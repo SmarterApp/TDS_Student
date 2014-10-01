@@ -1,0 +1,276 @@
+@charset "UTF-8";
+@import url(../../../Themes/torch/css/masterShell.css);
+
+/* Missouri's logos */
+
+#tds-ot-branding{
+	background: url(../Images/mo-top-bg-beta.jpg) repeat-x; 
+	height: 120px;
+}
+
+/*.preloader .logo_small {
+	background-image: url(../Images/logo_medium.gif);
+}*/
+#A2 {
+	display: none;
+}
+.startSpeak, .stopSpeak, .speakHelp {
+	visibility: hidden;
+	overflow: hidden;
+	height: 0px;
+	width: 0px;
+}
+#accDialog .bd {
+	height:200px !important;
+}
+#loginLinks {
+	display: block;
+}
+.practiceTest #loginLinks {
+	display: none;
+}
+
+.NotForScoreEntry, .ForScoreEntry {
+	display: none;
+}
+/* @group Data Entry */
+
+
+/* @group sectionLogin tweaks */
+
+.mode_ResponseEntry .loginForm label {
+	min-width: 9em;
+}
+.mode_ResponseEntry #sectionLogin .actions {
+    padding-right: 14%;
+}  
+.mode_ResponseEntry .goPractice {
+	display: none;
+}
+.mode_ResponseEntry .loginForm input {
+	max-width: 400px !important;
+}
+.mode_ResponseEntry .loginRow {
+	min-height: 2.5em;
+	clear:both;
+}
+.TDS_PS_L3.mode_ResponseEntry .loginForm label, .TDS_PS_L4.mode_ResponseEntry .loginForm label {
+    float: none;
+    margin-bottom: 10px;
+    text-align: left;
+    max-width: inherit;
+    width: inherit;
+}
+.TDS_PS_L3.mode_ResponseEntry .loginForm input, .TDS_PS_L4.mode_ResponseEntry .loginForm input {
+    float: none;
+    width: 80%;
+    margin-bottom: 0em;
+}
+/* @end */
+
+.mode_ResponseEntry #verifyTestForm {
+    background-color: #DCEBF5;
+    border-bottom: 1px solid #0F6797;
+    border-top: 1px solid #0F6797;
+    display: inherit;
+    margin-left: -0.6em;
+    margin-right: -.6em;
+    padding: 0 0 0 0.5em;
+}
+
+/* @group sectionTestSelection tweaks */
+
+.mode_ResponseEntry #sectionTestSelection table tr th:first-child {  
+	white-space: inherit;
+}
+.mode_ResponseEntry .resumeTest, .mode_ResponseEntry .newTest {
+	width: inherit;
+	padding-right: 35px;
+}
+
+/* @end */
+
+.mode_ResponseEntry #sectionTestResults .ptShow, 
+.mode_ResponseEntry #sectionTestResults.scoreUnavailableInPT .ptShow, 
+.mode_ResponseEntry .practiceTest #sectionTestResults .ptShow {
+	display: none !important;
+}
+
+.practiceTest.mode_ResponseEntry .singleUser .loginForm1 {
+	border: none;
+}
+.practiceTest.mode_ResponseEntry .singleUser .ot-shadowBox {
+	float: none !important;
+}
+.practiceTest.mode_ResponseEntry .singleUser .ot-shadowBox h2 {
+	background-image: none !important;
+}
+.practiceTest.mode_ResponseEntry #ot-brand2 strong {
+	background-image: none !important;
+	padding-right: 5px;
+}
+
+.mode_ResponseEntry .actions input {
+	border: none;
+    display: block;
+    margin: 0px;
+    background-color: transparent;
+    cursor: pointer;
+     color: #000000;
+    font-size: 93%;
+    min-height: 2em;
+    padding: 0px 1em;
+}
+.mode_ResponseEntry .actions input:hover {
+	background-color: #0E4878 !important;
+	color: #fff;
+}
+.TDS_PS_L1.mode_ResponseEntry .actions input, .TDS_PS_L2.mode_ResponseEntry .actions input, .TDS_PS_L3.mode_ResponseEntry .actions input{
+	max-width: 250px;
+	line-height: 1em;
+}
+.TDS_PS_L4.mode_ResponseEntry .actions input{
+	max-width: 260px;
+}
+.TDS_PS_L3.mode_ResponseEntry .actions input{
+	max-width: 240px;
+	line-height: 1em;
+}
+.mode_ResponseEntry .actions .positive input {
+	color: #0d4373;
+}
+.mode_ResponseEntry .actions .positive input:hover {
+	background-color: #0d4373 !important;
+	color: #fff;
+}
+.mode_ResponseEntry #loginLinks {
+	display: block;
+}
+.practiceTest.mode_ResponseEntry #loginLinks {
+	display: none;
+}
+.mode_ResponseEntry .NotForScoreEntry {
+	display: inline;
+}
+/* @end */
+
+
+
+
+/* @group Alternate (Green) */
+
+/* @group Header Stuff */
+
+.mode_ScoreEntry #ot-logo_spot1 {
+	background-image:url(../Images/logo_delaware_alt_large.gif);
+	width: 350px;
+}
+.mode_ScoreEntry #tds-ot-header {
+	background-color: #6bad63;
+}
+.mode_ScoreEntry #tds-ot-branding {
+    background-color: inherit;
+}
+.mode_ScoreEntry #ot-brand1 {
+    background: transparent url(../Images/lighthouse_top_green.gif) no-repeat right bottom;
+}
+.mode_ScoreEntry #ot-brand2 {
+    background: url("../Images/lighthouse_bottom_green.gif") no-repeat scroll right center transparent;
+    border-bottom-color: #4D83C3;
+    height: 28px;
+}
+
+/* @end */
+
+/* @group sectionLogin tweaks */
+
+.mode_ScoreEntry .loginForm label {
+	min-width: 9em;
+}
+.mode_ScoreEntry #sectionLogin .actions {
+    padding-right: 14%;
+}  
+.mode_ScoreEntry .loginRow {
+	min-height: 2.5em;
+	clear:both;
+}
+/* @end */
+
+
+/* @group sectionTestSelection tweaks */
+
+.mode_ScoreEntry #sectionTestSelection table tr th:first-child {  
+	white-space: inherit;
+}
+.mode_ScoreEntry .resumeTest, .newTest {
+	width: inherit;
+	padding-right: 35px;
+}
+
+/* @end */
+
+.mode_ScoreEntry #sectionTestResults .ptShow, 
+.mode_ScoreEntry #sectionTestResults.scoreUnavailableInPT .ptShow, 
+.mode_ScoreEntry .practiceTest #sectionTestResults .ptShow {
+	display: none !important;
+}
+.mode_ScoreEntry .practiceTest .singleUser .loginForm1 {
+	border: none;
+}
+.mode_ScoreEntry .practiceTest .singleUser .ot-shadowBox {
+	float: none !important;
+}
+.mode_ScoreEntry .practiceTest .singleUser .ot-shadowBox h2 {
+	background-image: none !important;
+}
+.mode_ScoreEntry .practiceTest #ot-brand2 strong {
+	background-image: none !important;
+	padding-right: 5px;
+}
+.mode_ScoreEntry #verifyTestForm {
+    background-color: #DCEBF5;
+    border-bottom: 1px solid #0F6797;
+    border-top: 1px solid #0F6797;
+    display: inherit;
+    margin-left: -0.6em;
+    margin-right: -.6em;
+    padding: 0 0 0 0.5em;
+}
+.mode_ScoreEntry .actions input {
+	border: none;
+    display: block;
+    margin: 0px;
+    background-color: transparent;
+    cursor: pointer;
+     color: #000000;
+    font-size: 93%;
+    min-height: 2em;
+    padding: 0px 1em;
+}
+.mode_ScoreEntry .actions input:hover {
+	background-color: #0E4878 !important;
+	color: #fff;
+}
+.mode_ScoreEntry.TDS_PS_L1 .actions input, .mode_ScoreEntry.TDS_PS_L2 .actions input, .mode_ScoreEntry.TDS_PS_L3 .actions input{
+	max-width: 250px;
+	line-height: 1em;
+}
+.mode_ScoreEntry.TDS_PS_L4 .actions input{
+	max-width: 260px;
+}
+.mode_ScoreEntry.TDS_PS_L3 .actions input{
+	max-width: 240px;
+	line-height: 1em;
+}
+.mode_ScoreEntry .actions .positive input {
+	color: #0d4373;
+}
+.mode_ScoreEntry .actions .positive input:hover {
+	background-color: #0d4373 !important;
+	color: #fff;
+}
+.mode_ScoreEntry .ForScoreEntry {
+	display: inline;
+}
+/* @end */
+

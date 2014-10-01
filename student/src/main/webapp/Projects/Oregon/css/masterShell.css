@@ -1,0 +1,55 @@
+@charset "UTF-8";
+
+/* Oregon's logos */
+#ot-logo_spot1 {
+	background-image: url(../Images/bigOak.gif);
+	width: 394px;
+}
+#ot-brand1 h1 {
+	display: inherit;
+}
+#ot-logo_spot3 {
+	display: block;
+	float: left;
+	width: 57px;
+	height: 29px;
+	background: url(../Images/bigRoots.gif) no-repeat left top;
+}
+.preloader .logo_small {
+	background-image: url(../Images/logo_medium.png);
+}
+
+/* hides score for Grade 3 Spanish Reading tests
+.grade_3.subject_Reading.language_ESN .yourScore{
+	display: none;
+}*/
+/* hides language drop down because Oregon only has English */
+.languages {
+	display: none;
+}
+.startSpeak, .stopSpeak, .speakHelp {
+	visibility: hidden;
+	overflow: hidden;
+	height: 0px;
+	width: 0px;
+}
+.subject_New_Item_Types.gradeSpan_3-12 .startSpeak, .subject_New_Item_Types.gradeSpan_3-12 .stopSpeak {
+	visibility: visible;
+	overflow: inherit;
+	width: 18px;
+	height: 18px;
+}
+.subject_New_Item_Types.gradeSpan_3-12 .speakHelp {
+	visibility: visible;
+	overflow: inherit;
+	height: 18px;
+	width:inherit;
+}
+
+#btnDiagELPA {
+	display: block;
+}
+
+#sectionDiagnostics .inline {
+    margin-top: 0.5em;
+}

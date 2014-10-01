@@ -1,0 +1,29 @@
+@charset "UTF-8";
+@import url(../../../Themes/flowers/css/masterShell.css);
+
+/* hawaii logos */
+#ot-logo_spot1 {
+	background-image:url(../Images/logo_hawaii.gif);
+	width: 426px;
+}
+.preloader .logo_small {
+	background-image: url(../Images/logo_medium.gif);
+}
+
+/* hides ELPA button on diagnostics page */
+#A2 {
+	display: none;
+}
+.gridtraining {
+	display: block;
+}
+/* hides score for ALL tests */
+.noScore/*, .yourScore*/ {
+	display:none;
+}
+
+.app_ScoreEntry .loginForm label {
+    max-width: inherit;
+    min-width: inherit;
+    width: 33%;
+}

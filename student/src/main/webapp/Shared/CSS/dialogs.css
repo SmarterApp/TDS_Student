@@ -1,0 +1,631 @@
+.yui-panel-container {
+	position: absolute;
+	top: 10em;
+	left: 50%;
+	margin-left: -250px;
+	font-family: arial, helvetica, clean, sans-serif;
+	font-size: 110%;
+}
+.mask {
+	z-index: 1;
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+/*.yui-skin-sam .mask {
+	background-color: #000;
+	opacity: .25;
+	filter: alpha(opacity=25);
+}*/
+
+.yui-panel-container.shadow .underlay.yui-force-redraw {
+	padding-bottom: 1px;
+}
+.yui-panel-container .container-close {
+	overflow: hidden;
+	text-indent: -10000em;
+	text-decoration: none;
+}
+.yui-skin-sam .container-close {
+	position: absolute;
+	top: 5px;
+	right: 6px;
+	width: 25px;
+	height: 15px;
+	background: url(../../../../assets/skins/sam/sprite.png) no-repeat 0 -300px;
+	cursor: pointer;
+}
+.yui-overlay.yui-force-redraw,.yui-panel-container.yui-force-redraw {
+	margin-bottom: 1px;
+}
+.yui-skin-sam .yui-dialog .ft .button-group {
+	display: block;
+	text-align: right;
+	background-color: inherit !important;
+}
+.yui-skin-sam .yui-panel {
+	position: relative;
+	left: 0;
+	top: 0;
+	border:3px solid #F5F7F7;
+	z-index: 1;
+	*border-width: 1px;
+	*zoom: 1;
+	_zoom: normal;
+	-moz-box-shadow: 0em 0em 5px #000;
+	-webkit-box-shadow: 0em 0em 5px #000;
+	box-shadow: 0em 0em 5px #000;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	background-color: #fff;
+	max-height: 500px;
+	width: 500px;
+}
+.browserVer_2.browser_firefox.yui-skin-sam .yui-panel, .browserVer_3.browser_firefox.yui-skin-sam .yui-panel {
+	border-color: #ccc;
+}
+.yui-skin-sam .yui-panel-container.shadow .underlay {
+	display: none;
+	position: absolute;
+	top: -3px;
+	left: -3px;
+	right: -3px;
+	bottom: -3px;
+	*top: 2px;
+	*left: -1px;
+	*right: -1px;
+	*bottom: -1px;
+	_top: 0;
+	_left: 0;
+	_right: 0;
+	_bottom: 0;
+	_margin-top: -1px;
+	_margin-left: -1px;
+	background-color: #000;
+	opacity: .2;
+	filter: alpha(opacity=2);
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+}
+.browser_firefox.browserVer_2 .underlay {
+	display: block !important;
+}
+.yui-skin-sam .yui-panel .hd, .yui-skin-sam .yui-panel .bd, .yui-skin-sam .yui-panel .ft {
+	border: none;
+	margin: 0 -1px;
+	*margin: 0;
+	*border: 0;
+}
+.yui-skin-sam .yui-panel .bd, .yui-skin-sam .yui-panel .ft {
+	background-color: #fff;
+}
+.yui-skin-sam .yui-panel .hd {
+	padding-left: 10px;
+	padding-top: 0px;
+	padding-right: 10px;
+	padding-bottom: 0px;
+	font-size:2.5em;
+	line-height:1.6em;
+	color: #666;
+	border-bottom:solid 1px #CCCCCC;
+	background-image: none;
+	background-color: #F5F7F7;
+}
+.yui-skin-sam .warning .hd {
+	padding-left: 40px;
+	background: #F5F7F7 url("../../Images/alerts/alert.png") no-repeat left center !important;
+}
+.yui-skin-sam .yui-panel .bd {
+	padding: 10px;
+	font-size: 1.3em;
+}
+.yui-skin-sam .yui-panel .ft {
+	padding: 10px;
+}
+ .yui-skin-sam .yui-button a:active {
+	outline: none !important;
+}
+
+
+/*#accDialog {
+	height: 1px;
+	overflow: hidden;
+}
+.masked #accDialog {
+	height: inherit;
+	overflow: inherit;
+}
+#accDialog_c {
+	top: 50%;
+	margin-top: -250px;
+	position: fixed;
+}
+#accDialog_c .hd{
+	font-size: 1.5em;
+}
+#accDialog_c.yui-overlay-hidden {
+	display: none;
+}
+#accDialog .bd {
+    overflow:auto;
+    padding:10px;
+    height: 170px;
+    font-size: 1em;
+}
+#accForm div {
+	border-bottom: solid 1px #ccc;
+	padding: 5px;
+	margin-bottom: 3px;
+}
+#accForm div div {
+	border-bottom: none;
+	padding: 0;
+	margin-bottom: 0;
+}
+#accForm label { 
+	display:block;
+	float:left;
+	width:200px;
+	clear:left;
+	text-align:right;
+	margin-right: 15px;
+	font-weight: bold;
+}
+#accForm .values {
+	float: left;
+	margin-left: 210px;
+	margin-top: -1.3em;
+}
+#accForm select { 
+	max-width:200px;
+}
+#accForm .values label { 
+	display:block;
+	float:none;
+	width:inherit;
+	text-align:left;
+	margin-right: 0px;
+	padding-bottom: .3em;
+	margin-left: 1.4em;
+	padding-top: .3em;
+	font-weight: inherit;
+	border-bottom: dotted 1px #e1e1e1;
+	border-color: #e8e8e8;
+}
+#accForm .values input { 
+	float: left;
+	margin-right: .5em;
+	margin-left: -1.8em;
+}*/
+/*.browser_firefox.browserVer_2 #accForm .values label { 
+	text-indent: 1.5em;
+}
+.browser_firefox.browserVer_2 #accForm .values input { 
+	margin-top: -1.3em;
+}*/
+
+#yuiProgressDialog {
+	width: 500px !important;
+	/*margin-right: -200px;*/
+}
+#yuiProgressDialog .hd{
+	font-size: 1.5em;
+}
+.TDS_PS_Largest #yuiProgressDialog .hd, .TDS_PS_Largest #yuiProgressDialog .bd {
+	position: relative;
+}
+#yuiSimpleDialog {
+	width: 600px !important;
+	/*margin-left: -300px;*/
+}
+.unproctored #accPrintonRequest {
+	display: none;
+}
+
+/* @ custom progress loading style */
+#loadingDialog {
+	display:none;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top: 0px;
+	left: 0px;
+	bottom: 0px;
+	right: 0px;
+	z-index: 999;
+	background: url(../Images/white.png) repeat;
+}
+#loadingDialog .border {
+	width: 300px;
+	left: 50%;
+	top: 40%;
+	position: absolute;
+	margin-left: -150px;
+	margin-top: -15px;
+	display: block;
+}
+#loadingDialog .container {
+	display: block;
+	height: 30px;
+	background: #f9fbfb url(../Images/loadingAnimation.gif) no-repeat center center;
+	padding: 10px;
+	text-indent: -9999px;
+}
+#loadingDialog .bd {
+	border-top: solid 1px #CCCCCC;
+}
+#loadingDialog .ft a {
+	display: block;
+	float: right;
+	border: solid 1px #ccc;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	padding: 5px;
+	margin-left: 5px;
+	margin-bottom: 10px;
+	color: #000;
+	text-decoration: none;
+}
+#loadingDialog .ft a:focus, #loadingDialog .ft a:active, #loadingDialog .ft a:hover {
+	text-decoration: underline;
+	border-color: #2765b4;
+	background-color: #f9fbfb;
+}
+.showingLoading #loadingDialog {
+	display:block;
+}
+
+/* new spinner */
+.yui-skin-sam .mask {
+	background-color: dimgray; /* ORIGINAL: #eceeee */
+	opacity: .25;
+	filter: alpha(opacity=25);
+}
+#yuiProgressDialog {
+    width: 35px !important;
+    height: 35px;
+	background: #fff url(../Images/saved.gif) no-repeat center center;
+	-moz-box-shadow: 0em 0em .3em #666;
+	-webkit-box-shadow: 0em 0em .3em #666;
+	box-shadow: 0em 0em .3em #666;
+}
+#yuiProgressDialog * {
+	display: none;
+}
+
+/* mask out a panel while it is loading */
+div.yui-panel-container.yui-panel-loading div.yui-panel-mask {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #f9fbfb url(../Images/loadingAnimation.gif) no-repeat center center;
+}
+
+div#tools div.tool {
+    width: 600px;
+    height: 600px;
+}
+div#tools div.tool-helpguide {
+	width: 720px;
+	height: 620px !important;
+}
+.TDS_PS_L0 div#tools div.tool-helpguide {
+	width: 720px !important;
+}
+.TDS_PS_L1 div#tools div.tool-helpguide {
+	width: 820px !important;
+}
+.TDS_PS_L2 div#tools div.tool-helpguide, .TDS_PS_L3 div#tools div.tool-helpguide, .TDS_PS_L4 div#tools div.tool-helpguide {
+	width: 900px !important;
+}
+div#tools div.tool iframe {
+    overflow: auto;
+	display:block;
+}
+/*.yui-skin-sam .container-close {
+    background: url(../../Images/close.png) no-repeat scroll center center;
+    cursor: pointer;
+    height: 1.5em;
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    width: 1.5em;
+    border: solid 1px #999;
+    -moz-border-radius: 3px;
+	border-radius: 3px; 
+}
+.yui-skin-sam .container-close:hover {
+    background-color: #fff !important;
+    border-color: #fff !important; 
+}*/
+
+.yui-skin-sam .container-close {
+    color: #000000;
+    display: block;
+    float: right;
+    height: 25px;
+    width: 25px;
+    overflow: hidden;
+    text-indent: -9999px;
+    line-height: 25px;
+    margin-top: -5px;
+    text-decoration: none;
+	background: url(../Images/modern/sprites_mobile_0.png) center -2730px no-repeat;
+}
+.yui-skin-sam .container-close:hover {
+	background-position: center -2831px;
+	text-decoration:underline;
+	color: #FFFFFF;
+}
+
+
+.TDS_PS_L1.yui-skin-sam .container-close {
+    right: 6px;
+    top: 6px;
+}
+.TDS_PS_L2.yui-skin-sam .container-close, .TDS_PS_L3.yui-skin-sam .container-close, .TDS_PS_L4.yui-skin-sam .container-close {
+    right: 10px;
+    top: 10px;
+}
+.TDS_PS_L0.yui-skin-sam .yui-panel .hd {
+	font-size: 1.4em;
+}
+.TDS_PS_L1.yui-skin-sam .yui-panel .hd {
+	font-size: 1.4em;
+}
+.TDS_PS_L2.yui-skin-sam .yui-panel .hd, .TDS_PS_L3.yui-skin-sam .yui-panel .hd, .TDS_PS_L4.yui-skin-sam .yui-panel .hd {
+	font-size: 1.5em;
+}
+
+#globalAccDialog .singleselect {
+	margin-bottom: .5em;
+	padding-bottom: .5em;
+	border-bottom: solid 1px #ccc;
+}
+
+/* @group TDS style buttons */
+
+.yui-skin-sam .yui-panel .ft {
+    padding: 5px;
+}
+.ft .button-group {
+    display: block;
+    font-size: 1em;
+    height: 2em;
+    padding-bottom: 5px;
+}
+.ft .button-group .yui-button {
+	display: block;
+	float: left;
+	border: 1px solid #0E4878;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	color: #000;
+	text-decoration: none;
+	line-height: 2em;
+	padding: 0px;
+	margin-right: .5em;
+	background-image: none !important;
+	/* prevent buttons from breaking out of dialog boxes*/
+	max-width: 50%;
+	overflow: hidden;
+}
+.ft .button-group .yui-button span {
+	display: block;
+	float: left;
+	border: none !important;
+	line-height: inherit;
+	padding: 0px;
+	margin-right: 0px;
+}
+.ft .button-group button {
+	border: none;
+    display: block;
+    margin: 0px;
+    background-color: transparent;
+    cursor: pointer;
+    color: #000000;
+    font-size: 93%;
+    line-height: 2em;
+    min-height: 2em;
+    padding: 0px 1em;
+    -moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}
+.ft .button-group button:hover, .yui-button.yui-push-button-focus button, .yui-button.yui-push-button-focus button:focus {
+	background-color: #0E4878 !important;
+	color: #fff !important;
+}
+
+/* @end */
+
+/* @group TTS buttons */
+.ttsHelpSpeakButtonClass, .ttsHelpStopSpeakButtonClass {
+	position: absolute;
+	height: 1.5em;
+	width: 1.5em;
+	border-color: #999999 !important;
+	top: 3px;
+	right: 45px;
+	overflow: hidden;
+	display: block;
+}
+
+.ttsHelpSpeakButtonClass:hover, .ttsHelpStopSpeakButtonClass:hover {
+	border-color: #fff !important;
+}
+.ttsHelpSpeakButtonClass.disabled:hover, .ttsHelpStopSpeakButtonClass.disabled:hover {
+	border-color: #999999 !important;
+	background-color: transparent !important;
+}
+.ttsHelpSpeakButtonClass {
+	right: 80px;
+}
+.ttsHelpSpeakButtonClass button, .ttsHelpStopSpeakButtonClass button {
+	color: #000;
+	text-decoration: none;
+	width: 18px;
+	height: 18px;
+	text-indent: -9999px;
+	background: url(../Images/controls/audio2010.png) no-repeat -503px -412px;
+	margin-left: 2px;
+	overflow: hidden;
+}
+.ft .button-group .ttsHelpSpeakButtonClass button:hover {
+	background-position: -533px -412px;
+	background-color: #fff !important;
+}
+.ttsHelpSpeakButtonClass.disabled button, .ttsHelpSpeakButtonClass.disabled button:hover {
+	background-position: -503px -439px !important;
+	background-color: transparent !important;
+	cursor: default;
+}
+.ttsHelpStopSpeakButtonClass button {
+	background-position: -563px -412px;
+}
+.ft .button-group .ttsHelpStopSpeakButtonClass button:hover {
+	background-position: -593px -412px;
+	background-color: #fff !important;
+}
+.ttsHelpStopSpeakButtonClass.disabled button, .ttsHelpStopSpeakButtonClass.disabled button:hover {
+	background-position: -563px -439px !important;
+	background-color: transparent !important;
+	cursor: default;
+}
+
+.ft .button-group .ttsHelpSpeakButtonClass button:focus, .ft .button-group .ttsHelpStopSpeakButtonClass button:focus {
+	background-color: #0E4878 !important;
+	outline: none !important;
+}
+.ft .button-group .ttsHelpSpeakButtonClass.disabled button:focus, .ft .button-group .ttsHelpStopSpeakButtonClass.disabled button:focus {
+	background-color: transparent !important;
+}
+
+.ft .hasTTS, .ft .noTTS {
+	display: none;
+}
+.ft.hasTTS .hasTTS {
+	display: inline;
+	color: #4A996D;
+	font-weight: bold;
+}
+.ft.noTTS .noTTS {
+	display: inline;
+	font-weight: bold;
+	color: red;
+}
+.noTTS .button-group, .hasTTS .button-group{
+	float: right;
+}
+
+
+
+/* @group TTS help buttons */
+
+#tools .ttsHelpSpeakButtonClass button {
+	background-position: -506px -415px;
+}
+.TDS_PS_L1 #tools .ttsHelpSpeakButtonClass button {
+	background-position: -504px -413px;
+}
+.TDS_PS_L2 #tools .ttsHelpSpeakButtonClass button, .TDS_PS_L3 #tools .ttsHelpSpeakButtonClass button, .TDS_PS_L4 #tools .ttsHelpSpeakButtonClass button {
+	background-position: -502px -411px;
+}
+#tools .ft .button-group .ttsHelpSpeakButtonClass button:hover {
+	background-position: -536px -415px;
+}
+.TDS_PS_L1 #tools .ft .button-group .ttsHelpSpeakButtonClass button:hover {
+	background-position: -534px -413px;
+}
+.TDS_PS_L2 #tools .ft .button-group .ttsHelpSpeakButtonClass button:hover, .TDS_PS_L3 #tools .ft .button-group .ttsHelpSpeakButtonClass button:hover, .TDS_PS_L4 #tools .ft .button-group .ttsHelpSpeakButtonClass button:hover {
+	background-position: -532px -411px;
+}
+#tools .ttsHelpSpeakButtonClass.disabled button, #tools .ttsHelpSpeakButtonClass.disabled button:hover {
+	background-position: -505px -442px !important;
+}
+.TDS_PS_L1 #tools .ttsHelpSpeakButtonClass.disabled button, #tools .TDS_PS_L1 .ttsHelpSpeakButtonClass.disabled button:hover {
+	background-position: -504px -440px !important;
+}
+.TDS_PS_L2 #tools .ttsHelpSpeakButtonClass.disabled button, #tools .TDS_PS_L2 .ttsHelpSpeakButtonClass.disabled button:hover, .TDS_PS_L3 #tools .ttsHelpSpeakButtonClass.disabled button, #tools .TDS_PS_L3 .ttsHelpSpeakButtonClass.disabled button:hover, .TDS_PS_L4 #tools .ttsHelpSpeakButtonClass.disabled button, #tools .TDS_PS_L4 .ttsHelpSpeakButtonClass.disabled button:hover {
+	background-position: -502px -437px !important;
+}
+#tools .ttsHelpStopSpeakButtonClass button {
+	background-position: -566px -415px;
+}
+.TDS_PS_L1 #tools .ttsHelpStopSpeakButtonClass button {
+	background-position: -564px -413px;
+}
+.TDS_PS_L2 #tools .ttsHelpStopSpeakButtonClass button, .TDS_PS_L3 #tools .ttsHelpStopSpeakButtonClass button, .TDS_PS_L4 #tools .ttsHelpStopSpeakButtonClass button {
+	background-position: -562px -411px;
+}
+#tools .ft .button-group .ttsHelpStopSpeakButtonClass button:hover {
+	background-position: -596px -415px;
+}
+.TDS_PS_L1 #tools .ft .button-group .ttsHelpStopSpeakButtonClass button:hover {
+	background-position: -594px -413px;
+}
+.TDS_PS_L2 #tools .ft .button-group .ttsHelpStopSpeakButtonClass button:hover, .TDS_PS_L3 #tools .ft .button-group .ttsHelpStopSpeakButtonClass button:hover, .TDS_PS_L4 #tools .ft .button-group .ttsHelpStopSpeakButtonClass button:hover {
+	background-position: -592px -411px;
+}
+#tools .ttsHelpStopSpeakButtonClass.disabled button, #tools .ttsHelpStopSpeakButtonClass.disabled button:hover {
+	background-position: -565px -442px !important;
+}
+.TDS_PS_L1 #tools .ttsHelpStopSpeakButtonClass.disabled button, .TDS_PS_L1 #tools .ttsHelpStopSpeakButtonClass.disabled button:hover {
+	background-position: -564px -440px !important;
+}
+.TDS_PS_L2 #tools .ttsHelpStopSpeakButtonClass.disabled button, .TDS_PS_L2 #tools .ttsHelpStopSpeakButtonClass.disabled button:hover, .TDS_PS_L3 #tools .ttsHelpStopSpeakButtonClass.disabled button, .TDS_PS_L3 #tools .ttsHelpStopSpeakButtonClass.disabled button:hover, .TDS_PS_L4 #tools .ttsHelpStopSpeakButtonClass.disabled button, .TDS_PS_L4 #tools .ttsHelpStopSpeakButtonClass.disabled button:hover {
+	background-position: -562px -437px !important;
+}
+
+/* changed style of buttons, no longer needed---
+.TDS_PS_L1 .ttsHelpSpeakButtonClass, .TDS_PS_L1 .ttsHelpStopSpeakButtonClass {
+	top: 6px;
+}
+.TDS_PS_L2 .ttsHelpSpeakButtonClass, .TDS_PS_L2 .ttsHelpStopSpeakButtonClass, .TDS_PS_L3 .ttsHelpSpeakButtonClass, .TDS_PS_L3 .ttsHelpStopSpeakButtonClass, .TDS_PS_L4 .ttsHelpSpeakButtonClass, .TDS_PS_L4 .ttsHelpStopSpeakButtonClass {
+	top: 10px;
+}*/
+
+.TDS_PS_L1 div#tools div.tool-helpguide .container-close, .TDS_PS_L1 #tools .ttsHelpStopSpeakButtonClass, .TDS_PS_L1 #tools .ttsHelpSpeakButtonClass {
+	width: 25px;
+	height: 25px;
+}
+.TDS_PS_L2 div#tools div.tool-helpguide .container-close, .TDS_PS_L2 #tools .ttsHelpStopSpeakButtonClass, .TDS_PS_L2 #tools .ttsHelpSpeakButtonClass, .TDS_PS_L3 div#tools div.tool-helpguide .container-close, .TDS_PS_L3 #tools .ttsHelpStopSpeakButtonClass, .TDS_PS_L3 #tools .ttsHelpSpeakButtonClass, .TDS_PS_L4 div#tools div.tool-helpguide .container-close, .TDS_PS_L4 #tools .ttsHelpStopSpeakButtonClass, .TDS_PS_L4 #tools .ttsHelpSpeakButtonClass {
+	width: 30px;
+	height: 30px;
+}
+
+#tools .tool-helpguide .ttsHelpSpeakButtonClass, #tools .tool-helpguide .ttsHelpStopSpeakButtonClass {
+	border: none !important;
+}
+#tools .tool-helpguide .button-group button:hover,  
+#tools .tool-helpguide .button-group button:active,  
+#tools .tool-helpguide .button-group button:focus {
+	background-color: transparent !important;
+}
+
+
+/* @end */
+/* @end */
+
+
+.platform_android #tools .ttsHelpSpeakButtonClass button, .platform_android #tools .container-close {
+	margin-top: -3px;
+}
+
+
+/*Fix for bug 121538 - we gotta have this CSS on these things if they are going to work on iPad*/
+.tool-dictionary-container .bd{
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+}

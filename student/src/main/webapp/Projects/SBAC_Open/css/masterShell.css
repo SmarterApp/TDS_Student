@@ -1,0 +1,39 @@
+@charset "UTF-8";
+@import url(../../../Themes/pillars/css/masterShell.css);
+
+/* Minnesota's logos */
+#ot-logo_spot1 {
+    background-image:  url(../Images/logo_sbac.png);
+}
+.browser_ie.browserVer_6 #ot-logo_spot1{
+	background: url(../Images/logo_sbac.gif) no-repeat transparent;
+}
+.languages {
+	display: none;
+}
+.loginForm label {
+   width: 33%;
+   max-width: inherit;
+   min-width: inherit;
+}
+.TDS_PS_L3 .loginForm label, .TDS_PS_L4 .loginForm label{
+   width: 35%;
+}
+#quickQuide {
+	border: solid 1px #ccc;
+}
+#sectionTestApproval h2 {
+    font-size: 2.35em;
+}
+
+/* practice test icon */
+.practiceTest #sectionLogin .ot-shadowBox h2 {
+    background-image: url(../Images/practice1.png) !important;
+}
+
+/* HIDE LOGIN INFORMATION */
+#loginForm1, #loginForm2, #loginAlert{
+	display: none;
+}
+#sectionLogin .actions .tds-button{ float: left;}
+/* @end */

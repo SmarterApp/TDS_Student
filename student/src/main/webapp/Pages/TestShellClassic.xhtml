@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:section="http://java.sun.com/jsf/composite/usercontrols"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:tds="http://airast.org/jsfcustom" xmlns:p="http://java.sun.com/jsf/passthrough">
+
+<h:head id="htmlHead">
+	<title>Classic Shell</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+
+	<!-- Shell styles -->
+	<tds:CSSLink href="~/Shared/CSS/testShell.css" media="screen" type="text/css" rel="stylesheet" />
+	<tds:CSSLink href="~/Projects/%s/css/testShell.css" media="screen" type="text/css" rel="stylesheet" />
+
+	<!-- YUI styles -->
+	<tds:CSSLink href="~/Scripts/Libraries/YUI/button/assets/skins/sam/button.css" rel="stylesheet" type="text/css" />
+	<!-- OPTIONAL -->
+	<tds:CSSLink href="~/Scripts/Libraries/YUI/menu/assets/skins/sam/menu.css" rel="stylesheet" type="text/css" />
+
+	<tds:CSSLink href="~/Shared/CSS/dialogs.css" media="screen" type="text/css" rel="stylesheet" />
+	<tds:CSSLink href="~/Shared/CSS/accommodations.css" media="screen" type="text/css" rel="stylesheet" />
+
+	<!-- Custom styles -->
+	<style type="text/css">
+
+/* BUG #16245: Tutorials images do not display properly and Tutorial plays continuously */
+#dialogContentFrames .contentFrameHide {
+	display: none;
+}
+</style>
+</h:head>
+<h:body id="htmlBody" role="application" class="showingLoading">
+	<span class="preloader"> <span class="endTest"></span><span class="badGrid"></span><span class="saveAnswer"></span><span class="sprites_yui"></span><span class="sprites_buttons"></span><span
+		class="answerA"></span><span class="answerB"></span><span class="answerC"></span><span class="answerD"></span><span class="answerE"></span><span class="answerF"></span><span class="answerI"></span><span
+		class="answerO"></span><span class="answerBlank"></span><span class="writingOpen"></span><span class="writingClosed"></span>
+	</span>
+	<div id="topHalf">
+		<!-- wraps both the current Header and the test content -->
+		<table cellpadding="0" cellspacing="0" height="100%" width="100%">
+			<tbody>
+				<tr>
+					<td class="headCell">
+						<!-- contains the head -->
+						<div id="head" role="banner">
+							<div class="topBar">
+								<span id="ot-studentInfo"><h:outputText value="#{studentInfo.getFullName()}" escape="false"/></span>
+								<div class="smallButtons">
+									<h:link id="btnHelp">
+										<span i18n-content="TestShell.Link.Help"></span>
+									</h:link>
+									<a id="proctorLogout" name="goLogout" tabindex="1002" style="display: none;"><span i18n-content="StudentMaster.Button.Logout"></span></a>
+								</div>
+								<span class="sessionID"></span> <span class="logo"></span> <span class="clear"></span>
+							</div>
+
+							<div class="bottomBar">
+								<span id="lblTestName" class="testName"></span> <span id="navigationContainer" class="jumptTo"> <label i18n-content="TestShell.Label.PastQuestions"></label>
+
+									<div id="navigation">
+										<select id="ddlNavigation"></select>
+										<!--span id="soundStatus" style="display:none;"></span-->
+										<div id="soundCues"></div>
+									</div>
+
+								</span>
+
+								<!--a id="btnReload">Reload</a-->
+								<span class="clear"></span>
+							</div>
+							<div class="notificationsContainer">
+								<div id="pnlNotifyError" class="notificationError" style="display: none;">&nbsp;</div>
+								<div id="pnlNotifyNotice" class="notificationNotice" style="display: none;">&nbsp;</div>
+								<div id="pnlNotifySuccess" class="notificationSuccess" style="display: none;">&nbsp;</div>
+							</div>
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="bottomthing">
+						<!-- contains test content/iFrame -->
+						<div id="contents" class="testContent">
+							<div id="reviews"></div>
+						</div>
+					</td>
+				</tr>
+
+			</tbody>
+		</table>
+	</div>
+	<div id="foot" role="navigation">
+		<div id="studentTools">
+			<ul>
+				<li><a id="btnZoomIn" href="#" class="zoomIn"><span class="icon"><span class="word" i18n-content="TestShell.Link.ZoomIn"></span></span></a></li>
+				<li><a id="btnZoomOut" href="#" class="zoomOut"><span class="icon"><span class="word" i18n-content="TestShell.Link.ZoomOut"></span></span></a></li>
+				<li><a id="btnCalculator" href="#" class="calculator"><span class="icon" i18n-content="TestShell.Link.Calculator"></span></a></li>
+				<li><a id="btnFormula" href="#" class="math"><span class="icon" i18n-content="TestShell.Link.Formula"></span></a></li>
+				<li><a id="btnPeriodic" href="#" class="periodic"><span class="icon" i18n-content="TestShell.Link.PeriodicTable"></span></a></li>
+				<li><a id="btnPrint" href="#" class="printer excludeMenu"><span class="icon" i18n-content="TestShell.Link.Print"></span></a></li>
+				<li><a id="btnPrintPractice" href="#" class="printerPractice excludeMenu"><span class="icon" i18n-content="TestShell.Link.PrintPractice"></span></a></li>
+
+				<!-- needed to fix min-width and centering conflict -->
+				<li class="centerFix"></li>
+			</ul>
+		</div>
+
+		<div id="studentControls">
+			<ul>
+				<li><span style="color: Black;" id="lblStatus"></span></li>
+				<li><a id="btnSave" class="save" href="#"><span class="icon" i18n-content="TestShell.Link.Save"></span></a></li>
+				<li><a id="btnPause" class="pause" href="#"><span class="icon" i18n-content="TestShell.Link.Pause"></span></a></li>
+				<li class="inactive"><a id="btnBack" class="back" href="#"><span class="icon"><span class="word" i18n-content="TestShell.Link.Back"></span><span class="shortcut"></span></span></a></li>
+				<li class="inactive"><a id="btnNext" class="next" href="#"><span class="icon"><span class="word" i18n-content="TestShell.Link.Next"></span><span class="shortcut"></span></span></a></li>
+				<li class="inactive"><a id="btnEnd" class="endTest confirmexitCSS" href="#"><span class="icon" i18n-content="TestShell.Link.EndTest"></span></a></li>
+				<li class="inactive"><a id="btnResults" class="endTest" href="#"><span class="icon" i18n-content="TestShell.Link.TestResults">Test Results</span></a></li>
+			</ul>
+		</div>
+	</div>
+
+	<!-- Help Dialog -->
+	<section:Help />
+	<!-- Modal Dialogs -->
+	<!-- 	<section:Dialogs /> -->
+
+	<ui:include src="TestShellDialogs.xhtml" />
+
+	<!-- Javascript -->
+	<div id="js-files">
+		<tds:ResourcesLink file="~/Scripts/scripts_student.xml" name="base" />
+		<tds:ResourcesLink file="~/Scripts/scripts_student.xml" name="testshell" />
+	</div>
+
+	<ui:include src="TestShellScripts.xhtml" />
+
+
+	<script type="text/javascript">
+		TestShell.name = 'classic';
+
+		// create renderer
+		ContentManager.Renderer.init('contents',
+				ContentManager.Renderer.MultiFrame);
+		ContentManager.Frame.setBaseUrl(TDS.baseUrl);
+
+		// remove newer audio players
+		AudioManager.removePlayer('sm2');
+		AudioManager.removePlayer('jwplayer');
+	</script>
+
+</h:body>
+</html>

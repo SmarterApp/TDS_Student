@@ -1,0 +1,54 @@
+# .hgignore - List of filenames hg should ignore
+
+# use glob syntax.
+syntax: glob
+
+# compiled code
+*.class
+
+# Package Files
+*.war
+*.ear
+
+# mvn build output
+target/
+bin/
+
+# Eclipse project files
+.classpath
+.project
+.settings/
+.cache/
+.springBeans
+.metadata/
+server/
+.externalToolBuilders/
+
+# Mac finder
+.DS_Store
+
+# Ignore all CVS files
+.cvsignore
+CVS/
+
+# Ignore all log files
+logs/*
+
+# Ignore backup files
+*~
+.*~
+
+# Ignore .orig files
+*.orig
+
+# IntelliJ project files
+.idea
+*.iml
+
+
+#This is temporary until student has been ported.
+#student/src/main/webapp/Scripts/**/*
+#student/src/main/webapp/Images/**/*
+#student/src/main/webapp/Shared/**/*
+#student/src/main/webapp/Themes/**/*
+#student/src/main/webapp/Projects/**/*

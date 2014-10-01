@@ -1,0 +1,357 @@
+@charset "UTF-8";
+/* CSS Document */
+
+html {
+	padding:0; 
+	margin:0; 
+	border:0; 
+	background:#fff; 
+	font-size:76%; 
+	font-family: Arial, Helvetica, sans-serif;
+}
+body {
+	height:100%;
+	max-height:100%;
+	overflow:hidden;
+	padding:0;
+	margin:0;
+	border:0;
+}
+#helpContent {
+	position:absolute;
+	left:0;
+	top:0px;
+	bottom:0px;
+	width:100%;
+	overflow:auto;
+	-webkit-overflow-scrolling:touch;
+	font-size: 1.4em;
+}
+hr, .clear {
+	display: block;
+	clear: both;
+}
+.noSpace {
+	margin-bottom: -20px !important;
+	font-style: italic;
+}
+.horizontal {
+	display: block;
+	height: 3px;
+	margin-bottom: 10em;
+	margin-top: 10em;
+	padding: 0px;
+	font-size: 1px;
+	line-height: 1px;
+	clear: both;
+	border-top: 1px solid #aaaaab;
+	border-bottom: 1px solid #aaaaab;
+}
+.horizontal3 {
+	display: block;
+	height: 2px;
+	margin-bottom: 10em;
+	margin-top: 10em;
+	padding: 0px;
+	font-size: 1px;
+	line-height: 1px;
+	clear: both;
+	border-top: 1px solid #bcbbbd;
+	border-bottom: 1px solid #bcbbbd;
+}
+.horizontal4 {
+	display: block;
+	height: 1px;
+	margin-bottom: 10em;
+	margin-top: 10em;
+	padding: 0px;
+	font-size: 1px;
+	line-height: 1px;
+	clear: both;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+.help a {
+	display: block;
+	background-color: #fff0d8;
+	height: 29px;
+	margin: 0px;
+	background-image: url(zoom.gif);
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	line-height: 33px;
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 47px;
+	color: #000000;
+	text-decoration: none;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.help a:hover {
+	background-position: 0px -51px;
+	text-decoration:underline;
+}
+body#singleKey {
+	font-size: 1.5em;
+}
+body#singleKey #helpContent {
+	left: 0px;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	width: 100%;
+}
+body#singleKey .shortcuts {
+	text-align: center;
+	padding: 1em;
+}
+body#singleKey .shortcuts table {
+	margin-right: auto;
+	margin-left: auto;
+}
+body#singleKey .rightColumn {
+	text-align: left;
+}
+body#singleKey caption {
+	display:none;
+}
+.shortcuts caption, .writing caption  {
+	color: #FFFFFF;
+	background-color: #175283;
+	font-size: 1.2em;
+	line-height: 1.4em;
+	text-align: left;
+	padding-top: .2em;
+	padding-right: 1em;
+	padding-bottom: .2em;
+	padding-left: 1em;
+}
+.shortcuts th, .writing th {
+	padding: 0.4em;
+	background-color: #fff0d7;
+	border: 1px solid #fff0d7;
+}
+.shortcuts td, .writing td {
+	padding: 3px;
+	border: 1px solid #fff4e1;
+}
+
+.leftColumn {
+	line-height: 29px;
+	text-align: center;
+}
+.centerColumn {
+	line-height: 29px;
+	text-align: center;
+}
+.shortcuts img {
+	float: none;
+	vertical-align:middle;
+	margin-right: -1px;
+}
+.tools caption {
+	color: #FFFFFF;
+	background-color: #175283;
+	font-size: 1.2em;
+	line-height: 1.4em;
+	text-align: left;
+	padding-top: .2em;
+	padding-right: 1em;
+	padding-bottom: .2em;
+	padding-left: 1em;
+}
+.tools th {
+	padding: 0.4em;
+	background-color: #e5e4e6;
+	border: 1px solid #e5e4e6;
+}
+.tools td {
+	padding: 3px;
+	border: 1px solid #e5e4e6;
+}
+.toolleft {
+	text-align: left;
+	vertical-align: middle;
+	min-width: 175px;
+}
+.toolRight u {
+	display: block;
+}
+.tools img {
+	float: none;
+}
+.strike {
+	text-align: center;
+	vertical-align:middle;
+	font-weight: bold;
+}
+.inner ul, .inner ol {
+	padding-top: 0px;
+	padding-right: 20px;
+	padding-bottom: 0px;
+	padding-left: 20px;
+	margin-top: .5em;
+	margin-right: 0px;
+	margin-bottom: .5em;
+	margin-left: 0px;
+}
+.inner p {
+	padding: 0px;
+	margin-top: .5em;
+	margin-right: 0px;
+	margin-bottom: .5em;
+	margin-left: 0px;
+}
+.inner p img, .inner li img, .toolRight img {
+	vertical-align:middle;
+}
+.inner h5 {
+	padding: 0px;
+	margin-top: 0.8em;
+	margin-right: 0px;
+	margin-bottom: 0.2em;
+	margin-left: 0px;
+}
+.tip {
+	border: 1px solid #03A037;
+}
+.tip h4 {
+	margin: 0px;
+	background-image: url(okSmall.gif);
+	background-repeat: no-repeat;
+	background-position: left center;
+	background-color: #DFF5C2;
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 20px;
+	text-transform: uppercase;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #03A037;
+	font-size: 1.2em;
+}
+.tip p {
+	padding: 0.4em !important;
+}
+.warning {
+	border: 1px solid #990000;
+}
+.warning h4 {
+	margin: 0px;
+	background-image: url(attentionSmall.gif);
+	background-repeat: no-repeat;
+	background-position: left center;
+	background-color: #FFFFCC;
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 20px;
+	text-transform: uppercase;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #990000;
+	font-size: 1.2em;
+}
+.warning p {
+	padding-top: 0.2em;
+	padding-right: 0.4em;
+	padding-bottom: 0.2em;
+	padding-left: 0.4em;
+}
+
+.screen {
+	border: 1px solid #CCCCCC;
+	text-align: center;
+	padding-bottom: 3px;
+}
+.screen h5 {
+	margin: 0px;
+	font-style: italic;
+}
+.floatLeft {
+	float: left;
+	vertical-align:inherit;
+}
+.floatRight {
+	float: right;
+	vertical-align:inherit;
+}
+.popNote {
+	font-size: 1em;
+	text-align: left;
+}
+
+.tools table table td {
+	border-color: #e1e1e1;
+	border-top-color: #fff;
+	border-right-color: #fff;
+	border-left-color: #fff;
+}
+
+
+
+/* @group accommodations */
+
+body.TDS_CCMagenta {
+	background-color: #ffd0ff;
+}
+body.TDS_CCMagenta2 {
+	background-color: #fde3fd;
+}
+body.TDS_CCYellow{
+	background-color: #ffffce;
+}
+body.TDS_CCYellow2{
+	background-color: #fcfce2;
+}
+body.TDS_CCBlue {
+	background-color: #99ffff;
+}
+body.TDS_CCBlue2 {
+	background-color: #cfffff;
+}
+body.TDS_CCGray {
+	background-color: #cecfce;
+}
+body.TDS_CCGray2 {
+	background-color: #e5e5e5;
+}
+body.TDS_CCGreen {
+	background-color: #cff799;
+}
+body.TDS_CCGreen2 {
+	background-color: #e0f6c1;
+}
+body.TDS_CCYellowB {
+	background-color: #039;
+	color:#FC0;
+}
+body.TDS_CCInvert {
+	background-color: #000;
+	color:#FFF;
+}
+body.TDS_CCWhiteN {
+	background-color: #003366;
+	color:#FFF;
+}
+
+.help {
+	display: none;
+}
+.TDS_PS_L1 {
+	font-size: 1.3em;
+}
+.TDS_PS_L2, .TDS_PS_L3, .TDS_PS_L4 {
+	font-size: 1.6em;
+}
+.loading {
+	background: #fff url(../../../../Shared/Images/loadingAnimation.gif) no-repeat center center;
+}
+.loading #navigation, .loading #helpContent {
+	visibility: hidden;
+}
+
+/* @end */

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<entry key="IsCheckinSite">${student.IsCheckinSite}</entry>
+	<entry key="DONOT_Distributed">${student.DONOT_Distributed}</entry>
+	<entry key="ClientName">${student.ClientName}</entry>
+	<entry key="ClientQueryString">${student.ClientQueryString}</entry>
+	<entry key="ClientCookie">${student.ClientCookie}</entry>
+	<entry key="Appkey">${student.Appkey}</entry>
+	<entry key="EncryptedPassword">${student.EncryptedPassword}</entry>
+	<entry key="RecordSystemClient">${student.RecordSystemClient}</entry>
+	<entry key="AdminPassword">${student.AdminPassword}</entry>
+	<entry key="SqlCommandTimeout">${student.SqlCommandTimeout}</entry>
+	<entry key="AppName">${student.AppName}</entry>
+	<entry key="SessionType">${student.SessionType}</entry>	
+	<entry key="StateCode">${student.StateCode}</entry>
+		
+	<!-- <entry key="student-sessiondb-jndi">java:/comp/env/jdbc/sessiondb</entry> --> 
+	<entry key="DBDialect">${student.DBDialect}</entry>
+	<entry key="TDSArchiveDBName">${student.TDSArchiveDBName}</entry>
+    <entry key="TDSSessionDBName">${student.TDSSessionDBName}</entry>
+    <entry key="TDSConfigsDBName">${student.TDSConfigsDBName}</entry>
+    <entry key="ItembankDBName">${student.ItembankDBName}</entry>
+    <entry key="Debug.AllowFTP">${student.Debug.AllowFTP}</entry>
+	
+	<entry key="TestRegistrationApplicationUrl">${student.TestRegistrationApplicationUrl}</entry>
+	<entry key="TDSReportsRootDirectory">${student.TDSReportsRootDirectory}</entry>
+	
+	<!-- for db-dev.opentestsystem.org 
+	<entry key="TDSSessionDBName">tdscore_dev_session2012_sandbox</entry>
+	<entry key="ItembankDBName">tdscore_dev_itembank2012_sandbox</entry>
+	<entry key="TDSArchiveDBName">tds_archive_</entry>
+	<entry key="TDSConfigsDBName">tdscore_dev_configs2012_sandbox</entry>
+	-->
+		
+	<!-- Unit test code only -->
+	<!-- TODO Ravi create a settings-test.xml under src/test/resources and use that.-->
+	<entry key="StudentMaxOpps">${student.StudentMaxOpps}</entry>
+	
+</properties>

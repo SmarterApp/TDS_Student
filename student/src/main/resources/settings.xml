@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<!-- There is a more modern format given here http://www.javadocexamples.com/org/apache/commons/configuration/org.apache.commons.configuration.XMLConfiguration.html -->
+	<entry key="IsCheckinSite">false</entry>
+	<entry key="DONOT_Distributed">true</entry>
+	<entry key="ClientName">Hawaii_PT</entry>
+	<entry key="ClientQueryString">true</entry>
+	<entry key="ClientCookie">true</entry>
+	<entry key="Appkey">Student</entry>
+	<entry key="EncryptedPassword">true</entry>
+	<entry key="RecordSystemClient">true</entry>
+	<entry key="AdminPassword">UnloadAppDomain1000tj</entry>
+	<entry key="SqlCommandTimeout">60</entry>
+	<entry key="AppName">Student</entry>
+	<entry key="SessionType">0</entry>		
+	<entry key="DBJndiName">java:/comp/env/jdbc/sessiondb</entry>
+	<entry key="rtsDllClass">tds.dll.mysql.RtsDLL</entry> <!-- RtsPackageDLL -->
+	<entry key="DBDialect">SQLSERVER</entry>
+	<!-- TODO elena think about moving this to database.xml -->
+	<!-- For MSSQL  -->
+	<!--    
+	<entry key="TDSSessionDBName">TDSCore_Dev_Session2012_Sandbox</entry>
+	<entry key="ItembankDBName">TDSCore_Dev_Itembank2012_Sandbox</entry>
+	<entry key="TDSArchiveDBName">TDS_Archive_</entry>
+	<entry key="TDSConfigsDBName">TDSCore_Dev_Configs2012_Sandbox</entry>
+	--> 
+	<!-- for db-dev.opentestsystem.org -->
+	<entry key="TDSSessionDBName">tdscore_dev_session2012_sandbox</entry>
+	<entry key="ItembankDBName">tdscore_dev_itembank2012_sandbox</entry>
+	<entry key="TDSArchiveDBName">tds_archive_</entry>
+	<entry key="TDSConfigsDBName">tdscore_dev_configs2012_sandbox</entry>
+	
+	<!-- for ec2-54-234-242-4.compute-1.amazonaws.com -->
+	<!--  
+	<entry key="TDSSessionDBName">tdscore_session_dev</entry>
+	<entry key="ItembankDBName">tdscore_itembank_dev</entry>
+	<entry key="TDSArchiveDBName">tds_archive_</entry>
+	<entry key="TDSConfigsDBName">tdscore_config_dev</entry>
+	-->
+	<!-- The following logger parameters are only applicable to standalone code and not to webapplication -->
+	<entry key="logger.proctorDevLogPath">C:\java_workspace\logs\</entry>
+	<entry key="logger.debuglevel">DEBUG</entry>
+	
+	<!-- Unit test code only -->
+	<!-- TODO Ravi create a settings-test.xml under src/test/resources and use that.-->
+	<entry key="StudentMaxOpps">2</entry>
+	<entry key="unitTests.baseLineDateTime">2012-10-10 15:10:10</entry>
+	<entry key="unitTests.useHardCodedBaseline">false</entry>
+</properties>

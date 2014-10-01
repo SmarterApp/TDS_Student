@@ -1,0 +1,128 @@
+table.tableitem {
+    width: 100%;
+    border: 1px solid #666666;
+    padding:1px;
+}
+.ti table th, 
+.ti td {
+    width: 100%;
+    border: 1px solid #666666;
+    padding: 1px;
+    vertical-align: top;
+}
+.ti-container {
+	overflow:hidden;
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+}
+.ti-stem {
+    margin-bottom: 1em;
+}
+.ti-stem p {
+	padding:0.2em;
+}
+.ti-stem span {
+	display: inline-block;
+	vertical-align:top;
+}
+.ti .loading:first-child {
+	text-align: center;
+}
+.ti-response-shown, 
+.ti-response-hidden {
+	display:inline-block;
+	margin-right: 2em;
+	vertical-align: middle;
+	margin-bottom: 0.5em;
+}
+.ti-response-shown div, 
+.ti-response-hidden div {
+	box-shadow: 0 0 0.2em #666666;
+	border: 3px solid #ddd;
+	min-width: 10em;
+	border-radius: 5px;
+	min-height: 12em;
+}
+.ti-response-shown .optionContent, 
+.ti-response-hidden .optionContent {
+	margin: 0 auto 0;
+	clear: none;
+	display: block;
+	text-align: left;
+	background: #fff;
+	background: -moz-linear-gradient(top, #fff, #eee);
+	background: -webkit-linear-gradient(top, #fff, #eee);	
+	border: 0 solid white;
+}
+.loading .ti-response-shown .optionContent { 
+	text-align: left
+}
+.ti-response-shown div .optionContent img {
+	margin: 0 auto 0;
+	clear: both;
+	display: block;
+}
+.ti .answerCell .ti-stop-button, 
+.ti .answerCell {
+	border-radius: 5px;
+	margin-top: 1em;
+}
+
+/* For some reason scrolling is triggering hover on tables, removing the hover effect*/
+.touch{
+	border-color: #ddd;
+}
+
+button {
+	/*background: transparent;*/
+	background: #eee;
+	border: transparent;
+}
+
+.ti-response-hidden {
+	visibility: hidden;	
+}
+
+/*  Multiple Choice rebuild */
+/* what is this for?
+.stemContainer.ti-stem {
+	width: 20em;
+	height: 5em;
+}*/
+
+.ti .ti-textarea {
+    width: 100%;
+    overflow: hidden;
+    -moz-border-radius:  .2em;
+	-webkit-border-radius:  .2em;
+	border-radius: .2em;
+	-webkit-box-shadow: inset 0em 0em .1em #ccc;
+	-moz-box-shadow: inset 0em 0em .1em #ccc;
+	box-shadow: inset 0em 0em .1em #ccc;
+
+}
+
+td.ti.ti_textbox, th.ti.ti_textbox{
+	background-color: rgba(174,219,232,0.5);
+}
+textarea.ti.ti-textarea{
+	min-width: 3em;
+	display: table-cell;
+	clear:both;
+	line-height: 1.1em;
+	padding: 0em;
+}
+/*remove once class gets applied to the cell
+td.format_ti p span, th.format_ti p span {
+	display: block;
+	background-color: rgb(0, 174, 239);
+    background-color: rgba(0, 174, 239, 0.2);
+	padding: .2em;
+}
+
+td.format_ti.format_ti_textbox, th.format_ti.format_ti_textbox {
+	background-color: rgb(0, 174, 239);
+    background-color: rgba(0, 174, 239, 0.2);
+	padding: .2em;
+}*/

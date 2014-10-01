@@ -1,0 +1,14 @@
+@charset "UTF-8";
+@import url(../../../Themes/flowers/css/testShell.css);
+
+/* hawaii logos */
+.topBar {
+	background-image: url(../Images/logo_hawaii_small.gif);
+}
+
+/* show iframe shim for dialogs */
+body.dialogAlertShow #dialogShim, body.dialogPromptShow #dialogShim, body.contentLoading #dialogShim {
+	width: 100%;
+	height: 100%;
+	display: block;
+}

@@ -1,0 +1,2562 @@
+﻿@charset "UTF-8";
+/* CSS Document */
+
+/* @group Contextual Help */
+a.contexthelp {
+	/*display: block;*/
+	background-image: url(../Images/controls/help.gif);
+	background-repeat: no-repeat;
+	background-position: -1px 0px;
+	text-indent: -9999px;
+	height: 17px;
+	width: 17px;
+	font-size: 1px;
+}
+a.contexthelp:hover {
+	background-position: -27px -49px;
+}
+.TDS_PS_L1 a.contexthelp {
+	background-image: url(../Images/controls/help.gif);
+	background-position: 0px -19px;
+	height: 21px;
+	width: 21px;
+}
+.TDS_PS_L1 a.contexthelp:hover {
+	background-position: -24px -26px;
+}
+.TDS_PS_L2 a.contexthelp, .TDS_PS_L3 a.contexthelp, .TDS_PS_L4 a.contexthelp {
+	background-image: url(../Images/controls/help.gif);
+	background-position: 0px -42px;
+	height: 25px;
+	width: 25px;
+}
+.TDS_PS_L2 a.contexthelp:hover, .TDS_PS_L3 a.contexthelp:hover, .TDS_PS_L4 a.contexthelp:hover {
+	background-position: -19px -1px;
+}
+/* @end */
+
+/* @group guide to revision */
+
+.TDS_GfR1 .guideToRevision {
+	display: block;
+	background-position: 0px -4149px;
+}
+.TDS_GfR1 .guideToRevision:hover {
+	background-position: -30px -4149px;
+}
+.TDS_PS_L1 a.guideToRevision {
+	background-position: 0px -4180px;
+}
+.TDS_PS_L1 a.guideToRevision:hover {
+	background-position: -30px -4180px;
+}
+.TDS_PS_L2 a.guideToRevision, .TDS_PS_L3 a.guideToRevision, .TDS_PS_L4 a.guideToRevision {
+	background-position: 0px -4220px;
+}
+.TDS_PS_L2 a.guideToRevision:hover, .TDS_PS_L3 a.guideToRevision:hover, .TDS_PS_L4 a.guideToRevision:hover {
+	background-position: -30px -4220px;
+}
+
+/* @end */
+
+/* @group Item Print */
+.TDS_PoD_Item a.printItem {
+	display: block;
+	background-image: url(../Images/controls/sprites_student.png);
+	background-repeat: no-repeat;
+	background-position: 50% -400px;
+	text-indent: -9999px;
+	height: 16px;
+	width: 16px;
+	font-size: 1px;
+	margin-left: 3px;
+	margin-right: 4px;
+	opacity: 0.5;
+}
+.TDS_PoD_Item.unproctored a.printItem {
+	display: none;
+}
+ a.printItem:hover {
+	opacity: 1;
+	background-position: 50% -400px;
+}
+.TDS_PS_L1 a.printItem {
+	background-image: url(../Images/controls/sprites_student.png);
+	background-position: 50% -1200px;
+	height: 20px;
+	width: 20px;
+}
+.TDS_PS_L1 a.printItem:hover {
+	opacity: 1;
+	background-position: 50% -1200px;
+}
+.TDS_PS_L2 a.printItem, .TDS_PS_L3 a.printItem, .TDS_PS_L4 a.printItem {
+	background-image: url(../Images/controls/sprites_student.png);
+	background-position: 50% -2700px;
+	height: 27px;
+	width: 25px;
+}
+.TDS_PS_L2 a.printItem:hover, .TDS_PS_L3 a.printItem:hover, .TDS_PS_L4 a.printItem:hover {
+	opacity: 1;
+	background-position: 50% -2700px;
+}
+.browser_firefox.browserVer_2.platform_mac a.printItem:hover, .browser_firefox.browserVer_2.platform_mac.TDS_PS_L1 a.printItem:hover, .browser_firefox.browserVer_2.platform_mac.TDS_PS_L2 a.printItem:hover, .browser_firefox.browserVer_2.platform_mac.TDS_PS_L3 a.printItem:hover, .browser_firefox.browserVer_2.platform_mac.TDS_PS_L4 a.printItem:hover {
+	opacity: 0.5;
+	background-color: #004a80;
+}
+/* @end */
+
+/* @group Keyboard */
+
+.keyboard {
+	text-align: left;
+	margin-top: .8em;
+}
+.keyboard ul {
+	display:block;
+	height:2.3em;
+	clear: both;
+}
+.TDS_PS_L1 .keyboard ul, .TDS_PS_L2 .keyboard ul {
+	height:2.2em;
+}
+.TDS_PS_L3 .keyboard ul {
+	height:1.8em;
+}
+.TDS_PS_L4 .keyboard ul {
+	height:1.3em;
+}
+.keyboard li {
+	display: block;
+	float: left;
+	list-style-type: none;
+	height: 29px;
+	width: 29px;
+	text-align: center;
+	line-height: 29px;
+	margin-right: 0.5em;
+	/*margin-bottom: .5em;*/
+}
+.TDS_PS_L1 .keyboard li {
+	height: 40px;
+	width: 39px;
+	line-height: 40px;
+	margin-right: 0.3em;
+	margin-bottom: .3em;
+}
+.TDS_PS_L2 .keyboard li {
+	height: 50px;
+	width: 48px;
+	line-height: 50px;
+	margin-right: 0.3em;
+	margin-bottom: .3em;
+}
+.TDS_PS_L3 .keyboard li, .TDS_PS_L4 .keyboard li {
+	height: 50px;
+	width: 48px;
+	line-height: 50px;
+	margin-right: .2em;
+	margin-bottom: .2em;
+}
+.keyboard a {
+	background-image: url(../Images/controls/keys.gif);
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	display: block;
+	font-weight: bold;
+	color: #000;
+	text-decoration: none;
+	font-family: "Courier New", Courier, monospace;
+}
+.TDS_PS_L1 .keyboard a {
+	background-position: -31px 0px;
+}
+.TDS_PS_L2 .keyboard a, .TDS_PS_L3 .keyboard a, .TDS_PS_L4 .keyboard a {
+	background-position: -72px 0px;
+}
+.keyboard a:hover {
+	background-position: 0px -40px;
+}
+.TDS_PS_L1 .keyboard a:hover {
+	background-position: -31px -42px;
+}
+.TDS_PS_L2 .keyboard a:hover, .TDS_PS_L3 .keyboard a:hover, .TDS_PS_L4 .keyboard a:hover {
+	background-position: -72px -52px;
+}
+.keyboard a:active {
+	background-position: 0px -80px;
+}
+.TDS_PS_L1 .keyboard a:active {
+	background-position: -31px -84px;
+}
+.TDS_PS_L2 .keyboard a:active, .TDS_PS_L3 .keyboard a:active, .TDS_PS_L4 .keyboard a:active {
+	background-position: -72px -105px;
+}
+
+.key-space {
+	width: 200px !important;
+}
+.key-space a {
+	background-position: 0px -157px;
+}
+.TDS_PS_L1 .key-space {
+	width: 250px !important;
+}
+.TDS_PS_L1 .key-space a {
+	background-position: -203px -157px;
+}
+.TDS_PS_L2 .key-space a, .TDS_PS_L3 .key-space a, .TDS_PS_L4 .key-space a {
+	width: 312px !important;
+	background-position: -141px 0px;
+}
+.TDS_PS_L4 .key-space {
+	font-size: .85em;
+}
+.key-space a:hover {
+	background-position: 0px -197px;
+}
+.TDS_PS_L1 .key-space a:hover {
+	background-position: -203px -199px;
+}
+.TDS_PS_L2 .key-space a:hover, .TDS_PS_L3 .key-space a:hover, .TDS_PS_L4 .key-space a:hover {
+	background-position: -141px -52px;
+}
+.key-space a:active {
+	background-position: 0px -237px;
+}
+.TDS_PS_L1 .key-space a:active {
+	background-position: -203px -242px;
+}
+.TDS_PS_L2 .key-space a:active, .TDS_PS_L3 .key-space a:active, .TDS_PS_L4 .key-space a:active {
+	background-position: -141px -104px;
+}
+.key-delete {
+	width: 100px !important;
+}
+.key-delete a {
+	background-position: -353px -314px;
+}
+.TDS_PS_L1 .key-delete {
+	width: 126px !important;
+}
+.TDS_PS_L1 .key-delete a {
+	background-position: -200px -297px;
+}
+.TDS_PS_L2 .key-delete, .TDS_PS_L3 .key-delete, .TDS_PS_L4 .key-delete {
+	width: 156px !important;
+}
+.TDS_PS_L4 .key-delete {
+	font-size: .85em;
+}
+.TDS_PS_L2 .key-delete a, .TDS_PS_L3 .key-delete a, .TDS_PS_L4 .key-delete a {
+	background-position: 0px -269px;
+}
+.key-delete a:hover {
+	background-position: -353px -354px;
+}
+.TDS_PS_L1 .key-delete a:hover {
+	background-position: -200px -339px;
+}
+.TDS_PS_L2 .key-delete a:hover, .TDS_PS_L3 .key-delete a:hover, .TDS_PS_L4 .key-delete a:hover {
+	background-position: 0px -321px;
+}
+.key-delete a:active {
+	background-position: -353px -394px;
+}
+.TDS_PS_L1 .key-delete a:active {
+	background-position: -200px -382px;
+}
+.TDS_PS_L2 .key-delete a:active, .TDS_PS_L3 .key-delete a:active, .TDS_PS_L4 .key-delete a:active {
+	background-position: 0px -373px;
+}
+.qwerty .key-a {
+	margin-left: .5em;
+}
+.qwerty .key-z {
+	margin-left: 1em;
+}
+.qwerty .key-m {
+	margin-right: 100px;
+}
+.qwerty .key-space {
+	margin-left: 1.5em;
+}
+.TDS_PS_L1 .qwerty .key-delete {
+	margin-left: .3em;
+}
+.TDS_PS_L2 .qwerty .key-delete {
+	margin-left: 4.5em;
+}
+.TDS_PS_L3 .qwerty .key-delete {
+	margin-left: 4.5em;
+}
+.TDS_PS_L4 .qwerty .key-delete {
+	margin-left: 4.5em;
+}
+.keyboard.qwerty  {
+	text-align: left;
+	width: 380px;
+	margin-top: .8em;
+}
+.TDS_PS_L1 .qwerty.keyboard {
+	width: 460px;
+}
+.TDS_PS_L2 .qwerty.keyboard, .TDS_PS_L3 .qwerty.keyboard, .TDS_PS_L4 .qwerty.keyboard {
+	width: 580px;
+}
+.keyboard.abcd  {
+	text-align: left;
+	width: 340px;
+	margin-top: .8em;
+}
+.TDS_PS_L1 .abcd.keyboard {
+	width: 420px;
+}
+.TDS_PS_L2 .abcd.keyboard, .TDS_PS_L3 .abcd.keyboard, .TDS_PS_L4 .abcd.keyboard {
+	width: 525px;
+}
+.TDS_PS_L3 .abcd.keyboard, .TDS_PS_L4 .abcd.keyboard, .TDS_PS_L3 .qwerty.keyboard, .TDS_PS_L4 .qwerty.keyboard, .TDS_PS_L3 .keyboard, .TDS_PS_L4 .keyboard {
+	margin-top: 0em;
+}
+
+.abcd .key-delete {
+	float:right;
+}
+
+/* @end */
+
+/* @group EL */
+
+.elicitedwrap {
+	height: 144px;
+	width: 64px;
+	position: relative;
+}
+.TDS_PS_L1 .elicitedwrap {
+	height: 181px;
+	width: 79px;
+}
+.TDS_PS_L2 .elicitedwrap, .TDS_PS_L3 .elicitedwrap, .TDS_PS_L4 .elicitedwrap {
+	height: 225px;
+	width: 99px;
+}
+.elicitedaround {
+	background-image: url(../Images/controls/audio2010.png);
+	background-repeat: no-repeat;
+	background-position: -478px -200px;
+	height: 144px;
+	width: 64px;
+	position: relative;
+	z-index:2;
+}
+.TDS_PS_L1 .elicitedaround {
+	background-position: -82px -230px;
+	height: 181px;
+	width: 79px;
+}
+.TDS_PS_L2 .elicitedaround, .TDS_PS_L3 .elicitedaround, .TDS_PS_L4 .elicitedaround {
+	background-position: -103px 0px;
+	height: 225px;
+	width: 99px;
+}
+.elicitedaround a:focus {
+	background-color: inherit !important;
+	border: dotted 1px #ccc;
+	margin-left: -1px;
+}
+/* @group loading and failed */
+/* @group all */
+.load_fail .btnRecord, .load_fail .btnRestart, .load_fail .btnPlayPause, .load_fail .soundlevelindicator, 
+.decode_fail .btnRecord, .decode_fail .btnRestart, .decode_fail .btnPlayPause, .decode_fail .soundlevelindicator, 
+.recording_fail .btnRecord, .recording_fail .btnRestart, .recording_fail .btnPlayPause, .recording_fail .soundlevelindicator, 
+.playing_fail .btnRecord, .playing_fail .btnRestart, .playing_fail .btnPlayPause, .playing_fail .soundlevelindicator, 
+
+.load_start .btnRecord, .load_start .btnRestart, .load_start .btnPlayPause, .load_start .soundlevelindicator, 
+.load_complete .btnRecord, .load_complete .btnRestart, .load_complete .btnPlayPause, .load_complete .soundlevelindicator, 
+.decode_start .btnRecord, .decode_start .btnRestart, .decode_start .btnPlayPause, .decode_start .soundlevelindicator, 
+
+.disabled .btnRecord, .disabled .btnRestart, .disabled .btnPlayPause,  .disabled .soundlevelindicator, 
+.recording_stopping .btnRecord, .recording_stopping .btnRestart, .recording_stopping .btnPlayPause,  .recording_stopping .soundlevelindicator {
+	display: none !important;
+}
+.load_fail .elicitedaround, .decode_fail .elicitedaround, .recording_fail .elicitedaround, .playing_fail .elicitedaround,
+.load_start .elicitedaround, .load_complete .elicitedaround, .decode_start .elicitedaround, .recording_stopping .elicitedaround {
+	background-image: none !important;
+}
+.load_fail.elicitedwrap, .decode_fail.elicitedwrap, .recording_fail.elicitedwrap, .playing_fail.elicitedwrap, 
+.load_start.elicitedwrap, .load_complete.elicitedwrap, .decode_start.elicitedwrap, .recording_stopping.elicitedwrap {
+	height: 144px;
+	width: 64px;
+	background-image: url(../Images/controls/avcontrols.gif);
+	background-repeat: no-repeat;
+	background-position: -594px -41px;
+	display: block;
+}
+.TDS_PS_L1 .load_fail.elicitedwrap, .TDS_PS_L1 .decode_fail.elicitedwrap, .TDS_PS_L1 .recording_fail.elicitedwrap, .TDS_PS_L1 .playing_fail.elicitedwrap, 
+.TDS_PS_L1 .load_start.elicitedwrap, .TDS_PS_L1 .load_complete.elicitedwrap, .TDS_PS_L1 .decode_start.elicitedwrap, .TDS_PS_L1 .recording_stopping.elicitedwrap {
+	background-image: url(../Images/controls/avcontrols.gif);
+	background-repeat: no-repeat;
+	background-position: -587px -23px;
+	height: 181px;
+	width: 79px;
+}
+.TDS_PS_L2 .load_fail.elicitedwrap, .TDS_PS_L2 .decode_fail.elicitedwrap, .TDS_PS_L2 .recording_fail.elicitedwrap, .TDS_PS_L2 .playing_fail.elicitedwrap, 
+.TDS_PS_L2 .load_start.elicitedwrap, .TDS_PS_L2 .load_complete.elicitedwrap, .TDS_PS_L2 .decode_start.elicitedwrap, .TDS_PS_L2 .recording_stopping.elicitedwrap, .TDS_PS_L3 .load_fail.elicitedwrap, .TDS_PS_L3 .decode_fail.elicitedwrap, .TDS_PS_L3 .recording_fail.elicitedwrap, .TDS_PS_L3 .playing_fail.elicitedwrap, 
+.TDS_PS_L3 .load_start.elicitedwrap, .TDS_PS_L3 .load_complete.elicitedwrap, .TDS_PS_L3 .decode_start.elicitedwrap, .TDS_PS_L3 .recording_stopping.elicitedwrap, .TDS_PS_L4 .load_fail.elicitedwrap, .TDS_PS_L4 .decode_fail.elicitedwrap, .TDS_PS_L4 .recording_fail.elicitedwrap, .TDS_PS_L4 .playing_fail.elicitedwrap, 
+.TDS_PS_L4 .load_start.elicitedwrap, .TDS_PS_L4 .load_complete.elicitedwrap, .TDS_PS_L4 .decode_start.elicitedwrap, .TDS_PS_L4 .recording_stopping.elicitedwrap {
+	background-image: url(../Images/controls/avcontrols.gif);
+	background-repeat: no-repeat;
+	background-position: -577px -1px;
+	height: 225px;
+	width: 99px;
+}
+/* @end */
+
+/* @group fail */
+.TDS_PS_L1 .load_fail .elicitedcontrols, .TDS_PS_L1 .load_fail .elicitedcontrols:hover, 
+.TDS_PS_L1 .decode_fail .elicitedcontrols, .TDS_PS_L1 .decode_fail .elicitedcontrols:hover, 
+.TDS_PS_L1 .recording_fail .elicitedcontrols, .TDS_PS_L1 .recording_fail .elicitedcontrols:hover, 
+.TDS_PS_L1 .playing_fail .elicitedcontrols, .TDS_PS_L1 .playing_fail .elicitedcontrols:hover {
+	height: 120px;
+	width: 50px;
+	left: 4px;
+	top: 4px;
+	border-top: 25px solid #fff;
+	border-bottom: 25px solid #fff;
+	border-right: 10px solid #fff;
+	border-left: 10px solid #fff;
+	position: absolute;
+}
+.TDS_PS_L2 .load_fail .elicitedcontrols, .TDS_PS_L2 .load_fail .elicitedcontrols:hover, 
+.TDS_PS_L2 .decode_fail .elicitedcontrols, .TDS_PS_L2 .decode_fail .elicitedcontrols:hover, 
+.TDS_PS_L2 .recording_fail .elicitedcontrols, .TDS_PS_L2 .recording_fail .elicitedcontrols:hover, 
+.TDS_PS_L2 .playing_fail .elicitedcontrols, .TDS_PS_L2 .playing_fail .elicitedcontrols:hover, 
+.TDS_PS_L3 .load_fail .elicitedcontrols, .TDS_PS_L3 .load_fail .elicitedcontrols:hover, 
+.TDS_PS_L3 .decode_fail .elicitedcontrols, .TDS_PS_L3 .decode_fail .elicitedcontrols:hover, 
+.TDS_PS_L3 .recording_fail .elicitedcontrols, .TDS_PS_L3 .recording_fail .elicitedcontrols:hover, 
+.TDS_PS_L3 .playing_fail .elicitedcontrols, .TDS_PS_L3 .playing_fail .elicitedcontrols:hover, 
+.TDS_PS_L4 .load_fail .elicitedcontrols, .TDS_PS_L4 .load_fail .elicitedcontrols:hover, 
+.TDS_PS_L4 .decode_fail .elicitedcontrols, .TDS_PS_L4 .decode_fail .elicitedcontrols:hover, 
+.TDS_PS_L4 .recording_fail .elicitedcontrols, .TDS_PS_L4 .recording_fail .elicitedcontrols:hover, 
+.TDS_PS_L4 .playing_fail .elicitedcontrols, .TDS_PS_L4 .playing_fail .elicitedcontrols:hover {
+	height: 135px;
+	width: 50px;
+	left: 5px;
+	top: 5px;
+	border-top: 40px solid #fff;
+	border-bottom: 40px solid #fff;
+	border-right: 20px solid #fff;
+	border-left: 20px solid #fff;
+	position: absolute;
+}
+/* @end */
+/* @group loading */
+.load_start .elicitedcontrols, .load_start .elicitedcontrols:hover, 
+.load_complete .elicitedcontrols, .load_complete .elicitedcontrols:hover, 
+.decode_start .elicitedcontrols, .decode_start .elicitedcontrols:hover {
+	height: 135px;
+	width: 54px;
+	left: 5px;
+	top: 5px;
+	background-color: #fff;
+	background-image: url(../Images/controls/loader32.gif);
+	background-repeat: no-repeat !important;
+	background-position: center center;
+	position: absolute;
+}
+.recording_stopping .elicitedcontrols, .recording_stopping .elicitedcontrols:hover {
+	background-image: url(../Images/controls/loader32.gif);
+	height: 135px;
+	width: 54px;
+	left: 5px;
+	top: 5px;
+	background-position: center center !important;
+	background-repeat: no-repeat;
+	background-color: #fff;
+	position: absolute;
+}
+
+.TDS_PS_L1 .load_start .elicitedcontrols, .TDS_PS_L1 .load_start .elicitedcontrols:hover, 
+.TDS_PS_L1 .load_complete .elicitedcontrols, .TDS_PS_L1 .load_complete .elicitedcontrols:hover, 
+.TDS_PS_L1 .decode_start .elicitedcontrols, .TDS_PS_L1 .decode_start .elicitedcontrols:hover, 
+.TDS_PS_L1 .recording_stopping .elicitedcontrols, .TDS_PS_L1 .recording_stopping .elicitedcontrols:hover {
+	height: 120px;
+	width: 50px;
+	left: 4px;
+	top: 4px;
+	border-top: 25px solid #fff;
+	border-bottom: 25px solid #fff;
+	border-right: 10px solid #fff;
+	border-left: 10px solid #fff;
+	background-color: #fff;
+	background-image: url(../Images/controls/loader32.gif);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+.TDS_PS_L2 .load_start .elicitedcontrols, .TDS_PS_L2 .load_start .elicitedcontrols:hover, 
+.TDS_PS_L2 .load_complete .elicitedcontrols, .TDS_PS_L2 .load_complete .elicitedcontrols:hover, 
+.TDS_PS_L2 .decode_start .elicitedcontrols, .TDS_PS_L2 .decode_start .elicitedcontrols:hover,
+.TDS_PS_L2 .recording_stopping .elicitedcontrols, .TDS_PS_L2 .recording_stopping .elicitedcontrols:hover, 
+.TDS_PS_L3 .load_start .elicitedcontrols, .TDS_PS_L3 .load_start .elicitedcontrols:hover, 
+.TDS_PS_L3 .load_complete .elicitedcontrols, .TDS_PS_L3 .load_complete .elicitedcontrols:hover, 
+.TDS_PS_L3 .decode_start .elicitedcontrols, .TDS_PS_L3 .decode_start .elicitedcontrols:hover,
+.TDS_PS_L3 .recording_stopping .elicitedcontrols, .TDS_PS_L3 .recording_stopping .elicitedcontrols:hover, 
+.TDS_PS_L4 .load_start .elicitedcontrols, .TDS_PS_L4 .load_start .elicitedcontrols:hover, 
+.TDS_PS_L4 .load_complete .elicitedcontrols, .TDS_PS_L4 .load_complete .elicitedcontrols:hover, 
+.TDS_PS_L4 .decode_start .elicitedcontrols, .TDS_PS_L4 .decode_start .elicitedcontrols:hover,
+.TDS_PS_L4 .recording_stopping .elicitedcontrols, .TDS_PS_L4 .recording_stopping .elicitedcontrols:hover {
+	height: 135px;
+	width: 50px;
+	left: 5px;
+	top: 5px;
+	border-top: 40px solid #fff;
+	border-bottom: 40px solid #fff;
+	border-right: 20px solid #fff;
+	border-left: 20px solid #fff;
+	background-color: #fff;
+	background-image: url(../Images/controls/loader32.gif);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+/* @end */
+/* @group disabled */
+
+.disabled .elicitedaround {
+	background: url(../Images/controls/audio2010.png) no-repeat -412px -200px;
+}
+.TDS_PS_L1 .disabled .elicitedaround {
+	background-position: -1px -230px;
+}
+.TDS_PS_L2 .disabled .elicitedaround, .TDS_PS_L3 .disabled .elicitedaround, .TDS_PS_L4 .disabled .elicitedaround {
+	background-position: 0px 0px;
+}
+
+/* @end */
+/* @end */
+
+.btnRecord {
+	text-indent: -9999px;
+	display: block;
+	height: 61px;
+	width: 55px;
+	position: absolute;
+	left: 4px;
+	top: 4px;
+	background-image: url(../Images/controls/audio2010.png);
+	background-repeat: no-repeat;
+	background-position: 1000px 1000px;
+}
+.TDS_PS_L1 .btnRecord {
+	height: 79px;
+	width: 69px;
+	left: 4px;
+	top: 5px;
+}
+.TDS_PS_L2 .btnRecord, .TDS_PS_L3 .btnRecord, .TDS_PS_L4 .btnRecord {
+	height: 97px;
+	width: 88px;
+	left: 5px;
+	top: 5px;
+}
+
+.elicitedwrap.recording_ready .btnRecord, .elicitedwrap.playing_start .btnRecord, .elicitedwrap.recording_done .btnRecord, .elicitedwrap.playing_done .btnRecord, .elicitedwrap.playing_stopped .btnRecord, .elicitedwrap.playing_paused .btnRecord, .elicitedwrap.decode_complete .btnRecord {
+	background-position: -346px -349px;
+}
+
+.TDS_PS_L1 .elicitedwrap.recording_ready .btnRecord, .TDS_PS_L1 .elicitedwrap.playing_start .btnRecord, .TDS_PS_L1 .elicitedwrap.recording_done .btnRecord,
+.TDS_PS_L1 .elicitedwrap.playing_done .btnRecord, .TDS_PS_L1 .elicitedwrap.playing_stopped .btnRecord, .TDS_PS_L1 .elicitedwrap.playing_paused .btnRecord, .TDS_PS_L1 .elicitedwrap.decode_complete .btnRecord {
+	background-position: 0px -416px;
+}
+.TDS_PS_L2 .elicitedwrap.recording_ready .btnRecord, .TDS_PS_L2 .elicitedwrap.playing_start .btnRecord, .TDS_PS_L2 .elicitedwrap.recording_done .btnRecord, .TDS_PS_L2 .elicitedwrap.playing_done .btnRecord, .TDS_PS_L2 .elicitedwrap.playing_stopped .btnRecord, .TDS_PS_L2 .elicitedwrap.playing_paused .btnRecord, .TDS_PS_L2 .elicitedwrap.decode_complete .btnRecord, 
+.TDS_PS_L3 .elicitedwrap.recording_ready .btnRecord, .TDS_PS_L3 .elicitedwrap.playing_start .btnRecord, .TDS_PS_L3 .elicitedwrap.recording_done .btnRecord, .TDS_PS_L3 .elicitedwrap.playing_done .btnRecord, .TDS_PS_L3 .elicitedwrap.playing_stopped .btnRecord, .TDS_PS_L3 .elicitedwrap.playing_paused .btnRecord, .TDS_PS_L3 .elicitedwrap.decode_complete .btnRecord, 
+.TDS_PS_L4 .elicitedwrap.recording_ready .btnRecord, .TDS_PS_L4 .elicitedwrap.playing_start .btnRecord, .TDS_PS_L4 .elicitedwrap.recording_done .btnRecord, .TDS_PS_L4 .elicitedwrap.playing_done .btnRecord, .TDS_PS_L4 .elicitedwrap.playing_stopped .btnRecord, .TDS_PS_L4 .elicitedwrap.playing_paused .btnRecord, .TDS_PS_L4 .elicitedwrap.decode_complete .btnRecord {
+	background-position: -412px -1px;
+}
+
+.elicitedwrap.recording_ready .btnRecord:hover, .elicitedwrap.playing_start .btnRecord:hover, .elicitedwrap.recording_done .btnRecord:hover, .elicitedwrap.playing_done .btnRecord:hover, .elicitedwrap.playing_stopped .btnRecord:hover, .elicitedwrap.playing_paused .btnRecord:hover, .elicitedwrap.decode_complete .btnRecord:hover {
+	background-position: -401px -349px;
+}
+
+.TDS_PS_L1 .elicitedwrap.recording_ready .btnRecord:hover, .TDS_PS_L1 .elicitedwrap.playing_start .btnRecord:hover, .TDS_PS_L1 .elicitedwrap.recording_done .btnRecord:hover, .TDS_PS_L1 .elicitedwrap.playing_done .btnRecord:hover, .TDS_PS_L1 .elicitedwrap.playing_stopped .btnRecord:hover, .TDS_PS_L1 .elicitedwrap.playing_paused .btnRecord:hover, .TDS_PS_L1 .elicitedwrap.decode_complete .btnRecord:hover {
+	background-position: -69px -416px;
+}
+.TDS_PS_L2 .elicitedwrap.recording_ready .btnRecord:hover, .TDS_PS_L2 .elicitedwrap.playing_start .btnRecord:hover, .TDS_PS_L2 .elicitedwrap.recording_done .btnRecord:hover, .TDS_PS_L2 .elicitedwrap.playing_done .btnRecord:hover, .TDS_PS_L2 .elicitedwrap.playing_stopped .btnRecord:hover, .TDS_PS_L2 .elicitedwrap.playing_paused .btnRecord:hover, .TDS_PS_L2 .elicitedwrap.decode_complete .btnRecord:hover, 
+.TDS_PS_L3 .elicitedwrap.recording_ready .btnRecord:hover, .TDS_PS_L3 .elicitedwrap.playing_start .btnRecord:hover, .TDS_PS_L3 .elicitedwrap.recording_done .btnRecord:hover, .TDS_PS_L3 .elicitedwrap.playing_done .btnRecord:hover, .TDS_PS_L3 .elicitedwrap.playing_stopped .btnRecord:hover, .TDS_PS_L3 .elicitedwrap.playing_paused .btnRecord:hover, .TDS_PS_L3 .elicitedwrap.decode_complete .btnRecord:hover, 
+.TDS_PS_L4 .elicitedwrap.recording_ready .btnRecord:hover, .TDS_PS_L4 .elicitedwrap.playing_start .btnRecord:hover, .TDS_PS_L4 .elicitedwrap.recording_done .btnRecord:hover, .TDS_PS_L4 .elicitedwrap.playing_done .btnRecord:hover, .TDS_PS_L4 .elicitedwrap.playing_stopped .btnRecord:hover, .TDS_PS_L4 .elicitedwrap.playing_paused .btnRecord:hover, .TDS_PS_L4 .elicitedwrap.decode_complete .btnRecord:hover {
+	background-position: -500px -1px;
+}
+.recording_start .elicitedaround {
+	background-position: -544px -200px;
+}
+.recording_start .btnRecord {
+	background-position: 1000px 1000px;
+	margin-top: 74px;
+	left: 5px;
+}
+.recording_start .btnRecord:hover {
+	background-position: -566px -349px;
+}
+.recording_start .elicitedcontrols, .recording_start .elicitedcontrols:hover {
+	display: block;
+	position: absolute;
+	height: 24px;
+	width: 15px;
+	top: 8px;
+	right: 8px;
+	background: url(../Images/controls/sound_record.gif) no-repeat center center !important;
+	
+}
+.TDS_PS_L1 .recording_start .elicitedaround {
+	background-position: -163px -230px;
+}
+.TDS_PS_L1 .recording_start .btnRecord {
+	background-position: 1000px 1000px !important;
+	margin-top: 93px;
+	left: 6px;
+}
+.TDS_PS_L1 .recording_start .btnRecord:hover {
+	background-position: -277px -417px !important;
+}
+.TDS_PS_L1 .recording_start .elicitedcontrols {
+	top: 15px;
+	right: 10px;
+}
+.TDS_PS_L2 .recording_start .elicitedaround, .TDS_PS_L3 .recording_start .elicitedaround, .TDS_PS_L4 .recording_start .elicitedaround {
+	background-position: -206px 0px;
+}
+.TDS_PS_L2 .recording_start .btnRecord, .TDS_PS_L3 .recording_start .btnRecord, .TDS_PS_L4 .recording_start .btnRecord {
+	background-position: 1000px 1000px !important;
+	margin-top: 118px;
+	left: 7px;
+}
+.TDS_PS_L2 .recording_start .btnRecord:hover, .TDS_PS_L3 .recording_start .btnRecord:hover, .TDS_PS_L4 .recording_start .btnRecord:hover {
+	background-position: -588px -98px !important;
+}
+.TDS_PS_L2 .recording_start .elicitedcontrols, .TDS_PS_L3 .recording_start .elicitedcontrols, .TDS_PS_L4 .recording_start .elicitedcontrols {
+	top: 20px;
+	right: 15px;
+}
+.soundlevelwrap {
+	display: block;
+	height: 50px;
+	width: 43px;
+	position: absolute;
+	left: 10px;
+	top: 56px;
+	z-index: 0;
+}
+.TDS_PS_L1 .soundlevelwrap {
+	height: 60px;
+	width: 54px;
+	left: 13px;
+	top: 70px;
+}
+.TDS_PS_L2 .soundlevelwrap, .TDS_PS_L3 .soundlevelwrap, .TDS_PS_L4 .soundlevelwrap {
+	height: 77px;
+	width: 68px;
+	left: 17px;
+	top: 87px;
+}
+.soundlevelindicator {
+	display: block;
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+	right: 0px;
+	height: 50px;
+}
+.recording_start .soundlevelindicator {
+	background-color: #f39f4f;
+}
+.TDS_PS_L1 .soundlevelindicator {
+	height: 60px;
+}
+.TDS_PS_L2 .soundlevelindicator, .TDS_PS_L3 .soundlevelindicator, .TDS_PS_L4 .soundlevelindicator {
+	height: 77px;
+}
+.btnPlayPause {
+	text-indent: -9999px;
+	display: none;
+	background-image: url(../Images/controls/audio2010.png);
+	background-repeat: no-repeat;
+	background-position: -456px -349px;
+	position: absolute;
+	height: 61px;
+	width: 54px;
+	bottom: 4px;
+	left: 4px;
+}
+.TDS_PS_L1 .btnPlayPause {
+	height: 79px;
+	width: 69px;
+}
+.TDS_PS_L2 .btnPlayPause, .TDS_PS_L3 .btnPlayPause, .TDS_PS_L4 .btnPlayPause {
+	height: 98px;
+	width: 88px;
+	left: 6px;
+}
+.elicitedwrap.recording_done .btnPlayPause, .elicitedwrap.playing_done .btnPlayPause, .elicitedwrap.playing_stopped .btnPlayPause, .elicitedwrap.playing_start .btnPlayPause, .elicitedwrap.playing_paused .btnPlayPause, .elicitedwrap.decode_complete .btnPlayPause {
+	display: block;
+	background-position: -456px -349px;
+}
+.playing_start .elicitedaround {
+	background-position: -610px -200px;
+}
+.elicitedwrap.playing_start .btnPlayPause {
+	display: block;
+	position: absolute;
+	height: 61px;
+	width: 54px;
+	bottom: 4px;
+	left: 3px;
+	background-image: url(../Images/controls/audio2010.png);
+	background-repeat: no-repeat;
+	background-position: 1000px 1000px;
+	text-indent: -9999px;
+}
+.elicitedwrap.playing_start .btnPlayPause:hover {
+	background-position: -621px -349px;
+}
+.elicitedwrap.playing_start .btnRecord {
+	display: none;
+}
+.playing_start .elicitedcontrols, .playing_start .elicitedcontrols:hover {
+	display: block;
+	position: absolute;
+	height: 24px;
+	width: 15px;
+	top: 22px;
+	right: 10px;
+	background: url(../Images/controls/sound_play.gif) no-repeat center center !important;
+}
+.TDS_PS_L1 .playing_start .elicitedaround {
+	background-position: -244px -230px;
+}
+.TDS_PS_L1 .elicitedwrap.playing_start .btnPlayPause {
+	display: block !important;
+	height: 79px;
+	width: 69px;
+	bottom: 4px;
+	left: 5px;
+	background-position: 1000px 1000px;
+}
+.TDS_PS_L1 .elicitedwrap.playing_start .btnRecord {
+	display: none !important;
+}
+.TDS_PS_L1 .elicitedwrap.playing_start .btnPlayPause:hover {
+	background-position: -346px -416px;
+}
+.TDS_PS_L1  .playing_start .elicitedcontrols {
+	top: 32px;
+	right: 15px;
+}
+.TDS_PS_L2 .playing_start .elicitedaround, .TDS_PS_L3 .playing_start .elicitedaround, .TDS_PS_L4 .playing_start .elicitedaround {
+	background-position: -309px 0px;
+}
+.TDS_PS_L2 .elicitedwrap.playing_start .btnPlayPause, .TDS_PS_L3 .elicitedwrap.playing_start .btnPlayPause, .TDS_PS_L4 .elicitedwrap.playing_start .btnPlayPause {
+	display: block !important;
+	height: 97px;
+	width: 88px;
+	bottom: 4px;
+	left: 6px;
+	background-position: 1000px 1000px;
+}
+.TDS_PS_L2 .elicitedwrap.playing_start .btnRecord, .TDS_PS_L3 .elicitedwrap.playing_start .btnRecord, .TDS_PS_L4 .elicitedwrap.playing_start .btnRecord {
+	display: none !important;
+}
+.TDS_PS_L2 .elicitedwrap.playing_start .btnPlayPause:hover, .TDS_PS_L3 .elicitedwrap.playing_start .btnPlayPause:hover, .TDS_PS_L4 .elicitedwrap.playing_start .btnPlayPause:hover {
+	background-position: -588px -1px;
+}
+.TDS_PS_L2  .playing_start .elicitedcontrols, .TDS_PS_L3  .playing_start .elicitedcontrols, .TDS_PS_L4  .playing_start .elicitedcontrols {
+	top: 43px;
+	right: 23px;
+}
+.TDS_PS_L1 .elicitedwrap.recording_done .btnPlayPause, .TDS_PS_L1 .elicitedwrap.playing_done .btnPlayPause, .TDS_PS_L1 .elicitedwrap.playing_stopped .btnPlayPause, .TDS_PS_L1 .elicitedwrap.playing_paused .btnPlayPause, .TDS_PS_L1 .elicitedwrap.decode_complete .btnPlayPause {
+	display: block;
+	background-position: -139px -416px;
+}
+.TDS_PS_L2 .elicitedwrap.recording_done .btnPlayPause, .TDS_PS_L2 .elicitedwrap.playing_done .btnPlayPause, .TDS_PS_L2 .elicitedwrap.playing_stopped .btnPlayPause, .TDS_PS_L2 .elicitedwrap.playing_paused .btnPlayPause, .TDS_PS_L2 .elicitedwrap.decode_complete .btnPlayPause, 
+.TDS_PS_L3 .elicitedwrap.recording_done .btnPlayPause, .TDS_PS_L3 .elicitedwrap.playing_done .btnPlayPause, .TDS_PS_L3 .elicitedwrap.playing_stopped .btnPlayPause, .TDS_PS_L3 .elicitedwrap.playing_paused .btnPlayPause, .TDS_PS_L3 .elicitedwrap.decode_complete .btnPlayPause, 
+.TDS_PS_L4 .elicitedwrap.recording_done .btnPlayPause, .TDS_PS_L4 .elicitedwrap.playing_done .btnPlayPause, .TDS_PS_L4 .elicitedwrap.playing_stopped .btnPlayPause, .TDS_PS_L4 .elicitedwrap.playing_paused .btnPlayPause, .TDS_PS_L4 .elicitedwrap.decode_complete .btnPlayPause {
+	display: block;
+	background-position: -412px -97px;
+}
+.elicitedwrap.recording_done .btnPlayPause:hover, .elicitedwrap.playing_done .btnPlayPause:hover, .elicitedwrap.playing_stopped .btnPlayPause:hover, .elicitedwrap.playing_paused .btnPlayPause:hover, .elicitedwrap.decode_complete .btnPlayPause:hover {
+	background-position: -510px -349px;
+}
+
+.TDS_PS_L1 .elicitedwrap.recording_done .btnPlayPause:hover, .TDS_PS_L1 .elicitedwrap.playing_done .btnPlayPause:hover, .TDS_PS_L1 .elicitedwrap.playing_stopped .btnPlayPause:hover, .TDS_PS_L1 .elicitedwrap.playing_paused .btnPlayPause:hover, .TDS_PS_L1 .elicitedwrap.decode_complete .btnPlayPause:hover {
+	background-position: -207px -416px;
+}
+.TDS_PS_L2 .elicitedwrap.recording_done .btnPlayPause:hover, .TDS_PS_L2 .elicitedwrap.playing_done .btnPlayPause:hover, .TDS_PS_L2 .elicitedwrap.playing_stopped .btnPlayPause:hover, .TDS_PS_L2 .elicitedwrap.playing_paused .btnPlayPause:hover, .TDS_PS_L2 .elicitedwrap.decode_complete .btnPlayPause:hover, 
+.TDS_PS_L3 .elicitedwrap.recording_done .btnPlayPause:hover, .TDS_PS_L3 .elicitedwrap.playing_done .btnPlayPause:hover, .TDS_PS_L3 .elicitedwrap.playing_stopped .btnPlayPause:hover, .TDS_PS_L3 .elicitedwrap.playing_paused .btnPlayPause:hover, .TDS_PS_L3 .elicitedwrap.decode_complete .btnPlayPause:hover, 
+.TDS_PS_L4 .elicitedwrap.recording_done .btnPlayPause:hover, .TDS_PS_L4 .elicitedwrap.playing_done .btnPlayPause:hover, .TDS_PS_L4 .elicitedwrap.playing_stopped .btnPlayPause:hover, .TDS_PS_L4 .elicitedwrap.playing_paused .btnPlayPause:hover, .TDS_PS_L4 .elicitedwrap.decode_complete .btnPlayPause:hover {
+	background-position: -500px -97px;
+}
+
+.elicitedwrap .btnRestart {
+	display: none !important;
+}
+
+/* @end */
+
+/* @group CLOZE Layouts */
+
+.cloze .questionCell .inputCloze, .cloze .questionContainer .inputCloze, .format_wb .questionCell .inputCloze, .format_wb .questionContainer .inputCloze {
+	width:inherit;
+	letter-spacing: .15em;
+}
+.TDS_PS_L1 .cloze .questionCell .inputCloze, .TDS_PS_L1 .cloze .questionContainer .inputCloze, .TDS_PS_L1 .format_wb .questionCell .inputCloze, .TDS_PS_L1 .format_wb .questionContainer .inputCloze {
+	font-size: .7em;
+}
+.TDS_PS_L2 .cloze .questionCell .inputCloze, .TDS_PS_L2 .format_wb .questionCell .inputCloze, .TDS_PS_L3 .cloze .questionCell .inputCloze, .TDS_PS_L3 .format_wb .questionCell .inputCloze, .TDS_PS_L4 .cloze .questionCell .inputCloze, .TDS_PS_L4 .format_wb .questionCell .inputCloze, 
+
+.TDS_PS_L2 .cloze .questionContainer .inputCloze, .TDS_PS_L2 .format_wb .questionContainer .inputCloze, .TDS_PS_L3 .cloze .questionContainer .inputCloze, .TDS_PS_L3 .format_wb .questionContainer .inputCloze, .TDS_PS_L4 .cloze .questionContainer .inputCloze, .TDS_PS_L4 .format_wb .questionContainer .inputCloze
+ {
+	font-size: .9em;
+}
+.cloze .questionCell .character_1, .format_wb .questionCell .character_1 {
+	width: 1.6em;
+}
+.cloze .questionCell .character_2, .format_wb  .questionCell .character_2 {
+	width: 2.3em;
+}
+.cloze .questionCell .character_3, .format_wb .questionCell .character_3 {
+	width: 3.2em;
+}
+.cloze .questionCell p, .format_wb .questionCell p {
+	clear:both;
+}
+.layout16 .stimulusCell, .layout16 .questionCell, .layout18 .stimulusCell, .layout18 .questionCell {
+	float:left;
+}
+.layout16 .stimulusCell, .layout18 .questionCell {
+	padding-right:2em;
+}
+
+/* @end */
+
+/* @group Layout 13 */
+
+.layout_13 .noColumns .theQuestions {
+	top:0px;
+}
+.structure.layout13 {
+	max-width:inherit;
+}
+.layout13 .commentBox {
+	margin-top: .5em;
+}
+.layout13 .questionCell {
+	text-align: left;
+}
+.layout13 .answerCell {
+	height: 550px;
+	width: 650px;
+	padding:0em;
+}
+.TDS_PS_L1 .layout13 .answerCell {
+	height: 688px;
+	width: 813px;
+}
+.TDS_PS_L2 .layout13 .answerCell, .TDS_PS_L3 .layout13 .answerCell, .TDS_PS_L4 .layout13 .answerCell {
+	height: 825px;
+	width: 975px;
+}
+.browserVer_1_3 .layout13 .answerCell applet {
+	display: block;
+} 
+
+/* Resets zoom styles for zooming that interfere with applet */
+/* NOTE: All new grid layouts MUST have this code or the grid (java applet) will crash in secure browser or reload in regular browser */
+.TDS_PS_L0 .structure.layout13, .TDS_PS_L1 .structure.layout13, .TDS_PS_L2 .structure.layout13, .TDS_PS_L3 .structure.layout13, .TDS_PS_L4 .structure.layout13, .TDS_PS_L0 .structure.layout13 tbody, .TDS_PS_L1 .structure.layout13 tbody, .TDS_PS_L2 .structure.layout13 tbody, .TDS_PS_L3 .structure.layout13 tbody, .TDS_PS_L4 .structure.layout13 tbody, .layout_13 .theQuestions .padding {
+	position: static !important;
+}
+.TDS_PS_L0 .structure.layout21, .TDS_PS_L1 .structure.layout21, .TDS_PS_L2 .structure.layout21, .TDS_PS_L3 .structure.layout21, .TDS_PS_L4 .structure.layout21, .TDS_PS_L0 .structure.layout21 tbody, .TDS_PS_L1 .structure.layout21 tbody, .TDS_PS_L2 .structure.layout21 tbody, .TDS_PS_L3 .structure.layout21 tbody, .TDS_PS_L4 .structure.layout21 tbody, .layout_21 .theQuestions .padding {
+	position: static !important;
+}
+.TDS_PS_L0 .structure.layout22, .TDS_PS_L1 .structure.layout22, .TDS_PS_L2 .structure.layout22, .TDS_PS_L3 .structure.layout22, .TDS_PS_L4 .structure.layout22, .TDS_PS_L0 .structure.layout22 tbody, .TDS_PS_L1 .structure.layout22 tbody, .TDS_PS_L2 .structure.layout22 tbody, .TDS_PS_L3 .structure.layout22 tbody, .TDS_PS_L4 .structure.layout22 tbody, .layout_22 .theQuestions .padding {
+	position: static !important;
+}
+.TDS_PS_L0 .structure.layout31, .TDS_PS_L1 .structure.layout31, .TDS_PS_L2 .structure.layout31, .TDS_PS_L3 .structure.layout31, .TDS_PS_L4 .structure.layout31, .TDS_PS_L0 .structure.layout31 tbody, .TDS_PS_L1 .structure.layout31 tbody, .TDS_PS_L2 .structure.layout31 tbody, .TDS_PS_L3 .structure.layout31 tbody, .TDS_PS_L4 .structure.layout31 tbody, .layout_31 .theQuestions .padding {
+	position: static !important;
+}
+/*keep flash from reloading with zoom*/
+.layout_17 .theQuestions .padding, .layout_17 .thePassage .padding, 
+.layout_21 .theQuestions .padding, .layout_21 .thePassage .padding, 
+.layout_23 .theQuestions .padding, .layout_23 .thePassage .padding, 
+.layout_24 .theQuestions .padding, .layout_24 .thePassage .padding, 
+.layout_25 .theQuestions .padding, .layout_25 .thePassage .padding, 
+.layout_26 .theQuestions .padding, .layout_26 .thePassage .padding, 
+.layout_27 .theQuestions .padding, .layout_27 .thePassage .padding, 
+.layout_28 .theQuestions .padding, .layout_28 .thePassage .padding, 
+.layout_29 .theQuestions .padding, .layout_29 .thePassage .padding, 
+.layout_32 .theQuestions .padding {
+	position: static !important;
+}
+/* @end */
+
+/* @group Layout 17 */
+
+/* +++++++++++++ These are exactly same as Layout 11, will mover over to items.css soon  +++++++++ */
+.layout17 .thePassage {
+	position:absolute;
+	left:0;
+	top:0px;
+	bottom:0px;
+	z-index:4;
+	overflow: auto;
+	left:0;
+	width: 60%;
+}
+.layout17 .theQuestions {
+	position:absolute;
+	left:0;
+	top:0px;
+	bottom:0px;
+	z-index:4;
+	overflow:auto;
+	left:60%;
+	width: 40%;
+	/*border-left-width: 2px;
+	border-left-style: solid;
+	border-left-color: #999999;*/
+	background: url(../Images/controls/passageborder.gif) repeat-y left top;
+}
+/* this fixes extra scroll bar issue with Mozilla 1.3 and reading */
+.browserVer_1_3 .layout17 .theQuestions .padding {
+	overflow:hidden;
+}
+
+/* active item stuff */
+.layout17 .questionAnswerGroup {
+	padding: .3em;	
+}
+/*.layout17  .activeItem {
+	border: 1px dashed #99CCFF !important;
+	background-image: url(../Images/gradientActive.gif);
+	background-repeat: repeat-y;
+	background-position: right top;
+}*/
+.layout17 .questionAnswerGroup {
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #DBDBDB;
+	margin-bottom: 5px;
+	padding-bottom: 5px;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-top-color: #FFFFFF;
+	border-right-color: #FFFFFF;
+	border-left-color: #FFFFFF;
+}
+.layout17 .questionContainer {
+	padding-bottom: 1em;	
+}
+.layout17 .optiondivider {
+	line-height: 50%;
+	display:block;
+}
+.safari .layout17 .thePassage, .safari .layout17 .theQuestions {
+	bottom: 48px;
+}
+.layout17 .multipleChoiceItem {
+	padding: .3em;
+	margin-bottom: 5px;
+	padding-bottom: 5px;	
+}
+/* @end */
+
+
+
+/* @group Layout 21 */
+
+/* +++++++++++++ These are exactly same as Layout 11, will mover over to items.css soon  +++++++++ */
+.layout21 .thePassage {
+	position:absolute;
+	left:0;
+	top:0px;
+	bottom:0px;
+	z-index:4;
+	overflow: auto;
+	left:0;
+	width: 40%;
+}
+.layout21 .theQuestions {
+	position:absolute;
+	left:0;
+	top:0px;
+	bottom:0px;
+	z-index:4;
+	overflow:auto;
+	left:40%;
+	width: 60%;
+	/*border-left-width: 2px;
+	border-left-style: solid;
+	border-left-color: #999999;*/
+	background: url(../Images/controls/passageborder.gif) repeat-y left top;
+}
+.layout21 .padding {
+	padding-right: 10px;
+	padding-left: 10px;
+}
+.TDS_PS_L0 .layout21 .GridContainer applet {
+	height: 465px !important;
+	width: 575px !important;
+}
+
+/*keep the applet from overflowing into questions below it */
+.TDS_PS_L1 .layout21 .GridContainer {
+	height:635px !important;
+}
+.TDS_PS_L2 .layout21 .GridContainer {
+	height:760px !important;
+}
+.TDS_PS_L3 .layout21 .GridContainer {
+	height:900px !important;
+}
+.TDS_PS_L4 .layout21 .GridContainer {
+	height:1000px !important;
+}
+/* this fixes extra scroll bar issue with Mozilla 1.3 and reading */
+.browserVer_1_3 .layout21 .theQuestions .padding {
+	overflow:hidden;
+}
+
+/* active item stuff */
+.layout21 .questionAnswerGroup {
+	padding: .3em;	
+}
+/*.layout21  .activeItem {
+	border: 1px dashed #99CCFF !important;
+	background-image: url(../Images/gradientActive.gif);
+	background-repeat: repeat-y;
+	background-position: right top;
+}*/
+.layout21 .questionAnswerGroup {
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #DBDBDB;
+	margin-bottom: 5px;
+	padding-bottom: 5px;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-top-color: #FFFFFF;
+	border-right-color: #FFFFFF;
+	border-left-color: #FFFFFF;
+}
+.layout21 .questionContainer {
+	padding-bottom: 1em;	
+}
+.layout21 .optiondivider {
+	line-height: 50%;
+	display:block;
+}
+.safari .layout21 .thePassage, .safari .layout21 .theQuestions {
+	bottom: 48px;
+}
+.layout21 .multipleChoiceItem {
+	padding: .3em;
+	margin-bottom: 5px;
+	padding-bottom: 5px;	
+}
+/* @end */
+
+/* @group Layout 22 (original 13) */
+
+.layout_22 .noColumns .theQuestions {
+	top:0px;
+}
+.structure.layout22 {
+	max-width:inherit;
+}
+.layout22 .commentBox {
+	margin-top: .5em;
+}
+.layout22 .questionCell {
+	float: left !important;
+	width: 17em;
+	text-align: left;
+}
+.layout22 .answerCell {
+	margin-left: 18em;
+	height: 550px;
+	width: 650px;
+	margin-right:1em;
+	padding:0em;
+	border-left: solid 1px transparent;
+}
+.TDS_PS_L1 .layout22 .answerCell {
+	height: 688px;
+	width: 813px;
+	border-left: solid 1px transparent;
+}
+.TDS_PS_L2 .layout22 .answerCell {
+	height: 825px;
+	width: 975px;
+	border-left: solid 1px transparent;
+}
+.TDS_PS_L3 .layout22 .answerCell {
+	height: 925px;
+	width: 1100px;
+	border-left: solid 1px transparent;
+}
+.TDS_PS_L4 .layout22 .answerCell {
+	height: 1040px;
+	width: 1240px;
+	border-left: solid 1px transparent;
+}
+.browserVer_1_3 .layout22 .answerCell applet {
+	display: block;
+} 
+/*resets zoom styles for zooming that interfere with applet */
+.TDS_PS_L0 .structure.layout22, .TDS_PS_L1 .structure.layout22, .TDS_PS_L2 .structure.layout22, .TDS_PS_L3 .structure.layout22, .TDS_PS_L4 .structure.layout22, .TDS_PS_L0 .structure.layout22 tbody, .TDS_PS_L1 .structure.layout22 tbody, .TDS_PS_L2 .structure.layout22 tbody, .TDS_PS_L3 .structure.layout22 tbody, .TDS_PS_L4 .structure.layout22 tbody, .layout_22 .theQuestions .padding {
+	position: static !important;
+}
+/* @end */
+
+/* @group Layout 23 */
+
+.layout23 .thePassage {
+	position:absolute;
+	left:0;
+	top:0px;
+	bottom:0px;
+	z-index:4;
+	overflow: auto;
+	left:0;
+	height: 40%;
+	width: 100%;
+	/*background: url(../Images/controls/passageborder.gif) repeat-x left bottom;*/
+}
+.layout23 .theQuestions {
+	position:absolute;
+	top:40%;
+	left:0;
+	bottom:0px;
+	z-index:4;
+	overflow:auto;
+	width: 100%;
+	height: 60%;
+	border-top: solid 2px #999;
+	
+}
+/*.layout23 .padding {
+	padding-right: 10px;
+	padding-left: 10px;
+}*/
+.TDS_PS_L0 .layout23 .GridContainer applet {
+	height: 465px !important;
+	width: 575px !important;
+}
+
+/*keep the applet from overflowing into questions below it */
+.TDS_PS_L1 .layout23 .GridContainer {
+	height:635px !important;
+}
+.TDS_PS_L2 .layout23 .GridContainer {
+	height:760px !important;
+}
+.TDS_PS_L3 .layout23 .GridContainer {
+	height:900px !important;
+}
+.TDS_PS_L4 .layout23 .GridContainer {
+	height:1000px !important;
+}
+/* this fixes extra scroll bar issue with Mozilla 1.3 and reading */
+.browserVer_1_3 .layout23 .theQuestions .padding {
+	overflow:hidden;
+}
+
+/* active item stuff */
+.layout23 .questionAnswerGroup {
+	padding: .3em;	
+}
+.layout23 .questionAnswerGroup {
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #DBDBDB;
+	margin-bottom: 5px;
+	padding-bottom: 5px;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-top-color: #FFFFFF;
+	border-right-color: #FFFFFF;
+	border-left-color: #FFFFFF;
+}
+.layout23 .questionContainer {
+	padding-bottom: 1em;	
+}
+.layout23 .optiondivider {
+	line-height: 50%;
+	display:block;
+}
+.safari .layout23 .thePassage, .safari .layout23 .theQuestions {
+	bottom: 48px;
+}
+.layout23 .multipleChoiceItem {
+	padding: .3em;
+	margin-bottom: 5px;
+	padding-bottom: 5px;	
+}
+/* @end */
+
+
+
+
+/* @group Layout 24 - 38/62 split */
+.layout24 .thePassage {
+	position:absolute;
+	left:0;
+	top:0px;
+	bottom:0px;
+	z-index:4;
+	overflow: auto;
+	left:0;
+	width: 38%;
+}
+.layout24 .theQuestions {
+	position:absolute;
+	left:0;
+	top:0px;
+	bottom:0px;
+	z-index:4;
+	overflow:auto;
+	left:38%;
+	width: 62%;
+	background: url(../Images/controls/passageborder.gif) repeat-y left top;
+}
+.layout24 .padding {
+	padding-right: 10px;
+	padding-left: 10px;
+}
+.TDS_PS_L0 .layout24 .GridContainer applet {
+	height: 465px !important;
+	width: 575px !important;
+}
+
+/*keep the applet from overflowing into questions below it */
+.TDS_PS_L1 .layout24 .GridContainer {
+	height:635px !important;
+}
+.TDS_PS_L2 .layout24 .GridContainer {
+	height:760px !important;
+}
+.TDS_PS_L3 .layout24 .GridContainer {
+	height:900px !important;
+}
+.TDS_PS_L4 .layout24 .GridContainer {
+	height:1000px !important;
+}
+/* this fixes extra scroll bar issue with Mozilla 1.3 and reading */
+.browserVer_1_3 .layout24 .theQuestions .padding {
+	overflow:hidden;
+}
+
+/* active item stuff */
+.layout24 .questionAnswerGroup {
+	padding: .3em;	
+}
+.layout24 .questionAnswerGroup {
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #DBDBDB;
+	margin-bottom: 5px;
+	padding-bottom: 5px;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-top-color: #FFFFFF;
+	border-right-color: #FFFFFF;
+	border-left-color: #FFFFFF;
+}
+.layout24 .questionContainer {
+	padding-bottom: 1em;	
+}
+.layout24 .optiondivider {
+	line-height: 50%;
+	display:block;
+}
+.safari .layout24 .thePassage, .safari .layout24 .theQuestions {
+	bottom: 48px;
+}
+.layout24 .multipleChoiceItem {
+	padding: .3em;
+	margin-bottom: 5px;
+	padding-bottom: 5px;	
+}
+/* @end */
+
+
+
+
+
+
+
+/* @group Layout 25 - 30/70 split */
+.layout25 .thePassage {
+	position:absolute;
+	left:0;
+	top:0px;
+	bottom:0px;
+	z-index:4;
+	overflow: auto;
+	left:0;
+	width: 30%;
+}
+.layout25 .theQuestions {
+	position:absolute;
+	left:0;
+	top:0px;
+	bottom:0px;
+	z-index:4;
+	overflow:auto;
+	left:30%;
+	width: 70%;
+	background: url(../Images/controls/passageborder.gif) repeat-y left top;
+}
+.layout25 .padding {
+	padding-right: 10px;
+	padding-left: 10px;
+}
+.TDS_PS_L0 .layout25 .GridContainer applet {
+	height: 465px !important;
+	width: 575px !important;
+}
+
+/*keep the applet from overflowing into questions below it */
+.TDS_PS_L1 .layout25 .GridContainer {
+	height:635px !important;
+}
+.TDS_PS_L2 .layout25 .GridContainer {
+	height:760px !important;
+}
+.TDS_PS_L3 .layout25 .GridContainer {
+	height:900px !important;
+}
+.TDS_PS_L4 .layout25 .GridContainer {
+	height:1000px !important;
+}
+/* this fixes extra scroll bar issue with Mozilla 1.3 and reading */
+.browserVer_1_3 .layout25 .theQuestions .padding {
+	overflow:hidden;
+}
+
+/* active item stuff */
+.layout25 .questionAnswerGroup {
+	padding: .3em;	
+}
+.layout25 .questionAnswerGroup {
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #DBDBDB;
+	margin-bottom: 5px;
+	padding-bottom: 5px;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-top-color: #FFFFFF;
+	border-right-color: #FFFFFF;
+	border-left-color: #FFFFFF;
+}
+.layout25 .questionContainer {
+	padding-bottom: 1em;	
+}
+.layout25 .optiondivider {
+	line-height: 50%;
+	display:block;
+}
+.safari .layout25 .thePassage, .safari .layout25 .theQuestions {
+	bottom: 48px;
+}
+.layout25 .multipleChoiceItem {
+	padding: .3em;
+	margin-bottom: 5px;
+	padding-bottom: 5px;	
+}
+/* @end */
+
+
+
+
+
+
+
+
+
+/* @group Layout 26 - 50/50 split */
+.layout26 .thePassage {
+	position:absolute;
+	left:0;
+	top:0px;
+	bottom:0px;
+	z-index:4;
+	overflow: auto;
+	left:0;
+	width: 50%;
+}
+.layout26 .theQuestions {
+	position:absolute;
+	left:0;
+	top:0px;
+	bottom:0px;
+	z-index:4;
+	overflow:auto;
+	left:50%;
+	width: 50%;
+	background: url(../Images/controls/passageborder.gif) repeat-y left top;
+}
+.layout26 .padding {
+	padding-right: 10px;
+	padding-left: 10px;
+}
+.TDS_PS_L0 .layout26 .GridContainer applet {
+	height: 465px !important;
+	width: 575px !important;
+}
+
+/*keep the applet from overflowing into questions below it */
+.TDS_PS_L1 .layout26 .GridContainer {
+	height:635px !important;
+}
+.TDS_PS_L2 .layout26 .GridContainer {
+	height:760px !important;
+}
+.TDS_PS_L3 .layout26 .GridContainer {
+	height:900px !important;
+}
+.TDS_PS_L4 .layout26 .GridContainer {
+	height:1000px !important;
+}
+/* this fixes extra scroll bar issue with Mozilla 1.3 and reading */
+.browserVer_1_3 .layout26 .theQuestions .padding {
+	overflow:hidden;
+}
+
+/* active item stuff */
+.layout26 .questionAnswerGroup {
+	padding: .3em;	
+}
+.layout26 .questionAnswerGroup {
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #DBDBDB;
+	margin-bottom: 5px;
+	padding-bottom: 5px;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-top-color: #FFFFFF;
+	border-right-color: #FFFFFF;
+	border-left-color: #FFFFFF;
+}
+.layout26 .questionContainer {
+	padding-bottom: 1em;	
+}
+.layout26 .optiondivider {
+	line-height: 50%;
+	display:block;
+}
+.safari .layout26 .thePassage, .safari .layout25 .theQuestions {
+	bottom: 48px;
+}
+.layout26 .multipleChoiceItem {
+	padding: .3em;
+	margin-bottom: 5px;
+	padding-bottom: 5px;	
+}
+/* @end */
+
+
+
+
+
+
+
+
+
+
+
+/* @group Layout 27 - 70/30 split */
+.layout27 .thePassage {
+	position:absolute;
+	left:0;
+	top:0px;
+	bottom:0px;
+	z-index:4;
+	overflow: auto;
+	left:0;
+	width: 70%;
+}
+.layout27 .theQuestions {
+	position:absolute;
+	left:0;
+	top:0px;
+	bottom:0px;
+	z-index:4;
+	overflow:auto;
+	left:70%;
+	width: 30%;
+	background: url(../Images/controls/passageborder.gif) repeat-y left top;
+}
+.layout27 .padding {
+	padding-right: 10px;
+	padding-left: 10px;
+}
+.TDS_PS_L0 .layout27 .GridContainer applet {
+	height: 465px !important;
+	width: 575px !important;
+}
+
+/*keep the applet from overflowing into questions below it */
+.TDS_PS_L1 .layout27 .GridContainer {
+	height:635px !important;
+}
+.TDS_PS_L2 .layout27 .GridContainer {
+	height:760px !important;
+}
+.TDS_PS_L3 .layout27 .GridContainer {
+	height:900px !important;
+}
+.TDS_PS_L4 .layout27 .GridContainer {
+	height:1000px !important;
+}
+/* this fixes extra scroll bar issue with Mozilla 1.3 and reading */
+.browserVer_1_3 .layout27 .theQuestions .padding {
+	overflow:hidden;
+}
+
+/* active item stuff */
+.layout27 .questionAnswerGroup {
+	padding: .3em;	
+}
+.layout27 .questionAnswerGroup {
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #DBDBDB;
+	margin-bottom: 5px;
+	padding-bottom: 5px;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-top-color: #FFFFFF;
+	border-right-color: #FFFFFF;
+	border-left-color: #FFFFFF;
+}
+.layout27 .questionContainer {
+	padding-bottom: 1em;	
+}
+.layout27 .optiondivider {
+	line-height: 50%;
+	display:block;
+}
+.safari .layout27 .thePassage, .safari .layout27 .theQuestions {
+	bottom: 48px;
+}
+.layout27 .multipleChoiceItem {
+	padding: .3em;
+	margin-bottom: 5px;
+	padding-bottom: 5px;	
+}
+/* @end */
+
+/* @group Layout 31 */
+
+.layout_31 .noColumns .theQuestions {
+	top:0px;
+}
+.structure.layout31 tbody {
+	width: 100%;
+	padding: 0em;
+	margin: 0em;
+}
+.structure.layout31 {
+	max-width:inherit;
+}
+.layout31 .commentBox {
+	margin-top: .5em;
+}
+.layout31 .questionCell {
+	text-align: left;
+	padding: 5px 0px;
+}
+.layout31 .answerCell {
+	padding:0em;
+}
+.layout_31 .padding {
+	padding: 5px 10px;
+}
+.layout31 .SimContainer {
+	padding-top: 0px;
+}
+/* @end */
+
+/* @group Layout 32 */
+
+.layout32 .theQuestions {
+	position:absolute;
+	left:0px;
+	top:0px;
+	bottom:0px;
+	overflow:auto;
+	width: 100%;
+	height: 100%;
+}
+.layout32 .questionAnswerGroup {
+	padding: .3em;	
+}
+.layout32 .questionAnswerGroup {
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #DBDBDB;
+	margin-bottom: 5px;
+	padding-bottom: 5px;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-top-color: #FFFFFF;
+	border-right-color: #FFFFFF;
+	border-left-color: #FFFFFF;
+}
+.layout32 .questionContainer {
+	padding-bottom: 1em;	
+}
+.layout32 .optiondivider {
+	line-height: 50%;
+	display:block;
+}
+.safari .layout32 .theQuestions {
+	bottom: 48px;
+}
+.layout32 .multipleChoiceItem {
+	padding: .3em;
+	margin-bottom: 5px;
+	padding-bottom: 5px;	
+}
+
+/* @end */
+
+/* @group Layout 33 */
+.layout33 .padding {
+	padding: 20px;
+}
+.layout33 .theQuestions {
+	position:absolute;
+	top:0;
+	left:0;
+	bottom:0px;
+	z-index:4;
+	overflow:auto;
+	width: 100%;
+	height: 100%;
+	
+}
+.TDS_PS_L0 .layout33 .GridContainer applet {
+	height: 465px !important;
+	width: 575px !important;
+}
+
+/*keep the applet from overflowing into questions below it */
+.TDS_PS_L1 .layout33 .GridContainer {
+	height:635px !important;
+}
+.TDS_PS_L2 .layout33 .GridContainer {
+	height:760px !important;
+}
+.TDS_PS_L3 .layout33 .GridContainer {
+	height:900px !important;
+}
+.TDS_PS_L4 .layout33 .GridContainer {
+	height:1000px !important;
+}
+/* this fixes extra scroll bar issue with Mozilla 1.3 and reading */
+.browserVer_1_3 .layout33 .theQuestions .padding {
+	overflow:hidden;
+}
+
+/* active item stuff */
+.layout33 .questionAnswerGroup {
+	padding: .3em;	
+}
+.layout33 .questionAnswerGroup {
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #DBDBDB;
+	margin-bottom: 5px;
+	padding-bottom: 5px;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-top-color: #FFFFFF;
+	border-right-color: #FFFFFF;
+	border-left-color: #FFFFFF;
+}
+.layout33 .questionContainer {
+	padding-bottom: 1em;	
+}
+.layout33 .optiondivider {
+	line-height: 50%;
+	display:block;
+}
+.safari .layout33 .theQuestions {
+	bottom: 48px;
+}
+.layout33 .multipleChoiceItem {
+	padding: .3em;
+	margin-bottom: 5px;
+	padding-bottom: 5px;	
+}
+/* @end */
+
+/* @group Sound Cue Repeat */
+.sound_cue {
+	text-decoration: none;
+	color: #FFF;
+}
+.sound_repeat {
+	display: -moz-inline-stack;
+	display: inline-block;
+	background: url(../Images/controls/avcontrols.gif) no-repeat -71px -56px;
+	color: #fff;
+	text-decoration: none;
+	vertical-align: middle;
+	height: 24px;
+	width: 23px;
+}
+.sound_repeat:hover {
+	background-position: -96px -56px;
+}
+.sound_repeat.playing_start, .sound_repeat.playing_paused {
+	background-position: -118px -275px;
+}
+.sound_repeat.playing_start:hover, .sound_repeat.playing_paused:hover {
+	background-position: -139px -275px;
+}
+.sound_repeat.load_fail, .sound_repeat.load_fail:hover, .sound_repeat.playing_fail, .sound_repeat.playing_fail:hover, .sound_repeat.decode_fail, .sound_repeat.decode_fail:hover {
+	background-position: -321px -283px;
+	cursor: default;
+}
+.sound_repeat.load_incomplete, .sound_repeat.disabled,
+.sound_repeat.load_incomplete:hover, .sound_repeat.disabled:hover {
+	background-position: -121px -56px;
+	cursor: default;
+}
+.sound_repeat.load_start, .sound_repeat.load_complete, .sound_repeat.decode_start,
+.sound_repeat.load_start:hover, .sound_repeat.load_complete:hover, .sound_repeat.decode_start:hover {
+	cursor: default;
+	background: url(../Images/controls/loader24.gif) no-repeat center center;
+}
+
+.TDS_PS_L1 .sound_repeat {
+	height: 29px;
+	width: 29px;
+	background-position: -238px -67px;
+}
+.TDS_PS_L1 .sound_repeat:hover {
+	background-position: -269px -68px;
+}
+.TDS_PS_L1 .sound_repeat.playing_start, .TDS_PS_L1 .sound_repeat.playing_paused {
+	background-position: 2px -274px;
+}
+.TDS_PS_L1 .sound_repeat.playing_start:hover, .TDS_PS_L1 .sound_repeat.playing_paused:hover {
+	background-position: -22px -274px;
+}
+.TDS_PS_L1 .sound_repeat.load_fail, .TDS_PS_L1 .sound_repeat.load_fail:hover, .TDS_PS_L1 .sound_repeat.playing_fail, .TDS_PS_L1 .sound_repeat.playing_fail:hover, .TDS_PS_L1 .sound_repeat.decode_fail, .TDS_PS_L1 .sound_repeat.decode_fail:hover {
+	background-position: -254px -280px;
+	cursor: default;
+}
+.TDS_PS_L1 .sound_repeat.load_incomplete, .TDS_PS_L1 .sound_repeat.disabled,
+.TDS_PS_L1 .sound_repeat.load_incomplete:hover, .TDS_PS_L1 .sound_repeat.disabled:hover {
+	background-position: -121px -56px;
+	cursor: default;
+}
+.TDS_PS_L1 .sound_repeat.load_start, .TDS_PS_L1 .sound_repeat.load_complete, .TDS_PS_L1 .sound_repeat.decode_start,
+.TDS_PS_L1 .sound_repeat.load_start:hover, .TDS_PS_L1 .sound_repeat.load_complete:hover, .TDS_PS_L1 .sound_repeat.decode_start:hover {
+	cursor: default;
+	background: url(../Images/controls/loader29.gif) no-repeat center center;
+}
+.TDS_PS_L2 .sound_repeat, .TDS_PS_L3 .sound_repeat, .TDS_PS_L4 .sound_repeat {
+	height: 36px;
+	width: 36px;
+	background-position: -450px -86px;
+}
+.TDS_PS_L2 .sound_repeat:hover, .TDS_PS_L3 .sound_repeat:hover, .TDS_PS_L4 .sound_repeat:hover {
+	background-position: -489px -86px;
+}
+.TDS_PS_L2 .sound_repeat.playing_start, .TDS_PS_L2 .sound_repeat.playing_paused, .TDS_PS_L3 .sound_repeat.playing_start, .TDS_PS_L3 .sound_repeat.playing_paused, .TDS_PS_L4 .sound_repeat.playing_start, .TDS_PS_L4 .sound_repeat.playing_paused {
+	background-position: -53px -269px;
+}
+.TDS_PS_L2 .sound_repeat.playing_start:hover, .TDS_PS_L2 .sound_repeat.playing_paused:hover, .TDS_PS_L3 .sound_repeat.playing_start:hover, .TDS_PS_L3 .sound_repeat.playing_paused:hover, .TDS_PS_L4 .sound_repeat.playing_start:hover, .TDS_PS_L4 .sound_repeat.playing_paused:hover {
+	background-position: -81px -269px;
+}
+.TDS_PS_L2 .sound_repeat.load_fail, .TDS_PS_L2 .sound_repeat.load_fail:hover, .TDS_PS_L2 .sound_repeat.playing_fail, .TDS_PS_L2 .sound_repeat.playing_fail:hover, .TDS_PS_L2 .sound_repeat.decode_fail, .TDS_PS_L2 .sound_repeat.decode_fail:hover, .TDS_PS_L3 .sound_repeat.load_fail, .TDS_PS_L3 .sound_repeat.load_fail:hover, .TDS_PS_L3 .sound_repeat.playing_fail, .TDS_PS_L3 .sound_repeat.playing_fail:hover, .TDS_PS_L3 .sound_repeat.decode_fail, .TDS_PS_L3 .sound_repeat.decode_fail:hover, .TDS_PS_L4 .sound_repeat.load_fail, .TDS_PS_L4 .sound_repeat.load_fail:hover, .TDS_PS_L4 .sound_repeat.playing_fail, .TDS_PS_L4 .sound_repeat.playing_fail:hover, .TDS_PS_L4 .sound_repeat.decode_fail, .TDS_PS_L4 .sound_repeat.decode_fail:hover {
+	background-position: -176px -277px;
+	cursor: default;
+}
+.TDS_PS_L2 .sound_repeat.load_incomplete, .TDS_PS_L2 .sound_repeat.disabled,
+.TDS_PS_L2 .sound_repeat.load_incomplete:hover, .TDS_PS_L2 .sound_repeat.disabled:hover, .TDS_PS_L3 .sound_repeat.load_incomplete, .TDS_PS_L3 .sound_repeat.disabled,
+.TDS_PS_L3 .sound_repeat.load_incomplete:hover, .TDS_PS_L3 .sound_repeat.disabled:hover, .TDS_PS_L4 .sound_repeat.load_incomplete, .TDS_PS_L4 .sound_repeat.disabled,
+.TDS_PS_L4 .sound_repeat.load_incomplete:hover, .TDS_PS_L4 .sound_repeat.disabled:hover {
+	background-position: -528px -86px;
+	cursor: default;
+}
+.TDS_PS_L2 .sound_repeat.load_start, .TDS_PS_L2 .sound_repeat.load_complete, .TDS_PS_L2 .sound_repeat.decode_start, 
+.TDS_PS_L2 .sound_repeat.load_start:hover, .TDS_PS_L2 .sound_repeat.load_complete:hover, .TDS_PS_L2 .sound_repeat.decode_start:hover, .TDS_PS_L3 .sound_repeat.load_start, .TDS_PS_L3 .sound_repeat.load_complete, .TDS_PS_L3 .sound_repeat.decode_start, 
+.TDS_PS_L3 .sound_repeat.load_start:hover, .TDS_PS_L3 .sound_repeat.load_complete:hover, .TDS_PS_L3 .sound_repeat.decode_start:hover, .TDS_PS_L4 .sound_repeat.load_start, .TDS_PS_L4 .sound_repeat.load_complete, .TDS_PS_L4 .sound_repeat.decode_start, 
+.TDS_PS_L4 .sound_repeat.load_start:hover, .TDS_PS_L4 .sound_repeat.load_complete:hover, .TDS_PS_L4 .sound_repeat.decode_start:hover {
+	cursor: default;
+	background: url(../Images/controls/loader32.gif) no-repeat center center;
+}
+/* @end */
+
+/* @group option sound cue */
+
+.withSound {
+	margin-left: 20px;
+	/*margin-top: -15px;*/
+}
+.TDS_PS_L1 .withSound {
+	margin-left: 23px;
+	/*margin-top: -20px;*/
+}
+.TDS_PS_L2 .withSound, .TDS_PS_L3 .withSound, .TDS_PS_L4 .withSound {
+	margin-left: 30px;
+	/*margin-top: -26px;*/
+}
+.optionSound {
+	height: 13px;
+	width: 17px;
+	float: left;
+	margin-bottom: -15px;
+}
+.optionSound a {
+	display:block;
+	background: url(../Images/controls/avcontrols.gif) no-repeat -75px -86px;
+	height: 13px;
+	width: 17px;
+	text-decoration: none;
+	margin-top: 2px;
+}
+.optionSound a:hover {
+	background-position: -100px -86px;
+}
+.optionSound a.playing_start, .optionSound a.playing_paused {
+	background-position: -121px -280px;
+}
+.optionSound a.playing_start:hover, .optionSound a.playing_paused:hover {
+	background-position: -142px -280px;
+}
+.optionSound a.load_fail, .optionSound a.load_fail:hover, .optionSound a.playing_fail, .optionSound a.playing_fail:hover, .optionSound a.decode_fail, .optionSound a.decode_fail:hover {
+	background-position: -350px -289px;
+	cursor: default;
+}
+.optionSound a.load_incomplete, .optionSound a.disabled,
+.optionSound a.load_incomplete:hover, .optionSound a.disabled:hover {
+	background-position: -124px -86px;
+	cursor: default;
+}
+.optionSound a.load_start, .optionSound a.load_complete, .optionSound a.decode_start, 
+.optionSound a.load_start:hover, .optionSound a.load_complete:hover, .optionSound a.decode_start:hover {
+	cursor: default;
+	background: url(../Images/controls/loader13.gif) no-repeat center center;
+}
+.TDS_PS_L1 .optionSound {
+	height: 15px;
+	width: 19px;
+	margin-bottom: -20;
+}
+.TDS_PS_L1 .optionSound a {
+	background-position: -243px -107px;
+	height: 15px;
+	width: 19px;
+	margin-top: 5px;
+}
+.TDS_PS_L1 .optionSound a:hover {
+	background-position: -274px -107px;
+}
+.TDS_PS_L1 .optionSound a.playing_start, .TDS_PS_L1 .optionSound a.playing_paused {
+	background-position: -3px -279px;
+}
+.TDS_PS_L1 .optionSound a.playing_start:hover, .TDS_PS_L1 .optionSound a.playing_paused:hover {
+	background-position: -27px -279px;
+}
+.TDS_PS_L1 .optionSound a.load_fail, .TDS_PS_L1 .optionSound a.load_fail:hover, .TDS_PS_L1 .optionSound a.playing_fail, .TDS_PS_L1 .optionSound a.playing_fail:hover, .TDS_PS_L1 .optionSound a.decode_fail, .TDS_PS_L1 .optionSound a.decode_fail:hover {
+	background-position: -293px -286px;
+	cursor: default;
+}
+.TDS_PS_L1 .optionSound a.load_incomplete, .TDS_PS_L1 .optionSound a.disabled,
+.TDS_PS_L1 .optionSound a.load_incomplete:hover, .TDS_PS_L1 .optionSound a.disabled:hover {
+	background-position: -305px -107px;
+	cursor: default;
+}
+.TDS_PS_L1 .optionSound a.load_start, .TDS_PS_L1 .optionSound a.load_complete, .TDS_PS_L1 .optionSound a.decode_start, 
+.TDS_PS_L1 .optionSound a.load_start:hover, .TDS_PS_L1 .optionSound a.load_complete:hover, .TDS_PS_L1 .optionSound a.decode_start:hover {
+	cursor: default;
+	background: url(../Images/controls/loader15.gif) no-repeat center center;
+}
+.TDS_PS_L2 .optionSound, .TDS_PS_L3 .optionSound, .TDS_PS_L4 .optionSound {
+	height: 19px;
+	width: 25px;
+	margin-bottom: -26;
+}
+.TDS_PS_L2 .optionSound a, .TDS_PS_L3 .optionSound a, .TDS_PS_L4 .optionSound a {
+	background-position: -455px -135px;
+	height: 19px;
+	width: 25px;
+	margin-top: 12px;
+}
+.TDS_PS_L3 .optionSound a {
+	margin-top: 20px;
+}
+.TDS_PS_L4 .optionSound a {
+	margin-top: 27px;
+}
+
+.TDS_PS_L2 .optionSound a:hover, .TDS_PS_L3 .optionSound a:hover, .TDS_PS_L4 .optionSound a:hover {
+	background-position: -494px -135px;
+}
+.TDS_PS_L2 .optionSound a.playing_start, .TDS_PS_L2 .optionSound a.playing_paused, .TDS_PS_L3 .optionSound a.playing_start, .TDS_PS_L3 .optionSound a.playing_paused, .TDS_PS_L4 .optionSound a.playing_start, .TDS_PS_L4 .optionSound a.playing_paused {
+	background-position: -58px -274px;
+}
+.TDS_PS_L2 .optionSound a.playing_start:hover, .TDS_PS_L2 .optionSound a.playing_paused:hover, .TDS_PS_L3 .optionSound a.playing_start:hover, .TDS_PS_L3 .optionSound a.playing_paused:hover, .TDS_PS_L4 .optionSound a.playing_start:hover, .TDS_PS_L4 .optionSound a.playing_paused:hover {
+	background-position: -86px -274px;
+}
+.TDS_PS_L2 .optionSound a.load_fail, .TDS_PS_L2 .optionSound a.load_fail:hover, .TDS_PS_L2 .optionSound a.playing_fail, .TDS_PS_L2 .optionSound a.playing_fail:hover, .TDS_PS_L2 .optionSound a.decode_fail, .TDS_PS_L2 .optionSound a.decode_fail:hover, .TDS_PS_L3 .optionSound a.load_fail, .TDS_PS_L3 .optionSound a.load_fail:hover, .TDS_PS_L3 .optionSound a.playing_fail, .TDS_PS_L3 .optionSound a.playing_fail:hover, .TDS_PS_L3 .optionSound a.decode_fail, .TDS_PS_L3 .optionSound a.decode_fail:hover, .TDS_PS_L4 .optionSound a.load_fail, .TDS_PS_L4 .optionSound a.load_fail:hover, .TDS_PS_L4 .optionSound a.playing_fail, .TDS_PS_L4 .optionSound a.playing_fail:hover, .TDS_PS_L4 .optionSound a.decode_fail, .TDS_PS_L4 .optionSound a.decode_fail:hover {
+	background-position: -218px -285px;
+	cursor: default;
+}
+.TDS_PS_L2 .optionSound a.load_incomplete, .TDS_PS_L2 .optionSound a.disabled,
+.TDS_PS_L2 .optionSound a.load_incomplete:hover, .TDS_PS_L2 .optionSound a.disabled:hover, .TDS_PS_L3 .optionSound a.load_incomplete, .TDS_PS_L3 .optionSound a.disabled,
+.TDS_PS_L3 .optionSound a.load_incomplete:hover, .TDS_PS_L3 .optionSound a.disabled:hover, .TDS_PS_L4 .optionSound a.load_incomplete, .TDS_PS_L4 .optionSound a.disabled,
+.TDS_PS_L4 .optionSound a.load_incomplete:hover, .TDS_PS_L4 .optionSound a.disabled:hover {
+	background-position: -534px -135px;
+	cursor: default;
+}
+.TDS_PS_L2 .optionSound a.load_start, .TDS_PS_L2 .optionSound a.load_complete, .TDS_PS_L2 .optionSound a.decode_start, 
+.TDS_PS_L2 .optionSound a.load_start:hover, .TDS_PS_L2 .optionSound a.load_complete:hover, .TDS_PS_L2 .optionSound a.decode_start:hover, .TDS_PS_L3 .optionSound a.load_start, .TDS_PS_L3 .optionSound a.load_complete, .TDS_PS_L3 .optionSound a.decode_start, 
+.TDS_PS_L3 .optionSound a.load_start:hover, .TDS_PS_L3 .optionSound a.load_complete:hover, .TDS_PS_L3 .optionSound a.decode_start:hover, .TDS_PS_L4 .optionSound a.load_start, .TDS_PS_L4 .optionSound a.load_complete, .TDS_PS_L4 .optionSound a.decode_start, 
+.TDS_PS_L4 .optionSound a.load_start:hover, .TDS_PS_L4 .optionSound a.load_complete:hover, .TDS_PS_L4 .optionSound a.decode_start:hover {
+	cursor: default;
+	background: url(../Images/controls/loader19.gif) no-repeat center center;
+}
+
+
+/* @end */
+
+/* @group Editor */
+.plainText textarea {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1em;
+	line-height: 1.1em;
+	padding: .3em;
+	overflow: auto;
+	font-weight: normal;
+	font-variant: normal;
+}
+.format_WER textarea {
+	height: 20em;
+	width: 30em;
+}
+.format_WSR textarea, .format_ER textarea, .format_SR textarea, .format_OE textarea, .format_CR4 textarea, .format_CR5 textarea, .format_RW textarea, .format_NL textarea, .format_SA textarea {
+	height: 8em;
+	width: 30em;
+}
+.layout11 .format_WER textarea, .layout11 .format_WSR textarea, .layout17 .format_WER textarea, .layout17 .format_WSR textarea, .layout21 .format_WER textarea, .layout21 .format_WSR textarea, 
+.layout11 .format_ER textarea, .layout11 .format_SR textarea, .layout11 .format_OE textarea, .layout11 .format_CR4 textarea, .layout11 .format_CR5 textarea, .layout11 .format_RW textarea, .layout11 .format_NL textarea, .layout11 .format_SA textarea,  
+.layout17 .format_ER textarea, .layout17 .format_SR textarea, .layout17 .format_OE textarea, .layout17 .format_CR4 textarea, .layout17 .format_CR5 textarea, .layout17 .format_RW textarea, .layout17 .format_NL textarea, .layout17 .format_SA textarea,  
+.layout21 .format_ER textarea, .layout21 .format_SR textarea, .layout21 .format_OE textarea, .layout21 .format_CR4 textarea, .layout21 .format_CR5 textarea, .layout21 .format_RW textarea, .layout21 .format_NL textarea, .layout21 .format_SA textarea, 
+.layoutSingleMulti .format_ER textarea, .layoutSingleMulti .format_SR textarea, .layoutSingleMulti .format_OE textarea, .layoutSingleMulti .format_CR4 textarea, .layoutSingleMulti .format_CR5 textarea, .layoutSingleMulti .format_RW textarea, .layoutSingleMulti .format_NL textarea, .layoutSingleMulti .format_SA textarea {
+	width: 100%;
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-subcont {
+	padding:0.2em;
+}
+.yui-skin-sam.TDS_PS_L3 .yui-toolbar-container .yui-toolbar-subcont, .yui-skin-sam.TDS_PS_L4 .yui-toolbar-container .yui-toolbar-subcont {
+	padding:0.1em;
+}
+/* @group special charactars */
+/* for toolbar icon */
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-specialchar span.yui-toolbar-icon {
+	background-image: url(../Images/controls/specialChar.gif);
+	background-position: center center;
+	left:6px;
+	top:1px;
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-spellcheck span.yui-toolbar-icon {
+	background-image: url(../Images/controls/spellcheck.gif);
+	background-position: center center;
+	left:5px;
+	top:3px;
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-reset span.yui-toolbar-icon {
+	background-image: url(../Images/controls/reset.png);
+	background-position: center center;
+	left:5px;
+	top:2px;
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-cut span.yui-toolbar-icon {
+	background-image: url(../Images/controls/tool_cut.png);
+	background-position: center center;
+	left:6px;
+	top:2px;
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-copy span.yui-toolbar-icon {
+	background-image: url(../Images/controls/tool_copy.png);
+	background-position: center center;
+	left:6px;
+	top:2px;
+}
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-paste span.yui-toolbar-icon {
+	background-image: url(../Images/controls/tool_paste.png);
+	background-position: center center;
+	left:7px;
+	top:2px;
+}
+/*.yui-skin-sam .yui-toolbar-container .yui-toolbar-langselect span.yui-toolbar-icon*/
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-select span.yui-toolbar-icon{
+	background-image: url(../Images/controls/language.gif);
+	background-position: center center;
+	left: 5px;
+	top: 3px;
+}
+
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-specialchar .first-child a, .yui-skin-sam .yui-toolbar-container .yui-toolbar-spellcheck .first-child a, .yui-skin-sam .yui-toolbar-container .yui-toolbar-select .first-child a{
+	text-indent:-9999px;
+}
+
+/* makes a grid
+.gridcontainer {
+	width: 20em;
+}
+.gridcontainer ul {
+	width: 19.5em;
+}
+.gridcontainer .bd .yuimenuitemlabel {
+	width: 2em;
+	height: 2em;
+	padding: 0em;
+	text-align: center;
+	line-height: 2em;
+}
+.gridcontainer .bd .yuimenuitem {
+	width: 1.9em;
+	height: 1.9em;
+	float: left;
+	padding: 0;
+}
+.gridcontainer .bd .yuimenuitem-selected {
+	background-color: b3d4ff;
+}*/
+/* @end */
+/* @end */
+
+/* @group tutorial */
+
+.tutorial .noColumns .theQuestions {
+	top:0px;
+}
+.tutorial .noColumns .padding {
+	padding-top:0px;
+	padding-bottom:0px
+}
+/* keeps android from distorting tutorial text */ 
+.platform_android.TDS_PS_L3 .tutorial #stimulusCell, 
+.platform_android.TDS_PS_L4 .tutorial #stimulusCell {
+	position: relative;
+}
+/* WARNING: Leaving this up causes Mac FF 2.0 to not show Flash */
+/*.tutorial .stimulusCell {
+	background: url(../Images/controls/loader32.gif) no-repeat center center;
+}*/
+
+.tutorial .stimulusCell p {
+	text-align:center;
+}
+.tutorial .stimulusCell p div {
+	margin:auto;
+}
+.tutorial .bigTable .questionCell h2 {
+	display: none;
+}
+/* blocks right-click in linux */
+.platform_linux .noLinux {
+	display: block;
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	background: url(../Images/clear.gif) repeat;
+	z-index:999;
+}
+.noLinux iframe {
+	height: 100%;
+	width: 100%;
+}
+
+/* @end */
+
+/* @group Coverpages */
+.coverpage .contextAreaFocus {
+	border: none;
+	margin: 0px;
+}
+.bigTable .coverpage {
+	border: solid 2px #ccc;
+	margin-top: 5%;
+	margin-left: 5em;
+	margin-right: 5em;
+}
+.coverpage .questionCell, .coverpage .answerCell, .coverpage .stimulusCell {
+    padding: 0.2em;
+}
+/*.bigTable .coverpage.cover1 {
+	margin-top: 15%;
+}*/
+.coverpage .answerCell h2 {
+	display: none;
+}
+.coverpage .answerCell {
+	line-height: 1.3em;
+}
+.cover4 .stimulusCell, .cover4 .answerCell, .cover5 .stimulusCell, .cover5 .answerCell {
+	float: left;
+	max-width: 45%;
+}
+.cover4 .stimulusCell, .cover5 .stimulusCell {
+	text-align: center;
+}
+
+/* @end */
+
+
+
+/* focus styles */
+.contextAreaFocus {
+	border: dotted 1px #666;
+	margin: -1px;
+}
+.thePassage.contextAreaFocus {
+	border: none;
+	margin: 0px;
+}
+.thePassage.contextAreaFocus .padding {
+	background: url(../Images/active_passage.png) repeat-y left top;
+}
+.layout11 .itemContainer, .layout17 .itemContainer, .layout21 .itemContainer, .layout23 .itemContainer {
+	border:1px solid transparent;
+}
+.layout11 .activeItem, .layout17 .activeItem, .layout21 .activeItem, .layout23 .activeItem  {
+	background-image: url(../Images/active.png);
+	background-position: 0 0;
+	background-repeat: no-repeat;
+	border-top:1px solid #e2efff !important;
+	border-left:1px solid #e2efff !important;
+}
+.withSound.contextAreaFocus {
+	margin: 0 -1px 0 19px;
+}
+.TDS_PS_L1 .withSound.contextAreaFocus {
+	margin: 0 -1px 0 22px;
+}
+.TDS_PS_L2 .withSound.contextAreaFocus, .TDS_PS_L3 .withSound.contextAreaFocus, .TDS_PS_L4 .withSound.contextAreaFocus {
+	margin: 0 -1px 0 29px;
+}
+.browser_firefox.browserVer_2 .optionContainer, .browser_airsecurebrowser.browserVer_3_5 .optionContainer, .browser_airsecurebrowser.browserVer_3_6 .optionContainer {
+	margin: -1px;
+	border: solid 1px transparent;
+}
+.browser_firefox.browserVer_2 .contextAreaFocus, .browser_airsecurebrowser.browserVer_3_5 .contextAreaFocus, .browser_airsecurebrowser.browserVer_3_6 .contextAreaFocus {
+	border: dotted 1px #666;
+}
+.browser_firefox.browserVer_2 .optionContainer.withSound, .browser_airsecurebrowser.browserVer_3_5 .optionContainer.withSound, .browser_airsecurebrowser.browserVer_3_6 .optionContainer.withSound {
+	margin-left: 19px;
+}
+.TDS_PS_L1 .browser_firefox.browserVer_2 .optionContainer.withSound, .TDS_PS_L1 .browser_airsecurebrowser.browserVer_3_5 .optionContainer.withSound, .TDS_PS_L1 .browser_airsecurebrowser.browserVer_3_6 .optionContainer.withSound {
+	margin-left: 22px;
+}
+.TDS_PS_L2 .browser_firefox.browserVer_2 .optionContainer.withSound, .TDS_PS_L2 .browser_airsecurebrowser.browserVer_3_5 .optionContainer.withSound, .TDS_PS_L2 .browser_airsecurebrowser.browserVer_3_6 .optionContainer.withSound, .TDS_PS_L3 .browser_firefox.browserVer_2 .optionContainer.withSound, .TDS_PS_L3 .browser_airsecurebrowser.browserVer_3_5 .optionContainer.withSound, .TDS_PS_L3 .browser_airsecurebrowser.browserVer_3_6 .optionContainer.withSound, .TDS_PS_L4 .browser_firefox.browserVer_2 .optionContainer.withSound, .TDS_PS_L4 .browser_airsecurebrowser.browserVer_3_5 .optionContainer.withSound, .TDS_PS_L4 .browser_airsecurebrowser.browserVer_3_6 .optionContainer.withSound {
+	margin-left: 29px;
+}
+/* @group guide to revision */
+.guide_revision {
+	padding: 20px;
+	overflow: auto;
+	height: 545px;
+	width: inherit;
+	font-size: .9em;
+}
+.guide_revision ul {
+	list-style: none;
+}
+.guide_revision li {
+	margin: .5em 1em;
+	display: block;
+	color: #000;
+	text-decoration: none;
+	background: url(../Images/writing/chooseMark1.png) no-repeat left top;
+	padding-left: 40px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	cursor: pointer;
+}
+.guide_revision li:hover {
+	background-image: url(../Images/writing/chooseMark4.png);
+}
+.guide_revision li:focus, .guide_revision li:active {
+	background-image: url(../Images/writing/chooseMark2.png) !important;
+}
+.guide_revision .checked {
+	background-image: url(../Images/writing/chooseMark3.png);
+}
+.guide_revision li.checked:hover {
+	background-image: url(../Images/writing/chooseMark2.png) !important;
+}
+.guide_revision h3 {
+	border-bottom: solid 1px #ccc;
+	margin-bottom: .5em;
+	font-weight: bold;
+}
+/* @end */
+
+/* @group Single Multi Layout (for use with simulator item) */
+.layoutSingleMulti .thePassage {
+	display: none;
+}
+.layoutSingleMulti .layoutColumnLeft {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	height: 100%;
+	width: 50%;
+	overflow: auto;
+}
+.layoutSingleMulti .layoutColumnRight .padding {
+	padding: 10px;
+}
+.layoutSingleMulti .layoutColumnLeft .thePassage {
+	/*border-bottom: solid 1px #ccc;*/
+	/*reset postioning to be handeld by leftColumn*/
+	position: static;
+	width: auto;
+	height: auto;
+	z-index: inherit;
+	overflow: inherit;
+	top: inherit;
+	bottom: inherit;
+	left: inherit;
+	right: inherit;
+}
+
+.layoutSingleMulti .markComment, .layoutSingleSim1 .markComment {
+    float: right;
+    margin-bottom: -18px;
+}
+.layoutSingleMulti .layoutColumnLeft .questionAnswerGroup {
+	border-bottom: none;
+}
+.layoutSingleMulti .layoutColumnLeft .questionContainer h2 {
+	margin-left: 5px;
+}
+.layoutSingleMulti .layoutColumnLeft .questionContainer .markComment {
+	margin-left: 5px;
+	margin-right: 5px;
+}
+.layoutSingleMulti .layoutColumnLeft .stemContainer {
+	padding-bottom: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+	clear: both;
+}
+.SimContainer {
+	margin-left: -3px;
+	margin-right: -3px;
+	padding-top: 5px;
+}
+.SimContainer.simV1 iframe {
+   	width: 100%;
+   	height: 650px;
+}
+.SimContainer.loading, .SimContainer.failed {
+    background-repeat: no-repeat;
+    background-position: center center;
+    -moz-box-shadow: 0em 0em 5px #666;
+	-webkit-box-shadow: 0em 0em 5px #666;
+	box-shadow: 0em 0em 5px #666;
+	border: 2px solid #f2f4f4;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+.SimContainer.loading {
+    background-image: url(../Images/controls/loader32.gif);
+}
+.SimContainer.failed {
+    background-image: url(../../Images/alerts/stopWhite.gif);
+}
+.SimContainer.loading iframe, .SimContainer.failed iframe {
+    visibility: hidden;
+}
+
+/* @group Custom SIM layouts - based off of standard layouts */
+
+/*layout 28*/
+.layoutSingleMulti.layout27 .layoutColumnLeft {
+	width: 70%;
+}
+/* layout 29*/
+.layoutSingleMulti.layout24 .layoutColumnLeft {
+	width: 38%;
+}
+.layoutSingleMulti.layout24 .layoutColumnLeft .padding {
+	padding-top: 10px;
+	padding-bottom: 5px;
+}
+.layoutSingleMulti.layout24 .layoutColumnLeft .questionContainer {
+	padding-bottom: 0px;
+}
+.layoutSingleMulti .layoutColumnLeft .thePassage .padding {
+	padding: 0px;
+}
+.layoutSingleMulti.layout24 .layoutColumnLeft .questionContainer h2, .layoutSingleMulti.layout24 .layoutColumnLeft .questionContainer .markComment {
+	margin-left: 0px;
+	margin-right: 0px;
+}
+.layoutSingleMulti.layout24 .layoutColumnLeft .stemContainer {
+	padding-bottom: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+.layoutSingleMulti .layoutColumnRight .GridContainer {
+	margin-left:-10px;
+	margin-right:-10px;
+}
+/* @end */
+/*layout 30*/
+.layout_30 .itemContainer {
+	position:absolute;
+	left:0;
+	top:0px;
+	bottom:0px;
+	overflow:auto;
+	width: 100%;
+}
+.layoutSingleSim1 {
+	display: table;
+	width: 100%;
+	height: 100%;
+}
+.layoutSingleSim1 .layoutColumnLeft {
+	display: table-cell;
+	padding: 10px;
+	vertical-align: middle;
+	width: 1%;
+}
+.layoutSingleSim1 .layoutColumnRight {
+	display: table-cell;
+	padding: 0 10px;
+	vertical-align: middle;
+}
+.layoutSingleSim1 .markComment {
+	min-width: 75px;
+}
+.layoutSingleSim1 .stemContainer {
+	width: 290px;
+}
+/* @end */
+
+/* @group Science Simulator (frame.css)
+
+.SimContainer {
+    position: absolute; 
+    display: block;
+    height: 100%; 
+    border: none; 
+    padding:0px; 
+    margin:0px; 
+    overflow:hidden;
+	left:5px;
+	right:5px;
+}
+.SimContainer iframe {
+    position: absolute; 
+    display: block; 
+    width: 100%; 
+    height: 100%; 
+    border: none; 
+    padding:0px; 
+    margin:0px; 
+    overflow:hidden;
+}
+
+/* @end */
+
+
+/* @group measurement tools */
+
+.measuring .tools_measure {
+	margin-left: .3em;
+	margin-right: -30px;
+	float:left;
+}
+.measuring:after {
+	content: "";  
+	display: block;  
+	clear: both;  
+	visibility: hidden;  
+	font-size: 0;  
+	height: 0; 
+}
+.measuring .illustrationContainer {
+	float: left;
+	border: 1px solid #0E4878;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
+.measuring .tools_measure button {
+	border: 1px solid #0E4878;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+    display: block;
+    cursor: pointer;
+    width: 22px;
+    height: 22px;
+    text-indent: -9999px;
+    overflow: hidden;
+	margin: 0 0 .3em;
+	background: transparent url(../Images/controls/geometry_sprites.png) no-repeat center 0;
+}
+.TDS_CCInvert .measuring .tools_measure button, 
+.TDS_CCWhiteN .measuring .tools_measure button {
+	background-image: url(../Images/controls/geometry_sprites_white.png);
+	border-color: #FFF;
+}
+.TDS_CCYellowB .measuring .tools_measure button {
+	background-image: url(../Images/controls/geometry_sprites_yellow.png);
+	border-color: #FFCC00;
+}
+.TDS_CCInvert .measuring .tools_measure button:hover, 
+.TDS_CCWhiteN .measuring .tools_measure button:hover, 
+.TDS_CCYellowB .measuring .tools_measure button:hover {
+	background-color: rgba(255,255,255,0.3);
+}
+.TDS_PS_L1 .tools_measure {
+	margin-right: -40px;
+}
+.TDS_PS_L1 .tools_measure button {
+	width: 32px;
+    height: 32px;
+}
+.TDS_PS_L2 .tools_measure {
+	margin-right: -50px;
+}
+.TDS_PS_L3 .tools_measure, 
+.TDS_PS_L4 .tools_measure {
+	margin-right: -60px;
+}
+.TDS_PS_L2 .tools_measure button, .TDS_PS_L3 .tools_measure button, .TDS_PS_L4 .tools_measure button {
+	width: 42px;
+    height: 42px;
+}
+.measuring button:hover {
+	background-color: #c1e9f9;
+	border-color: #00aeef;
+}
+.measuring button:focus, .measuring button:active {
+	background-color: #00aeef;
+	border-color: #00aeef;
+}
+.measuring button.on {
+	border-color: #00aeef;
+}
+.measuring button.measure_straight {
+	background-position: center -195px;
+}
+.TDS_PS_L1 button.measure_straight {
+	background-position: center -160px;
+}
+.TDS_PS_L2 button.measure_straight, .TDS_PS_L3 button.measure_straight, .TDS_PS_L4 button.measure_straight {
+	background-position: center -110px;
+}
+.measuring button.measure_compass {
+	background-position: center -85px;
+}
+.TDS_PS_L1 button.measure_compass {
+	background-position: center -50px;
+}
+.TDS_PS_L2 button.measure_compass, .TDS_PS_L3 button.measure_compass, .TDS_PS_L4 button.measure_compass {
+	background-position: center 0px;
+}
+.measuring button.measure_reset {
+	background-position: center -305px;
+}
+.TDS_PS_L1 button.measure_reset {
+	background-position: center -270px;
+}
+.TDS_PS_L2 button.measure_reset, .TDS_PS_L3 button.measure_reset, .TDS_PS_L4 button.measure_reset {
+	background-position: center -220px;
+}
+.measuring button.measure_ruler {
+	background-position: center -415px;
+}
+.TDS_PS_L1 button.measure_ruler {
+	background-position: center -380px;
+}
+.TDS_PS_L2 button.measure_ruler, .TDS_PS_L3 button.measure_ruler, .TDS_PS_L4 button.measure_ruler {
+	background-position: center -330px;
+}
+.measuring button.measure_protractor {
+	background-position: center -525px;
+}
+.TDS_PS_L1 button.measure_protractor {
+	background-position: center -490px;
+}
+.TDS_PS_L2 button.measure_protractor, .TDS_PS_L3 button.measure_protractor, .TDS_PS_L4 button.measure_protractor {
+	background-position: center -440px;
+}
+/* fb-64674 prevent svgs from other pages from blocking current svgs */
+.pageWrapper.hiding .measuring svg {
+    left: -9999px;
+	pointer-events: none;
+}
+.hideMeasuring, 
+.pageWrapper.hiding .mtPageScaleTools {
+	position: absolute;
+	left: -9999px !important;
+	pointer-events: none;
+}
+
+/* @end */

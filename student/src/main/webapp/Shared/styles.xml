@@ -1,0 +1,45 @@
+<resources>
+
+    <fileSet name="mastershell">
+        <input>CSS/reset.css</input>
+        <input>CSS/login.css</input>
+        <input>CSS/soundcheck.css</input>
+        <input>../Scripts/Libraries/YUI/button/assets/skins/sam/button.css</input>
+        <input>CSS/dialogs.css</input>
+        <input>../Projects/{0}/css/login.css</input>
+        <input>CSS/accommodations.css</input>
+    </fileSet>
+
+    <fileSet name="testshell">
+        <input>CSS/testshell.css</input>
+        <input>../Projects/{0}/css/testshell.css</input>
+        <input>../Scripts/Libraries/YUI/button/assets/skins/sam/button.css</input>
+        <input>../Scripts/Libraries/YUI/menu/assets/skins/sam/menu.css</input>
+        <input>CSS/dialogs.css</input>
+        <input>CSS/accommodations.css</input>
+    </fileSet>
+
+    <fileSet name="testshellaccessibility">
+        <input>CSS/wai.css</input>
+        <input>CSS/wai_shell.css</input>
+        <input>../Projects/{0}/css/wai_Shell.css</input>
+        <input>CSS/dialogs.css</input>
+        <input>CSS/accommodations.css</input>
+        <input>../Scripts/Libraries/YUI/button/assets/skins/sam/button.css</input>
+    </fileSet>
+
+    <fileSet name="content">
+        <input>../Scripts/Libraries/YUI/menu/assets/skins/sam/menu.css</input>
+        <input>../Scripts/Libraries/YUI/button/assets/skins/sam/button.css</input>
+        <input>../Scripts/Libraries/YUI/container/assets/skins/sam/container.css</input>
+        <input>../Scripts/Libraries/YUI/editor/assets/skins/sam/editor.css</input>
+        <input>CSS/items.css</input>
+        <input>CSS/elpa.css</input>
+        <input>CSS/accommodations.css</input>
+        <input>CSS/frame.css</input>
+        <input>../Projects/{0}/css/items.css</input>
+        <input>../Projects/{0}/css/elpa.css</input>
+    </fileSet>
+
+</resources>
+

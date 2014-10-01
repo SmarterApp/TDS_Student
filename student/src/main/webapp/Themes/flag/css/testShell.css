@@ -1,0 +1,68 @@
+@charset "UTF-8";
+/* Flag Theme for Ohio */
+
+.topBar {
+	background-image: url(../Images/flag-sm.jpg);
+	padding-right: 135px;
+	background-color: #84a5c1;
+	background-position: center top;
+	background-repeat: none;
+}
+
+.sessionID {
+	border:none;
+}
+.logo{
+	background-image: url(../Images/logo_ohio.png);
+	background-repeat: no-repeat;
+	display: block;
+	background-position: right top;
+	min-height: 20px;
+	min-width: 121px;
+	position: absolute;
+	right: 0;
+	margin: 3px 5px;
+}
+.smallButtons a {
+	background-color: #cbd8d8;
+}
+.smallButtons a:hover {
+	background-color: #fff;
+	color: #000;
+}
+.studentInfo {
+	background-color: #84a5c1;
+	color: #fff;
+	border-right: 1px solid #fff;
+}
+.bottomBar {
+	background-color: #f0f0f0;
+	border-top-color: #004a80;
+	border-bottom-color: #716f61;
+}
+.testName {
+	background-color: #cdcdcd;
+	border:none;
+}
+.yourChoices .greenBtn {
+	border-color: #164c7e;
+	color:#164c7e;
+}
+.yourChoices .greenBtn:hover {
+	background-color:#164c7e;
+}
+.sound_cue, .sound_cue.load_incomplete, .sound_cue.disabled  {
+	background: url(../Images/controls/speaker_noclick.gif) no-repeat center center;
+}
+
+#foot{
+	background: url(../Images/studentFooter.gif) repeat-x #7ea5c7;
+}
+#studentTools{
+	background: url(../Images/studentFooterTools.gif) repeat-x;
+	height: 30px;
+}
+/* preloads Images so they don't appear 'missing' */
+.preloader {
+	background-color: #A7C9E2;
+}

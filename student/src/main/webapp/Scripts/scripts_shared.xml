@@ -1,0 +1,665 @@
+<resources>
+
+    <!-- YUI 2 -->
+    <fileSet name="libs-YUI" compress="false">
+        <input>Libraries/YUI/yahoo-dom-event/yahoo-dom-event.js</input>
+        <input>Libraries/YUI/event-mouseenter/event-mouseenter-min.js</input>
+        <input>Libraries/YUI/event-delegate/event-delegate-min.js</input>
+        <input>Libraries/YUI/selector/selector-min.js</input>
+        <input>Libraries/YUI/json-old/json-min.js</input>
+        <input>Libraries/YUI/connection/connection-min.js</input>
+        <input>Libraries/YUI/get/get-min.js</input>
+        <input>Libraries/YUI/cookie/cookie-min.js</input>
+        <input>Libraries/YUI/storage/storage-min.js</input>
+        <input>Libraries/YUI/element/element-min.js</input>
+        <input>Libraries/YUI/button/button-min.js</input>
+        <input>Libraries/YUI/animation/animation-min.js</input>
+        <input>Libraries/YUI/dragdrop/dragdrop-min.js</input>
+        <input>Libraries/YUI/container/container-min.js</input>
+        <input>Libraries/YUI/container/containerariaplugin-min.js</input>
+
+        <!-- test shell -->
+        <input>Libraries/YUI/menu/menu-min.js</input>
+        <input>Libraries/YUI/tabview/tabview-min.js</input>
+        <input>Libraries/YUI/slider/slider-min.js</input>
+
+        <input>Libraries/YUI/YUI3-min.js</input>
+
+    </fileSet>
+
+    <!-- YUI 2 (debug) -->
+    <fileSet name="libs-YUI-debug" compress="false">
+        <input>Libraries/YUI/yahoo/yahoo.js</input>
+        <input>Libraries/YUI/dom/dom.js</input>
+        <input>Libraries/YUI/event/event.js</input>
+        <input>Libraries/YUI/event-mouseenter/event-mouseenter.js</input>
+        <input>Libraries/YUI/event-delegate/event-delegate.js</input>
+        <input>Libraries/YUI/selector/selector.js</input>
+        <input>Libraries/YUI/json-old/json-min.js</input>
+        <input>Libraries/YUI/connection/connection.js</input>
+        <input>Libraries/YUI/get/get-min.js</input>
+        <input>Libraries/YUI/cookie/cookie.js</input>
+        <input>Libraries/YUI/storage/storage.js</input>
+        <input>Libraries/YUI/element/element.js</input>
+        <input>Libraries/YUI/button/button.js</input>
+        <input>Libraries/YUI/animation/animation.js</input>
+        <input>Libraries/YUI/dragdrop/dragdrop.js</input>
+        <input>Libraries/YUI/container/container.js</input>
+        <input>Libraries/YUI/container/containerariaplugin.js</input>
+
+        <!-- test shell -->
+        <input>Libraries/YUI/menu/menu.js</input>
+        <input>Libraries/YUI/tabview/tabview.js</input>
+        <input>Libraries/YUI/slider/slider.js</input>
+
+        <input>Libraries/YUI/YUI3.js</input>
+
+    </fileSet>
+
+    <fileSet name="libs-svgweb" compress="false">
+        <input>Libraries/svgweb/svg.js</input>
+    </fileSet>
+    
+    <fileSet name="libs-mathjax" compress="false">
+        <!--<input>http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full</input>-->
+        <input>Libraries/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full</input>
+    </fileSet>
+
+    <fileSet name="libs-rangy" compress="false">
+        <input>Libraries/rangy/rangy-core.js</input> <!-- BUG: Needs to have a semicolon added to the end of file -->
+        <input>Libraries/rangy/rangy-cssclassapplier.js</input>
+    </fileSet>
+
+    <fileSet name="libs-jQuery" compress="false">
+        <input>Libraries/jQuery/jquery-1.10.2.min.js</input>
+    </fileSet>
+
+    <!-- Basic 3rd party libraries -->
+    <fileSet name="libs" compress="false">
+        <input>Libraries/TraceKit/tracekit.js</input>
+        <input>Libraries/IO.js</input>
+        <reference set="libs-YUI" />
+        <reference set="libs-jQuery" />
+        <input>Libraries/raphael/raphael-min.js</input>
+        <input>Libraries/jwplayer/jwplayer.js</input>
+        <input>Libraries/soundmanager2/script/soundmanager2-nodebug-jsmin.js</input>
+        <input>Libraries/FlashDetect/flash_detect_min.js</input>
+        <reference set="libs-rangy" />
+        <input>Libraries/q/q.min.js</input>
+    </fileSet>
+
+    <!-- Secure browser implementations-->
+    <fileSet name="securebrowsers">
+        <input>SecureBrowser/Summit/air_mobile_2.js</input>
+        <input>SecureBrowser/factory.js</input>
+        <input>SecureBrowser/base.js</input>
+        <input>SecureBrowser/base.recorder.js</input>
+        <input>SecureBrowser/firefox.js</input>
+        <input>SecureBrowser/firefox.recorder.js</input>
+        <input>SecureBrowser/chrome.js</input>
+        <input>SecureBrowser/mobile.android.js</input>
+        <input>SecureBrowser/mobile.ios.js</input>
+        <input>SecureBrowser/mobile.recorder.js</input>
+        <input>Utilities/util_securebrowser.js</input>
+    </fileSet>
+  
+    <!-- Utilities -->
+    <fileSet name="utilities">
+        <input>Utilities/util.js</input>
+        <input>Utilities/util_function.js</input>
+        <input>Utilities/util_object.js</input>
+        <input>Utilities/util_number.js</input>
+        <input>Utilities/util_string.js</input>
+        <input>Utilities/util_date.js</input>
+        <input>Utilities/util_converters.js</input>
+        <input>Utilities/util_array.js</input>
+        <input>Utilities/util_structs.js</input>
+        <input>Utilities/util_iter.js</input>
+        <input>Utilities/util_dom.js</input>
+        <input>Utilities/util_style.js</input>
+        <input>Utilities/util_promise.js</input>
+        <input>Utilities/util_event.js</input>
+        <input>Utilities/util_event_manager.js</input>
+        <input>Utilities/util_delay.js</input>
+        <input>Utilities/util_delay_conditional.js</input>
+        <input>Utilities/util_taskworkflow.js</input>
+        <input>Utilities/util_xhr.js</input>
+        <input>Utilities/util_browser.js</input>
+        <input>Utilities/util_browser_feature.js</input>
+        <input>Utilities/util_cookies.js</input>
+        <input>Utilities/util_java.js</input>
+        <input>Utilities/util_querystring.js</input>
+        <input>Utilities/util_mobile.js</input>
+        <input>Utilities/util_mozilla.js</input>        
+        <input>Utilities/util_statistics.js</input>
+        <input>Utilities/util_network.js</input>
+        <input>Utilities/util_workflow.js</input> <!-- master shell -->
+        <input>Utilities/util_xml.js</input> <!-- test shell -->
+        <input>Utilities/util_frame.js</input> <!-- test shell -->
+        <input>Utilities/util_simulate.js</input> <!-- test shell -->
+        <input>Utilities/util_storage.js</input>
+        <input>Utilities/util_audio.js</input>
+        <input>Utilities/util_audio_sound.js</input>
+        <input>Utilities/util_audio_queue.js</input>
+        <input>Utilities/util_xdm.js</input>
+        <input>Utilities/util_slider.js</input>
+        <reference set="securebrowsers"/>
+    </fileSet>
+  
+    <!-- Tools -->
+    <fileSet name="tools">
+        <input>Tools/tds.js</input>
+        <input>Tools/tds_diagnostics.js</input>
+        <input>Tools/tds_ToolManager.js</input>
+        <input>Tools/tds_dialog.js</input>
+        <input>Tools/tds_keyboard.js</input>
+        <input>Tools/tds_button.js</input>
+        <input>Tools/tds_aria.js</input>
+        <input>Tools/tds_xhr.js</input>
+        <input>Tools/tds_CLS.js</input>
+        <input>Tools/tds_help.js</input>
+        <input>Tools/tds_cache.js</input>
+        <input>Tools/tds_zoom.js</input> <!-- test shell -->
+        <input>Tools/tds_timeout.js</input> <!-- test shell -->
+    </fileSet>
+
+    <fileSet name="systemDialog">
+        <input>SystemDialog/base.js</input>
+        <input>SystemDialog/module.js</input>
+        <input>SystemDialog/Controls/volume.js</input>
+    </fileSet>
+
+    <!-- Loader -->
+    <fileSet name="loader">
+        <input>ResourceLoader/loader.js</input>
+        <input>ResourceLoader/collection.js</input>
+        <input>ResourceLoader/dependency.js</input>
+        <input>ResourceLoader/conditional.js</input>
+        <input>ResourceLoader/image.js</input>
+        <input>ResourceLoader/binary.js</input>
+        <input>ResourceLoader/script.js</input>
+        <input>ResourceLoader/xhr.js</input>
+    </fileSet>
+
+    <!-- Messages -->
+    <fileSet name="messages">
+        <input>Messages/messages_legacy.js</input>
+        <input>Messages/messages_system.js</input>
+        <input>Messages/messages_indexer.js</input>
+        <input>Messages/messages_loader.js</input>
+        <input>Messages/messages_template.js</input>
+    </fileSet>
+
+    <!-- Accommodations -->
+    <fileSet name="accommodations">
+        <input>Accommodations/tds_acc.js</input>
+        <input>Accommodations/tds_acc_type.js</input>
+        <input>Accommodations/tds_acc_value.js</input>
+        <input>Accommodations/tds_acc_props.js</input>
+        <input>Accommodations/tds_acc_manager.js</input>
+        <input>Accommodations/tds_acc_renderer.js</input> <!-- test shell -->
+        <input>Accommodations/tds_acc_dialog.js</input> <!-- test shell -->
+    </fileSet>
+
+    <!-- TTS -->
+    <fileSet name="tts">
+        <input>TTS/config.js</input>
+        <input>TTS/util.js</input>
+        <input>TTS/tts.js</input>
+        <input>TTS/control.js</input>
+        <input>TTS/highlighter.js</input>
+        <input>TTS/parser.js</input>
+        <input>TTS/securebrowser.js</input>
+        <input>TTS/chrome.js</input>
+        <input>TTS/sb_generic.js</input>
+        <input>TTS/ui.js</input>
+        <input>TTS/menu.js</input>
+    </fileSet>
+
+    <!-- TTS2 (Jon's version) -->
+    <fileSet name="tts2">
+        <input>TTS2/config.js</input>
+        <input>TTS2/util.js</input>
+        <input>TTS2/tts.js</input>
+        <input>TTS2/control.js</input>
+        <input>TTS2/parse.js</input>
+        <input>TTS2/highlighter.js</input>
+        <input>TTS2/selector.js</input>
+        <input>TTS2/languagemanager.js</input>
+        <input>TTS2/ui.js</input>
+        <input>TTS2/menu.js</input>
+        <input>TTS2/Services/securebrowser.js</input>
+        <input>TTS2/Services/firefox.js</input>
+        <input>TTS2/Services/chrome.js</input>
+    </fileSet>
+
+    <fileSet name="content-audio">
+        <input>Audio/audio.js</input>
+        <input>Audio/java.js</input>
+        <input>Audio/services.js</input>
+        <input>Audio/Recorder/recorder.js</input>
+        <input>Audio/Recorder/recorder.sb.js</input>
+        <!--<input>Audio/Recorder/recorder.java.js</input>-->
+        <input>Audio/Player/player.js</input>
+        <input>Audio/Player/player.queue.js</input>
+        <input>Audio/widget.js</input>
+    </fileSet>
+    
+    <!-- Content Manager -->
+    <fileSet name="content-manager">
+        <input>Content/content_manager.js</input>
+        <input>Content/content_page.js</input>
+        <input>Content/content_entity.js</input>
+        <input>Content/content_passage.js</input>
+        <input>Content/content_item.js</input>
+        <input>Content/content_item_tools.js</input>
+        <input>Content/content_menu.js</input>
+        <input>Content/content_dialog.js</input>
+        <input>Content/content_events.js</input>
+        <input>Content/content_keyboard.js</input>
+        <input>Content/content_xml.js</input>
+        <input>Content/content_frame.js</input>
+        <input>Content/content_qti.js</input>
+        <input>Content/content_renderer.js</input>
+    </fileSet>
+ 
+    <!-- Content Media Processor -->
+    <fileSet name="content-media">
+        <input>Content/Modules/module_media.js</input>
+    </fileSet>
+
+
+
+    <!-- Video -->
+    <fileSet name="content-video">
+        <input>Video/video_manager.js</input>
+        <input>Video/video_swf.js</input>
+    </fileSet>
+
+    <!-- Spell Check -->
+    <fileSet name="content-spell">
+        <input>SpellCheck/spellcheck.js</input>
+        <input>SpellCheck/spellcheck_manager.js</input>
+        <input>SpellCheck/spellcheck_server.js</input>
+        <input>SpellCheck/spellcheck_mozilla.js</input>
+    </fileSet>
+
+    <!-- Writing -->
+    <fileSet name="content-writing">
+        <input>Writing/writing.unit.js</input>
+        <input>Writing/writing.widget.js</input>
+        <input>Content/Modules/module_writing.js</input>
+    </fileSet>
+    
+    <!-- HTML Editor 1 -->
+    <fileSet name="content-editor1">
+        <input>Libraries/YUI/editor/editor.js</input>
+        <input>HTMLEditor/base.js</input>
+        <input>HTMLEditor/clipboard.js</input>
+        <input>HTMLEditor/specialchar.js</input>
+        <input>HTMLEditor/spellcheck.js</input>
+        <input>HTMLEditor/writing.js</input>
+        <input>HTMLEditor/module.js</input>
+        <reference set="content-writing" />
+    </fileSet>
+
+    <!-- HTML Editor 2 -->
+    <fileSet name="content-editor2">
+
+        <input>Libraries/ckeditor/4.3/ckeditor.js</input>
+        <input>Libraries/ckeditor/4.3/lang/en.js</input>
+        <input>Libraries/ckeditor/4.3/styles.js</input>
+        <input>Libraries/ckeditor/4.3/plugins/table/dialogs/table.js</input>
+        <input>Libraries/ckeditor/4.3/plugins/specialchar/dialogs/specialchar.js</input>
+        <input>Libraries/ckeditor/4.3/plugins/specialchar/dialogs/lang/en.js</input>
+
+        <input>HTMLEditor2/plugins/spellchecker/plugin.js</input>
+        <input>HTMLEditor2/plugins/clipboard/plugin.js</input>
+        <input>HTMLEditor2/plugins/clipboard/lang/en.js</input>
+        <input>HTMLEditor2/base.js</input>
+        <input>HTMLEditor2/table.js</input>
+        <input>HTMLEditor2/module.js</input>
+    
+        <reference set="content-writing" />
+
+    </fileSet>
+
+    <fileSet name="content-grid2">
+            
+        <input>Grid2/common.js</input>        
+        <input>Grid2/grid.js</input>        
+        <input>Grid2/utils.js</input>    
+        <input>Grid2/crtool.js</input>
+        <input>Grid2/math.js</input>
+
+        <input>Grid2/Model/model.js</input>
+        <input>Grid2/Model/model.options.js</input>
+        <input>Grid2/Model/model.base.js</input>
+        <input>Grid2/Model/model.position.js</input>
+        <input>Grid2/Model/model.circle.js</input>
+        <input>Grid2/Model/model.polygon.js</input>
+        <input>Grid2/Model/model.path.js</input>
+        <input>Grid2/Model/model.point.js</input>
+        <input>Grid2/Model/model.snappoint.js</input>
+        <input>Grid2/Model/model.line.js</input>
+        <input>Grid2/Model/model.rectangle.js</input>
+        <input>Grid2/Model/model.image.js</input>
+        <input>Grid2/Model/model.staticimage.js</input>
+        <input>Grid2/Model/model.label.js</input>
+        <input>Grid2/Model/model.region.js</input>
+        <input>Grid2/Model/model.region.group.js</input>
+        <input>Grid2/Model/model.region.event.js</input>
+        <input>Grid2/Model/model.palette.js</input>
+
+        <input>Grid2/View/view.js</input>
+        <input>Grid2/View/view.layout.js</input>
+        <input>Grid2/View/view.loader.js</input>
+        <input>Grid2/View/view.canvas.js</input>
+        <input>Grid2/View/view.palette.js</input>
+        <input>Grid2/View/view.toolbar.js</input>
+        <input>Grid2/View/view.feedback.js</input>
+        <input>Grid2/View/view.editor.js</input>
+
+        <input>Grid2/Action/action.js</input>
+        <input>Grid2/Action/action.move.js</input>
+        <input>Grid2/Action/action.point.js</input>
+        <input>Grid2/Action/action.line.js</input>
+        <input>Grid2/Action/action.arrow.js</input>
+        <input>Grid2/Action/action.delete.js</input>
+        <input>Grid2/Action/action.circle.js</input>
+
+        <input>Grid2/toolbar.js</input>
+        <input>Grid2/toolbar.button.js</input>
+        <input>Grid2/palette.js</input>
+        <input>Grid2/canvas.js</input>
+
+        <input>Grid2/ImportExport/importexport.js</input>
+        <input>Grid2/ImportExport/importexport.options.js</input>
+        <input>Grid2/ImportExport/importexport.hotspot.js</input>
+        <input>Grid2/ImportExport/importexport.shapes.js</input>
+		<input>Grid2/ImportExport/ImportExport.qti.js</input>
+
+        <input>Content/Modules/module_grid.js</input>
+
+    </fileSet>
+    
+    <!-- Interactions (Hottext and Draggables) -->
+    <fileSet name="content-ht">
+        <!-- Choice Interaction -->
+        <input>Interaction/Interaction.js</input>
+        <input>Interaction/ChoiceInteraction.js</input>
+        <input>Interaction/Choice/Choice.js</input>
+        <!-- Select Interaction -->
+        <input>Interaction/SelectInteraction.js</input>
+        <input>Interaction/Choice/SelectChoice.js</input>
+        <!-- DragDrop Interaction -->
+        <input>Interaction/DDInteraction.js</input>
+        <input>Interaction/Choice/DragDrop.js</input>
+        <input>Interaction/Choice/DragGroup.js</input>
+        <!-- Order Interaction -->
+        <input>Interaction/OrderInteraction.js</input>
+        <input>Interaction/Choice/OrderGroup.js</input>
+        <input>Interaction/Choice/OrderChoice.js</input>
+        <!-- Blackbox -->
+        <input>Content/Modules/module_interaction.js</input>
+        <input>Interaction/qti/hottext.parse.js</input>
+    </fileSet>
+
+    <fileSet name="content-sim2">
+        <input>Simulator2/Renderer/SetSimNameSpace.js</input>
+        <input>Simulator2/Renderer/SWF/swfobject.js</input>
+        <input>Simulator2/Renderer/Object2.js</input>
+        <input>Simulator2/Renderer/HTML2JSMap2.js</input>
+        <input>Simulator2/Renderer/Constants2.js</input>
+        <input>Simulator2/Renderer/Whiteboard2.js</input>
+        <input>Simulator2/Renderer/Utils/Utils2.js</input>
+        <input>Simulator2/Renderer/Utils/Debug2.js</input>
+        <input>Simulator2/Renderer/Utils/Queue2.js</input>
+        <input>Simulator2/Renderer/Utils/Stack2.js</input>
+        <input>Simulator2/Renderer/Utils/String2.js</input>
+        <input>Simulator2/Renderer/Utils/Dictionary2.js</input>
+        <input>Simulator2/Renderer/Utils/Table2.js</input>
+        <input>Simulator2/Renderer/Utils/PersistentVariableDataBase2.js</input>
+        <input>Simulator2/Renderer/SimItem2.js</input>
+        <input>Simulator2/Renderer/Input/KeyboardInput2.js</input>
+        <input>Simulator2/Renderer/SimElement2.js</input>
+        <input>Simulator2/Renderer/DataDictionary2.js</input>
+        <input>Simulator2/Renderer/EventManager2.js</input>
+        <input>Simulator2/Renderer/EventDB2.js</input>
+        <input>Simulator2/Renderer/Event2.js</input>
+        <input>Simulator2/Renderer/Display/Layout2.js</input>
+        <input>Simulator2/Renderer/Simulator2.js</input>
+        <input>Simulator2/Renderer/SimulationManager2.js</input>
+        <input>Simulator2/Renderer/ResponseStateManager2.js</input>
+        <input>Simulator2/Renderer/Display/Canvas2.js</input>
+        <input>Simulator2/Renderer/Display/Panel2.js</input>
+        <input>Simulator2/Renderer/Animation/InlineData2.js</input>
+        <input>Simulator2/Renderer/Animation/AnimationElement2.js</input>
+        <input>Simulator2/Renderer/Animation/AnimationRenderer2.js</input>
+        <input>Simulator2/Renderer/Animation/HTML5Shell.js</input>
+        <input>Simulator2/Renderer/Animation/HotTextShell2.js</input>
+        <input>Simulator2/Renderer/Animation/AnimationSet2.js</input>
+        <input>Simulator2/Renderer/Animation/AnimationThread2.js</input>
+        <input>Simulator2/Renderer/Animation/AnimationThreadElement2.js</input>
+        <input>Simulator2/Renderer/Animation/FlashAnimationInterface2.js</input>
+        <input>Simulator2/Renderer/Input/Section2.js</input>
+        <input>Simulator2/Renderer/Input/InputElement2.js</input>
+        <input>Simulator2/Renderer/Input/GroupList2.js</input>
+        <input>Simulator2/Renderer/Input/ChoiceList2.js</input>
+        <input>Simulator2/Renderer/Input/DropList2.js</input>
+        <input>Simulator2/Renderer/Input/OptionList2.js</input>
+        <input>Simulator2/Renderer/Input/FieldSet2.js</input>
+        <input>Simulator2/Renderer/Input/SimSlider2.js</input>
+        <input>Simulator2/Renderer/Input/TextField2.js</input>
+        <input>Simulator2/Renderer/Input/StaticElement2.js</input>
+        <input>Simulator2/Renderer/Input/VerticalSpace2.js</input>
+        <input>Simulator2/Renderer/Input/HorizontalLine2.js</input>
+		<input>Simulator2/Renderer/Input/SectionDivider2.js</input>
+        <input>Simulator2/Renderer/Input/UpDownCounter2.js</input>
+        <input>Simulator2/Renderer/Input/TextConstant2.js</input>
+        <input>Simulator2/Renderer/Control/CommandElement2.js</input>
+        <input>Simulator2/Renderer/Control/Button2.js</input>
+        <input>Simulator2/Renderer/Display/DataDisplayElement2.js</input>
+        <input>Simulator2/Renderer/Display/DataTable2.js</input>
+        <input>Simulator2/Renderer/Display/DialogPanel2.js</input>
+
+        <input>Simulator2/EvaluationUnit/SimParser.js</input>
+        <input>Simulator2/EvaluationUnit/ParserItem.js</input>
+        <input>Simulator2/EvaluationUnit/SimUtils.js</input>
+        <input>Simulator2/EvaluationUnit/Parser.js</input>
+        <input>Simulator2/EvaluationUnit/Constraints.js</input>
+        <input>Simulator2/EvaluationUnit/ConstraintManager.js</input>
+        <input>Simulator2/EvaluationUnit/Permutations.js</input>
+        <input>Simulator2/EvaluationUnit/Functions.js</input>
+        <input>Simulator2/EvaluationUnit/FunctionManager.js</input>
+        <input>Simulator2/EvaluationUnit/FilterEvaluation.js</input>
+        <input>Simulator2/EvaluationUnit/Ranges.js</input>
+        <input>Simulator2/EvaluationUnit/RangeManager.js</input>
+        <input>Simulator2/EvaluationUnit/MinMaxRange.js</input>
+        <input>Simulator2/EvaluationUnit/IterationRange.js</input>
+        <input>Simulator2/EvaluationUnit/Variables.js</input>
+        <input>Simulator2/EvaluationUnit/VariableManager.js</input>
+        <input>Simulator2/EvaluationUnit/PersistentVariable.js</input>
+        <input>Simulator2/EvaluationUnit/ImplicitVariable.js</input>
+        <input>Simulator2/EvaluationUnit/LookupVariable.js</input>
+        <input>Simulator2/EvaluationUnit/BindableVariable.js</input>
+        <input>Simulator2/EvaluationUnit/ConstantVariable.js</input>
+        <input>Simulator2/EvaluationUnit/CumulativeVariable.js</input>
+        <input>Simulator2/EvaluationUnit/ResultVariable.js</input>
+        <input>Simulator2/EvaluationUnit/FunctionEvaluation.js</input>
+        <input>Simulator2/EvaluationUnit/EvaluationUnit.js</input>
+
+        <input>Simulator2/Renderer/SimulationLoader2.js</input>
+        <input>Content/Modules/module_simulator2.js</input>
+        
+    </fileSet>
+	
+    <!-- Measurement Tools -->
+    <fileSet name="content-mt">
+        <input>Libraries/MillionMunkeys/PiMunkey_1_4/PiObject.js</input>
+        <input>MeasurementTools/Set.js</input>
+        <input>MeasurementTools/Canvas.js</input>
+        <input>MeasurementTools/StraightLine.js</input>
+        <input>MeasurementTools/Ruler.js</input>
+        <input>MeasurementTools/Protractor.js</input>
+        <input>MeasurementTools/Compass.js</input>
+        <input>MeasurementTools/Arc.js</input>
+        <input>Content/Modules/module_mt.js</input>
+    </fileSet>
+
+   <!-- Equation Editor 2 -->
+    <fileSet name="content-eq2">
+        <input>EquationEditor2/config.js</input>
+        <input>EquationEditor2/content.js</input>
+        <input>EquationEditor2/editor.js</input>
+        <input>EquationEditor2/xml2jsonv2.js</input>
+        <input>Content/Modules/module_equation2.js</input>
+    </fileSet>
+
+    <!-- Equation Editor 2 accessibility (No MathJax) -->
+    <fileSet name="content-eq2-accessible">
+        <input>Content/Modules/module_equation2.js</input>
+    </fileSet>
+
+
+  <!-- Slideshow -->
+    <fileSet name="content-slideshow">
+        <input>Slideshow/sm2-show.js</input>
+        <input>Content/Modules/module_slideshow.js</input>
+    </fileSet>
+
+    <!-- Word List -->
+    <fileSet name="content-wl">
+        <input>WordList/wl_item.js</input>
+        <input>WordList/wl_panel.js</input>
+        <input>WordList/wl_retag.js</input>
+        <input>Content/Modules/module_wordlist.js</input>
+    </fileSet>
+
+  <fileSet name="content-mc">
+    <input>MultipleChoice/mc.group.js</input>
+    <input>MultipleChoice/mc.option.js</input>
+    <input>MultipleChoice/ms.group.js</input>
+    <input>MultipleChoice/ms.option.js</input>
+    <input>Content/Modules/module_mc.js</input>
+  </fileSet>
+  
+  <fileSet name="content-ebsr">
+    <input>EBSR/ebsr.js</input>
+    <input>EBSR/ebsr.qti.js</input>
+    <input>Content/Modules/module_ebsr.js</input>
+  </fileSet>
+
+  <!-- Animation -->
+    <fileSet name="content-animation">
+        <input>Animation/animation_manager.js</input>
+        <input>Content/Modules/module_animation.js</input>        
+    </fileSet>
+    
+    <fileSet name="content-mi">
+        <input>MatchItem/drawing.js</input>
+        <input>MatchItem/mi.html.js</input>
+        <input>MatchItem/mi.cell.js</input>
+        <input>MatchItem/mi.parse.js</input>
+        <input>MatchItem/mi.matrix.js</input>
+        <input>MatchItem/mi.render.js</input>
+        <input>Content/Modules/module_matchitem.js</input>
+    </fileSet>
+
+    <fileSet name="content-edittask">
+        <input>EditTask/edit.interaction.js</input>
+        <input>EditTask/edit.parse.js</input>
+        <input>EditTask/edit.html.js</input>
+        <input>EditTask/edit.html.text.js</input>
+        <input>EditTask/edit.html.choice.js</input>
+        <input>Content/Modules/module_edittask.js</input>
+    </fileSet>
+
+    <fileSet name="content-scaffolding">
+        <input>Scaffolding/asi.parse.js</input>
+        <input>Scaffolding/asi.audio.js</input>
+        <input>Scaffolding/asi.wapiaudio.js</input>
+        <input>Scaffolding/asi.audiofactory.js</input>
+        <input>Scaffolding/asi.html.js</input>
+        <input>Scaffolding/asi.interaction.js</input>
+        <input>Content/Modules/module_scaffolding.js</input>
+    </fileSet>
+
+    <fileSet name="content-scratchpad">
+        <input>ScratchPad/zwibbler2.js</input>
+        <input>ScratchPad/speqeditor.js</input>
+        <input>Content/Modules/module_scratchpad.js</input>
+    </fileSet>
+
+    <fileSet name="content-linereader">
+      <input>LineReader/control.js</input>
+    </fileSet>
+  
+    <!-- Masking tools for accessibility -->
+    <fileSet name="content-mask">
+        <input>Mask/main.js</input>
+        <input>Mask/control.js</input>
+        <input>Mask/events.js</input>
+        <input>Content/Modules/module_mask.js</input>
+    </fileSet>
+
+    <!-- Table Item -->
+    <fileSet name="content-ti">
+        <input>TableItem/ti.js</input>
+        <input>TableItem/ti.textarea.js</input>
+        <input>TableItem/ti.responsetable.js</input>
+        <input>Content/Modules/module_ti.js</input>
+    </fileSet>
+
+    <!-- Table Input (TI2) -->
+    <fileSet name="content-ti2">
+        <input>TableInput/base.js</input>
+        <input>TableInput/validator.js</input>
+        <input>TableInput/response.js</input>
+        <input>TableInput/module.js</input>
+    </fileSet>
+  
+    <!-- Moogle -->
+    <fileSet name="content-moogle">
+        <input>Moogle/moogle.js</input>
+        <input>Content/Modules/module_moogle.js</input>
+    </fileSet>
+
+    <fileSet name="content-notes">
+        <input>Notes/main.js</input>
+        <input>Notes/dialog.js</input>
+        <input>Notes/base.js</input>
+        <input>Notes/textarea.js</input>
+        <input>Notes/scratchpad.js</input>
+        <input>Notes/dropdown.js</input>
+        <input>Notes/equation.js</input>
+        <input>Notes/factory.js</input>
+        
+        <!-- Disabled this since we switched back to Comments infrastructure -->
+        <!--<input>Content/Modules/module_notes.js</input>-->
+    </fileSet>
+    
+    <!-- Modules -->
+    <fileSet name="content-modules">
+
+        <!-- Standalone -->
+        <reference set="content-mc" />
+        <reference set="content-ebsr"/>
+        <reference set="content-wl"/>
+        <input>Content/Modules/module_attachment.js</input>
+        <input>Content/Modules/module_plaintext.js</input>
+        <input>Content/Modules/module_wordbuilder.js</input>
+
+        <!-- Services -->
+        <input>Content/Modules/module_menu.js</input>
+        <input>Content/Modules/module_highlighter.js</input>
+        <input>Content/Modules/module_tts.js</input>
+        <input>Content/Modules/module_audioplayer.js</input>
+        <input>Content/Modules/module_audiorecorder.js</input>
+        <input>Content/Modules/module_video.js</input>
+        <input>Content/Modules/module_asl.js</input>
+        <input>Content/Modules/module_pagination.js</input>
+
+    </fileSet>
+
+</resources>

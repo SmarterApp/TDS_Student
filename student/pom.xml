@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.opentestsystem.shared</groupId>
+		<artifactId>shared-master</artifactId>
+		<version>1.0.1</version>
+	</parent>
+	<groupId>org.opentestsystem.delivery</groupId>
+	<artifactId>student</artifactId>
+	<name>student</name>
+	<packaging>war</packaging>
+	<version>R01.00.00</version>
+
+	<licenses>
+		<license>
+			<name>AIR-License-1.0</name>
+			<url>http://www.smarterapp.org/documents/American_Institutes_for_Research_Open_Source_Software_License.pdf</url>
+			<distribution>repo</distribution>
+			<comments>Educational Online Test Delivery System Copyright (c) 2013 American Institutes for Research</comments>
+		</license>
+	</licenses>
+
+	<repositories>
+		<repository>
+			<id>airdev-snapshots</id>
+			<name>airdev-snapshots</name>
+			<url>http://airdev.artifactoryonline.com/airdev/libs-snapshots-local</url>
+		</repository>
+	</repositories>
+
+	<properties>
+		<item-renderer.version>0.0.1</item-renderer.version>
+		<item-scoring.version>1.1.0</item-scoring.version>
+		<resource-bundler.version>0.0.1</resource-bundler.version>
+		<item-selection.version>0.0.1</item-selection.version>
+		<testscoring.version>0.0.1</testscoring.version>
+		<spellcheck.version>0.0.1</spellcheck.version>
+		<progman-client.version>0.0.4</progman-client.version>
+		<sb11-mna-client.version>0.0.4</sb11-mna-client.version>
+		<sb11-shared-code.version>0.0.6</sb11-shared-code.version>
+	</properties>
+
+	<dependencies>
+		<!-- Start Dependency shared project -->
+		<dependency>
+			<groupId>org.opentestsystem.shared</groupId>
+			<artifactId>shared-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.opentestsystem.shared</groupId>
+			<artifactId>shared-tr-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.opentestsystem.shared</groupId>
+			<artifactId>shared-logging</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.opentestsystem.shared</groupId>
+			<artifactId>shared-threading</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.opentestsystem.shared</groupId>
+			<artifactId>shared-test</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>tds-dll-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>tds-dll-mssql</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>tds-dll-mysql</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>item-renderer</artifactId>
+			<version>${item-renderer.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>AIR</groupId>
+			<artifactId>ResourceBundler</artifactId>
+			<version>${resource-bundler.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>tds-itemselection-common</artifactId>
+			<version>${item-selection.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>tds-itemselection-aironline</artifactId>
+			<version>${item-selection.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>item-scoring-api</artifactId>
+			<version>${item-scoring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>item-scoring-engine</artifactId>
+			<version>${item-scoring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>testscoring</artifactId>
+			<version>${testscoring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>AIR.SpellCheck</groupId>
+			<artifactId>spellcheck</artifactId>
+			<version>${spellcheck.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore</artifactId>
+		</dependency>
+			<!-- Start: Program management integration dependency -->
+		<dependency>
+			<groupId>org.opentestsystem.shared</groupId>
+			<artifactId>prog-mgmnt-client</artifactId>
+			<version>${progman-client.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.opentestsystem.shared</groupId>
+			<artifactId>prog-mgmnt-client-null-impl</artifactId>
+			<version>${progman-client.version}</version>
+		</dependency>
+		<!-- End: Program management integration dependency -->
+		<!-- Start: Monitoring and Alerting integration dependency -->
+		<dependency>
+			<groupId>org.opentestsystem.shared</groupId>
+			<artifactId>monitoring-alerting.client-null-impl</artifactId>
+			<version>${sb11-mna-client.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.opentestsystem.shared</groupId>
+			<artifactId>monitoring-alerting.client</artifactId>
+			<version> ${sb11-mna-client.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.opentestsystem.shared</groupId>
+			<artifactId>sb11-shared-code</artifactId>
+			<version>${sb11-shared-code.version}</version>
+		</dependency>
+		<!-- End: Monitoring and Alerting integration dependency -->
+		<!-- Logging -->
+		<!-- <dependency> <groupId>log4j</groupId> <artifactId>log4j</artifactId> 
+			<scope>provided</scope> </dependency> <dependency> <groupId>org.slf4j</groupId> 
+			<artifactId>slf4j-log4j12</artifactId> <scope>compile</scope> </dependency> -->
+		<dependency>
+			<groupId>commons-primitives</groupId>
+			<artifactId>commons-primitives</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-configuration</groupId>
+			<artifactId>commons-configuration</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-digester</groupId>
+			<artifactId>commons-digester</artifactId>
+		</dependency>
+		<!-- @Inject -->
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+		</dependency>
+		<!-- Servlet -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Test -->
+		<dependency>
+			<groupId>com.mchange</groupId>
+			<artifactId>c3p0</artifactId>
+			<scope>compile</scope>
+		</dependency>
+	
+	</dependencies>
+</project>

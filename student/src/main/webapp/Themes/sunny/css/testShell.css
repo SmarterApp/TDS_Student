@@ -1,0 +1,52 @@
+@charset "UTF-8";
+/* Lake Theme */
+
+.topBar {
+	background-image: url(../Images/test_sbac.gif);
+	padding-right: 200px;
+	background-color: #fff;
+}
+.sessionID {
+	border-right: 1px solid #41516c;
+}
+.smallButtons a:hover {
+	background-color: #ffa20c;
+}
+.studentInfo {
+	background-color: transparent;
+    border: medium none;
+    color: #225376;
+}
+.bottomBar {
+	background-color: #f0f0f0;
+	border-top-color: #004a80;
+	border-bottom-color: #716f61;
+}
+.testName {
+	background-color: #6083A8;
+    border: medium none;
+    color: #FFFFFF;
+}
+.yourChoices .greenBtn {
+	border-color: #164c7e;
+	color:#164c7e;
+}
+.yourChoices .greenBtn:hover {
+	background-color:#164c7e;
+}
+.sound_cue, .sound_cue.load_incomplete, .sound_cue.disabled  {
+	background: url(../Images/controls/speaker_noclick.gif) no-repeat center center;
+}
+#foot{
+	background: url(../Images/studentFooter.gif) repeat-x #003961;
+}
+#studentTools{
+	background: url(../Images/studentFooterTools.gif) repeat-x;
+	height: 30px;
+	border: none;
+}
+
+/* preloads Images so they don't appear 'missing' */
+.preloader {
+	background-color: #A7C9E2;
+}

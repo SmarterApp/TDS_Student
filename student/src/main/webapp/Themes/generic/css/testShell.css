@@ -1,0 +1,50 @@
+@charset "UTF-8";
+/* Generic Blue Theme */
+
+.topBar {
+	background: #224b76 url(../Images/gradient_deepBlue.png) repeat-x left bottom;
+	padding-right: 5px;
+}
+.sessionID {
+	border:none;
+}
+.logo{
+	display: none;
+}
+.smallButtons a {
+	background-color: #c6d8e2;
+	border-color: #00355c;
+}
+.smallButtons a:hover {
+	background-color: #fff;
+	color: #000;
+}
+.studentInfo {
+	background-color: transparent;
+	color: #fff;
+	border-right: none;
+}
+.bottomBar {
+	background-color: #f0f0f0;
+	border-top-color: #004a80;
+	border-bottom-color: #716f61;
+}
+.testName {
+	background-color: #cdcdcd;
+	border:none;
+}
+.yourChoices .greenBtn {
+	border-color: #164c7e;
+	color:#164c7e;
+}
+.yourChoices .greenBtn:hover {
+	background-color:#164c7e;
+}
+.sound_cue, .sound_cue.load_incomplete, .sound_cue.disabled  {
+	background: url(../Images/controls/speaker_noclick.gif) no-repeat center center;
+}
+
+/* preloads Images so they don't appear 'missing' */
+.preloader {
+	background-color: #004a80;
+}

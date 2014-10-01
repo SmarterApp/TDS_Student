@@ -1,0 +1,34 @@
+@charset "UTF-8";
+/* OR specific styles, uses default theme */
+
+/* @group logos */
+
+.topBar {
+	background-image: url(../Images/logoStudentTop.gif);}
+.bottomBar {
+	background-image: url(../Images/logoStudentBottomInside.gif);
+	background-repeat: no-repeat;
+	background-position: right top;
+}
+
+/* @end */
+
+
+.startSpeak, .stopSpeak, .speakHelp {
+	visibility: hidden;
+	overflow: hidden;
+	height: 0px;
+	width: 0px;
+}
+.subject_New_Item_Types.gradeSpan_3-12 .startSpeak, .subject_New_Item_Types.gradeSpan_3-12 .stopSpeak {
+	visibility: visible;
+	overflow: inherit;
+	width: 18px;
+	height: 18px;
+}
+.subject_New_Item_Types.gradeSpan_3-12 .speakHelp {
+	visibility: visible;
+	overflow: inherit;
+	height: 18px;
+	width:inherit;
+}

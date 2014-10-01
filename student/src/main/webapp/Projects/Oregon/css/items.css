@@ -1,0 +1,16 @@
+@charset "UTF-8";
+/* Oregon Rules*/
+
+/* moved to accommodations.css 
+.grade_03 .thePassage, .grade_04 .thePassage {
+	font-size: 1.3em;
+}
+.subject_Science {
+	font-family: Arial, Helvetica, sans-serif;
+}
+*/
+
+/* Mac OS 9 choices, keys hack */
+.browserVer_1_3.TDS_PS_Larger .optionClicker, .browserVer_1_3.TDS_PS_Larger .keyboard a {
+	position:relative;
+}

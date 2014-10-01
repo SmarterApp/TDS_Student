@@ -1,0 +1,75 @@
+/* CSS File */
+@charset "UTF-8";
+
+/*Tree Theme (UTAH) Styles */
+#ot-topBar, #ot-studentInfo, .sessionID{
+    background: #b6c8b5;
+    border-color: #546152;
+	color: #546152;
+}
+#ot-brand1{
+	background: url("../Images/utah-banner.jpg") no-repeat right #546152;
+	height: 103px;
+	border-bottom: 1px solid #ccc;
+}
+#ot-brand2{
+	    background-color: #fff;
+        border-color: #ccc;
+		height: 33px;
+}
+.practiceTest #sectionLogin .ot-shadowBox h2{
+    background: url("../Images/bike/bikeTitle.gif") no-repeat scroll 100% 100% transparent;
+    
+}
+#ot-brand2 strong{
+	background: #fff; 
+	border-left: 1px solid #ccc;
+   
+    height: 33px;
+}
+.practiceTest #ot-brand2 strong{
+	background: url("../Images/bike/bikeTop.gif") no-repeat scroll 100% 50% #fff;
+	 padding-right: 45px;
+}
+#sectionLogin .ot-innerShadow{
+    background: #efead7 !important;
+}
+.practiceTest .loginForm, .ot-shadowBox h2{
+    border-color: #546152;
+
+}
+.practiceTest .checkHolder{
+    background: #546152;
+    color: #fff;
+}
+.blurb{
+    background: #efead7;
+}
+.linkbox, .gridlink{
+    background-color: #dcd8ca;
+    border-color: #999;
+    color: #000;
+}
+#diagnostics a{
+}
+
+ #tds-ot-footer span, #tds-ot-footer a{
+    color: #546152;
+}
+/*
+.actions .positive button, .actions .positive input{
+    
+    color: #546152;
+}
+.actions .positive{
+    border-color: #546152;
+}
+.actions .positive button:hover, .actions .positive input:hover, .actions .positive button:active, .actions .positive input:active, .actions .positive button:focus, .actions .positive input:focus{
+    background-color: #546152 !important;
+    color: #fff;
+}*/
+.ot-smallButtons a{
+    background-color: #efead7;
+    border-color: #546152;
+    color: #546152;
+}

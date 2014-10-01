@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:cc="http://java.sun.com/jsf/composite" xmlns:tds="http://airast.org/jsfcustom">
+<cc:interface />
+<cc:implementation>
+
+	<tds:SectionWrapper id="sectionSoundCheck">
+
+		<span class="preloader"><span class="recorder"></span></span>
+
+		<div id="checkSound" class="shadowBox small soundcheck" style="">
+			<h2 i18n-content="SoundCheck.Label.DidYouHear"></h2>
+
+			<div class="instructions">
+				<p>
+	    		   <a id="audioPlayer" autoplay="False" visible="True" class="sound_repeat" type="audio/ogg" href="#{request.contextPath}/Shared/Audio/SoundCheckSample.ogg" tabindex="1" />
+				   <span
+						i18n-content="SoundCheck.Label.ClickToHear"></span>
+				</p>
+				<p i18n-content="SoundCheck.Label.HeardYesOrNo"></p>
+			</div>
+
+			<span class="actions"> <tds:Button id="btnSoundNo" styleClass="negative" key="SoundCheck.Label.HeardNo" /> <tds:Button id="btnSoundYes" styleClass="positive disabled"
+					key="SoundCheck.Label.HeardYes" />
+			</span> <span class="clear"></span>
+		</div>
+
+		<div id="checkRecorder" class="shadowBox small soundcheck" style="display: none;">
+			<h2 i18n-content="SoundCheck.Label.RecordAndPlay"></h2>
+
+			<div class="instructions">
+				<div id="audioRecorder" class="elicitedwrap recording_ready disabled">
+					<span class="soundlevelwrap"><span class="soundlevelindicator" style="width: 50%"></span></span>
+					<div class="elicitedaround">
+						<a href="javascript:void(0);" class="btnRecord" tabindex="4" i18n-content="SoundCheck.Button.StartStopRecording"></a> <a href="javascript:void(0);" class="btnPlayPause" tabindex="5"
+							i18n-content="SoundCheck.Button.Play"></a> <span class="elicitedcontrols"></span>
+					</div>
+				</div>
+				<div i18n-content="SoundCheck.Label.SoundCheckInstructions"></div>
+				<!-- NOTE: before i18n change this div was not here -->
+			</div>
+
+			<span class="actions"> <tds:Button id="btnRecorderProblem" styleClass="negative" key="SoundCheck.Button.InstructionsFollowUpNo" /> <tds:Button id="btnRecorderYes"
+					styleClass="positive disabled" key="SoundCheck.Button.InstructionsFollowUpYes" />
+			</span> <span class="clear"></span>
+		</div>
+
+		<div id="checkError" class="shadowBox small soundcheck" style="display: none;">
+			<h2 i18n-content="SoundCheck.Label.AudioProblem"></h2>
+
+			<div class="instructions">
+				<p i18n-content="SoundCheck.Label.TellAdminMessage"></p>
+			</div>
+
+			<span class="actions"> <tds:Button id="btnErrorRetry" styleClass="negative" key="SoundCheck.Label.TryAgain" /> <tds:Button styleClass="soundCheckLogout positive"
+					key="SoundChecl.Label.LogoutOnAudioError" />
+			</span> <span class="clear"></span>
+		</div>
+
+		<!-- -->
+
+		<div id="javaError" class="shadowBox small soundcheck" style="display: none">
+			<h2 i18n-content="SoundCheck.Label.Java14Required"></h2>
+			<span class="actions"> <tds:Button styleClass="positive" key="SoundCheck.Button.LogoutOnJavaError" />
+			</span>
+		</div>
+
+		<div id="flashError" class="shadowBox small soundcheck" style="display: none">
+			<h2 i18n-content="SoundCheck.Label.Flash9Required"></h2>
+			<span class="actions"> <tds:Button styleClass="positive" key="SoundCheck.Label.LogoutOnFlashError" />
+			</span> <span class="clear"></span>
+		</div>
+
+		<div id="soundCheckRecorderError" class="shadowBox small soundcheck" style="display: none">
+			<h2 i18n-content="SoundCheck.RecorderRequired.Header"></h2>
+			<div class="instructions" i18n-content="SoundCheck.RecorderRequired.Text"></div>
+			<span class="actions"> <tds:Button styleClass="soundCheckLogout positive" key="SoundChecl.Label.LogoutOnAudioError" />
+			</span> <span class="clear"></span>
+		</div>
+
+	</tds:SectionWrapper>
+
+</cc:implementation>
+</html>
