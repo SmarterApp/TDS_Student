@@ -1,11 +1,3 @@
-/*******************************************************************************
- * Educational Online Test Delivery System 
- * Copyright (c) 2014 American Institutes for Research
- *     
- * Distributed under the AIR Open Source License, Version 1.0 
- * See accompanying file AIR-License-1_0.txt or at
- * http://www.smarterapp.org/documents/American_Institutes_for_Research_Open_Source_Software_License.pdf
- ******************************************************************************/
 /*
  * using System; using System.Collections.Generic; using System.IO; using
  * System.Xml.Linq;
@@ -18,6 +10,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -71,6 +64,9 @@ public class Resources
         parseFileSet (childEl);
       } else if ("import".equalsIgnoreCase (childName)) {
         parseImport (childEl);
+      } else if ("remove".equalsIgnoreCase (childName))
+      {
+        parseRemove (childEl);
       }
 
     }
@@ -94,6 +90,18 @@ public class Resources
     {
       FileSet resource = iterator.next ();
       _fileSets.put (resource.getName (), resource);
+    }
+  }
+
+  private void parseRemove (Element excludeEl)
+  {
+    Attribute setAttrib = excludeEl.getAttribute ("set");
+    String setName = (setAttrib != null) ? setAttrib.getValue () : null;
+
+    // remove fileset globally
+    if (!StringUtils.isEmpty (setName))
+    {
+      _fileSets.remove (setName);
     }
   }
 

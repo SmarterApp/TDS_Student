@@ -8,7 +8,7 @@ This project is licensed under the [AIR Open Source License v1.0](http://www.sma
 ## Getting Involved ##
 We would be happy to receive feedback on its capabilities, problems, or future enhancements:
 
-* For general questions or discussions, please use the [Forum](forum_link_here).
+* For general questions or discussions, please use the [Forum](http://forum.opentestsystem.org/viewforum.php?f=9).
 * Use the **Issues** link to file bugs or enhancement requests.
 * Feel free to **Fork** this project and develop your changes!
 
@@ -16,6 +16,12 @@ We would be happy to receive feedback on its capabilities, problems, or future e
 
 ### Webapp
 The Webapp module contains the Student UI and REST APIs.
+
+### ResourceBundler
+The ResourceBundler module provides the classes to parse the xml files in Student's 'Scripts' folder which contains the configuration for loading java scripts in the pages in run time.When the jsf pages' custom tags are executed, the code behind invokes those classes to load appropriate java scripts and css files.
+
+### SpellCheck
+The SpellCheck module contains REST APIs related to dictionary and spell check for student tests with passages. It contains integration to the [Hunspell](http://hunspell.sourceforge.net) Engine for spell check.
 
 ## Setup
 In general, building the code and deploying the WAR file is a good first step.  The Student application, however, has a number of other steps that need to be performed in order to fully setup the system.

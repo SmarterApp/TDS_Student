@@ -10,14 +10,6 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>spellcheck</name>
   
-	<repositories>
-	    <!--other repositories if any-->
-	    <repository>
-	        <id>project.local</id>
-	        <name>project</name>
-	        <url>file:${project.basedir}/repo</url>
-	    </repository>
-	</repositories>
   	<licenses>
 		<license>
 			<name>AIR-License-1.0</name>

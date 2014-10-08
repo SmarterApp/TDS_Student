@@ -12,7 +12,7 @@
 	<artifactId>student</artifactId>
 	<name>student</name>
 	<packaging>war</packaging>
-	<version>R01.00.00</version>
+	<version>R01.00.01</version>
 
 	<licenses>
 		<license>
@@ -23,13 +23,6 @@
 		</license>
 	</licenses>
 
-	<repositories>
-		<repository>
-			<id>airdev-snapshots</id>
-			<name>airdev-snapshots</name>
-			<url>http://airdev.artifactoryonline.com/airdev/libs-snapshots-local</url>
-		</repository>
-	</repositories>
 
 	<properties>
 		<item-renderer.version>0.0.1</item-renderer.version>
