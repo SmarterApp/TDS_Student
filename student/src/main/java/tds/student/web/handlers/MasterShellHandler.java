@@ -135,6 +135,8 @@ public class MasterShellHandler extends TDSHandler
   @ResponseBody
   public ResponseData<LoginInfo> loginStudent (@RequestParam (value = "sessionID", required = false) String sessionID, @RequestParam (value = "keyValues", required = false) String keyValues,
       @RequestParam (value = "forbiddenApps", required = false) String forbiddenApps, HttpServletResponse response, HttpServletRequest request) throws ReturnStatusException, FailedReturnStatusException {
+    long startTime = System.currentTimeMillis ();
+    _logger.info ("<<<<<<<<<loginStudent Start "+ getTime () +" -- " + Thread.currentThread ().getId () + " >>>>>>>>>>>> keyValues : "+keyValues);
     LoginInfo loginInfo;
     sessionID = sessionID != null ? sessionID : "";
     keyValues = keyValues != null ? keyValues : "";
@@ -207,7 +209,8 @@ public class MasterShellHandler extends TDSHandler
     StudentContext.saveTestee (loginInfo.getTestee ());
     StudentContext.saveSession (loginInfo.getSession ());
     StudentCookie.writeStore();
-    
+    _logger.info ("<<<<<<<<<loginStudent End "+ getTime () +" -- " + Thread.currentThread ().getId () + " >>>>>>>>>>>> keyValues : "+keyValues);
+    _logger.info ("<<<<<<<<< loginStudent Total Execution Time : "+((System.currentTimeMillis ()-startTime)/1000) + " seconds");
     return new ResponseData<LoginInfo> (TDSReplyCode.OK.getCode (), "OK", loginInfo);
   }
 
@@ -223,6 +226,7 @@ public class MasterShellHandler extends TDSHandler
   @RequestMapping (value = "MasterShell.axd/getTests")
   @ResponseBody
   public ResponseData<List<TestSelection>> getTests (@RequestParam (value = "grade", required = false) String grade) throws ReturnStatusException, TDSSecurityException, StudentContextException {
+    long startTime = System.currentTimeMillis ();
     List<TestSelection> testSelections = null;
     checkAuthenticated ();
 
@@ -245,7 +249,7 @@ public class MasterShellHandler extends TDSHandler
     }
     
     testSelections = _oppService.getEligibleTests (testee, session, grade,browserInfo);
-
+    _logger.info ("<<<<<<<<< getTests Total Execution Time : "+((System.currentTimeMillis ()-startTime)/1000) + " seconds");
     return new ResponseData<List<TestSelection>> (TDSReplyCode.OK.getCode (), "OK", testSelections);
   }
 
@@ -295,12 +299,14 @@ public class MasterShellHandler extends TDSHandler
     // get test properties
     TestSession session = StudentContext.getSession ();
     Testee testee = StudentContext.getTestee ();
-
+    
     // validate context
     if (session == null || testee == null) {
       StudentContext.throwMissingException ();
     }
-
+    
+    _logger.info ("<<<<<<<<<OpenTest Start "+ getTime () +" -- " + Thread.currentThread ().getId () + " >>>>>>>>>>>> testID : "+testID + " Name "+session.getName () + " Id " + session.getId ());
+    
     // create json response
     opportunityInfoJsonModel.setTestForms (new ArrayList<TestForm> ());
     opportunityInfoJsonModel.setTesteeForms (new ArrayList<String> ());
@@ -322,7 +328,7 @@ public class MasterShellHandler extends TDSHandler
     StudentContext.saveSubject (subject);
     StudentContext.saveGrade (grade);
     StudentCookie.writeStore();
-    
+    _logger.info ("<<<<<<<<<OpenTest End "+ getTime () +" -- " + Thread.currentThread ().getId () + " >>>>>>>>>>>> testID : "+testID + " Name "+session.getName () + " Id " + session.getId ());
     return new ResponseData<OpportunityInfoJsonModel> (TDSReplyCode.OK.getCode (), "OK", opportunityInfoJsonModel);
   }
 
@@ -662,6 +668,9 @@ public class MasterShellHandler extends TDSHandler
    */
   private void sendTestStatus (String testeeId, String testKey, UUID oppKey, TestStatusType testStatusType) {
     try {
+      if (testeeId.substring (0, 7).equalsIgnoreCase ("guest -")) {
+         return;
+       }
       TestStatus testStatus = new TestStatus ();
       testStatus.setStudentId (testeeId);
       testStatus.setTestId (testKey);

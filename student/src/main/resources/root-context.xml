@@ -131,6 +131,9 @@
 		<beans:property name="idleConnectionTestPeriod" value="${datasource.idleConnectionTestPeriod:300}"/>
 		<beans:property name="testConnectionOnCheckout" value="${datasource.testConnectionOnCheckout:false}"/>
 		<beans:property name="testConnectionOnCheckin" value="${datasource.testConnectionOnCheckin:false}"/>
+		<beans:property name="numHelperThreads" value="${datasource.numHelperThreads:6}"/>
+		<beans:property name="maxStatements" value="${datasource.maxStatements:20000}"/>
+		<beans:property name="maxStatementsPerConnection" value="${datasource.maxStatementsPerConnection:200}"/>
 	</beans:bean>
 		
 	<!--End: c3p0 Datasource Configuration -->

@@ -50,6 +50,9 @@ public class RemoteStudentPackageService implements IStudentPackageService
   
   @Override
   public String getStudentPackage (String ssidOrExternalSsid, boolean isSsid) {
+    if (ssidOrExternalSsid.equalsIgnoreCase ("guest")) {
+       return null;
+    }
     ssidOrExternalSsid = UrlEncoderDecoderUtils.encode (ssidOrExternalSsid);
 
     // SB-326
@@ -61,12 +64,8 @@ public class RemoteStudentPackageService implements IStudentPackageService
       urlPath = "studentpackage?" + ssidOrExternalSsidParam + "=" + ssidOrExternalSsid + "&stateabbreviation=" + _stateCode;
       return _trClient.getPackage (urlPath);
     } catch (Exception e) {
-      if (ssidOrExternalSsid.equalsIgnoreCase ("guest")) {
-         _logger.warn (e.getMessage ());
-      } else {
-         _logger.error (e.getMessage (), e);
-      }
-      return null;
+       _logger.error (e.getMessage (), e);
+       return null;
     }
 
   }
@@ -81,10 +80,10 @@ public class RemoteStudentPackageService implements IStudentPackageService
       _trClient.put ("testStatus", testStatuses);
     } catch (TrApiException e) {
        if (!e.isErrorExempted ()) {
-          _logger.error ("RemoteStudentPackageService.sendTestStatus: " + e.getErrorMessage (), e);
+          _logger.warn ("RemoteStudentPackageService.sendTestStatus: " + e.getErrorMessage ());
        }
     } catch (Exception e) {
-      _logger.error ("RemoteStudentPackageService.sendTestStatus: " + e.getMessage (), e);
+      _logger.warn ("RemoteStudentPackageService.sendTestStatus: " + e.getMessage ());
     }
     
   }

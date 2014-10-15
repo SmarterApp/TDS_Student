@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.Iterator;
 
 import org.apache.commons.io.FileUtils;
@@ -16,9 +15,9 @@ import org.apache.commons.lang3.StringUtils;
 import AIR.Common.Utilities.Path;
 import AIR.Common.Web.Session.HttpContext;
 import AIR.Common.time.DateTime;
+import AIR.ResourceBundler.Xml.FileSet;
 import AIR.ResourceBundler.Xml.FileSetInput;
 import AIR.ResourceBundler.Xml.Resources;
-import AIR.ResourceBundler.Xml.FileSet;
 
 // / <summary>
 // / This takes a resouces object and combines all the file sets.

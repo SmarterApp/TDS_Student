@@ -9,11 +9,11 @@
 package tds.student.sql.repository;
 
 import java.io.StringWriter;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -57,7 +57,6 @@ import AIR.Common.DB.AbstractDAO;
 import AIR.Common.DB.SQLConnection;
 import AIR.Common.DB.SqlParametersMaps;
 import AIR.Common.DB.results.DbResultRecord;
-import AIR.Common.DB.results.MultiDataResultSet;
 import AIR.Common.DB.results.SingleDataResultSet;
 import TDS.Shared.Data.ReturnStatus;
 import TDS.Shared.Exceptions.ReturnStatusException;
@@ -169,7 +168,22 @@ public class OpportunityRepository extends AbstractDAO implements IOpportunityRe
   public TestConfig startTestOpportunity (OpportunityInstance oppInstance, String testKey, String formKeyList) throws ReturnStatusException {
     TestConfig oppConfig = new TestConfig ();
     try (SQLConnection connection = getSQLConnection ()) {
-      SingleDataResultSet firstResultSet = _studentDll.T_StartTestOpportunity_SP (connection, oppInstance.getKey (), oppInstance.getSessionKey (), oppInstance.getBrowserKey (), formKeyList);
+      
+      SingleDataResultSet firstResultSet = null;
+      Integer transactionIsolation = null;
+      try {
+        transactionIsolation = connection.getTransactionIsolation ();
+        connection.setTransactionIsolation (Connection.TRANSACTION_READ_COMMITTED);
+        firstResultSet = _studentDll.T_StartTestOpportunity_SP (connection, oppInstance.getKey (), oppInstance.getSessionKey (), oppInstance.getBrowserKey (), formKeyList);
+      } catch (Exception e) {
+        throw e;
+      } finally {
+        if(transactionIsolation!=null) {
+          connection.setTransactionIsolation (transactionIsolation);
+        }
+      }
+      
+      
       ReturnStatusException.getInstanceIfAvailable (firstResultSet);
 
       ReturnStatus status = ReturnStatus.parse (firstResultSet);

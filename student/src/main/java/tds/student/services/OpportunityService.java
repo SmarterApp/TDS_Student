@@ -64,11 +64,13 @@ public class OpportunityService implements IOpportunityService
   private static final Logger    _logger = LoggerFactory.getLogger (OpportunityService.class);
 
   public List<TestSelection> getEligibleTests (Testee testee, TestSession session, String grade, BrowserInfo browserInfo) throws ReturnStatusException {
+    long startTime = System.currentTimeMillis ();
     // get test availability info
     List<TestSelection> testSelectionList = null;
     try {
 
       testSelectionList = _oppRepository.getEligibleTests (testee.getKey (), session.getKey (), grade);
+      _logger.info ("<<<<<<<<< getEligibleTests 10 Execution Time : "+((System.currentTimeMillis ()-startTime)/1000) + " seconds >>>> " + Thread.currentThread ().getId ());
    // validate browser for this test
       if (browserInfo != null)
       {
@@ -121,7 +123,7 @@ public class OpportunityService implements IOpportunityService
               }
           }
       }
-
+      _logger.info ("<<<<<<<<< getEligibleTests Total Execution Time : "+((System.currentTimeMillis ()-startTime)/1000) + " seconds >>>> " + Thread.currentThread ().getId ());
     } catch (ReturnStatusException e) {
       _logger.error (e.getMessage ());
       throw e;

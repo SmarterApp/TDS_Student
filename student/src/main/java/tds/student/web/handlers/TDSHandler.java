@@ -119,5 +119,10 @@ public class TDSHandler extends HttpHandlerBase
   protected void onBeanFactoryInitialized () {
 
   }
+  
+  protected String getTime() {
+    java.text.SimpleDateFormat df = new java.text.SimpleDateFormat("MM-dd-yyyy hh:mm:ss");
+    return df.format (new java.util.Date());
+  }
 
 }
