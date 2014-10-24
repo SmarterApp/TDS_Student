@@ -6,12 +6,13 @@
 	<parent>
 		<groupId>org.opentestsystem.shared</groupId>
 		<artifactId>shared-master</artifactId>
-		<version>1.0.1-BUILD-SNAPSHOT</version>
+		<version>1.0.1</version>
 	</parent>
 	<groupId>org.opentestsystem.delivery</groupId>
 	<artifactId>student</artifactId>
 	<name>student</name>
 	<packaging>war</packaging>
+	<version>R01.00.03</version>
 
 	<licenses>
 		<license>
@@ -24,15 +25,15 @@
 
 
 	<properties>
-		<item-renderer.version>0.0.1-SNAPSHOT</item-renderer.version>
-		<item-scoring.version>1.1.0-SNAPSHOT</item-scoring.version>
-		<resource-bundler.version>0.0.1-SNAPSHOT</resource-bundler.version>
-		<item-selection.version>0.0.1-SNAPSHOT</item-selection.version>
-		<testscoring.version>0.0.1-SNAPSHOT</testscoring.version>
-		<spellcheck.version>0.0.1-SNAPSHOT</spellcheck.version>
-		<progman-client.version>0.0.4-SNAPSHOT</progman-client.version>
-		<sb11-mna-client.version>0.0.4-SNAPSHOT</sb11-mna-client.version>
-		<sb11-shared-code.version>0.0.6-SNAPSHOT</sb11-shared-code.version>
+		<item-renderer.version>0.0.1</item-renderer.version>
+		<item-scoring.version>1.1.0</item-scoring.version>
+		<resource-bundler.version>0.0.1</resource-bundler.version>
+		<item-selection.version>0.0.1</item-selection.version>
+		<testscoring.version>0.0.1</testscoring.version>
+		<spellcheck.version>0.0.1</spellcheck.version>
+		<progman-client.version>0.0.4</progman-client.version>
+		<sb11-mna-client.version>0.0.4</sb11-mna-client.version>
+		<sb11-shared-code.version>0.0.6</sb11-shared-code.version>
 	</properties>
 
 	<dependencies>

@@ -136,7 +136,6 @@ public class MasterShellHandler extends TDSHandler
   public ResponseData<LoginInfo> loginStudent (@RequestParam (value = "sessionID", required = false) String sessionID, @RequestParam (value = "keyValues", required = false) String keyValues,
       @RequestParam (value = "forbiddenApps", required = false) String forbiddenApps, HttpServletResponse response, HttpServletRequest request) throws ReturnStatusException, FailedReturnStatusException {
     long startTime = System.currentTimeMillis ();
-    _logger.info ("<<<<<<<<<loginStudent Start "+ getTime () +" -- " + Thread.currentThread ().getId () + " >>>>>>>>>>>> keyValues : "+keyValues);
     LoginInfo loginInfo;
     sessionID = sessionID != null ? sessionID : "";
     keyValues = keyValues != null ? keyValues : "";
@@ -209,7 +208,6 @@ public class MasterShellHandler extends TDSHandler
     StudentContext.saveTestee (loginInfo.getTestee ());
     StudentContext.saveSession (loginInfo.getSession ());
     StudentCookie.writeStore();
-    _logger.info ("<<<<<<<<<loginStudent End "+ getTime () +" -- " + Thread.currentThread ().getId () + " >>>>>>>>>>>> keyValues : "+keyValues);
     _logger.info ("<<<<<<<<< loginStudent Total Execution Time : "+((System.currentTimeMillis ()-startTime)/1000) + " seconds");
     return new ResponseData<LoginInfo> (TDSReplyCode.OK.getCode (), "OK", loginInfo);
   }
@@ -305,7 +303,6 @@ public class MasterShellHandler extends TDSHandler
       StudentContext.throwMissingException ();
     }
     
-    _logger.info ("<<<<<<<<<OpenTest Start "+ getTime () +" -- " + Thread.currentThread ().getId () + " >>>>>>>>>>>> testID : "+testID + " Name "+session.getName () + " Id " + session.getId ());
     
     // create json response
     opportunityInfoJsonModel.setTestForms (new ArrayList<TestForm> ());
@@ -328,7 +325,6 @@ public class MasterShellHandler extends TDSHandler
     StudentContext.saveSubject (subject);
     StudentContext.saveGrade (grade);
     StudentCookie.writeStore();
-    _logger.info ("<<<<<<<<<OpenTest End "+ getTime () +" -- " + Thread.currentThread ().getId () + " >>>>>>>>>>>> testID : "+testID + " Name "+session.getName () + " Id " + session.getId ());
     return new ResponseData<OpportunityInfoJsonModel> (TDSReplyCode.OK.getCode (), "OK", opportunityInfoJsonModel);
   }
 
@@ -473,6 +469,7 @@ public class MasterShellHandler extends TDSHandler
   @RequestMapping (value = "MasterShell.axd/scoreTest")
   @ResponseBody
   public ResponseData<TestSummary> scoreTest (HttpServletRequest request) throws ReturnStatusException, TDSSecurityException, StudentContextException {
+    long startTime = System.currentTimeMillis ();
     checkAuthenticated ();
 
     TestOpportunity testOpp = StudentContext.getTestOpportunity ();
@@ -483,7 +480,7 @@ public class MasterShellHandler extends TDSHandler
 
     TestManager testManager = new TestManager (testOpp);
     testManager.LoadResponses (true);
-
+    _logger.info ("<<<<<<<<< scoreTest Execution Time 1: "+((System.currentTimeMillis ()-startTime)) + " ms. ");
     // If there are more adaptive item groups to take then stop here and
     // return
     testManager.CheckIfTestComplete ();
@@ -494,7 +491,7 @@ public class MasterShellHandler extends TDSHandler
       HttpContext.getCurrentContext ().getResponse ().setStatus (HttpStatus.SC_FORBIDDEN);
       return new ResponseData<TestSummary> (TDSReplyCode.Denied.getCode (), message, null);
     }
-
+    _logger.info ("<<<<<<<<< scoreTest Execution Time 2: "+((System.currentTimeMillis ()-startTime)) + " ms. ");
     // check if all visible pages are completed
     PageList pages = testManager.GetVisiblePages ();
 
@@ -504,7 +501,7 @@ public class MasterShellHandler extends TDSHandler
       HttpContext.getCurrentContext ().getResponse ().setStatus (HttpStatus.SC_FORBIDDEN);
       return new ResponseData<TestSummary> (TDSReplyCode.Denied.getCode (), message, null);
     }
-
+    _logger.info ("<<<<<<<<< scoreTest Execution Time 3: "+((System.currentTimeMillis ()-startTime)) + " ms. ");
     // complete test
     _oppService.setStatus (testOpp.getOppInstance (), new OpportunityStatusChange (OpportunityStatusType.Completed, true));
     
@@ -512,7 +509,7 @@ public class MasterShellHandler extends TDSHandler
 
     // score the test
     TestScoreStatus scoreStatus = _testScoringService.scoreTest (testOpp.getOppInstance ().getKey (), testOpp.getTestKey ());
-
+    _logger.info ("<<<<<<<<< scoreTest Execution Time 4: "+((System.currentTimeMillis ()-startTime)) + " ms. ");
     // if we successfully scored the record the server latency
     if (scoreStatus == TestScoreStatus.Submitted) {
       ServerLatency latency = ServerLatency.getCurrent (HttpContext.getCurrentContext ());
@@ -520,8 +517,9 @@ public class MasterShellHandler extends TDSHandler
     }
 
     // try and get scores
-    return getTestSummary ();
-
+    ResponseData<TestSummary> testSummary =  getTestSummary ();
+    _logger.info ("<<<<<<<<< scoreTest Total Execution Time : "+((System.currentTimeMillis ()-startTime)) + " ms. ");
+    return testSummary;
   }
 
   /***

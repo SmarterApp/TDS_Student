@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import AIR.Common.Web.HttpHandlerBase;
 import AIR.Common.Web.TDSReplyCode;
 import AIR.Common.data.ResponseData;
-import TDS.Shared.Data.ReturnStatus;
-import TDS.Shared.Exceptions.ReturnStatusException;
 import TDS.Shared.Exceptions.TDSHttpException;
 import TDS.Shared.Exceptions.TDSSecurityException;
 import TDS.Shared.Security.TDSIdentity;
@@ -120,9 +118,4 @@ public class TDSHandler extends HttpHandlerBase
 
   }
   
-  protected String getTime() {
-    java.text.SimpleDateFormat df = new java.text.SimpleDateFormat("MM-dd-yyyy hh:mm:ss");
-    return df.format (new java.util.Date());
-  }
-
 }
