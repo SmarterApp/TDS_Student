@@ -26,6 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.util.HtmlUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -345,7 +346,7 @@ public class TestShellHandler extends TDSHandler
 
       ApprovalInfo approvalInfo = _oppService.checkSegmentApproval(oppInstance);
       if (approvalInfo.getComment () != null)
-    	  approvalInfo.setComment (UrlEncoderDecoderUtils.encode (approvalInfo.getComment ()));
+    	  approvalInfo.setComment (HtmlUtils.htmlEscape (approvalInfo.getComment ()));
 
       /*
       if (approvalInfo.Status == OpportunityApprovalStatus.Denied)
@@ -387,7 +388,7 @@ public class TestShellHandler extends TDSHandler
       {
         //TODO mpatel - Talk to Shiva and confirm we can replace following line of code with UrlEncoderDecoderUtils
 //          comment = AntiXss.HtmlEncode(comment, 2000);
-          comment = UrlEncoderDecoderUtils.encode (comment);
+          comment = HtmlUtils.htmlEscape  (comment);
       }
 
       _responseRepository.recordComment(oppInstance.getSessionKey (), testee.getKey (), oppInstance.getKey (), position, comment);
