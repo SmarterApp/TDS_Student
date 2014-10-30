@@ -63,8 +63,8 @@ function onkeyevent(e, type, key, keyCode, charCode, target)
     else if (e.ctrlKey && !e.shiftKey && type == 'keyup')
     {
         // Zooming: All OS's
-        if (keyCode == 107 || keyCode == 61 /*mac*/) { TestShell.UI.zoomIn(); return KeyEventResult.Matched; }  // +
-        if (keyCode == 109) { TestShell.UI.zoomOut(); return KeyEventResult.Matched; }  // -
+        if (keyCode == 107 || keyCode == 61 /*mac*/ || keyCode == 187 /*chrome*/ ) { TestShell.UI.zoomIn(); return KeyEventResult.Matched; }  // +
+        if (keyCode == 109 || keyCode == 173 /*ff*/ || keyCode == 189 /*chrome*/) { TestShell.UI.zoomOut(); return KeyEventResult.Matched; }  // -
         
         switch (key)
         {

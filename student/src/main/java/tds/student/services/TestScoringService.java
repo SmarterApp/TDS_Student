@@ -69,20 +69,24 @@ public class TestScoringService implements ITestScoringService
     String scoreString = null;
     // make sure test for scoring is loaded
     // TODO mpatel - Discuss with Shiva and Create Scorer class
-
-    _singleton.loadTestForScoring (testKey);
+  //TODO mpatel - Following code is commented as we are not doing anything for scoring now.Paul's test scoring engine will do following merge accordingly once done.
+   /* _singleton.loadTestForScoring (testKey);
     // call test scorer engine with delimited response from DB
     Scorer testScorer = _singleton.CreateTestScorer ();
 
     try { // call Paul's test scoring engine scoreString =
       scoreString = testScorer.testScore (testKey, input, testEndDate, ';', ':', "Completed");
+      
+      
     } catch (Exception ex) {
       // Most likely a ScoringEngineException occured if we get here..
       if (_tdsSettings.isTestScoringLogError ()) {
         _tdsLogger.applicationError (ex.getMessage (), "getTestScoreString", null, ex);
       }
       return null;
-    }
+    }*/
+    
+    scoreString = "Overall:RawScore:6/22:";
     return scoreString;
   }
 

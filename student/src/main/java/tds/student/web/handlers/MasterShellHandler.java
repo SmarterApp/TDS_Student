@@ -480,7 +480,6 @@ public class MasterShellHandler extends TDSHandler
 
     TestManager testManager = new TestManager (testOpp);
     testManager.LoadResponses (true);
-    _logger.info ("<<<<<<<<< scoreTest Execution Time 1: "+((System.currentTimeMillis ()-startTime)) + " ms. ");
     // If there are more adaptive item groups to take then stop here and
     // return
     testManager.CheckIfTestComplete ();
@@ -491,7 +490,6 @@ public class MasterShellHandler extends TDSHandler
       HttpContext.getCurrentContext ().getResponse ().setStatus (HttpStatus.SC_FORBIDDEN);
       return new ResponseData<TestSummary> (TDSReplyCode.Denied.getCode (), message, null);
     }
-    _logger.info ("<<<<<<<<< scoreTest Execution Time 2: "+((System.currentTimeMillis ()-startTime)) + " ms. ");
     // check if all visible pages are completed
     PageList pages = testManager.GetVisiblePages ();
 
@@ -501,15 +499,17 @@ public class MasterShellHandler extends TDSHandler
       HttpContext.getCurrentContext ().getResponse ().setStatus (HttpStatus.SC_FORBIDDEN);
       return new ResponseData<TestSummary> (TDSReplyCode.Denied.getCode (), message, null);
     }
-    _logger.info ("<<<<<<<<< scoreTest Execution Time 3: "+((System.currentTimeMillis ()-startTime)) + " ms. ");
+    _logger.info ("<<<<<<<<< scoreTest Execution Time 3: "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
     // complete test
     _oppService.setStatus (testOpp.getOppInstance (), new OpportunityStatusChange (OpportunityStatusType.Completed, true));
     
+    _logger.info ("<<<<<<<<< scoreTest Execution Time 3.1: "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
      sendTestStatus(StudentContext.getTestee ().getId(), testOpp.getTestKey (), testOpp.getOppInstance ().getKey (), TestStatusType.COMPLETED);
 
+     _logger.info ("<<<<<<<<< scoreTest Execution Time 3.2: "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
     // score the test
     TestScoreStatus scoreStatus = _testScoringService.scoreTest (testOpp.getOppInstance ().getKey (), testOpp.getTestKey ());
-    _logger.info ("<<<<<<<<< scoreTest Execution Time 4: "+((System.currentTimeMillis ()-startTime)) + " ms. ");
+    _logger.info ("<<<<<<<<< scoreTest Execution Time 4: "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
     // if we successfully scored the record the server latency
     if (scoreStatus == TestScoreStatus.Submitted) {
       ServerLatency latency = ServerLatency.getCurrent (HttpContext.getCurrentContext ());
@@ -518,7 +518,7 @@ public class MasterShellHandler extends TDSHandler
 
     // try and get scores
     ResponseData<TestSummary> testSummary =  getTestSummary ();
-    _logger.info ("<<<<<<<<< scoreTest Total Execution Time : "+((System.currentTimeMillis ()-startTime)) + " ms. ");
+    _logger.info ("<<<<<<<<< scoreTest Total Execution Time : "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
     return testSummary;
   }
 

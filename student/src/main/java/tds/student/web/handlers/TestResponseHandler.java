@@ -119,7 +119,6 @@ public class TestResponseHandler extends TDSHandler
 
       // get context objects
       TestOpportunity testOpp = StudentContext.getTestOpportunity ();
-
       // validate context
       if (testOpp == null)
         StudentContext.throwMissingException ();
@@ -136,7 +135,6 @@ public class TestResponseHandler extends TDSHandler
 
       // get the request information from tehe browser
       TestResponseReader responseReader = TestResponseReader.parse (request.getInputStream (), testOpp);
-
       /*
        * Ping
        */
@@ -165,7 +163,6 @@ public class TestResponseHandler extends TDSHandler
         e.printStackTrace ();
         throw e;
       }
-
       // save updating responses latency
       for (ItemResponseUpdateStatus responseResult : responseResults)
       {
@@ -191,13 +188,11 @@ public class TestResponseHandler extends TDSHandler
       dbTimer.start ();
       testManager.LoadResponses (validateResponses);
       dbTimer.stop ();
-
       // save loading responses latency
       // TODO Shajib: need verify this is same as dbTimer.ElapsedMilliseconds
       latency.setDbLatency (dbTimer.getTime ());
       // add item info to latency
       LoadServerLatencyItems (latency, responseReader);
-
       // update the test config
       // UpdateTestConfig(testManager);
 
@@ -213,7 +208,8 @@ public class TestResponseHandler extends TDSHandler
       } catch (Exception e) {
         e.printStackTrace ();
       }
-
+      _logger.info (new StringBuilder ("<<<<<<<<< Response update 7 Execution Time : ").append ((System.currentTimeMillis ()-timeServerReceived)).append (" ms. ").append(" prefetchMax: ").append (prefetchMax).append (" ThreadId: ").append (Thread.currentThread ().getId ()).toString ());
+      //temp counter for debuging
       // if the test is not completed then check if prefetch is available
       while (testManager.CheckPrefetchAvailability (testOpp.getTestConfig ().getPrefetch ()))
       {
@@ -229,7 +225,7 @@ public class TestResponseHandler extends TDSHandler
         // check if test is completed
         testManager.CheckIfTestComplete ();
       }
-
+      _logger.info (new StringBuilder ("<<<<<<<<< Response update 8 Execution Time : ").append ((System.currentTimeMillis ()-timeServerReceived)).append (" ms. ").append(" prefetchCount: ").append (prefetchCount).append (" ThreadId: ").append (Thread.currentThread ().getId ()).toString ());
       if (prefetchCount == prefetchMax) {
 
       	String message = String.format (
@@ -246,7 +242,6 @@ public class TestResponseHandler extends TDSHandler
 
       // new groups
       PageList pageList = testManager.GetVisiblePages (lastPage);
-
       /****************
        * WRITE XML
        ****************/
@@ -267,18 +262,17 @@ public class TestResponseHandler extends TDSHandler
       long timeClientSent = responseReader.getTimestamp ();
       long timeServerCompleted = System.currentTimeMillis ();
       responseWriter.writeTimestamps (timeClientSent, timeServerReceived, timeServerCompleted);
-
       // response updates performed
       responseWriter.writeResponseUpdates (responseResults);
-
       // new groups
       responseWriter.writeGroups (pageList);
 
       // generate the HTML for each group and write it out
       // xmlResponse.WriteContents(testOpp, itemResponseGroups);
-
+      
       // close writing
       responseWriter.writeEnd ();
+      _logger.info ("<<<<<<<<< Response update Total Execution Time : "+((System.currentTimeMillis ()-timeServerReceived)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
     } catch (Exception e) {
       _logger.error (e.toString (),e);
       throw e;

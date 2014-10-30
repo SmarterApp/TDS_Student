@@ -9,6 +9,8 @@
 package tds.student.web;
 
 import org.apache.commons.collections.Predicate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import tds.student.services.abstractions.IAdaptiveService;
 import tds.student.services.abstractions.IResponseService;
@@ -32,6 +34,7 @@ public class TestManager
 
   private IAdaptiveService      _adaptiveService;
 
+  private static final Logger _logger = LoggerFactory.getLogger (TestManager.class);
   public TestManager (TestOpportunity testOpp)
   {
     _testOpp = testOpp;
@@ -118,7 +121,9 @@ public class TestManager
   // / </remarks>
   public boolean CheckIfTestComplete () throws ReturnStatusException
   {
+    long startTime = System.currentTimeMillis ();
     _isTestComplete = _responseService.isTestComplete (_testOpp.getOppInstance ().getKey ());
+    _logger.info ("<<<<<<<<< Response update CheckIfTestComplete Total Execution Time : "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
     return _isTestComplete;
   }
 
@@ -131,6 +136,7 @@ public class TestManager
   // / </param>
   public boolean CheckPrefetchAvailability (int prefetch)
   {
+    long startTime = System.currentTimeMillis ();
     if (_pageList == null)
       return false;
 
@@ -148,7 +154,8 @@ public class TestManager
     {
       itemsLeftRequired += group.getItemsLeftRequired ();
     }
-
+    
+    _logger.info ("<<<<<<<<< Response update CheckPrefetchAvailability Total Execution Time : "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
     // if the # of items needed to be prefetched is greater than or equal
     // to the # of items left that are required, then perform prefetch
     return (itemsNeeded >= itemsLeftRequired);
@@ -162,6 +169,7 @@ public class TestManager
   // / </summary>
   public NextItemGroupResult CreateNextItemGroup () throws Exception
   {
+    long startTime = System.currentTimeMillis ();
     if (_pageList == null)
     {
       throw new Exception ("Cannot generate next item group until responses are loaded.");
@@ -180,6 +188,7 @@ public class TestManager
 
     _pageList.add (pageGroup);
 
+    _logger.info ("<<<<<<<<< Response update CreateNextItemGroup Total Execution Time : "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
     // create generated group info to return
     return new NextItemGroupResult (pageGroup);
   }

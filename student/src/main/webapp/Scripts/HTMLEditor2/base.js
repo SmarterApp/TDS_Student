@@ -82,8 +82,8 @@
             startupFocus: false,
             baseFloatZIndex: 50, // allow showAlert dialogs to be higher than cke_dialog_background_cover and dialogs
             dialog_noConfirmCancel: true,
-            tabSpaces: 4,  // TAB key inserts 4 &nbsp characters into editor at cursor
-            extraPlugins: 'clipboard,spellchecker',
+            tabSpaces: 0,  // TAB key inserts 4 &nbsp characters into editor at cursor
+            extraPlugins: 'clipboard,spellchecker,indent,customindent',
             removePlugins: 'sharedSpaces,floatingspace,resize,tableresize,wordcount',
             disableNativeSpellChecker: true,
             disableNativeTableHandles: true,

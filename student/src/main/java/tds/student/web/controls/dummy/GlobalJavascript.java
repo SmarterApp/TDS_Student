@@ -165,10 +165,15 @@ public class GlobalJavascript extends UIComponentBase
       AccLookup globalAccsLookup = _configRepository.getGlobalAccommodations ().createLookup (-1);
 
       // get all the language codes (HACK: add "ENU" if there are no codes)
+      //   	10/28/2014: added "ESN" to default language list for loading See (SB-350)
+      // 	**Other possible changes will be in Database - setting language for GlobalStudent settings
+      //	**or using the blackbox_messages.js files which are pre-configured with Spanish translation
       List<String> languages = (List<String>) globalAccsLookup.getCodes ("Language");
-      if (languages.size () == 0)
-        languages.add ("ENU");
-
+      if (languages.size () == 0){
+    	  languages.add ("ENU");
+    	  languages.add("ESN"); //add Spanish to DOM
+      }
+      
       writer.writeMessages (contextList, languages, null, null);
     }
 
