@@ -12,7 +12,7 @@
 	<artifactId>student</artifactId>
 	<name>student</name>
 	<packaging>war</packaging>
-	<version>R01.00.04</version>
+	<version>R01.00.05</version>
 
 	<licenses>
 		<license>

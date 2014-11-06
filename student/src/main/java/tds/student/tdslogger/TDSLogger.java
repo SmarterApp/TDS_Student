@@ -50,7 +50,7 @@ public class TDSLogger extends AbstractDAO implements ITDSLogger
     
     String details = buildDetails (request, ex);
     
-    _logger.error ( String.format("'%s'  %s", methodName, msg));
+    _logger.error ( String.format("'%s'  %s", methodName, msg),ex);
     
     tdsLoggerInternal ("TDSApplication", "Error", msg, details, methodName, 
         (request == null ? null : request.getRemoteAddr ()));
@@ -62,7 +62,7 @@ public class TDSLogger extends AbstractDAO implements ITDSLogger
     
     String details = buildDetails (request, ex);   
     
-    _logger.warn (String.format("'%s'  %s", methodName, msg));
+    _logger.warn (String.format("'%s'  %s", methodName, msg),ex);
     
     tdsLoggerInternal ("TDSApplication", "Warning", msg, details, methodName, 
         (request == null ? null : request.getRemoteAddr ()));
@@ -82,7 +82,7 @@ public class TDSLogger extends AbstractDAO implements ITDSLogger
       msg = ex.getMessage ();
     String details = buildDetails (null, ex); 
     
-    _logger.error (_fatal, String.format("'%s'  %s", methodName, msg));
+    _logger.error (_fatal, String.format("'%s'  %s", methodName, msg),ex);
     
     tdsLoggerInternal ("TDSApplication", "Fatal", msg, details, methodName, null);
   }
@@ -102,7 +102,7 @@ public class TDSLogger extends AbstractDAO implements ITDSLogger
     
     String details = buildDetails (null, ex);   
     
-    _logger.error (_fatal, String.format("'%s'  %s", methodName, msg));
+    _logger.error (_fatal, String.format("'%s'  %s", methodName, msg),ex);
     
     tdsLoggerInternal ("TDSConfig", "Critical", msg, details, methodName, null);
   }
@@ -113,7 +113,7 @@ public class TDSLogger extends AbstractDAO implements ITDSLogger
     
     String details = buildDetails (null, ex); 
     
-    _logger.error (String.format("'%s'  %s", methodName, msg));
+    _logger.error (String.format("'%s'  %s", methodName, msg),ex);
     
     tdsLoggerInternal ("TDSConfig", "Fatal", msg, details, methodName, null);
   }
@@ -269,10 +269,10 @@ public class TDSLogger extends AbstractDAO implements ITDSLogger
       _commonDll._RecordSystemError_SP (connection, proc, message, testee,
           test, null, application, clientIp, applicationContextId, stackTrace, oppKey, clientName);
     } catch (SQLException e) {
-      _logger.error (e.getMessage ());
+      _logger.error (e.getMessage (),e);
       //throw new ReturnStatusException (e);
     } catch (ReturnStatusException re) {
-      _logger.error (re.getMessage ());
+      _logger.error (re.getMessage (),re);
     }
   }
 

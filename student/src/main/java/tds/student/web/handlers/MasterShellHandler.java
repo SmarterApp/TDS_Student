@@ -199,6 +199,7 @@ public class MasterShellHandler extends TDSHandler
       String message = String.format ("LOGIN: %s [Values: %s, Session: %s]", error, keyValues, sessionID);
       _tdsLogger.applicationWarn (message, "loginStudent", request, null);
       
+      _logger.error ("Error validating login info : "+message);
       // send error to client
       response.setStatus (HttpStatus.SC_FORBIDDEN);
       return new ResponseData<LoginInfo> (TDSReplyCode.Denied.getCode (), error, null);
@@ -499,17 +500,13 @@ public class MasterShellHandler extends TDSHandler
       HttpContext.getCurrentContext ().getResponse ().setStatus (HttpStatus.SC_FORBIDDEN);
       return new ResponseData<TestSummary> (TDSReplyCode.Denied.getCode (), message, null);
     }
-    _logger.info ("<<<<<<<<< scoreTest Execution Time 3: "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
     // complete test
     _oppService.setStatus (testOpp.getOppInstance (), new OpportunityStatusChange (OpportunityStatusType.Completed, true));
     
-    _logger.info ("<<<<<<<<< scoreTest Execution Time 3.1: "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
      sendTestStatus(StudentContext.getTestee ().getId(), testOpp.getTestKey (), testOpp.getOppInstance ().getKey (), TestStatusType.COMPLETED);
 
-     _logger.info ("<<<<<<<<< scoreTest Execution Time 3.2: "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
     // score the test
     TestScoreStatus scoreStatus = _testScoringService.scoreTest (testOpp.getOppInstance ().getKey (), testOpp.getTestKey ());
-    _logger.info ("<<<<<<<<< scoreTest Execution Time 4: "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
     // if we successfully scored the record the server latency
     if (scoreStatus == TestScoreStatus.Submitted) {
       ServerLatency latency = ServerLatency.getCurrent (HttpContext.getCurrentContext ());
