@@ -565,7 +565,7 @@ a.guideToRevision:hover, a.guideToRevision:focus, .TDS_PS_L1 a.guideToRevision:h
 
 
 .layout11 .activeItem, .layout17 .activeItem, .layout21 .activeItem, .layout23 .activeItem {
-    background-image: url("../Images/active.png");
+    background-image: url("../images/active.png");
     background-position: 0 0;
     background-repeat: no-repeat;
     border-left: 1px solid #E2EFFF !important;
@@ -840,7 +840,7 @@ a.guideToRevision:hover, a.guideToRevision:focus, .TDS_PS_L1 a.guideToRevision:h
 /* @group ASL */
 
 a.ASL {
-	background: transparent url(../Images/ASL.png) no-repeat scroll center -70px;
+	background: transparent url(../images/ASL.png) no-repeat scroll center -70px;
     display: block;
     height: 16px;
     margin-top: 1px;
@@ -1455,8 +1455,7 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 	background-position: center -1126px;
 }
 /*Level 0 - stop sound icon hover */
-.audioControls.playing_start .playPause:hover, 
-.audioControls.playing_pause .playPause:hover {
+.audioControls.playing_start .playPause:hover {
 	background-position: center -1194px;
 }
 .audioControls.load_incomplete .playPause, 
@@ -1470,7 +1469,7 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 .audioControls.load_start, 
 .audioControls.load_complete, 
 .audioControls.decode_start {
-	background: #fff url(../Images/controls/loader29.gif) no-repeat center center;
+	background: #fff url(../images/controls/loader29.gif) no-repeat center center;
 }
 .audioControls.load_start a, 
 .audioControls.load_complete a, 
@@ -1834,7 +1833,7 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 
 /*remove sound level indicator, not supported in modern shell*/
 .elicitedaround, .disabled .elicitedaround, .btnRecord, .btnPlayPause, .elicitedwrap.playing_start .btnPlayPause {
-	background-image: url(../Images/controls/audio2013.png) !important;
+	background-image: url(../images/controls/audio2013.png) !important;
 }
 
 /* make sure IE displays text left-aligned */

@@ -58,8 +58,9 @@ TestShell.Comments.Base.prototype.render = function() {
     // CREATE:
     var dialog = new YAHOO.widget.SimpleDialog(this.getId(), {
         visible: false,
-        draggable: false,
-        modal: true,
+        draggable: true,
+        modal: false,
+        constraintoviewport: true,
         close: false,
         fixedcenter: true,
         width: '450px',

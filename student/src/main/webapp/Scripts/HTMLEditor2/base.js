@@ -21,17 +21,19 @@
     CKEDITOR.on('instanceCreated', function (ev) {
         var clipPath = HTMLEditor.resolveBaseUrl('Scripts/HTMLEditor2/plugins/clipboard/icons/');
         var spellPath = HTMLEditor.resolveBaseUrl('Scripts/HTMLEditor2/plugins/spellchecker/icons/');
+        var keymapPath = HTMLEditor.resolveBaseUrl('Scripts/HTMLEditor2/plugins/keymaphelp/icons/');
         CKEDITOR.skin.addIcon('cut', clipPath + 'cut.png', 0, true);
         CKEDITOR.skin.addIcon('copy', clipPath + 'copy.png', 0, true);
         CKEDITOR.skin.addIcon('paste', clipPath + 'paste.png', 0, true);
         CKEDITOR.skin.addIcon('spellchecker', spellPath + 'spellchecker.png', 0, true);
+        CKEDITOR.skin.addIcon('keymaphelp', keymapPath + 'keymaphelp.png', 0, true);
     });
 
     // fix paths
     function fixPaths() {
 
         // version of ckeditor (should match what is in scripts_shared.xml)
-        var version = '4.3';
+        var version = '4.4';
 
         var rootPath = HTMLEditor.resolveBaseUrl('');
         var basePath = rootPath + 'Scripts/Libraries/ckeditor/' + version + '/';
@@ -72,7 +74,96 @@
         }
     }
 
-    function createConfig(responseType) {
+    // this defines groups of buttons we can show
+    var DEFAULT_GROUPS = {
+        'help': ['KeyMapHelp'],
+        'basicstyles': ['Bold', 'Italic', 'Underline'],
+        'cleanup': ['RemoveFormat'],
+        'list': ['NumberedList', 'BulletedList'],
+        'indent': ['Outdent', 'Indent'],
+        'clipboard': ['Cut', 'Copy', 'Paste'],
+        'undo': ['Undo', 'Redo'],
+        'spellchecker': ['SpellChecker', 'Languages'],
+        'table': ['Table'],
+        'specialchar': ['SpecialChar']
+    };
+
+    function createToolbar(responseType, addGroups, removeGroups) {
+        
+        var toolGroups = {};
+
+        // for custom we only use the groups that are given to us
+        if (responseType == 'HTMLEditorCustom') {
+            // take groups that match
+            if (addGroups) {
+                addGroups.forEach(function (groupName) {
+                    toolGroups[groupName] = DEFAULT_GROUPS[groupName];
+                });
+            }
+        } else {
+            // take all groups
+            Object.keys(DEFAULT_GROUPS).forEach(function(groupName) {
+                toolGroups[groupName] = DEFAULT_GROUPS[groupName];
+            });
+        }
+
+        // this defines the ckeditor button groups used by ckeditor
+        var toolbar = [
+            ['KeyMapHelp'],
+            ['Bold', 'Italic', 'Underline', 'RemoveFormat'],
+            ['NumberedList', 'BulletedList', 'Outdent', 'Indent'],
+            ['Cut', 'Copy', 'Paste', 'Undo', 'Redo'],
+            ['SpellChecker', 'Languages'],
+            ['Table', 'SpecialChar']
+        ];
+
+        // always remove table if we aren't using table or custom response type
+        if (responseType != 'HTMLEditorTable' &&
+            responseType != 'HTMLEditorCustom') {
+            delete toolGroups['table'];
+        }
+
+        // if plain text remove all groups other than spell check
+        if (responseType == 'PlainTextSpell') {
+            Object.keys(toolGroups).forEach(function(groupName) {
+                if (groupName != 'spellchecker') {
+                    delete toolGroups[groupName];
+                }
+            });
+        }
+
+        // if not in streamlined mode then remove the help group
+        var accProps = Accommodations.Manager.getCurrentProps();
+        if (!accProps.isStreamlinedMode()) {
+            delete toolGroups['help'];
+        }
+
+        // remove any groups passed in
+        if (removeGroups) {
+            removeGroups.forEach(function (groupName) {
+                delete toolGroups[groupName];
+            });
+        }
+
+        // create lookup for buttons with the groups we have left
+        var buttons = Util.Array.flatten(Util.Object.values(toolGroups));
+
+        // remove buttons for any groups we removed
+        toolbar = toolbar.map(function (group) {
+            // remove any buttons we don't have groups for
+            return group.filter(function (button) {
+                return buttons.indexOf(button) != -1;
+            });
+        }).filter(function (group) {
+            // remove any empty groups
+            return group.length;
+        });
+
+        return toolbar;
+
+    }
+
+    function createConfig(responseType, addGroups, removeGroups) {
 
         // create ckeditor config
         var config = {
@@ -82,37 +173,16 @@
             startupFocus: false,
             baseFloatZIndex: 50, // allow showAlert dialogs to be higher than cke_dialog_background_cover and dialogs
             dialog_noConfirmCancel: true,
-            tabSpaces: 0,  // TAB key inserts 4 &nbsp characters into editor at cursor
-            extraPlugins: 'clipboard,spellchecker,indent,customindent',
+            //tabSpaces: 4,  // Please see FB 147852 before changing this
+            extraPlugins: 'clipboard,spellchecker,keymaphelp',
             removePlugins: 'sharedSpaces,floatingspace,resize,tableresize,wordcount',
             disableNativeSpellChecker: true,
             disableNativeTableHandles: true,
             height: '' // removes height attribute
         };
 
-        // The toolbar groups arrangement, optimized for two toolbar rows.
-        if (responseType == 'PlainTextSpell') {
-            config.toolbarGroups = [
-                { name: 'spellchecker' }
-            ];
-        } else {
-            config.toolbarGroups = [
-                { name: 'basicstyles', groups: ['basicstyles', 'cleanup'] },
-                { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align'] },
-                { name: 'clipboard', groups: ['clipboard', 'undo'] },
-                { name: 'spellchecker' },
-                { name: 'insert' } // <-- special characters
-            ];
-        }
-
-        // Remove some buttons, provided by the standard plugins, which we don't
-        // need to have in the Standard(s) toolbar.
-        if (responseType == 'HTMLEditorTable') {
-            config.removeButtons = 'Strike,Subscript,Superscript';
-        } else {
-            // Remove Table button, unless we are responseType HTMLEditorTable
-            config.removeButtons = 'Strike,Subscript,Superscript,Table';
-        }
+        // create toolbar
+        config.toolbar = createToolbar(responseType, addGroups, removeGroups);
 
         if (useInline) {
             config.removePlugins += ',wysiwygarea'; // remove iframe
@@ -134,6 +204,8 @@
     // this function is called when the editor and dom is ready 
     function onInstanceReady(editor) {
 
+        var editable = editor.editable();
+
         editor.isReady = true;
 
         // add TDS class
@@ -141,7 +213,6 @@
 
         // get the main content element
         if (useInline) {
-            var editable = editor.editable();
             editor.contentDom = editable.$; // editable <div>
         } else {
             editor.contentDom = editor.document.$.body; // frame <body>
@@ -153,10 +224,24 @@
             editorEl.removeAttribute('title');
         }
 
+        // FB 146275 - hardware keyboards act different under iOS >= 7 so we're going to disallow Ctrl key shortcuts because
+        //  Caps-Lock on sets Ctrl key flag to true for all subsequent key presses
+        //  Ctrl-key sets Meta = true and only generates a key up event
+        //  Shift/Alt keys works fine
+        if (!Util.Browser.supportsModifierKeys()) {
+            editable.attachListener(editable, 'keydown', function (evt) {
+                if (evt.data.$.ctrlKey) {
+                    evt.stop();
+                }
+            }, null, null, 1);
+        }
+
         // unlock editor
-        setTimeout(function() {
-            editor.setReadOnly(false);
-        }, 0);
+        if (editor.config.disabled !== true) {
+            setTimeout(function () {
+                editor.setReadOnly(false);
+            }, 0);
+        }
     }
 
     function createEditor(containerEl, responseType, configOverride) {
@@ -166,20 +251,31 @@
 
         // create editor and add it to the container element 
         fixPaths();
-        var config = createConfig(responseType);
+        var config = createConfig(responseType, configOverride.addGroups, configOverride.removeGroups);
         if (configOverride) {
             for (var property in configOverride){
                 config[property] = configOverride[property];
             }
         }
+
+        // Hack: CKEditor 4.4 adds a flag to test browser compatibility and then checks this when a new
+        //  editor is created (at least those at the only check points in the 4.4.3 code we use). One of those
+        //  tests is for FireFox >= 4 which breaks our need to support 3.6. For now we'll force all
+        //  browsers to be compatible.
+        CKEDITOR.env.isCompatible = true;
+
         var editor = CKEDITOR.appendTo(containerEl, config);
+        if (!editor) {
+            throw new Error('CKEditor failed to be created.');
+        }
+
         editor.isReady = false;
 
         // wait for editor to be ready
         editor.on('instanceReady', onInstanceReady.bind(null, editor));
 
         return editor;
-    };
+    }
 
     var HTMLEditor = {};
 
@@ -188,12 +284,12 @@
     // users of HTMLEditor need to always override this
     HTMLEditor.resolveBaseUrl = function (url) {
         return url;
-    }
+    };
 
     // users of HTMLEditor need to always override this
     HTMLEditor.getLanguage = function() {
         return 'ENU';
-    }
+    };
 
     window.HTMLEditor = HTMLEditor;
 
@@ -254,13 +350,27 @@ Any patches or hacks for CKEditor.
     // Justin tried to have this integrated into CKEditor
     // https://github.com/ckeditor/ckeditor-dev/pull/52
     CKEDITOR.on('ariaWidget', function (e) {
-        var menuIframe = e.data;
-        if (menuIframe.hasClass && !menuIframe.hasClass('dragDisabled')) {
-            var doc = menuIframe.getFrameDocument();
-            var menuBody = doc.getBody();
+
+        var menuCKEditorEl = e.data;
+
+        if (menuCKEditorEl.hasClass && !menuCKEditorEl.hasClass('dragDisabled')) {
+
+            var tag = menuCKEditorEl.$.tagName.toLowerCase();
+            var doc;
+            var menuBody;
+            if (tag === 'iframe') {
+                doc = menuCKEditorEl.getFrameDocument();
+                menuBody = doc.getBody();
+            } else if (tag === 'body') { // IE passes the body in
+                doc = menuCKEditorEl.getDocument();
+                menuBody = menuCKEditorEl;
+            } else {
+                return; // Better than no menu?
+            }
+
             if (doc && menuBody) {
                 menuBody.setAttribute('ondragstart', 'return false;');
-                menuIframe.addClass('dragDisabled');
+                menuCKEditorEl.addClass('dragDisabled');
             }
         }
     });

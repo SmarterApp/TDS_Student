@@ -116,24 +116,6 @@ Sortable lists interaction block.
         return groupsList;
     };
 
-    // Create <response> and append it to the document root
-    OI.prototype.createResponseQTI = function (xmlDoc) {
-        var rootNode = xmlDoc.documentElement;
-        var groupsList = this.getResponseJson();
-        Util.Array.each(groupsList, function (groupJson) {
-            var responseNode = xmlDoc.createElement('response');
-            responseNode.setAttribute('id', groupJson.identifier);
-            rootNode.appendChild(responseNode);
-
-            Util.Array.each(groupJson.responses, function (response) {
-                // <response>
-                var valueNode = xmlDoc.createElement('value');
-                valueNode.textContent = response;
-                responseNode.appendChild(valueNode);
-            });
-        });
-    };
-
     // get the response as a xml document
     OI.prototype.getResponseXml = function () {
         var responseXml = Util.Xml.createDocument('interaction');
@@ -168,12 +150,13 @@ Sortable lists interaction block.
     };
 
     // load a xml response string
-    OI.prototype.loadResponseXml = function (xmlDoc) {
+    OI.prototype.loadResponseXml = function (xml) {
 
+        // get root node
+        var interactionNode = TDS.Interaction.parseXmlRoot(xml);
         var interaction = this;
-        var xmlRoot = xmlDoc.documentElement;
 
-        Util.Dom.queryTagsBatch('group', xmlRoot, function (groupNode) {
+        Util.Dom.queryTagsBatch('group', interactionNode, function (groupNode) {
             var groupIdentifier = groupNode.getAttribute('identifier');
             var group = interaction.getGroup(groupIdentifier);
             if (group) {
@@ -191,31 +174,6 @@ Sortable lists interaction block.
         var xmlDoc = Util.Xml.parseFromString(xmlStr);
         this.loadResponseXml(xmlDoc);
     }
-
-    // load a <response> node (which is like a <group>)
-    OI.prototype.loadResponseQTI = function (xml) {
-
-        var responseNode;
-        if (typeof xml == 'string') {
-            var xmlDoc = Util.Xml.parseFromString(xml);
-            responseNode = xmlDoc.documentElement;
-        } else {
-            responseNode = xml;
-        }
-
-        var interaction = this;
-        var groupId = responseNode.getAttribute('id');
-        var group = interaction.getGroup(groupId);
-
-        if (group) {
-            var identifiers = [];
-            Util.Dom.queryTagsBatch('value', responseNode, function (valueNode) {
-                var responseIdentifier = Util.Xml.getNodeText(valueNode);
-                identifiers.push(responseIdentifier);
-            });
-            group.sort(identifiers);
-        }
-    };
 
     TDS.OrderInteraction = OI;
 

@@ -113,6 +113,11 @@ Util.String.isNullOrWhiteSpace = function(str) {
     return (str.length === 0);
 };
 
+// Capitialize the first letter
+Util.String.capitalize = function(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 Util.String._HASHCODE_MAX = 0x100000000;
 
 // string hash function similar to java.lang.String.hashCode().

@@ -1,330 +1,542 @@
-﻿ContentManager.Renderer =
-{
-    _instance: null,
-    _client: null,
-    _customScripts: [], // custom list of javascript 
-    _customStyles: [], // custom list of CSS
-    _customFormatter: null // custom formatter func for css/js
-};
+﻿/* Init */
 
-// check if we are using direct renderer (no iframes)
-ContentManager.Renderer.isDirect = function() {
-    return this._instance instanceof ContentManager.Renderer.Direct;
-};
+(function(CM) {
 
-ContentManager.Renderer.getClient = function() { return this._client; };
-ContentManager.Renderer.setClient = function(client) { this._client = client; };
+    // # of seconds until image times out
+    var IMAGE_TIMEOUT = 90;
 
-// get the custom formatter for use elsewhere (e.x., sim)
-ContentManager.Renderer.getCustomFormatter = function() { return this._customFormatter; };
+    // how many times we can retry loading images
+    var IMAGE_MAX_RETRY = 2;
 
-// set a custom function for modifying css/js url's before they are added to iframe (e.x., manifest)
-ContentManager.Renderer.setCustomFormatter = function(formatterFunc) { this._customFormatter = formatterFunc; };
+    var State = {
+        Init: 0, // This is the default state. Object is created and the content HTML is ready to render.
+        Rendering: 1, // Right before we write the content HTML to the DOM.
+        Rendered: 2, // The content HTML has finished writing but the DOM might not be ready to access yet.
+        Available: 3, // The content HTML is now ready in the DOM to be accessed.
+        Loaded: 4 // All the resources in the HTML (e.x. images) have been loaded and content is ready to view.
+    };
 
-// modify a list of resource url's (css/js) using the custom formatter 
-ContentManager.Renderer.processResources = function(resources)
-{
-    if (YAHOO.lang.isFunction(this._customFormatter))
-    {
-        for (var i = 0; i < resources.length; i++)
-        {
-            resources[i] = this._customFormatter(resources[i]);
+    var StateNames = {};
+    StateNames[State.Init] = 'init';
+    StateNames[State.Rendering] = 'rendering';
+    StateNames[State.Rendered] = 'rendered';
+    StateNames[State.Available] = 'available';
+    StateNames[State.Loaded] = 'loaded';
+
+    function Renderer(parentEl, id, html) {
+
+        this.id = id;
+        this._parentEl = parentEl; // <div> that holds all the pages
+        this._pageEl = null; // <div> that wraps this page
+        this._html = html;
+
+        // images
+        this._imagesLoading = []; // images currently waiting to load
+        this._imagesLoaded = []; // images that loaded successfully
+        this._imagesFailed = []; // images that failed to load
+        this._imagesAborted = []; // images that got aborted or timed out
+        this._imagesTimer = null; // timer object for waiting on images
+        this._imagesRetry = 0; // how many times a timeout occured and we retried
+
+        // resource loader
+        this._resourceCollection = new ResourceLoader.Collection();
+
+        // status info
+        this._status = State.Init;
+
+        Util.Event.Emitter(this);
+    }
+
+    Renderer.State = State;
+
+    Renderer.getStateNames = function() {
+        return Util.Object.values(StateNames);
+    }
+
+    Renderer.init = function () {
+        // Here for compatibility...
+    }
+
+    Renderer.isDirect = function() {
+        return true; // TODO: Remove usages of this
+    }
+
+    // a helper method for writing html into the innerHTML of a node
+    Renderer.writeHtml = function (parentEl, html) {
+
+        // create page html container
+        // NOTE: Can't appendChild to a node created from another frame so get parent node owner
+        var parentDoc = Util.Dom.getOwnerDocument(parentEl);
+        var pageWrapper = parentDoc.createElement('div');
+        YUD.addClass(pageWrapper, 'pageWrapper');
+
+        // check if html exists
+        if (html) {
+
+            // if the html is a xml document then get its element
+            if (html.documentElement) {
+                html = html.documentElement;
+            }
+
+            // check for the type of html
+            if (html.nodeType > 0) {
+                pageWrapper.appendChild(html);
+            } else {
+                pageWrapper.innerHTML = html;
+            }
         }
+
+        // set page hidden from JAWS until it is ready
+        pageWrapper.setAttribute('aria-hidden', 'true');
+
+        // add container to frame
+        parentEl.appendChild(pageWrapper);
+
+        return pageWrapper;
+    };
+
+    // a helper method for showing a page container
+    Renderer.show = function (el) {
+        if (el) {
+            el.setAttribute('aria-hidden', 'false');
+            YUD.removeClass(el, 'hiding');
+            YUD.addClass(el, 'showing');
+        }
+    };
+
+    // a helper method for hiding a page container
+    Renderer.hide = function (el) {
+        if (el) {
+            el.setAttribute('aria-hidden', 'true');
+            YUD.removeClass(el, 'showing');
+            YUD.addClass(el, 'hiding');
+        }
+    };
+
+    Renderer.remove = function(page) {
+        var pageContainer = page.getContainer();
+        Util.Dom.removeNode(pageContainer);
     }
-};
 
-ContentManager.Renderer.clearCustomScripts = function() { this._customScripts = []; };
-ContentManager.Renderer.getCustomScripts = function() { return this._customScripts; };
-ContentManager.Renderer.addCustomScript = function(path) { this._customScripts.push(path); };
+    /************************************************************/
 
-ContentManager.Renderer.getScripts = function()
-{
-    var scripts =
-    [
-        'Scripts/Libraries/YUI/yahoo-dom-event/yahoo-dom-event.js',
-        'Scripts/Libraries/YUI/dragdrop/dragdrop-min.js',
-        'Scripts/Libraries/jwplayer/jwplayer.js'
-    ];
+    Renderer.prototype._log = function (message) {
+        if (!CM._debug) {
+            return;
+        }
+        CM.log('RENDERER ' + this.id + ': ' + message);
+    };
     
-    // add custom js
-    for (var i = 0; i < this._customScripts.length; i++)
-    {
-        scripts.push(this._customScripts[i]);
-    }
+    Renderer.prototype.getState = function () {
+        return this._status;
+    };
+
+    Renderer.prototype.setState = function (newState) {
+
+        // check if valid page status
+        if (!YAHOO.lang.isNumber(newState) ||
+            newState < State.Init ||
+            newState > State.Loaded) {
+            throw 'Invalid page state';
+        }
+
+        // get current status
+        var currentState = this.getState();
+
+        // get the string names of the status's
+        var currentStateName = StateNames[currentState];
+        var newStateName = StateNames[newState];
+
+        // check if page status string name was found
+        if (newStateName == null) {
+            throw 'No page state name found';
+        }
+
+        // check if this is a valid status transition
+        var statusError = 'Invalid page state transition (' + currentStateName + ' --> ' + newStateName + ')';
+        if (newState == State.Init && currentState >= State.Init) {
+            throw statusError;
+        } else if (newState == State.Rendering &&
+            currentState != State.Init) {
+            throw statusError;
+        } else if (newState == State.Rendered &&
+            currentState != State.Rendering) {
+            throw statusError;
+        } else if (newState == State.Available &&
+            currentState != State.Rendered) {
+            throw statusError;
+        } else if (newState == State.Loaded &&
+            currentState != State.Available) {
+            throw statusError;
+        }
+
+        // set new status
+        this._status = newState;
+
+        this._log(newStateName);
+        this.fire(newStateName);
+    };
+
+    // get the HTML used to render the page
+    Renderer.prototype.getHtml = function () { return this._html; };
+
+    // set the HTML used to render the page
+    Renderer.prototype.setHtml = function (html) {
+
+        if (this.getState() <= State.Rendering) {
+            this._html = html;
+            return true;
+        }
+
+        return false;
+    };
+
+    // gets the container for the page, this is what we hide/show
+    Renderer.prototype.getContainer = function () {
+        return this._pageEl;
+    };
+
+    // get the pages current window
+    Renderer.prototype.getWin = function () {
+        return document.parentWindow || document.defaultView;
+    };
     
-    // call custom formatter
-    ContentManager.Renderer.processResources(scripts);
+    // get the container element for this page
+    Renderer.prototype.getElement = function () {
+        return document.getElementById('Page_' + this.id);
+    };
 
-    return scripts;
-};
+    // call this function to render the pages HTML
+    Renderer.prototype.render = function () {
 
-ContentManager.Renderer.clearCustomStyles = function() { this._customStyles = []; };
-ContentManager.Renderer.getCustomStyles = function() { return this._customStyles; };
-ContentManager.Renderer.addCustomStyle = function(path) { this._customStyles.push(path); };
+        // check if we have already started to render
+        if (this.getState() > State.Init) {
+            return this._pageEl;
+        }
 
-ContentManager.Renderer.getStyles = function()
-{
-    // add default css
-    var styles =
-    [
-        'Scripts/Libraries/YUI/menu/assets/skins/sam/menu.css',
-        'Scripts/Libraries/YUI/button/assets/skins/sam/button.css',
-        'Scripts/Libraries/YUI/container/assets/skins/sam/container.css',
-        'Scripts/Libraries/YUI/editor/assets/skins/sam/editor.css',
+        // set status/fire event
+        this.setState(State.Rendering);
 
-        'Shared/CSS/items.css',
-        'Shared/CSS/elpa.css',
-        'Shared/CSS/accommodations.css',
-        'Shared/CSS/frame.css',
-        'Scripts/Simulator2/Renderer/CSS/simulator.css',
-        'Scripts/Simulator2/Renderer/CSS/slider.css'
-    ];
+        // write out page html
+        var pageEl = Renderer.writeHtml(this._parentEl, this.getHtml());
+        this._pageEl = pageEl;
 
-    // add client specific css
-    if (this._client)
-    {
-        styles.push('Projects/' + this._client + '/css/items.css');
-        styles.push('Projects/' + this._client + '/css/elpa.css');
-    }
-    
-    // add custom css
-    for (var i = 0; i < this._customStyles.length; i++)
-    {
-        styles.push(this._customStyles[i]);
-    }
+        // hide page container
+        Renderer.hide(pageEl);
 
-    // add browser specific css
-    if (YAHOO.env.ua.webkit)
-    {
-        styles.push('Shared/CSS/Browsers/webkit.css');
-    }
-    else if (YAHOO.env.ua.ie)
-    {
-        styles.push('Shared/CSS/Browsers/ie.css');
-    }
-    
-    // call custom formatter
-    ContentManager.Renderer.processResources(styles);
+        // add YUI class to enable widgets
+        YUD.addClass(document.body, 'yui-skin-sam');
 
-    return styles;
-};
+        // add touch class
+        YUD.addClass(document.body, Util.Browser.isTouchDevice() ? 'touch' : 'no-touch');
 
-ContentManager.Renderer.applyStyles = function(doc, client)
-{
-    // get styles to apply
-    var styles = this.getStyles(client);
-    
-    // get current styles
-    var links = document.getElementsByTagName('link');
+        // get the element containing the pages content
+        var pageElement = this.getElement();
 
-    // filter out styles that are already loaded on the page
-    styles = Util.Array.reject(styles, function(style) {
-        return Util.Array.find(links, function(link) {
-            return (link.href.toLowerCase().indexOf(style.toLowerCase()) != -1);
+        // this will occur if something got rendered but there was no page found
+        if (pageElement == null) {
+            throw new Error('The page element could not be found.');
+        }
+
+        // get all images and check for them to be loaded
+        YUD.batch(pageElement.getElementsByTagName('img'), this.addImage, this, true);
+
+        // set status/fire event
+        this.setState(State.Rendered);
+
+        // let DOM refresh
+        YAHOO.lang.later(1, this, this.onAvailable);
+
+        return pageEl;
+    };
+
+    // process renderer document
+    function process(renderer) {
+
+        var pageWin = renderer.getWin();
+
+        // check if we already processed this doc
+        if (pageWin.__tds_processed) {
+            return;
+        }
+
+        // apply YUI menu events to iframe (NOTE: you must create a menu at some point for this to work)
+        ContentManager.Menu.applyDocFix(document);
+
+        // listen for keyboard events on the pages document
+        if (typeof CM.addKeyEvents == 'function') {
+            CM.addKeyEvents(document);
+        }
+
+        // stop drag/scroll DOM events
+        Util.Dom.stopDragEvents(document);
+
+        // stop right click on regular browsers
+        Util.Dom.stopAllEvents(document, 'contextmenu');
+
+        // stop middle click
+        YUE.on(document, 'mousedown', function (ev) {
+            if (ev.button == 1) {
+                YUE.stopEvent(ev);
+            }
         });
-    });
 
-    // resolve url's
-    for(var i = 0; i < styles.length; i++)
-    {
-        styles[i] = ContentManager.resolveBaseUrl(styles[i]);
-    }
+        pageWin.__tds_processed = true;
+    };
 
-    Util.dir(styles);
+    // this function gets called after writing the HTML to the DOM is done and DOM has been refreshed
+    Renderer.prototype.onAvailable = function () {
 
-    // apply css to the doc
-    var win = (doc.parentWindow || doc.defaultView);
-    YAHOO.util.Get.css(styles, { win: win });
-};
+        // process doc
+        process(this);
 
-// create a new renderer
-// @element Container for the renderer
-// @renderer The renderer class
-ContentManager.Renderer.init = function(container, rendererClass)
-{
-    // get element that will be the container for the pages
-    container = YUD.get(container);
-    
-    /*
-    if (ContentManager.enableARIA)
-    {
-        container.setAttribute('role', 'main');
+        // get the element containing the pages content
+        var pageElement = this.getElement();
 
-        // NOTE: By putting aria-live on the container for all the pages it 
-        // will speak the page each time you just hide or show it automatically
-        container.setAttribute('aria-live', 'polite');
-        container.setAttribute('aria-relevant', 'additions text');
-    }
-    */
+        // set status/fire event
+        this.setState(State.Available);
 
-    // create renderer
-    var rendererInstance = new rendererClass(container);
+        // stop clicks on all page links (help, print, comment, mark review)
+        YUD.batch(pageElement.getElementsByTagName('a'), function (link) {
 
-    // save renderer and initialize it
-    this._instance = rendererInstance;
-    this._instance.init();
-};
+            // For 2014 just let tab work
+            // disable tab index so it cannot be tabbed to
+            /*if (CM.enableARIA === false) {
+                link.setAttribute('tabindex', '-1');
 
-// a helper method for writing html into the innerHTML of a node
-ContentManager.Renderer.writeHtml = function(parentNode, html)
-{
-    // create page html container
-    // NOTE: Can't appendChild to a node created from another frame so get parent node owner
-    var parentDoc = Util.Dom.getOwnerDocument(parentNode);
-    var pageWrapper = parentDoc.createElement('div');
-    YUD.addClass(pageWrapper, 'pageWrapper');
-    
-    // check if html exists
-    if (html) {
+                // disable links from getting focus when clicked
+                YUE.on(link, 'mousedown', function (ev) { YUE.stopEvent(ev); });
+                YUE.on(link, 'mouseup', function (ev) { YUE.stopEvent(ev); });
+            }*/
 
-        // if the html is a xml document then get its element
-        if (html.documentElement) {
-            html = html.documentElement;
+            // disable link click so you cannot go the url
+            if (!CM.isLinkClickable(link)) {
+                YUE.on(link, 'click', function(ev) {
+                    YUE.stopEvent(ev);
+                });
+            }
+        });
+
+        // check if resources that were added
+        if (this._resourceCollection.hasLoaders()) {
+            // subscribe to collection events and start loading
+            this._resourceCollection.subscribe(ResourceLoader.Status.COMPLETE, this.checkLoaded, this);
+            this._resourceCollection.subscribe(ResourceLoader.Status.ERROR, this.checkLoaded, this);
+            this._resourceCollection.subscribe(ResourceLoader.Status.ABORT, this.checkLoaded, this);
+            this._resourceCollection.load();
         }
-    
-        // check for the type of html
-        if (html.nodeType > 0) {
-            pageWrapper.appendChild(html);
+
+        // check if page is done loading
+        YAHOO.lang.later(1, this, this.checkLoaded);
+    };
+
+    // call this function when you think the page might be loaded
+    Renderer.prototype.checkLoaded = function () {
+
+        // check if there are any images we are still waiting on
+        if (this._imagesLoading.length > 0) {
+            return;
+        }
+
+        // cancel existing timeout
+        if (this._imagesTimer != null) {
+            this._imagesTimer.cancel();
+            this._imagesTimer = null;
+        }
+
+        // check if any resources we are still waiting on
+        if (this._resourceCollection.hasLoaders() &&
+            this._resourceCollection.getStatus() == ResourceLoader.Status.LOADING) {
+            return;
+        }
+
+        // fire loaded event
+        if (this.getState() == State.Available) {
+            // set status/fire event
+            this.setState(State.Loaded);
+        }
+    };
+
+    // get resource loaders
+    Renderer.prototype.getResourceLoaders = function() {
+        return this._resourceCollection;
+    };
+
+    // add a resource to load
+    Renderer.prototype.addResourceLoader = function (resource) {
+        this._resourceCollection.add(resource);
+    };
+
+    Renderer.prototype.getImagesLoading = function() {
+        return this._imagesLoading;
+    };
+
+    Renderer.prototype.getImagesLoaded = function() {
+        return this._imagesLoaded;
+    };
+
+    Renderer.prototype.getImagesFailed = function() {
+        return this._imagesFailed;
+    };
+
+    Renderer.prototype.getImagesAborted = function() {
+        return this._imagesAborted;
+    };
+
+    // add an image that we will be waiting for
+    // PRELOAD? http://www.phpied.com/preload-cssjavascript-without-execution/
+    Renderer.prototype.addImage = function (image) {
+
+        // generate an ID for an image if it doesn't have one
+        if (image.id == '') {
+            image.id = YUD.generateId();
+        }
+
+        this._imagesLoading.push(image);
+
+        // Internet Explorer doesn't reliably raise LOAD events on images, so we must use READY_STATE_CHANGE.
+        // If the image is cached locally, IE won't fire the LOAD event while the
+        // onreadystate event is fired always. On the other hand, the ERROR event
+        // is always fired whenever the image is not loaded successfully no matter
+        // whether it's cached or not.
+
+        // add dom events
+        var loadEvent = YAHOO.env.ua.ie ? 'readystatechange' : 'load';
+        YUE.addListener(image, loadEvent, this._onImageEvent, image, this);
+        YUE.addListener(image, 'abort', this._onImageEvent, image, this);
+        YUE.addListener(image, 'error', this._onImageEvent, image, this);
+
+        // set timestamp
+        image.dateRequested = Util.Date.now();
+
+        // cancel existing timeout and start new one
+        this._startImageTimer();
+    };
+
+    // cancel existing timeout and start new one
+    Renderer.prototype._startImageTimer = function () {
+        if (this._imagesTimer != null) {
+            this._imagesTimer.cancel();
+        }
+        this._imagesTimer = YAHOO.lang.later((IMAGE_TIMEOUT * 1000), this, this._onImagesTimeout);
+    };
+
+    // this function is called when an time has a timeout
+    Renderer.prototype._onImagesTimeout = function () {
+
+        Util.log('image timeout');
+
+        // check if we can retry
+        if (this._imagesRetry < IMAGE_MAX_RETRY) {
+            this._imagesRetry++;
+
+            // attempt to reload each image
+            Util.Array.each(this._imagesLoading, function (image) {
+                image.src = image.src;
+
+                // set timestamp
+                image.dateRequested = Util.Date.now();
+            });
+
+            this._startImageTimer();
         } else {
-            pageWrapper.innerHTML = html;
+            // simulate abort event
+            Util.Array.each(this._imagesLoading, function (image) {
+                var evt = { type: 'abort' };
+                this._onImageEvent(evt, image);
+            }, this);
         }
-    }
-    
-    // set page hidden from JAWS until it is ready
-    pageWrapper.setAttribute('aria-hidden', 'true'); 
-
-    // add container to frame
-    parentNode.appendChild(pageWrapper);
-
-    return pageWrapper;
-};
-
-// a helper method for showing a page container
-ContentManager.Renderer.show = function(pageContainer) {
-    pageContainer.setAttribute('aria-hidden', 'false');
-    YUD.removeClass(pageContainer, 'hiding');
-    YUD.addClass(pageContainer, 'showing');
-};
-
-// a helper method for hiding a page container
-ContentManager.Renderer.hide = function(pageContainer) {
-    pageContainer.setAttribute('aria-hidden', 'true');
-    YUD.removeClass(pageContainer, 'showing');
-    YUD.addClass(pageContainer, 'hiding');
-};
-
-
-// write out the HTML for a page object
-ContentManager.Renderer.writePage = function(page)
-{
-    return this._instance.write(page);
-};
-
-// remove the HTML for a page object
-ContentManager.Renderer.removePage = function(page)
-{
-    return this._instance.remove(page);
-};
-
-/************************************************************/
-
-// RENDERER: Used to render each page in a seperate frame
-ContentManager.Renderer.MultiFrame = function(rootContainer)
-{
-    this.init = function()
-    {
-        ContentManager.Frame.setContainer(rootContainer);
     };
 
-    this.write = function(page)
-    {
-        // first create a frame to hold HTML
-        var frame = ContentManager.Frame.create(page.id, function(frame)
-        {
-            // get the frames element we will write to
-            var frameDoc = Util.Dom.getFrameContentDocument(frame);
-            var frameForm = frameDoc.forms['contentForm'];
+    // handles image events (READY_STATE_CHANGE, LOAD, ABORT, and ERROR)
+    Renderer.prototype._onImageEvent = function (evt, image) {
 
-            // write html to element in frame
-            ContentManager.Renderer.writeHtml(frameForm, page.getHtml());
+        // make sure we are waiting on this event
+        if (!Util.Array.contains(this._imagesLoading, image)) {
+            return;
+        }
 
-            // tell page we are done rendering
-            page.onRendered(frameDoc /*document*/, frame /*container*/);
-        });
+        if (evt.type == 'readystatechange') {
+            // This implies that the user agent is IE
+            if (image.readyState == 'complete') {
+                // This is the IE equivalent of a LOAD event.
+                evt = { type: 'load' }; // (NOTE: can't change evt.type property so we fake it)
+            } else {
+                // This may imply that the load failed.
+                // Note that the image has only the following states:
+                //   * uninitialized
+                //   * loading
+                //   * complete
+                // When the ERROR or the ABORT event is fired, the readyState
+                // will be either uninitialized or loading and we'd ignore those states
+                // since they will be handled separately (eg: evt.type = 'ERROR').
 
-        // hide page container
-        ContentManager.Renderer.hide(frame);
+                // Notes from MSDN : The states through which an object passes are
+                // determined by that object. An object can skip certain states
+                // (for example, interactive) if the state does not apply to that object.
+                // see http://msdn.microsoft.com/en-us/library/ms534359(VS.85).aspx
+
+                // The image is not loaded, ignore.
+                return;
+            }
+        }
+
+        // Add natural width/height properties for non-Gecko browsers.
+        if (typeof image.naturalWidth == 'undefined') {
+            if (evt.type == 'load') {
+                image.naturalWidth = image.width;
+                image.naturalHeight = image.height;
+            } else {
+                // This implies that the image fails to be loaded.
+                image.naturalWidth = 0;
+                image.naturalHeight = 0;
+            }
+        }
+
+        // image load
+        // this._log('image ' + evt.type + ' - ' + image.src);
+
+        // remove dom events
+        var loadEvent = YAHOO.env.ua.ie ? 'readystatechange' : 'load';
+        YUE.removeListener(image, loadEvent, this._onImageEvent);
+        YUE.removeListener(image, 'abort', this._onImageEvent);
+        YUE.removeListener(image, 'error', this._onImageEvent);
+
+        // remove the image from waiting queue
+        Util.Array.remove(this._imagesLoading, image);
+
+        // move image into final queue
+        if (evt.type == 'load') {
+            this._imagesLoaded.push(image);
+        } else if (evt.type == 'abort') {
+            this._imagesAborted.push(image);
+        } else {
+            this._imagesFailed.push(image);
+        } // error
+
+        // set timestamp
+        image.dateCompleted = Util.Date.now();
+
+        // check if page is done loading
+        this.checkLoaded();
     };
 
-    this.remove = function(page)
-    {
-        ContentManager.Frame.remove(page.id);
-    };
-};
-
-// RENDERER: Used to render all the pages in one frame
-ContentManager.Renderer.SingleFrame = function(rootContainer)
-{
-    this._frame = null;
-
-    this.init = function()
-    {
-        ContentManager.Frame.setContainer(rootContainer);
-        ContentManager.Frame.create('contentFrame');
-    };
-
-    this.write = function(page)
-    {
-        // write html to shell container
-        var frame = document.getElementById('contentFrame');
-        var frameDoc = Util.Dom.getFrameContentDocument(frame);
-        var frameForm = frameDoc.forms['contentForm'];
-        var pageContainer = ContentManager.Renderer.writeHtml(frameForm, page.getHtml());
-
-        // hide page container
-        ContentManager.Renderer.hide(pageContainer);
-
-        // tell page we are done rendering
-        page.onRendered(frameDoc, pageContainer);
+    Renderer.prototype.dispose = function () {
+        this.id = null;
+        this._html = null;
+        this._container = null;
+        this._doc = null;
+        this._imagesLoading = null;
+        this._imagesLoaded = null;
+        this._imagesFailed = null;
+        this._imagesAborted = null;
+        this._imagesTimer = null;
+        this._imagesRetry = null;
+        
+        this.fire('dispose');
+        this.removeAllListeners();
     };
 
-    this.remove = function(page)
-    {
-        var pageContainer = page.getContainer();
-        Util.Dom.removeNode(pageContainer);
-    };
-};
+    CM.Renderer = Renderer;
 
-// RENDERER: Used to render all the pages in the shell within an element (no frames are used)
-ContentManager.Renderer.Direct = function(rootContainer)
-{
-    this.init = function()
-    {
-        // ContentManager.Renderer.applyStyles(document);
-        var contentForm = HTML.FORM({ id: 'contentForm', name: 'contentForm' });
-        rootContainer.appendChild(contentForm);
-        // container.innerHTML = '<form id="contentForm" name="contentForm"></form>';
-    };
-
-    this.write = function(page)
-    {
-        // write html to shell container
-        var form = document.forms['contentForm'];
-        var pageContainer = ContentManager.Renderer.writeHtml(form, page.getHtml());
-
-        // hide page container
-        ContentManager.Renderer.hide(pageContainer);
-
-        // tell page we are done rendering
-        page.onRendered(document, pageContainer);
-    };
-
-    this.remove = function(page)
-    {
-        var pageContainer = page.getContainer();
-        Util.Dom.removeNode(pageContainer);
-    };
-};
-
-/************************************************************/
-
+})(ContentManager);

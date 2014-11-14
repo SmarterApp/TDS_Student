@@ -9,7 +9,7 @@
  * 
  * Creates a section from the xml file
  ******************************************************************************/
-Simulator.Input.Section = function (sim, thePanel) {
+Simulator.Input.Section = function (sim, thePanel, count) {
     Simulator.SimElement.call(this, sim); // Instance Variable inheritance declaration
 
     // Private Instance Variables
@@ -20,15 +20,31 @@ Simulator.Input.Section = function (sim, thePanel) {
     var sectionLabel = '';
     var panel = thePanel;
     var simID = null;
+    var sectionCount = (!count) ? 0 : count; // to create unique section IDs (WCAG)
+    var orientation = "vertical";
+    var numberOfColumns = "1";
+
+    this.getSectionSettings = function () {
+        var sectionSettings = {
+            'elementorientation': orientation,
+            'numberofcolumns' : numberOfColumns
+        }
+        return sectionSettings;
+    }
 
     var dbg = function () { return sim.getDebug(); };
     var utils = function () { return sim.getUtils(); };
     var simMgr = function () { return sim.getSimulationManager(); };
     var simDocument = function () { return sim.getSimDocument(); };
+    var transDictionary = function () { return sim.getTranslationDictionary(); };
+    this.getSimDocument = function () {
+        return simDocument();
+    }
 
     if (sim) {
         simID = sim.getSimID();
     }
+
     //Instance Methods
     this.setDivider = function (newDivider) {
         divider = newDivider;
@@ -44,9 +60,13 @@ Simulator.Input.Section = function (sim, thePanel) {
     };
 
     this.getLabel = function () {
-        return sectionLabel;
+        // retrieve translated text
+        return transDictionary().translate(sectionLabel);
     };
 
+    this.getSectionID = function () {
+        return 'inputSection' + simID + sectionCount;
+    }
 
     this.render = function () {
         var inputPanel = panel;
@@ -55,9 +75,10 @@ Simulator.Input.Section = function (sim, thePanel) {
         var space = this.getSpaceAbove();
         if (space > 0) utils().appendBlankVertcalSpace(HTMLPanel, space);
         if (label) {
-            var h2Element = simDocument().createElement('h2');
-            h2Element.innerHTML = label;
-            HTMLPanel.appendChild(h2Element);
+            var h4Element = simDocument().createElement('h4'); // change form h2 to h4 per Dan
+            h4Element.id = this.getSectionID(); // WCAG
+            h4Element.innerHTML = label;
+            HTMLPanel.appendChild(h4Element);
             //if(simMgr().getSpeechEnabled()) inputPanel.appendStr('<br>');
         }
         var image = this.getImage();
@@ -84,6 +105,12 @@ Simulator.Input.Section = function (sim, thePanel) {
             switch (i) {
                 case 'divider':
                     instance.setDivider(attr[i]);
+                    break;
+                case 'orientation':
+                    orientation = attr[i];
+                    break;
+                case 'columns':
+                    numberOfColumns = attr[i];
                     break;
             }
         }

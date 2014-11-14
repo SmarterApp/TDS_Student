@@ -85,6 +85,9 @@ Summit.SecureBrowser.Mobile = function () {
 	    /** (Internal)Command to request the device check the status of guided access.
 	     *  @constant */
 	    CMD_CHECK_GUIDED_ACCESS: "cmdCheckGuidedAccess",
+        /** (Internal)Command to enable or disable guided access on a device.
+	     *  @constant */
+	    CMD_ENABLE_GUIDED_ACCESS: "cmdEnableGuidedAccess",
 	    /** (Internal)Command to request the device check the status of TTS.
 	     *  @constant */
 	    CMD_CHECK_TTS: "cmdCheckTTS",
@@ -448,6 +451,30 @@ Summit.SecureBrowser.Mobile = function () {
 		    return this.sendCommand(this.CMD_CHECK_GUIDED_ACCESS, _identifier, _callback);
 	    },
 
+        /** Enable or disable guided access mode on a device (iOS only).
+	     *  Sends an asynchronous request to the device.
+         *  @param {Boolean} a boolean variable whether to enable (true) or disable (false) guided access.
+	     *  @param {String} identifier a unique identifier or null to autogenerate one.
+	     *  @param {function} callback The callback to invoke when the device responds.
+	     *      The function should take a single parameter object that will contain a {Boolean}
+	     *      property called 'enabled'. Additionally, the original identifier will
+	     *      be provided via an 'identifier' property of the parameter.
+	     *
+	     *  @return {String} the unique identifier for the request.
+	     */
+	    enableGuidedAccess: function (toEnable, _identifier, _callback) {
+	        _identifier = _identifier == null ? this.UUID() : _identifier;
+
+	        this.callbacks[_identifier] = _callback;
+
+	        var params = {
+	            identifier: _identifier,
+	            enable: toEnable ? "true" : "false"
+	        };
+
+	        this.sendToApp(this.CMD_ENABLE_GUIDED_ACCESS, JSON.stringify(params, null, true));
+	    },
+
 	    /** Request that the device update its list of running processes.
 	     *  Sends an asynchronous request to the device.
 	     *  @param {String} identifier a unique identifier or null to autogenerate one.
@@ -801,6 +828,24 @@ Summit.SecureBrowser.Mobile = function () {
 		    return this.device.guidedAccessEnabled;
 	    },
 
+        /** Called in response to a request to enable or disable Guided Access.
+         *
+         *  @param {String} Parameters JSON representation of the result
+         *  @config {String} [identifier]
+         *  @config {Boolean} whether the request is successful
+         */
+	    ntvOnEnableGuidedAccessReceived: function (_parameters) {
+	        var results;
+
+	        results = JSON.parse(_parameters, null);
+
+	        if (results.enabled != null) {
+	            this.device.guidedAccessEnabled = results.enabled;
+	        }
+
+	        this.executeCallback(results);
+	    },
+
 	    /** Called when The native TextToSpeech engine is enabled on the device, or in response
 	     *  to a request to check the status of TextToSpeech.
 	     *	@param Parameters JSON representation of the result
@@ -994,7 +1039,7 @@ Summit.SecureBrowser.Mobile = function () {
 		    return results.keyboard;
 	    },
 
-		/** Called when the application has detected the contents of the
+        /** Called when the application has detected the contents of the
         *       clipboard have changed.
         *       @param {String} Parameters JSON representation of the result.
         *       @config {String} contents the contents of the clipboard.
@@ -1004,7 +1049,7 @@ Summit.SecureBrowser.Mobile = function () {
 
                 return this.dispatchMessageEvent(this.EVENT_CLIPBOARD_CHANGED, results.contents);
         },
-		
+
 	    /** Dispatch an event using the document; with the given name.
 	     *
 	     *  @param eventName the name of the event to dispatch

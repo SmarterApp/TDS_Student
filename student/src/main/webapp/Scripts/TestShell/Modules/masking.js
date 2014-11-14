@@ -34,26 +34,36 @@ This test shell module is used for the masking button.
         TDS.Mask.toggle();
     }
 
-    function init() {
+    function load() {
 
         // check if masking is enabled
         var accProps = TDS.getAccommodationProperties();
         if (accProps && accProps.hasMaskingEnabled()) {
             // setup button
-            TestShell.UI.addButtonTool('btnMask', 'Masking', 'maskingtool', toggle);
+            TestShell.UI.addButtonTool({
+                id: 'btnMask',
+                className: 'maskingtool',
+                i18n: 'TestShell.Link.Masking',
+                label: 'Masking',
+                fn: toggle
+            });
         } else {
             console.warn("Masking not enabled.");
             return;
         }
         //removing CSS_ENABLED class from body element while page hide.
-        ContentManager.onPageEvent('hide', function() {
+        ContentManager.onPageEvent('hide', function () {
             if (isEnabled()) {
                 disable();
             }
         });
+
     }
 
-    TS.Events.subscribe('init', init);
+    TS.registerModule({
+        name: 'masking',
+        load: load
+    });
 
 })(TestShell);
 

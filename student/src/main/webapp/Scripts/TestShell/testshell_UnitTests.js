@@ -19,10 +19,10 @@ TestShell.UnitTests.answerPage = function()
     var page = TestShell.PageManager.getCurrent();
     if (!page || !page.hasContent()) return;
 
-    Util.Array.each(page.responses, function(response)
+    Util.Array.each(page.items, function(item)
     {
         // if (response.isValid) return; // already responded to
-        var contentItem = response.getItem();
+        var contentItem = item.getContentItem();
         var answered = TestShell.UnitTests.answerItem(contentItem);
     });
 
@@ -189,13 +189,19 @@ TestShell.UnitTests.answerItem = function(contentItem)
 // add button for answering test
 TestShell.Events.subscribe('init', function() {
 
-    TestShell.UI.addButtonControl('btnAnswerPage', 'Answer', 'answer', function() {
-        TestShell.UnitTests.answerPage();
+    TestShell.UI.addButtonControl({
+        id: 'btnAnswerPage',
+        label: 'Answer',
+        fn: TestShell.UnitTests.answerPage
     });
 
-    TestShell.UI.addButtonControl('btnRefresh', 'Refresh', 'refresh', function() {
-        var pageNum = TestShell.PageManager.getCurrent().pageNum;
-        TDS.redirectTestShell(pageNum);
+    TestShell.UI.addButtonControl({
+        id: 'btnRefresh',
+        label: 'Refresh',
+        fn: function() {
+            var pageNum = TestShell.PageManager.getCurrent().pageNum;
+            TDS.redirectTestShell(pageNum);
+        }
     });
 
 });

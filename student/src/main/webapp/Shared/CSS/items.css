@@ -536,7 +536,7 @@ a.markReviewDisabled, a.markReviewDisabled:hover {
 }
 .yourChoices .greenBtn {
 	display: block;
-	background-image: url(../Images/btnGreenTop.gif);
+	background-image: url(../images/btnGreenTop.gif);
 	background-repeat: no-repeat;
 	background-position: left top;
 	float: left;
@@ -546,7 +546,7 @@ a.markReviewDisabled, a.markReviewDisabled:hover {
 }
 .yourChoices .greenBtn span {
 	display: block;
-	background-image: url(../Images/btnGreenBottom.gif);
+	background-image: url(../images/btnGreenBottom.gif);
 	background-repeat: no-repeat;
 	background-position: right bottom;
 	padding-top: 7px;
@@ -561,7 +561,7 @@ a.markReviewDisabled, a.markReviewDisabled:hover {
 }
 .yourChoices .redBtn {
 	display: block;
-	background-image: url(../Images/btnRedTop.gif);
+	background-image: url(../images/btnRedTop.gif);
 	background-repeat: no-repeat;
 	background-position: left top;
 	float: left;
@@ -571,7 +571,7 @@ a.markReviewDisabled, a.markReviewDisabled:hover {
 }
 .yourChoices .redBtn span {
 	display: block;
-	background-image: url(../Images/btnRedBottom.gif);
+	background-image: url(../images/btnRedBottom.gif);
 	background-repeat: no-repeat;
 	background-position: right bottom;
 	padding-top: 7px;
@@ -902,7 +902,8 @@ a.markReviewDisabled, a.markReviewDisabled:hover {
 .answerCell .optionContainer:hover span {
 	background-position: 0px -21px;
 }
-.format_ms .answerContainer div:hover span, .format_ms .answerCell div:hover span {
+.format_ms .answerContainer .optionContainer:hover span, 
+.format_ms .answerCell .optionContainer:hover span {
 	background-position: 0px -149px;
 }
 .optionA .optionClicker {
@@ -1053,11 +1054,14 @@ a.markReviewDisabled, a.markReviewDisabled:hover {
 .TDS_PS_L1 .answerCell .optionContainer:hover span {
 	background-position: -40px -30px;
 }
-.TDS_PS_L1 .format_ms .answerContainer div:hover span, .TDS_PS_L1 .format_ms .answerCell div:hover span, 
-.TDS_PS_L1 .format_ms .answerContainer div.optionDisabled:hover span, .TDS_PS_L1 .format_ms .answerCell div.optionDisabled:hover span {
+.TDS_PS_L1 .format_ms .answerContainer .optionContainer:hover span, 
+.TDS_PS_L1 .format_ms .answerCell .optionContainer:hover span, 
+.TDS_PS_L1 .format_ms .answerContainer div.optionDisabled:hover span, 
+.TDS_PS_L1 .format_ms .answerCell div.optionDisabled:hover span {
 	background-position: 0px -625px;
 }
-.TDS_PS_L1 .answerContainer div.optionDisabled:hover span, .TDS_PS_L1 .answerCell div.optionDisabled:hover span {
+.TDS_PS_L1 .answerContainer div.optionDisabled:hover span, 
+.TDS_PS_L1 .answerCell div.optionDisabled:hover span {
 	background-position: -40px 0px;
 }
 
@@ -1094,7 +1098,10 @@ a.markReviewDisabled, a.markReviewDisabled:hover {
 .TDS_PS_L2 .answerContainer div.optionDisabled:hover span, .TDS_PS_L2 .answerCell div.optionDisabled:hover span {
 	background-position: 0px -60px;
 }
-.TDS_PS_L2 .format_ms .answerContainer div:hover span, .TDS_PS_L2 .format_ms .answerCell div:hover span, .TDS_PS_L2 .format_ms .answerContainer div.optionDisabled:hover span, .TDS_PS_L2 .format_ms .answerCell div.optionDisabled:hover span {
+.TDS_PS_L2 .format_ms .answerContainer .optionContainer:hover span, 
+.TDS_PS_L2 .format_ms .answerCell .optionContainer:hover span, 
+.TDS_PS_L2 .format_ms .answerContainer div.optionDisabled:hover span, 
+.TDS_PS_L2 .format_ms .answerCell div.optionDisabled:hover span {
 	background-position: 0px -1174px;
 }
 /* level 3 */
@@ -1129,7 +1136,10 @@ a.markReviewDisabled, a.markReviewDisabled:hover {
 .TDS_PS_L3 .answerContainer div.optionDisabled:hover span, .TDS_PS_L3 .answerCell div.optionDisabled:hover span {
 	background-position: -80px -70px;
 }
-.TDS_PS_L3 .format_ms .answerContainer div:hover span, .TDS_PS_L3 .format_ms .answerCell div:hover span, .TDS_PS_L3 .format_ms .answerContainer div.optionDisabled:hover span, .TDS_PS_L3 .format_ms .answerCell div.optionDisabled:hover span {
+.TDS_PS_L3 .format_ms .answerContainer .optionContainer:hover span, 
+.TDS_PS_L3 .format_ms .answerCell .optionContainer:hover span, 
+.TDS_PS_L3 .format_ms .answerContainer div.optionDisabled:hover span, 
+.TDS_PS_L3 .format_ms .answerCell div.optionDisabled:hover span {
 	background-position: 0px -1825px;
 }
 /* level 4 */
@@ -1164,7 +1174,10 @@ a.markReviewDisabled, a.markReviewDisabled:hover {
 .TDS_PS_L4 .answerContainer div.optionDisabled:hover span, .TDS_PS_L4 .answerCell div.optionDisabled:hover span {
 	background-position: -70px 0px;
 }
-.TDS_PS_L4 .format_ms .answerContainer div:hover span, .TDS_PS_L4 .format_ms .answerCell div:hover span, .TDS_PS_L4 .format_ms .answerContainer div.optionDisabled:hover span, .TDS_PS_L4 .format_ms .answerCell div.optionDisabled:hover span {
+.TDS_PS_L4 .format_ms .answerContainer .optionContainer:hover span, 
+.TDS_PS_L4 .format_ms .answerCell .optionContainer:hover span, 
+.TDS_PS_L4 .format_ms .answerContainer div.optionDisabled:hover span, 
+.TDS_PS_L4 .format_ms .answerCell div.optionDisabled:hover span {
 	background-position: 0px -2626px;
 }
 /* @end */
@@ -2145,7 +2158,7 @@ body.dialogShowing .GridContainer iframe, body.popupShowing .GridContainer ifram
 }
 
 .GridContainer.loading {
-    background-image: url(../Images/controls/loader32.gif);
+    background-image: url(../images/controls/loader32.gif);
 }
 
 .GridContainer.failed {

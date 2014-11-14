@@ -9,7 +9,7 @@
  * @return - instance of a SimSlider
  *******************************************************************************
  */
-Simulator.Input.SimSlider = function (sim, node, panel, theSection) {
+Simulator.Input.SimSlider = function (sim, node, panel, theSection, container) {
 
     Simulator.Input.FieldSet.call(this, sim); // Inherit Instance variables
 
@@ -19,7 +19,7 @@ Simulator.Input.SimSlider = function (sim, node, panel, theSection) {
     var HTMLId = null;
     var textAreaId = null;
     var sliderBackgroundImage = 'http://yui.yahooapis.com/2.9.0/build/slider/assets/bg-h.gif';
-    var sliderImage = 'Scripts/Simulator/renderer/Images/slider_thumb.png';
+    var sliderImage = 'Scripts/Simulator/renderer/images/slider_thumb.png';
     var theSlider = null;
     var setValues = [];
     var orientation = 'horizontal';
@@ -77,7 +77,7 @@ Simulator.Input.SimSlider = function (sim, node, panel, theSection) {
     };
 
     this.getSliderImage = function () {
-        return 'Scripts/Simulator/renderer/Images/slider_thumb.png';
+        return 'Scripts/Simulator/renderer/images/slider_thumb.png';
     };
 
     this.setSliderImage = function (newSliderImage) {
@@ -203,13 +203,19 @@ Simulator.Input.SimSlider = function (sim, node, panel, theSection) {
     };
 
     this.render = function () {
-        var panelHtml = panel.getHTMLElement();
-
+        var panelHtml = container;
+        var labelledByID = this.getSectionID(); // default aria-labelledby to containing section (WCAG) 
+        
         // Create the container for the entire slider apparatus
         var holderDiv = simDocument().createElement('div');
         holderDiv.id = this.getNodeID() + 'sliderHolder';
         if (this.getOrientation() == 'horizontal') holderDiv.setAttribute('class', 'slider sliderHorizontal');
         else holderDiv.setAttribute('class', 'slider sliderVertical');
+        holderDiv.setAttribute('role', 'group'); // WCAG
+
+        if (theSection.getSectionSettings().elementorientation === "horizontal") {
+            holderDiv.classList.add("inputpanelcell");
+        }
 
         // The value and text decorations of this slider
         var label = '';
@@ -238,10 +244,16 @@ Simulator.Input.SimSlider = function (sim, node, panel, theSection) {
         }
         var labelElem = simDocument().createElement('span');
         labelElem.innerHTML = label;
+        if (this.getLabel()) {
+            var labelID = this.createLabelID();
+            labelElem.id = labelID; // ID for WCAG
+            labelledByID = labelledByID + ' ' + labelID; // if there is an element label, add to the aria-laballedby attribute (WCAG)
+            labelElem.setAttribute('aria-label', this.getLabel()); // WCAG (don't read colon)
+        }
 
         // This is the text field for the converted slider value
         var txtAreaDiv = simDocument().createElement('div');
-        txtAreaDiv.setAttribute('class', 'slider-label-area'); ;
+        txtAreaDiv.setAttribute('class', 'slider-label-area');
         var txtAreaInput = simDocument().createElement('input');
         txtAreaInput.id = this.getNodeID() + 'slider-value';
         this.txtAreaId = txtAreaInput.id;
@@ -252,6 +264,8 @@ Simulator.Input.SimSlider = function (sim, node, panel, theSection) {
         txtAreaInput.autocomplete = 'off';
         txtAreaInput.value = this.getDefaultValue();
         txtAreaInput.setAttribute('class', 'slider-text-area');
+
+        txtAreaInput.setAttribute('aria-labelledby', labelledByID);  // WCAG
 
         utils().bindEvent(txtAreaInput, 'change', function () {
             var currentValue = txtAreaInput.value;
@@ -292,6 +306,10 @@ Simulator.Input.SimSlider = function (sim, node, panel, theSection) {
             txtAreaUM = simDocument().createElement('label');
             txtAreaUM.setAttribute('for', txtAreaInput.id);
             txtAreaUM.innerHTML = this.getUnits();
+
+            var unitsID = this.createUnitsID();
+            txtAreaUM.id = unitsID; // WCAG
+            txtAreaInput.setAttribute('aria-describedby', unitsID);  // WCAG
         }
 
         // Register the element items for keyboard input
@@ -304,9 +322,11 @@ Simulator.Input.SimSlider = function (sim, node, panel, theSection) {
         minMaxDiv.appendChild(minValSpan);
         minValSpan.innerHTML = this.getMinValue() + '  ';
         minValSpan.setAttribute('class', 'yui-slider-min');
+        minValSpan.setAttribute('role', 'presentation'); // WCAG
         var maxValSpan = simDocument().createElement('span');
         minMaxDiv.appendChild(maxValSpan);
         maxValSpan.setAttribute('class', 'yui-slider-max');
+        maxValSpan.setAttribute('role', 'presentation'); // WCAG
         maxValSpan.innerHTML = '  ' + this.getMaxValue();
 
         var image = this.getImage();
@@ -345,6 +365,14 @@ Simulator.Input.SimSlider = function (sim, node, panel, theSection) {
         sliderThumbDiv.setAttribute("class", "yui-slider-thumb");
 
         sliderThumbDiv.setAttribute('class', 'yui-slider-thumb');
+        
+        sliderThumbDiv.setAttribute('aria-labelledby', labelledByID);  // WCAG
+        sliderThumbDiv.setAttribute('aria-valuenow', this.getDefaultValue()); // WCAG
+        sliderThumbDiv.setAttribute('aria-valuemax', this.getMaxValue()); // WCAG
+        sliderThumbDiv.setAttribute('aria-valuemin', this.getMinValue()); // WCAG
+        sliderThumbDiv.setAttribute('role', 'slider'); // WCAG
+        sliderThumbDiv.setAttribute('tabindex', 0); // (hopefully) force focus on separate options (WCAG)
+
         //		 var sliderThumbImg = simDocument().createElement('img');
         //		 sliderThumbImg.src = this.getSliderImage();
         //		 var sliderBGImg = simDocument().createElement('img');
@@ -549,6 +577,8 @@ Simulator.Input.SimSlider = function (sim, node, panel, theSection) {
         var id = jsSlider.txtAreaId;
         var node = simDocument().getElementById(id);
         node.value = actualValue;
+        var sliderNode = simDocument().getElementById(jsSlider.sliderThumbDivId);
+        sliderNode.setAttribute('aria-valuenow', actualValue); // WCAG
         if (jsSlider.getReportMovement()) {
             jsSlider.setData(actualValue);  // coerce the value to a string
             jsSlider.recordInput(jsSlider);

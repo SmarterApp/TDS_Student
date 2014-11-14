@@ -1,7 +1,7 @@
 ﻿MatchItem = (typeof (MatchItem) == "undefined") ? {} : MatchItem;
 ///////////////////////////
 // This file is responsible for all things regarding presentation of match QTI items.
-// THer are 2 formats supported: table and line-drawing.  THere is a distinct class for each.
+// There are 2 formats supported: table and line-drawing.  There is a distinct class for each.
 ////////////////////////////
 
 // Generate HTML codee to render the line-drawing version of the item.
@@ -157,12 +157,16 @@ MatchItem.TableHtmlGenerator = function (discriminator) {
         var table = document.createElement('table');
         var thead = document.createElement('THEAD');
         self.tbody = document.createElement('TBODY');
-        var caption = document.createElement('caption');
+
+        // WCAG 20.0.5 - only add caption if captionText is present
+        if (captionText && captionText.length > 0) {
+            var caption = document.createElement('caption');
+            Util.Dom.setTextContent(caption, captionText);
+            table.appendChild(caption);
+        }
 
         // Make title span the top row
-        Util.Dom.setTextContent(caption, captionText);
         thead.appendChild(self.headerRow);
-        table.appendChild(caption);
         table.appendChild(thead);
         table.appendChild(self.tbody);
         parentDiv.appendChild(table);

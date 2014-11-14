@@ -73,6 +73,13 @@ Simulator.Display.DataTable = function (sim, panel) {
 
     var simDocument = function () { return sim.getSimDocument(); };
 
+    // WCAG related standard text:
+    var clearRowText = function () { return 'Clear Row'; }; // will need to be internationalized
+    var tableCaptionText = function () { return 'Output Table'; }; // will need to be internationalized
+    var rowHeaderText = function () { return 'Trial'; }; // will need to be internationalized
+
+    var transDictionary = function () { return sim.getTranslationDictionary(); };
+
     var HTMLDataTable = simDocument().createElement('table');
     HTMLDataTable.setAttribute('class', 'dataTable');
     HTMLDataTable.rules = 'all';
@@ -87,27 +94,36 @@ Simulator.Display.DataTable = function (sim, panel) {
         var newCell = null;
         var hTable = simDocument().getElementById(table.getID());
         var nRows = hTable.rows.length;
-        var lastCellID = table.createCellId(hTable.tBodies[0].rows.length - 2, numColumns - 1);
+        var lastCellID = table.createCellId(hTable.tBodies[0].rows.length - 2, table.getNumColumnsPlusHeader() - 1);  // WCAG
         var newRow = hTable.insertRow(nRows);
-        for (var i = 0; i < numColumns; i++) {
+        if (sim.getAccessibilityIFActive()) { // WCAG
+            var rowHeader = document.createElement('th');
+            rowHeader.innerHTML = rowHeaderText() + ' ' + nRows;
+            newRow.appendChild(rowHeader);
+        }
+        for (var i = table.getZerothColumn() ; i < table.getNumColumnsPlusHeader() ; i++) {  // WCAG
             newCell = newRow.insertCell(i);
-            newCell.id = table.createCellId(hTable.tBodies[0].rows.length - 1, i);
+            newCell.id = table.createCellId(hTable.tBodies[0].rows.length - 1, i); // WCAG
             newCell.innerHTML = ' ';
             // add keyboard support for table cells
             if (table.isFocusable()) keyboardInput().addFocusableElementItem(table, table.getID(), newCell.id);
         }
         if (table.getClearRows()) {
-            var dCell = newCell = newRow.insertCell(numColumns);
+            var dCell = newCell = newRow.insertCell(table.getNumColumnsPlusHeader()); // WCAG
             dCell.style.borderRight = '0px';
             dCell.style.borderTop = '0px';
             dCell.style.borderBottom = '0px';
-            dCell.id = table.createCellId(hTable.tBodies[0].rows.length - 1, numColumns);
+            dCell.id = table.createCellId(hTable.tBodies[0].rows.length - 1, table.getNumColumnsPlusHeader()); // WCAG
             var anchor = simDocument().createElement('a');
             anchor.href = '#';
             anchor.setAttribute('class', 'clearRow');
+            anchor.innerHTML = clearRowText();
+            var anchorwrap = simDocument().createElement('div');
+            /*
             var img = simDocument().createElement('img');
             img.src = table.getDeleteRowImage();
             anchor.appendChild(img);
+            */
             anchor.onclick = (function (e) {
                 var theRow = simMgr().getTrialNum() - 1;
                 if (loadFromResponse) {
@@ -118,7 +134,8 @@ Simulator.Display.DataTable = function (sim, panel) {
                     instance.clearRow(e, id, theRow);
                 };
             })();
-            dCell.appendChild(anchor);
+            anchorwrap.appendChild(anchor);
+            dCell.appendChild(anchorwrap);
             // add keyboard support for clear row buttons
             if (table.isFocusable()) keyboardInput().addFocusableElementItem(table, table.getID(), dCell.id);
         }
@@ -176,8 +193,20 @@ Simulator.Display.DataTable = function (sim, panel) {
                         elements = inputArray[i].split(Simulator.Constants.PAIR_DELIMITTER);
                         for (var k = 0; k < elements.length; k++) {
                             parts = elements[k].split(Simulator.Constants.KEY_VALUE_DELIMITTER);
-                            if (parts[1]) cellWritten = obj.setCell(parts[0], parts[1]);
-                            else cellWritten = obj.setCell(p, parts[0]);
+                            var myInputKey, myData;
+                            if (parts[1]) {
+                                myInputKey = parts[0];
+                                myData = parts[1];
+                            } else {
+                                myInputKey = p;
+                                myData = parts[0];
+                            }
+                            if (isNaN(myData)) {
+                                // if not a number, then it is a tag so translate (otherwise, leave it alone)
+                                // retrieve translated text for output
+                                myData = transDictionary().translate(myData);
+                            }
+                            cellWritten = obj.setCell(myInputKey, myData);
                         }
                     }
                 }
@@ -214,7 +243,7 @@ Simulator.Display.DataTable = function (sim, panel) {
             }
         }
         var cellWritten = false;
-        for (var k = 0; k < numColumns; k++) {
+        for (var k = 0 ; k < obj.getNumColumns() ; k++) {
             var allData = null;
             var inputKey = headingMap[k]['inputKey'];
             var outputKeys = headingMap[k]['outputKey'];
@@ -234,15 +263,24 @@ Simulator.Display.DataTable = function (sim, panel) {
                     outputKeyList[i] = outputKeyList[i].replace(/\s*\"$/, "\"");
                     outputKeyList[i] = outputKeyList[i].replace(/\"/g, "");
                     if (outputKeyList[i] in functionDB) {
+                        var keyString = "";
                         if (iteratorSelectorMap[k]) {
                             data = util().applyFilter(iteratorSelectorMap[k], functionDB[outputKeyList[i]]);
                             functionDB[outputKeyList[i]] = data;  // Override the output with the filtered results
                         } else {
                             if (includeKeyInOutput[k]) {
-                                functionDB[outputKeyList[i]] = outputKeyList[i] + ' : ' + functionDB[outputKeyList[i]];
+                                // retrieve translated text for key
+                                var keyTag = outputKeyList[i];
+                                keyString = transDictionary().translate(keyTag) + ' : ';
+                                //functionDB[outputKeyList[i]] = outputKeyList[i] + "<-TR?" + ' : ' + functionDB[outputKeyList[i]] + "<-if !num, translate";
                             }
                         }
-                        data = functionDB[outputKeyList[i]];
+                        if (isNaN(functionDB[outputKeyList[i]])) {
+                            // if not a number, then it is a tag so translate (otherwise, leave it alone)
+                            // retrieve translated text for output
+                            functionDB[outputKeyList[i]] = transDictionary().translate(functionDB[outputKeyList[i]]);
+                            }
+                        data = keyString + functionDB[outputKeyList[i]];
                         if (data instanceof Array) data = data.join(',');
                         if (allData) allData = allData + ', ' + data;
                         else allData = data;
@@ -269,7 +307,7 @@ Simulator.Display.DataTable = function (sim, panel) {
         var cell = null;
         var buff = [];
         for (var j = 0; j < numRows; j++) {
-            for (var i = 0; i < numColumns; i++) {
+            for (var i = obj.getZerothColumn(); i < obj.getNumColumnsPlusHeader(); i++) { // WCAG
                 cellID = obj.createCellId(j, i);
                 cell = simDocument().getElementById(cellID);
                 if (i == 0) buff.push(cell.innerHTML);
@@ -285,9 +323,9 @@ Simulator.Display.DataTable = function (sim, panel) {
     }
 
     function rowIsEmpty(tbl, theRow) {
-        var nCols = tbl.getNumColumns();
+        var nCols = tbl.getNumColumnsPlusHeader(); // WCAG
         if (theRow < tbl.getNumRows() && theRow >= 0) {
-            for (var i = 0; i < nCols; i++) {
+            for (var i = tbl.getZerothColumn(); i < nCols; i++) { // WCAG
                 var id = tbl.createCellId(theRow, i);
                 var cell = simDocument().getElementById(id);
                 if (cell.innerHTML != '') return false;
@@ -306,7 +344,13 @@ Simulator.Display.DataTable = function (sim, panel) {
         for (var j = 0; j < numRows; j++) {
             row = simDocument().createElement('tr');
             tBody.appendChild(row);
-            for (var i = 0; i < numColumns; i++) {
+            if (sim.getAccessibilityIFActive()) { // WCAG: add row headers
+                var rowHeader = document.createElement('th');
+                var printedRowNumber = j + 1; // row 0 --> 'row 1', etc.
+                rowHeader.innerHTML = rowHeaderText() + ' ' + printedRowNumber;
+                row.appendChild(rowHeader);
+            }
+            for (var i = tbl.getZerothColumn(); i < tbl.getNumColumnsPlusHeader(); i++) { // WCAG
                 var cell = simDocument().createElement('td');
                 cell.id = tbl.createCellId(j, i);
                 row.appendChild(cell);
@@ -317,16 +361,19 @@ Simulator.Display.DataTable = function (sim, panel) {
             }
             if (tbl.getClearRows()) {
                 var dCell = newCell = row.insertCell(row.cells.length);
-                dCell.id = tbl.createCellId(j, numColumns);
+                dCell.id = tbl.createCellId(j, tbl.getNumColumnsPlusHeader()); // WCAG
                 dCell.style.borderRight = '0px';
                 dCell.style.borderTop = '0px';
                 dCell.style.borderBottom = '0px';
                 var anchor = simDocument().createElement('a');
                 anchor.href = '#';
                 anchor.setAttribute('class', 'clearRow');
+                anchor.innerHTML = clearRowText();
+                /*
                 var img = simDocument().createElement('img');
-                img.src = tbl.getDeleteRowImage();
+                img.src = table.getDeleteRowImage();
                 anchor.appendChild(img);
+                */
                 anchor.onclick = (function (e) {
                     var theRow = j;
                     var id = tbl.getNodeID();
@@ -349,6 +396,7 @@ Simulator.Display.DataTable = function (sim, panel) {
         speechGrammarBldr().createTableRowClearRule(tbl.getName(), '', tbl, 'Data Table');
     };
 
+
     //private functions - end here
 
     this.setEname(source);
@@ -365,6 +413,14 @@ Simulator.Display.DataTable = function (sim, panel) {
 
     this.setID = function (id) {
         HTMLDataTable.setAttribute('id', this.getNodeID());
+    };
+
+    this.getCaptionID = function () {
+        return 'caption' + this.getID();
+    };
+
+    this.getColumnHeaderID = function (colNumber) {
+        return 'column' + colNumber + 'Header' + this.getID();
     };
 
     this.getUserAddRows = function () {
@@ -388,6 +444,14 @@ Simulator.Display.DataTable = function (sim, panel) {
         if (numRows == 0) deleteColumn = true;
         return this;
     };
+
+    this.getZerothColumn = function () { // WCAG
+        return (sim.getAccessibilityIFActive() ? 1 : 0);
+    }
+
+    this.getNumColumnsPlusHeader = function () { // WCAG
+        return this.getNumColumns() + this.getZerothColumn();
+    }
 
     this.getNumColumns = function () {
         return numColumns;
@@ -414,11 +478,19 @@ Simulator.Display.DataTable = function (sim, panel) {
         var cell = null;
         var headingText = null;
         var isIE = util().isInternetExplorer();
+
         if (header != null) {
             //if (simMgr().getSpeechEnabled()) HTMLPanel.innerHTML += 'Move To Data Table\n';
             var tHead = HTMLDataTable.createTHead();
             var row = simDocument().createElement('tr');
             tHead.appendChild(row);
+
+            if (sim.getAccessibilityIFActive()) { // WCAG
+                var blankHeaderCell = simDocument().createElement('th');
+                blankHeaderCell.setAttribute('id', this.getColumnHeaderID(0)); // WCAG
+                row.appendChild(blankHeaderCell);
+            }
+
             for (var i = 0; i < header.childNodes.length; i++) {
                 try {
                     var child = header.childNodes[i];
@@ -426,11 +498,13 @@ Simulator.Display.DataTable = function (sim, panel) {
                         k += 1;
                         if (k <= numColumns) {
                             cell = simDocument().createElement('th');
+                            cell.setAttribute('id', this.getColumnHeaderID(k + this.getZerothColumn())); // WCAG
                             row.appendChild(cell);
                             indexStr = 'text';
                             if (isIE) headingText = child.attributes.getNamedItem(indexStr).value;
                             else headingText = child.attributes[indexStr].nodeValue;
-                            cell.innerHTML = headingText;
+                            // retrieve translated text for heading
+                            cell.innerHTML = transDictionary().translate(headingText);
                             headingNames[k] = headingText;
                             headingMap[k] = [];
                             indexStr = "contentType";
@@ -576,6 +650,20 @@ Simulator.Display.DataTable = function (sim, panel) {
                 }
             }
 
+            if (sim.getAccessibilityIFActive()) {
+                // adding table caption (WCAG)
+                var caption = simDocument().createElement('caption');
+                caption.innerHTML = tableCaptionText();
+                caption.setAttribute('id', this.getCaptionID());
+                HTMLDataTable.insertBefore(caption, tHead);
+
+                // adding column header for trashcans (WCAG)
+                var cell = simDocument().createElement('th');
+                row.appendChild(cell);
+                cell.innerHTML = clearRowText();
+            }
+
+
         }
         return this;
     };
@@ -616,7 +704,7 @@ Simulator.Display.DataTable = function (sim, panel) {
         var tFoot = HTMLDataTable.createTFoot();
         var row = simDocument().createElement('TR');
         tFoot.appendChild(row);
-        for (var i = 0; i < numColumns; i++) {
+        for (var i = this.getZerothColumn(); i < this.getNumColumnsPlusHeader(); i++) { // WCAG
             var cell = simDocument().createElement('TD');
             cell.style.width = colWidth;
             row.appendChild(cell);
@@ -683,21 +771,21 @@ Simulator.Display.DataTable = function (sim, panel) {
             var cell = simDocument().getElementById(cellID);
             switch (rowFunctionMap[column]) {
                 case 'mean':
-                    for (var i = 0; i < numColumns; i++) if (i != column) sum += parseFloat(cell.inerHTML);
+                    for (var i = 0; i < this.getNumColumns() ; i++) if (i != column) sum += parseFloat(cell.innerHTML);
                     return (sum / numRows).toFixed(this.getFixedDigits());
                     break;
                 case 'sum':
-                    for (var i = 0; i < numColumns; i++) if (i != column) sum += parseFloat(cell.inerHTML);
+                    for (var i = 0; i < this.getNumColumns() ; i++) if (i != column) sum += parseFloat(cell.innerHTML);
                     return sum.toFixed(this.getFixedDigits());
                     break;
                 case 'max':
                     var max = null;
-                    for (var i = 0; i < numColumns; i++) max = Math.max(parseFloat(cell.inerHTML), max);
+                    for (var i = 0; i < this.getNumColumns() ; i++) max = Math.max(parseFloat(cell.innerHTML), max);
                     return max.toFixed(this.getFixedDigits());
                     break;
                 case 'min':
                     var min = null;
-                    for (var i = 0; i < numColumns; i++) min = Math(min, parseFloat(cell.inerHTML));
+                    for (var i = 0; i < this.getNumColumns() ; i++) min = Math(min, parseFloat(cell.innerHTML));
                     return min.toFixed(this.getFixedDigits());
                     break;
             }
@@ -736,10 +824,11 @@ Simulator.Display.DataTable = function (sim, panel) {
         var cellWritten = false;
         var testVal = null;
         if (rowNum < numRows && rowNum >= 0 && colNum != -1) {
-            var id = this.createCellId(rowNum, colNum);
+            var displayColNum = colNum + this.getZerothColumn(); // WCAG
+            var id = this.createCellId(rowNum, displayColNum);
             cell = simDocument().getElementById(id);
             var contentType = headingMap[colNum]['contentType'];
-            if (data === Simulator.Constants.NO_DATA_INDICATOR) cell.inerHTML = Simulator.Constants.NO_DATA_INDICATOR;
+            if (data === Simulator.Constants.NO_DATA_INDICATOR) cell.innerHTML = Simulator.Constants.NO_DATA_INDICATOR;
             else if (contentType == 'text') {
                 if (!isNaN(data)) {   // string representation of a number
                     testVal = parseFloat(data);
@@ -760,7 +849,7 @@ Simulator.Display.DataTable = function (sim, panel) {
                 }
                 cell.innerHTML = util().replaceAll(data, Simulator.Constants.MULTIPLE_VALUE_DELIMITTER, ',');
             } else if (contentType == 'image') {
-                cell.inerHTML = '<img src="data:image/png;base64,"' + data + '" alt="x">';
+                cell.innerHTML = '<img src="data:image/png;base64,"' + data + '" alt="x">';
             }
             cellWritten = true;
         } else cellWritten = false;
@@ -769,7 +858,7 @@ Simulator.Display.DataTable = function (sim, panel) {
 
     this.setAutoCountCells = function (rowNum) {
         if (rowNum < numRows && rowNum >= 0) {
-            for (var i = 0; i < this.getNumColumns(); i++) {
+            for (var i = this.getZerothColumn(); i < this.getNumColumnsPlusHeader(); i++) { // WCAG
                 if (autoCountMap[i] != null) {
                     var id = this.createCellId(rowNum, i);
                     cell = simDocument().getElementById(id);
@@ -871,7 +960,7 @@ Simulator.Display.DataTable = function (sim, panel) {
 
     this.saveScoreableInputs = function () {
         var row = simMgr().getTrialNum() - 1;
-        for (var i = 0; i < numColumns; i++) {
+        for (var i = this.getZerothColumn(); i < this.getNumColumnsPlusHeader(); i++) { // WCAG
             var cellID = this.createCellId(row, i);
             var cell = simDocument().getElementById(cellID);
             if (scoreableMap[i]) scoringTable().setValue(headingNames[i], row, cell.innerHTML);
@@ -974,8 +1063,8 @@ Simulator.Display.DataTable = function (sim, panel) {
                 // this.onChange(elementID); //TODO: Verify this while testing
                 // check if the item being selected is a "clear row" button
                 if (this.getClearRows()) {
-                    if ((itemIndex % (numColumns + 1)) == numColumns) {
-                        var currentRow = Math.floor(itemIndex / (numColumns + 1));
+                    if ((itemIndex % (numColumns + 1)) == numColumns) { // WCAG
+                        var currentRow = Math.floor(itemIndex / (numColumns + 1)); // WCAG
                         this.clearRow(null, itemID, currentRow, false);
                     }
                 }
@@ -1013,13 +1102,13 @@ Simulator.Display.DataTable = function (sim, panel) {
         var tHeader = HTMLDataTable.tHead;
         var tBody = HTMLDataTable.tBodies[0];
         buff.push('Inspecting '); buff.push(this.getName()); buff.push(sep);
-        for (var i = 0; i < numColumns; i++) {
+        for (var i = this.getZerothColumn(); i < this.getNumColumnsPlusHeader(); i++) {  // WCAG
             buff.push(tHeader.rows[0].cells[i].innerHTML); buff.push(colSep);
         }
         buff.push(rowSep);
         for (var l = 0; l < numRows; l++) {
             var row = tBody.rows[l];
-            for (var j = 0; j < numColumns; j++) {
+            for (var j = this.getZerothColumn() ; j < this.getNumColumnsPlusHeader() ; j++) {  // WCAG
                 buff.push(row.cells[j].innerHTML); buff.push(colSep);
             }
             buff.push(rowSep);
@@ -1047,10 +1136,10 @@ Simulator.Display.DataTable = function (sim, panel) {
         if (!simMgr().isPlaying() && !simMgr().isReadOnly()) {
             var tbl = this;
             var nRows = tbl.getNumRows();
-            var nCols = tbl.getNumColumns();
+            var nCols = tbl.getNumColumnsPlusHeader(); // WCAG
             if (theRow < nRows && theRow >= 0) {
                 if (!rowIsEmpty(tbl, theRow)) {
-                    for (var i = 0; i < nCols; i++) {
+                    for (var i = this.getZerothColumn(); i < nCols; i++) { //WCAG
                         var id = tbl.createCellId(theRow, i);
                         var cell = simDocument().getElementById(id);
                         cell.innerHTML = '';

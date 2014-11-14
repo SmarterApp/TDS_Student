@@ -33,12 +33,12 @@
 .slide_controls_img {
   	width:23px; 
  	height:23px; 
-  	background: url(Images/slider_thumb.png) no-repeat center center !important;
+  	background: url(images/slider_thumb.png) no-repeat center center !important;
   	display: block;
 }
 
 .slide_controls_slider_bg {
-    background: url(Images/slider_back.gif) repeat-x center center;
+    background: url(images/slider_back.gif) repeat-x center center;
     position: relative;
   	height: 23px;
   	width: 195px;
@@ -70,7 +70,7 @@
 	transition: background-color .3s ease-in;
 	text-indent: -9999px;
 	overflow: hidden;
-	background: #f6f5f7 url(Images/controls.png) no-repeat center 4px;
+	background: #f6f5f7 url(images/controls.png) no-repeat center 4px;
 }
 .slide_controls_btn:hover, .slide_controls_btn:active {
 	background-color: #00AEEF;

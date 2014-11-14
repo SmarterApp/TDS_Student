@@ -167,15 +167,24 @@ WordListPanel.sendRequest = (function (wl_item) {
 // Are there any TDS_WL configs in the accs cookie?  If not then
 // don't bother to fetch any data we can't even display
 WordListPanel.IsWordListEnabled = (function () {
-    var atype = Accommodations.Manager.getCurrent().getType(WordListPanel.AccType);
 
-    // If there is no accs strings at all, don't enable word list
-    if ((atype == null) || (atype.getValues().length == 0))
+    var accs = Accommodations.Manager.getCurrent();
+    var wlType = accs.getType(WordListPanel.AccType);
+
+    // check if type exists
+    if (!wlType) {
         return false;
+    }
+
+    // check if values exist
+    var wlValues = wlType.getSelected();
+    if (wlValues.length == 0) {
+        return false;
+    }
 
     // If one of the acc strings is 'no word list', don't enable word list.
-    for (var i = 0; i < atype.getValues().length; ++i) {
-        var codes = atype.getValues()[i].getCodes();
+    for (var i = 0; i < wlValues.length; ++i) {
+        var codes = wlValues[i].getCodes();
         for (var j = 0; j < codes.length; ++j) {
             if (codes[j] == WordListPanel.AccNoAccs) {
                 return false;
@@ -183,6 +192,7 @@ WordListPanel.IsWordListEnabled = (function () {
         }
     }
 
+    // if we got here then 'TDS_WL0' was not included
     return true;
 });
 

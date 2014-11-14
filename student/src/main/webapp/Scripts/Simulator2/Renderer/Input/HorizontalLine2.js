@@ -6,7 +6,7 @@
 * Creates a new HorizontalLine class.
 *****************************************************************************
 */
-Simulator.Input.HorizontalLine = function (sim, panel, theSection) {
+Simulator.Input.HorizontalLine = function (sim, panel, theSection, container) {
 
     Simulator.Input.StaticElement.call(this, sim); // Inherit Instance variables
 
@@ -98,7 +98,7 @@ Simulator.Input.HorizontalLine = function (sim, panel, theSection) {
 
     this.render = function () {
 
-        var panelHtml = panel.getHTMLElement();
+        var panelHtml = container;
 
         // create a span element
         spanElement = simDocument().createElement('span');

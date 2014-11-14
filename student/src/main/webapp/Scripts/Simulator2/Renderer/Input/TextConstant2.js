@@ -6,7 +6,7 @@
 * Creates a new TextConstant class.
 *****************************************************************************
 */
-Simulator.Input.TextConstant = function (sim, panel, theSection) {
+Simulator.Input.TextConstant = function (sim, panel, theSection, container) {
 
     Simulator.Input.StaticElement.call(this, sim); // Inherit Instance variables
 
@@ -15,7 +15,8 @@ Simulator.Input.TextConstant = function (sim, panel, theSection) {
     var dbg = function () { return sim.getDebug(); };
     var utils = function() { return sim.getUtils(); };
     var simDocument = function() { return sim.getSimDocument(); };
-    
+    var transDictionary = function () { return sim.getTranslationDictionary(); };
+
     if(sim) {
         this.setPanel(panel);
         this.setSection(theSection);
@@ -28,8 +29,9 @@ Simulator.Input.TextConstant = function (sim, panel, theSection) {
         text = newText;
     };
     
-    this.getText = function() {
-        return text;
+    this.getText = function () {
+        // retrieve translated text
+        return transDictionary().translate(text);
     };
     
     this.setHeavy = function(newHeavy) {
@@ -57,9 +59,12 @@ Simulator.Input.TextConstant = function (sim, panel, theSection) {
     };
 
     this.render = function () {
-    	var panelHtml = panel.getHTMLElement();
+    	var panelHtml =container;
         var divElement = simDocument().createElement('div');
         if (this.getSpaceAbove() > 0) utils().appendBlankVertcalSpace(divElement, this.getSpaceAbove());
+        if (theSection.getSectionSettings().elementorientation === "horizontal") {
+            divElement.classList.add("inputpanelcell");
+        }
         panelHtml.appendChild(divElement);
         if (this.getHeavy()) divElement.innerHTML = '<b>' + this.getText() + '</b>';
         else divElement.innerHTML = this.getText();

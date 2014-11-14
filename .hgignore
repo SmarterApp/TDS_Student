@@ -45,10 +45,6 @@ logs/*
 .idea
 *.iml
 
-
-#This is temporary until student has been ported.
-#student/src/main/webapp/Scripts/**/*
-#student/src/main/webapp/Images/**/*
-#student/src/main/webapp/Shared/**/*
-#student/src/main/webapp/Themes/**/*
-#student/src/main/webapp/Projects/**/*
+#Item preview content
+student/src/main/webapp/ItemPreviewContent/**
+iris/src/main/webapp/ItemPreviewContent/**

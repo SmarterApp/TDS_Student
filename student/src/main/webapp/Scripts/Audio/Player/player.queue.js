@@ -136,9 +136,12 @@
     };
 
     // removes all the audio from the queue
-    Queue.prototype.clear = function() {
-        for (var i = 0; i < this._playerIDs.length; i++) {
-            this.remove(this._playerIDs[i]);
+    Queue.prototype.clear = function () {
+        // copy the array so that we aren't modifying as we iterate over it
+        var ids = this._playerIDs.slice();
+
+        for (var i = 0; i < ids.length; i++) {
+            this.remove(ids[i]);
         }
     };
 

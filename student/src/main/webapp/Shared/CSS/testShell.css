@@ -39,7 +39,7 @@ body {
 	z-index:5;
 	color:#FFFFFF;
 	background-color: #333f58;
-	background-image: url(../Images/studentFooter.gif);
+	background-image: url(../images/studentFooter.gif);
 	background-repeat: repeat-x;
 	background-position: 0px 0px;
 	vertical-align:top;
@@ -91,7 +91,7 @@ body.browserVer_1_3  #foot, .browserVer_1_3 #topHalf {
 
 .topBar {
 	background-color: #333f58;
-	background-image: url(../Images/logo_default.gif);
+	background-image: url(../images/logo_default.gif);
 	background-repeat: no-repeat;
 	background-position: right bottom;
 	padding-right: 178px;
@@ -255,7 +255,7 @@ body.browserVer_1_3  #foot, .browserVer_1_3 #topHalf {
 }
 #studentTools {
 	padding-top: 1px;
-	background-image: url(../Images/studentFooterTools.gif);
+	background-image: url(../images/studentFooterTools.gif);
 	background-repeat: repeat-x;
 	background-position: 0px 0px;
 	float: left;
@@ -593,7 +593,7 @@ body.browserVer_1_3  #foot, .browserVer_1_3 #topHalf {
 
 .printRequest {
 	display: block;
-	background-image: url(../Images/studentControls/printRequest.gif);
+	background-image: url(../images/studentControls/printRequest.gif);
 	background-repeat: no-repeat;
 	height: 25px;
 	width: 30px;
@@ -1318,7 +1318,7 @@ body.dialogAlertShow #dialogAlert, body.dialogPromptShow #dialogPrompt, body.con
 	width: 17px;
 	margin-top: 2px;
 	text-decoration: none;
-	background: url(../Images/controls/avcontrols.gif) no-repeat scroll -75px -86px transparent;
+	background: url(../images/controls/avcontrols.gif) no-repeat scroll -75px -86px transparent;
 }
 .sound_cue:hover {
 	background-position: -100px -86px;
@@ -1334,21 +1334,21 @@ body.dialogAlertShow #dialogAlert, body.dialogPromptShow #dialogPrompt, body.con
 	margin-top: 8px;
 }
 .sound_cue.playing_start {
-	background: url(../Images/controls/animatedSpeaker.gif) no-repeat center center;
+	background: url(../images/controls/animatedSpeaker.gif) no-repeat center center;
 }
 .sound_cue.load_fail, .sound_cue.decode_fail, .sound_cue.playing_fail {
-	background: url(../Images/controls/avcontrols.gif);
+	background: url(../images/controls/avcontrols.gif);
 	background-position: -350px -289px;
 	cursor: default;
 }
 .sound_cue.load_start, .sound_cue.load_complete, .sound_cue.decode_start {
 	cursor: default;
-	background: url(../Images/controls/testshell_loader13.gif) no-repeat center center;
+	background: url(../images/controls/testshell_loader13.gif) no-repeat center center;
 }
 /* original with different states 
 .sound_cue {
 	display:block;
-	background: url(../Images/controls/avcontrols.gif) no-repeat -75px -86px;
+	background: url(../images/controls/avcontrols.gif) no-repeat -75px -86px;
 	height: 13px;
 	width: 17px;
 	text-decoration: none;
@@ -1375,7 +1375,7 @@ body.dialogAlertShow #dialogAlert, body.dialogPromptShow #dialogPrompt, body.con
 .sound_cue.load_start, .sound_cue.load_complete, .sound_cue.decode_start, .sound_cue.decode_complete,
 .sound_cue.load_start:hover, .sound_cue.load_complete:hover, .sound_cue.decode_start:hover, .sound_cue.decode_complete:hover {
 	cursor: default;
-	background: url(../Images/controls/loader13.gif) no-repeat center center;
+	background: url(../images/controls/loader13.gif) no-repeat center center;
 }
 */
 
@@ -1384,7 +1384,7 @@ body.dialogAlertShow #dialogAlert, body.dialogPromptShow #dialogPrompt, body.con
 
 #soundStatus {
 	display:block;
-    background: url(../Images/controls/avcontrols.gif) no-repeat -75px -86px;
+    background: url(../images/controls/avcontrols.gif) no-repeat -75px -86px;
 	height: 13px;
 	width: 17px;
 	text-decoration: none;
@@ -1396,7 +1396,7 @@ body.dialogAlertShow #dialogAlert, body.dialogPromptShow #dialogPrompt, body.con
 
 #btnReload {
 	display:block;
-	background: url(../Images/controls/reload.gif) no-repeat 0 0;
+	background: url(../images/controls/reload.gif) no-repeat 0 0;
 	height: 13px;
 	width: 17px;
 	text-decoration: none;

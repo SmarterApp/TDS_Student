@@ -11,8 +11,8 @@ TDS = window.TDS || {};
 var YUD = YAHOO.util.Dom;
 TDS.Mask = {
   Config: {
-    minH: 8,
-    minW: 10, 
+    minH: 0,
+    minW: 5, 
     Debug: true,
     Enabled: true,
     altEventName: '',   // for devices support both mouse and touch

@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 /* Sunny (Florida) Theme */
 
 /* @group general */
@@ -8,7 +8,7 @@
 .ot-shadowBox .instructions {
 	border-color: #0F6797;
 }
-.ot-shadowBox h2 {
+.ot-shadowBox h1 {
 	border-color: #94B6D9;
 }
 /* @end */
@@ -42,11 +42,11 @@
 .sessionID {
 	border-right: none;
 }
-.ot-smallButtons a {
+/*.ot-smallButtons a {
 	background-color: #d9e1e3;
-    border-color:#b6bfba;
+    border-color:#b6bfba;*/
     /* finger friendly*/
-    padding: 5px 10px;
+/*    padding: 5px 10px;
 }
 .ot-smallButtons a:hover {
 	background-color: #fff;
@@ -59,7 +59,7 @@
 	background-position: center 4px;
 	text-indent: -9999px;
 	padding-top: 15px;
-}
+}*/
 #tds-ot-branding{
 	height: auto;
 	display: block;
@@ -69,9 +69,10 @@
 	background-image: none;
 	background-color: transparent;
 	height: auto;
+	padding-bottom: 10px;
 }
 #ot-logo_spot1 {
-	/*background: url(../Images/logo_default.png) no-repeat left;*/
+	/*background: url(../images/logo_default.png) no-repeat left;*/
 	height: 70px;
 	width: 173px;
 	margin-left: 25px;
@@ -82,7 +83,7 @@
 }
 
 #ot-brand2 {
-	background: transparent;
+	background: #2883a7;
 	border: none;
 	display: block;
 	position: relative;
@@ -90,23 +91,24 @@
 	min-height: 31px;
 }
 #ot-brand2 strong {
-	border-left: none;
-	float: right;
 	color: #fff;
 	margin-left: 0px;
-	background: #2883a7;
+	background: url(../../../Images/masterShell/tablet/tablet_sm_white.png) 5px center no-repeat #2883a7;
 	padding-top: 0px;
 	padding-bottom: 0px;
-	height: 31px;
-	line-height: 31px;
 	margin-top: 0px;
 	font-weight: normal;
+	border: none;
+}
+.practiceTest #ot-brand2{
+	float: none;
 }
 .practiceTest #ot-brand2 strong {
-	background-image: url(../Images/bike/bikeTop.gif);
+	/*background-image: url(../images/bike/bikeTop.gif);
 	background-color: #2883a7;
 	border-right: none;
-	padding-right: 50px;
+	padding-right: 50px;*/
+	float: none;
 }
 #tds-ot-footer span, #tds-ot-footer a {
 	color: #164c7e;
@@ -114,7 +116,7 @@
 /*.header .titleThing {
 	color: #000;
 	background-color: #9ebec4;
-	background-image: url(../Images/breadcrumb.gif);
+	background-image: url(../images/breadcrumb.gif);
 }*/
 /* @end */
 
@@ -130,16 +132,17 @@
 
 /* @group Section Login */
 #sections{
-	background: url(../Images/fade-bg.png) repeat-x transparent;
+	background: url(../images/fade-bg.png) repeat-x transparent;
 }
 
-#sectionLogin .ot-innerShadow {
+#sectionLogin .ot-innerShadow,
+#sectionLoginProctor .ot-innerShadow {
 	background-color: #fff !important;
 	background-image: none !important;
 	border-color: #004a80;
 }
-.practiceTest #sectionLogin .ot-shadowBox h2 {
-	background-image: url(../Images/bike/bikeTitle.gif);
+.practiceTest #sectionLogin .ot-shadowBox h1 {
+	/*background-image: url(../images/bike/bikeTitle.gif);*/
 }
 .practiceTest #loginForm1, .practiceTest #loginForm2 {
 	border-color: #0F6797;
@@ -163,7 +166,7 @@
 	color: #0F6797 !important;
 }
 .goPractice {
-	background-image: url(../Images/bike/goPractice.gif);
+	
 }
 .browserWrong {
 	border: 1px solid #0F6797;
@@ -204,7 +207,7 @@
 }
 .resumeTest, .newTest {
 	background-color: #DCEBF5;
-    background-image: url("../Images/select.gif");
+    background-image: url("../images/select.gif");
     border: 1px solid #164C7E;
 }
 #sectionTestSelection .resumeTest:hover, #sectionTestSelection .newTest:hover {
@@ -279,20 +282,50 @@ body.practiceTest .proctorMessage {
 }
 /* end */
 
+/* Florida new Help Button */
+#ot-topBar .ot-smallButtons{
+}
+#btnHelp{
+	/*background: url("../../../shared/images/modern/sprites_mobile_0.png") no-repeat -35px -745px;
+	min-width: 0;
+	height: 30px;
+	width: 30px;
+	border: none;
+	padding: 0;
+	margin: 0;
+	border-left: 1px solid white;
+	border-right: 1px solid white;
+}
+#btnHelp:hover{
+	background-color: #2883a7;
+}
+#btnHelp span{
+	display: block;
+	height: 0;
+	width: 0;
+	overflow: hidden;
+}
+#btnAccGlobal{
+	text-indent: 0;
+	background: url("../../../shared/images/modern/sprites_mobile_0.png") no-repeat -35px -3825px;
+	width: 0px;
+	height: 0px;
+	padding: 0;
+	border: none;
+	overflow:hidden;
+	padding: 30px 30px 0 0;
+	margin: 0 0 0 0;
+	border-left: 1px solid white;
+}
+#btnAccGlobal:hover{
+	background-position: -35px -3825px;
+	text-indent: 0;
+	height: 0;
+	width: 0;
+	padding: 30px 30px 0 0;
+	background-color: #2883a7;
+}*/
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+fieldset.sessionID legend{
+	min-width: 10em;
+}

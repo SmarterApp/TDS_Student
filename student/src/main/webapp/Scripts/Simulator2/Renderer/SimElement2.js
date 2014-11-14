@@ -35,7 +35,8 @@ Simulator.SimElement = function (sim) {
     
     var eventMgr = function () { return theSimulator.getEventManager(); };    
     var dbg = function() {return theSimulator.getDebug();};
-    var simDocument = function() { return sim.getSimDocument(); };
+    var simDocument = function () { return sim.getSimDocument(); };
+    var transDictionary = function () { return sim.getTranslationDictionary(); }
 
     // Instance Methods
     this.getEname = function() {
@@ -94,7 +95,8 @@ Simulator.SimElement = function (sim) {
     };
 
     this.getLabel = function () {
-        return label;
+        // retrieve translated text
+        return transDictionary().translate(label);
     };
 
     this.setLabel = function (newLabel) {
@@ -123,10 +125,15 @@ Simulator.SimElement = function (sim) {
     };
 
     this.getImage = function () {
-        return image;
+        // retrieve language-specific version of image
+        var translatedImage = transDictionary().translate(image);
+        debug("Getting an image using SimElement2.js method: " + translatedImage);
+        return translatedImage;
     };
 
     this.setImage = function (newImage) {
+        // right now, this sets image tag (pre-translation)
+        debug("SETTING an image using SimElement2.js method: " + newImage);
         image = newImage;
         return this;
     };
@@ -146,8 +153,8 @@ Simulator.SimElement = function (sim) {
     this.formatEventData = function () {  // default superclass method implementation
         return this.getData();
     };
-	
-	this.postOnChangeEnabled = function () { // check if the element has postonchange events
+
+    this.postOnChangeEnabled = function () { // check if the element has postonchange events
         var theEvent = this.nextEvent('true');
         while (theEvent != null) {
             if (theEvent.postOnChange == 'yes') {

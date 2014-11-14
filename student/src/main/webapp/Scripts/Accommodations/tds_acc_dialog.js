@@ -93,13 +93,3 @@ Accommodations.Dialog.prototype.show = function()
     // show dialog
     this._yuiDialog.show();
 };
-
-// TODO: If I remove createPanel() then there is no mask behind the accommodations dialog.
-YUE.onDOMReady(function()
-{
-    TDS.ToolManager.init();
-    var panel = TDS.ToolManager.createPanel('panel-hack', 'hack', 'Header', 'Footer');
-
-    //hiding the panel-hack_c div to prevent from shifting up when user input issue
-    YUD.setStyle(panel.element, 'display', 'none');
-});

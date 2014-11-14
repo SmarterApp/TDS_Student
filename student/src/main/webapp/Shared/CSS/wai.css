@@ -715,18 +715,18 @@ a.contexthelp:hover, a.contexthelp:focus {
 }
 .sound_repeat.load_start, .sound_repeat.load_complete, .sound_repeat.decode_start,
 .sound_repeat.load_start:hover, .sound_repeat.load_complete:hover, .sound_repeat.decode_start:hover {
-	background: url(../Images/controls/loader24.gif) no-repeat center center;
+	background: url(../images/controls/loader24.gif) no-repeat center center;
 }
 
 .TDS_PS_L1 .sound_repeat.load_start, .TDS_PS_L1 .sound_repeat.load_complete, .TDS_PS_L1 .sound_repeat.decode_start,
 .TDS_PS_L1 .sound_repeat.load_start:hover, .TDS_PS_L1 .sound_repeat.load_complete:hover, .TDS_PS_L1 .sound_repeat.decode_start:hover {
-	background: url(../Images/controls/loader29.gif) no-repeat center center;
+	background: url(../images/controls/loader29.gif) no-repeat center center;
 }
 .TDS_PS_L2 .sound_repeat.load_start, .TDS_PS_L2 .sound_repeat.load_complete, .TDS_PS_L2 .sound_repeat.decode_start, 
 .TDS_PS_L2 .sound_repeat.load_start:hover, .TDS_PS_L2 .sound_repeat.load_complete:hover, .TDS_PS_L2 .sound_repeat.decode_start:hover, .TDS_PS_L3 .sound_repeat.load_start, .TDS_PS_L3 .sound_repeat.load_complete, .TDS_PS_L3 .sound_repeat.decode_start, 
 .TDS_PS_L3 .sound_repeat.load_start:hover, .TDS_PS_L3 .sound_repeat.load_complete:hover, .TDS_PS_L3 .sound_repeat.decode_start:hover, .TDS_PS_L4 .sound_repeat.load_start, .TDS_PS_L4 .sound_repeat.load_complete, .TDS_PS_L4 .sound_repeat.decode_start, 
 .TDS_PS_L4 .sound_repeat.load_start:hover, .TDS_PS_L4 .sound_repeat.load_complete:hover, .TDS_PS_L4 .sound_repeat.decode_start:hover {
-	background: url(../Images/controls/loader32.gif) no-repeat center center;
+	background: url(../images/controls/loader32.gif) no-repeat center center;
 }
 /* @end */
 
@@ -840,7 +840,7 @@ a.contexthelp:hover, a.contexthelp:focus {
 	margin-bottom: .2em;
 }
 .keyboard a {
-	background-image: url(../Images/controls/keys.gif);
+	background-image: url(../images/controls/keys.gif);
 	background-repeat: no-repeat;
 	background-position: 0px 0px;
 	display: block;

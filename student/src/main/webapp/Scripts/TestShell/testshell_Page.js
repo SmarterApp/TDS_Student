@@ -269,10 +269,8 @@ TestShell.Page.prototype.getPreviousPages = function(enabled) {
 
 TestShell.Page.prototype.toString = function() { return this.id; };
 
-function getGroupIDs(groups)
-{
-    return Y.Array.reduce(groups, '', function(text, group)
-    {
+function getGroupIDs(groups) {
+    return Util.Array.reduce(groups, '', function(text, group) {
         return text + ((text.length == 0) ? '' : ', ') + group.id;
     });
 }

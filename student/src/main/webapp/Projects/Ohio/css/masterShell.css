@@ -3,10 +3,10 @@
 
 /* Ohio's logos */
 #ot-logo_spot1 {
-    background-image:  url(../Images/logo_ohio.png);
+    background-image:  url(../images/logo_ohio.png);
 }
 .browser_ie.browserVer_6 #ot-logo_spot1{
-	background: url(../Images/logo_ohio.gif) no-repeat transparent;
+	background: url(../images/logo_ohio.gif) no-repeat transparent;
 }
 .languages {
 	display: none;
@@ -51,4 +51,12 @@
 .yui-overlay-hidden .tool-helpguide iframe {
 	height: 0;
 	width: 0;
+}
+
+/* Hide Tricycle for Ohio */
+.practiceTest #ot-brand2 strong, .practiceTest #sections{
+	background-image: none;
+}
+.practiceTest #ot-brand2 strong{
+	padding-left: 20px;
 }

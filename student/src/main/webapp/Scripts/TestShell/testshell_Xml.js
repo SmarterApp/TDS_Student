@@ -2,64 +2,85 @@
 
 (function(TestShell) {
 
-    function createRequest(id, timestamp, responses) {
+    function createRequest(data) {
         
-        var xml = '<request action="update" eventID="' + id + '" timestamp="' + timestamp + '">';
+        // write root
+        var xml = '<request ';
+        xml += 'action="update" ';
+        xml += 'eventID="' + data.id + '" ';
+        xml += 'timestamp="' + data.timestamp + '" ';
+        xml += 'lastPage="' + data.lastPage + '" ';
+        xml += 'prefetch="' + data.prefetch + '" ';
+        xml += '>';
 
-        if (YAHOO.util.Lang.isArray(responses)) {
-            xml += serializeResponses(responses);
+        // write accs
+        if (data.accommodations) {
+            xml += serializeAccs(data.accommodations);
+        }
+
+        // write responses
+        if (YAHOO.util.Lang.isArray(data.responses)) {
+            xml += serializeResponses(data.responses);
         }
 
         xml += '</request>';
         return xml;
     };
 
-    // serialize a collection of responses into XML to send to the server
-    function serializeResponses(responses) {
-        
-        var xml = '<responseUpdates>';
+    function serializeAccs(serializedStr) {
+        var xml = '<accs>';
+        xml += '<![CDATA[' + serializedStr + ']]>';
+        xml += "</accs>";
+        return xml;
+    };
 
-        Util.Array.each(responses, function(response) {
-            xml += serializeResponse(response);
+    // serialize a collection of responses into XML to send to the server
+    function serializeResponses(items) {
+        
+        var xml = '<responses>';
+
+        Util.Array.each(items, function(item) {
+            xml += serializeResponse(item);
         });
 
-        xml += "</responseUpdates>";
+        xml += "</responses>";
 
         return xml;
     };
 
     // serialize a collection of responses into XML to send to the server
-    function serializeResponse(response) {
+    function serializeResponse(item) {
         
-        var xml = '<responseUpdate ';
-        xml += 'id="' + response.id + '" ';
-        xml += 'itsBank="' + response.itsBank + '" ';
-        xml += 'itsItem="' + response.itsItem + '" ';
-        xml += 'segmentID="' + response.group.segmentID + '" ';
-        xml += 'page="' + response.pageNum + '" ';
-        xml += 'position="' + response.position + '" ';
-        xml += 'sequence="' + response.sequence + '" ';
-        xml += 'dateCreated="' + response.dateCreated + '" ';
-        xml += 'isSelected="' + response.isSelected + '" ';
-        xml += 'isValid="' + response.isValid + '" ';
+        var xml = '<response ';
+        xml += 'id="' + item.id + '" ';
+        xml += 'bankKey="' + item.bankKey + '" ';
+        xml += 'itemKey="' + item.itemKey + '" ';
+        xml += 'segmentID="' + item.page.segmentID + '" ';
+        xml += 'pageKey="' + item.page.pageKey + '" ';
+        xml += 'dateCreated="' + item.page.dateCreated + '" ';
+        xml += 'page="' + item.page.pageNum + '" ';
+        xml += 'position="' + item.position + '" ';
+        xml += 'sequence="' + item.sequence + '" ';
+        xml += 'selected="' + item.isSelected + '" ';
+        xml += 'valid="' + item.isValid + '" ';
         xml += '>';
 
-        var item = response.getItem();
+        var contentItem = item.getContentItem();
 
         // add file path
-        xml += '<filePath>' + (item.filePath || '') + '</filePath>';
+        xml += '<filePath>' + (contentItem.filePath || '') + '</filePath>';
 
         // add response value
         xml += '<value>';
 
-        if (response.value != null) {
-            if (typeof response.value == 'string') {
+        if (item.value != null) {
+            if (typeof item.value == 'string') {
                 // escape closing tag for CDATA
-                var responseValue = response.value.replace(/]]>/g, ']]&gt;');
+                var responseValue = item.value.replace(/]]>/g, ']]&gt;');
                 xml += '<![CDATA[' + responseValue + ']]>';
             } else {
                 // get serialized value and throw error
-                var serialized = response.value;
+                var serialized = item.value;
                 try {
                     serialized = JSON.stringify(serialized);
                 } catch(ex) {
@@ -71,7 +92,7 @@
 
         xml += '</value>';
 
-        xml += '</responseUpdate>';
+        xml += '</response>';
 
         return xml;
     };
@@ -115,10 +136,16 @@
             machineID: getAttrib(resultsNode, 'machineID'),
             timestamps: readTimestamps(resultsNode),
             notification: readNotification(resultsNode),
-            summary: parseSummary(resultsNode),
+            summary: parseTestSummary(resultsNode),
             updates: readResponseUpdates(resultsNode),
-            groups: readGroups(resultsNode)
+            groups: readPages(resultsNode),
         };
+
+        // parse content
+        var contentsNode = getNode('contents', resultsNode);
+        if (contentsNode) {
+            results.contents = ContentManager.Xml.create(xmlDoc);
+        }
 
         return results;
     };
@@ -151,26 +178,17 @@
         return notification;
     };
 
-    function parseSummary(resultsNode)
+    function parseTestSummary(resultsNode)
     {
-        var node = getNode('summary', resultsNode);
+        var node = getNode('testsummary', resultsNode);
         if (node == null) return null;
 
-        var summary = {
-            testLength: getAttribInt(node, 'testLength'),
-            testLengthMet: getAttribBool(node, 'testLengthMet'),
-            testFinished: getAttribBool(node, 'testFinished'),
-            prefetched: getAttribBool(node, 'prefetched')
-            // groups: getAttribInt(node, 'groups'),
-            // groupsCompleted: getAttribInt(node, 'groupsCompleted'),
-            // responsesTotal: getAttribInt(node, 'responsesTotal'),
-            // responsesValid: getAttribInt(node, 'responsesValid'),
-            // responsesVisible: getAttribInt(node, 'responsesVisible'),
-            // firstGroup: getAttribInt(node, 'firstGroup'),
-            // lastGroup: getAttribInt(node, 'lastGroup')
+        var testSummary = {
+            testLengthMet: getAttribBool(node, 'lengthMet'),
+            testFinished: getAttribBool(node, 'finished')
         };
 
-        return summary;
+        return testSummary;
     };
 
     // reads the status of the response updates
@@ -189,81 +207,94 @@
     };
 
     function parseResponseStatus(updateNode) {
-        var responseStatus = new TestShell.Response.Status();
+        var responseStatus = new TestShell.Item.Status();
         responseStatus.position = getAttribInt(updateNode, 'position');
+        responseStatus.sequence = getAttribInt(updateNode, 'sequence');
         responseStatus.status = getAttrib(updateNode, 'status');
         responseStatus.reason = getAttrib(updateNode, 'reason');
         return responseStatus;
     };
 
-    // function for parsing response nodes into response objects
-    function parseResponse(responseNode, group) {
-        
-        var response = new TestShell.Response(group);
-        response.id = getAttrib(responseNode, 'id');
-        response.dateCreated = getAttrib(responseNode, 'created');
-        response.format = getAttrib(responseNode, 'format');
+    function readPages(resultsNode) {
 
-        response.itsBank = getAttribInt(responseNode, 'bank');
-        response.itsItem = getAttribInt(responseNode, 'item');
-        response.pageNum = getAttribInt(responseNode, 'page');
-        response.position = getAttribInt(responseNode, 'position');
-        response.sequence = getAttribInt(responseNode, 'sequence');
+        var pagesNode = getNode('pages', resultsNode);
+        var pages = [];
 
-        response.mark = getAttribBool(responseNode, 'mark');
-        response.isSelected = getAttribBool(responseNode, 'isSelected');
-        response.isRequired = getAttribBool(responseNode, 'isRequired');
-        response.isValid = getAttribBool(responseNode, 'isValid');
-        response.prefetched = getAttribBool(responseNode, 'prefetched');
+        // get all the <group> nodes
+        batchNodes('page', pagesNode, function (node) {
+            var page = null;
+            var type = getAttrib(node, 'type');
+            if (type == 'contentpage') {
+                page = parsePageGroup(node);
+            }
+            if (page) {
+                pages.push(page);
+            }
+        });
 
-        return response;
+        return pages;
     };
 
     // function for parsing group nodes into group objects
-    function parseGroup(resultsNode, groupNode) {
+    function parsePageGroup(pageNode) {
         
-        var group = new TestShell.PageGroup();
-        group.id = getAttrib(groupNode, 'id');
-        group.pageNum = getAttribInt(groupNode, 'page');
-        group.numRequired = getAttribInt(groupNode, 'numRequired');
+        // page
+        var type = getAttrib(pageNode, 'type');
+        var pageNum = getAttribInt(pageNode, 'number');
 
-        group.segment = getAttribInt(groupNode, 'segment');
-        group.segmentID = getAttrib(groupNode, 'segmentID');
+        // <segment>
+        var segmentNode = getNode('segment', pageNode);
+        var segmentPos = getAttribInt(segmentNode, 'position');
+        var segmentID = getAttrib(segmentNode, 'id');
+
+        // <group>
+        var groupNode = getNode('group', pageNode);
+        var groupID = getAttrib(groupNode, 'id');
+        var pageKey = getAttrib(groupNode, 'key');
+        var dateCreated = getAttrib(groupNode, 'created');
+        var numRequired = getAttrib(groupNode, 'required');
+
+        // create page group
+        var page = new TestShell.PageGroup();
+        page.id = groupID;
+        page.pageNum = pageNum;
+        page.pageKey = pageKey;
+        page.dateCreated = dateCreated;
+        page.numRequired = numRequired;
+        page.segment = segmentPos;
+        page.segmentID = segmentID;
 
         // get all the <response> nodes for a <group>
-        batchNodes('response', groupNode, function(node) {
-            var response = parseResponse(node, group);
-            group.responses.push(response);
+        var itemsNode = getNode('items', pageNode);
+        batchNodes('item', itemsNode, function (node) {
+            var item = parseItem(node, page);
+            page.items.push(item);
         });
 
-        // get content
-        /*
-        var contentsNode = getNode('contents', resultsNode);
-        var nodeContent = selectNode('content[groupID = "' + group.id + '"]', contentsNode);
+        return page;
+    };
 
-        if (nodeContent) {
-            var contentParser = new ContentManager.Xml();
-            group.content = contentParser.parseContent(nodeContent);
-        }
-        */
+    // function for parsing response nodes into response objects
+    function parseItem(itemNode, page) {
 
-        return group;
+        var item = new TestShell.Item(page);
+        item.id = getAttrib(itemNode, 'id');
+        // response.format = getAttrib(responseNode, 'format');
+
+        item.bankKey = getAttribInt(itemNode, 'bankKey');
+        item.itemKey = getAttribInt(itemNode, 'itemKey');
+        item.pageNum = getAttribInt(itemNode, 'page');
+        item.position = getAttribInt(itemNode, 'position');
+        item.sequence = getAttribInt(itemNode, 'sequence');
+        item.mark = getAttribBool(itemNode, 'marked');
+        item.isSelected = getAttribBool(itemNode, 'selected');
+        item.isRequired = getAttribBool(itemNode, 'required');
+        item.isValid = getAttribBool(itemNode, 'valid');
+        item.prefetched = getAttribBool(itemNode, 'prefetched');
+
+        return item;
     };
     
-    function readGroups(resultsNode) {
-        
-        var groupsNode = getNode('groups', resultsNode);
-        var groups = [];
-
-        // get all the <group> nodes
-        batchNodes('group', groupsNode, function(node) {
-            var group = parseGroup(resultsNode, node);
-            groups.push(group);
-        });
-
-        return groups;
-    };
-
     TestShell.Xml.validResults = validResults;
     TestShell.Xml.parseResults = parseResults;
 

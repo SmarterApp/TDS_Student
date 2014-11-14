@@ -42,11 +42,13 @@ This test shell module is used for the ruler and protractor button.
         // create ruler button
         if (accProps.isSelected('Ruler', 'TDS_Ruler1')) {
 
-            TestShell.UI.addButtonTool(
-            	'btnRuler',
-            	'Ruler',
-                'mt_ruler',
-                toggleRuler);
+            TestShell.UI.addButtonTool({
+                id: 'btnRuler',
+                className: 'mt_ruler',
+                i18n: 'TestShell.Link.Ruler',
+                label: 'Ruler',
+                fn: toggleRuler
+            });
 
             hideRulerButton();
 
@@ -68,11 +70,13 @@ This test shell module is used for the ruler and protractor button.
         // create protractor button
         if (accProps.isSelected('Protractor', 'TDS_Protractor1')) {
 
-            TestShell.UI.addButtonTool('btnProtractor',
-            		'Protractor',
-                'mt_protractor',
-                toggleProtractor
-            );
+            TestShell.UI.addButtonTool({
+                id: 'btnProtractor',
+                className: 'mt_protractor',
+                i18n: 'TestShell.Link.Protractor',
+                label: 'Protractor',
+                fn: toggleProtractor
+            });
 
             hideProtractorButton();
 
@@ -93,11 +97,10 @@ This test shell module is used for the ruler and protractor button.
 
     }
 
-    TS.Events.subscribe('init', load);
-   /* TS.registerModule({
+    TS.registerModule({
         name: 'mt',
         load: load
-    });*/
+    });
 
 })(TestShell);
 

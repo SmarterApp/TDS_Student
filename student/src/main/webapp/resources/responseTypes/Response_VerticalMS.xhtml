@@ -4,7 +4,7 @@
 <cc:interface componentType="tds.itemrenderer.webcontrols.templates.MCObject">
 </cc:interface>
 <cc:implementation>
-
+<div id="OptionsContainer_#{cc.data.position}" class="optionsContainer">
 	<ui:repeat value="#{cc.options}" var="option">
 		<div id="Item_OptionContainer_#{option.name}" title="Option #{option.key}" data-menu-prefix="TDSTTS.Label.Select#{option.key}."
 			class="optionContainer contextArea option#{option.key} #{(option.selected) ? 'optionSelected' : ''} #{(option.disabled) ? 'optionDisabled' : ''}">
@@ -16,5 +16,6 @@
 			</div>
 		</div>
 	</ui:repeat>
+</div>
 </cc:implementation>
 </html>

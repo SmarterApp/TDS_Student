@@ -29,8 +29,11 @@ Fixes for CKEditor table plugin.
 
     function validateSize(msg) {
         return function () {
-            var value = this.getValue(),
-				pass = /^(((\d*(\.\d+))|(\d*))(px|em|ex|in|cm|mm|pt|pc|\%)?)?$/i.test(value);
+            var value = this.getValue(); // Get the text value from the text box
+
+            // Validate it... the following regular expression basically says give me a floating point number with at least one non-zero digit optionally
+            //  followed by a unit (e.g. 'px') or leave the whole thing blank (i.e. the last ? makes the whole thing optional)
+			var pass = /^((0*\.\d*[1-9]\d*|0*[1-9]\d*(\.\d+)?)(px|em|ex|in|cm|mm|pt|pc|\%)?)?$/i.test(value);
             
             if (!pass) {
                 var invalidValue = this.getInputElement().$;

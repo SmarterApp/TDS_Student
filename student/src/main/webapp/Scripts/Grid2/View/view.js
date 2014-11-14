@@ -352,7 +352,9 @@ Grid.View.prototype.zoom = function(scale) {
             this._svgElement.width.baseVal.value = zoomedWidth;
             this._svgElement.height.baseVal.value = zoomedHeight;
         }
-        if (YAHOO.env.ua.android > 0) {
+        
+        // Bug 142346 - Safari as well as android require the attributes to set the dimensions of the svg element
+        if (YAHOO.env.ua.android > 0 || YAHOO.env.ua.webkit >= 534) { 
             this._svgElement.setAttribute('width', zoomedWidth);
             this._svgElement.setAttribute('height', zoomedHeight);
         }

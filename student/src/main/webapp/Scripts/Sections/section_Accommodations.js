@@ -35,7 +35,7 @@ Sections.Accommodations.prototype.load = function (segmentsAccommodations)
     // clear segments
     segmentsContainer.innerHTML = '';
 
-    Util.Array.each(segmentsAccommodations, function(segmentAccommodations)
+    segmentsAccommodations.forEach(function(segmentAccommodations)
     {
         // skip accommodations that have nothing visible
         if (!segmentAccommodations.isAnyVisible()) return;
@@ -49,48 +49,26 @@ Sections.Accommodations.prototype.load = function (segmentsAccommodations)
         segmentContainer.appendChild(segmentHeader);
 
         // create segment accommodations
-        var renderer = new Accommodations.Renderer(segmentAccommodations, segmentContainer);
+        var renderer = new Accommodations.Renderer(segmentAccommodations);
         renderer.bind();
-        renderer.render();
+        renderer.render(segmentContainer);
 
         this._rendererCollection.push(renderer);
 
-    }, this);
+    }.bind(this));
 };
 
 Sections.Accommodations.prototype.submit = function()
 {
-    var self = this;
-
-    // update acc object with what the user selected
-    /*Util.Array.each(this._renderers, function(renderer)
-    {
-        renderer.save();
-    });*/
-
-    var formValues = [];
-    formValues.push('testKey=' + LoginShell.testSelection.key);
-    formValues.push('testID=' + LoginShell.testSelection.id);
-    formValues.push('subject=' + LoginShell.testSelection.subject);
-    formValues.push('grade=' + LoginShell.testSelection.grade);
-
-    Util.Array.each(this._segmentsAccommodations, function(segmentAccommodations)
-    {
-        var segmentPos = segmentAccommodations.getPosition();
-        var codes = segmentAccommodations.getSelectedDelimited(true, ',');
-        formValues.push('segment=' + segmentPos + '#' + codes);
-    });
-
-    Util.dir(formValues);
-
+    var test = LoginShell.testSelection;
+    var testee = TDS.Student.Storage.getTestee();
+    var session = TDS.Student.Storage.getTestSession();
+    var passphrase = TDS.Student.Storage.getPassphrase();
+    
     // submit test for approval
-    LoginShell.api.openTest(formValues.join('&'), function(oppInfo)
-    {
-        // once we open test move next
-        if (oppInfo)
-        {
+    TDS.Student.API.openTest(test, testee, session, this._segmentsAccommodations, null, passphrase)
+        .then(function (oppInfo) {
             LoginShell.setOppInfo(oppInfo);
-            self.request('next');
-        }
-    });
+            this.request('next');
+    }.bind(this));
 };

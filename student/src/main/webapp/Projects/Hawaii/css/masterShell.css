@@ -3,11 +3,11 @@
 
 /* hawaii logos */
 #ot-logo_spot1 {
-	background-image:url(../Images/logo_hawaii.gif);
+	background-image:url(../images/logo_hawaii.gif);
 	width: 426px;
 }
 .preloader .logo_small {
-	background-image: url(../Images/logo_medium.gif);
+	background-image: url(../images/logo_medium.gif);
 }
 
 /* hides ELPA button on diagnostics page */

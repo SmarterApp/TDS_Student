@@ -473,7 +473,8 @@ C.prototype.initMaskClick = function(page, evt){
         };
     }
     
-    this.createListeners(this.getClickElements(page),
+    this.createListeners(
+        this.getClickElements(page),
         this.mouseMove.bind(this),
         'mousemove'
     );
@@ -496,26 +497,34 @@ C.prototype.mouseMove = function (page, evt) {
     //indicate mousemove event by create a div and adding dashed border to it.
 C.prototype.indicateDrawing = function (a, b) {
     if (!a || !b) { return; }
-    // deltaY/deltaH adjust the indication area to keep mouse on 'page', which will keep 'mouseup' event listened on 'page' element.
-    // if a.clientY <= b.clientY, means mouse dragging top-down, otherwise, dragging down-top, adjust the indication area accordingly
-    var deltaY = 10,
-        deltaH = -10;
     var x = a.clientX <= b.clientX ? a.clientX : b.clientX;
-    var y = a.clientY <= b.clientY ? a.clientY : (b.clientY + deltaY);
+    var y = a.clientY <= b.clientY ? a.clientY : b.clientY;
     var w = Math.abs(a.clientX - b.clientX);
-    var h = Math.abs(a.clientY - b.clientY) + deltaH;
+    var h = Math.abs(a.clientY - b.clientY);
     
     var iDrawing = document.getElementById('indicateDrawingContainer');
 
-    if (!iDrawing) {
+    if (!iDrawing && w > CFG.minW && h > CFG.minH) {
         iDrawing = document.createElement('div');
         iDrawing.setAttribute('id', 'indicateDrawingContainer');
         //CFG.Debug && console.log("create indicateDrawing div (a, b, x, y, w, h)", a, b, x, y, w, h);
         YUD.setStyle(iDrawing, 'position', 'fixed');
         YUD.addClass(iDrawing, 'tds_mask_container tds_mask_container_drawing');
         document.body.appendChild(iDrawing);
-    }
 
+        // adding event listener to the new created div since mouse behavior can end up on it.
+        this.createListeners(
+            iDrawing,
+            this.mouseMove.bind(this),
+            'mousemove'
+        );
+        this.createListeners(
+            iDrawing,
+            this.mouseUp.bind(this),
+            'mouseup',
+            CFG.cls.MOVE
+        );
+    }
     //CFG.Debug && console.log("iDrawing div (w, h)", w, h);
     YUD.setStyle(iDrawing, 'left', x + 'px');
     YUD.setStyle(iDrawing, 'top', y + 'px');
@@ -583,15 +592,14 @@ C.prototype.removeIndicateDrawingContainer = function () {
 
 C.prototype.determineBox = function(a, b){
   if (!a || !b) { return; }
-  // dY/dH creating mask according to the position and size of indication area, which was adjusted to keep mouse on 'page' element and make mouseup listener work.
-  var dY = 10, dH = -10;
+
   var box = {
     tX: a.clientX <= b.clientX ? a.clientX : b.clientX,
-    tY: a.clientY <= b.clientY ? a.clientY : (b.clientY + dY),
+    tY: a.clientY <= b.clientY ? a.clientY : b.clientY,
     bX: a.clientY <= b.clientX ? b.clientX : a.clientX,
     bY: a.clientY <= b.clientX ? b.clientY : a.clientY,
     w: Math.abs(a.clientX - b.clientX),
-    h: Math.abs(a.clientY - b.clientY) + dH
+    h: Math.abs(a.clientY - b.clientY)
   };
   //
   //Provide a min bounding box size.

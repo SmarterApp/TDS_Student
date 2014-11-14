@@ -12,7 +12,7 @@ TDS.CLS =
     localDomains: null,
     isProctorLoggedIn: false,
     LogoutComponent: {},
-    PagesExcludedFromConfirm: ['logout.xhtml', 'clslogout.xhtml', 'replogin.xhtml', 'clslogin.xhtml', 'confirmexit.xhtml'],
+    PagesExcludedFromConfirm: ['logout.aspx', 'clslogout.aspx', 'replogin.aspx', 'clslogin.aspx', 'confirmexit.aspx'],
     getPopupBlockerCookie: function() { return 'TDS_Proctor_CheckPopup'; },
     isScoreEntry: false
 };
@@ -197,7 +197,7 @@ TDS.CLS.LogoutComponent = {
 		 }
 		 //on the very first page we need to check for pop up blockers.
 		 //however on secure browser we do not want to throw pop ups.
-		 if (currentPage.indexOf('loginshell.xhtml') >= 0 && !Util.Browser.isSecure())
+		 if (currentPage.indexOf('loginshell.aspx') >= 0 && !Util.Browser.isSecure())
              TDS.CLS.LogoutComponent.checkForPopupBlocker();
          
          

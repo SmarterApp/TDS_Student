@@ -2,64 +2,83 @@
 /* MS OPTION          */
 /**********************/
 
-var ContentMSOption = function(options, key)
-{
-    ContentMSOption.superclass.constructor.call(this, options, key);
-};
+(function() {
 
-YAHOO.lang.extend(ContentMSOption, ContentMCOption);
+    var MSOption = function(options, key) {
+        MSOption.superclass.constructor.call(this, options, key);
+        this._role = 'checkbox';
+    };
 
-// check if the selection can be made
-ContentMSOption.prototype._validateSelection = function() {
+    YAHOO.lang.extend(MSOption, ContentMCOption);
 
-    var maxChoices = this._options.getMaxChoices();
-    var selected = this._options.getSelected();
-    var selectedCount = selected.length;
+    // check if the selection can be made
+    MSOption.prototype._validateSelection = function() {
 
-    // check if max choices was met
-    if (maxChoices == 1 && selectedCount > 0) {
-        selected[0].deselect(); // deselect existing option as a convenience
-    } else if (maxChoices > 0 && maxChoices <= selectedCount) {
-        return false; // max has been met
-    }
+        var maxChoices = this._options.getMaxChoices();
+        var selected = this._options.getSelected();
+        var selectedCount = selected.length;
 
-    // selection is allowed
-    return true;
-};
+        // check if max choices was met
+        if (maxChoices == 1 && selectedCount > 0) {
+            selected[0].deselect(); // deselect existing option as a convenience
+        } else if (maxChoices > 0 && maxChoices <= selectedCount) {
+            return false; // max has been met
+        }
 
-ContentMSOption.prototype.select = function()
-{
-    // toggle checkbox
-    var checkbox = this.getRadioButton();
+        // selection is allowed
+        return true;
+    };
 
-    if (checkbox.checked) {
-        this.deselect();
-    } else {
+    MSOption.prototype.select = function() {
 
-        // check if we can select this choice
-        if (!this._validateSelection()) {
+        var group = this._options;
+        var item = group.getItem();
+        var page = item.getPage();
+
+        if (item.isReadOnly()) {
             return false;
         }
 
-        // select checkbox input
-        checkbox.checked = true;
+        // fire before select event (and cancel if someone returns false)
+        var cancelSelect = this.fire('beforeSelect');
+        if (cancelSelect === false) {
+            return false;
+        }
 
-        // add selected css
-        YUD.addClass(this.getElement(), 'optionSelected');
+        // toggle checkbox
+        var inputEl = this.getInputElement();
 
-        // show feedback
-        var page = this._options._item.getPage();
-        var pageAccProps = page.getAccommodationProperties();
-        if (pageAccProps != null && pageAccProps.showFeedback()) this.showFeedback();
-    }
+        if (inputEl.checked) {
+            this.deselect();
+        } else {
 
-    // TDS notification
-    /*if (typeof (window.tdsUpdateItemResponse) == 'function')
-    {
-        // get current options position and notify TDS
-        var position = this._options._item.position;
-        window.tdsUpdateItemResponse(position, this.key);
-    }*/
+            // check if we can select this choice
+            if (!this._validateSelection()) {
+                return false;
+            }
 
-    return true;
-};
+            // select checkbox input
+            inputEl.checked = true;
+
+            // add selected css
+            var optionEl = this.getElement();
+            YUD.addClass(optionEl, 'optionSelected');
+            optionEl.setAttribute('aria-checked', 'true');
+
+            // show feedback
+            var accProps = page.getAccommodationProperties();
+            if (accProps != null && accProps.showFeedback()) {
+                this.showFeedback();
+            }
+        }
+
+        // TDS notification
+        this.fire('select');
+
+        return true;
+    };
+
+    // exports
+    window.ContentMSOption = MSOption;
+
+})();

@@ -66,7 +66,7 @@
             throw new Error('There is no url defined for content dialog frame.');
         }
 
-        // build DialogFrame.xhtml url
+        // build DialogFrame.aspx url
         var accProps = Accommodations.Manager.getDefaultProps();
         var lang = accProps ? accProps.getLanguage() : 'ENU';
         var url = Dialog.urlFrame;
@@ -117,8 +117,10 @@
         }
 
         // stop any TTS that is playing 
-        TTS.getInstance().stop();
-
+        if (TTS.getInstance().isPlaying()) {
+            TTS.getInstance().stop();
+        }
+        
         // hide context menu
         CM.Menu.hide();
 

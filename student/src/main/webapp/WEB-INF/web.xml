@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-	version="2.5">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:root-context.xml</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.faces.CONFIG_FILES</param-name>
+		<param-value>WEB-INF/faces-config.xml,WEB-INF/itempreview-faces-config.xml
+    </param-value>
 	</context-param>
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -22,6 +25,8 @@
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/Pages/API/*</url-pattern>
+		<url-pattern>/API.axd/*</url-pattern>
+		<url-pattern>/TIS/API/*</url-pattern>
 		<url-pattern>/Pages/SpellEngine.axd/*</url-pattern>
 	</servlet-mapping>
 	<servlet>
@@ -54,7 +59,7 @@
 	<servlet>
 		<servlet-name>SoundCueHandler</servlet-name>
 		<servlet-class>tds.student.web.handlers.SoundCueHandler</servlet-class>
-	<load-on-startup>4</load-on-startup>
+		<load-on-startup>4</load-on-startup>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>SoundCueHandler</servlet-name>
@@ -90,8 +95,8 @@
 	</context-param>
 	<!--Start: Added for Program Management and Monitoring and Alerting dependency -->
 	<context-param>
-	   <param-name>contextInitializerClasses</param-name>
-	   <param-value>org.opentestsystem.shared.mna.client.listener.ClientSpringConfigurator,org.opentestsystem.shared.progman.init.InitSpringPropertyConfigLoad</param-value>
+		<param-name>contextInitializerClasses</param-name>
+		<param-value>org.opentestsystem.shared.mna.client.listener.ClientSpringConfigurator,org.opentestsystem.shared.progman.init.InitSpringPropertyConfigLoad</param-value>
 	</context-param>
 	<!--End: Added for Program Management and Monitoring and Alerting dependency -->
 	<listener>
@@ -102,9 +107,9 @@
 		<description>contextTrackerListener</description>
 		<listener-class>tds.student.web.dummy.TDSApplication</listener-class>
 	</listener>
-	
+
 	<!-- All filters -->
-    <!-- This filter creates a proxy for the request object. It needs to precede requestInitializerFilter -->
+	<!-- This filter creates a proxy for the request object. It needs to precede requestInitializerFilter -->
 	<filter>
 		<filter-name>requestInitializerFilter</filter-name>
 		<filter-class>AIR.Common.Web.Session.HttpRequestLoggerInitializerFilter</filter-class>
@@ -112,10 +117,9 @@
 			<param-name>prefix</param-name>
 			<param-value>testadmin</param-value>
 		</init-param>
-        
-        <!-- If this parameter is true, (or anything besides "false" or missing), a request proxy is
-             generated that permits reading the input data stream multiple times. This parameter is ignored
-             unless DEBUG level logging is in effect for HttpRequestLoggerInitializerFilter -->
+
+		<!-- If this parameter is true, (or anything besides "false" or missing), a request proxy is generated that permits reading the input data stream multiple times. This parameter is ignored unless DEBUG 
+			level logging is in effect for HttpRequestLoggerInitializerFilter -->
 		<init-param>
 			<param-name>LogRequestBodies</param-name>
 			<param-value>false</param-value>
@@ -126,8 +130,7 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-	<!-- This filter needs to follow requestInitializerFilter if used. It should precede all other filters.
-         We need this to set Request / Response as a ThreadLocal object. -->
+	<!-- This filter needs to follow requestInitializerFilter if used. It should precede all other filters. We need this to set Request / Response as a ThreadLocal object. -->
 	<filter>
 		<filter-name>contextInitializerFilter</filter-name>
 		<filter-class>AIR.Common.Web.Session.HttpContextInitializerFilter</filter-class>
@@ -136,10 +139,26 @@
 		<filter-name>contextInitializerFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	<filter>
+		<filter-name>caseinsensitiveFilter</filter-name>
+		<filter-class>AIR.Common.Web.Session.CaseInsensitiveFileNameFilter</filter-class>
+		<init-param>
+			<param-name>extensionsToFilter</param-name>
+			<param-value>png|gif|jpeg|jpg|bmp|js|css</param-value>
+		</init-param>
+		<init-param>
+			<param-name>extensionsMapping</param-name>
+			<param-value>aspx=xhtml|</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>caseinsensitiveFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 	<context-param>
 		<param-name>org.apache.myfaces.WRAP_SCRIPT_CONTENT_WITH_XML_COMMENT_TAG</param-name>
 		<param-value>false</param-value>
-	</context-param> 
+	</context-param>
 	<welcome-file-list>
 		<welcome-file>Pages/LoginShell.xhtml</welcome-file>
 	</welcome-file-list>

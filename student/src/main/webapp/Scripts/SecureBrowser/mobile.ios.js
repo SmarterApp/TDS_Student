@@ -28,7 +28,7 @@ TDS.SecureBrowser.Mobile.iOS.prototype.loadProcessList = function () {
 };
 
 TDS.SecureBrowser.Mobile.iOS.prototype.getProcessList = function () {
-	this.setProcessList();
+    this.setProcessList();
     return this._processes;
 };
 
@@ -43,14 +43,55 @@ TDS.SecureBrowser.Mobile.iOS.prototype.initialize = function () {
     var backgroundThreshold = this._backgroundThreshold;
     var startTimeBackground = null;
     var hasBeenBackgrounded = false;
-    this.getGuidedAccessMode = function () { return guidedAccessMode; };
     this.getHasBeenBackgrounded = function () { return hasBeenBackgrounded; };
     this.setProcessList = function () { this._processes = secBrowser.device.runningProcesses; };
     var isLockedDown = true; // indicate if a student test session is going on
+    var isAutonomousGuidedAccessEnabled;    // we cannot determine whether autonomous guided access is available until the student app is fully loaded
+
+    function checkAutonomousGuidedAccess() {
+        if (typeof (isAutonomousGuidedAccessEnabled) == 'undefined') {
+            // determine whether autonomous guided access is available
+            if (Util.Browser.getIOSVersion() >= 7) {
+                isAutonomousGuidedAccessEnabled = TDS.getAppSetting('sb.iosAutonomousGuidedAccessAllowed', false);
+            } else {
+                isAutonomousGuidedAccessEnabled = false;
+            }
+        }
+    }
+
+    this.getGuidedAccessMode = function () {
+        checkAutonomousGuidedAccess();
+        if (typeof (isAutonomousGuidedAccessEnabled) == 'undefined') {
+            return 'true';
+        } else if (!isAutonomousGuidedAccessEnabled) {
+            return guidedAccessMode;
+        } else if (isLockedDown) {
+            return guidedAccessMode;
+        } else {    // bypass security check while log in (the browser app will be enabled right after log in)
+            return 'true';
+        }
+    };
+
     this.setLockDown = function (lockdown) {
         isLockedDown = lockdown;
         if (!lockdown) {
             hasBeenBackgrounded = false;
+            // Disable guided access when lockdown is lifted. Guided access can be disabled autonomously only when it was enabled autonomously
+            // by the browser itself. So no need to check if the autonomous guided access is available here.
+            if (guidedAccessMode == 'true') {
+                secBrowser.enableGuidedAccess(lockdown, null, function (enableResults) {
+                    if (enableResults.didSucceed) {
+                        guidedAccessMode = 'false';
+                    }
+                });
+            }
+        } else if (isAutonomousGuidedAccessEnabled && guidedAccessMode == 'false') {
+            // if autonomous guided access is available, enable guided access when system lockdown
+            secBrowser.enableGuidedAccess(lockdown, null, function (enableResults) {
+                if (enableResults.didSucceed) {
+                    guidedAccessMode = 'true';
+                }
+            });
         }
     };
 

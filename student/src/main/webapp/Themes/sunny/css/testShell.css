@@ -2,7 +2,7 @@
 /* Lake Theme */
 
 .topBar {
-	background-image: url(../Images/test_sbac.gif);
+	background-image: url(../images/test_sbac.gif);
 	padding-right: 200px;
 	background-color: #fff;
 }
@@ -35,18 +35,18 @@
 	background-color:#164c7e;
 }
 .sound_cue, .sound_cue.load_incomplete, .sound_cue.disabled  {
-	background: url(../Images/controls/speaker_noclick.gif) no-repeat center center;
+	background: url(../images/controls/speaker_noclick.gif) no-repeat center center;
 }
 #foot{
-	background: url(../Images/studentFooter.gif) repeat-x #003961;
+	background: url(../images/studentFooter.gif) repeat-x #003961;
 }
 #studentTools{
-	background: url(../Images/studentFooterTools.gif) repeat-x;
+	background: url(../images/studentFooterTools.gif) repeat-x;
 	height: 30px;
 	border: none;
 }
 
-/* preloads Images so they don't appear 'missing' */
+/* preloads images so they don't appear 'missing' */
 .preloader {
 	background-color: #A7C9E2;
 }

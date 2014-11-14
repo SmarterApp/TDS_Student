@@ -1,5 +1,5 @@
 ﻿// this is a selectable choice
-TDS.SelectChoice = function (identifier, element, config) {
+TDS.SelectChoice = function(identifier, element, config) {
 
     // set properties
     this._selected = false;
@@ -47,7 +47,9 @@ TDS.SelectChoice.prototype.select = function() {
 
 // deselect the choice
 TDS.SelectChoice.prototype.deselect = function() {
-    if (!this._selected) return false;
+    if (!this._selected) {
+        return false;
+    }
     this._selected = false;
     this.onDeselect();
     this.fireEvent('deselectEvent', this._identifier);
@@ -68,13 +70,28 @@ TDS.SelectChoice.prototype.onDeselect = function() {
 
 // this is called when the choice is clicked
 TDS.SelectChoice.prototype.onClick = function(ev) {
-    if (this.isSelected()) this.deselect();
-    else this.select();
+    if (this.isSelected()) {
+        this.deselect();
+    } else {
+        this.select();
+    }
 };
 
 TDS.SelectChoice.prototype.init = function() {
-    YAHOO.util.Event.on(this._element, 'click', this.onClick, this, true);
-    this._element.setAttribute('role', 'checkbox');
-    this._element.setAttribute('aria-checked', 'false');
-};
+    var el = this._element;
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('role', 'checkbox');
+    el.setAttribute('aria-checked', 'false');
 
+    // listen for mouse click
+    YAHOO.util.Event.on(el, 'click', this.onClick, this, true);
+
+    // listen for enter key
+    new YAHOO.util.KeyListener(el, {
+        keys: [13]
+    }, {
+        fn: this.onClick,
+        scope: this,
+        correctScope: true
+    }).enable();
+};

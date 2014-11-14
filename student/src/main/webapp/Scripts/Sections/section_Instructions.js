@@ -17,9 +17,7 @@ Sections.Instructions.prototype.init = function ()
 {
     var container = YUD.get('quickQuide');
     var frame = YUD.get('helpFrame');
-
-    var url = TDS.baseUrl + 'Pages/';
-    url += Messages.get('Global.Path.Help');
+    var url = TDS.Help.getUrl();
 
     // load instructions
     TDS.ToolManager.loadFrameUrl(container, frame, url, function(frameDoc, allowAccess) // loadFrameKey
@@ -28,21 +26,18 @@ Sections.Instructions.prototype.init = function ()
         YUD.addClass(frameDoc.body, 'embedded');
 
         // init help tts
-        onHelpLoad(frame, 'startSpeakingButton', 'stopSpeakingButton', 'ttsHelpMessage', 'noTTSHelpMessage');
+        TDS.Help.onLoad(frame, 'startSpeakingButton', 'stopSpeakingButton', 'ttsHelpMessage', 'noTTSHelpMessage');
     });
 };
 
-Sections.Instructions.prototype.start = function()
-{
-    var startData = 
-    {
-        formKey: LoginShell.formSelection
+Sections.Instructions.prototype.start = function () {
+
+    var testee = TDS.Student.Storage.getTestee();
+
+    var callback = function (testInfo) {
+        TDS.Student.Storage.setTestInfo(testInfo);
+        TDS.redirectTestShell();
     };
-    
-    LoginShell.api.startTest(startData, function(testConfig)
-    {
-        // make sure there is a config
-        if (testConfig) TDS.redirectTestShell();
-    });
-};
 
+    TDS.Student.API.startTest(testee, LoginShell.formSelection).then(callback);
+};

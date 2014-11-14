@@ -103,7 +103,7 @@ Simulator.Input.KeyboardInput = function (sim) {
 
     // move the focus to the previous item within the list of focusable items
     var advanceToPreviousItem = function () {
-        if (itemIndex == 0)
+        if (itemIndex <= 0) // previously ==, which caused an error if the first input was ctrl+shift+tab or shift+tab: wrap rather than decrement negative itemIndex
             advanceToPreviousElement();
         else
             itemIndex--;
@@ -370,6 +370,20 @@ Simulator.Input.KeyboardInput = function (sim) {
         shortcut.remove('enter');
     };
 
+    this.resetKeyboardFocusState = function () {
+        // if there is any previously focused item, call the corresponding item's method to move focus away from the item
+        if (prevInputObjectInfo[ELEMENT]) {
+            prevInputObjectInfo[ELEMENT].keyboardNavigateAwayFrom(prevInputObjectInfo[KEY], prevInputObjectInfo[ITEM], itemIndex);
+        }
+
+        // reset focus
+        inputIndex = 0;
+        itemIndex = -1;
+
+        // clear out previously focused object
+        prevInputObjectInfo = [];
+    }
+
     // initialize the object that is previously focused on to empty
     var prevInputObjectInfo = [];
 
@@ -477,6 +491,9 @@ Simulator.Input.KeyboardInput = function (sim) {
                 if (parts) {
                     // call the corresponding item's method to record item selection
                     parts[ELEMENT].recordKeyboardSelection(parts[KEY], parts[ITEM], itemIndex);
+                    // for option and choice lists, keep focus on current element
+                    if (parts[ELEMENT].getType() == 'optionList' || parts[ELEMENT].getType() == 'choiceList')
+                        parts[ELEMENT].keyboardNavigateTo(parts[KEY], parts[ITEM], itemIndex);
                     // for droplist, move the focus to the next element once the "enter" key is pressed
                     if (parts[ELEMENT].getType() === 'dropList') {
                         itemIndex = focusableElements[inputIndex][ITEM].length - 1;

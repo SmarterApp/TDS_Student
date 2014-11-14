@@ -11,11 +11,11 @@
 
 			<div class="ot-shadowBox">
 				<div class="ot-innerShadow">
-					<h2 id="sectionLoginHeader" i18n-content="Login.Label.Prompt"></h2>
+					<h1 id="sectionLoginHeader" i18n-content="Login.Label.Prompt"></h1>
+					<a class="hiddenLink" href="#instructions">Sign in instructions below</a>
 
 					<form id="loginForm" target="xhrFrame">
 						<!-- onsubmit="return(loginForm()) -->
-
 						<div id="loginForm1" class="loginForm loginForm1">
 							<span class="checkHolder forPractice"> <input id="cbUser" name="user" type="checkbox" value="userWho" tabindex="0" /> <label for="cbUser" i18n-content="User.Label.Guest"></label>
 							</span>
@@ -26,8 +26,14 @@
 
 						<div id="loginForm2" class="loginForm loginForm2">
 							<span class="checkHolder forPractice"> <input id="cbSession" name="session" type="checkbox" value="noSession" tabindex="0" /> <label for="cbSession" i18n-content="User.Label.Session"></label>
-							</span> <label for="loginSessionID" i18n-content="User.Label.SessionID"></label> <input type="text" id="loginSessionID" name="loginSessionID" size="26" maxlength="50" tabindex="0" /> <span
-								id="loginSessionIDError" class="validation">&nbsp;</span> <span class="clear"></span>
+							</span>
+							<fieldset class="sessionID" role="group">
+								<legend i18n-content="User.Label.SessionID">SessionID:</legend>
+								<label for="loginSessionID1">Session ID Part 1</label> <input type="text" id="loginSessionID1" name="loginSessionID1" size="6" maxlength="6" tabindex="0" /> <span> - </span> <label
+									for="loginSessionID2">Session ID Part 2</label> <input type="text" id="loginSessionID2" name="loginSessionID2" size="6" maxlength="6" tabindex="0" /> <span> - </span> <label
+									for="loginSessionID3">Session ID Part 3</label> <input type="text" id="loginSessionID3" name="loginSessionID3" size="6" maxlength="6" tabindex="0" />
+							</fieldset>
+							<span id="loginSessionIDError" class="validation">&nbsp;</span> <span class="clear"></span>
 						</div>
 
 						<div id="loginAlert">
@@ -37,12 +43,13 @@
 							</div>
 						</div>
 
-						<span class="actions"> <tds:Button id="btnLogin" styleClass="positive" key="Login.Button.SignIn" inputType="submit" />
+						<span class="actions"> <tds:Button id="btnLogin" styleClass="positive" key="Login.Button.SignIn" inputType="Submit" />
 						</span>
 
 					</form>
 
 					<div id="loginInstructions">
+						<a name="instructions">&nbsp;</a>
 						<div class="instructions forOperational"></div>
 						<div class="instructions forPractice" i18n-content="StaticContent.Label.PTLoginText"></div>
 					</div>
@@ -59,12 +66,10 @@
 				</div>
 			</div>
 			<!-- shadowBox -->
-
 			<div id="ot-blurbs" class="forPractice" role="complementary" i18n-content="StaticContent.Label.PTIntroText"></div>
-			<span class="forOperational" i18n-content="StaticContent.Label.PTLink"></span>
+			<span class="clear"></span> <span class="forOperational" i18n-content="StaticContent.Label.PTLink"></span>
 			<!-- remove link from static text and move to here -->
 
-			<span class="clear"></span>
 		</div>
 		<!-- loginWrap -->
 

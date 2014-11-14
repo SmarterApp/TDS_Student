@@ -214,7 +214,13 @@ SimParser.FunctionEvaluation = function (eUnit) {
                     var sirF = fMng.getFunctionByCompOrder(k);
                     fn[k] = sirF.getName();
                     if (cMng.evalPreConstraints(fn[k], varValueList)) {
-                        funcVector[k] = evalFormula2(sirF.getEquation(), varValueList);
+                        /*Start - Lookup Chaining*/
+                        if (sirF.getType() != "lookup") { //Regular and Javascript Functions
+                            funcVector[k] = evalFormula2(sirF.getEquation(), varValueList);
+                        }
+                        else { //Look Up Functions
+                            funcVector[k] = evalLFunction(sirF, varValueList); //Evaluate Lookup Functions
+                        }/*End - Lookup Chaining*/
                         // check if the variable is 'cumulative' or 'persistent', if yes, need to update the persistent variable store, and retrieve the updated value for that variable
                         // retrieve the result variable name
                         if (sirF.getValue() != null) {
@@ -315,10 +321,12 @@ SimParser.FunctionEvaluation = function (eUnit) {
         if (result.length === 0) {
             result.push({ 'functions': undefined, 'variables': undefined});
         }
-         
-        // add results of lfunctions to the output
+
+
+        /* Commented out the Old Code for Lookups - Lookup Chaining
+         add results of lfunctions to the output
         var lr = fMng.evaluateLFunctions(varValueList, varNames, varValues);
-        // add it to the FIRST element of result array
+         add it to the FIRST element of result array
         if (result.length >= 0) {
             var r = result[0].functions;
             if (r) {
@@ -326,19 +334,19 @@ SimParser.FunctionEvaluation = function (eUnit) {
                     r[p] = lr[p];
                 }
             }
-        }
-         
+        }*/
+        /* Commented out the Old Code for JFunctions*/
         // add results of jfunctions to the output
-        var jr = fMng.evaluateJFunctions(varNames, varValues);
+        //var jr = fMng.evaluateJFunctions(varNames, varValues);
         // add it to the FIRST element of result array
-        if (result.length >= 0) {
+        /*if (result.length >= 0) {
             var r = result[0].functions;
             if (r) {
                 for (var p in jr) {
                     r[p] = jr[p];
                 }
             }
-        }
+        }*/
          
         // filter evaluation
         // var fe = new FilterEvaluation();
@@ -360,6 +368,21 @@ SimParser.FunctionEvaluation = function (eUnit) {
      
         return result;
     }
+
+    //Start - Lookup Chaining
+    function evalLFunction(lFunction, varValueList) {
+        var keyName = lFunction.getKeyName(); // Get the keyname from the look up function
+        var keyValue;
+        // Get the value of the key from varValueList
+        for (var i = 0; i < varValueList.length; i++) {
+            var obj = varValueList[i];
+            if (obj["name"] == keyName) {
+                keyValue = obj["value"];
+            }
+        }
+        return lFunction.getLookupValue(keyValue); //get the lookup value for the key and return
+    }
+    //End - Lookup Chaining
     
     // convert data to whiteboard format and write result to the whiteboard
     // var doEnd = function () {

@@ -196,6 +196,28 @@ FocusUtils = {
 PreciseUtils = {
     setResultPrecision: function (number, l) {
         return parseFloat(number.toFixed(l));        
+    },
+
+    /* check if the fractional part of the floating number is within the restriction length
+     *@input: input field
+     *@s: new input string
+     */
+    validatedInputFractionalPartLen: function (input, s) {
+        var value = input.value,
+            curPos = CaretPositionUtils.getCaretPosition(input), // position of newly input
+            decimalPos = value.indexOf('.'),        // position of decimal point, -1 means do not have to worry about it
+            fpLen = getMaxFractionalPartLen(input); // pre-config maximum length for fractional part, null/undefined means not specified
+
+        if (fpLen && decimalPos > -1) {             // maximum length of fractional part for this input field is specified and the current value is a float number 
+            if (decimalPos < curPos && value.split('.')[1].length == fpLen) {   // input on the fractional part and current fractional part length equals to the maximum length of it
+                return false;
+            }
+        } else if (fpLen && decimalPos == -1 && s == '.') {    // newly input value is decimal, check the length after it's position
+            if (value.length - curPos > fpLen) {    // digits after decimal larger than maximum length
+                return false;
+            }
+        }
+        return true;
     }
 };
 
@@ -1822,6 +1844,7 @@ TDS_Calc.prototype.addMissingMultiplier = function(str)
         inputStr = inputStr.replace(new RegExp('[+][*]', 'g'), '+');
         inputStr = inputStr.replace(new RegExp('[-][*]', 'g'), '-');
         inputStr = inputStr.replace(new RegExp('[/][*]', 'g'), '/');
+        inputStr = inputStr.replace(new RegExp('[.][*]', 'g'), '.');
     }
     if (inputStr.charAt(0) == '*') {
         if (oldInput == inputStr) return 'Error'; 
@@ -1861,8 +1884,45 @@ TDS_Calc.prototype.translate_pow = function(inputStr)
             if (rightOpPos < inputStr.length -1) 
                 str2 = inputStr.substring(rightOpPos+1);
             var opStr1 = inputStr.substring(leftOpPos,pos);
-            var opStr2 = inputStr.substring(pos+1, rightOpPos+1);
-            inputStr = str1 + 'pow(' + opStr1 + ',' + opStr2 + ')' + str2;
+            var opStr2 = inputStr.substring(pos + 1, rightOpPos + 1);
+
+            /*
+             * For negative numbers, JavaScript does not support cubic root and higher level root extraction calculation
+             * So when opStr1 is negative number, and opStr2 (exponent) is not an integer, and the denominator of opStr2 (exponent) is not an even number, say (-8)^(1/3)
+             * The code will calculate it like this pow(Math.abs(-8), (1/3)), and add the +/- sign in front of the result according to the parity of molecular and denominator of the exponent
+             * Since the denominator of opStr2 (exponent) number is odd only (otherwise, the root would be illegal, because of the negative power base number)
+             * For those opStr2 (exponent) number whose molecular is odd, the final result would be negative as the opStr1 number
+             * For those opStr2 (exponent) number whose molecular is even, the final result would be positive 
+             */
+
+            // For now, due to the complexity we only support a/b format fraction as an exponent
+            if (opStr2.indexOf('/') > -1) {                     // opStr2 is fraction
+                var molecular = opStr2.split('/')[0].replace(new RegExp('[()]', 'g'), ''),
+                    denominator = opStr2.split('/')[1].replace(new RegExp('[()]', 'g'), '');
+
+                if (this.evalExpression(opStr1) < 0 &&          // opStr1 is negative
+                    Number(molecular) &&                        // opStr2 molecular is a number
+                    Number(denominator) &&                      // opStr2 denominator is a number
+                    denominator % 2 != 0) {                     // opStr2's denominator is odd
+
+                    var sign = '';
+
+                    opStr1 = 'Math.abs(' + opStr1 + ')';
+
+                    if (opStr2.split('/')[0].replace(new RegExp('[()]', 'g'), '') % 2 != 0) { // if the molecular of power number is odd, then the final result would be negative as opStr1
+                        sign = '-';
+                    }
+
+                    inputStr = str1 + sign + 'pow(' + opStr1 + ',' + opStr2 + ')' + str2;
+
+                } else {
+                    inputStr = str1 + 'pow(' + opStr1 + ',' + opStr2 + ')' + str2;
+                }
+            } else {
+                inputStr = str1 + 'pow(' + opStr1 + ',' + opStr2 + ')' + str2;
+            }
+
+            
             //alert ('new inputStr: ' + inputStr);
         } else {
             //showErrorMessage("pow error");
@@ -1995,9 +2055,8 @@ function CalcKeyPressProcess(myfield, e) {
             var new_contents = '';
             if (calc.immediateEvalFlag.oprandContinueFlag) {
                 new_contents = document.getElementById(myfield.id).value;
-                if (new_contents.length < getMaxInputLen(myfield)) 
-                {
-                    CaretPositionUtils.insertCharacter(myfield, character);            
+                if (new_contents.length < getMaxInputLen(myfield)) {
+                    CaretPositionUtils.insertCharacter(myfield, character);
                 }
             }
             else 
@@ -2031,7 +2090,8 @@ function CalcKeyPressProcess(myfield, e) {
         
         if (allowed) {
             new_contents = document.getElementById(myfield.id).value;
-            if (new_contents.length < getMaxInputLen(myfield, character)) {
+            if (new_contents.length < getMaxInputLen(myfield, character) &&
+                PreciseUtils.validatedInputFractionalPartLen(myfield, character)) { // check fractional part length restriction if necessary
                 var workingCalc = getWorkingCalcInstance();
                 //(key input) in Scientific, when input a number right after a 'result number', the result need to be replaced by the new input. bug 112395 
                 if (workingCalc.immediateEvalFlag && workingCalc.immediateEvalFlag.resultClearFlag && myfield.id == 'textinput') {
@@ -2155,6 +2215,21 @@ function getMaxInputLen(inputField, character) {
         }
     }
     return 0;
+}
+
+/*
+ * get the maximum length allowed for the fractional part (after decimal point)
+ * @inputField
+ */
+function getMaxFractionalPartLen(inputField) {
+    if (inputField == null) {
+        return 0;
+    }
+
+    var inputId = inputField.id;
+    var lens = getWorkingCalcInstance().config.fractionalPartLen;
+
+    return lens[inputId];
 }
 
 //brower detection utility function

@@ -34,33 +34,6 @@ ContentManager.onItemEvent('available', function(contentPage, item)
     if (pageHeader) pageHeader.setAttribute('tabindex', '-1');
 });
 
-// for auto emboss we need to call item complete so it can add aria label to the print link
-ContentManager.onItemEvent('available', function(contentPage, item)
-{
-    var group = TestShell.PageManager.get(contentPage.id);
-
-    if (group instanceof TestShell.PageGroup)
-    {
-        var response = group.getResponse(item.position);
-
-        if (response && item.printed)
-        {
-            TestShell.Print.itemComplete(group, response);
-        }
-    }
-});
-
-// for auto emboss we need to call passage complete so it can add status to the page
-ContentManager.onPassageEvent('available', function(contentPage, passage)
-{
-    var group = TestShell.PageManager.get(contentPage.id);
-
-    if (group instanceof TestShell.PageGroup && passage.printed)
-    {
-        TestShell.Print.passageComplete(group);
-    }
-});
-
 // when the html content has finished loading then setup the page
 ContentManager.onPageEvent('loaded', function(contentPage)
 {
@@ -89,9 +62,10 @@ ContentManager.onPageEvent('loaded', function(contentPage)
 ContentManager.onPageEvent('loaded', function(contentPage)
 {
     // get missing image files
+    var contentRenderer = contentPage.getRenderer();
     var missingImages = [];
-    missingImages.push(contentPage.getImagesFailed());
-    missingImages.push(contentPage.getImagesAborted());
+    missingImages.push(contentRenderer.getImagesFailed());
+    missingImages.push(contentRenderer.getImagesAborted());
     missingImages = Util.Array.flatten(missingImages);
 
     var missingFiles = [];
@@ -273,18 +247,31 @@ ContentManager.onItemEvent('ready', function(contentPage, item)
 */
 
 // check if page has everything required to show it
-ContentManager.onPageEvent('beforeShow', function(contentPage)
-{
+ContentManager.onPageEvent('beforeShow', function(contentPage) {
+
+    // check if any of the pages passage or items had errors
+    var entities = contentPage.getEntities();
+    var errors = Util.Array.mapFlatten(entities, function (entity) {
+        return entity.getErrors();
+    });
+    if (errors.length > 0) {
+        // show error and don't allow them to retry (since most likely a JS error)
+        TestShell.UI.showContentError(true);
+        TDS.Diagnostics.report(errors[0].ex);
+        return false;
+    }
+
     // check if any html content images failed to load
-    if (contentPage.getImagesFailed().length > 0 || 
-        contentPage.getImagesAborted().length > 0)
+    var contentRenderer = contentPage.getRenderer();
+    if (contentRenderer.getImagesFailed().length > 0 ||
+        contentRenderer.getImagesAborted().length > 0)
     {
         // show error and they have to log out
         TestShell.UI.showContentError();
         return false;
     }
 
-    var resourceLoaders = contentPage.getResourceLoaders();
+    var resourceLoaders = contentRenderer.getResourceLoaders();
     
     // check if any resource loaders failed
     if (resourceLoaders.hasLoaders() && 
@@ -329,12 +316,8 @@ ContentManager.onPageEvent('show', function(contentPage)
 
 ContentManager.onPageEvent('beforeHide', function(contentPage)
 {
-    // hide all dialogs if the context menu is now showing
-    TDS.ToolManager.hideAll();
-
     // BUG #15249: Context/Global menu remains opened when navigating to other pages using keyboard shortcuts
     ContentManager.Menu.hide(); // context menu
-    TestShell.Comments.hide(); // comments dialog
 });
 
 // listen for when page content is hidden (contentmanager) and refire event from the PageManager
@@ -343,32 +326,6 @@ ContentManager.onPageEvent('hide', function(contentPage)
     // fire the test shell version of the onHide event
     var page = TestShell.PageManager.get(contentPage.id);
     TestShell.PageManager.Events.fire('onHide', page);
-});
-
-// clear calculator
-ContentManager.onPageEvent('hide', function(contentPage) 
-{
-    var tools = TDS.ToolManager.getAll();
-
-    for (var i = 0; i < tools.length; i++) {
-        try {
-            // Reset all calculator panels
-            if (tools[i].id.toLowerCase().indexOf('calculator') > 0) {
-                
-                 var frameCalc = document.getElementById('frame-'+tools[i].id);
-                // make sure frame exists
-                if (!frameCalc || !frameCalc.contentWindow) continue;
-
-                // make sure function exists
-                var winCalc = frameCalc.contentWindow;
-                if (typeof winCalc.resetTDSCalc != 'function') continue;
-
-                // call clear on calc
-                winCalc.resetTDSCalc();
-            }
-        }
-        catch (ex) { Util.log(ex); } // Permission denied for to get property Window.clearCalc
-    }
 });
 
 // hide content dialog when menu key is pressed
@@ -381,81 +338,11 @@ ContentManager.onEntityEvent('menushow', function(contentPage, entity, menu, evt
     }
 });
 
-// open comment dial
-/*ContentManager.onItemEvent('comment', function(contentPage, item)
-{
-    TestShell.Comments.showItem(item);
-});*/
-
 // this is fired when the page is completed and cannot be responded to anymore
 ContentManager.onPageEvent('completed', function(contentPage) {
     // go to the next page
     TestShell.Navigation.next();
 });
-
-/* ZOOM CODE */
-(function () {
-
-    /*
-    NOTE:
-    When zooming is manually called on the test shell we
-    ask the content page zoom object to zoom.
-    */
-
-    // when the page is available set the current zoom level from the accommodations
-    ContentManager.onPageEvent('available', function (contentPage) {
-        var accProps = contentPage.getAccommodationProperties();
-        var zoomLevel = accProps.getPrintSize();
-        var pageZoom = contentPage.getZoom();
-        pageZoom.currentLevel = pageZoom.getLevel(zoomLevel);
-
-        // remove page zoom document and let the test shell zoom take care of it
-        if (pageZoom._documents.length > 0 &&
-            pageZoom._documents[0] == document) {
-            pageZoom._documents = [];
-        }
-    });
-
-    // set zoom level on test shell
-    // note: we need to do this on beforeShow or there is a flicker
-    ContentManager.onPageEvent('beforeShow', function (contentPage) {
-
-        var shellZoom = TestShell.UI.zoom;
-        var pageZoom = contentPage.getZoom();
-
-        // check if the pages zoom is different than the test shell
-        if (pageZoom.currentLevel != shellZoom.currentLevel) {
-            pageZoom.refresh(true); // this will zoom test shell using event below
-        }
-
-    });
-
-    // listen for when content is zoomed so we can also zoom the test shell
-    ContentManager.onPageEvent('zoom', function (contentPage) {
-
-        // BUG: #14957 - When page is prefetched it reverts test shell zoom level to default
-        // NOTE: We don't zoom on prefetch anymore
-        // if (ContentManager.getCurrentPage() != contentPage) return;
-
-        // zoom test shell
-        var shellZoom = TestShell.UI.zoom;
-        var pageZoom = contentPage.getZoom();
-
-        // check if the 
-        if (shellZoom.currentLevel != pageZoom.currentLevel) {
-            shellZoom.setLevel(pageZoom.currentLevel);
-        }
-
-        // BUG #66206: Bottom border of Calculators is missing when zooming in & out
-        $(TDS.ToolManager.getAll()).each(function (idx, panel) {
-            if (panel.refresh) {
-                panel.refresh();
-            }
-        });
-
-    });
-
-})();
 
 // hook up spell check code
 (function(window) {
@@ -480,12 +367,12 @@ ContentManager.onPageEvent('completed', function(contentPage) {
 
 ContentManager.Dialog.onShow.subscribe(function() 
 {
-    YUD.addClass(TestShell.Frame.getBody(), TestShell.UI.CSS.dialogShowing);
+    YUD.addClass(document.body, TestShell.UI.CSS.dialogShowing);
 });
 
 ContentManager.Dialog.onHide.subscribe(function() 
 {
-    YUD.removeClass(TestShell.Frame.getBody(), TestShell.UI.CSS.dialogShowing);
+    YUD.removeClass(document.body, TestShell.UI.CSS.dialogShowing);
 });
 
 /*************************************************************************************************/
@@ -515,29 +402,6 @@ function tdsUpdateItemMark(position, marked)
     // send xhr
     var markData = { position: position, mark: marked };
     TestShell.xhrManager.markForReview(markData);
-}
-
-// passage print
-function tdsPassagePrint()
-{
-    // submit XHR request
-    TestShell.Print.passage();
-}
-
-// item print
-function tdsItemPrint(position)
-{
-    var response = TestShell.PageManager.getResponse(position);
-
-    if (response.isDirty())
-    {
-        TestShell.UI.showAlert(Messages.get('TDSShellObjectsJS.Label.Warning'), Messages.get('TDSShellObjectsJS.Label.SaveBeforePrint'));
-    }
-    else
-    {
-        // submit XHR request
-        TestShell.Print.item(position);
-    }
 }
 
 // remove item response
@@ -572,7 +436,7 @@ function tdsRemoveResponse(position)
                 // reset response data
                 itemResponse.reset();
                 // reload content
-                itemResponse.group.requestContent(true);
+                itemResponse.page.requestContent(true);
             }
         });
     };

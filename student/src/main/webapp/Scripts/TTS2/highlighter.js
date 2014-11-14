@@ -22,7 +22,7 @@ TTS.Parse.Highlighter = function (doc) {
     var _currentRange = null;
     var _chromebookOffset = 0;
     var _prevStatus = null;
-	
+
     var Debug = function(string) {
         if (TTS.Config.Debug) {
             console.log(string);
@@ -127,8 +127,8 @@ TTS.Parse.Highlighter = function (doc) {
     this.setSpeakString = function (speakString, pn) {
         _speakString = speakString;
         _parseNodeRoot = pn;
-		
-		// Bug 133270 Word index values returned by Chromebook v34 speech engine are offset from those used in tracking by the number of leading spaces + 1
+        
+        // Bug 133270 Word index values returned by Chromebook v34 speech engine are offset from those used in tracking by the number of leading spaces + 1
         var leadingSpaces = _speakString.match(/^ +/) || [''];
         _chromebookOffset = leadingSpaces[0].length + 1;
     };
@@ -139,14 +139,15 @@ TTS.Parse.Highlighter = function (doc) {
         if (Util.Browser.isChromeOS() && Util.Browser.getChromeVersion() >= 34) {
             start += _chromebookOffset;
         }
-		var part = _speakString.substring(start);
+        var part = _speakString.substring(start);
         var match = _wordEndingPattern.exec(part);
         var end;
         if ((match != null) && (match.length > 0)) {
             end = start + match[0].length - 1;
-            Debug(match[0] + " start: " + start + " len: " + match[0].length + " string: " + part);
+            Debug('********' + match[0] + " start: " + start + " len: " + match[0].length + " string: " + part);
         } else {
             end = start + part.length;
+            Debug("******** start: " + start + " string: " + part);
         }
         highliteRange(_parseNodeRoot, start, end);
     };
@@ -195,7 +196,7 @@ TTS.Parse.Highlighter = function (doc) {
         //this is really a stub that can be changed to modify the pattern based on the browser, OS, or other things that may
         //influence the interpetation of word boundaries. This is only used for highlighting, so a mistake is very transient--the whole word might not
         // be highlighted.
-        return new RegExp("[\s.;()]*[a-zA-Z0-9,\'\-]+[\r\t .;()?]", 'm'); //this needs to be a much better regEx
+        return new RegExp("[\s.;()]*[a-zA-Z0-9,\'\-]+[\r\t .:;()?]", 'm'); //this needs to be a much better regEx
     };
 
     _wordEndingPattern = getWordEndingPattern();

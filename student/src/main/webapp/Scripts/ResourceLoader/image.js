@@ -80,7 +80,7 @@ ResourceLoader.Image.prototype._onEvent = function(evt)
             // Notes from MSDN : The states through which an object passes are
             // determined by that object. An object can skip certain states
             // (for example, interactive) if the state does not apply to that object.
-            // see http://msdn.microsoft.com/en-us/library/ms534359(VS.85).xhtml
+            // see http://msdn.microsoft.com/en-us/library/ms534359(VS.85).aspx
 
             // The image is not loaded, ignore.
             return;

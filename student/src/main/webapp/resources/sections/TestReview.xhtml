@@ -12,8 +12,9 @@
 		<div id="markedWarning" style="display: none;" i18n-content="QuestionsAreMarkedForReview"></div>
 
 		<div class="choices">
-
-			<select id="ddlNavigation" size="8"></select>
+			<!-- A Clegg: I am removing the size attribute from this select tag to try and fix bug 88470 for mobile -->
+			<label class="labelTestReview" i18n-content="TestReview.Label.ItemNavigation" for="ddlNavigation">Select question(s) to review:</label> 
+			<select id="ddlNavigation" title="Select question to review"></select>
 
 			<div class="actions">
 				<tds:Button id="btnReviewTest" styleClass="negative" key="TestReview.Button.MyAnswers" />

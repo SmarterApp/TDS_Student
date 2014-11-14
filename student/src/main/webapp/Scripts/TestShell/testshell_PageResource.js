@@ -20,7 +20,7 @@ TestShell.PageResource.prototype.getContentUrl = function()
 {
     var urlBuilder = [];
     urlBuilder.push(TDS.baseUrl);
-    urlBuilder.push('Pages/API/Content.axd/loadResource');
+    urlBuilder.push('Pages/API/TestShell.axd/getResourceContent');
     urlBuilder.push('?bankKey=' + this._bankKey);
     urlBuilder.push('&itemKey=' + this._itemKey);
     urlBuilder.push('&segmentID=' + this._segmentID);

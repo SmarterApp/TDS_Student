@@ -7,7 +7,7 @@
  * @return - instance of a DropList
  *******************************************************************************
  */
-Simulator.Input.DropList = function(sim, node, panel, theSection) {
+Simulator.Input.DropList = function (sim, node, panel, theSection, container) {
 
     Simulator.Input.GroupList.call(this, sim); // Inherit Instance variables
     var dbg = function() { return sim.getDebug(); };
@@ -15,7 +15,8 @@ Simulator.Input.DropList = function(sim, node, panel, theSection) {
     var keyboardInput = function () { return sim.getKeyboardInput(); };
     var scoringTable = function () { return sim.getScoringTable(); };
     var simMgr = function () { return sim.getSimulationManager(); };
-    var simDocument = function() { return sim.getSimDocument(); };
+    var simDocument = function () { return sim.getSimDocument(); };
+    var transDictionary = function () { return sim.getTranslationDictionary(); };
     
     var instance = this;
     var selectType = 'single'; // Instance Variable declaration format
@@ -136,7 +137,7 @@ Simulator.Input.DropList = function(sim, node, panel, theSection) {
         var element = simDocument().getElementById(elementID);
 		// var node = simDocument().getElementById("inputPanel");
 		// var outline = getElementsByClassName("dropHolder", node)[0];
-		var outline = element.getParentNode;
+		var outline = element.parentNode; // fixed
 		// element.selectedIndex = index;					
 		if(outline) outline.setAttribute("class", "dropHolder simAreaFocus");
 		var item = null;
@@ -155,7 +156,7 @@ Simulator.Input.DropList = function(sim, node, panel, theSection) {
 		// var node = simDocument().getElementById("inputPanel");
 		var element = simDocument().getElementById(elementID);
 		// var element = getElementsByClassName("dropHolder", node)[0];
-		var outline = element.getParentNode;
+		var outline = element.parentNode; // fixed
 		if(outline) outline.setAttribute("class", "dropHolder");
 		var item = null;
 		item = simDocument().getElementById(itemID);
@@ -267,6 +268,7 @@ Simulator.Input.DropList = function(sim, node, panel, theSection) {
     this.render = function() {
         var items = this.getItems();
         var itemID = null;
+        var labelledByID = this.getSectionID(); // default aria-labelledby to containing section (WCAG) 
         
         this.setFocusable(true, true); // Don't set the element itself to accept keyboard input
         var image = this.getImage();
@@ -317,11 +319,15 @@ Simulator.Input.DropList = function(sim, node, panel, theSection) {
             labelSpan.style.padding.top = '15px';
             // labelSpan.label = this.getLabel();
             labelSpan.innerHTML = this.getLabel();
+            var labelSpanID = this.createLabelID();
+            labelSpan.id = labelSpanID; // ID for WCAG
+            labelledByID = labelledByID + ' ' + labelSpanID; // if there is an element label, add to the aria-laballedby attribute (WCAG)
             formSpan.appendChild(labelSpan);
         }
         var select = simDocument().createElement('select');
         select.id = this.getNodeID();
-        select.innerHTML =  + this.getName();
+        select.setAttribute('aria-labelledby', labelledByID); // WCAG
+        // select.innerHTML =  + this.getName(); // not sure what this was doing... it's broken anyway
         var item = null;
         for ( var x = 0; x < items.length; x++) {
             var itemIDReset = x == 0 ? true : false;
@@ -333,7 +339,9 @@ Simulator.Input.DropList = function(sim, node, panel, theSection) {
                 item.value = (items[x]).lookup('val');
             }
             if(items[x].lookup('default') == 'yes') item.selected = 'selected';
-            item.innerHTML = (items[x]).lookup('val');
+            // retrieve translated text
+            var innerHTMLtag = (items[x]).lookup('val');
+            item.innerHTML = transDictionary().translate(innerHTMLtag);
             select.appendChild(item);
             // Register the element items for keyboard input
             if(this.isFocusable()) {
@@ -344,7 +352,10 @@ Simulator.Input.DropList = function(sim, node, panel, theSection) {
         var arrowSpan = simDocument().createElement('span');
         arrowSpan.setAttribute('class', 'dropArrow');
         formSpan.appendChild(arrowSpan);
-        htmlPanel = panel.getHTMLElement();
+        htmlPanel = container;
+        if (theSection.getSectionSettings().elementorientation === "horizontal") {
+            dropDiv.classList.add("inputpanelcell");
+        }
         htmlPanel.appendChild(dropDiv);
         var dropList = simDocument().getElementById(this.getNodeID());
         if(instance.getSaveOnChange()) 

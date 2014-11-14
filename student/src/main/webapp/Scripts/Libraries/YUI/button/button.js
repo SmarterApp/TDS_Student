@@ -2139,7 +2139,7 @@ version: 2.9.0
 
 				//	In IE when the user mouses down on a focusable element
 				//	that element will be focused and become the "activeElement".
-				//	(http://msdn.microsoft.com/en-us/library/ms533065(VS.85).xhtml)
+				//	(http://msdn.microsoft.com/en-us/library/ms533065(VS.85).aspx)
 				//	However, there is a bug in IE where if there is a  
 				//	positioned element with a focused descendant that is 
 				//	hidden in response to the mousedown event, the target of 

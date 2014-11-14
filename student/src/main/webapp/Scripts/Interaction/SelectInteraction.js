@@ -83,7 +83,7 @@ TDS.SelectInteraction.prototype.getSelectedInGroup = function (id) {
 
 // get all the group id's
 TDS.SelectInteraction.prototype.getGroups = function () {
-    return Util.Array.uniqueList(this.getChoices().map(function(choice) {
+    return Util.Array.unique(this.getChoices().map(function(choice) {
         return choice.getGroupIdentifier();
     }));
 };
@@ -197,36 +197,6 @@ TDS.SelectInteraction.prototype.getResponseJson = function () {
     return groupList;
 };
 
-// Create <response> and append it to the document root
-TDS.SelectInteraction.prototype.createResponseQTI = function (xmlDoc) {
-    var xmlEl = xmlDoc.documentElement;
-    var groupsList = this.getResponseJson();
-    // Bug 114534 If no selected interactions, use group list to generate empty <response> tags
-    if (groupsList.length < 1) {
-        groupsList = this.getGroups();
-    }
-    
-    var responseXML;
-    Util.Array.each(groupsList, function(groupJson) {
-        responseXML = xmlDoc.createElement('response');
-        xmlEl.appendChild(responseXML);
-            
-        if (typeof groupJson == "object") {
-            responseXML.setAttribute('id', groupJson.identifier);
-
-            Util.Array.each(groupJson.responses, function(response) {
-                // <response>
-                var responseNode = xmlDoc.createElement('value');
-                responseNode.textContent = response;
-                responseXML.appendChild(responseNode);
-            });
-        } else {
-            // Bug 114534 Set ID attribute in empty <response> tags
-            responseXML.setAttribute('id', groupJson);
-        }
-    });
-};
-
 // Get the response as a xml document.
 TDS.SelectInteraction.prototype.getResponseXml = function() {
     var responseXml = Util.Xml.createDocument('interaction');
@@ -274,41 +244,20 @@ TDS.SelectInteraction.prototype.setResponse = function(identifier) {
 
 TDS.SelectInteraction.prototype.loadResponseIDs = function(responseIdentifiers) {
     this.resetResponse();
-    for (var i = 0; i < responseIdentifiers.length; i++) {
-        this.setResponse(responseIdentifiers[i]);
-    }
+    responseIdentifiers.forEach(function(id) {
+        this.setResponse(id);
+    }.bind(this));
 };
 
-TDS.SelectInteraction.prototype.loadResponse = function (xml) {
+TDS.SelectInteraction.prototype.loadResponseXml = function (xml) {
 
-    var interactionXml = Util.Xml.parseFromString(xml);
-    var interactionNode = interactionXml.documentElement;
-
+    // get root node
+    var interactionNode = TDS.Interaction.parseXmlRoot(xml);
     var responseIdentifiers = [];
 
     Util.Dom.queryTagsBatch('response', interactionNode, function(responseNode) {
         var responseIdentifier = responseNode.getAttribute('identifier');
         responseIdentifiers.push(responseIdentifier);
-    });
-
-    this.loadResponseIDs(responseIdentifiers);
-};
-
-TDS.SelectInteraction.prototype.loadResponseQTI = function (xml) {
-
-    var responseNode;
-    if (typeof xml == 'string') {
-        var xmlDoc = Util.Xml.parseFromString(xml);
-        responseNode = xmlDoc.documentElement;
-    } else {
-        responseNode = xml;
-    }
-
-    var responseIdentifiers = [];
-
-    Util.Dom.queryTagsBatch('value', responseNode, function (valueNode) {
-        var value = Util.Xml.getNodeText(valueNode);
-        responseIdentifiers.push(value);
     });
 
     this.loadResponseIDs(responseIdentifiers);

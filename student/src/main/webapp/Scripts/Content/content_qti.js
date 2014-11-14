@@ -2,9 +2,9 @@
 This file is used for any general QTI utilities or parsers.
 */
 
-ContentManager.QTI = {};
+(function (CM) {
 
-(function (QTI) {
+    var QTI = {};
 
     var validHtmlTags = [
 
@@ -103,6 +103,95 @@ ContentManager.QTI = {};
     QTI.validHtmlTags = validHtmlTags;
     QTI.loadStem = loadStem;
 
-})(ContentManager.QTI);
+    /*
+    function mapInteractionsToWidgetConfigs (item, type) {
+        var qtiDoc = Util.Xml.parseFromString(item.qti.xml);
+        return $(type, qtiDoc).map(function (idx, node) {
+            var stemEl = item.getStemElement();
+            var id = node.getAttribute('responseIdentifier');
+            var selector = '*[data-qti-identifier=' + id + ']';
+            var el = $(selector, stemEl).get(0);
+            return new CM.WidgetConfig(id, el, node);
+        }).get();
+    }
+    */
+
+    function mapInteractionsToWidgetConfigs(item, type, custom) {
+        var stemEl = item.getStemElement();
+        var selector = '*[data-qti-type=' + type + ']';
+        if (custom) {
+            selector += '[data-qti-custom=' + custom + ']';
+        }
+        return $(selector, stemEl).map(function(idx, interactionEl) {
+            var scriptEl = $(interactionEl).children().get(0);
+            var interactionId = interactionEl.getAttribute('data-qti-identifier');
+            var interactionXml = scriptEl.innerHTML;
+            var interactionDoc = Util.Xml.parseFromString(interactionXml);
+            var interactionNode = interactionDoc.documentElement;
+            return new CM.WidgetConfig(interactionId, interactionEl, interactionNode);
+        }).get();
+    }
+
+    QTI.createWidgetMatch = function (type, custom) {
+        return function(page, item, content) {
+            if (item.isResponseType('QTI')) {
+                return mapInteractionsToWidgetConfigs(item, type, custom);
+            }
+            return false;
+        }
+    }
+    
+    // Move all the content child nodes from one node to another
+    QTI.moveContents = function(fromNode, toNode) {
+        $(fromNode).contents().each(function (idx, childNode) {
+            $(toNode).append(childNode);
+        });
+    }
+
+    /*
+    Replace all the nodes matching the selector with new nodes. 
+    This also copies all the child nodes into the new nodes. 
+    If removeNode is true then it will be removed from the document
+    once the newNode is created. You would use this in combination
+    with the returned results.
+    Returns all the new nodes that were created.
+    */
+    QTI.replaceNodes = function (parentNode, selector, replacer) {
+        return $(selector, parentNode).map(function (idx, currentNode) {
+            // create new node
+            var newNode = replacer(currentNode);
+            // copy children over to the new node
+            QTI.moveContents(currentNode, newNode);
+            // check if we should remove old node
+            $(currentNode).replaceWith(newNode);
+            return newNode;
+        }).get();
+    }
+
+    // Replace the <prompt> with a <div>
+    QTI.replacePrompt = function (parentNode) {
+        var doc = parentNode.ownerDocument;
+        var prompts = QTI.replaceNodes(parentNode, 'prompt', function(promptNode) {
+            var promptEl = doc.createElement('div');
+            promptEl.setAttribute('class', 'interactionPrompt');
+            return promptEl;
+        });
+        if (prompts.length > 0) {
+            return prompts[0];
+        } else {
+            return null;
+        }
+    }
+
+    // Take an interaction node and create an html container. 
+    QTI.createInteractionElement = function (interactionNode, nodeName) {
+        var interactionEl = document.createElement(nodeName || 'div');
+        interactionEl.innerHTML = Util.Xml.innerHTML(interactionNode);
+        return interactionEl;
+    }
+
+    CM.QTI = QTI;
+
+})(window.ContentManager);
 
 

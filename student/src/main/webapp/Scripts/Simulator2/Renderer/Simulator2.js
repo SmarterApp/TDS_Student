@@ -61,6 +61,9 @@ Simulator.Simulator = function (container, assistiveMode, speechMode) {
     var dbg = new Simulator.Utils.Debug(this);
     var keyboardInput = new Simulator.Input.KeyboardInput(this); // create a KeyboardInput instance
     var html2jsMap = new Simulator.HTML2JSMap(this);
+    var translationDictionary = (typeof Simulator.Utils.TranslationDictionary == 'function') // check if we have this available first
+        ? new Simulator.Utils.TranslationDictionary(this)
+        : { translate: function (tag) { return tag; } }; // if not, use dummy object to emulate an unloaded translation dictionary (fb-146865: SimTool doesn't know about TranslationDictionary2.js yet)
 
     // for storing pre-render queue for sliders
     var sliderPreRenderQueue = new Simulator.Utils.Queue();
@@ -172,6 +175,10 @@ Simulator.Simulator = function (container, assistiveMode, speechMode) {
         return keyboardInput;
     };
 
+    this.getTranslationDictionary = function () {
+        return translationDictionary;
+    };
+
     debug('Instantiating SimulationManager');
     simMgr = new Simulator.SimulationManager(this);
     debug('Required services instantiated');
@@ -212,6 +219,12 @@ Simulator.Simulator = function (container, assistiveMode, speechMode) {
         sendStartEvent();
     };
 
+    // load translations from xml string
+    this.loadTranslationXmlText = function (xmlText) {
+        var transElem = loadXMLDocFromString(xmlText);
+        this.loadTranslationXmlDom(transElem);
+    };
+
     // start the simulator with a xml string
     this.startSimulationXmlText = function (xmlText) {
         var xmlDoc = loadXMLDocFromString(xmlText);
@@ -226,6 +239,21 @@ Simulator.Simulator = function (container, assistiveMode, speechMode) {
             sliderElement = instance.getSliderPreRenderQueue().remove();
         }
     };
+
+    this.loadTranslationXmlDom = function (transDom) {
+        debug('Translation dictionary is loading');
+        x = transDom.getElementsByTagName('translation');
+        if (x.length > 0) {
+            debug('Found translation section');
+            // load translation dictionary - defaults to english
+            translationDictionary.loadTranslations(x);
+
+            /*
+            // TESTING:
+            translationDictionary.setCurrentLanguage('es');
+            */
+        }
+    }
 
     // start the simulator with a xml dom
     this.startSimulationXmlDom = function (xmlDoc) {
@@ -300,7 +328,7 @@ Simulator.Simulator = function (container, assistiveMode, speechMode) {
             var sections = xmlDoc.getElementsByTagName('section');
             if (sections) {
                 for (var i = 0; i < sections.length; i++) {  // do each section
-                    createInputSection(this, sections[i]);
+                    createInputSection(this, sections[i], i); // pass in i to help generate unique id for section headers (WCAG)
                 }
             } else {
                 dbg.logFatalError(source, 'Missing "section" elements in xml input file.');
@@ -396,7 +424,13 @@ Simulator.Simulator = function (container, assistiveMode, speechMode) {
 
     // This is the main function to call for external users to
     // render the item and response xml into the simulator.
-    this.loadXml = function (itemXml, responseXml) {
+    // Translation xml is passed in separately.
+    this.loadXml = function (itemXml, responseXml, translationXml) {
+        // load translation dictionary first
+        if (translationXml != null && translationXml.length > 0) {
+            this.loadTranslationXmlText(translationXml);
+        }
+
         // load item xml
         this.startSimulationXmlText(itemXml);
 
@@ -454,13 +488,16 @@ Simulator.Simulator = function (container, assistiveMode, speechMode) {
 
     // this function is called when someone leaves a page with the simulator
     this.hide = function () {
-
+        // reset keyboard focus so when re-entering a sim page things like fb-97025 (open dropdown) don't happen
+        keyboardInput.resetKeyboardFocusState();
     };
 
     // this function is called when someone enters the simulator frame
     this.focus = function () {
-        // enable shortcut keys for a simulation item while it is on focus
-        keyboardInput.initializeKeyboardShortcuts();
+        // we no longer use keyboard shortcuts for streamlined/accessibility mode (WCAG)
+        if (!this.getAccessibilityIFActive())
+            // enable shortcut keys for a simulation item while it is on focus
+            keyboardInput.initializeKeyboardShortcuts();
     };
 
     // this function is called when someone leaves the simulator frame
@@ -498,6 +535,10 @@ Simulator.Simulator = function (container, assistiveMode, speechMode) {
         buff.push('End inspecting ' + source);
         if (embedded) return buff.join('\n');
         else forced ? debugf(buff.join('\n')) : debug(buff.join('\n'));
+    };
+
+    this.isLoaded = function () {
+        return simMgr.isLoaded();
     };
 
     dbg.setDebug(true);
@@ -594,44 +635,73 @@ Simulator.Simulator = function (container, assistiveMode, speechMode) {
     }
 
     // Create all of the input panel elements from the xml fie
-    function createInputSection(sim, section) {
+    function createInputSection(sim, section, count) {
         var panel = layout.getPanelInstance(Simulator.Constants.INPUT_PANEL_NAME);
         var attr = utils.getAttributes(section);
-        var aSection = new Simulator.Input.Section(sim, panel);
+        var aSection = new Simulator.Input.Section(sim, panel, count);
         aSection.setAttributes(attr);
         aSection.render();
         var sectionElements = section.childNodes;
         var theElement;
+        var elementorientation = aSection.getSectionSettings().elementorientation;
+        var numberofcolumns = aSection.getSectionSettings().numberofcolumns;
+        var container;
+        if (elementorientation === "vertical") {
+            var tableRow = aSection.getSimDocument().createElement("div");
+            tableRow.className = "inputpanelrow";
+            panel.getHTMLElement().appendChild(tableRow);
+            container = tableRow;
+        }
         for (var i = 0; i < sectionElements.length; i++) {
+            if (elementorientation === "horizontal") {
+                if (i % numberofcolumns == 0) {
+                    var tableRow = aSection.getSimDocument().createElement("div");
+                    tableRow.className = "inputpanelrow";
+                    panel.getHTMLElement().appendChild(tableRow);
+                }
+                container = tableRow;
+            }
             switch (sectionElements[i].nodeName) {
                 case 'inputElement':
                     var iElements = sectionElements[i].childNodes;
                     for (var j = 0; j < iElements.length; j++) {
+                        var my = {};
                         switch (iElements[j].nodeName) {
                             case 'dropList':
-                                theElement = new Simulator.Input.DropList(sim, iElements[j], panel, aSection);
+                                theElement = new Simulator.Input.DropList(sim, iElements[j], panel, aSection, container);
                                 break;
                             case 'optionList':
-                                theElement = new Simulator.Input.OptionList(sim, iElements[j], panel, aSection);
+                                theElement = new Simulator.Input.OptionList(sim, iElements[j], panel, aSection, container);
                                 break;
                             case 'choiceList':
-                                theElement = new Simulator.Input.ChoiceList(sim, iElements[j], panel, aSection);
+                                theElement = new Simulator.Input.ChoiceList(sim, iElements[j], panel, aSection, container);
                                 break;
                             case 'upDownCounter':
-                                theElement = new Simulator.Input.UpDownCounter(sim, iElements[j], panel, aSection);
+                                if (sim.getAccessibilityIFActive()) { // if in streamlined/accessibility mode, convert counters to droplists
+                                    my.accessibleNode = convertUpDownCounterToDropDown(iElements[j]);
+                                    theElement = new Simulator.Input.DropList(sim, my.accessibleNode, panel, aSection, container);
+                                } else
+                                    theElement = new Simulator.Input.UpDownCounter(sim, iElements[j], panel, aSection, container);
                                 break;
                             case 'slider':
-                                theElement = new Simulator.Input.SimSlider(sim, iElements[j], panel, aSection);
+                                theElement = new Simulator.Input.SimSlider(sim, iElements[j], panel, aSection, container);
                                 break;
                             case 'textField':
-                                theElement = new Simulator.Input.TextField(sim, iElements[j], panel, aSection);
+                                theElement = new Simulator.Input.TextField(sim, iElements[j], panel, aSection, container);
                                 break;
                             default:
                                 continue;  // Immediately start next for loop iteration
                         }
-                        var attr = utils.getAttributes(iElements[j]);
-                        theElement.setAttributes(attr, iElements[j]);
-                        setEvents(theElement, iElements[j]);
+                        if (my.accessibleNode != undefined) {
+                            var attr = utils.getAttributes(my.accessibleNode);
+                            theElement.setAttributes(attr, my.accessibleNode);
+                            setEvents(theElement, my.accessibleNode);
+                            delete my.accessibleNode;
+                        } else {
+                            var attr = utils.getAttributes(iElements[j]);
+                            theElement.setAttributes(attr, iElements[j]);
+                            setEvents(theElement, iElements[j]);
+                        }
                         theElement.render();
                         break;
                     }
@@ -641,7 +711,7 @@ Simulator.Simulator = function (container, assistiveMode, speechMode) {
                     for (var c = 0; c < cElements.length; c++) {
                         switch (cElements[c].nodeName) {
                             case 'button':
-                                theElement = new Simulator.Control.Button(sim, panel, aSection);
+                                theElement = new Simulator.Control.Button(sim, panel, aSection, container);
                                 break;
                             default:
                                 continue;
@@ -657,19 +727,19 @@ Simulator.Simulator = function (container, assistiveMode, speechMode) {
                     for (var s = 0; s < sElements.length; s++) {
                         switch (sElements[s].nodeName) {
                             case 'imageElement':
-                                theElement = new Simulator.Input.ImageElement(sim, panel, aSection);
+                                theElement = new Simulator.Input.ImageElement(sim, panel, aSection, container);
                                 break;
                             case 'horizontalLine':
-                                theElement = new Simulator.Input.HorizontalLine(sim, panel, aSection);
+                                theElement = new Simulator.Input.HorizontalLine(sim, panel, aSection, container);
                                 break;
                             case 'sectionDivider':
-                                theElement = new Simulator.Input.SectionDivider(sim, panel, aSection);
+                                theElement = new Simulator.Input.SectionDivider(sim, panel, aSection, container);
                                 break;
                             case 'verticalSpace':
-                                theElement = new Simulator.Input.VerticalSpace(sim, panel, aSection);
+                                theElement = new Simulator.Input.VerticalSpace(sim, panel, aSection, container);
                                 break;
                             case 'textConstant':
-                                theElement = new Simulator.Input.TextConstant(sim, panel, aSection);
+                                theElement = new Simulator.Input.TextConstant(sim, panel, aSection, container);
                                 break;
                             default:
                                 continue;
@@ -683,12 +753,91 @@ Simulator.Simulator = function (container, assistiveMode, speechMode) {
         }
     }
 
+    // in streamlined/accessible mode, UpDownCounters get rendered as DropDowns
+    // this converts the counter XML to the corresponding dropdown XML
+    function convertUpDownCounterToDropDown(upDownNode) {
+        /*var dropElementNode = document.createElement('dropList');
+        dropElementNode.setAttribute('eName', 'dropList');
+        dropElementNode.setAttribute('type', 'dropList');
+        */
+
+        function gatherPropertyString(obj) {
+            var stringVector = [];
+            for (var prop in obj) {
+                if (obj[prop] != null)
+                    stringVector.push(prop + '="' + obj[prop] + '"');
+            }
+            return stringVector.join(' ');
+        }
+
+        var my = {};
+        my.xml = [];
+        my.dropElement = {};
+        my.dropElement.eName = 'dropList';
+        my.dropElement.name = upDownNode.getAttribute('name');
+        my.dropElement.type = 'dropList';
+        my.dropElement.inputScope = upDownNode.getAttribute('inputScope');
+        my.dropElement.label = upDownNode.getAttribute('label');
+        my.dropElement.note = upDownNode.getAttribute('note');
+        my.dropElement.image = upDownNode.getAttribute('image');
+
+        my.xml.push('<dropList ' + gatherPropertyString(my.dropElement) + '>');
+
+        my.calc = {};
+        my.calc.defaultValue = parseFloat(upDownNode.getAttribute('defaultValue'));
+        my.calc.minValue = parseFloat(upDownNode.getAttribute('minValue'));
+        my.calc.maxValue = parseFloat(upDownNode.getAttribute('maxValue'));
+        my.calc.increment = parseFloat(upDownNode.getAttribute('increment'));
+        my.calc.units = upDownNode.getAttribute('units'); // *****will need to be internationalized!*****: if (my.units != null) my.units = getTranslationDictionary().translate(my.units);
+        
+
+        my.calc.values = []; // collect all possible values
+        var currentValue = my.calc.defaultValue;
+        while (currentValue >= my.calc.minValue) { // default and below
+            my.calc.values.push(currentValue);
+            currentValue -= my.calc.increment;
+        }
+        currentValue = my.calc.defaultValue + my.calc.increment;
+        while (currentValue <= my.calc.maxValue) { // above default
+            my.calc.values.push(currentValue);
+            currentValue += my.calc.increment;
+        }
+        my.calc.values.sort(function (a, b) { return a - b }); // sort numerically, ascending
+
+
+        my.items = [];
+        for (var i = 0; i < my.calc.values.length; i++)
+            my.items.push(
+                {
+                    'val': ((my.calc.units == null) ? my.calc.values[i] : (my.calc.values[i] + ' ' + my.calc.units)),
+                    'dataProxy': my.calc.values[i],
+                    'evaluationProxy': my.calc.values[i],
+                    'animationProxy': my.calc.values[i],
+                    'default': ((my.calc.values[i] == my.calc.defaultValue) ? 'yes' : null)
+                });
+        for (var j = 0; j < my.items.length; j++)
+            my.xml.push('<item ' + gatherPropertyString(my.items[j]) + ' />');
+
+        my.eventNodes = upDownNode.getElementsByTagName('event');
+        for (var j = 0; j < my.eventNodes.length; j++) {
+            my.xml.push(my.eventNodes[j].outerHTML); // copy over any event nodes
+        }
+
+        my.xml.push('</dropList>');
+
+        var xmlString = my.xml.join('\n').replace("&", "&amp;");
+        var xmlDoc = loadXMLDocFromString(xmlString);
+
+        return xmlDoc.getElementsByTagName('dropList')[0];
+    }
+
     // Create all of the animation elements from the xml file
     function createAnimationMembers(sim, animationNode) {
         var attr;
         var theElement;
         var animationSet = null;
         var panel = layout.getPanelInstance(Simulator.Constants.ANIMATION_PANEL_NAME);
+        panel.setLiveAttribute('polite'); // set live to polite to allow notificaiton (WCAG)
         panel.recordOriginalWidthAndHeight();
         for (var i = 0; i < animationNode.childNodes.length; i++) {
             if (animationNode.childNodes[i].nodeName[0] != '#') {
@@ -789,8 +938,34 @@ Simulator.Simulator = function (container, assistiveMode, speechMode) {
     // Create all data display elements from the xml file
     function createDisplayMembers(sim, displayNode) {
         var theElement = null;
-        var displayElements = displayNode.childNodes;
+        //var displayElements = displayNode.childNodes;
         var panel = layout.getPanelInstance(Simulator.Constants.DATA_DISPLAY_PANEL_NAME);
+        panel.setLiveAttribute('polite'); // set live to polite to allow notificaiton (WCAG)
+
+        var displayElementsOriginal = displayNode.childNodes;
+        var displayElements = [];
+        if (sim.getAccessibilityIFActive()) { // if in streamlined/accessible mode: force ClearAllRows button below the data table (WCAG)
+            var clearAllRowsButtons = [];
+            var otherElements = [];
+            for (var j = 0; j < displayElementsOriginal.length; j++) {
+                if (displayElementsOriginal[j].nodeName == 'commandElement' && displayElementsOriginal[j].getElementsByTagName('button')[0].getAttribute('handler') == 'ResetTrials')
+                    clearAllRowsButtons.push(displayElementsOriginal[j]); // gather any ClearAllRows buttons
+                else
+                    otherElements.push(displayElementsOriginal[j]); // gather all other elements
+            }
+            for (var j = 0; j < otherElements.length; j++) {
+                displayElements.push(otherElements[j]);
+                if (otherElements[j].nodeName == 'displayElement') { // once we find the table...
+                    displayElements = displayElements.concat(clearAllRowsButtons); // place ClearAllRows buttons immediately after
+                    clearAllRowsButtons = [];
+                }
+            }
+        } else { // otherwise, use specified ordering
+            for (var j = 0; j < displayElementsOriginal.length; j++) {
+                displayElements.push(displayElementsOriginal[j]);
+            }
+        }
+        var clearAllRowsButton;
         for (var i = 0; i < displayElements.length; i++) {
             switch (displayElements[i].nodeName) {
                 case 'displayElement':
@@ -820,6 +995,7 @@ Simulator.Simulator = function (container, assistiveMode, speechMode) {
                         switch (cElements[c].nodeName) {
                             case 'button':
                                 theElement = new Simulator.Control.Button(sim, panel);
+                                //.childNodes[0].getAttribute('handler') == 'ResetTrials'
                                 break;
                             default:
                                 continue;
@@ -827,11 +1003,19 @@ Simulator.Simulator = function (container, assistiveMode, speechMode) {
                         theElement.setAttributes(cElements[c].attributes, cElements[c]);
                         setEvents(theElement, cElements[c]);
                         theElement.render('dataOutputPanel');
+                        if (sim.getAccessibilityIFActive()
+                            && theElement.getHandler() == 'ResetTrials'
+                            && clearAllRowsButton == undefined) {
+                            clearAllRowsButton = simDocument.getElementById(theElement.getNodeID());
+                        }
                         break;
                     }
                     break;
             }
         }
+
+        if (clearAllRowsButton != undefined) // WCAG - label the clear all rows button with table caption
+            clearAllRowsButton.setAttribute('aria-labelledby', dataTable.getCaptionID());
 
     }
 

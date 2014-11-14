@@ -27,7 +27,7 @@
         } else {
             html = '';
         }
-        progressDialog.setBody(html); // + '<br/><img src="../shared/Images/loadingAnimation.gif" />'
+        progressDialog.setBody(html); // + '<br/><img src="../shared/images/loadingAnimation.gif" />'
     }
 
     function showProgress(message) {

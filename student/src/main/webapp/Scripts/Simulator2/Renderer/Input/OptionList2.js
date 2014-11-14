@@ -8,7 +8,7 @@
  * @return - instance of a OptionList
  *******************************************************************************
  */
-Simulator.Input.OptionList = function(sim, node, panel, theSection) {
+Simulator.Input.OptionList = function(sim, node, panel, theSection, container) {
 
     Simulator.Input.GroupList.call(this, sim); // Inherit Instance variables
     
@@ -21,7 +21,8 @@ Simulator.Input.OptionList = function(sim, node, panel, theSection) {
     var scoringTable = function () { return sim.getScoringTable(); }; // get scoring table instance
     var keyboardInput = function () { return sim.getKeyboardInput(); };  // get keyboard input instance
     var simMgr = function() { sim.getSimulationManager(); };
-    var simDocument = function() { return sim.getSimDocument(); };
+    var simDocument = function () { return sim.getSimDocument(); };
+    var transDictionary = function () { return sim.getTranslationDictionary(); };
 
     if(sim) {
         this.setPanel(panel);
@@ -103,36 +104,52 @@ Simulator.Input.OptionList = function(sim, node, panel, theSection) {
     
     this.keyboardNavigateTo = function(elementID, itemID, index) {
         var element = simDocument().getElementById(elementID);
-        var nodes = element.getElementsByTagName('li');
-        var item = nodes[index];
-        if(element) element.selectedIndex = index;            
-        if(item) item.setAttribute('class', 'simAreaFocus');
+        if (element) {
+            element.selectedIndex = index;
+            var nodes = element.getElementsByTagName('li');
+            var item = nodes[index];
+            if (item) {
+                item.setAttribute('class', 'simAreaFocus');
+            }
+        }
     };
     
     this.receivedSpeechFocus = function() {
         debug(this.getName() + ' received speech focus');
         var element = simDocument().getElementById(this.getNodeID());
-        var nodes = element.getElementsByTagName('li');
-        var item = nodes[0];
-        if(element) element.selectedIndex = 0;            
-        element.style.border='thin solid #ff0000';
-        if(item) item.setAttribute('class', 'simAreaFocus');
+        if (element) {
+            element.selectedIndex = 0;
+            element.style.border = 'thin solid #ff0000';
+            var nodes = element.getElementsByTagName('li');
+            var item = nodes[0];
+            if (item) {
+                item.setAttribute('class', 'simAreaFocus');
+            }
+        }
     };
     
     this.keyboardNavigateAwayFrom = function(elementID, itemID, index) {
         var element = simDocument().getElementById(elementID);
-        var nodes = element.getElementsByTagName('li');
-        var item = nodes[index];
-        item.removeAttribute('class');
+        if (element) {
+            var nodes = element.getElementsByTagName('li');
+            var item = nodes[index];
+            if (item) {
+                item.removeAttribute('class');
+            }
+        }
     };
     
     this.removeSpeechFocus = function() {
         debug(this.getName() + ' lost speech focus');
         var element = simDocument().getElementById(this.getNodeID());
-        var nodes = element.getElementsByTagName('li');
-        var item = nodes[0];
-        item.removeAttribute('class');
-        element.style.border='none';
+        if (element) {
+            element.style.border = 'none';
+            var nodes = element.getElementsByTagName('li');
+            var item = nodes[0];
+            if (item) {
+                item.removeAttribute('class');
+            }
+        }
     };
     
     this.disableInput = function() {
@@ -164,7 +181,10 @@ Simulator.Input.OptionList = function(sim, node, panel, theSection) {
         var items = this.getItems();
         var nextNum = utils().getNextSequenceNumber();
         var image = null;
-        var panelHtml = panel.getHTMLElement();
+        var labelledByID = this.getSectionID(); // default aria-labelledby to containing section (WCAG) 
+        var panelHtml = container;
+        var outerDiv = simDocument().createElement("div");
+        outerDiv.className = "inputOptionList";
         
         this.setFocusable(true, true); // Don't set the element itself to accept keyboard input
 /*        if(simMgr().getSpeechEnabled()) {
@@ -184,11 +204,18 @@ Simulator.Input.OptionList = function(sim, node, panel, theSection) {
         else 
 */            
         
-        if(this.getLabel()) {
+        if (this.getLabel()) {
+            var h5LabelElement = simDocument().createElement('h5'); // using h5 rather than simple text node (WCAG)
+            var h5ID = this.createLabelID();
+            h5LabelElement.id = h5ID; // ID for WCAG
+            labelledByID = labelledByID + ' ' + h5ID; // if there is an element label, add to the aria-laballedby attribute (WCAG)
+            h5LabelElement.innerHTML = this.getLabel();
+            outerDiv.appendChild(h5LabelElement);
+            /*
         	var textLabelEl = simDocument().createTextNode(this.getLabel());
-        	panelHtml.appendChild(textLabelEl);
+        	outerDiv.appendChild(textLabelEl);
         	var brElement = simDocument().createElement('br');
-        	panelHtml.appendChild(brElement);
+            outerDiv.appendChild(brElement); */
         }
         
         
@@ -203,12 +230,19 @@ Simulator.Input.OptionList = function(sim, node, panel, theSection) {
                 	ulElement = simDocument().createElement('ul');
                 	ulElement.id = nodeID;
                 	ulElement.setAttribute('class', 'singleSelect withImages');
+                	ulElement.setAttribute('role', 'radiogroup'); // WCAG
+                	ulElement.setAttribute('aria-labelledby', labelledByID); // WCAG
                 } else {
                 	ulElement = simDocument().createElement('ul');
                 	ulElement.id = nodeID;
                 	ulElement.setAttribute('class', 'singleSelect');
+                	ulElement.setAttribute('role', 'radiogroup'); // WCAG
+                	ulElement.setAttribute('aria-labelledby', labelledByID); // WCAG
                 }
-                panelHtml.appendChild(ulElement);
+                if (theSection.getSectionSettings().elementorientation === "horizontal") {
+                    outerDiv.classList.add("inputpanelcell");
+                }
+                outerDiv.appendChild(ulElement);
             }
             if ((items[x]).lookup('val') != undefined) {
             	var listElement = simDocument().createElement('li');
@@ -234,6 +268,7 @@ Simulator.Input.OptionList = function(sim, node, panel, theSection) {
             	if(items[x].lookup('default') == 'yes') {
             	    elementLabel.setAttribute('class', 'inputChecked');
             	}
+            	// elementLabel.setAttribute('tabindex', 0); // (hopefully) force focus on separate options (WCAG)
             	if (image != undefined && image != null) {
             		var imageSpanEl = simDocument().createElement('span');
             		imageSpanEl.setAttribute('class', 'holderImage');
@@ -245,7 +280,9 @@ Simulator.Input.OptionList = function(sim, node, panel, theSection) {
             	}
             	var listLabelSpanEl = simDocument().createElement('span');
             	listLabelSpanEl.setAttribute('class', 'listLabel');
-            	listLabelSpanEl.innerHTML = (items[x]).lookup('val');
+                // retrieve translated text
+            	var innerHTMLtag = (items[x]).lookup('val');
+            	listLabelSpanEl.innerHTML = transDictionary().translate(innerHTMLtag);
             	elementLabel.appendChild(listLabelSpanEl);
             	listElement.appendChild(elementLabel);
             	ulElement.appendChild(listElement);
@@ -256,7 +293,7 @@ Simulator.Input.OptionList = function(sim, node, panel, theSection) {
             	keyboardInput().addFocusableElementItem(this, nodeID, itemID);
             }
         }
-        
+        panelHtml.appendChild(outerDiv);
         this.setDefaultSelections();
         this.mapHTML2JS(ulElement);
     };

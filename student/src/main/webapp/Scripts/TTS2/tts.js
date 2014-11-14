@@ -163,13 +163,15 @@ TTS.Manager.init = function (forceInit) { //set forceInit to true if this is a r
         var service = null;
 
 
-        // first check for SB service and make sure we are in native SB
-        if (YAHOO.lang.isFunction(TTSService_SB) && YAHOO.lang.isFunction(window.Runtime)){
+        // check for native SB and SB service exists
+        if (Util.Browser.isSecure() && Util.Browser.getSecureVersion() > 0 &&
+            YAHOO.lang.isFunction(TTSService_SB) && !Util.Browser.isMobile()) {
             service = new TTSService_SB();
-        } else if (typeof TTSService_Applet != 'undefined' && YAHOO.lang.isFunction(TTSService_Applet)){
-          // else check for java service (this also requires java)
+        }// check for java service (this also requires java)
+        else if (typeof TTSService_Applet != 'undefined' && YAHOO.lang.isFunction(TTSService_Applet)){
             service = new TTSService_Applet();
-        } else if (Util.Browser.isSecure() && (Util.Browser.isAndroid() || (Util.Browser.isIOS() && (Util.Browser.getSecureVersion() >= 2)))) {
+        } // check for mobile secure browser
+        else if (Util.Browser.isSecure() && (Util.Browser.isAndroid() || (Util.Browser.isIOS() && (Util.Browser.getSecureVersion() >= 2)))) {
             service = new TTSService_Generic();
         } // if we are in chrome, we might be running an extension or packaged app. Even if we are not, the load will not succeed but we can still go ahead and setup the servicce.
         else if (Util.Browser.isSecure() && Util.Browser.isChrome()) {
@@ -189,9 +191,9 @@ TTS.Manager.init = function (forceInit) { //set forceInit to true if this is a r
         TTS.Manager._changeStatus(TTS.Status.Initializing);
 
         // try and load service
-        if (!service.load()) {
+        if (!service || !service.load()) {
             return false;
-    }
+        }
     } catch (ex) {
         // init threw an exception
         console.error("Failed to load a service.", ex);
@@ -405,10 +407,16 @@ TTS.Manager.loadUserSettings = function(){
         if (!Util || !Util.Storage) {
             return;
         }
-        //Setup the user selected volumn, pitch and rate.
-        TTS.Manager.setVolume(TTS.Config.User.getVolume());
-        TTS.Manager.setPitch(TTS.Config.User.getPitch());
-        TTS.Manager.setRate(TTS.Config.User.getRate());
+
+        //Setup the user selected volume, pitch and rate - this happens both when TTS sound check is initialized and when a test is initialized.
+        var curLang;
+        var curVoicePack = TTS.Manager.getCurrentVoicePack();
+        if (curVoicePack) {
+            curLang = curVoicePack.Language;
+        }
+        TTS.Manager.setVolume(TTS.Config.User.getVolume(curLang));
+        TTS.Manager.setPitch(TTS.Config.User.getPitch(curLang));
+        TTS.Manager.setRate(TTS.Config.User.getRate(curLang));
 
         // Set the prefferred voices for each language using the value that may have been configured
         // in the TTS configuration page
@@ -416,12 +424,12 @@ TTS.Manager.loadUserSettings = function(){
         for (var i = 0; i < langCodes.length; i++) {
             var langVoicePref = TTS.Config.User.getVoice(langCodes[i]);
             if(langVoicePref) {
-                TTS.Config.Debug && console.log("Setting a user prference for the language.", langVoicePref);
+                TTS.Config.Debug && console.log("Setting a user preference for the language.", langVoicePref);
                 var voicePacks = TTS.Manager.getVoicesForLanguage(langCodes[i]);
                 for (var j = 0; j < voicePacks.length; j++) {
                     var voicePack = voicePacks[j];
                     if (voicePack.ServiceVoiceName == langVoicePref){
-                        TTS.Manager.setAsPrefferredVoicePack(voicePack);
+                        TTS.Manager.setAsPreferredVoicePack(voicePack);
                         TTS.Manager.setVoice(voicePack.ServiceVoiceName);
                     }
                 }
@@ -718,6 +726,9 @@ TTS.Manager.setVoiceForLanguage = function (language) {
         }
     }
     TTS.Manager.setVoice(selectedVoice.ServiceVoiceName);
+    TTS.Manager.setVolume(TTS.Config.User.getVolume(language));
+    TTS.Manager.setPitch(TTS.Config.User.getPitch(language));
+    TTS.Manager.setRate(TTS.Config.User.getRate(language));
 
     // keep track of language
     TTS.Manager._lastVoiceLanguage = language;
@@ -755,7 +766,7 @@ TTS.Manager.getKnownLanguageCodes = function() {
     return languages;
 };
 
-TTS.Manager.setAsPrefferredVoicePack = function(voicePack) {
+TTS.Manager.setAsPreferredVoicePack = function(voicePack) {
     if (voicePack.Available) {
         voicePack.Priority = 0; // The lowest Priority voice is always picked for a given language
     }

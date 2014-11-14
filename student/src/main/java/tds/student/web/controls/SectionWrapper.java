@@ -148,14 +148,14 @@ public final class SectionWrapper extends TDSGenericControl
     }
 
     // h2
-    writer.startElement ("h2", null);
+    writer.startElement ("h1", null);
     writer.writeAttribute ("id", this.getHeaderID (), null);
 
     if (!StringUtils.isEmpty (this.getHeaderKey ())) {
       writer.writeAttribute ("i18n-content", this.getHeaderKey (), null);
     }
     writer.write (this.getHeaderText ());
-    writer.endElement ("h2");
+    writer.endElement ("h1");
   }
 
   public void renderEndTag (ResponseWriter writer) throws IOException {

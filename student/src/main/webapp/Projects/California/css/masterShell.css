@@ -3,11 +3,11 @@
 
 /* SBAC's logos */
 #ot-logo_spot1 {
-    background-image:  url(../Images/logo_sbac.png);
+    background-image:  url(../images/logo_sbac.png);
 	width: 390px;
 }
 .browser_ie.browserVer_6 #ot-logo_spot1{
-	background: url(../Images/logo_sbac.gif) no-repeat transparent;
+	background: url(../images/logo_sbac.gif) no-repeat transparent;
 }
 .languages {
 	display: none;
@@ -29,5 +29,5 @@
 
 /* practice test icon */
 .practiceTest #sectionLogin .ot-shadowBox h2 {
-    background-image: url(../Images/practice1.png) !important;
+    background-image: url(../images/practice1.png) !important;
 }

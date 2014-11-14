@@ -2,7 +2,7 @@
 /* Flag Theme for Ohio */
 
 .topBar {
-	background-image: url(../Images/flag-sm.jpg);
+	background-image: url(../images/flag-sm.jpg);
 	padding-right: 135px;
 	background-color: #84a5c1;
 	background-position: center top;
@@ -13,7 +13,7 @@
 	border:none;
 }
 .logo{
-	background-image: url(../Images/logo_ohio.png);
+	background-image: url(../images/logo_ohio.png);
 	background-repeat: no-repeat;
 	display: block;
 	background-position: right top;
@@ -52,17 +52,17 @@
 	background-color:#164c7e;
 }
 .sound_cue, .sound_cue.load_incomplete, .sound_cue.disabled  {
-	background: url(../Images/controls/speaker_noclick.gif) no-repeat center center;
+	background: url(../images/controls/speaker_noclick.gif) no-repeat center center;
 }
 
 #foot{
-	background: url(../Images/studentFooter.gif) repeat-x #7ea5c7;
+	background: url(../images/studentFooter.gif) repeat-x #7ea5c7;
 }
 #studentTools{
-	background: url(../Images/studentFooterTools.gif) repeat-x;
+	background: url(../images/studentFooterTools.gif) repeat-x;
 	height: 30px;
 }
-/* preloads Images so they don't appear 'missing' */
+/* preloads images so they don't appear 'missing' */
 .preloader {
 	background-color: #A7C9E2;
 }

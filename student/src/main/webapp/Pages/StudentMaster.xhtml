@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:section="http://java.sun.com/jsf/composite/sections"
-	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:vds="http://java.sun.com/jsf/composite/usercontrols" xmlns:tds="http://airast.org/jsfcustom" xmlns:p="http://java.sun.com/jsf/passthrough">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:section="http://java.sun.com/jsf/composite/sections" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:vds="http://java.sun.com/jsf/composite/usercontrols"
+	xmlns:tds="http://airast.org/jsfcustom" xmlns:p="http://java.sun.com/jsf/passthrough">
 
 <!-- TODO Shajib: ManifestSingleton.Html is used here, skipped it for now { "<%= ManifestSingleton.Html %> "-->
 
@@ -28,7 +29,6 @@ a:focus {
 }
 </style>
 
-	<vds:Debug />
 	<tds:ResourcesLink file="~/Scripts/scripts_student.xml" name="base" />
 
 	<ui:insert name="headerHolder"></ui:insert>
@@ -58,6 +58,8 @@ a:focus {
 
 	<div class="tds-ot-wrapper">
 
+		<a href="#body" class="hiddenLink">Skip Navigation</a>
+
 		<form id="mainForm"></form>
 
 		<div id="tds-ot-header" role="banner">
@@ -70,13 +72,12 @@ a:focus {
 						i18n-content="StudentMaster.Button.Logout"></span></a>
 				</div>
 				<!--  reference: http://java.dzone.com/articles/calling-static-method-el -->
-				<span class="sessionID">#{studentInfo.getSessionID()}</span> <span id="ot-studentInfo"><h:outputText value="#{studentInfo.getFullName()}" escape="false"/></span> <span class="clear"></span>
+				<span class="sessionID">SESSION ID</span> <span id="ot-studentInfo">FULL NAME</span> <span class="clear"></span>
 
 			</div>
 
 			<div id="tds-ot-branding">
-				<span id="ot-brand1"> <span id="ot-logo_spot1"></span>
-					<h1 i18n-content="StudentMaster.StaticContent.Header"></h1> <span id="ot-logo_spot2"></span>
+				<span id="ot-brand1"> <span id="ot-logo_spot1"></span> <span class="hiddenHeader" i18n-content="StudentMaster.StaticContent.Header"></span> <span id="ot-logo_spot2"></span>
 				</span> <span id="ot-brand2"> <span id="ot-logo_spot3"></span> <strong i18n-content="StudentMaster.StaticContent.StudentPTTag"></strong> <span id="ot-logo_spot4"></span>
 				</span>
 			</div>
@@ -101,6 +102,8 @@ a:focus {
 		aria-live="polite" 
 		aria-relevant="additions text" 
 		-->
+
+		<a name="body" class="hiddenLink"></a>
 		<div id="sections" role="main">
 			<ui:insert name="contentHolder">Master page content</ui:insert>
 		</div>

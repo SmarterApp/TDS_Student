@@ -171,6 +171,16 @@ This is the service layer for the AIR SB audio recorders:
         return null;
     };
 
+    SBService.getSources = function (callback) {
+        if (typeof callback === 'function') {
+            callback([defaultOptions.captureDevice.toString()]);
+        }
+    };
+
+    SBService.getSources = function (deviceId) {
+        return defaultOptions.captureDevice.toString() === deviceId;
+    };
+
     // register recorder with audio manager
     Recorder.register(SBService);
 

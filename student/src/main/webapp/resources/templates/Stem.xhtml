@@ -4,10 +4,10 @@
 <cc:interface componentType="tds.itemrenderer.webcontrols.templates.Stem">
 </cc:interface>
 <cc:implementation>
-<h2>#{cc.data.position}</h2>
+	<h2 id="QuestionNumber_#{cc.data.position}" class="questionNumber">#{cc.data.label}</h2>
 
-<div id="Stem_#{cc.data.position}" class="stemContainer" title="Question">
-	<tds:Literal ID="ltlContent" binding="#{cc.question}" />
-</div>
+	<div id="Stem_#{cc.data.position}" class="stemContainer">
+		<tds:Literal ID="ltlContent" binding="#{cc.question}" />
+	</div>
 </cc:implementation>
 </html>

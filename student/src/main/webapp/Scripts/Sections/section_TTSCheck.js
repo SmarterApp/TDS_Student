@@ -15,7 +15,7 @@ Sections.TTSCheck.prototype.init = function(){
         this.ui  = new TTS.Config.UI();
         this.ui.next = this.request.bind(this, 'next');
         this.ui.back = this.request.bind(this, 'back');
-
+        
         TTS.getInstance().runOnInit(function(){
             TTS.Config.User.reset(); //Resets the TTS user configuration before displaying
             this.ui.setCfg(this.getSettings());
@@ -36,7 +36,7 @@ Sections.TTSCheck.prototype.hasLang = function(lang){
     if(window.LoginShell && (LoginShell.testSelection == null)){
         properties = new Accommodations.Properties(TDS.globalAccommodations);
     }
-    var langs = properties.getLanguages() || [];
+    var langs = properties.getLanguages(true) || [];
     return (langs.indexOf(lang) != -1);
 };
 
@@ -48,18 +48,11 @@ Sections.TTSCheck.prototype.getSettings = function(){
 
     //Do more settings config.
     var accProps = TDS.getAccommodationProperties();
-    var isNotMobile = !Util.Browser.isMobile();
-
-    if(isNotMobile===false) {
-        $('#TTS_Set_Defaults').parent().hide();
-        $('#TTS_Adjustments .instructions').hide();
-    }
-
     var config = {
-        ShowVoicePacks: accProps.showVoicePackControl(),
-        ShowVolume:     isNotMobile && accProps.showVolumeControl(),
-        ShowPitch:      isNotMobile && accProps.showPitchControl() && !Util.Browser.isLinux(),
-        ShowRate:       isNotMobile && accProps.showRateControl()
+        ShowVoicePacks: TDS.getAccommodationProperties().showVoicePackControl(),
+        ShowVolume: accProps.showVolumeControl() && TTS.Manager.supportsVolumeControl(),
+        ShowPitch: accProps.showPitchControl() && TTS.Manager.supportsPitchControl() && !Util.Browser.isLinux(),
+        ShowRate: accProps.showRateControl() && TTS.Manager.supportsRateControl()
     };
     return config;
 };

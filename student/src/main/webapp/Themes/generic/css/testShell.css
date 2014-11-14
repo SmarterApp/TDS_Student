@@ -2,7 +2,7 @@
 /* Generic Blue Theme */
 
 .topBar {
-	background: #224b76 url(../Images/gradient_deepBlue.png) repeat-x left bottom;
+	background: #224b76 url(../images/gradient_deepBlue.png) repeat-x left bottom;
 	padding-right: 5px;
 }
 .sessionID {
@@ -41,10 +41,10 @@
 	background-color:#164c7e;
 }
 .sound_cue, .sound_cue.load_incomplete, .sound_cue.disabled  {
-	background: url(../Images/controls/speaker_noclick.gif) no-repeat center center;
+	background: url(../images/controls/speaker_noclick.gif) no-repeat center center;
 }
 
-/* preloads Images so they don't appear 'missing' */
+/* preloads images so they don't appear 'missing' */
 .preloader {
 	background-color: #004a80;
 }

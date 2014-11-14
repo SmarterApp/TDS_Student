@@ -4,11 +4,11 @@
 /* Delware's logos */
 
 #ot-logo_spot1 {
-	background-image:url(../Images/logo_delaware_large.gif);
+	background-image:url(../images/logo_delaware_large.gif);
 	width: 350px;
 }
 .preloader .logo_small {
-	background-image: url(../Images/logo_medium.gif);
+	background-image: url(../images/logo_medium.gif);
 }
 #A2 {
 	display: none;
@@ -161,7 +161,7 @@
 /* @group Header Stuff */
 
 .mode_ScoreEntry #ot-logo_spot1 {
-	background-image:url(../Images/logo_delaware_alt_large.gif);
+	background-image:url(../images/logo_delaware_alt_large.gif);
 	width: 350px;
 }
 .mode_ScoreEntry #tds-ot-header {
@@ -171,10 +171,10 @@
     background-color: inherit;
 }
 .mode_ScoreEntry #ot-brand1 {
-    background: transparent url(../Images/lighthouse_top_green.gif) no-repeat right bottom;
+    background: transparent url(../images/lighthouse_top_green.gif) no-repeat right bottom;
 }
 .mode_ScoreEntry #ot-brand2 {
-    background: url("../Images/lighthouse_bottom_green.gif") no-repeat scroll right center transparent;
+    background: url("../images/lighthouse_bottom_green.gif") no-repeat scroll right center transparent;
     border-bottom-color: #4D83C3;
     height: 28px;
 }

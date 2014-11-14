@@ -41,9 +41,6 @@ This code is used to initialize the blackbox xhr handler javascript link.
         // set base url
         TDS.baseUrl = blackboxConfig.baseUrl;
     
-        // set client style path
-        ContentManager.Renderer.setClient(blackboxConfig.client);
-
         // load test shell template
         testShellLoader();
 

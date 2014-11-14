@@ -4,7 +4,7 @@
 /* @group Contextual Help */
 a.contexthelp {
 	/*display: block;*/
-	background-image: url(../Images/controls/help.gif);
+	background-image: url(../images/controls/help.gif);
 	background-repeat: no-repeat;
 	background-position: -1px 0px;
 	text-indent: -9999px;
@@ -16,7 +16,7 @@ a.contexthelp:hover {
 	background-position: -27px -49px;
 }
 .TDS_PS_L1 a.contexthelp {
-	background-image: url(../Images/controls/help.gif);
+	background-image: url(../images/controls/help.gif);
 	background-position: 0px -19px;
 	height: 21px;
 	width: 21px;
@@ -25,7 +25,7 @@ a.contexthelp:hover {
 	background-position: -24px -26px;
 }
 .TDS_PS_L2 a.contexthelp, .TDS_PS_L3 a.contexthelp, .TDS_PS_L4 a.contexthelp {
-	background-image: url(../Images/controls/help.gif);
+	background-image: url(../images/controls/help.gif);
 	background-position: 0px -42px;
 	height: 25px;
 	width: 25px;
@@ -62,7 +62,7 @@ a.contexthelp:hover {
 /* @group Item Print */
 .TDS_PoD_Item a.printItem {
 	display: block;
-	background-image: url(../Images/controls/sprites_student.png);
+	background-image: url(../images/controls/sprites_student.png);
 	background-repeat: no-repeat;
 	background-position: 50% -400px;
 	text-indent: -9999px;
@@ -81,7 +81,7 @@ a.contexthelp:hover {
 	background-position: 50% -400px;
 }
 .TDS_PS_L1 a.printItem {
-	background-image: url(../Images/controls/sprites_student.png);
+	background-image: url(../images/controls/sprites_student.png);
 	background-position: 50% -1200px;
 	height: 20px;
 	width: 20px;
@@ -91,7 +91,7 @@ a.contexthelp:hover {
 	background-position: 50% -1200px;
 }
 .TDS_PS_L2 a.printItem, .TDS_PS_L3 a.printItem, .TDS_PS_L4 a.printItem {
-	background-image: url(../Images/controls/sprites_student.png);
+	background-image: url(../images/controls/sprites_student.png);
 	background-position: 50% -2700px;
 	height: 27px;
 	width: 25px;
@@ -159,7 +159,7 @@ a.contexthelp:hover {
 	margin-bottom: .2em;
 }
 .keyboard a {
-	background-image: url(../Images/controls/keys.gif);
+	background-image: url(../images/controls/keys.gif);
 	background-repeat: no-repeat;
 	background-position: 0px 0px;
 	display: block;
@@ -341,7 +341,7 @@ a.contexthelp:hover {
 	width: 99px;
 }
 .elicitedaround {
-	background-image: url(../Images/controls/audio2010.png);
+	background-image: url(../images/controls/audio2010.png);
 	background-repeat: no-repeat;
 	background-position: -478px -200px;
 	height: 144px;
@@ -387,14 +387,14 @@ a.contexthelp:hover {
 .load_start.elicitedwrap, .load_complete.elicitedwrap, .decode_start.elicitedwrap, .recording_stopping.elicitedwrap {
 	height: 144px;
 	width: 64px;
-	background-image: url(../Images/controls/avcontrols.gif);
+	background-image: url(../images/controls/avcontrols.gif);
 	background-repeat: no-repeat;
 	background-position: -594px -41px;
 	display: block;
 }
 .TDS_PS_L1 .load_fail.elicitedwrap, .TDS_PS_L1 .decode_fail.elicitedwrap, .TDS_PS_L1 .recording_fail.elicitedwrap, .TDS_PS_L1 .playing_fail.elicitedwrap, 
 .TDS_PS_L1 .load_start.elicitedwrap, .TDS_PS_L1 .load_complete.elicitedwrap, .TDS_PS_L1 .decode_start.elicitedwrap, .TDS_PS_L1 .recording_stopping.elicitedwrap {
-	background-image: url(../Images/controls/avcontrols.gif);
+	background-image: url(../images/controls/avcontrols.gif);
 	background-repeat: no-repeat;
 	background-position: -587px -23px;
 	height: 181px;
@@ -404,7 +404,7 @@ a.contexthelp:hover {
 .TDS_PS_L2 .load_start.elicitedwrap, .TDS_PS_L2 .load_complete.elicitedwrap, .TDS_PS_L2 .decode_start.elicitedwrap, .TDS_PS_L2 .recording_stopping.elicitedwrap, .TDS_PS_L3 .load_fail.elicitedwrap, .TDS_PS_L3 .decode_fail.elicitedwrap, .TDS_PS_L3 .recording_fail.elicitedwrap, .TDS_PS_L3 .playing_fail.elicitedwrap, 
 .TDS_PS_L3 .load_start.elicitedwrap, .TDS_PS_L3 .load_complete.elicitedwrap, .TDS_PS_L3 .decode_start.elicitedwrap, .TDS_PS_L3 .recording_stopping.elicitedwrap, .TDS_PS_L4 .load_fail.elicitedwrap, .TDS_PS_L4 .decode_fail.elicitedwrap, .TDS_PS_L4 .recording_fail.elicitedwrap, .TDS_PS_L4 .playing_fail.elicitedwrap, 
 .TDS_PS_L4 .load_start.elicitedwrap, .TDS_PS_L4 .load_complete.elicitedwrap, .TDS_PS_L4 .decode_start.elicitedwrap, .TDS_PS_L4 .recording_stopping.elicitedwrap {
-	background-image: url(../Images/controls/avcontrols.gif);
+	background-image: url(../images/controls/avcontrols.gif);
 	background-repeat: no-repeat;
 	background-position: -577px -1px;
 	height: 225px;
@@ -459,13 +459,13 @@ a.contexthelp:hover {
 	left: 5px;
 	top: 5px;
 	background-color: #fff;
-	background-image: url(../Images/controls/loader32.gif);
+	background-image: url(../images/controls/loader32.gif);
 	background-repeat: no-repeat !important;
 	background-position: center center;
 	position: absolute;
 }
 .recording_stopping .elicitedcontrols, .recording_stopping .elicitedcontrols:hover {
-	background-image: url(../Images/controls/loader32.gif);
+	background-image: url(../images/controls/loader32.gif);
 	height: 135px;
 	width: 54px;
 	left: 5px;
@@ -489,7 +489,7 @@ a.contexthelp:hover {
 	border-right: 10px solid #fff;
 	border-left: 10px solid #fff;
 	background-color: #fff;
-	background-image: url(../Images/controls/loader32.gif);
+	background-image: url(../images/controls/loader32.gif);
 	background-repeat: no-repeat;
 	background-position: center center;
 }
@@ -514,7 +514,7 @@ a.contexthelp:hover {
 	border-right: 20px solid #fff;
 	border-left: 20px solid #fff;
 	background-color: #fff;
-	background-image: url(../Images/controls/loader32.gif);
+	background-image: url(../images/controls/loader32.gif);
 	background-repeat: no-repeat;
 	background-position: center center;
 }
@@ -523,7 +523,7 @@ a.contexthelp:hover {
 /* @group disabled */
 
 .disabled .elicitedaround {
-	background: url(../Images/controls/audio2010.png) no-repeat -412px -200px;
+	background: url(../images/controls/audio2010.png) no-repeat -412px -200px;
 }
 .TDS_PS_L1 .disabled .elicitedaround {
 	background-position: -1px -230px;
@@ -543,7 +543,7 @@ a.contexthelp:hover {
 	position: absolute;
 	left: 4px;
 	top: 4px;
-	background-image: url(../Images/controls/audio2010.png);
+	background-image: url(../images/controls/audio2010.png);
 	background-repeat: no-repeat;
 	background-position: 1000px 1000px;
 }
@@ -678,7 +678,7 @@ a.contexthelp:hover {
 .btnPlayPause {
 	text-indent: -9999px;
 	display: none;
-	background-image: url(../Images/controls/audio2010.png);
+	background-image: url(../images/controls/audio2010.png);
 	background-repeat: no-repeat;
 	background-position: -456px -349px;
 	position: absolute;
@@ -710,7 +710,7 @@ a.contexthelp:hover {
 	width: 54px;
 	bottom: 4px;
 	left: 3px;
-	background-image: url(../Images/controls/audio2010.png);
+	background-image: url(../images/controls/audio2010.png);
 	background-repeat: no-repeat;
 	background-position: 1000px 1000px;
 	text-indent: -9999px;
@@ -1747,7 +1747,7 @@ a.contexthelp:hover {
 .sound_repeat {
 	display: -moz-inline-stack;
 	display: inline-block;
-	background: url(../Images/controls/avcontrols.gif) no-repeat -71px -56px;
+	background: url(../images/controls/avcontrols.gif) no-repeat -71px -56px;
 	color: #fff;
 	text-decoration: none;
 	vertical-align: middle;
@@ -1775,7 +1775,7 @@ a.contexthelp:hover {
 .sound_repeat.load_start, .sound_repeat.load_complete, .sound_repeat.decode_start,
 .sound_repeat.load_start:hover, .sound_repeat.load_complete:hover, .sound_repeat.decode_start:hover {
 	cursor: default;
-	background: url(../Images/controls/loader24.gif) no-repeat center center;
+	background: url(../images/controls/loader24.gif) no-repeat center center;
 }
 
 .TDS_PS_L1 .sound_repeat {
@@ -1804,7 +1804,7 @@ a.contexthelp:hover {
 .TDS_PS_L1 .sound_repeat.load_start, .TDS_PS_L1 .sound_repeat.load_complete, .TDS_PS_L1 .sound_repeat.decode_start,
 .TDS_PS_L1 .sound_repeat.load_start:hover, .TDS_PS_L1 .sound_repeat.load_complete:hover, .TDS_PS_L1 .sound_repeat.decode_start:hover {
 	cursor: default;
-	background: url(../Images/controls/loader29.gif) no-repeat center center;
+	background: url(../images/controls/loader29.gif) no-repeat center center;
 }
 .TDS_PS_L2 .sound_repeat, .TDS_PS_L3 .sound_repeat, .TDS_PS_L4 .sound_repeat {
 	height: 36px;
@@ -1836,7 +1836,7 @@ a.contexthelp:hover {
 .TDS_PS_L3 .sound_repeat.load_start:hover, .TDS_PS_L3 .sound_repeat.load_complete:hover, .TDS_PS_L3 .sound_repeat.decode_start:hover, .TDS_PS_L4 .sound_repeat.load_start, .TDS_PS_L4 .sound_repeat.load_complete, .TDS_PS_L4 .sound_repeat.decode_start, 
 .TDS_PS_L4 .sound_repeat.load_start:hover, .TDS_PS_L4 .sound_repeat.load_complete:hover, .TDS_PS_L4 .sound_repeat.decode_start:hover {
 	cursor: default;
-	background: url(../Images/controls/loader32.gif) no-repeat center center;
+	background: url(../images/controls/loader32.gif) no-repeat center center;
 }
 /* @end */
 
@@ -1862,7 +1862,7 @@ a.contexthelp:hover {
 }
 .optionSound a {
 	display:block;
-	background: url(../Images/controls/avcontrols.gif) no-repeat -75px -86px;
+	background: url(../images/controls/avcontrols.gif) no-repeat -75px -86px;
 	height: 13px;
 	width: 17px;
 	text-decoration: none;
@@ -1889,7 +1889,7 @@ a.contexthelp:hover {
 .optionSound a.load_start, .optionSound a.load_complete, .optionSound a.decode_start, 
 .optionSound a.load_start:hover, .optionSound a.load_complete:hover, .optionSound a.decode_start:hover {
 	cursor: default;
-	background: url(../Images/controls/loader13.gif) no-repeat center center;
+	background: url(../images/controls/loader13.gif) no-repeat center center;
 }
 .TDS_PS_L1 .optionSound {
 	height: 15px;
@@ -1923,7 +1923,7 @@ a.contexthelp:hover {
 .TDS_PS_L1 .optionSound a.load_start, .TDS_PS_L1 .optionSound a.load_complete, .TDS_PS_L1 .optionSound a.decode_start, 
 .TDS_PS_L1 .optionSound a.load_start:hover, .TDS_PS_L1 .optionSound a.load_complete:hover, .TDS_PS_L1 .optionSound a.decode_start:hover {
 	cursor: default;
-	background: url(../Images/controls/loader15.gif) no-repeat center center;
+	background: url(../images/controls/loader15.gif) no-repeat center center;
 }
 .TDS_PS_L2 .optionSound, .TDS_PS_L3 .optionSound, .TDS_PS_L4 .optionSound {
 	height: 19px;
@@ -1968,7 +1968,7 @@ a.contexthelp:hover {
 .TDS_PS_L3 .optionSound a.load_start:hover, .TDS_PS_L3 .optionSound a.load_complete:hover, .TDS_PS_L3 .optionSound a.decode_start:hover, .TDS_PS_L4 .optionSound a.load_start, .TDS_PS_L4 .optionSound a.load_complete, .TDS_PS_L4 .optionSound a.decode_start, 
 .TDS_PS_L4 .optionSound a.load_start:hover, .TDS_PS_L4 .optionSound a.load_complete:hover, .TDS_PS_L4 .optionSound a.decode_start:hover {
 	cursor: default;
-	background: url(../Images/controls/loader19.gif) no-repeat center center;
+	background: url(../images/controls/loader19.gif) no-repeat center center;
 }
 
 
@@ -2097,7 +2097,7 @@ a.contexthelp:hover {
 }
 /* WARNING: Leaving this up causes Mac FF 2.0 to not show Flash */
 /*.tutorial .stimulusCell {
-	background: url(../Images/controls/loader32.gif) no-repeat center center;
+	background: url(../images/controls/loader32.gif) no-repeat center center;
 }*/
 
 .tutorial .stimulusCell p {
@@ -2163,10 +2163,12 @@ a.contexthelp:hover {
 
 
 /* focus styles */
+/*
 .contextAreaFocus {
 	border: dotted 1px #666;
 	margin: -1px;
 }
+*/
 .thePassage.contextAreaFocus {
 	border: none;
 	margin: 0px;
@@ -2178,7 +2180,7 @@ a.contexthelp:hover {
 	border:1px solid transparent;
 }
 .layout11 .activeItem, .layout17 .activeItem, .layout21 .activeItem, .layout23 .activeItem  {
-	background-image: url(../Images/active.png);
+	background-image: url(../images/active.png);
 	background-position: 0 0;
 	background-repeat: no-repeat;
 	border-top:1px solid #e2efff !important;
@@ -2320,7 +2322,7 @@ a.contexthelp:hover {
 	border-radius: 10px;
 }
 .SimContainer.loading {
-    background-image: url(../Images/controls/loader32.gif);
+    background-image: url(../images/controls/loader32.gif);
 }
 .SimContainer.failed {
     background-image: url(../../Images/alerts/stopWhite.gif);

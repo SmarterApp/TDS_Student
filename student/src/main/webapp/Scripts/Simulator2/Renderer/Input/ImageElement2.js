@@ -6,7 +6,7 @@
 * Creates a new ImageElement class.
 *****************************************************************************
 */
-Simulator.Input.ImageElement = function (sim, panel, theSection) {
+Simulator.Input.ImageElement = function (sim, panel, theSection, container) {
 
     Simulator.Input.StaticElement.call(this, sim); // Inherit Instance variables
 
@@ -14,7 +14,7 @@ Simulator.Input.ImageElement = function (sim, panel, theSection) {
     var simID = null;
 
     var dbg = function () {return sim.getDebug();};
-    var utils = function () { return sim.getUtil(); };
+    var utils = function () { return sim.getUtils(); };
     var simDocument = function () { return sim.getSimDocument(); };
 
     if (sim) {
@@ -40,15 +40,18 @@ Simulator.Input.ImageElement = function (sim, panel, theSection) {
     };
 
     this.render = function () {
-        var inputPanel = simDocument().getElementById('inputPanel');
+        var inputPanel = container;
         div = simDocument().createElement('div');
         div.id = 'imageHolder' + simID;
+        if (theSection.getSectionSettings().elementorientation === "horizontal") {
+            div.classList.add("inputpanelcell");
+        }
         inputPanel.appendChild(div);
         var span = simDocument().createElement('span');
         span.id = 'holdingSpan' + simID;
         div.appendChild(span);
         var img = simDocument().createElement('img');
-        img.id = this.getEname() + SimItem.NextForNumber();
+        img.id = this.getEname() + sim.getSimID();
         img.src = this.getImage();
         span.appendChild(img);
 

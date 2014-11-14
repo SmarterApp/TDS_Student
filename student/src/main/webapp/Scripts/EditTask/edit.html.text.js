@@ -74,6 +74,7 @@ EditItem.Html.Text = function () {
 
         YUD.addClass(textInput, 'edit-textarea');
         YUD.setAttribute(textInput, 'id', 'edit-textarea');
+        YUD.setAttribute(textInput, 'type', 'text'); //WCAG 23.1-0
         parentForm.appendChild(textInput);
         interaction.textSpan = textInput;
         return parentForm;

@@ -14,6 +14,12 @@ ContentPassage.prototype.getElement = function() {
     return Util.Dom.getElementByClassName('thePassage', 'div', pageElement);
 };
 
+// get the container element for the tools
+ContentPassage.prototype.getToolsElement = function () {
+    var pageElement = this.getPage().getElement();
+    return Util.Dom.getElementByClassName('passageTools', 'div', pageElement);
+};
+
 // call this function when setting removing focus on an item
 ContentPassage.prototype.clearActive = function() {
     var itemElement = this.getElement();
@@ -37,6 +43,8 @@ ContentPassage.prototype.setActive = function(domEvent, force) // parameters opt
 
     // set focus to question element container
     // if (activated) ContentManager.focus(element);
+
+    return activated;
 };
 
 ContentPassage.prototype._log = function(message) {

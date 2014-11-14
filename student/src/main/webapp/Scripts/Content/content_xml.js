@@ -183,11 +183,13 @@ This code is used to parse the xml used for rendering content.
             subject: getAttrib(itemNode, 'subject'),
             grade: getAttrib(itemNode, 'grade'),
             format: getAttrib(itemNode, 'format'),
+            marked: getAttribBool(itemNode, 'marked'),
             disabled: getAttribBool(itemNode, 'disabled'),
             responseType: getAttrib(itemNode, 'responseType'),
             position: getAttribInt(itemNode, 'position'),
             positionOnPage: getAttribInt(itemNode, 'positionOnPage'),
             filePath: getCData(itemNode, 'filePath'),
+            printable: getAttribBool(itemNode, 'printable'),
             printed: getAttribBool(itemNode, 'printed')
         };
 
@@ -266,8 +268,7 @@ This code is used to parse the xml used for rendering content.
 
         return option;
     };
-
-
+    
     function create (root) {
         var contentsNode = getNode('contents', root); // <contents>
         var contents = parse(contentsNode);

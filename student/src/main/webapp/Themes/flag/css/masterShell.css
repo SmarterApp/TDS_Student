@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 /*Lake Theme */
 
 /* @group general */
@@ -8,7 +8,7 @@
 .ot-shadowBox .instructions {
 	border-color: #0F6797;
 }
-.ot-shadowBox h2 {
+.ot-shadowBox h1 {
 	border-color: #94B6D9;
 }
 /* @end */
@@ -16,8 +16,8 @@
 /* @group header and footer */
 #tds-ot-header {
 	border-bottom: none;
-	background: #7da5c7 url(../Images/flag.jpg) no-repeat right top;
-	height: 116px;
+	background: #7da5c7 url(../images/flag.jpg) no-repeat right top;
+	
 	border-bottom: 1px solid #44515b;
 }
 .browser_safari #ot-topBar{
@@ -60,17 +60,8 @@
     padding: 1px 5px;
     text-decoration: none;
     text-transform: uppercase;
-    border: solid 1px #bfc880;
-    -moz-border-radius: 3px;
-	border-radius: 3px; 
 }
-.ot-smallButtons a:hover {
-	background-color: #fff;
-	color: #000;
-}
-#btnAccGlobal:hover{
-	background-position: center 1px;
-}
+
 #ot-brand1 {
 	height: 45px;
     margin: 15px 0 0 20px;
@@ -92,37 +83,31 @@
 	display: none;
 }
 #ot-brand2 {
-	background: url(../Images/title.png) no-repeat 20px 0px transparent;
+	background: url(../images/title.png) no-repeat 20px 0px transparent;
 	border: none !important;
 	height: 28px;
 }
-/*To allow for Alt-assessment banner in Data Entry and Data Entry only*/
-.mode_ResponseEntry #ot-brand2, .mode_dataentry #ot-brand2{
-	background: url(../Images/alt-title.png) no-repeat 20px 0px transparent;
-}
-.browser_ie.browserVer_6.mode_ResponseEntry #ot-brand2, .browser_ie.browserVer_6.mode_dataentry #ot-brand2{
-	background: url(../Images/alt-title.gif) no-repeat 20px 0px transparent;
-}
-.browser_ie.browserVer_6 #ot-brand2{ background: url(../Images/title.gif) no-repeat 20px 0px transparent; }
+.browser_ie.browserVer_6 #ot-brand2{ background: url(../images/title.gif) no-repeat 20px 0px transparent; }
+
 #ot-brand2 strong {
 	border-left: none;
 	color: #fff;
 	margin-left: 0px;
-	background: #ee0131;
+	background: url(../../../Images/masterShell/tablet/tablet_sm_white.png) 5px center no-repeat #ee0131;
 	padding-top: 0px;
 	padding-bottom: 0px;
-	height: 31px;
-	line-height: 31px;
-	margin-top: 0px;
+	margin-top: 29px;
 	font-weight: normal;
+	float: left;
+	border: none;
+	width: 100%;
 }
 
 
 .practiceTest #ot-brand2 strong {
-	background-image: url(../Images/bike/bikeTop.gif);
-	background-color: #ee0131;
-	border-right: none;
-	padding-right: 50px;
+	float: none;
+	margin-top: 0;
+
 }
 #tds-ot-footer span, #tds-ot-footer a {
 	color: #034577;
@@ -130,7 +115,7 @@
 /*.header .titleThing {
 	color: #000;
 	background-color: #9ebec4;
-	background-image: url(../Images/breadcrumb.gif);
+	background-image: url(../images/breadcrumb.gif);
 }*/
 /* @end */
 
@@ -146,7 +131,8 @@
 /* @end */
 
 /* @group Section Login */
-#sectionLogin .ot-innerShadow {
+#sectionLogin .ot-innerShadow,
+#sectionLoginProctor .ot-innerShadow {
 	background-color: #fff !important;
 	background-image: none !important;
 	border-color: #034577;
@@ -168,8 +154,8 @@
 	border-color:#034577;
 	background-color: #034577 !important;
 }
-.practiceTest #sectionLogin .ot-shadowBox h2 {
-	background-image: url(../Images/bike/bikeTitle.gif);
+.practiceTest #sectionLogin .ot-shadowBox h1 {
+	
 }
 .practiceTest #loginForm1, .practiceTest #loginForm2 {
 	border-color: #034577;
@@ -193,7 +179,7 @@
 	color: #0F6797 !important;
 }
 .goPractice {
-	background-image: url(../Images/bike/goPractice.gif);
+	
 }
 a.goPractice:focus{ background-color: #446351 !important;}
 
@@ -239,7 +225,7 @@ a.goPractice:focus{ background-color: #446351 !important;}
 }
 .resumeTest, .newTest {
 	background-color: #DCEBF5;
-    background-image: url("../Images/select.gif");
+    background-image: url("../images/select.gif");
     border: 1px solid #164C7E;
 }
 #sectionTestSelection .resumeTest:hover, #sectionTestSelection .newTest:hover {
@@ -297,22 +283,29 @@ body.practiceTest .proctorMessage {
 	font-family: Arial, Helvetica, sans-serif !important;
 }
 
+fieldset.sessionID legend{
+	min-width: 10em;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* ohio - disable user credentals of login on practice test site */
+.practiceTest #loginForm1{
+	border-color: #ccc;
+	color: #ccc;
+}
+.practiceTest #loginForm1 .checkHolder{
+	background-color: #ccc;
+}
+.practiceTest #loginForm1 .checkHolder input{
+	visibility: hidden;
+	-moz-user-select: none;
+	-webkit-user-select:none;
+	user-select: none;
+}
+.practiceTest #loginForm1 input{
+	color: #ccc;
+}
+.goPractice{
+	background-image: url(../../../Images/goPractice-blank.png);
+	background-position: 100% -4px;
+}
+/* end */

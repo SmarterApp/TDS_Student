@@ -33,7 +33,7 @@ TestShell.PageReview.prototype.init = function()
 
 TestShell.PageReview.prototype.getSegment = function() { return this._segment; };
 
-TestShell.PageReview.prototype.getLabel = function() { return 'Review'; };
+TestShell.PageReview.prototype.getLabel = function () { return Messages.getAlt('TestShell.Label.PageReview', 'Review'); };
 
 TestShell.PageReview.prototype.isVisible = function()
 {
@@ -96,7 +96,7 @@ TestShell.PageReview.prototype.isConfirmed = function() { return this._confirmed
 TestShell.PageReview.prototype.isCompleted = function() // base
 {
     // check if confirming if the review page being completed is disabled
-    if (TDS.getPref('testshell.segments.disableReviewConfirm')) return true;
+    if (TDS.getAppSetting('testshell.segments.disableReviewConfirm')) return true;
 
     // check if someone manually confirmed this review page by pressing next on it
     if (this.isConfirmed()) return true;

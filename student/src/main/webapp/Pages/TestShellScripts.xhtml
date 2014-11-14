@@ -20,26 +20,41 @@
 	<h:outputScript>
 		//<![CDATA[
 		// check if ContentManager and TestShell exist
-		if ((typeof ContentManager == 'object')
-				&& (typeof TestShell == 'object')) {
-			// add config
-			YAHOO.lang.augmentObject(TestShell.Config, tdsTestConfig, true);
+    if ((typeof ContentManager == 'object') && (typeof TestShell == 'object')) {
 
-			// triggered when page is ready
-			//YUE.onDOMReady(TestShell.load); // window.onload
+        // get config
+        TestShell.Config = TDS.Student.Storage.getTestInfo();
 
-			YUE.on(window, 'load', function(ev) {
-				TestShell.load();
-			});
+        // check if config exists
+        if (TestShell.Config != null) {
 
-			// triggered when page is unloading
-			window.onbeforeunload = TestShell.unload;
-		} else {
-			// if javascript fails to load then we will get here..
-			showAlertWarning('Failed to load test shell', function() {
-				TDS.logout();
-			});
-		}
+            TDS.Comments = TestShell.Config.comments;
+
+            // add querystring values
+            var qs = Util.QueryString.parse();
+            TestShell.Config.reviewPage = qs.page || 0;
+
+            // triggered when page is ready
+            //YUE.onDOMReady(TestShell.load); // <-- this breaks firefox audio recorder...
+
+            YUE.on(window, 'load', function (ev) {
+                TestShell.load();
+            });
+
+            // triggered when page is unloading
+            window.onbeforeunload = TestShell.unload;
+
+        } else {
+            TDS.Dialog.showWarning('Failed to load test config', function () {
+                TDS.logout();
+            });
+        }
+    } else {
+        // if javascript fails to load then we will get here..
+        TDS.Dialog.showWarning('Failed to load test shell', function () {
+            TDS.logout();
+        });
+    }
 	//]]>
 	</h:outputScript>
 

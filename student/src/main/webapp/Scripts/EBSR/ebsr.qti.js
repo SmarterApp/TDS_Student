@@ -77,6 +77,7 @@ EBSR.QTI.prototype.getComponentList = function () {
 EBSR.QTI.prototype.generateInteractionHTML = function (answerContainer) {
     var interactionHTML = $('<div></div')
         .attr('id', 'Item_Container_EBSR_' + this.itemKey + '_' + this.key)
+        .attr('role', this.options._role)
         .addClass('interactionContainer')
         .appendTo(answerContainer);
     this.generatePromptHTML(interactionHTML);
@@ -87,33 +88,7 @@ EBSR.QTI.prototype.generateInteractionHTML = function (answerContainer) {
         Util.Array.each(options, function (option) {
             var optionContainer = interaction.generateOptionHTML(interactionHTML, option);
             interaction._componentList.push(optionContainer);
-
-            // Add event handlers to radio button
-            $(optionContainer).find('input')
-                .attr('aria-label', 'Option ' + option.key)
-                .bind('click', function(ev) {
-                    option.select(true); // HACK: force selection
-                })
-                .bind('focus', function(ev) {
-                    $(optionContainer).css({ 'background-color': 'orange' });
-                })
-                .bind('blur', function(ev) {
-                    $(optionContainer).css({ 'background-color': '' });
-                });
-
-            // NOTE: Safari 2.0 onclick does not always work, so we replace it with mousedown which does work.
-            var clickType = (YAHOO.env.ua.webkit > 0 && YAHOO.env.ua.webkit <= 419.3) ? 'mousedown' : 'click';
-
-            // add click event to option container
-            $(optionContainer).bind(clickType, function (clickEvent) {
-                // ignore click if alt key was being held down
-                if (clickEvent.altKey) return;
-
-                // TODO: RENABLE THIS? ---> if (ContentManager.Menu.isShowing()) return;
-
-                // select option
-                option.select();
-            });
+            option.render();
         });
     }
 };
@@ -177,6 +152,7 @@ EBSR.QTI.prototype.generateOptionHTML = function (parent, option) {
     // Create optionContent div
     $('<div></div>')
         .addClass('optionContent')
+        .attr('id', 'Item_OptionContent_Response_EBSR_' + optionIdString + '_' + option.key)
         .html(this.parsedOptions[option.key].innerHTML)
         .appendTo(node);
     

@@ -693,7 +693,9 @@ Grid.prototype.addMouseListener = function(id, handler)
         // console.log('mouseEventHandler: ' + id + ' (' + currentPosition.x + ',' + currentPosition.y + ')');
 
         // NOTE: on IE I guess with flash that the clientX/Y is already an integer..
-        if (YAHOO.env.ua.ie)
+        // Bug 87590: iPads with Retina displays can have clientX/Y with fractional positions
+        // https://developer.apple.com/library/ios/documentation/windowsviews/conceptual/viewpg_iphoneos/WindowsandViews/WindowsandViews.html#//apple_ref/doc/uid/TP40009503-CH2-SW15
+        if (YAHOO.env.ua.ie || YAHOO.env.ua.ios)
         {
             currentPosition.x = Math.round(currentPosition.x);
             currentPosition.y = Math.round(currentPosition.y);

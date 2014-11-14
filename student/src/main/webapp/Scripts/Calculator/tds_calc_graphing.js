@@ -337,10 +337,16 @@ GraphingCalc.prototype.buttonPressProcess = function(e)
     var element =  document.getElementById(id);
     var s = element.getAttribute('val');
     if ((s == null)||(this.getInputArea()==null)) return;
-    
-    var new_contents = this.getInputArea().value;   
-    if (new_contents.length < getMaxInputLen(this.getInputArea(), s))
-        CaretPositionUtils.insertCharacter(this.getInputArea(), s);
+
+    var curInput = this.getInputArea();
+
+    var new_contents = curInput.value;   
+    if (new_contents.length < getMaxInputLen(curInput, s)) {
+        // check fractional part length
+        if (PreciseUtils.validatedInputFractionalPartLen(curInput, s)) {
+            CaretPositionUtils.insertCharacter(curInput, s);
+        }
+    }
 
     // fix https://bugz.airws.org/default.asp?65824
     /*
@@ -1237,8 +1243,8 @@ GraphingCalc.prototype.getAxisMark = function(xy, ind, Origin, step)
         var index = str.indexOf('.');
         if (index!=-1) {
             if (str.charAt(index+1)!=0) {
-                mark = str.substring(0, index) + '.' + str.substring(index+1,index+3);
-                mark = Math.round(mark*10)/10;
+                //mark = str.substring(0, index) + '.' + str.substring(index+1,index+3);
+                mark = Math.round(str*100)/100;     // using str instead of trimed mark to keep it accurate
             }
             else 
                 mark = str.substring(0, index);

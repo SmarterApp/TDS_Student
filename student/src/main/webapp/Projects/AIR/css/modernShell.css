@@ -2,7 +2,7 @@
 
 #topBar {
 	height: 99px;
-	background: #1e4c66 url(../Images/gradient_deepBlue.png) repeat-x left bottom;
+	background: #1e4c66 url(../images/gradient_deepBlue.png) repeat-x left bottom;
 	font-family: "Lucida Grande", "Lucida Sans", Arial, Helvetica, sans-serif;
 }
 #contents {
@@ -21,7 +21,7 @@
 #navigation {
 	zoom:1;
 	font-size:10px;
-	background: url(../Images/air_Small.png) no-repeat center 15px;
+	background: url(../images/air_Small.png) no-repeat center 15px;
 }
 #toQuestions {
 	font-size:1.5em;

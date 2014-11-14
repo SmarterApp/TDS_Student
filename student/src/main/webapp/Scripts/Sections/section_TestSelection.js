@@ -25,20 +25,18 @@ Sections.TestSelection.prototype.load = function(grade) {
     LoginShell.testSelection = null;
 
     // HACK: if the grade is null and there are previously loaded tests then just show them
-    if (grade == null && this.testSelections != null) {
+    // BUG 108114: Always get list of tests.. maybe we can cache oppkey in future
+    /*if (grade == null && this.testSelections != null) {
         return false;
-    }
+    }*/
 
-    var self = this;
+    var testee = TDS.Student.Storage.getTestee();
+    var testSession = TDS.Student.Storage.getTestSession();
 
-    // call xhr
-    LoginShell.api.getTests({ grade: grade }, function(testSelections) {
-        if (testSelections) {
-            // render tests
-            self.testSelections = testSelections;
-            self.ready(testSelections);
-        }
-    });
+    TDS.Student.API.getTests(testee, testSession, grade).then(function (testSelections) {
+        this.testSelections = testSelections;
+        this.ready(testSelections);
+    }.bind(this));
 
     return true; // tell workflow to wait for xhr to finish
 };
@@ -130,7 +128,7 @@ Sections.TestSelection.prototype._createButton = function(testSelection, idx) {
     YUD.setAttribute(testButtonEl, 'tabindex', 0);
 
     // create test header
-    var testHeaderEl = HTML.H3();
+    var testHeaderEl = HTML.STRONG();
     testHeaderEl.innerHTML = testHeader;
     testButtonEl.appendChild(testHeaderEl);
 
@@ -180,92 +178,35 @@ Sections.TestSelection.prototype.select = function(testSelection, skipWarning) {
 
     // show progress since we might be detecting java
     TDS.Dialog.showProgress();
-
-    // FLASH: check if the version of flash installed meets the minimum requirements
-    if (testSelection.requirements.flashVersion > 0) {
-        if (Util.Browser.getFlashVersion() < testSelection.requirements.flashVersion) {
-            var message = ErrorCodes.get('Opportunity.Javascript.NoFlash', [testSelection.requirements.flashVersion]);
-            TDS.Dialog.showWarning(message);
-            return false;
-        }
-    }
-
-    // JAVA: check if this test requires java and we are not skipping the check
-    /*if (testSelection.requirements.javaVersion > 0)
-    {
-        // setProgressMessage('<%= Message("Opportunity.Javascript.DetectingJava") %>');
-
-        // call this if java failed to be detected
-        var javaFailure = function()
-        {
-            Util.log('getJREVersionAsync: failure');
-
-            var message = ErrorCodes.get('Opportunity.Javascript.NoJava', [testSelection.requirements.javaVersion]);
-            TDS.Dialog.showWarning(message);
-        };
-
-        // call this if java was detected
-        var javaSuccess = function(version)
-        {
-            Util.log('getJREVersionAsync: success');
-
-            // check if the version of java installed meets the minimum requirements
-            if (version.applet < testSelection.requirements.javaVersion)
-            {
-                javaFailure();
-            }
-            else
-            {
-                self.open(testSelection);
-            }
-        };
-
-        var callback =
-        {
-            success: javaSuccess,
-            failure: javaFailure,
-            codebase: window.javaFolder + '/Utilities/'
-        };
-
-        // begin java detction
-        Util.log('getJREVersionAsync: begin');
-        Util.Browser.getJREVersionAsync(callback, window.javaFolder + '/Utilities/');
-        return false;
-    }*/
-
+    
     self.open(testSelection);
     return true;
 };
 
 // call the server to open test
-Sections.TestSelection.prototype.open = function(testSelection) {
+Sections.TestSelection.prototype.open = function(test) {
 
-    var self = this;
-
-    // Create the form values to send to the server.
-    var request = {
-        testKey: testSelection.key,
-        testID: testSelection.id,
-        oppKey: testSelection.oppKey, // required for SIRVE purposes.
-        subject: testSelection.subject,
-        grade: testSelection.grade
-    };
+    var testee = TDS.Student.Storage.getTestee();
+    var session = TDS.Student.Storage.getTestSession();
 
     // if this is a proctorless session and the test has never been started then show accommodations selection
-    if (LoginShell.session.isProctorless && testSelection.status == 2) {
-        // get accommodations for test
-        LoginShell.api.getSegmentsAccommodations(request, function(accommodations) {
-            if (accommodations) {
-                self.request('acc', accommodations);
-            }
-        });
+    if (LoginShell.session.isGuest && test.status == 2) {
+        // get accommodations for selected test
+        TDS.Student.API.getTestAccommodations(test, testee, session)
+            .then(function (accommodations) {
+                this.request('acc', accommodations);
+        }.bind(this));
     } else {
-        // submit test for approval
-        LoginShell.api.openTest(request, function(oppInfo) {
-            if (oppInfo) {
+
+        // get data for opening test
+        var proctorBrowserKey = TDS.Student.Storage.getProctorSatBrowserKey();
+        var passphrase = TDS.Student.Storage.getPassphrase();
+
+        // open the selected test
+        TDS.Student.API.openTest(test, testee, session, null, proctorBrowserKey, passphrase)
+            .then(function (oppInfo) {
                 LoginShell.setOppInfo(oppInfo);
-                self.request('next');
-            }
-        });
+                this.request('next');
+        }.bind(this));
     }
 };

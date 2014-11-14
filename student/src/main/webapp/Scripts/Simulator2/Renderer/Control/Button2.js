@@ -8,7 +8,7 @@
 * Concrete class used for rendering buttons.
 *****************************************************************************
 */
-Simulator.Control.Button = function (sim, panel, section) {
+Simulator.Control.Button = function (sim, panel, section, container) {
 
     Simulator.Control.CommandElement.call(this, sim);
 
@@ -53,6 +53,8 @@ Simulator.Control.Button = function (sim, panel, section) {
     var html2jsMap = function () { return sim.getHTML2JSMap(); };
 
     var simDocument = function () { return sim.getSimDocument(); };
+
+    var transDictionary = function () { return sim.getTranslationDictionary(); }
 
     var keyboardInput = function () { return sim.getKeyboardInput(); };
 
@@ -443,6 +445,7 @@ Simulator.Control.Button = function (sim, panel, section) {
     };
 
     function ShowAlert(id, parameters) {
+        var transParameters = transDictionary().translate(parameters);
         var newTime = new Date();
         var theButton = simDocument().getElementById(id);
         if (theButton) {
@@ -456,15 +459,18 @@ Simulator.Control.Button = function (sim, panel, section) {
                         if (jsButton.isDisabled())
                             (simMgr().GetDisabledAction())();
                         else {
-                            if (parameters) {
-                                var parts = parameters.split('|');
+                            if (transParameters) {
+                                var parts = transParameters.split('|');
                                 var elements = [];
                                 var aParameter = null;
                                 for (var i = 0; i < parts.length; i++) {
                                     aParameter = parts[i].split('*');
                                     elements[aParameter[0]] = aParameter[1];
                                 }
-                                if ('contents' in elements) Simulator.showAlertWarning(unescape(elements['contents']));
+                                if ('contents' in elements) {
+                                    var msg = unescape(elements['contents']);
+                                    Simulator.showAlertWarning(unescape(elements['contents']));
+                                }
                             }
                         }
                     }
@@ -523,7 +529,12 @@ Simulator.Control.Button = function (sim, panel, section) {
         var needTableDiv = false;
         var tableDiv = null;
         var buttonDiv = null;
-        var HTMLPanel = panel.getHTMLElement();
+        if (section) {
+            var HTMLPanel = container;
+        }
+        else {
+            var HTMLPanel = panel.getHTMLElement();
+        }
         var button = null;
         var imageSpan = null;
         var imageElement = null;
@@ -543,6 +554,11 @@ Simulator.Control.Button = function (sim, panel, section) {
         } else {
             buttonDiv = simDocument().createElement('div');
             buttonDiv.id = 'buttonDiv' + this.getNodeID();
+            if (section) {
+                if (section.getSectionSettings().elementorientation === "horizontal") {
+                    buttonDiv.classList.add("inputpanelcell");
+                }
+            }
             HTMLPanel.appendChild(buttonDiv);
         }
         button = simDocument().createElement('button');

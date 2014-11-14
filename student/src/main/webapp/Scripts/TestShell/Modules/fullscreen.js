@@ -56,14 +56,20 @@ This test shell module is used for the fullscreen button.
         }
     }
 
-    function init() {
+    function load() {
 
         // check if full screen is enabled
         var accProps = TDS.getAccommodationProperties();
         if (accProps && accProps.hasFullScreenEnabled()) {
 
             // setup button
-            TestShell.UI.addButtonControl('btnFullScreen', 'Full Screen', 'fullscreen', toggle);
+            TestShell.UI.addButtonControl({
+                id: 'btnFullScreen',
+                className: 'fullscreen',
+                i18n: 'TestShell.Link.FullScreen',
+                label: 'Full Screen',
+                fn: toggle
+            });
 
             // if full screen pass is enabled Jeremy said to enable right away
             if (accProps.hasFullScreenPassword()) {
@@ -72,7 +78,10 @@ This test shell module is used for the fullscreen button.
         }
     }
 
-    TS.Events.subscribe('init', init);
+    TS.registerModule({
+        name: 'fullscreen',
+        load: load
+    });
 
 })(TestShell);
 

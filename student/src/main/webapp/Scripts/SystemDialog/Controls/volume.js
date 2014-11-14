@@ -44,11 +44,6 @@
         var systemVolumeInfo = getSystemVolumeInfo();
         if (systemVolumeInfo) {
             slider = Util.Slider.create('systemVolume', systemVolumeInfo.min, systemVolumeInfo.max);
-            slider.onEnd.subscribe(function (level) {
-                if (level < 2) {
-                    this.setValue(2);
-                }
-            });
             return slider.getEl();
         }
     }

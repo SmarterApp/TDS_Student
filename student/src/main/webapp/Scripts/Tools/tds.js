@@ -1,7 +1,6 @@
 // define global namespace for all TDS global variables and components
-if (typeof TDS == 'undefined') {
-    var TDS = {};
-}
+var TDS = window.TDS || {};
+var tds = TDS; // alias
 
 TDS._initialized = false;
 TDS.buildNumber = 0;
@@ -18,14 +17,15 @@ TDS.isReadOnly = false;
 TDS.isSIRVE = false;
 TDS.inPTMode = false;
 TDS.showItemScores = false;
-TDS.isMonolith = false;
 
 // global app settings 
 TDS.Settings = {};
 
 // global debug settings
 TDS.Debug = {
-    ignoreForbiddenApps: false
+    showExceptions: false,
+    ignoreForbiddenApps: false,
+    ignoreBrowserChecks: false
 };
 
 TDS.init = function () {
@@ -35,7 +35,9 @@ TDS.init = function () {
     }
 
     // loads configs
-    TDS.Config.load();
+    if (TDS.Config) {
+        TDS.Config.load();
+    }
 
     if (TDS.messages) {
         // set message system language callback
@@ -110,11 +112,6 @@ TDS.redirect = function(url) {
         TDS.Dialog.showProgress();
     }
 
-    // if this is score entry app before redirecting we need to disable confirm exit popup
-    if (TDS.isProxyLogin && typeof TDS.CLS.LogoutComponent == 'object') {
-        TDS.CLS.LogoutComponent.PageUnloadEvent.unsubscribeAll();
-    }
-
     // if raw is to true then don't include base url
     var raw = Util.String.isHttpProtocol(url);
     if (raw !== true) {
@@ -127,7 +124,7 @@ TDS.redirect = function(url) {
 };
 
 TDS.redirectError = function(key, header, context) {
-    var url = TDS.baseUrl + 'Pages/Notification.xhtml';
+    var url = TDS.baseUrl + 'Pages/Notification.aspx';
 
     if (YAHOO.lang.isString(key)) {
         var message = Messages.get(key);
@@ -148,22 +145,27 @@ TDS.redirectError = function(key, header, context) {
 };
 
 // redirects to the test shell
-TDS.redirectTestShell = function(page) {
+TDS.redirectTestShell = function (pageNum, itemNum) {
     var redirectUrl;
     var accProps = TDS.getAccommodationProperties();
 
     // figure out url
-    if (accProps.hasBraille() || accProps.isTestShellAccessibility()) {
-        redirectUrl = 'Pages/TestShellAccessibility.xhtml';
-    } else if (accProps.isTestShellClassic()) {
-        redirectUrl = 'Pages/TestShell.xhtml';
+    if (accProps.isTestShellModern()) {
+        redirectUrl = 'Pages/TestShell.aspx?name=modern';
     } else {
-        redirectUrl = 'Pages/TestShell.xhtml';
+        redirectUrl = 'Pages/TestShell.aspx';
     }
 
     // add optional page 
-    if (page) {
-        redirectUrl += '?page=' + page;
+    if (pageNum > 0) {
+        redirectUrl += (redirectUrl.indexOf('?') != -1) ? '&' : '?';
+        redirectUrl += 'page=' + pageNum;
+    }
+
+    // add optional item
+    if (itemNum > 0) {
+        redirectUrl += (redirectUrl.indexOf('?') != -1) ? '&' : '?';
+        redirectUrl += 'item=' + itemNum;
     }
 
     TDS.redirect(redirectUrl);
@@ -178,151 +180,61 @@ TDS.getLoginUrl = function() {
         url = TDS.Student.Storage.getReturnUrl();
     }
 
+    // if proxy and a return url is specified, we will go here instead
+    if (TDS.isProxyLogin) {
+        url = TDS.Student.Storage.getProctorReturnUrl() || url ;
+    }
+
     // if there is no return url use base url
     if (url == null) {
-        url = 'Pages/LoginShell.xhtml?logout=true';
+        url = TDS.baseUrl;
+        url += 'Pages/LoginShell.aspx?logout=true';
     }
 
     return url;
 };
 
-TDS.logout = function() {
+TDS.logout = function () {
     var url = TDS.getLoginUrl();
-    TDS.redirect(url);
+
+    // if proxy, send a request to close out the proctor session
+    if (TDS.isProxyLogin) {
+        var proctor = (window.LoginShell) ? LoginShell.proctor : null;
+        var storage = TDS.Student.Storage;
+        var testSession = storage.getTestSession();
+
+        // check if we're still on login site with proctor login data.  Otherwise, we are on satellite and should be using data from storage.
+        var sessionKey = (proctor) ? proctor.sessionKey : testSession.key;
+        var proctorKey = (proctor) ? proctor.proctorKey : testSession.proctorKey;
+        var loginBrowserKey = (proctor) ? proctor.loginBrowserKey : storage.getProctorLoginBrowserKey();
+        // sat browser key is only set on satellite, this will be an empty guid if logging out on login site
+        var satBrowserKey = (proctor) ? proctor.satBrowserKey : storage.getProctorSatBrowserKey(); 
+        var logoutProctorCallback = function() {
+            TDS.redirect(url);
+        }
+        TDS.Student.API.logoutProctor(sessionKey, proctorKey, loginBrowserKey, satBrowserKey).then(logoutProctorCallback);
+    } else {
+        TDS.redirect(url);
+    }
 };
 
 TDS.logoutProctor = function(exl) {
-    TDS.redirect('Pages/Proxy/logout.xhtml?exl=' + exl, false);
+    TDS.redirect('Pages/Proxy/logout.aspx?exl=' + exl, false);
 };
 
-/************************************************************
-* NOTE: All the code below is used to load the TDS variables (from GlobalXHR.axd?GetConfigs) into the right data structures
-*/
-
-// configs holds the raw json data that comes from the server
-if (typeof TDS.Config == 'undefined') {
-    TDS.Config = {};
-}
-
-TDS.Config.load = function() {
-    // load config
-    TDS.Config._setStyles();
-
-    // load accommodations
-    TDS.Config._loadGlobalAccs();
-    TDS.Config._loadTestAccs();
-
-    // loads messages
-    TDS.Config._loadMessages();
-
-    // load resource manifest if available
-    TDS.Config._loadManifest();
-};
-
-// append a cacheid and chksum to css links if any
-TDS.Config._loadManifest = function() {
-
-    if (typeof TDS.Config.resourceManifest != 'object') {
-        return;
-    }
-    if (typeof ContentManager != 'object' ||
-        typeof ContentManager.Renderer != 'object') {
-        return;
-    }
-
-    // override content_renderer.js to return the file paths with query strings
-    var manifestFormatter = function(resourceKey) {
-        var resourceFile = resourceKey;
-
-        // Add the cache Id flag
-        if (YAHOO.lang.isString(TDS.Cache.id)) {
-            resourceFile += "?cid=" + TDS.Cache.id;
-        } else {
-            resourceFile += "?cid=1";
+// lookup a client side app setting
+TDS.getAppSetting = function (name, defaultValue /*[boolean|number|string]*/) {
+    if (TDS.Config && TDS.Config.appSettings) {
+        var value = TDS.Config.appSettings[name];
+        if (value !== undefined) {
+            return value;
         }
-
-        // Add the checksum
-        Util.Array.each(TDS.Config.resourceManifest, function(manifestEntry) {
-            if (manifestEntry.name == resourceKey) {
-                resourceFile += "&chksum=" + manifestEntry.chksum;
-            }
-        });
-
-        return resourceFile;
-    };
-
-    ContentManager.Renderer.setCustomFormatter(manifestFormatter);
-};
-
-// set CSS styles
-TDS.Config._setStyles = function() {
-    if (this.styles) {
-        Util.Array.each(this.styles, function (style) {
-            YUD.addClass(document.body, style);
-        });
     }
-};
-
-// load global accommodations
-TDS.Config._loadGlobalAccs = function() {
-
-    // check if accommodations objects exists
-    if (typeof Accommodations != 'function') {
-        return;
-    }
-
-    TDS.globalAccommodations = new Accommodations('global');
-
-    if (this.accs_global) {
-        TDS.globalAccommodations.importJson(this.accs_global);
-        TDS.globalAccommodations.selectDefaults();
-    }
-};
-
-// load test and segment accommodations
-TDS.Config._loadTestAccs = function() {
-    // check if accommodations objects exists
-    if (typeof Accommodations != 'function') {
-        return;
-    }
-
-    // check for newer namespace which uses sessionStorage
-    if (typeof TDS.Student == 'object') {
-        this.accs_segments = TDS.Student.Storage.getAccJson();
-    }
-
-    // check if config exists
-    if (this.accs_segments == null) {
-        return;
-    }
-
-    for (var i = 0; i < this.accs_segments.length; i++) {
-        var accommodations = Accommodations.create(this.accs_segments[i]);
-        accommodations.selectAll();
-        Accommodations.Manager.add(accommodations);
-    };
-};
-
-// load new messages system
-TDS.Config._loadMessages = function() {
-    // check if messages lib is available
-    if (typeof TDS.Messages != 'object') {
-        return;
-    }
-
-    // load messages json
-    var messageLoader = new TDS.Messages.MessageLoader();
-    if (TDS.Config.messages) {
-        messageLoader.load(TDS.Config.messages);
-    }
-
-    // save message system and process template replacements
-    // messageLoader.buildIndex();
-    TDS.messages = messageLoader.getMessageSystem();
+    return defaultValue;
 };
 
 // event stuff
-(function() {
+(function () {
 
     // run init when all scripts are done loading
     YAHOO.util.Event.onDOMReady(TDS.init);
@@ -336,18 +248,3 @@ TDS.Config._loadMessages = function() {
     }
 
 })();
-
-/************************************************************/
-
-// Preferences API:
-
-TDS.getPref = function(name, defaultValue /*[boolean|number|string]*/) {
-    if (typeof TDS.Config.preferences == 'object') {
-        var value = TDS.Config.preferences[name];
-        if (value !== undefined) {
-            return value;
-        }
-    }
-
-    return defaultValue;
-};

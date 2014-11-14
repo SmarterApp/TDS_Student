@@ -291,6 +291,21 @@ TestShell.PageManager._addGroup = function(group) {
     if (!this._initializing || !group.isCompleted()) {
         group.requestContent();
     }
+
+    // check for duplicate items
+    try {
+        if (group.items) {
+            var positions = group.items.map(function (item) {
+                return item.position;
+            });
+            if (positions.length != Util.Array.unique(positions).length) {
+                var error = 'Duplicate item positions: ' + positions.join(', ');
+                TDS.Diagnostics.report(error, false);
+            }
+        }
+    } catch (ex) {
+        // Added this code 4-18-2014 for weekend deployment so protecting with try/catch.         
+    }
 };
 
 TestShell.PageManager.addGroups = function(groups) {
@@ -430,10 +445,6 @@ TestShell.PageManager.updateAccommodations = function(currentPage) {
 // NOTE: This is fired in a timer within content manager.
 TestShell.PageManager.Events.subscribe('onShow', function(page) {
     
-    // reset idle timer
-    TestShell.idleTimer.waitMins = TestShell.Config.interfaceTimeout;
-    TestShell.idleTimer.reset();
-
     // start auto save
     TestShell.autoSaveStart();
 
@@ -484,9 +495,6 @@ TestShell.PageManager.Events.subscribe('onShow', function(page) {
     // show save button?
     TestShell.UI.showSave(page);
 
-    // update popup class
-    TestShell.Tools.updateShowing();
-
     // show/hide the dropdown navigation
     var navContainer = YUD.get('navigationContainer');
 
@@ -503,14 +511,19 @@ TestShell.PageManager.Events.subscribe('onShow', function(page) {
         // if this is a content page and ARIA is enabled then focus on the content div
         if (isPageContent && ContentManager.enableARIA) {
             var contentFocuser = YUD.get('contentsFocuser');
-
-            if (contentFocuser) {
-                // set text to speak and focus on it (this triggers JAWS to read the text)
-                contentFocuser.innerHTML = page.getScreenReaderText();
+            if (!contentFocuser) {
+                contentFocuser = document.createElement('a');
+                contentFocuser.id = 'contentsFocuser';
+                contentFocuser.className = 'element-invisible';
+                contentFocuser.setAttribute('tabindex', '-1');
+                document.body.appendChild(contentFocuser);
+            }
+            // set text to speak and focus on it (this triggers JAWS to read the text)
+            var screenReaderText = page.getScreenReaderText();
+            if (screenReaderText) {
+                contentFocuser.innerHTML = screenReaderText;
                 contentFocuser.focus();
             }
-
-            //TDS.ARIA.writeLog('Page is ready.');
         } else {
             // BUG #22684: Focus stays on NEXT button
             var contentPage = ContentManager.getCurrentPage();

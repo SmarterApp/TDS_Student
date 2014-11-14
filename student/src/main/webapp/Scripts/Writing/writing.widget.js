@@ -1,205 +1,276 @@
-// CLASS: writing layout
-function WritingWidget(divLayout, frame) 
-{
-    this.maxWords = 850;
-    this.units = []; // get all prompt unit wrappers
+/*
+This code is used for setting up the writing widget with ckeditor.
+*/
 
-    this.divBigTable = YUD.getFirstChild(divLayout); // main div inside layout
-    this.linkStart = YUD.getElementsByClassName('writeNow', 'a', divLayout)[0]; // link "Start Writing On Selected Prompt"
-    this.linksChangePrompt = YUD.getElementsByClassName('changePrompt', 'a', divLayout); // link "Change Prompt"
-    this.linkExpandAll = YUD.getElementsByClassName('expandAll', 'a', divLayout)[0];// link "Expand All Prompts"
+(function(CM, CKEDITOR) {
 
-    // check if layout is in edit mode
-    this.isEditing = function()
-    {
-        return YUD.hasClass(this.divBigTable, 'nowWrite');
-    };
+    var wordsAllowed = 850;
+
+    // get the word count for some text
+    function countHTMLWords(html) {
+
+        // if there is no html then just return 0 words
+        if (!html) {
+            return 0;
+        }
+
+        // This method for counting words from an HTMl document comes from the CKEditor word count plugin
+        var text = html.
+            replace(/(\r\n|\n|\r)/gm, " "). // Replace end of line chars with spaces
+            replace(/^\s+|\s+$/g, ""). // Remove whitespace from start/end of lines
+            replace("&nbsp;", " "); // Replace &nbsp with spaces
+
+        // Strip all HTML
+        var tmp = document.createElement("div");
+        tmp.innerHTML = text;
+        text = Util.Dom.getTextContent(tmp);
+
+        var words = text.split(/\s+/); // Split on whitespace
+
+        for (var wordIndex = words.length - 1; wordIndex >= 0; wordIndex--) {
+            if (words[wordIndex].match(/^([\s\t\r\n]*)$/)) {
+                words.splice(wordIndex, 1);
+            }
+        }
+
+        return words.length;
+    }
+
+    // update the word count for a ckeditor instance
+    function updateWordCount(item, warning) {
+
+        // get the word count
+        var editor = item.editor;
+        var isEditorReady = editor && editor.isReady;
+        var wordsCount = countHTMLWords(isEditorReady ? editor.getData() : item.value);
+
+        // update the main word count (bottom of the screen)
+        var wordCountLabel = (wordsCount == 0) ? '' : wordsCount + ' out of ' + wordsAllowed + ' words used.';
+        var page = item.getPage();
+        var pageEl = page.getElement();
+        if (pageEl) {
+            $('div.writeNav2', pageEl).text(wordCountLabel);
+        }
+
+        // update the unit word count (prompt selection screen)
+        if (wordsCount > 0) {
+            var promptCountLabel = wordsCount + ' words';
+            var itemEl = item.getElement();
+            if (itemEl) {
+                $('span.inlineCount', itemEl).text(promptCountLabel);
+            }
+        }
+
+        // check if we should show an alert dialog
+        if (isEditorReady && warning && wordsCount > wordsAllowed) {
+            var message = 'Your response cannot exceed ' + wordsAllowed + ' words.';
+            TDS.Dialog.showAlert(message, function () {
+                CM.focus(editor);
+            });
+        }
+    }
     
-    // enables editing on the selected prompt
-    this.enableEditing = function()
-    {
-        var selectedUnit = this.getSelectedUnit();
+    // This builds an ckeditor instance for an items writing prompt.
+    // NOTE: We don't use module_htmleditor2.js right now because 
+    // there are some differences in how we set this up.
+    function createEditor(writing, item) {
+        
+        var itemDiv = YUD.get('Item_' + item.position);
+        var editorDiv = itemDiv.getElementsByClassName('writingBlock')[0];
+        var editor = HTMLEditor.create(editorDiv, item.responseType, { disabled: item.isReadOnly() });
+        item.editor = editor;
+        editor.parentItem = item;
 
-        // if there is no selected prompt then nothing to do
-        if (selectedUnit == null)
-        {
-            return false;
+        // check if existing response
+        if (item.value) {
+            // we use private variable because in editor.js (line 867) 
+            // it will use it when loading but won't fire events
+            editor._.data = item.value;
         }
-        else
-        {
-            YUD.addClass(this.divBigTable, 'nowWrite');
-            if (selectedUnit.item && selectedUnit.item.editor && selectedUnit.item.editor.contentLoaded)
-            {
-                // NOTE: Without this FF 2.0 will not be editable after showing prompt
-                // BUG #16906: When in spell check mode, pressing left and right does not move to each highlighted word
-                selectedUnit.item.editor.show();
-                selectedUnit.item.editor.hide();
-                selectedUnit.item.editor.show();
+                        
+        // Chrome needs this...
+        // TODO: I commented this out in code rewrite.. do we still need it?
+        // editor.contentDom.focus();
 
-                // this fixes an issue with modal dialog taking focus and now allowing show() to focus
-                ContentManager.focus(frame);
-                ContentManager.focus(divLayout);
+        // #bug 104821 add item component, fix ctrl+tab  change focus
+        item.addComponent(editor);
+        
+        // listen for when a key is pressed so we can update word count
+        editor.on('change', function() {
+            updateWordCount(item, true);
+        });
+
+        editor.on('instanceReady', function () {
+            updateWordCount(item, false);
+        });
+
+    }
+
+    // sets up a writing item unit
+    function processItem(writing, item) {
+        
+        // create writing prompt
+        var unit = new WritingUnit(item.getElement());
+        unit.item = item; // assign item to unit (TODO: remove this)
+        unit.writing = writing; // parent writing object
+        writing.units.push(unit); // add to unit list
+        
+        // check if a unit is already selected (if selected on server side) 
+        if (unit.isSelected()) {
+            unit.select(); // we need to call select do the CSS class gets applied
+            YUD.removeClass(writing.linkStart, 'inactive'); // set start writing mode to active
+            item.setActive();
+        }
+
+        // add onlick for when clicking on prompt
+        YUE.addListener(unit.linkSelect, 'click', function () {
+            if (CM.Menu.isShowing()) return;
+            writing.selectUnit(unit);
+        });
+
+        // add onlick for expanding prompt
+        YUE.addListener(unit.linkExpandPrompt, 'click', unit.toggleExpand, unit, true);
+
+        item.isVisible = function () {
+            return Util.Dom.isVisible(unit.divPrompt);
+        };
+        
+        // Update on show...due to issues with CKE editor and Chrome, we need to
+        // create the editor instance only after the parent div is visible.
+        unit.onOpenEdit.subscribe(function () {
+
+            updateWordCount(item, false);
+
+            // lazy load editor
+            if (!item.editor) {
+                createEditor(writing, item);
             }
+        });
 
-            selectedUnit.onOpenEdit.fire();
+        updateWordCount(item, false);
 
-            return true;
+        return unit;
+    }
+
+    // sets up the writing page widget
+    function processPage(page) {
+
+        // create writing widget
+        var divWriting = page.getElement();
+        var writing = new WritingLayout(divWriting);
+
+        // create word count bar and add it to the dom
+        var wordCountDiv = divWriting.getElementsByClassName('writeNav2')[0];
+        YUD.addClass(wordCountDiv, 'writeNav2');
+        var parentDiv = divWriting.getElementsByClassName('bigTable')[0];
+        parentDiv.appendChild(wordCountDiv);
+        writing.wordCountEl = wordCountDiv;
+
+        // process each item (prompt) on the page
+        var items = page.getItems();
+        Util.Array.each(items, function (item) {
+            // create writing unit
+            var unit = processItem(writing, item);
+            var unitEl = item.getElement();
+            var config = new CM.WidgetConfig(unitEl.id, unitEl);
+            var widget = CM.createWidget(Widget_Writing, page, item, config);
+            widget.unit = unit;
+            item.widgets.add('writing', widget);
+        });
+
+        // hack for one prompt
+        if (writing.units.length == 1) {
+            writing.units[0].select();
+            writing.enableEditing();
         }
-    };
+        else {
+            writing.toggleEdit();
+        }
+
+        return writing;
+    }
+
+    function Plugin_Writing() {
+        this.writing = null;
+    }
+
+    CM.registerPagePlugin('writing', Plugin_Writing, function(page) {
+        return (page.layout == '12');
+    });
+
+    Plugin_Writing.prototype.load = function () {
+        this.writing = processPage(this.page);
+    }
     
-    // disables editing mode and returns to prompt selection screen
-    this.disableEditing = function() {
-        var selectedUnit = this.getSelectedUnit();
+    function Widget_Writing(page, item) {
+        this.unit = null;
+    }
 
-        if (selectedUnit != null) {
-            // Bug 108774 - destroy existing spellcheck instances before selecting a different response
-            if (selectedUnit.item && selectedUnit.item.editor && selectedUnit.item.editor.spell) {
-                selectedUnit.item.editor.spell.destroy();
-            }
-            // when toggling off edit mode then check if comment div is showing, if so disable it
-            if (YUD.getStyle(selectedUnit.divComment, 'display') == 'block') {
-                YUD.setStyle(selectedUnit.divComment, 'display', 'none');
-            }
-        }
-        YUD.removeClass(this.divBigTable, 'nowWrite');
+    CM.extendWidget(Widget_Writing);
 
-        selectedUnit.onCloseEdit.fire();
-    };
+    Widget_Writing.prototype.keyEvent = function(evt) {
 
-    // toggle edit mode
-    // @confirm = should confirm when going back to prompt selection
-    this.toggleEdit = function()
-    {
-        if (this.checkForErrors('toggleEdit')) return;
+        var unit = this.unit;
+        var writing = unit.writing;
 
-        var selectedUnit = this.getSelectedUnit();
+        // make sure keydown event and no modifiers
+        if (evt.type != 'keydown' || evt.ctrlKey || evt.altKey) return;
 
-        if (this.isEditing())
-        {
-            // if the confirm dialog is already open then don't run this again (might happen with shortcut)
-            if (YUD.hasClass(document.body, 'dialogPromptShow')) return;
-
-            var that = this; // remember context of 'this'
-
-            var closeEdit = function()
-            {
-                that.disableEditing();
-                TTS.getInstance().stop();
-                ContentManager.Menu.hide();
-            };
-
-            // if the showWarningPrompt function is found then show the user that first, otherwise just close edit mode
-            if (window.TestShell)
-            {
-                TestShell.UI.showWarningPrompt('TDSWritingJS.Label.ChangePassage',
-                {
-                    yes: closeEdit
-                });
-            }
-            else
-            {
-                closeEdit();
+        // if we are on the prompt selection screen and someone hits enter then perform an action on the prompt
+        if (evt.key == 'Enter' && !writing.isEditing()) {
+            if (unit.isSelected()) {
+                writing.enableEditing();
+            } else {
+                writing.selectUnit(unit);
             }
         }
-        else
-        {
-            this.enableEditing();
-            TTS.getInstance().stop();
-            ContentManager.Menu.hide();
-        }
-    };
 
-    // is expand all link clicked
-    this.isExpandAll = function()
-    {
-        return YUD.hasClass(this.linkExpandAll, 'collapse');
-    };
-
-    // toggle expanding all prompts
-    this.toggleExpandAll = function()
-    {
-        if (this.isEditing()) return;
-        
-        for(var i = 0; i < this.units.length; i++)
-        {
-            // expand/collapse prompt
-            if (this.isExpandAll()) this.units[i].collapse();
-            else this.units[i].expand();
-        }
-        
-        // set link class
-        if (this.isExpandAll()) YUD.removeClass(this.linkExpandAll, 'collapse');
-        else YUD.addClass(this.linkExpandAll, 'collapse');
-    };
+    }
     
-    // select a specific unit
-    this.selectUnit = function(unit)
-    {
-        YUD.removeClass(this.linkStart, 'inactive'); // set start writing active
-        
-        var selectedUnit = this.getSelectedUnit();
-        
-        if (selectedUnit != null)
-        {
-            if (selectedUnit == unit) // check if prompt is already selected
-            {
-                if (this.isEditing()) selectedUnit.toggleExpand(); // if editing and user selected prompt it should open/close
-                return;
-            }
+    Widget_Writing.prototype.showMenu = function(menu) {
 
-            selectedUnit.deselect(); // deselect previous prompt
-        }
-        
-        unit.select(); // select new prompt
-        
-        this.checkForErrors('selectUnit');
-    };
-    
-    // gets the currently selected unit object (or null if none are selected)
-    this.getSelectedUnit = function()
-    {
-        for(var i = 0; i < this.units.length; i++)
-        {
-            if (this.units[i].isSelected()) return this.units[i];
+        var item = this.entity;
+        var unit = this.unit;
+        var writing = unit.writing;
+
+        // check if stem
+        if (item.getActiveComponent() != item.getStemElement()) return;
+
+        // add change prompt if editing 
+        if (writing.isEditing()) {
+            menu._entity.push({
+                text: 'Change Prompt',
+                classname: 'changePrompt',
+                onclick: {
+                    fn: writing.toggleEdit,
+                    scope: writing
+                }
+            });
         }
 
-        return null;        
-    };
-      
-    // checks layout for any errors and performs corrective action if found
-    // @stack = function that caused error
-    this.checkForErrors = function(stack)
-    {
-        stack = (stack == null) ? '' : stack;
-    
-        var selectedUnits = [];
-        
-        for (var i = 0; i < this.units.length; i++)
-        {
-            var unit = this.units[i];
-            if (unit.isSelected()) selectedUnits.push(unit);
-        }
+    }
 
-        // check if multiple prompts are selected
-        if (selectedUnits.length > 1)
-        {
-            // An error has occured. You will need to reselect your prompt.
-            for (var i = 0; i < selectedUnits.length; i++)
-            {
-                selectedUnits[i].deselect();
-                selectedUnits[i].hiddenChanged.value = true;                
-            }
+    Widget_Writing.prototype.isResponseAvailable = function () {
+        return this.entity.editor && this.entity.editor.isReady;
+    }
 
-            if (this.isEditing()) this.disableEditing(); // if editing go back to selection screen
+    Widget_Writing.prototype.getResponse = function() {
+        var item = this.entity;
+        var editor = item.editor;
+        var unit = this.unit;
+        var value = editor.getData();
+        var isValid = (value.length > 0);
+        var isSelected = unit.isSelected();
+        return this.createResponse(value, isValid, isSelected);
+    }
 
-            return true;
-        }
-        
-        return false;
-    };
-    
-    /*** INIT ***/
-    YUE.addListener(this.linkStart, 'click', this.toggleEdit, this, true); // switch to writing mode
-    YUE.addListener(this.linksChangePrompt, 'click', this.toggleEdit, this, true); // switch back to selection mode
-    YUE.addListener(this.linkExpandAll, 'click', this.toggleExpandAll, this, true); // expand all prompts
-};
+    Widget_Writing.prototype.setResponse = function(value) {
+        var item = this.entity;
+        var editor = item.editor;
+        editor.setData(value);
+    }
+
+})(window.ContentManager, window.CKEDITOR);
+
+
+

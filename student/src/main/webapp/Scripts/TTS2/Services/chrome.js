@@ -20,7 +20,8 @@ function TTSService_Chrome()
     this.supportsRateControl = function () {
         return true;
     };
-	
+
+
     this.isSupported = function()
     {
         return Util.Browser.isChrome();

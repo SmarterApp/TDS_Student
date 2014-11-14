@@ -54,6 +54,18 @@ Simulator.Input.InputElement = function (sim) {
         return section.getLabel();
     };
 
+    this.getSectionID = function () {
+        return section.getSectionID();
+    }
+
+    this.createLabelID = function () {
+        return this.createItemID(false, -1, this.getName() + 'Label');
+    }
+
+    this.createUnitsID = function () {
+        return this.createItemID(false, -1, this.getName() + 'Units');
+    }
+
     this.getPrevValue = function () {
         return prevValue;
     };
@@ -102,11 +114,11 @@ Simulator.Input.InputElement = function (sim) {
         if (!id) id = this.getNodeID();
         var jsObj = this.getHTMLElement(id);
         //debug(source, 'In InputElement.onChange for element ' + id);
-        this.recordInput(jsObj, false, true);
+        this.recordInput(jsObj, false, true, false);
         this.postOnChangeEvents();
     };
 
-    this.recordInput = function (obj, setDefault, recordOnChange) {
+    this.recordInput = function (obj, setDefault, recordOnChange, forcedSave) {
         var value = null;
         //debug('recording input for ' + this.getName());
         for (var i = 0; i < inputScope.length; i++) {
@@ -121,8 +133,9 @@ Simulator.Input.InputElement = function (sim) {
             }
         }
         // We don't put default values into the scoring table when they are declared, and we only write to the scoring table if the input element has
-        // 'postOnChange' enabled
-        if (value && this.getScoreable() && !setDefault && this.postOnChangeEnabled()) {
+        // 'postOnChange' enabled or "forcedSave" flag is set to true (the flag is set to true only when a trial is started, in which writing
+        // input element values to the scroing table is mandatory
+        if (value && this.getScoreable() && !setDefault && (this.postOnChangeEnabled() || forcedSave)) {
             //debug('Recording '' + value + '' of '' + this.getName() + '' into scoring table', null, 'trace');
             scoringTable().setValue(this.getName(), simulationMgr().getTrialRowNum(recordOnChange), value);   // Trials start at 1, rows at 0
         }

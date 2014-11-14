@@ -32,21 +32,18 @@ Mozilla._lastException = null;
 // Check if this browser allows higher privileges (Mozilla)
 Mozilla.allowPrivileged = function()
 {
-    // check if components exists (only in Mozilla browers)
-    if (typeof (Components) == 'undefined')
-    {
-        return Mozilla.SecurityPrivilege.Unavailable;
-    }
+    // check for PrivilegeManager (only in Mozilla browers)
     try
     {
-        // try and check classes object (will throw exception if we don't have privileges)
-        if (typeof Components.classes == 'object')
-        {
+        if (typeof netscape == 'object' &&
+            typeof netscape.security == 'object' &&
+            typeof netscape.security.PrivilegeManager == 'object') {
             return Mozilla.SecurityPrivilege.Available;
         }
     }
     catch (ex)
     {
+        // NOTE: This stuff won't run anymore since we switching to checking for PrivilegeManager
         Mozilla._lastException = ex;
 
         // If the error we got was not the browser needing permission then this browser is not mozilla
@@ -67,7 +64,7 @@ Mozilla.allowPrivileged = function()
 // You can call this without a callback if you want to see if this browser supports execute privileges.
 // NOTE: If privileges are denied then this will stop requesting them.
 // NOTE: The callback function will only get executed if we gain security privileges.
-Mozilla.execPrivileged = function(callback)
+Mozilla.execPrivileged = function (callback, browserMinVersion, browserMaxVersion)
 {
     // check if universal connect was denied
     if (Mozilla._universalConnect == Mozilla.UniversalConnect.Denied) return false;
@@ -84,7 +81,13 @@ Mozilla.execPrivileged = function(callback)
             return false;
         }
     }
-   
+
+    // check if the browser meets the version requirements
+    var minBrowser = YAHOO.lang.isNumber(browserMinVersion) ? browserMinVersion : -1;
+    var maxBrowser = YAHOO.lang.isNumber(browserMaxVersion) ? browserMaxVersion : -1;
+    if (minBrowser > 0 && Util.Browser.getFirefoxVersion() <= minBrowser ||
+        maxBrowser > 0 && Util.Browser.getFirefoxVersion() >= maxBrowser)
+        return false;    
 
     try
     {
@@ -121,7 +124,7 @@ Mozilla.getPreference = function(name)
 };
 
 // a helper function for setting a single preference value
-Mozilla.setPreference = function (name, value)
+Mozilla.setPreference = function (name, value, browserMinVersion, browserMaxVersion)
 {
     var success = false;
 
@@ -129,7 +132,7 @@ Mozilla.setPreference = function (name, value)
     {
         Mozilla.preference(name, value);
         success = true;
-    });
+    }, browserMinVersion, browserMaxVersion);
 
     return success;
 };

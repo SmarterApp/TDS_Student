@@ -5,11 +5,11 @@
 
 /* @group Header Stuff */
 #ot-logo_spot1 {
-	background-image:url(../Images/logo_delaware_large.gif);
+	background-image:url(../images/logo_delaware_large.gif);
 	width: 350px;
 }
 .preloader .logo_small {
-	background-image: url(../Images/logo_medium.gif);
+	background-image: url(../images/logo_medium.gif);
 }
 
 /* @end */
@@ -69,7 +69,7 @@
 }
 
 .preloader .logo_small {
-	background-image: url(../Images/logo_medium.gif);
+	background-image: url(../images/logo_medium.gif);
 }
 
 

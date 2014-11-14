@@ -36,6 +36,4 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="tds.student.web" />
-	
-	
 </beans:beans>

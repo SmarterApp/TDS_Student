@@ -40,6 +40,7 @@ EditItem.Html = function () {
         var replacementSpan = document.createElement('span');
         crossoutSpan.innerHTML = crossoutContent;
         parentDiv.setAttribute('role', 'button');
+        parentDiv.setAttribute('aria-haspopup', 'true');
         parentDiv.setAttribute('title', 'click to correct');
 
         // Restore the item if the student has blanked out the response.
@@ -50,12 +51,27 @@ EditItem.Html = function () {
         } else {
             YUD.addClass(crossoutSpan, 'edit-originaltext');
         }
-        parentDiv.appendChild(crossoutSpan);
+
+        // WCAG 13.1 - Provide visually hidden spoken cues that text is crossed out
+        var startCrossoutSpan = document.createElement('span');
+        YUD.addClass(startCrossoutSpan, 'hidden-spoken');
+        var spokenCue = Messages.getAlt('ET.strikethrough.begin', 'start crossed out text');
+        Util.Dom.setTextContent(startCrossoutSpan, spokenCue);
+        var endCrossoutSpan = document.createElement('span');
+        YUD.addClass(endCrossoutSpan, 'hidden-spoken');
+        spokenCue = Messages.getAlt('ET.strikethrough.end', 'end crossed out text');
+        Util.Dom.setTextContent(endCrossoutSpan, spokenCue);
 
         if (replaceContent) {
+            parentDiv.appendChild(startCrossoutSpan);
+            parentDiv.appendChild(crossoutSpan);
+            parentDiv.appendChild(endCrossoutSpan);
+
             //replacementSpan.innerHTML = replaceContent;
             Util.Dom.setTextContent(replacementSpan, replaceContent);
             parentDiv.appendChild(replacementSpan);
+        } else {
+            parentDiv.appendChild(crossoutSpan);
         }
     };
 

@@ -32,6 +32,7 @@ Simulator.Animation.AnimationElement = function (sim) {
     var simDocument = function () { return sim.getSimDocument(); };
     var dbg = function () { return sim.getDebug(); };
     var simMgr = function () { return sim.getSimulationManager(); };
+    var transDictionary = function () { return sim.getTranslationDictionary(); };
 
     //#endregion
     //#region public functions
@@ -45,22 +46,24 @@ Simulator.Animation.AnimationElement = function (sim) {
     };
 
     this.getSrc = function () {
-        return src;
+        var transSrc = transDictionary().translate(src);
+        return transSrc;
     };
 
     this.setSrc = function (newSrc) {
-        var filename = util().getFileName(newSrc, true);
+        var filename = util().getFileName(transDictionary().translate(newSrc), true);
         if (filename == 'inlineData') src = '';
         else src = newSrc;
         return this;
     };
 
     this.getAltSrc = function () {
-        return altSrc;
+        var transAltSrc = transDictionary().translate(altSrc);
+        return transAltSrc;
     };
 
     this.setAltSrc = function (newAltSrc) {
-        var filename = util().getFileName(newAltSrc, true);
+        var filename = util().getFileName(transDictionary().translate(newAltSrc), true);
         if (filename == 'inlineData') altSrc = '';
         else altSrc = newAltSrc;
         return this;

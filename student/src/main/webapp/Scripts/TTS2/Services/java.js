@@ -4,14 +4,13 @@ function TTSService_Applet()
 {
     this.TTSApplet = null;               // Reference to the applet instance
 
-    this.setApplet = function(applet)
-    {
+    this.setApplet = function(applet) {
         this.TTSApplet = applet;
 
-        this.TTSApplet.initialize();  // this initializes the applet to COM bridge. It is important to leave this here because if we dont, then all following calls to SAPI will fail
+        this.TTSApplet.initialize(); // this initializes the applet to COM bridge. It is important to leave this here because if we dont, then all following calls to SAPI will fail
     };
 
-	this.supportsVolumeControl = function () {
+    this.supportsVolumeControl = function () {
         return false;
     };
 
@@ -22,8 +21,8 @@ function TTSService_Applet()
     this.supportsRateControl = function () {
         return false;
     };
-	
-    this.isSupported = function()
+
+    this.isSupported = function ()
     {
         // TODO : Need to check for Java here at some point. Right now, only checking for windows because the applet only runs on windows
         return (navigator.platform.indexOf("Windows") != -1 || navigator.platform.indexOf("Win32") != -1 || navigator.platform.indexOf("Win64") != -1)        

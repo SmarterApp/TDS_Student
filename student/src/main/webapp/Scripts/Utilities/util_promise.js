@@ -9,4 +9,5 @@ Util.Promise = {};
 
 (function (P, Q) {
     P.defer = Q.defer;
+    P.isPromise = Q.isPromise;
 })(Util.Promise, Q);

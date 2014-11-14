@@ -9,7 +9,7 @@
  * @return - instance of a TextField
  *******************************************************************************
  */
-Simulator.Input.TextField = function(sim, node, panel, theSection) {
+Simulator.Input.TextField = function(sim, node, panel, theSection, container) {
 
 	Simulator.Input.InputElement.call(this, sim); // Inherit Instance variables
 
@@ -29,6 +29,8 @@ Simulator.Input.TextField = function(sim, node, panel, theSection) {
     var eventMgr = function () { return sim.getEventManager(); };
     var simDocument = function () { return sim.getSimDocument(); };
     var keyboardInput = function () { return sim.getKeyboardInput(); };
+    var transDictionary = function () { return sim.getTranslationDictionary(); };
+
 
     var scoringTable = function () { return sim.getScoringTable(); }; // get scoring table instance
     
@@ -58,8 +60,9 @@ Simulator.Input.TextField = function(sim, node, panel, theSection) {
     };
 
     this.getText = function () {
-        return text;
-    };
+        // retrieve translated text
+        return transDictionary().translate(text);
+    }; 
 
     this.setText = function (newText) {
         text = newText;
@@ -125,7 +128,7 @@ Simulator.Input.TextField = function(sim, node, panel, theSection) {
                         this.setData(textCache);
                         this.recordInput();
                         textCache = '';
-                        eventMgr().postEvent(new Simulator.Event(this, 'info', 'inputAvailable'));
+                        //eventMgr().postEvent(new Simulator.Event(this, 'info', 'inputAvailable'));
                         break;
                 }
                 break;
@@ -206,8 +209,7 @@ Simulator.Input.TextField = function(sim, node, panel, theSection) {
 
 	this.render = function() {		
 		var nodeID = this.getNodeID();
-		var panelHtml = panel.getHTMLElement();
-        
+		var panelHtml = container;
         var brElement1 = simDocument().createElement('br');
     	panelHtml.appendChild(brElement1);
     	var brElement2 = simDocument().createElement('br');
@@ -250,6 +252,9 @@ Simulator.Input.TextField = function(sim, node, panel, theSection) {
         inputEl.setAttribute('maxlength', this.getFieldLength());
         spanElement2.appendChild(inputEl);
         divElement.appendChild(spanElement2);
+        if (theSection.getSectionSettings().elementorientation === "horizontal") {
+            divElement.classList.add("inputpanelcell");
+        }
         panelHtml.appendChild(divElement);
 
         this.recordInput(this, true);  // true -> setting a default value

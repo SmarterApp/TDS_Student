@@ -1,250 +1,216 @@
-﻿/*********************************************
- * CONTENT MANAGER EVENTS 
- *********************************************/
+﻿/*
+The global events. We need to remove usages of this at some point.
+*/
 
-// add all the selected accommodations to the page body
-ContentManager.onPageEvent('beforeShow', function(page)
-{
-    var pageAccs = page.getAccommodations();
+(function (CM) {
 
-    if (pageAccs != null) {
-        Accommodations.Manager.updateCSS(page.getBody(), pageAccs.getId());
+    var pageEvents = new Util.Event.Emitter(CM);
+    var entityEvents = new Util.Event.Emitter(CM);
+    var itemEvents = new Util.Event.Emitter(CM);
+    var passageEvents = new Util.Event.Emitter(CM);
+    var componentEvents = new Util.Event.Emitter(CM);
+
+    CM.onPageEvent = function (name, callback) {
+        pageEvents.on(name, callback, null, false);
+    };
+
+    CM.oncePageEvent = function (name, callback) {
+        pageEvents.once(name, callback, null, true);
+    };
+
+    CM.removePageEvent = function(name, callback) {
+        pageEvents.removeListener(name, callback);
     }
-});
 
-// HACK: If there is no real passage but someone selected multi item layout with a passage section
-// in it we will create a fake passage object for the items illustration if it has one.
-ContentManager.onPageEvent('available', function(page)
-{
-    if (page.getPassage() != null) return;
+    CM.onEntityEvent = function (name, callback) {
+        entityEvents.on(name, callback, null, false);
+    };
 
-    // check if this layout has a passage section
-    var pageElement = page.getElement();
-    var passageElement = Util.Dom.getElementByClassName('thePassage', 'div', pageElement);
+    CM.onceEntityEvent = function (name, callback) {
+        entityEvents.once(name, callback, null, true);
+    };
 
-    // check if there is a passage element and assume it is the illustration
-    if (passageElement == null) return;
+    CM.removeEntityEvent = function (name, callback) {
+        entityEvents.removeListener(name, callback);
+    };
 
-    var firstItem = page.getItems()[0];
+    CM.onItemEvent = function (name, callback) {
+        itemEvents.on(name, callback, null, false);
+    };
 
-    // HACK: create fake passage
-    var passage = ContentManager._createPassage(page, { bankKey: firstItem.bankKey, itemKey: 0 });
-    page.setPassage(passage);
-});
+    CM.onceItemEvent = function (name, callback) {
+        itemEvents.once(name, callback, null, true);
+    };
 
-// add focusable passage components
-ContentManager.onPassageEvent('available', function(page, passage)
-{
-    var passageElement = passage.getElement();
-    if (passageElement != null) passage.addComponent(passageElement);
-});
+    CM.removeItemEvent = function (name, callback) {
+        itemEvents.removeListener(name, callback);
+    };
 
-// add expandable passage
-ContentManager.onPassageEvent('available', function(page, passage)
-{
-    // check if enabled
-    var accProps = page.getAccommodationProperties();
-    if (!accProps || !accProps.showExpandablePassages()) return;
+    CM.onPassageEvent = function (name, callback) {
+        passageEvents.on(name, callback, null, false);
+    };
 
-    var css_collapsed = 'passage-collapsed'; // passage is normal size
-    var css_expanded = 'passage-expanded'; // passage has filled up screen
+    CM.oncePassageEvent = function (name, callback) {
+        passageEvents.once(name, callback, null, true);
+    };
 
-    // get the element to set collapse
-    var expandEl = ContentManager.Renderer.isDirect() ? 
-        page.getElement() : // <-- only modern shell supports this
-        page.getBody(); // <-- this is for classic shell
+    CM.removePassageEvent = function (name, callback) {
+        passageEvents.removeListener(name, callback);
+    };
 
-    // start off as collapsed
-    YUD.addClass(expandEl, css_collapsed);
+    CM.onComponentEvent = function (name, callback) {
+        componentEvents.on(name, callback, null, false);
+    };
 
-    // create new expand/collapse link
-    var expandLink = page.getDoc().createElement('a');
-    YUD.setAttribute(expandLink, 'href', '#');
-    YUD.addClass(expandLink, 'expand-collapse-passage');
+    CM.onceComponentEvent = function (name, callback) {
+        componentEvents.once(name, callback, null, true);
+    };
 
-    // add event handler to toggle classes
-    YUE.on(expandLink, 'click', function(clickEv)
-    {
-        // stop dom event
-        YUE.stopEvent(clickEv);
+    CM.removeComponentEvent = function (name, callback) {
+        componentEvents.removeListener(name, callback);
+    };
+
+    // fire an event for the page and each passage/items
+    CM.firePageEvent = function (name, page, args, fireEntityEvents) {
+
+        // if the page argument is a string then lookup the page
+        if (typeof page == 'string') {
+            page = CM.getPage(page);
+        }
+
+        // check if there is a page
+        Util.Assert.isString(name);
+        Util.Assert.isInstanceOf(ContentPage, page);
+
+        // fire event for page (return value will be NULL if there are no subscribers)
+        var pageArgs = [page].concat(args || []);
+        var ret = pageEvents.fireArgs(name, pageArgs);
+
+        // check if firing entity events is allowed and the page events didn't get cancelled
+        // note: event can only be cancelled if when subscribe() was called cancellable param was set to 'true'
+        if (fireEntityEvents === true && ret !== false) {
+
+            // fire event for passage if any
+            var passage = page.getPassage();
+
+            if (passage) {
+                CM.fireEntityEvent(name, passage, args);
+            }
+
+            // fire event for each item
+            var items = page.getItems();
+
+            for (var i = 0; i < items.length; i++) {
+                CM.fireEntityEvent(name, items[i], args);
+            }
+        }
+
+        return ret;
+    };
+
+    // fire an entity event (if this returns true then the event was cancelled)
+    CM.fireEntityEvent = function (name, entity, args) {
+
+        Util.Assert.isString(name);
+        Util.Assert.isInstanceOf(ContentEntity, entity);
+
+        var page = entity.getPage();
+        var entityArgs = [page, entity].concat(args || []);
+
+        // first fire entity event
+        entityEvents.fireArgs(name, entityArgs);
+
+        // then fire item or passage event
+        if (entity instanceof ContentItem) {
+            itemEvents.fireArgs(name, entityArgs);
+        } else if (entity instanceof ContentPassage) {
+            passageEvents.fireArgs(name, entityArgs);
+        }
+    };
+
+    CM.fireComponentEvent = function (name, entity, component, args) {
+        var page = entity.getPage();
+        var componentArgs = [page, entity, component].concat(args || []);
+        componentEvents.fireArgs(name, componentArgs);
+    };
+
+    function onEntityCreated(entity, content) {
+
+        entity.on('show', function () {
+            return CM.fireEntityEvent('show', entity);
+        });
+
+        entity.on('hide', function () {
+            return CM.fireEntityEvent('hide', entity);
+        });
+
+        entity.on('focus', function (previousEntity) {
+            return CM.fireEntityEvent('focus', entity, previousEntity);
+        });
+
+        entity.on('blur', function () {
+            return CM.fireEntityEvent('blur', entity);
+        });
+
+        entity.on('menushow', function(contentMenu, evt, pageSelection) {
+            return CM.fireEntityEvent('menushow', entity, [contentMenu, evt, pageSelection]);
+        });
+
+        // fire entity created
+        return CM.fireEntityEvent('init', entity, [content]);
+    }
+
+    function onPageCreated(page, content) {
         
-        // check for class
-        if (YUD.hasClass(expandEl, css_expanded))
-        {
-            // make passage collapsed
-            YUD.removeClass(expandEl, css_expanded);
-            YUD.addClass(expandEl, css_collapsed);
-        }
-        else if (YUD.hasClass(expandEl, css_collapsed))
-        {
-            // make passage expanded
-            YUD.removeClass(expandEl, css_collapsed);
-            YUD.addClass(expandEl, css_expanded);
-        }
+        // subscribe to rendering events
+        var stateNames = CM.Renderer.getStateNames();
+        stateNames.forEach(function pageEvent(status) {
+            page.once(status, function() {
+                return CM.firePageEvent(status, page, null, true);
+            });
+        });
+
+        page.on('passageCreated', onEntityCreated);
+        page.on('itemCreated', onEntityCreated);
+
+        page.on('beforeShow', function () {
+            return CM.firePageEvent('beforeShow', page);
+        });
+
+        page.on('show', function () {
+            return CM.firePageEvent('show', page);
+        });
+
+        page.on('afterShow', function () {
+            return CM.firePageEvent('afterShow', page);
+        });
+
+        page.on('beforeHide', function () {
+            return CM.firePageEvent('beforeHide', page);
+        });
+
+        page.on('hide', function () {
+            return CM.firePageEvent('hide', page);
+        });
+
+        page.on('beforeZoom', function (level) {
+            return CM.firePageEvent('beforeZoom', page, [level], true);
+        });
+
+        page.on('zoom', function (level) {
+            return CM.firePageEvent('zoom', page, [level], true);
+        });
+
+        page.on('keyevent', function (evt) {
+            return CM.firePageEvent('keyevent', page, [evt], true);
+        });
+
+        // fire page created
+        return CM.firePageEvent('init', page, [content], false);
+    }
+
+    CM.on('pagesCreated', function (pages) {
+        pages.on('pageCreated', onPageCreated);
     });
 
-    /*
-    // add link to passage
-    var passageEl = passage.getElement();
-    if (passageEl == null) return; // no passage element
-
-    // try and find passage title
-    var passageHeaders = passageEl.getElementsByTagName("h2");
-    
-    // add expand link before the passage title
-    if (passageHeaders && passageHeaders.length > 0)
-    {
-        var passageHeader = passageHeaders[0];
-        YUD.insertBefore(expandLink, passageHeader);
-        return;
-    }
-    */
-    
-    // get passage element
-    var passageEl = passage.getElement();
-    if (passageEl == null) return; // no passage element
-
-    // add expand link as the first child of passage padding
-    var paddingEl = Util.Dom.getElementByClassName('padding', 'div', passageEl);
-    
-    if (paddingEl)
-    {
-        var paddingChildEl = YUD.getFirstChild(paddingEl);
-        if (paddingChildEl) YUD.insertBefore(expandLink, paddingChildEl);
-        else paddingEl.appendChild(expandLink);
-    }
-});
-
-// add focusable item components
-ContentManager.onItemEvent('available', function(page, item)
-{
-    var layoutElements = [];
-
-    // add stem element
-    var stemElement = item.getStemElement();
-    layoutElements.push(stemElement);
-
-    // get illustration element
-    var illustrationElement = item.getIllustrationElement();
-
-    // figure out if we should add the illustration as a component
-    if (illustrationElement)
-    {
-        YUD.addClass(illustrationElement, 'illustrationContainer');
-        
-        // illustration is part of layout/OO and can be empty so make sure it has content
-        var illustrationText = Util.Dom.getTextContent(illustrationElement);
-        illustrationText = YAHOO.lang.trim(illustrationText);
-
-        // add illustration element if it has text (illustration.innerHTML != '<p>&nbsp;</p>')
-        if (illustrationText.length > 0)
-        {
-            layoutElements.push(illustrationElement);
-        }
-    }
-
-    // sort nodes by order in DOM
-    Util.Array.sort(layoutElements, Util.Dom.compareNodeOrder);
-    
-    // add all the layout elements
-    Util.Array.each(layoutElements, function(layoutElement)
-    {
-        item.addComponent(layoutElement);
-    });
-});
-
-ContentManager.onEntityEvent('focus', function(page, entity)
-{
-    // when focusing on an item reset the component to be the first one 
-    entity.resetComponent();
-});
-
-ContentManager.onEntityEvent('blur', function(page, entity)
-{
-    entity.clearComponent();
-
-    // BUG #63088 fix: Clear any selected text
-    page.collapseSelection();
-});
-
-ContentManager.onComponentEvent('focus', function(page, entity, component)
-{
-    if (ContentManager.isElement(component))
-    {
-        YUD.addClass(component, 'contextAreaFocus');
-    }
-});
-
-ContentManager.onComponentEvent('blur', function(page, entity, component)
-{
-    // NOTE: You might see a double blur when selecting something other than stem. This
-    // is because when you first focus on an entity the first component gets focused.
-    // Then your click is registered and the stem gets blurred and whatever other component
-    // you selected (e.x., MC option) will get focus. 
-    if (ContentManager.isElement(component))
-    {
-        YUD.removeClass(component, 'contextAreaFocus');
-    }
-
-    ContentManager.enableCaretMode(false);
-});
-
-// force the iframe to repaint/redraw it's contents (example css: forceRedraw{padding-bottom:1px;})
-ContentManager.onPageEvent('show', function(page)
-{
-    var pageContainer = page.getContainer();
-    if (pageContainer == null || pageContainer.nodeName != 'IFRAME') return;
-
-    var pageBody = page.getBody();
-    if (pageBody == null) return;
-
-    YUD.addClass(pageBody, 'forceRedraw');
-
-    setTimeout(function()
-    {
-        YUD.removeClass(pageBody, 'forceRedraw');
-    }, 1);
-});
-
-// When an item is available subscribe to its mouse events.
-// NOTE: This was moved from content_entity.js. 
-// TODO: Should this be in an event? Seems important enough to be in main code.
-ContentManager.onEntityEvent('available', function(page, item)
-{
-    var element = item.getElement();
-    ContentManager.addMouseEvents(item, element);
-});
-
-// check if item is unsupported
-ContentManager.onItemEvent('unsupported', function(page, item) {
-    var itemEl = item.getElement();
-    YUD.addClass(itemEl, 'unsupported');
-});
-
-// check for elements that we want TTS to skip
-ContentManager.onItemEvent('available', function (page, item) {
-    
-    var itemEl = item.getElement();
-    if (itemEl) {
-        // check for item tools container
-        var markCommentEl = Util.Dom.getElementByClassName('markComment', 'span', itemEl);
-        if (markCommentEl) {
-            markCommentEl.setAttribute('data-tts-skip', 'true');
-        }
-        // check for item position header
-        var posEl = Util.Dom.queryTag('h2', itemEl);
-        if (posEl && Util.Dom.getTextContent(posEl) == item.position) {
-            posEl.setAttribute('data-tts-skip', 'true');
-        }
-    }
-
-    var pageDoc = page.getDoc();
-    if (pageDoc) {
-        // check for comment box
-        var commentBoxEl = pageDoc.getElementById('Item_CommentBox_' + item.position);
-        if (commentBoxEl) {
-            commentBoxEl.setAttribute('data-tts-skip', 'true');
-        }
-    }
-
-});
+})(ContentManager);

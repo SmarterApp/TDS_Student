@@ -8,12 +8,12 @@
 	height: 105px;
 }
 #ot-logo_spot1{
-	background: url("../Images/sage-logo.png") no-repeat left bottom;
+	background: url("../images/sage-logo.png") no-repeat left bottom;
 	width: 230px;
 	height: 105px;
 }
 .ie6 #ot-logo_spot1{
-	background: url("../Images/sage-logo.gif") no-repeat left bottom;
+	background: url("../images/sage-logo.gif") no-repeat left bottom;
 }
 #ot-logo_spot2{
 	background: none;

@@ -87,18 +87,19 @@ SimParser.FunctionManager = function (eUnit) {
                 if (newFunction.getScoreable() !== 'no') {
                     scoringTable.addElement(newFunction.getName(), 'output');
                 }
+                //Get everything into one functions array - Lookup Chaining
                 // put the lookup functions in the list for lookups
-                if (attr.type === 'lookup') {
+                /*if (attr.type === 'lookup') {
                     lfunctions.push(newFunction);
                 }
-                else {
+                else {*/
                     // if (attr.type === 'javascript')
                         // jfunctions.push(f);
                     //else {
                     // put all other functions in another list
-                    functions.push(newFunction);
+                functions.push(newFunction);
                     // }
-                }
+                /*}*/
             }
         }
 
@@ -164,6 +165,7 @@ SimParser.FunctionManager = function (eUnit) {
                 else {
                     EU.debug('Function evaluation cannot work because ordered function ' + functions[i].getValue() + ' cannot be evaluated');
                     evaluationSucceed = false;
+                    depTreeExists = true;
                     break;
                 }
             }
@@ -231,7 +233,16 @@ SimParser.FunctionManager = function (eUnit) {
     // check if a function can be evaluated provided with an array of values,
     // e.g., f='x+y+z', v=['x','y','z'] - returns true but f='x+y+z', v=['x','y'] - returns false because 'z' is not provided
     this.canComputeFunction = function (func, values) {
-        var fvars = func.getVarNames();
+        //Start - Lookup Chaining
+        //adjusted for lookup functions
+        var fvars;
+        if (func.getType() == "lookup") { 
+            fvars = [func.getKeyName()]; //Get Lookup variables i.e Key
+        }
+        else {
+            fvars = func.getVarNames();
+        }
+        //End - Lookup Chaining
         return compareArrays(fvars, values);
     }
 
@@ -258,6 +269,7 @@ SimParser.FunctionManager = function (eUnit) {
     }
 
     // evaluate lookup functions
+    //Deprecated Function - Lookup Chaining
     this.evaluateLFunctions = function (varValueList, varNames, varValues) {
         var r = {};
         for (var i = 0; i < lfunctions.length; i++) {

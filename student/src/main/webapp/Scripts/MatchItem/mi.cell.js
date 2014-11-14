@@ -41,6 +41,11 @@ MatchItem.Cell = function (id, rowIndex, colIndex, matrix, cellFactory) {
 
     // Make the cell look like it has been checked/unchecked.
     this.setChecked = function (val, parentSelected) {
+
+        if (matrix.isReadOnly()) {
+            return;
+        }
+
         presentation.setChecked(val, parentSelected);
         checked = val;
     };

@@ -277,7 +277,9 @@ VideoManager.SWF.embed = function(win, linkVideo, overrideAutoplay, disableShell
 
     // remove original link
     var parentNode = linkVideo.parentNode;
-    parentNode.removeChild(linkVideo);
+    if (parentNode) {
+        parentNode.removeChild(linkVideo);
+    }
 
     // get swf container
     var children = YUD.getChildren(divVideo);

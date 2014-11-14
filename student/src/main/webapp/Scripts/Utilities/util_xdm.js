@@ -1,4 +1,4 @@
-﻿if (typeof Util != 'object') Util = {};
+﻿window.Util = window.Util || {};
 
 /*
 Cross-domain messaging API.
@@ -30,7 +30,7 @@ Example:
 
 */
 
-(function (Util) {
+Util.XDM = (function () {
 
 	var defaults = {
 		targetWindow: window,
@@ -40,10 +40,10 @@ Example:
 
 	var id = 0;
 	var requests = {};
-	var responses = {};
 	var listeners = {};
 
 	var XDM = function (targetWindow, targetOrigin) {
+	    targetWindow = targetWindow || window;
 		return $.extend(XDM.bind(), {
 			targetWindow: targetWindow,
 			targetOrigin: targetOrigin,
@@ -51,7 +51,10 @@ Example:
 		});
 	};
 
+    XDM.suppressException = false;
+
 	XDM.init = function (thisWindow) {
+	    thisWindow = thisWindow || window;
 	    if (thisWindow.addEventListener) {
 	        thisWindow.addEventListener('message', messageHandler, true);
 	    }
@@ -63,9 +66,17 @@ Example:
 		listeners[name] = callback;
 	};
 
+    // remove a listener
 	XDM.removeListener = function (name) {
 		delete listeners[name];
 	};
+
+    // clear all listeners
+	XDM.removeListeners = function () {
+        Object.keys(listeners).forEach(function(key) {
+            XDM.removeListener(key);
+        });
+    };
 
 	// send a request
 	function postRequest(requestName) {
@@ -90,14 +101,15 @@ Example:
 		}
 
 		if (data.type === 'request') {
+		    // message request on the server from the client
 		    console.log('MESSAGE REQUEST: ', data);
 		    var response = new Response(data);
-			responses[response.id] = response.data;
 			response.targetWindow = evt.source;
 			response.targetOrigin = evt.origin === 'null' ? defaults.targetOrigin : evt.origin;
 			response.send();
 		}
 		else if (data.type === 'response') {
+		    // message response from the server to the client
 		    console.log('MESSAGE RESPONSE: ', data);
 			if (data.success) {
 			    requests[data.id].resolve(data.data);
@@ -111,10 +123,6 @@ Example:
 
 	function Request(name) {
 		this.init.apply(this, [].slice.call(arguments));
-	}
-
-	function Response(req) {
-		this.init(req);
 	}
 
 	Request.prototype.init = function(name) {
@@ -148,30 +156,60 @@ Example:
 		return $.extend(new Request(), obj);
 	};
 
+	function Response(req) {
+	    this.init(req);
+	}
+
 	Response.prototype.init = function(req) {
 		this.id = req.id;
 		this.name = req.name;
 		this.type = 'response';
-		try {
-		    var response = Request.create(req);
+	    try {
+            // parse the request data
+		    var request = Request.create(req);
+
+            // lookup the listener for this type of request
 		    var listener = listeners[req.name];
-            if (listener) {
-                this.data = listener.apply(this, response.data);
+
+            // if there is a listener found the run it
+		    if (listener) {
+                this.data = listener.apply(this, request.data);
                 this.success = true;
             } else {
-                throw new Error('Could not find the listener \'' + req.name + '\'');
+		        throw new Error('Could not find the listener \'' + req.name + '\'');
             }
-		} catch (error) {
+	    } catch (error) {
+            // listener threw an exception
 			this.data = new XDM.Error(error);
 			this.success = false;
 		}
 	};
 
-	Response.prototype.send = function() {
+	Response.prototype.send = function () {
+
+        // set defaults
 		this.targetWindow = this.targetWindow || defaults.targetWindow;
 		this.targetOrigin = this.targetOrigin || defaults.targetOrigin;
-		this.targetWindow.postMessage(JSON.stringify(this), this.targetOrigin);
-		if (!this.success) {
+
+	    var request = this;
+		function postMessage(value) {
+		    request.data = value;
+		    request.targetWindow.postMessage(JSON.stringify(request), request.targetOrigin);
+	    };
+
+        // delay posting message in case listener returned a promise
+		$.when(this.data).then(function (value) {
+		    postMessage(value);
+		}, function(error) {
+		    request.success = false;
+            if (error instanceof Error) {
+                error = new XDM.Error(error);
+            }
+		    postMessage(error);
+		});
+
+        // throw exception 
+		if (!XDM.suppressException && !this.success) {
 			throw this.data.error;
 		}
 	};
@@ -209,6 +247,6 @@ Example:
 
 	};
 
-	Util.XDM = XDM;
+	return XDM;
 
-})(Util);
+})();

@@ -8,33 +8,36 @@
 	color: #546152;
 }
 #ot-brand1{
-	background: url("../Images/utah-banner.jpg") no-repeat right #546152;
+	background: url("../images/utah-banner.jpg") no-repeat right #546152;
 	height: 103px;
 	border-bottom: 1px solid #ccc;
 }
 #ot-brand2{
 	    background-color: #fff;
         border-color: #ccc;
-		height: 33px;
 }
-.practiceTest #sectionLogin .ot-shadowBox h2{
-    background: url("../Images/bike/bikeTitle.gif") no-repeat scroll 100% 100% transparent;
+.practiceTest #sectionLogin .ot-shadowBox h1{
     
 }
 #ot-brand2 strong{
-	background: #fff; 
-	border-left: 1px solid #ccc;
-   
-    height: 33px;
+	background-color: #fff;
+	border-left: none;
+	border-right: 1px solid #ccc;
+}
+.practiceTest #ot-brand2{
+	background: #d50000;
 }
 .practiceTest #ot-brand2 strong{
-	background: url("../Images/bike/bikeTop.gif") no-repeat scroll 100% 50% #fff;
-	 padding-right: 45px;
+ 	background: url(../../../Images/masterShell/bike2/bike_white.png) 10px center no-repeat;
+}
+.practiceTest #sections{
+	background: url(../../../Images/masterShell/bike2/bike_bg.png) right center no-repeat;
+	min-height: 500px;
 }
 #sectionLogin .ot-innerShadow{
     background: #efead7 !important;
 }
-.practiceTest .loginForm, .ot-shadowBox h2{
+.practiceTest .loginForm, .ot-shadowBox h1{
     border-color: #546152;
 
 }
@@ -72,4 +75,11 @@
     background-color: #efead7;
     border-color: #546152;
     color: #546152;
+}
+
+.goPractice{
+	background-image: url(../../../images/masterShell/bike2/goPractice.png);
+}
+.goPractice a:focus{
+	background-color: #546152;
 }

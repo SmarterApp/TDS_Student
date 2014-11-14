@@ -20,13 +20,21 @@ TTS.Store = TTS.Store || {
 };
 
 //Provide an easy way of accessing a single instance of the control.
-TTS.Singleton   = null;
-TTS.getInstance = function (NoInit) { 
+TTS.Singleton = null;
+
+// Create Singleton
+TTS.createSingleton = function (NoInit) {
     if (!TTS.Singleton) {
         var cfg = JSON.parse(JSON.stringify(TTS.Config));
         cfg.NoInit = NoInit;
         TTS.Singleton = new TTS.Control(cfg);
         TTS.Singleton.init();
+    }
+}
+
+TTS.getInstance = function (NoInit) { 
+    if (!TTS.Singleton) {
+        TTS.createSingleton(NoInit);
     }
     return TTS.Singleton;
 };
@@ -66,6 +74,10 @@ TTS.Control = function(cfg) {
     ///this gets the language with which the HTML node is tagged. if the HTML node is not tagged, it prompts languageManager to tag it, then retries. 
     ///if the retry does not find a tagged language, it returns null
     this.getMarkedLanguage = function (node, failIfNotFound) {
+        if (!node) {
+            return null; // No node was passed into function, so lang is unknown
+        }
+        
         if ((node.nodeType == 3) || (node.nodeType == 4) || (node.nodeType == 8)) {
             return this.getMarkedLanguage(node.parentNode);
         }
@@ -284,9 +296,9 @@ TTS.Control.prototype.playSelection = function(sel,language){
 TTS.Control.prototype.playParseNode = function (pn, language) {
     try {
         var speakString = pn.CompileSpeakString();
+        speakString = TTS.Util.replaceLeadDirectives(speakString);
         // Bug 114921 Shorten back-to-back silences by reducing them to 1msec duration
         speakString = TTS.Util.shortenSilence(speakString);
-        speakString = TTS.Util.replaceLeadSemicolon(speakString);
 
         this.getHighlighter().setSpeakString(speakString, pn);
         this.speak(speakString, language);

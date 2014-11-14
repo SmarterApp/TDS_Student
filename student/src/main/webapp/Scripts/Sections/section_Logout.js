@@ -26,9 +26,10 @@ Sections.Logout.prototype.load = function ()
     if (LoginShell.testSelection != null)
     {
         // pause test
-        var self = this;
-        LoginShell.api.pauseTest(function() { self.ready(); });
-        
+        TDS.Student.API.pauseTest().then(function() {
+            this.ready();
+        }.bind(this));
+
         return true; // wait for pause
     }
 

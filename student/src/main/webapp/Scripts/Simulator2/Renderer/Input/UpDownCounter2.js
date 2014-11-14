@@ -10,7 +10,7 @@
  *******************************************************************************
  */
 
-Simulator.Input.UpDownCounter = function (sim, node, panel, theSection) {
+Simulator.Input.UpDownCounter = function (sim, node, panel, theSection, container) {
 
     Simulator.Input.FieldSet.call(this, sim); // Inherit Instance variables
 
@@ -79,6 +79,24 @@ Simulator.Input.UpDownCounter = function (sim, node, panel, theSection) {
     };
 
     this.keyboardNavigateTo = function (elementID, itemID, index) {
+        var element = simDocument().getElementById(elementID);
+        var spanElement = element.getElementsByTagName('span')[0];
+        var upDownSpanElement = spanElement.getElementsByClassName('upDown')[0];
+        var item = element.getElementsByClassName(itemID)[0];
+        if (item) item.setAttribute('class', itemID + ' simAreaFocus');
+    }
+
+    this.keyboardNavigateAwayFrom = function (elementID, itemID, index) {
+        var element = simDocument().getElementById(elementID);
+        var spanElement = element.getElementsByTagName('span')[0];
+        var upDownSpanElement = spanElement.getElementsByClassName('upDown')[0];
+        var item = element.getElementsByClassName(itemID)[0];
+        if (item) item.setAttribute('class', itemID);
+    }
+
+
+    /*
+    this.keyboardNavigateTo = function (elementID, itemID, index) {
         var element = simDocument().getElementsByClassName(elementID)[0];
         var item = element.getElementsByClassName(itemID)[0];
         if (item) item.setAttribute('class', itemID + ' simAreaFocus');
@@ -89,6 +107,7 @@ Simulator.Input.UpDownCounter = function (sim, node, panel, theSection) {
         var item = element.getElementsByClassName(itemID)[0];
         if (item) item.setAttribute('class', itemID);
     };
+    */
 
     this.recordKeyboardSelection = function (elementID, itemID, itemIndex) {
 
@@ -163,7 +182,8 @@ Simulator.Input.UpDownCounter = function (sim, node, panel, theSection) {
 
     this.render = function () {
         var nodeID = this.getNodeID();
-        var panelHtml = panel.getHTMLElement();
+        var panelHtml = container;
+        var labelledByID = this.getSectionID(); // default aria-labelledby to containing section (WCAG) 
 
         this.setFocusable(true, true);
 
@@ -201,6 +221,7 @@ Simulator.Input.UpDownCounter = function (sim, node, panel, theSection) {
             divElement = simDocument().createElement('div');
             divElement.id = 'incrementalWrapper' + nodeID;
             divElement.setAttribute('class', 'incrementalWrapper withImages');
+            divElement.setAttribute('role', 'group'); // WCAG
             var spanElement = simDocument().createElement('span');
             spanElement.setAttribute('class', 'holderImage');
             var imageElement = simDocument().createElement('img');
@@ -213,6 +234,7 @@ Simulator.Input.UpDownCounter = function (sim, node, panel, theSection) {
             divElement = simDocument().createElement('div');
             divElement.id = 'incrementalWrapper' + nodeID;
             divElement.setAttribute('class', 'incrementalWrapper');
+            divElement.setAttribute('role', 'group'); // WCAG
             if (sim.getSpeechEnabled()) {
                 divElement.setAttribute('style', 'padding-bottom: 40px');
             }
@@ -250,6 +272,7 @@ Simulator.Input.UpDownCounter = function (sim, node, panel, theSection) {
             }
         }
         inputGoingUpElement.setAttribute('type', 'button');
+        inputGoingUpElement.setAttribute('title', 'increase count');
         upDownSpanElement.appendChild(inputGoingUpElement);
         if (sim.getSpeechEnabled()) {
             var textLabelElement1 = simDocument().createTextNode(' Increment');
@@ -272,6 +295,7 @@ Simulator.Input.UpDownCounter = function (sim, node, panel, theSection) {
             }
         }
         inputGoingDownElement.setAttribute('type', 'button');
+        inputGoingDownElement.setAttribute('title', 'decrease count');
         upDownSpanElement.appendChild(inputGoingDownElement);
         if (sim.getSpeechEnabled()) {
             var textLabelElement2 = simDocument().createTextNode(' Decrement');
@@ -279,17 +303,45 @@ Simulator.Input.UpDownCounter = function (sim, node, panel, theSection) {
         }
         containerSpanElement.appendChild(upDownSpanElement);
         divElement.appendChild(containerSpanElement);
+        if (theSection.getSectionSettings().elementorientation === "horizontal") {
+            divElement.classList.add("inputpanelcell");
+        }
         panelHtml.appendChild(divElement);
 
         if (needtoShowLabelBelow) {
+            if (this.getLabel()) {
+                var h5LabelElement = simDocument().createElement('h5'); // using h5 rather than simple text node (WCAG)
+                var h5ID = this.createLabelID();
+                h5LabelElement.id = h5ID; // ID for WCAG
+                labelledByID = labelledByID + ' ' + h5ID; // if there is an element label, add to the aria-laballedby attribute (WCAG)
+                h5LabelElement.innerHTML = this.getLabel();
+                divElement.appendChild(h5LabelElement);
+            }
+            /*
             var textLabelElement3 = simDocument().createTextNode(this.getLabel());
-            divElement.appendChild(textLabelElement3);
+            divElement.appendChild(textLabelElement3); */
         }
+
+        inputElement.setAttribute('aria-labelledby', labelledByID); // WCAG
+        inputGoingUpElement.setAttribute('aria-labelledby', labelledByID); // WCAG
+        inputGoingDownElement.setAttribute('aria-labelledby', labelledByID); // WCAG
+
+        inputGoingUpElement.setAttribute('aria-valuenow', this.getDefaultValue()); // WCAG
+        inputGoingUpElement.setAttribute('aria-valuemax', this.getMaxValue()); // WCAG
+        inputGoingUpElement.setAttribute('aria-valuemin', this.getMinValue()); // WCAG
+
+        inputGoingDownElement.setAttribute('aria-valuenow', this.getDefaultValue()); // WCAG
+        inputGoingDownElement.setAttribute('aria-valuemax', this.getMaxValue()); // WCAG
+        inputGoingDownElement.setAttribute('aria-valuemin', this.getMinValue()); // WCAG
 
         if (this.isFocusable()) {
             // Register the element items for keyboard input
+            /*         
             keyboardInput().addFocusableElementItem(this, 'upDown', 'goingUp');
-            keyboardInput().addFocusableElementItem(this, 'upDown', 'goingUp');
+            keyboardInput().addFocusableElementItem(this, 'upDown', 'goingDown');
+            */
+            keyboardInput().addFocusableElementItem(this, divElement.id, 'goingUp');
+            keyboardInput().addFocusableElementItem(this, divElement.id, 'goingDown');
         }
 
         // panel.appendStr(buff.join(''));
@@ -333,6 +385,8 @@ Simulator.Input.UpDownCounter = function (sim, node, panel, theSection) {
 
     this.incrementValue = function (id, maxValue, increment) {
         var htmlElement = simDocument().getElementById(id);
+        var upElement = htmlElement.parentNode.getElementsByTagName('span')[0].getElementsByClassName('goingUp')[0];
+        var downElement = htmlElement.parentNode.getElementsByTagName('span')[0].getElementsByClassName('goingDown')[0];
         currentValue = parseFloat(htmlElement.value);
 
         if ((currentValue + parseFloat(increment)) <= maxValue) {
@@ -341,6 +395,8 @@ Simulator.Input.UpDownCounter = function (sim, node, panel, theSection) {
         htmlElement.value = currentValue;
         currentValue = this.getModifiedValue(currentValue);
         currentValue = currentValue.toString();
+        upElement.setAttribute('aria-valuenow', currentValue); // WCAG
+        downElement.setAttribute('aria-valuenow', currentValue); // WCAG
         this.setData(currentValue);
         valueChanged = true;
         if (this.getSaveOnChange()) this.onChange(this.getNodeID());
@@ -348,6 +404,8 @@ Simulator.Input.UpDownCounter = function (sim, node, panel, theSection) {
 
     this.decrementValue = function (id, minValue, decrement) {
         var htmlElement = simDocument().getElementById(id);
+        var upElement = htmlElement.parentNode.getElementsByTagName('span')[0].getElementsByClassName('goingUp')[0];
+        var downElement = htmlElement.parentNode.getElementsByTagName('span')[0].getElementsByClassName('goingDown')[0];
         currentValue = parseFloat(htmlElement.value);
 
         if ((currentValue - parseFloat(decrement)) >= minValue) {
@@ -356,6 +414,8 @@ Simulator.Input.UpDownCounter = function (sim, node, panel, theSection) {
         htmlElement.value = currentValue;
         currentValue = this.getModifiedValue(currentValue);
         currentValue = currentValue.toString();
+        upElement.setAttribute('aria-valuenow', currentValue); // WCAG
+        downElement.setAttribute('aria-valuenow', currentValue); // WCAG
         this.setData(currentValue);
         valueChanged = true;
         if (this.getSaveOnChange()) this.onChange(this.getNodeID());

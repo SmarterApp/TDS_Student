@@ -456,24 +456,6 @@ TDS.DDInteraction.prototype.getResponseJson = function()
     return groupsList;
 };
 
-// Create <response> and append it to the document root
-TDS.DDInteraction.prototype.createResponseQTI = function (xmlDoc) {
-    var rootNode = xmlDoc.documentElement;
-    var groupsList = this.getResponseJson();
-    Util.Array.each(groupsList, function (groupJson) {
-        var responseNode = xmlDoc.createElement('response');
-        responseNode.setAttribute('id', groupJson.identifier);
-        rootNode.appendChild(responseNode);
-
-        Util.Array.each(groupJson.responses, function (response) {
-            // <response>
-            var valueNode = xmlDoc.createElement('value');
-            valueNode.textContent = response;
-            responseNode.appendChild(valueNode);
-        });
-    });
-};
-
 // get the response as a xml document
 TDS.DDInteraction.prototype.getResponseXml = function()
 {
@@ -505,18 +487,16 @@ TDS.DDInteraction.prototype.getResponseXml = function()
 };
 
 // get the response as a xml string
-TDS.DDInteraction.prototype.getResponse = function()
-{
+TDS.DDInteraction.prototype.getResponse = function () {
     var responseXml = this.getResponseXml();
     return Util.Xml.serializeToString(responseXml);
 };
 
 // load a xml response string
-TDS.DDInteraction.prototype.loadResponse = function (xml)
+TDS.DDInteraction.prototype.loadResponseXml = function (xml)
 {
-    var interactionXml = Util.Xml.parseFromString(xml);
-    var interactionNode = interactionXml.documentElement;
-
+    // get root node
+    var interactionNode = TDS.Interaction.parseXmlRoot(xml);
     var dd = this;
 
     Util.Dom.queryTagsBatch('group', interactionNode, function (groupNode)
@@ -531,30 +511,6 @@ TDS.DDInteraction.prototype.loadResponse = function (xml)
             dd.onDrop(draggable, group);
         });
     });
-};
-
-// load a <response> node (which is like a <group>)
-TDS.DDInteraction.prototype.loadResponseQTI = function (xml) {
-
-    var responseNode;
-    if (typeof xml == 'string') {
-        var xmlDoc = Util.Xml.parseFromString(xml);
-        responseNode = xmlDoc.documentElement;
-    } else {
-        responseNode = xml;
-    }
-
-    var dd = this;
-    var groupId = responseNode.getAttribute('id');
-    var group = dd.getGroup(groupId);
-
-    if (group) {
-        Util.Dom.queryTagsBatch('value', responseNode, function (valueNode) {
-            var responseIdentifier = Util.Xml.getNodeText(valueNode);
-            var draggable = dd.getDraggable(responseIdentifier);
-            dd.onDrop(draggable, group);
-        });
-    }
 };
 
 /************************************************************/

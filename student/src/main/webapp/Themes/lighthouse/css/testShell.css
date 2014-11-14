@@ -2,7 +2,7 @@
 /* Lighthouse Theme */
 
 .topBar {
-	background-image: url(../Images/logo_default_shell.gif);
+	background-image: url(../images/logo_default_shell.gif);
 	padding-right: 263px;
 	background-color: #a7c9e2;
 }
@@ -27,15 +27,15 @@
 }
 #foot {
 	background-color: #164c7e;
-	background-image: url(../Images/studentFooter.gif);
+	background-image: url(../images/studentFooter.gif);
 }
 #studentTools {
-	background-image: url(../Images/studentFooterTools.gif);
+	background-image: url(../images/studentFooterTools.gif);
 	border-right-color: #164c7e;
 }
 .printRequest {
 	display: block;
-	background-image: url(../Images/studentControls/printRequest.gif);
+	background-image: url(../images/studentControls/printRequest.gif);
 	background-repeat: no-repeat;
 	height: 25px;
 	width: 30px;
@@ -52,10 +52,10 @@
 	background-color:#164c7e;
 }
 .sound_cue, .sound_cue.load_incomplete, .sound_cue.disabled  {
-	background: url(../Images/controls/speaker_noclick.gif) no-repeat center center;
+	background: url(../images/controls/speaker_noclick.gif) no-repeat center center;
 }
 
-/* preloads Images so they don't appear 'missing' */
+/* preloads images so they don't appear 'missing' */
 .preloader {
 	background-color: #A7C9E2;
 }

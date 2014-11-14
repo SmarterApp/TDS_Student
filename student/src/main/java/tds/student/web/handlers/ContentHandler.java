@@ -1,10 +1,10 @@
 /*******************************************************************************
- * Educational Online Test Delivery System 
- * Copyright (c) 2014 American Institutes for Research
- *     
- * Distributed under the AIR Open Source License, Version 1.0 
- * See accompanying file AIR-License-1_0.txt or at
- * http://www.smarterapp.org/documents/American_Institutes_for_Research_Open_Source_Software_License.pdf
+ * Educational Online Test Delivery System Copyright (c) 2014 American
+ * Institutes for Research
+ * 
+ * Distributed under the AIR Open Source License, Version 1.0 See accompanying
+ * file AIR-License-1_0.txt or at http://www.smarterapp.org/documents/
+ * American_Institutes_for_Research_Open_Source_Software_License.pdf
  ******************************************************************************/
 package tds.student.web.handlers;
 
@@ -49,22 +49,30 @@ import TDS.Shared.Exceptions.ReturnStatusException;
 
 @Scope ("prototype")
 @Controller
-public class ContentHandler extends TDSHandler
+public class ContentHandler extends BaseContentRendererController
 {
 
   private static final Logger _logger = LoggerFactory.getLogger (ContentHandler.class);
-  
-  @Autowired
-  private IResponseService _responseService;
 
   @Autowired
-  private StudentSettings  _studentSettings;
+  private IResponseService    _responseService;
 
   @Autowired
-  private IContentService  _contentService;
+  private StudentSettings     _studentSettings;
 
   @Autowired
-  PrintService             _printService;
+  private IContentService     _contentService;
+
+  @Autowired
+  PrintService                _printService;
+
+  @RequestMapping (value = "TestShell.axd/getPageContent", produces = "application/xml")
+  @ResponseBody
+  public void loadGroupTestShell (HttpServletResponse response, @RequestParam (value = "page", required = false) int page, @RequestParam (value = "groupID", required = false) String groupId,
+      @RequestParam (value = "dateCreated", required = false) String dateCreated, @RequestParam (value = "new", required = false) boolean prefetched,
+      @RequestParam (value = "attempt", required = false) int attempt) throws StudentContextException, ReturnStatusException, IOException {
+    loadGroup (response, page, groupId, dateCreated, prefetched, attempt);
+  }
 
   /**
    * Load an item group from session DB and render html
@@ -85,18 +93,20 @@ public class ContentHandler extends TDSHandler
   public void loadGroup (HttpServletResponse response, @RequestParam (value = "page", required = false) int page, @RequestParam (value = "groupID", required = false) String groupId,
       @RequestParam (value = "dateCreated", required = false) String dateCreated, @RequestParam (value = "new", required = false) boolean prefetched,
       @RequestParam (value = "attempt", required = false) int attempt) throws StudentContextException, ReturnStatusException, IOException {
+    long startTime = System.currentTimeMillis ();
     response.setContentType ("text/xml");
-    
+    _logger.info ("<<<<<<<<< loadGroup Start: page : groupID:" + groupId + " dateCreated: " + dateCreated + " new: " + prefetched + "  attempt: " + attempt + "  ThreadId: "
+        + Thread.currentThread ().getId ());
     // get test opp and accommodations
     TestOpportunity testOpp = getTestOpportunity ();
-    
+
     AccLookup accLookup = getAccLookup ();
 
     // validate context
     if (testOpp == null) {
       StudentContext.throwMissingException ();
     }
-    _logger.info("loadTest: ContentHandler.loadGroup  Opportunity ID: " + testOpp.getOppInstance ().getKey ()  +  "  group id: " + groupId);
+    _logger.info ("loadTest: ContentHandler.loadGroup  Opportunity ID: " + testOpp.getOppInstance ().getKey () + "  group id: " + groupId);
 
     PageGroup pageGroup = _responseService.getItemGroup (testOpp.getOppInstance (), page, groupId, dateCreated, !_studentSettings.isReadOnly ());
 
@@ -121,81 +131,10 @@ public class ContentHandler extends TDSHandler
     ItemRenderGroup itemRenderGroup = createItemRenderGroup (pageGroup, accLookup);
 
     renderGroup (itemRenderGroup, accLookup, response);
-
+    _logger.info ("<<<<<<<<< loadGroup Total Execution Time : " + ((System.currentTimeMillis () - startTime)) + " ms. ThreadId: " + Thread.currentThread ().getId ());
   }
 
-  /**
-   * A helper function for rending the html for an item render group.
-   * 
-   * @param itemRenderGroup
-   * @param accLookup
-   * @param response
-   * @throws ContentRenderingException
-   */     
-  private void renderGroup (ItemRenderGroup itemRenderGroup, AccLookup accLookup, HttpServletResponse response) throws ContentRenderingException {
-    try {
-      // create HTML renderer
-      PageLayout pageLayout = getBean ("pageLayout", PageLayout.class);
-      
-      // // add unique ID to page wrapper
-      pageLayout.getSettings ().setUseUniquePageId (true);
-      pageLayout.getSettings ().setIncludeJson(false);
-      
-      pageLayout.setItemRenderGroup (itemRenderGroup);
-      
-      // // get accs props
-      AccProperties accProps = new AccProperties(accLookup);
-     
-      // // in braille mode force WAI layout
-      if (accProps.isBrailleEnabled () || (accProps.getTestShell() != null && accProps.getTestShell().equals("TDS_TS_Accessibility"))) {
-        pageLayout.setLayout("WAI");
-      }
-      // use layout that is in the xml
-      else {
-        pageLayout.setLayout();
-      }
-      
-      // get it rendered.
-      RendererServlet.getRenderedOutput (pageLayout);
-      // write the rendered string to the socket.
-     
-     ITSDocumentXmlSerializable contentSerializer = new ITSDocumentXmlSerializable(pageLayout);
-
-      // // render xml to stream);
-       this.setMIMEType(ContentType.Xml);
-  
-       // // write xml
-       XmlWriter writer = new XmlWriter (response.getOutputStream ());
-       writer.writeStartElement("contents");
-       contentSerializer.writeXml(writer);
-       writer.writeEndElement();
-       writer.close();
-       
-       // check if rendering errors
-       if (pageLayout.getErrorCategory () != ErrorCategories.None) {
-          throw new Exception(pageLayout.getErrorDescription ());
-       }
-
-    } catch (Exception exp) {
-      exp.printStackTrace ();
-      throw new ContentRenderingException (exp);
-    }
-
-  }
-
-  /**
-   * Call this function to check if the page group can be auto embossed
-   * (printed).
-   * 
-   * Note: If you call this function it is assumed this page has just been
-   * prefetched and that we can auto emboss content for the first time.
-   * 
-   * @param testOpp
-   * @param accLookup
-   * @param pageGroup
-   * @throws ReturnStatusException
-   */
-  private void autoEmbossing (TestOpportunity testOpp, AccLookup accLookup, PageGroup pageGroup) throws ReturnStatusException  {
+  private void autoEmbossing (TestOpportunity testOpp, AccLookup accLookup, PageGroup pageGroup) throws ReturnStatusException {
     AccProperties accProps = new AccProperties (accLookup);
 
     // make sure this is a braille test
@@ -203,8 +142,7 @@ public class ContentHandler extends TDSHandler
       return;
 
     // check if passage allows auto embossing
-    if (pageGroup.getIitsDocument () != null &&
-        allowsAutoEmbossing (accProps, pageGroup.getIitsDocument ())) {
+    if (pageGroup.getIitsDocument () != null && allowsAutoEmbossing (accProps, pageGroup.getIitsDocument ())) {
 
       _printService.printPassageBraille (testOpp, pageGroup, accLookup);
     }
@@ -225,7 +163,7 @@ public class ContentHandler extends TDSHandler
    * @param document
    * @return
    */
-  private boolean allowsAutoEmbossing (AccProperties accProps, IITSDocument document)  {
+  private boolean allowsAutoEmbossing (AccProperties accProps, IITSDocument document) {
     if (document == null) {
       return false;
     }
@@ -256,7 +194,7 @@ public class ContentHandler extends TDSHandler
    * @return ItemRenderGroup
    * @throws ITSDocumentException
    */
-  private ItemRenderGroup createItemRenderGroup (PageGroup pageGroup, AccLookup accLookup)  {
+  private ItemRenderGroup createItemRenderGroup (PageGroup pageGroup, AccLookup accLookup) {
 
     AccProperties accProperties = new AccProperties (accLookup);
     String language = accProperties.getLanguage ();
@@ -277,7 +215,7 @@ public class ContentHandler extends TDSHandler
       IItemRender itemRender = new ItemRender (item.getDocument (), item.getPosition ());
       itemRender.setResponse (item.getValue ());
       itemRender.setDisabled (false);
-      itemRender.setMark (item.isMarkForReview());
+      itemRender.setMark (item.isMarkForReview ());
       itemRender.setSelected (item.getIsSelected ());
       itemRender.setPrintable (item.isPrintable ());
       itemRender.setPrinted (item.isPrinted ());

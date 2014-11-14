@@ -25,12 +25,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import TDS.Shared.Exceptions.ReturnStatusException;
 import tds.student.web.StudentSettings;
-import tds.student.web.dummy.ManifestSingleton;
 import tds.student.web.dummy.ResourcesSingleton;
 import tds.student.web.handlers.MasterShellHandler;
 import AIR.Common.Configuration.AppSetting;
 import AIR.Common.Web.FacesContextHelper;
 import AIR.Common.Web.Session.Server;
+import AIR.WebResources.ManifestSingleton;
 
 // TODO Shajib: Not sure whether following two lines should stay or not, so
 // commented for now.

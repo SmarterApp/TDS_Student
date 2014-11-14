@@ -15,6 +15,10 @@ Simulator.Utils.Dictionary = function (sim) {
 
     var dbg = function () {return sim.getDebug();};
 
+    this.getElements = function () {
+        return elements;
+    }
+
     this.exists = function (key) {
         return (elements[key] == undefined);
     };

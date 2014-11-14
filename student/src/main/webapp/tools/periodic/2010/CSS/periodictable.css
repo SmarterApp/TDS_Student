@@ -2,8 +2,7 @@
 
 .container {
     -moz-user-select: none; 
-	-moz-user-input: enabled !important; 
-	-moz-user-focus: ignore !important;
+
 	cursor: default;
 	display: block;
 	height: 100%;

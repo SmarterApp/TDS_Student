@@ -2,7 +2,7 @@
 /* Flower Theme */
 
 .topBar {
-	background-image: url(../Images/logo_default_shell.gif);
+	background-image: url(../images/logo_default_shell.gif);
 	padding-right: 273px;
 	background-color: #cd6f0a;
 }
@@ -26,15 +26,15 @@
 }
 #foot {
 	background-color: #cd6f0a;
-	background-image: url(../Images/studentFooter.gif);
+	background-image: url(../images/studentFooter.gif);
 }
 #studentTools {
-	background-image: url(../Images/studentFooterTools.gif);
+	background-image: url(../images/studentFooterTools.gif);
 	border-right-color: #cd6f0a;
 }
 .printRequest {
 	display: block;
-	background-image: url(../Images/studentControls/printRequest.gif);
+	background-image: url(../images/studentControls/printRequest.gif);
 	background-repeat: no-repeat;
 	height: 25px;
 	width: 30px;
@@ -51,23 +51,23 @@
 	background-color:#164c7e;
 }
 .sound_cue, .sound_cue.load_incomplete, .sound_cue.disabled  {
-	background: url(../Images/controls/speaker_noclick.gif) no-repeat center center;
+	background: url(../images/controls/speaker_noclick.gif) no-repeat center center;
 }
 .sound_cue.playing_start {
-	background: url(../Images/controls/animatedSpeaker.gif) no-repeat center center;
+	background: url(../images/controls/animatedSpeaker.gif) no-repeat center center;
 }
 .sound_cue.load_start, .sound_cue.load_complete, .sound_cue.decode_start, .sound_cue.decode_complete,
 .sound_cue.load_start:hover, .sound_cue.load_complete:hover, .sound_cue.decode_start:hover, .sound_cue.decode_complete:hover {
-	background: url(../Images/controls/testshell_loader13.gif) no-repeat center center;
+	background: url(../images/controls/testshell_loader13.gif) no-repeat center center;
 }
 
-/* preloads Images so they don't appear 'missing' */
+/* preloads images so they don't appear 'missing' */
 .preloader {
 	background-color: #164C7E;
 }
 .preloader .endTest {
-	background-image: url(../Images/controls/end.gif);
+	background-image: url(../images/controls/end.gif);
 }
 .preloader .saveAnswer {
-	background-image: url(../Images/controls/save.gif);
+	background-image: url(../images/controls/save.gif);
 }

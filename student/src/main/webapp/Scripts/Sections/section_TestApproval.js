@@ -31,7 +31,7 @@ Sections.TestApproval.prototype.setMessage = function(header, message)
 Sections.TestApproval.prototype.cancel = function()
 {
     // cancel any xhr requests
-    LoginShell.api.abort('checkApproval');
+    TDS.Student.API.cancelCheckApproval();
 
     // stop any polling
     if (this._timer)
@@ -53,44 +53,46 @@ Sections.TestApproval.prototype.load = function ()
     */
 };
 
-Sections.TestApproval.prototype.enter = function()
-{
-    var self = this;
+Sections.TestApproval.prototype.enter = function () {
+
+    var Store = TDS.Student.Storage;
+    var oppInstance = Store.createOppInstance();
+    var testSession = Store.getTestSession();
+    var testProps = Store.getTestProperties();
 
     // default polling duration 
     var pollDuration = 5000;
 
     // check for approval after a specific duration 
-    var pollForApproval = function(duration)
-    {
-        self.timer = YAHOO.lang.later(duration, this, checkForApproval);
-    };
+    var pollForApproval = function(duration) {
+        this.timer = YAHOO.lang.later(duration, this, checkForApproval);
+    }.bind(this);
 
     // check the server for approval
-    var checkForApproval = function()
-    {
-        LoginShell.api.checkApproval(null, function(approval)
-        {
-            if (approval)
-            {
-                // check if approved/denied
-                switch (approval.status)
-                {
-                    case Sections.TestApproval.Status.approved: self.approved(approval); return;
-                    case Sections.TestApproval.Status.denied: self.denied(approval); return;
-                    case Sections.TestApproval.Status.logout: self.logout(); return;
+    var checkForApproval = function() {
+        TDS.Student.API.checkApproval(oppInstance, testSession.id, testProps.key).then(function (approval) {
+            // check if approved/denied
+            switch (approval.status) {
+                case Sections.TestApproval.Status.approved: {
+                    this.approved(approval); return;
                 }
-                
-                // continue polling for approval
-                pollForApproval(pollDuration);
+                case Sections.TestApproval.Status.denied: {
+                    this.denied(approval); return;
+                }
+                case Sections.TestApproval.Status.logout: {
+                    this.logout(); return;
+                }
             }
-        });
+            // continue polling for approval
+            pollForApproval(pollDuration);
+        }.bind(this));
     };
 
     // begin polling for approval
     pollForApproval(1);
 };
 
+// this is called automatically when the test is approved
 Sections.TestApproval.prototype.approved = function(approval)
 {
     LoginShell.setTestAccommodations(approval.segmentsAccommodations);

@@ -1,10 +1,10 @@
 <resources>
-    
+
     <!-- 
     This CSS is used in Loader.aspx. 
     All file paths are relative to /Shared/. 
     -->
-    
+
     <!-- Base -->
     <fileSet name="base">
 
@@ -26,6 +26,8 @@
 
         <input>../Scripts/Interaction/CSS/interaction.css</input>
         <input>../Scripts/EquationEditor2/mathjax_editor.css</input>
+        <input>../Scripts/EquationEditor3/eq_editor.css</input>
+        <input>../Scripts/EquationEditor3/custom_eq_editor.css</input>
         <input>../Scripts/LineReader/lineReader.css</input>
         <input>../Scripts/MatchItem/mi.css</input>
         <input>../Scripts/Slideshow/show.css</input>
@@ -34,129 +36,86 @@
         <input>../Scripts/HTMLEditor2/editor.css</input>
         <input>../Scripts/EditTask/edit.css</input>
         <input>../Scripts/Scaffolding/asi.css</input>
-        <input>../Scripts/EBSR/ebsr.css</input> 
+        <input>../Scripts/EBSR/ebsr.css</input>
         <input>../Scripts/Scratchpad/scratchpad.css</input>
         <input>../Scripts/Mask/mask.css</input>
         <input>../Scripts/TableInput/base.css</input>
-		<input>../Scripts/Moogle/CSS/moogle.css</input>
+        <input>../Scripts/Moogle/CSS/moogle.css</input>
 
     </fileSet>
-	
-	<fileSet name="navigator_widgets">
+
+    <fileSet name="navigator_widgets">
         <input>../Scripts/Interaction/CSS/interaction.css</input>
         <input>../Scripts/EquationEditor2/mathjax_editor.css</input>
         <input>../Scripts/Simulator2/Renderer/CSS/simulator.css</input>
         <input>../Scripts/Simulator2/Renderer/CSS/slider.css</input>
         <input>../Scripts/EditTask/edit.css</input>
-		<input>../Scripts/MatchItem/mi.css</input>
+        <input>../Scripts/MatchItem/mi.css</input>
     </fileSet>
-    
-    <!-- Classic Styles -->
-    <fileSet name="classic">
-        
-        <reference set="base" />
-        
+
+    <fileSet name="universal">
+
+        <!-- YUI -->
+        <input>../Scripts/Libraries/YUI/menu/assets/skins/sam/menu.css</input>
+        <input>../Scripts/Libraries/YUI/button/assets/skins/sam/button.css</input>
+        <input>../Scripts/Libraries/YUI/container/assets/skins/sam/container.css</input>
+        <input>../Scripts/Libraries/YUI/editor/assets/skins/sam/editor.css</input>
+
         <!-- Shell -->
-        <input>CSS/reset.css</input>
-        <input>CSS/testShell.css</input>
-        <input>../Projects/{0}/css/testShell.css</input>
+        <input>CSS/modernFrame.css</input>
+        <input>CSS/normalize.css</input>
+        <input>CSS/Universal/shell.css</input>
+        <input>CSS/dialogs.css</input>
+        <input>CSS/accommodations.css</input>
 
         <!-- Content -->
         <input>CSS/items.css</input>
         <input>CSS/elpa.css</input>
-        <input>CSS/accommodations.css</input>
-        <input>CSS/frame.css</input>
+        <input>CSS/Universal/items.css</input>
         <input>../Projects/{0}/css/items.css</input>
         <input>../Projects/{0}/css/elpa.css</input>
-        <input>../Scripts/Simulator2/Renderer/CSS/simulator.css</input>
-        <input>../Scripts/Simulator2/Renderer/CSS/slider.css</input>
+
+        <!-- Widgets -->
+        <reference set="widgets" />
 
     </fileSet>
 
     <!-- Modern Styles (copied from TestShellModern.aspx) -->
     <fileSet name="modern">
-
-        <!-- YUI -->
-        <input>../Scripts/Libraries/YUI/menu/assets/skins/sam/menu.css</input>
-        <input>../Scripts/Libraries/YUI/button/assets/skins/sam/button.css</input>
-        <input>../Scripts/Libraries/YUI/container/assets/skins/sam/container.css</input>
-        <input>../Scripts/Libraries/YUI/editor/assets/skins/sam/editor.css</input>
-    
-        <!-- Shell -->
-        <input>CSS/modernFrame.css</input>
-        <input>CSS/normalize.css</input>
-        <input>CSS/modernShell.css</input>
-        <input>../Projects/{0}/css/modernShell.css</input>
-        <input>CSS/dialogs.css</input>
-        <input>CSS/accommodations.css</input>
-        
-        <!-- Content -->
-        <input>CSS/items.css</input>
-        <input>CSS/elpa.css</input>
-        <input>CSS/modernItems.css</input>
-        <input>../Projects/{0}/css/items.css</input>
-        <input>../Projects/{0}/css/elpa.css</input>
-        <input>../Projects/{0}/css/modernItems.css</input>
-        
-        <!-- Widgets -->
-        <reference set="widgets" />
-        
+        <reference set="universal" />
+        <input>CSS/Universal/modernish.css</input>
     </fileSet>
-	
-	<fileSet name="navigator">		       
-        <!-- YUI -->
-        <input>../Scripts/Libraries/YUI/menu/assets/skins/sam/menu.css</input>
-        <input>../Scripts/Libraries/YUI/button/assets/skins/sam/button.css</input>
-        <input>../Scripts/Libraries/YUI/container/assets/skins/sam/container.css</input>
-        <input>../Scripts/Libraries/YUI/editor/assets/skins/sam/editor.css</input>
-    
-        <!-- Shell -->
-        <input>CSS/modernFrame.css</input>
-        <input>CSS/normalize.css</input>
-        <input>CSS/modernShell.css</input>
-        <input>../Projects/{0}/css/modernShell.css</input>
-        <input>CSS/dialogs.css</input>
-        <input>CSS/accommodations.css</input>
-        
-        <!-- Content -->
-        <input>CSS/items.css</input>
-        <input>CSS/elpa.css</input>
-        <input>CSS/modernItems.css</input>
-        <input>../Projects/{0}/css/items.css</input>
-        <input>../Projects/{0}/css/elpa.css</input>
-        <input>../Projects/{0}/css/modernItems.css</input>
-        
-        <!-- Widgets -->
-        <reference set="navigator_widgets" />	 
-	</fileSet>
-    
-    <!-- Accessibility Shell (copied from TestShellAccessibility.aspx) -->
-    <fileSet name="accessibility">
 
-        <!-- YUI Styles -->
-        <input>../Scripts/Libraries/YUI/button/assets/skins/sam/button.css</input>
-        
-        <!-- adding modern styles -->
-        <input>CSS/modernShell.css</input>
-        <input>CSS/modernItems.css</input>
-        
-        <!-- Shell/Content Styles -->
-        <input>CSS/wai_shell.css</input>
-        <input>CSS/wai.css</input>
-        <input>../Projects/{0}/css/wai_shell.css</input>
-        <input>CSS/dialogs.css</input>
-        <input>CSS/accommodations.css</input>
-        
-        <!-- Widget Styles -->
-        <reference set="widgets" />
-        
-    </fileSet>
-    
     <!-- Development Styles -->
     <fileSet name="dev">
-        <reference set="modern" />
+        <reference set="universal" />
+    </fileSet>
+
+    <fileSet name="navigator">
+        <!-- YUI -->
+        <input>../Scripts/Libraries/YUI/menu/assets/skins/sam/menu.css</input>
+        <input>../Scripts/Libraries/YUI/button/assets/skins/sam/button.css</input>
+        <input>../Scripts/Libraries/YUI/container/assets/skins/sam/container.css</input>
+        <input>../Scripts/Libraries/YUI/editor/assets/skins/sam/editor.css</input>
+
+        <!-- Shell -->
+        <input>CSS/modernFrame.css</input>
+        <input>CSS/normalize.css</input>
+        <input>CSS/modernShell.css</input>
+        <input>../Projects/{0}/css/modernShell.css</input>
+        <input>CSS/dialogs.css</input>
+        <input>CSS/accommodations.css</input>
+
+        <!-- Content -->
+        <input>CSS/items.css</input>
+        <input>CSS/elpa.css</input>
+        <input>CSS/modernItems.css</input>
+        <input>../Projects/{0}/css/items.css</input>
+        <input>../Projects/{0}/css/elpa.css</input>
+        <input>../Projects/{0}/css/modernItems.css</input>
+
+        <!-- Widgets -->
+        <reference set="navigator_widgets" />
     </fileSet>
 
 </resources>
-
-

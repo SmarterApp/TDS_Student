@@ -252,7 +252,7 @@ Util.Frame.addEnhancements = function(iframe)
             form.setAttribute('method', 'POST');
             form.setAttribute('target', this.id); // post form to iframe window
 
-            // submit form which will render pages items (TestFrame.xhtml)
+            // submit form which will render pages items (TestFrame.aspx)
             form.submit();
             return true;
         },
@@ -394,7 +394,7 @@ Util.Frame.addEnhancements = function(iframe)
 
     };
 
-    YAHOO.mix(iframe, enhancements);
+    Util.Object.mix(iframe, enhancements);
 };
 
 Util.Frame.BLANK_SOURCE = 'javascript:""';

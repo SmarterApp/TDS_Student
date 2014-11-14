@@ -21,6 +21,7 @@ form.yui-panel.sp_container {
 .sp_canvas_container {
     margin-left: 95px;
     position: relative;
+    overflow: hidden; /* to prevent DomNodes' elements from obscuring things outside the canvas's area */
 }
 .sp_property_panel {
     background: rgba(242,242,242,0.95) none repeat scroll 0 0;
@@ -181,7 +182,7 @@ form.yui-panel.sp_container {
     width: 1em;
     min-width: 23px;
     margin-top: -1.8em;
-	background: url("Images/wd-wheel.png") no-repeat center center;
+	background: url("images/wd-wheel.png") no-repeat center center;
 	background-size:100%;
 }
 .TDS_PS_L0 .sp_colour_wheel {
@@ -293,7 +294,7 @@ sp_colour_btn_select {
     padding: 0px;
 }
 .sp_toolbar .sp_toolbar_container ul.sp_toolbar_ul_left li a {
-    background-image: url("Images/sprite_toolbar.png");
+    background-image: url("images/sprite_toolbar.png");
     background-repeat: no-repeat;
     display: block;
     overflow:hidden;
@@ -302,7 +303,7 @@ sp_colour_btn_select {
 	width: 0;
 }
 .sp_toolbar .sp_toolbar_container ul.sp_toolbar_ul_right li a {
-    background-image: url("Images/sprite_toolbar.png");
+    background-image: url("images/sprite_toolbar.png");
     background-repeat: no-repeat;
 	display: block;
     overflow:hidden;

@@ -7,10 +7,10 @@
 /* Florida's logos */
 
 #ot-logo_spot1 {
-    background-image:  url(../Images/logo-florida.png);
+    background-image:  url(../images/logo-florida.png);
 }
 .browser_ie.browserVer_6 #ot-logo_spot1{
-	background: url(../Images/logo-florida.gif) no-repeat transparent;
+	background: url(../images/logo-florida.gif) no-repeat transparent;
 }
 .languages {
 	display: none;
@@ -30,9 +30,6 @@
     font-size: 2.35em;
 }
 
-.practiceTest #loginWrap {
-	width: 45em;
-}
 
 
 /* @group Force ananyomous login for now */
@@ -60,3 +57,13 @@
 }
 
 /* @end */
+
+/* keep launchpad icon hidden for florda*/
+/* I guess we want this turned on? */
+/*
+.platform_ios a#btnLaunchpad, 
+.platform_android a#btnLaunchpad, 
+.platform_chrome.browser_airsecurebrowser a#btnLaunchpad, 
+.platform_chrome.browser_airmobilesecurebrowser a#btnLaunchpad {
+	display: none !important;
+}*/

@@ -32,23 +32,6 @@ Blackbox.getConfig = function() {
     return (typeof blackboxConfig == 'object') ? blackboxConfig : {};
 };
 
-Blackbox.getClient = function() {
-    var queryObj = this._getQueryObject();
-    return queryObj.getValue('client');
-};
-
-Blackbox.getClientStylePath = function() {
-    var queryObj = this._getQueryObject();
-    return queryObj.getValue('clientstyle');
-};
-
-// check if HTML5 doctype was used
-Blackbox.isHTML5Doctype = function() {
-    // http://stackoverflow.com/questions/6088972/get-doctype-of-an-html-as-string-with-javascript
-    var node = document.doctype;
-    return (node != null && node.publicId === '');
-};
-
 // get the shell name (modern, classic or accessibility)
 Blackbox.getShell = function() {
     var queryObj = this._getQueryObject();
@@ -59,53 +42,10 @@ Blackbox.getShell = function() {
         shell = shell.toLowerCase(); // make lowercase
         shell = shell.replace('shell', ''); // remove 'shell' from name
     } else {
-        shell = 'modern';
+        shell = 'universal';
     }
 
     return shell;
-};
-
-// figures out the best renderer to use for content manager
-Blackbox.getRenderer = function() {
-
-    var queryObj = this._getQueryObject();
-
-    var renderer = queryObj.getValue('renderer');
-
-    // cleanup renderer value
-    if (renderer) {
-        renderer = renderer.toLowerCase();
-    }
-
-    // check if someone requested a specific renderer
-    switch (renderer) {
-        case 'direct':
-            return ContentManager.Renderer.Direct;
-        case 'singleframe':
-            return ContentManager.Renderer.SingleFrame;
-        case 'multiframe':
-            return ContentManager.Renderer.MultiFrame;
-        default: {
-            var shell = Blackbox.getShell();
-
-            // since no renderer was defined try and and figure it out using shell
-            switch (shell) {
-                case 'accessibility':
-                case 'modern':
-                    return ContentManager.Renderer.Direct;
-                case 'classic':
-                    return ContentManager.Renderer.MultiFrame;
-                default: {
-                    // since nobody specific anything lets make a guess using doctype
-                    if (Blackbox.isHTML5Doctype()) {
-                        return ContentManager.Renderer.Direct;
-                    } else {
-                        return ContentManager.Renderer.MultiFrame;
-                    }
-                }
-            }
-        }
-    }
 };
 
 // this function gets called when the blackbox DOM and scripts are available
@@ -127,32 +67,26 @@ Blackbox.init = function() {
     }
 
     // add empty accommodations
-    var accommodations = new Accommodations();
-    Accommodations.Manager.add(accommodations);
-
-    // initialize content manager
-    if (TDS.baseUrl && TDS.baseUrl.length > 0) {
-        ContentManager.init(TDS.baseUrl);
-        ContentManager.Frame.setBaseUrl(TDS.baseUrl, true);
-    } else {
-        ContentManager.init();
-    }
-
+    var accs = new Accommodations();
+    Accommodations.Manager.add(accs);
+    
     // let everyone know the blackbox is available
     Blackbox.fireEvent('available');
+
+    // set the base URL for the player and recorder initialization
+    ContentManager.setBaseUrl(TDS.baseUrl);
 
     // setup audio
     var flashPath = ContentManager.resolveBaseUrl('Scripts/Libraries/soundmanager2/swf/');
     TDS.Audio.Player.setup(flashPath);
     TDS.Audio.Recorder.initialize();
 
-    // initialize TTS (why would this be initialized here instead of only in the module when included)
-    //TTSManager.init();
-
     // get the blackbox config
     var config = Blackbox.getConfig();
 
-    ContentManager.onPageEvent('loaded', function(page) {
+    ContentManager.onPageEvent('loaded', function (page) {
+
+        /*
         // get zoom
         var accProps = Accommodations.Manager.getCurrentProperties();
         var zoomLevel = accProps.getPrintSize();
@@ -165,6 +99,7 @@ Blackbox.init = function() {
         else {
             zoomObj.reset();
         } // use default
+        */
 
         // show a page when it is loaded
         if (config.preventShowOnLoad !== true) {
@@ -178,59 +113,34 @@ Blackbox.init = function() {
         // start playing any audio that is set to auto play
         page.autoPlayQueue.start();
     });
-
-    // get the specific client style path
-    var clientStyle = Blackbox.getClientStylePath();
-
-    // check if client style path was provided and if it wasn't then try the client name
-    if (!YAHOO.lang.isString(clientStyle)) {
-        clientStyle = Blackbox.getClient();
-    }
-
-    // if clientstyle or client was provided then tell the renderer
-    if (YAHOO.lang.isString(clientStyle)) {
-        ContentManager.Renderer.setClient(clientStyle);
-    }
-
-    // create and initialize the renderer
-    var contentContainer = YUD.get('contents');
-
-    if (contentContainer) {
-        
-        var contentRenderer = Blackbox.getRenderer();
-
-        // log the type of renderer
-        if (contentRenderer == ContentManager.Renderer.Direct) {
-            console.log('Content Renderer: direct');
-        } else if (contentRenderer == ContentManager.Renderer.SingleFrame) {
-            console.log('Content Renderer: single frame');
-        } else if (contentRenderer == ContentManager.Renderer.MultiFrame) {
-            console.log('Content Renderer: multi frame');
-        } else {
-            console.log('Content Renderer: unknown');
-        }
-
-        ContentManager.Renderer.init(contentContainer, contentRenderer);
-    }
+    
+    // set accommodations from url (NOTE: leave this after blackboxInitializing)
+    Blackbox.setAccommodationsFromUrl();
 
     // check if enabling accessibility
-    if (Blackbox.getShell() == 'accessibility') {
+    var accProps = Accommodations.Manager.getCurrentProps();
+    if (accProps.isStreamlinedMode()) {
+        TDS.Shell.allowFocus = true;
         ContentManager.enableAccessibility();
     }
 
-    // set accommodations from url (NOTE: leave this after blackboxInitializing)
-    Blackbox.setAccommodationsFromUrl();
+    // load buttons
+    TDS.Shell.name = 'universal';
+    TDS.Shell.processConfig(config.testShellToolbars);
+    TDS.Shell.showButton('btnItemScore');
 
     // hook up event handlers
     Blackbox.bindUIEvents();
 
-    // if someone included item information in the shell URL then load the content
-    // var urlContentRequest = Blackbox.getContentRequestFromUrl();
+    // initialize content manager
+    if (TDS.baseUrl && TDS.baseUrl.length > 0) {
+        ContentManager.init(TDS.baseUrl);
+    } else {
+        ContentManager.init();
+    }
 
     Blackbox.fireEvent('ready');
 
-    // load content in the url if any
-    // if (urlContentRequest) Blackbox.loadContent(urlContentRequest);
 };
 
 // use this function to bind any events to the UI
@@ -268,76 +178,71 @@ Blackbox.bindUIEvents = function() {
 };
 
 // this function is called to request content to get loaded
-Blackbox.loadContent = function(contentRequest, forceReload) {
+Blackbox.loadContent = function (contentRequest, forceReload) {
+
     // get the current page
     var currentPage = ContentManager.getCurrentPage();
 
-    // check if the content request is already being shown
+    // check if the content is being shown
     if (currentPage) {
-        if (!forceReload && currentPage.id == contentRequest.id) {
-            return;
-        }
         currentPage.hide();
     }
 
-    if (!forceReload) {
-        // check if there is an existing page
-        var existingPage = ContentManager.getPage(contentRequest.id);
+    var page = ContentManager.getPage(contentRequest.id);
 
-        if (existingPage) {
-            existingPage.show();
-            return; // no need to load anything..
+    if (page) {
+        if (forceReload) {
+            ContentManager.removePage(page);
+        } else {
+            return Q.resolve(page);
         }
     }
 
+    var deferred = Util.Promise.defer();
     TDS.Dialog.showProgress();
 
     // update latest accommodations for this request
     var accommodations = Accommodations.Manager.getCurrent();
     contentRequest.accommodations = accommodations.getSelectedJson();
 
-    var contentError = function(xhrData) {
-        alert('Blackbox Error: ' + xhrData.statusText);
+    // called when config fails to load
+    function onContentFail(xhrData) {
         TDS.Dialog.hideProgress();
+        TDS.Dialog.showWarning('Blackbox Error: ' + xhrData.statusText);
+        deferred.reject();
     };
 
-    // function for when the content returns from XHR
-    var contentReady = function(xhrData) {
+    // called when the config is loaded
+    function onContentReady(xhrData) {
+
         // check if right status was returned
         if (xhrData.status != 200) {
-            contentError(xhrData);
+            onContentFail(xhrData);
             return;
         }
 
+        // create array of content json from the xml
         var contents = ContentManager.Xml.create(xhrData.responseXML);
 
-        if (contents) {
-            for (var i = 0; i < contents.length; i++) {
-                var content = contents[i];
-
-                // check if existing page already
-                var page = ContentManager.getPage(content.id);
-
-                // if there is an existing page remove it
-                if (page && forceReload) {
-                    ContentManager.removePage(page);
-                    page = null;
-                }
-
-                if (page) {
-                    page.show();
-                } else {
-                    // create and render new page
-                    page = ContentManager.createPage(content);
-                    page.render();
-                }
-            }
+        // check if any content
+        if (!contents || contents.length == 0) {
+            onContentFail(xhrData);
+            return;
         }
+
+        // create page and render
+        var content = contents[0];
+        page = ContentManager.createPage(content);
+        page.render();
+        page.once('loaded', function() {
+            deferred.fulfill(page);
+        });
+
     };
 
     var callback = {
-        success: contentReady,
-        failure: contentError,
+        success: onContentReady,
+        failure: onContentFail,
         timeout: 120000
     };
 
@@ -351,11 +256,12 @@ Blackbox.loadContent = function(contentRequest, forceReload) {
     YAHOO.util.Connect.setDefaultXhrHeader(false); // 
 
     // send xhr request
-    var requestUrl = TDS.resolveBaseUrl('ContentRequest.axd/load');
+    var requestUrl = TDS.resolveBaseUrl('Pages/API/ContentRequest.axd/load');
     var postData = YAHOO.lang.JSON.stringify(contentRequest);
     YAHOO.util.Connect.asyncRequest('POST', requestUrl, callback, postData);
 
-    Util.dir(contentRequest);
+    // return promise to load
+    return deferred.promise;
 };
 
 // returns a content object based on the values in the query string
@@ -611,119 +517,22 @@ Blackbox.enableButton = function(name, shouldEnable) {
     return true;
 };
 
-// function for creating a top bar button html
-Blackbox._createButton = function(id, label, fn) {
-
-    var liEl = document.createElement('li');
-
-    var buttonEl = document.createElement('button');
-    
-    if (id) {
-        buttonEl.id = id;
-    }
-    
-    liEl.appendChild(buttonEl);
-
-    var spanEl = document.createElement('span');
-    spanEl.className = 'icon';
-    
-    if (label) {
-        spanEl.innerHTML = label;
-    }
-    
-    buttonEl.appendChild(spanEl);
-
-    if (YAHOO.lang.isFunction(fn)) {
-        YUE.addListener(buttonEl, 'click', fn);
-    }
-
-    return liEl;
-};
-
 // add a button to the top bar tool section 
 Blackbox.createButtonTool = function(id, label, fn) {
-    var liEl = Blackbox._createButton(id, label, fn);
-    var topBarEl = document.getElementById('studentTools');
-    if (topBarEl) {
-        var ulEl = YAHOO.util.Dom.getFirstChild(topBarEl);
-        if (ulEl) {
-            ulEl.appendChild(liEl);
-        }
-    }
+    TDS.Shell.addTool({
+        id: id,
+        label: label,
+        fn: fn
+    });
 };
 
 // add a button to the top bar controls section 
 Blackbox.createButtonControl = function(id, label, fn) {
-    var liEl = Blackbox._createButton(id, label, fn);
-    var topBarEl = document.getElementById('studentControls');
-    if (topBarEl) {
-        var ulEl = YAHOO.util.Dom.getFirstChild(topBarEl);
-        if (ulEl) {
-            ulEl.appendChild(liEl);
-        }
-    }
-};
-
-// pop up a new window with the accessibility view
-// NOTE: Used by ITS
-Blackbox.openWindow = function(contentRequest) {
-    
-    // check for content to request
-    if (!YAHOO.lang.isObject(contentRequest)) {
-        return false;
-    }
-
-    // set defaults if they are not assigned
-    var queryObj = this._getQueryObject(top);
-    if (contentRequest.client == null) {
-        contentRequest.client = queryObj.getValue('client');
-    }
-    if (contentRequest.language == null) {
-        contentRequest.language = queryObj.getValue('language');
-    }
-    if (contentRequest.language == null) {
-        contentRequest.language = "ENU";
-    } // default if blank
-
-    // logging
-    dump(contentRequest);
-
-    // create form
-    var form = document.createElement("form");
-
-    // set form properties
-    form.enctype = form.encoding = "multipart/form-data";
-    form.setAttribute('method', 'POST');
-
-    // post form to new window
-    // form.setAttribute('action', 'Accessibility.xhtml');
-    form.setAttribute('action', TDS.resolveBaseUrl('Accessibility.xhtml'));
-    form.setAttribute('target', '_blank');
-
-    // add form to document (this is required on some browsers)
-    document.body.appendChild(form);
-
-    // parameters
-    var params = { json: YAHOO.util.Lang.JSON.stringify(contentRequest) };
-
-    // check if any parameters passed in and if so add them to form
-    for (var key in params) {
-        if (!params.hasOwnProperty(key)) {
-            continue;
-        }
-
-        // create hidden field
-        var hiddenField = document.createElement("input");
-        hiddenField.setAttribute("type", "hidden");
-        hiddenField.setAttribute("name", key);
-        hiddenField.setAttribute("value", params[key]);
-        form.appendChild(hiddenField);
-    }
-
-    // submit form
-    form.submit();
-
-    return true;
+    TDS.Shell.addControl({
+        id: id,
+        label: label,
+        fn: fn
+    });
 };
 
 function log(message) {

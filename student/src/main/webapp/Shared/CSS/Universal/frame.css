@@ -1,0 +1,118 @@
+/* @group Misc frame styles that were hard coded */
+
+/*moved highlgiht into item styles */
+
+/* This prevents the text of the element and sub-elements to be selected. 
+   Selection can be enabled on sub-elements using "-moz-user-select:text". */
+body * {
+    -moz-user-select: -moz-none; 
+    -webkit-user-select: none; 
+    -ms-user-select: none; 
+}
+
+/* The text can be selected by the user on the passage and stem */
+.thePassage.contextAreaFocus *, 
+.stemContainer.contextAreaFocus *,
+.illustrationContainer.contextAreaFocus *,
+.interactionPrompt.contextAreaFocus * {
+    -moz-user-select: text !important;
+    -webkit-user-select: text !important;
+    -ms-user-select: text !important;
+}
+/* BUG 94512: IE only, applies style to container div, otherwise all text is selectable. */
+.thePassage.contextAreaFocus , 
+.stemContainer.contextAreaFocus,
+.interactionPrompt.contextAreaFocus, 
+.illustrationContainer.contextAreaFocus {
+	-ms-user-select: element !important;
+}
+
+/* Item container tabbing (new for 2014) */
+.itemContainer.contextAreaFocus .stemContainer * {
+    -moz-user-select: text !important;
+    -webkit-user-select: text !important;
+    -ms-user-select: text !important;
+}
+.itemContainer.contextAreaFocus .stemContainer {
+	-ms-user-select: element !important;
+}
+
+/* I commented this out for universal shell since it was allowing things to be selected. Why did we have this? */
+/*
+.itemContainer {
+    -moz-user-select: text !important;
+    -webkit-user-select: text !important;
+    -ms-user-select: text !important;
+}
+*/
+
+/* We need to allow input fields to be selectable */
+input, 
+textarea,
+div.EditorContainer * {
+    -moz-user-select: text !important;
+    -webkit-user-select: text !important;
+    -ms-user-select: text !important;
+}
+
+/*********************************/
+
+/* fixed selectable image and tables! */
+img, .thePassage table  {
+    -moz-user-select: none; 
+    -webkit-user-select: none; 
+    -ms-user-select: none; 
+	cursor: default;
+}
+
+.thePassage {
+	-moz-user-input: enabled !important; 
+	-moz-user-focus: ignore !important;
+}
+
+.forceRedraw {
+    padding-bottom:1px;
+}
+
+/* @end */
+
+/* Misc IE frame styles that were hard coded  */
+
+.StudentGridStatus {
+    display: none !important;
+}
+
+/* If visibility is set to hidden on Flash it does not load 
+.GridContainer applet, .GridContainer iframe, .GridContainer object {
+    visibility: visible !important;
+}*/
+
+object, embed {
+    -moz-user-select: -moz-none; 
+    -webkit-user-select: none; 
+    -ms-user-select: none; 
+}
+
+/* @end */
+
+/* try and prevent menu on long press */
+a {
+    -webkit-touch-callout: none !important;
+}
+
+/* Disable text selection */
+user-select-none * {
+    user-select: none;
+    -moz-user-select: -moz-none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+/* Enable text selection */
+user-select-text * {
+    user-select: text !important;
+    -moz-user-select: text !important;
+    -webkit-user-select: text !important;
+	-ms-user-select: text !important;
+}
+

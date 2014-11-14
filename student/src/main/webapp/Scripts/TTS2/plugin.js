@@ -65,13 +65,17 @@ CM TTS page plugin
         return window.ContentManager != null && window.ContentManager.getAccommodationProperties().isTTSTrackingEnabled();
     };
 
-    CM.registerEntityPlugin('tts-item', ItemPlugin_TTS, function itemMatch(page, entity) {
+    function itemMatch(page, entity) {
         var accProps = page.getAccommodationProperties();
         if (accProps && entity instanceof ContentItem) {
             if (entity.isResponseType('EBSR')) return false;
             return accProps.hasTTSItem();
         }
         return false;
+    }
+
+    CM.registerEntityPlugin('item.tts', ItemPlugin_TTS, itemMatch, {
+        priority: 299 // right before strikethrough
     });
 
     ItemPlugin_TTS.prototype.load = function () {
@@ -113,10 +117,9 @@ CM TTS page plugin
         var ctrl = TTS.getInstance();
         if (!ctrl.isAvailable()) return;
 
-        var mcWidgets = item.getWidgetGroup('mc');
-        var isMC = mcWidgets.length > 0;
+        var isMC = item.widgets.has('mc');
         if (isMC) {
-            return;
+//            return;
         }
 
         //Create the text to speech menu defaults.
@@ -143,11 +146,16 @@ CM TTS page plugin
         TTS.Config.Debug && console.log("TTS On Item Menushow config", menuCfg);
     }
 
+    ItemPlugin_TTS.prototype.hide = function () {
+        // if we are playing audio stop it
+        TTS.getInstance().stop();
+    };
+
     /* Passage */
     function PassagePlugin_TTS(page, entity, config) {
     }
 
-    CM.registerEntityPlugin('tts-passage', PassagePlugin_TTS, function itemMatch(page, entity) {
+    CM.registerEntityPlugin('passage.tts', PassagePlugin_TTS, function itemMatch(page, entity) {
         var accProps = page.getAccommodationProperties();
         if (accProps && entity instanceof ContentPassage) {
             return accProps.hasTTSStimulus();
@@ -179,6 +187,11 @@ CM TTS page plugin
         TTS.Config.Debug && console.log("Passage menu show.", menuCfg);
         TTS.MenuSystem.addMenuSetup(menu, menuCfg);
     }
+
+    PassagePlugin_TTS.prototype.hide = function () {
+        // if we are playing audio stop it
+        TTS.getInstance().stop();
+    };
 
     /* Page */
     function PagePlugin_TTS(page, config) {

@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 /*Lake Theme */
 
 /* @group general */
@@ -8,7 +8,7 @@
 .ot-shadowBox .instructions {
 	border-color: #0F6797;
 }
-.ot-shadowBox h2 {
+.ot-shadowBox h1 {
 	border-color: #94B6D9;
 }
 /* @end */
@@ -16,7 +16,7 @@
 /* @group header and footer */
 #tds-ot-header {
 	border-bottom: none;
-	background: #004a80 url(../Images/lake.jpg) no-repeat left top;
+	background: #004a80 url(../images/lake.jpg) no-repeat left top;
 }
 #tds-ot-branding {
 	background-color: transparent;
@@ -59,7 +59,7 @@
 	background-color: transparent;
 }
 #ot-logo_spot1 {
-	background: url(../Images/logo_default.png) no-repeat center center;
+	background: url(../images/logo_default.png) no-repeat center center;
 	width: 147px;
 }
 #ot-logo_spot2 {
@@ -85,7 +85,7 @@
 	margin-top: 0px;
 }
 .practiceTest #ot-brand2 strong {
-	background-image: url(../Images/bike/bikeTop.gif);
+	background-image: url(../images/bike/bikeTop.gif);
 	background-color: #27659b;
 	border-right: none;
 	padding-right: 50px;
@@ -96,7 +96,7 @@
 /*.header .titleThing {
 	color: #000;
 	background-color: #9ebec4;
-	background-image: url(../Images/breadcrumb.gif);
+	background-image: url(../images/breadcrumb.gif);
 }*/
 /* @end */
 
@@ -116,8 +116,8 @@
 	background-image: none !important;
 	border-color: #004a80;
 }
-.practiceTest #sectionLogin .ot-shadowBox h2 {
-	background-image: url(../Images/bike/bikeTitle.gif);
+.practiceTest #sectionLogin .ot-shadowBox h1 {
+	background-image: url(../images/bike/bikeTitle.gif);
 }
 .practiceTest #loginForm1, .practiceTest #loginForm2 {
 	border-color: #0F6797;
@@ -141,7 +141,7 @@
 	color: #0F6797 !important;
 }
 .goPractice {
-	background-image: url(../Images/bike/goPractice.gif);
+	background-image: url(../images/bike/goPractice.gif);
 }
 .browserWrong {
 	border: 1px solid #0F6797;
@@ -182,7 +182,7 @@
 }
 .resumeTest, .newTest {
 	background-color: #DCEBF5;
-    background-image: url("../Images/select.gif");
+    background-image: url("../images/select.gif");
     border: 1px solid #164C7E;
 }
 #sectionTestSelection .resumeTest:hover, #sectionTestSelection .newTest:hover {

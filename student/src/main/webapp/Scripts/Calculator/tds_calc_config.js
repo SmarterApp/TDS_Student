@@ -69,7 +69,8 @@ var CalcConfigBase =
         shortcutInitFunc: initGraphingShortCut,
         textInputLen: [{id: 'equa1', len: 48}, {id: 'equa2', len: 48},{id: 'equa3', len: 48},{id: 'equa4', len: 48},
                        {id: 'initX', len: 10}, {id: 'xmin', len: 6}, {id: 'ymin', len:6}, {id: 'xmax', len: 6}, {id: 'ymax', len: 6}, 
-                       {id: 'xscale', len: 3}, {id: 'yscale', len: 3}, {id: 'tracestepsize', len: 3}]
+                       { id: 'xscale', len: 48 }, { id: 'yscale', len: 48 }, { id: 'tracestepsize', len: 3 }],
+        fractionalPartLen: { 'xscale': 2, 'yscale': 2 }
     },
     {
         name: CalcModeList['GraphingInv'], displayName: 'Graphing', type: CalcType.graphing, lazyEvaluation: true, css: 'graphing inv',
@@ -77,7 +78,8 @@ var CalcConfigBase =
         shortcutInitFunc: initGraphingShortCut,
         textInputLen: [{ id: 'equa1', len: 48 }, { id: 'equa2', len: 48 }, { id: 'equa3', len: 48 }, { id: 'equa4', len: 48 },
                        { id: 'initX', len: 10 }, { id: 'xmin', len: 6 }, { id: 'ymin', len: 6 }, { id: 'xmax', len: 6 }, { id: 'ymax', len: 6 },
-                       { id: 'xscale', len: 3 }, { id: 'yscale', len: 3 }, { id: 'tracestepsize', len: 3 }]
+                       { id: 'xscale', len: 48 }, { id: 'yscale', len: 48 }, { id: 'tracestepsize', len: 3 }],
+        fractionalPartLen: { 'xscale': 2, 'yscale': 2 }
     },
     {
         name: CalcModeList['Regression'], displayName: 'Regression',type: CalcType.regression,lazyEvaluation: true,css: 'regressions',

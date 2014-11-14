@@ -9,7 +9,7 @@
 	top: 91px;
 }
 #studentTools {
-	background: url("../Images/logo_utah_demo.png") no-repeat scroll 5px 5px transparent;
+	background: url("../images/logo_utah_demo.png") no-repeat scroll 5px 5px transparent;
     height: 70px;
     width: 310px;
 }
@@ -51,17 +51,17 @@
 	padding:.3em;
 }
 .yui-panel td.incorrect {
-	background-image: url(../Images/RedX.png);
+	background-image: url(../images/RedX.png);
 	background-repeat: no-repeat;
 	background-position: center center;	
 }
 .yui-panel td.correct {
-	background-image: url(../Images/GreenCheck.png);
+	background-image: url(../images/GreenCheck.png);
 	background-repeat: no-repeat;
 	background-position: center center;	
 }
 .yui-panel td.na {
-	background-image: url(../Images/YellowDash.png);
+	background-image: url(../images/YellowDash.png);
 	background-repeat: no-repeat;
 	background-position: center center;	
 }

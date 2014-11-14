@@ -1,6 +1,19 @@
 ﻿TestShell.ContentLoader = 
 {
-    _requests: []
+    _requests: [],
+    _contentLookup: {}
+};
+
+// add contents for cache lookup
+TestShell.ContentLoader.addContents = function(contents) {
+    contents.forEach(function (content) {
+        this._contentLookup[content.id] = content;
+    }.bind(this));
+};
+
+// check of cached content
+TestShell.ContentLoader.getContent = function (group) {
+    return this._contentLookup[group.id];
 };
 
 // get a group based on the xhr request
@@ -23,8 +36,14 @@ TestShell.ContentLoader._createRequest = function(group)
     // get url for loading content
     var url = group.getContentUrl();
 
+    var json = {
+        accs: TDS.Student.Storage.serializeAccs()
+    };
+
+    var content = Util.QueryString.stringify(json);
+
     // create request object
-    var request = this._xhrManager.createRequest(group.id, url, 'POST', null, this._processResponse, this);
+    var request = this._xhrManager.createRequest(group.id, url, 'POST', content, this._processResponse, this);
 
     // config:
     request.setArgs(
@@ -51,6 +70,16 @@ TestShell.ContentLoader.request = function(group)
 
     // add group to current requests
     this._requests.push(group);
+
+    // check for cached content
+    var content = this.getContent(group);
+    if (content) {
+        YAHOO.lang.later(0, this, function () {
+            Util.Array.remove(this._requests, group);
+            this._processContent(content);
+        });
+        return true; // don't call xhr
+    }
 
     // create request object
     var request = TestShell.ContentLoader._createRequest(group);
@@ -112,7 +141,12 @@ TestShell.ContentLoader._processXml = function(group, xmlDoc)
 
     // create new content page and render html
     var xmlContents = ContentManager.Xml.create(xmlDoc);
-    contentPage = ContentManager.createPage(xmlContents[0]);
+    this._processContent(xmlContents[0]);
+};
+
+TestShell.ContentLoader._processContent = function (content)
+{
+    var contentPage = ContentManager.createPage(content);
     contentPage.render();
 };
 

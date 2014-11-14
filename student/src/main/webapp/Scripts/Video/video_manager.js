@@ -90,7 +90,7 @@ VideoManager.embed = function(pageWin, linkVideo,zoomFactor)
         config.width = 400;
         config.height = 226;
     }
-
+    
     // NOTE: You have to create array using the frame window (https://bugzilla.mozilla.org/show_bug.cgi?id=548862)
     var createAnArray = function() {
         return (typeof pageWin.createAnArray == 'function') ? pageWin.createAnArray() : [];
@@ -104,6 +104,14 @@ VideoManager.embed = function(pageWin, linkVideo,zoomFactor)
     config.modes = createAnArray();
     config.modes.push({ type: 'html5' });
     config.modes.push({ type: 'flash', src: flashPath });
+    
+    // clear logo and context menu entries
+    config.logo = {
+        file: '',
+        link: ''
+    };
+    config.abouttext = '';
+    config.aboutlink = '';
 
     // embed player
     var player = pageWin.jwplayer(linkVideo).setup(config);

@@ -14,8 +14,8 @@
     
     <tds:ResourcesLink File="~/Scripts/scripts_student.xml" Name="TDSCalculator" runat="server" />
    
-    <tds:CSSLink runat="server" href="css/calc.css" rel="stylesheet" type="text/css" />
-    <tds:CSSLink runat="server" href="css/project.css" rel="stylesheet" type="text/css" />
+    <tds:CSSLink runat="server" href="~/Scripts/Calculator/css/calc.css" rel="stylesheet" type="text/css" />
+    <tds:CSSLink runat="server" href="~/Scripts/Calculator/css/project.css" rel="stylesheet" type="text/css" />
    
     <script type="text/javascript">
         var tdscalc;

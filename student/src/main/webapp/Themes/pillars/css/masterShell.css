@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 /*Lake Theme */
 
 /* @group general */
@@ -8,7 +8,7 @@
 .ot-shadowBox .instructions {
 	border-color: #0F6797;
 }
-.ot-shadowBox h2 {
+.ot-shadowBox h1 {
 	border-color: #94B6D9;
 }
 /* @end */
@@ -16,7 +16,7 @@
 /* @group header and footer */
 #tds-ot-header {
 	border-bottom: 1px solid #b1b2b4;
-	/*background: #fff url(../Images/training_test.gif) no-repeat right 40px;*/
+	/*background: #fff url(../images/training_test.gif) no-repeat right 40px;*/
 	background: #fff;
 }
 #tds-ot-branding {
@@ -40,24 +40,7 @@
 .sessionID {
 	border-right: none;
 }
-.ot-smallButtons a {
-	background-color: #d9e1e3;
-    border-color:#b6bfba;
-    /* finger friendly*/
-    padding: 5px 10px;
-}
-.ot-smallButtons a:hover {
-	background-color: #fff;
-	color: #000 !important;
-}
-#btnAccGlobal {
-	background-position: center 4px;
-}
-#btnAccGlobal:hover, #btnAccGlobal:focus{
-	background-position: center 4px;
-	text-indent: -9999px;
-	padding-top: 15px;
-}
+
 #tds-ot-branding{
 	height: 116px;
 	display: block;
@@ -68,7 +51,7 @@
 	background-color: transparent;
 }
 #ot-logo_spot1 {
-	background: url(../Images/logo_default.png) no-repeat left;
+	background: url(../images/logo_default.png) no-repeat left;
 	height: 87px;
 	width: 180px;
 	margin-left: 25px;
@@ -83,7 +66,7 @@
 /*
 #ot-brand2 {
 	background-color: transparent;
-	background-image: url(../Images/brand2-bar.gif);
+	background-image: url(../images/brand2-bar.gif);
 	background-repeat: repeat-x;
 	border: none !important;
 	height: 31px !important;
@@ -103,19 +86,15 @@
 	font-weight: normal;
 }*/
 .practiceTest #ot-brand2 strong {
-	background-image: url(../Images/bike/bikeTop.gif);
+	/*background-image: url(../images/bike/bikeTop.gif);
 	background-color: #819dba;
 	border-right: none;
-	padding-right: 50px;
+	padding-right: 50px;*/
 }
 #tds-ot-footer span, #tds-ot-footer a {
 	color: #164c7e;
 }
-/*.header .titleThing {
-	color: #000;
-	background-color: #9ebec4;
-	background-image: url(../Images/breadcrumb.gif);
-}*/
+
 /* @end */
 
 /* @group action buttons */
@@ -129,13 +108,14 @@
 /* @end */
 
 /* @group Section Login */
-#sectionLogin .ot-innerShadow {
+#sectionLogin .ot-innerShadow,
+#sectionLoginProctor .ot-innerShadow {
 	background-color: #fff !important;
 	background-image: none !important;
 	border-color: #004a80;
 }
-.practiceTest #sectionLogin .ot-shadowBox h2 {
-	background-image: url(../Images/bike/bikeTitle.gif);
+.practiceTest #sectionLogin .ot-shadowBox h1 {
+
 }
 .practiceTest #loginForm1, .practiceTest #loginForm2 {
 	border-color: #0F6797;
@@ -159,7 +139,7 @@
 	color: #0F6797 !important;
 }
 .goPractice {
-	background-image: url(../Images/bike/practice1.png);
+	background-image: url(../images/bike/practice1.png);
 }
 .browserWrong {
 	border: 1px solid #0F6797;
@@ -200,7 +180,7 @@
 }
 .resumeTest, .newTest {
 	background-color: #DCEBF5;
-    background-image: url("../Images/select.gif");
+    background-image: url("../images/select.gif");
     border: 1px solid #164C7E;
 }
 #sectionTestSelection .resumeTest:hover, #sectionTestSelection .newTest:hover {
@@ -272,6 +252,15 @@ body.practiceTest .proctorMessage {
 }
 .forOperational a.goPractice{
 	float: left;
+}
+/* end */
+
+/* For Multi-Input Session ID */
+fieldset.sessionID legend{
+	width: 33%;
+}
+.loginRow{
+	overflow: hidden;
 }
 /* end */
 

@@ -6,7 +6,7 @@
 * Creates a new VerticalSpace class.
 *****************************************************************************
 */
-Simulator.Input.VerticalSpace = function (sim, panel, theSection) {
+Simulator.Input.VerticalSpace = function (sim, panel, theSection, container) {
 
     Simulator.Input.StaticElement.call(this, sim); // Inherit Instance variables
 
@@ -43,7 +43,7 @@ Simulator.Input.VerticalSpace = function (sim, panel, theSection) {
     };
 
     this.render = function () {
-        var panelHtml = panel.getHTMLElement();
+        var panelHtml = container;
         var divElement = simDocument().createElement('div');
         divElement.style.paddingBottom = 20 * this.getLines() + 'px';
         panelHtml.appendChild(divElement);

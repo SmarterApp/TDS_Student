@@ -4,7 +4,7 @@
 
     this.Controls =
     {
-        txtLoginSessionID: YUD.get('loginSessionID'),
+        txtLoginSessionID: YUD.get('loginSessionID') ? [YUD.get('loginSessionID')] : [YUD.get('loginSessionID1'), YUD.get('loginSessionID2'), YUD.get('loginSessionID3')],
         cbUser: YUD.get('cbUser'),
         cbSession: YUD.get('cbSession'),
         btnLogin: YUD.get('btnLogin')
@@ -20,15 +20,6 @@
     {
         this.disableSessionInput(this.Controls.cbSession.checked);
     });
-
-    // diagnostics
-    this.addClick('btnDiagnostic', function()
-    {
-        this.request('diag');
-    });
-
-    // Events: buttons
-    // this.addClick(this.Controls.btnLogin, this.validate);
 };
 
 YAHOO.lang.extend(Sections.Login, Sections.Base);
@@ -49,30 +40,70 @@ Sections.Login.prototype.setLoginInput = function(id, value)
 };
 
 // get session info
-Sections.Login.prototype.getSessionID = function() { return this.Controls.txtLoginSessionID.value; };
-Sections.Login.prototype.setSessionID = function(value) { this.Controls.txtLoginSessionID.value = value; };
+Sections.Login.prototype.getSessionID = function () {
+    var txtLoginSessionIdArray = this.Controls.txtLoginSessionID,
+        txtLoginSessionIdValue = '';
+
+    if (TDS.isDataEntry || TDS.isReadOnly) {
+        txtLoginSessionIdValue = LoginShell.getProxySessionID();
+    } else {
+        for (var i = 0; i < txtLoginSessionIdArray.length; i++) {
+            var inputValue = txtLoginSessionIdArray[i].value.trim();
+            txtLoginSessionIdValue += (i == 0 || inputValue == '') ? inputValue : '-' + inputValue;
+        }
+    }
+
+    // for guest session, a transfer would be neccessary
+    if (txtLoginSessionIdValue == 'GUEST-GUEST-GUEST') {
+        txtLoginSessionIdValue = 'GUEST Session';
+    }
+
+    return txtLoginSessionIdValue;
+};
+Sections.Login.prototype.setSessionID = function (value) {
+    var txtLoginSessionIdArray = value.split('-');
+    for (var j = 0; j < this.Controls.txtLoginSessionID.length; j++) {
+        // get specific session input element
+        var sessionEl = this.Controls.txtLoginSessionID[j];
+        if (sessionEl) {
+            sessionEl.value = value ? txtLoginSessionIdArray[j] : '';
+        }
+    }
+};
 
 Sections.Login.prototype.load = function ()
 {
-    var self = this;
-
     // clear previous student and reset accommodations
     TDS.globalAccommodations.selectDefaults();
     LoginShell.clear();
 
     // Mainly On chrome OS running our extension, we want to try to force full screen after student logs in 
-    // and release this lock when they log out
-    if (Util.Browser.isSecure() && Util.Browser.isChrome()) {
+    // and release this lock when they log out; also on iOS browser, we call function enableLockDown to disable
+    // the check if the browser has been backgrounded
+    if (Util.Browser.isSecure()) {
         Util.SecureBrowser.enableLockDown(false);
     }
 
     var loginForm = YUD.get('loginForm');
 
-    loginForm.onsubmit = function()
-    {
-        self.validate();
+    loginForm.onsubmit = function () {
+
+        // Test to verify that local storage is working... otherwise thing will fail silectly later resulting
+        //  in much user frustration.
+        try {
+            Util.Storage.set('storageTest', '');
+        } catch (ex) {
+            if (ex.name.toLowerCase() === 'quotaexceedederror') {
+                var localStorageErrorMsg = Messages.getAlt('Login.Message.LocalStorageError', 'Unable to use local storage on your device. Please disable Private browsing if enabled');
+                TDS.Dialog.showAlert(localStorageErrorMsg, function () { return; });
+            }
+            return false;
+        }
+        Util.Storage.remove('storageTest'); // Clean Up
+
+        this.validate();
         return false; // cancels form submission
-    };
+    }.bind(this);
 
     // render login fields and set visible controls
     this.render();
@@ -81,8 +112,9 @@ Sections.Login.prototype.load = function ()
     // If the welcome mat has already collected the login information, 
     // submit it now.
     this.checkForRedirect(loginForm);
-    // debug
-    // this.setQuerystring();
+
+    // load currently running apps (some mobile browsers require we do this)
+    Util.SecureBrowser.loadProcessList();
 };
 
 Sections.Login.prototype.render = function() {
@@ -177,6 +209,9 @@ Sections.Login.prototype.setControls = function()
     {
         // hide session input section since we assign session on the server side
         YUD.setStyle('loginForm2', 'display', 'none');
+        // Cannot login as GUEST
+        this.disableUserInput(false);
+        this.Controls.cbUser.checked = false;
     }
 };
 
@@ -205,14 +240,15 @@ Sections.Login.prototype.disableUserInput = function(disabled)
 Sections.Login.prototype.disableSessionInput = function(disabled)
 {
     this.Controls.cbSession.checked = disabled;
-    this.Controls.txtLoginSessionID.disabled = disabled;
-
-    if (disabled)
-    {
-        this.setSessionID('GUEST Session');
+    for (var i = 0; i < this.Controls.txtLoginSessionID.length; i++) {
+        if (this.Controls.txtLoginSessionID[i]) {
+            this.Controls.txtLoginSessionID[i].disabled = disabled;
+        }
     }
-    else
-    {
+
+    if (disabled) {
+        this.setSessionID('GUEST-GUEST-GUEST');
+    } else {
         this.setSessionID('');
     }
 };
@@ -220,10 +256,8 @@ Sections.Login.prototype.disableSessionInput = function(disabled)
 // validate the login fields and submit to the server for authentication
 Sections.Login.prototype.validate = function ()
 {
-    var self = this;
-
     //Check if the environment is secure in case we are using a secure browser
-    if (Util.Browser.isSecure()) {
+    if (Util.Browser.isSecure() && !TDS.Debug.ignoreBrowserChecks) {
         if (!Util.SecureBrowser.isEnvironmentSecure()) {
             var defaultError = 'Environment is not secure. Please notify your proctor';
             // for iOS brower, also add a notice to adjust the volume before enabling the Guided Access mode
@@ -241,34 +275,6 @@ Sections.Login.prototype.validate = function ()
         }
     }
 
-    // get forbidden apps
-    var forbiddenApps = Util.SecureBrowser.getForbiddenApps();
-
-    var forbiddenAppsFlat = '';
-
-    for (var i = 0; i < forbiddenApps.length; i++)
-    {
-        if (forbiddenAppsFlat.length > 0) forbiddenAppsFlat += '|';
-        forbiddenAppsFlat += forbiddenApps[i].desc;
-    }
-    
-    // check for multiple instances of "Secure Browser" that may be active. We dont want to allow login if there is a another instance running (and possibly defunct)
-    // Unfortunately, since all our client browsers have client specific names, the best we can do is look for 'SecureBrowser' as opposed to the actual process name
-    if (Util.Browser.isSecure()) {
-        var processList = Util.SecureBrowser.getProcessList(true);
-        var browserInstances = [];
-        Util.Array.each(processList, function (processName) {
-            if (processName.toLowerCase().indexOf('securebrowser') > -1) {
-                browserInstances.push(processName);
-            }
-        });
-        if (browserInstances.length > 1) {
-            // more than 1 instance possibly running
-            TDS.Dialog.showWarning(Messages.getAlt('LoginShell.Alert.MultipleBrowserInstances', 'More than 1 secure browser instance detected. Please close all instances and try again'));
-            return;
-        }
-    }
-
     // get login fields
     var keyValues = [];
 
@@ -280,27 +286,24 @@ Sections.Login.prototype.validate = function ()
 
     }, this);
 
-    // create login request
-    var loginRequest =
-    {
-        keyValues: keyValues.join(';'),
-        sessionID: this.getSessionID(),
-        forbiddenApps: forbiddenAppsFlat
+    // get forbidden apps
+    var forbiddenApps = Util.SecureBrowser.getForbiddenApps();
+    var sessionID = this.getSessionID();
+
+    var loginCallback = function(loginInfo) {
+        console.log('Login Info', loginInfo);
+        LoginShell.setLoginInfo(loginInfo);
+        this.request('next', loginInfo);
+
+        // we want to try to force full screen after student logs in and release lock when they log out, and
+        // that applies to secure browsers that implement function enableLockDown
+        if (Util.Browser.isSecure()) {
+            Util.SecureBrowser.enableLockDown(true);
+        }
     };
 
-    // submit request to the server
-    LoginShell.api.loginStudent(loginRequest, function (loginInfo) {
-        if (loginInfo) {
-            LoginShell.setLoginInfo(loginInfo);
-            self.request('next', loginInfo);
-
-            // Mainly On chrome OS running our extension, we want to try to force full screen after student logs in 
-            // and release this lock when they log out
-            if (Util.Browser.isSecure() && Util.Browser.isChrome()) {
-                Util.SecureBrowser.enableLockDown(true);
-            }
-        }
-    });
+    TDS.Student.API.loginStudent(keyValues, sessionID, forbiddenApps)
+        .then(loginCallback.bind(this));
 };
 
 // this is a helper function for the login form
@@ -309,7 +312,6 @@ function loginForm()
     LoginShell.workflow.getActivity('sectionLogin').validate();
     return false;
 }
-
 
 // If we are here from welcome mat app, try the login
 // credentials now, don't make the user type them in again.

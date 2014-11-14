@@ -1,57 +1,50 @@
 //Created to fulfill ticket 88056
 
-(function (TS){
+(function (TS) {
+
     var Player = TDS.Audio.Player;
-    var Slideshow = window.slide; 
 
     function attemptPlay(){
-        subscribeEndAudio();
-        Util.log('unmuting...');
+        Player.onIdle.subscribe(doMute);
+        Player.onFail.subscribe(doMute);
+        Player.onPause.subscribe(doMute);
+        
         if(Util.SecureBrowser.unmute()){
             TestShell.muted = false;
+            Util.log('unmuting...');
         }
     }
     
-    function engageAutomute(){
-        subscribePlayAudio();
+    function engageAutomute() {
+        Player.onPlay.subscribe(attemptPlay);
+        Player.onResume.subscribe(attemptPlay);
         doMute();
         Util.log('Automute engaged');
     }
 
-    function doMute()
-    {
-        unsubscribeEndAudio();
-        Util.log('muting...');
-        if(Util.SecureBrowser.mute()){
-            TestShell.muted = true;
-        }
-    }
-    
-    function subscribePlayAudio(){
-        Player.onPlay.subscribe(attemptPlay);
-        Slideshow.onPlay.subscribe(attemptPlay);
-    }
-
-    function subscribeEndAudio(){
-        Player.onIdle.subscribe(doMute);
-        Player.onFail.subscribe(doMute);
-        Slideshow.onIdle.subscribe(doMute);
-    }
-    
-    function unsubscribeEndAudio(){
+    function doMute(){
         Player.onIdle.unsubscribe(doMute);
         Player.onFail.unsubscribe(doMute);
-        Slideshow.onIdle.unsubscribe(doMute);
+        Player.onPause.unsubscribe(doMute);
+
+        if(Util.SecureBrowser.mute()){
+            TestShell.muted = true;
+            Util.log('muting...');
+        }
     }
 
-    function automute_init(){
+    function load() {
         var accProps = TDS.getAccommodationProperties();
         if(accProps && accProps.isAutoMute()) {
             engageAutomute();
         }
     }
-    TS.Events.subscribe('init', automute_init);
-    
+
+    TS.registerModule({
+        name: 'automute',
+        load: load
+    });
+
     //DEBUG
     //TS.automute_start = engageAutomute;
 })(TestShell);

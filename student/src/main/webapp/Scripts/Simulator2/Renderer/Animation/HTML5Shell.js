@@ -330,7 +330,7 @@ Simulator.Animation.HTML5Shell = function(sim, theSimID) {
             if (result === Simulator.Constants.ANIMATION_ALIVE) {
                 resetStatusTimer();
             }
-		}
+        }
     };
 
     var srTimeouts = 0;

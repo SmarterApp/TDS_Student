@@ -17,9 +17,9 @@ import javax.faces.context.ResponseWriter;
 
 import org.apache.commons.lang.StringUtils;
 
-import tds.student.web.dummy.ManifestSingleton;
 import tds.student.web.dummy.ResourcesSingleton;
 import AIR.Common.Web.Session.Server;
+import AIR.WebResources.ManifestSingleton;
 
 @FacesComponent (value = "ScriptLink")
 public class ScriptLink extends UIComponentBase

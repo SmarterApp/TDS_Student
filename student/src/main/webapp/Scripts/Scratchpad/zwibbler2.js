@@ -251,6 +251,44 @@
         el.innerHTML = '<a href="' + url + '">x</a>';
         return el.firstChild.href;
     }
+
+    (function ($) {
+
+        /*
+         * jQuery Double Tap
+         * Developer: Sergey Margaritov (sergey@margaritov.net)
+         * Date: 22.10.2013
+         * Based on jquery documentation http://learn.jquery.com/events/event-extensions/
+         */
+
+        $.event.special.dbltap = {
+            bindType: 'touchend',
+            delegateType: 'touchend',
+
+            handle: function (event) {
+                var handleObj = event.handleObj,
+                    targetData = jQuery.data(event.target),
+                    now = new Date().getTime(),
+                    delta = targetData.lastTouch ? now - targetData.lastTouch : 0,
+                    delay = delay == null ? 300 : delay;
+
+                if (delta < delay && delta > 30) {
+                    targetData.lastTouch = null;
+                    event.type = handleObj.origType;
+                    ['clientX', 'clientY', 'pageX', 'pageY'].forEach(function (property) {
+                        event[property] = event.originalEvent.changedTouches[0][property];
+                    })
+
+                    // let jQuery handle the triggering of "dbltap" event handlers
+                    handleObj.handler.apply(this, arguments);
+                } else {
+                    targetData.lastTouch = now;
+                }
+            }
+        };
+
+    })(jQuery);
+
     /*
     Zwibbler
     
@@ -479,25 +517,17 @@
             var li = $("<li>", { 'class': 'sp_tool_list_item' }).append(a);
             var index = this.buttons.length;
             if (clickfn) {
-                //var touchStart = function (evt) {
-                //    console.log("Got touchstart");
-                //    evt.preventDefault();
-                //    clickfn(evt);
-                //};
-                //a.bind("touchstart", touchStart);
-                //li.bind("touchstart", touchStart);
-
-                var clicky = function (evt) {
-                    console.log("Got a click");
+                a.on('click touchend', function (evt) {
                     evt.stopPropagation();
+
+                    // prevent touchend events from raising click events after 300ms
                     evt.preventDefault();
+
                     if (!self.isReadOnly()) {
                         self.focus(index);
                         clickfn(evt);
                     }
-                };
-                //li.click(clicky);
-                a.click(clicky);
+                });
             }
             if (col_name == this.ul_Left.valueOf(0)) {
                 this.ul_Left.append(li);
@@ -653,7 +683,7 @@
             "defaultTextColour": "#000000",
             "defaultShadow": false,
             "fonts": ["Arial", "Times New Roman"],
-            "imageFolder": "$SCRIPT/Images",
+            "imageFolder": "$SCRIPT/images",
             "nudge": 10,
             "showArrowTool": true,
             "showArrowHeadSizeProperty": true,
@@ -7646,6 +7676,10 @@
                 width: 'auto'
             });
 
+            _dialog.renderEvent.subscribe(function () {
+                this.element.style.marginLeft = -this.element.offsetWidth / 2 + 'px';
+            });
+
             return _dialog;
         }
 
@@ -8721,6 +8755,7 @@
         */
         init: function (canvas, doc, colourPanel, eventSource, config) {
             this.config = config;
+            this.scale = config.scale;
             this.colourPanel = colourPanel;
             this.eventSource = eventSource;
             this.canvas = canvas[0];
@@ -8912,7 +8947,6 @@
         */
         setDocument: function (doc) {
             this.doc = doc;
-            this.scale = 1.0;
             this.translateX = 0;
             this.translateY = 0;
 
@@ -9151,7 +9185,7 @@
                 e.preventDefault();
             });
 
-            $(this.canvas).dblclick(function (e) {
+            $(this.canvas).on("dblclick dbltap", function (e) {
                 if (self.isReadOnly()) {
                     e.stopPropagation();
                     e.preventDefault();
@@ -12591,6 +12625,7 @@
         }
 
     };
+
     /*
     Copyright 2010 Hanov Solutions Inc. All Rights Reserved
     
@@ -12611,18 +12646,20 @@
     */
     function PropertyPanel(config, id) {
         this.config = config;
+
         this.initPanel($("<div>"));
         this.div.addClass("sp_property_panel");
         this.SPID = id;
         this.div.attr('id', id + '_sp_property-panel');
+
         this.wrapperDiv = $('<div>', { 'class': 'sp_property_panel_wrapper' });
         this.div.append(this.wrapperDiv);
-        if (this.div[0] && typeof YAHOO.util.DD == 'function')
-            this.draggrableElement = new YAHOO.util.DD(this.div[0]);
+
         var dragHanldeId = this.SPID + '_property_panel_drag_handle';
-        var draggableDiv = $('<div>', { 'class': 'sp_drag_panel_handle', 'title': 'Move', 'id': dragHanldeId}).text('Property Panel');
-        this.draggrableElement.setHandleElId(dragHanldeId);
-        this.wrapperDiv.append(draggableDiv);
+        var dragHandle = $('<div>', { 'class': 'sp_drag_panel_handle', 'title': 'Move', 'id': dragHanldeId }).text('Property Panel');
+        this.makeDraggableElement(this.div, dragHandle, $('.theQuestions'));
+        this.wrapperDiv.append(dragHandle);
+
         var self = this;
         var a = $('<a>', { 'class': 'sp_close_panel', 'title': 'Close', 'href': '#'}).text('Hide Options').click(function () { self.hide() });
         this.wrapperDiv.append(a);
@@ -13219,8 +13256,132 @@
                 "left": "155px",
                 "top": "30px"
             });
-        }
+        },
 
+        makeDraggableElement: function ($element, $dragHandle, $boundingElement) {
+            var dragging = false,
+                $document = $(document),
+                mouseOrigin, elementOffsetOrigin;
+
+            function getPoint(event) {
+
+                if (typeof event.screenX !== 'number') {
+                    event = event.originalEvent.changedTouches[0];
+                }
+
+                return {
+                    x: event.screenX | 0,
+                    y: event.screenY | 0
+                };
+            }
+
+            function getDelta(currentEvent) {
+                var point = getPoint(currentEvent);
+                point.x -= mouseOrigin.x;
+                point.y -= mouseOrigin.y;
+
+                return point;
+            }
+
+            function getRect($element, outter) {
+                var element = $element[0],
+                    elementOffset = $element.offset();
+
+                return {
+                    left: elementOffset.left | 0,
+                    top: elementOffset.top | 0,
+                    right: (elementOffset.left + (outter ? element.offsetWidth : element.scrollWidth)) | 0,
+                    bottom: (elementOffset.top + (outter ? element.offsetHeight : element.scrollHeight)) | 0,
+                    width: function () {
+                        return this.right - this.left;
+                    },
+                    height: function () {
+                        return this.bottom - this.top;
+                    }
+                };
+            }
+
+            // includes margins/borders/paddings
+            function getOutterRect($element) {
+                return getRect($element, true);
+            }
+
+            // inner area's rectangle
+            function getInnerRect($element) {
+                return getRect($element, false);
+            }
+
+            function startDrag(event) {
+                if (!dragging) {
+                    dragging = true;
+
+                    mouseOrigin = getPoint(event);
+                    elementOffsetOrigin = getOutterRect($element);
+
+                    $dragHandle.off('mousedown touchstart', startDrag).on('mouseup touchend', endDrag);
+                    $document.on('mousemove touchmove', drag);
+
+                    event.stopPropagation();
+                    event.preventDefault();
+                }
+            }
+
+            function drag(event) {
+
+                if (!dragging) {
+                    return endDrag(event);
+                }
+
+                var delta = getDelta(event),
+                    bounds = getInnerRect($boundingElement),
+                    deltaLimits = {
+                        min: {
+                            x: bounds.left - elementOffsetOrigin.left,
+                            y: bounds.top - elementOffsetOrigin.top
+                        },
+                        max: {
+                            x: bounds.right - elementOffsetOrigin.right,
+                            y: bounds.bottom - elementOffsetOrigin.bottom
+                        }
+                    };
+
+                function constrain(dimension, axis) {
+                    if (elementOffsetOrigin[dimension]() < bounds[dimension]()) {
+                        delta[axis] = Math.max(delta[axis], deltaLimits.min[axis]);
+                        delta[axis] = Math.min(delta[axis], deltaLimits.max[axis]);
+                    } else {
+                        // we are bigger than the container, can't move either direction
+                        delta[axis] = 0;
+                    }
+                }
+
+                constrain('width', 'x');
+                constrain('height', 'y');
+
+                if (delta.x || delta.y) {
+                    $element.offset({
+                        left: elementOffsetOrigin.left + delta.x,
+                        top: elementOffsetOrigin.top + delta.y
+                    });
+                }
+
+                event.stopPropagation();
+                event.preventDefault();
+            }
+
+            function endDrag(event) {
+                if (dragging) {
+                    $dragHandle.on('mousedown touchstart', startDrag).off('mouseup touchend', endDrag);
+                    $document.off('mousemove touchmove', drag);
+                    dragging = false;
+                }
+
+                event.stopPropagation();
+                event.preventDefault();
+            }
+
+            $dragHandle.on('mousedown', startDrag);
+        }
     };
 
     // inherit from Panel
@@ -13285,20 +13446,19 @@
         this.toolbarContainer = $('<div>', { 'class': 'sp_toolbar' });
         this.div.append(this.toolbarContainer);
 
-        var canvasSize = this.config.options.canvasSize;
-        if (!(canvasSize)) {
-            canvasSize = "600X800";
-        }
-        var canvasWidth = canvasSize.substr(0, canvasSize.indexOf('X')) + "px";
-        var canvasHeight = canvasSize.substr(canvasSize.indexOf('X') + 1, canvasSize.length) + "px";
+        this.config.scale = this.config.scale || 1.0;
+        var canvasSize = (this.config.options.canvasSize || "600X800").split('X');
+        this.config.originalWidth = canvasSize[0];
+        this.config.originalHeight = canvasSize[1];
 
-        this.canvasContainer = $('<div>', { 'class': 'sp_canvas_container', 'width': canvasWidth, 'height': canvasHeight });
-        //this.canvasContainer = $('<div>', { 'class': 'sp_canvas_container' });
+        this.canvasContainer = $('<div>', {
+            'class': 'sp_canvas_container',
+            'width': this.config.originalWidth + 'px',
+            'height': this.config.originalHeight + 'px'
+        });
         this.div.append(this.canvasContainer);
 
-        //Setting width & height will set style, canvas requires the attribute
-        this.canvas = $("<canvas>", { 'class': 'sp_main_canvas', 'width': canvasWidth, 'height': canvasHeight });
-        //this.canvas = $("<canvas>", { 'class': 'sp_main_canvas' });
+        this.canvas = $("<canvas>", { 'class': 'sp_main_canvas' });
         this.resizeCanvas();
         this.canvasContainer.append(this.canvas);
 
@@ -13428,6 +13588,17 @@
         return this.log("Local document changed.");
     };
 
+    Application.prototype.zoom = function (scale) {
+        this.canvasContainer.css({
+            width: this.config.originalWidth * scale + 'px',
+            height: this.config.originalHeight * scale + 'px',
+        });
+
+        this.resizeCanvas();
+
+        this.view.scale = scale;
+        this.view.update(true);
+    };
 
     Application.prototype.resizeCanvas = function () {
         var rect = this.getCanvasRectangle(this.canvasContainer);
@@ -13562,12 +13733,12 @@
             }, this), rightList, 'Text');
         }
         //Hiding Math Tool until we resolve Math Editor Reload function.
-        if (this.config.get("showMathTool")) {
+        /*if (this.config.get("showMathTool")) {
             this.toolbar.addButton('math', __bind(function (e) {
                 this.toolbar.clearHighlights();
                 return this.newMathML("");
             }, this), rightList, 'Math');
-        }
+        }*/
         this.toolbar.setButtonHighlight("pick", true);
         if (this.config.getOption("showImageTool")) {
             this.toolbar.addButton('pick', __bind(function (e) {
@@ -13892,7 +14063,7 @@
 
         // ensure our div has a tabindex. when it is in focus, we will interpret
         // the keyboard commands.
-        this.div.attr("tabindex", "0");
+        this.div.attr("tabindex", "-1");
 
         this.div.on("focus", function (e) {
             self.log("Got keyboard focus");
@@ -13935,6 +14106,13 @@
     @param {boolean} toolbar
     */
     Application.prototype.focus = function (toolbar) {
+        // on some browsers, giving focus to an element scrolls to that element
+        // this is useful for elements which you tab into, but in our case the
+        // Application will only recieve focus on a click event on the canvas or
+        // div, and the scrolling is not wanted (bug 126539)
+        var container = $('.theQuestions'),
+            scrollTop = container.scrollTop();
+
         this.toolbarInFocus = toolbar;
 
         if (this.toolbarInFocus) {
@@ -13943,6 +14121,9 @@
         } else {
             this.toolbar.blur();
         }
+        this.div.focus();
+
+        container.scrollTop(scrollTop);
     };
 
     /**

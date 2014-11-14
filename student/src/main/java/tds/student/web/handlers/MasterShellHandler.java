@@ -1,10 +1,10 @@
 /*******************************************************************************
- * Educational Online Test Delivery System 
- * Copyright (c) 2014 American Institutes for Research
- *     
- * Distributed under the AIR Open Source License, Version 1.0 
- * See accompanying file AIR-License-1_0.txt or at
- * http://www.smarterapp.org/documents/American_Institutes_for_Research_Open_Source_Software_License.pdf
+ * Educational Online Test Delivery System Copyright (c) 2014 American
+ * Institutes for Research
+ * 
+ * Distributed under the AIR Open Source License, Version 1.0 See accompanying
+ * file AIR-License-1_0.txt or at http://www.smarterapp.org/documents/
+ * American_Institutes_for_Research_Open_Source_Software_License.pdf
  ******************************************************************************/
 package tds.student.web.handlers;
 
@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -20,6 +21,9 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.IteratorUtils;
+import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.opentestsystem.shared.trapi.data.TestStatus;
@@ -35,7 +39,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import tds.itemrenderer.data.AccLookup;
 import tds.itemrenderer.data.AccProperties;
+import tds.student.data.TestInfo;
 import tds.student.proxy.data.Proctor;
+import tds.student.sbacossmerge.data.GeoComponent;
+import tds.student.sbacossmerge.data.GeoType;
 import tds.student.services.abstractions.IAccommodationsService;
 import tds.student.services.abstractions.ILoginService;
 import tds.student.services.abstractions.IOpportunityService;
@@ -49,18 +56,23 @@ import tds.student.services.data.LoginKeyValues;
 import tds.student.services.data.PageList;
 import tds.student.services.data.TestOpportunity;
 import tds.student.services.data.TestScoreStatus;
+import tds.student.sql.abstractions.IItemBankRepository;
 import tds.student.sql.abstractions.IOpportunityRepository;
 import tds.student.sql.abstractions.IScoringRepository;
 import tds.student.sql.data.Accommodations;
 import tds.student.sql.data.BrowserCapabilities;
 import tds.student.sql.data.OpportunityInfo;
 import tds.student.sql.data.OpportunityInstance;
+import tds.student.sql.data.OpportunitySegment;
+import tds.student.sql.data.OpportunitySegment.OpportunitySegments;
 import tds.student.sql.data.OpportunityStatusChange;
 import tds.student.sql.data.OpportunityStatusType;
 import tds.student.sql.data.ServerLatency;
 import tds.student.sql.data.TestConfig;
 import tds.student.sql.data.TestDisplayScores;
 import tds.student.sql.data.TestForm;
+import tds.student.sql.data.TestProperties;
+import tds.student.sql.data.TestSegment;
 import tds.student.sql.data.TestSelection;
 import tds.student.sql.data.TestSession;
 import tds.student.sql.data.TestSummary;
@@ -73,17 +85,22 @@ import tds.student.web.StudentContextException;
 import tds.student.web.StudentCookie;
 import tds.student.web.StudentSettings;
 import tds.student.web.TestManager;
+import tds.student.web.configuration.TestShellSettings;
 import AIR.Common.TDSLogger.ITDSLogger;
 import AIR.Common.Web.BrowserParser;
 import AIR.Common.Web.TDSReplyCode;
+import AIR.Common.Web.UrlHelper;
 import AIR.Common.Web.WebHelper;
 import AIR.Common.Web.Session.HttpContext;
+import AIR.Common.Web.Session.Server;
 import AIR.Common.data.ResponseData;
 import AIR.Common.time.DateTime;
 import TDS.Shared.Browser.BrowserInfo;
+import TDS.Shared.Configuration.TDSSettings;
 import TDS.Shared.Exceptions.FailedReturnStatusException;
 import TDS.Shared.Exceptions.ReturnStatusException;
 import TDS.Shared.Exceptions.TDSSecurityException;
+import TDS.Shared.Security.TDSEncryptionException;
 
 @Controller
 @Scope ("prototype")
@@ -111,15 +128,18 @@ public class MasterShellHandler extends TDSHandler
 
   @Autowired
   private ILoginService          _loginService;
-  
+
   @Autowired
   private IScoringRepository     _scoringRepository;
-  
+
   @Autowired
   private IStudentPackageService _studentPackageService;
-  
+
   @Autowired
   private ITDSLogger             _tdsLogger;
+
+  @Autowired
+  private IItemBankRepository    _ibrepository;
 
   /***
    * 
@@ -133,9 +153,11 @@ public class MasterShellHandler extends TDSHandler
    */
   @RequestMapping (value = "MasterShell.axd/loginStudent")
   @ResponseBody
-  public ResponseData<LoginInfo> loginStudent (@RequestParam (value = "sessionID", required = false) String sessionID, @RequestParam (value = "keyValues", required = false) String keyValues,
-      @RequestParam (value = "forbiddenApps", required = false) String forbiddenApps, HttpServletResponse response, HttpServletRequest request) throws ReturnStatusException, FailedReturnStatusException {
+  public ResponseData<tds.student.sbacossmerge.data.LoginInfo> loginStudent (@RequestParam (value = "sessionID", required = false) String sessionID,
+      @RequestParam (value = "keyValues", required = false) String keyValues, @RequestParam (value = "forbiddenApps", required = false) String forbiddenApps, HttpServletResponse response,
+      HttpServletRequest request) throws ReturnStatusException, FailedReturnStatusException {
     long startTime = System.currentTimeMillis ();
+    _logger.info ("<<<<<<<<<loginStudent Start " + getTime () + " -- " + Thread.currentThread ().getId () + " >>>>>>>>>>>> keyValues : " + keyValues);
     LoginInfo loginInfo;
     sessionID = sessionID != null ? sessionID : "";
     keyValues = keyValues != null ? keyValues : "";
@@ -162,13 +184,13 @@ public class MasterShellHandler extends TDSHandler
     try {
       loginInfo = _loginService.login (sessionID, loginKeyValues);
     } catch (Exception ex) {
-      String message = String.format("LOGIN EXCEPTION: %s", ex.getMessage ());
+      String message = String.format ("LOGIN EXCEPTION: %s", ex.getMessage ());
       _tdsLogger.applicationError (message, "loginStudent", request, ex);
-      
+
       // get login error message
       String loginErrorKey = "Login.Label.Error";
       response.setStatus (HttpStatus.SC_INTERNAL_SERVER_ERROR);
-      return new ResponseData<LoginInfo> (TDSReplyCode.Error.getCode (), loginErrorKey, null);
+      return new ResponseData<tds.student.sbacossmerge.data.LoginInfo> (TDSReplyCode.Error.getCode (), loginErrorKey, null);
     }
 
     // check forbidden apps if there are no validation errors
@@ -202,15 +224,35 @@ public class MasterShellHandler extends TDSHandler
       _logger.error ("Error validating login info : "+message);
       // send error to client
       response.setStatus (HttpStatus.SC_FORBIDDEN);
-      return new ResponseData<LoginInfo> (TDSReplyCode.Denied.getCode (), error, null);
+      return new ResponseData<tds.student.sbacossmerge.data.LoginInfo> (TDSReplyCode.Denied.getCode (), error, null);
     }
 
     // save cookie
     StudentContext.saveTestee (loginInfo.getTestee ());
     StudentContext.saveSession (loginInfo.getSession ());
-    StudentCookie.writeStore();
-    _logger.info ("<<<<<<<<< loginStudent Total Execution Time : "+((System.currentTimeMillis ()-startTime)/1000) + " seconds");
-    return new ResponseData<LoginInfo> (TDSReplyCode.OK.getCode (), "OK", loginInfo);
+    StudentCookie.writeStore ();
+    _logger.info ("<<<<<<<<<loginStudent End " + getTime () + " -- " + Thread.currentThread ().getId () + " >>>>>>>>>>>> keyValues : " + keyValues);
+    _logger.info ("<<<<<<<<< loginStudent Total Execution Time : " + ((System.currentTimeMillis () - startTime) / 1000) + " seconds");
+
+    // create an instance of the new login info
+    tds.student.sbacossmerge.data.LoginInfo _loginInfo = new tds.student.sbacossmerge.data.LoginInfo (loginInfo);
+    if (_loginInfo.getTestee ().isGuest ())
+      _loginInfo.setGrades (_ibrepository.getGrades ());
+    _loginInfo.setGlobalAccs (null);// = //however we do this in
+    // globaljavascriptwriter
+    // create the Satellite class as it exists in .NEt
+    GeoComponent satellite = new GeoComponent (GeoType.Satellite, UUID.randomUUID (), "NA");
+    satellite.setUrl (Server.resolveUrl ("~/Pages/LoginShell.xhtml"));
+    _loginInfo.setSatellite (satellite);
+
+    // TODO Shajib, no hardcoding of url
+    _loginInfo.setReturnUrl (Server.resolveUrl ("~/Pages/LoginShell.xhtml"));
+    _loginInfo.setAppName (_studentSettings.getAppName ());
+    _loginInfo.setClientName (getClientName ());
+    // TODO Shajib: no url attr in LoginInfo
+    // _loginInfo.setUrl(HttpContext.getCurrentContext ().getServer
+    // ().getContextPath ());
+    return new ResponseData<tds.student.sbacossmerge.data.LoginInfo> (TDSReplyCode.OK.getCode (), "OK", _loginInfo);
   }
 
   /***
@@ -242,14 +284,28 @@ public class MasterShellHandler extends TDSHandler
     }
     // get all tests for this grade
     BrowserInfo browserInfo = null;
-    if (!DebugSettings.ignoreBrowserChecks ())
-    {
-        browserInfo = BrowserInfo.GetHttpCurrent();
+    if (!DebugSettings.ignoreBrowserChecks ()) {
+      browserInfo = BrowserInfo.GetHttpCurrent ();
     }
-    
-    testSelections = _oppService.getEligibleTests (testee, session, grade,browserInfo);
-    _logger.info ("<<<<<<<<< getTests Total Execution Time : "+((System.currentTimeMillis ()-startTime)/1000) + " seconds");
+
+    testSelections = _oppService.getEligibleTests (testee, session, grade, browserInfo);
+    _logger.info ("<<<<<<<<< getTests Total Execution Time : " + ((System.currentTimeMillis () - startTime) / 1000) + " seconds");
     return new ResponseData<List<TestSelection>> (TDSReplyCode.OK.getCode (), "OK", testSelections);
+  }
+
+  /***
+   * For a proctorless session return all the accommodations for a test and
+   * allow the student to choose from them.
+   * 
+   * @param testKey
+   * @return
+   * @throws ReturnStatusException
+   * @throws TDSSecurityException
+   */
+  @RequestMapping (value = "MasterShell.axd/getTestAccommodations")
+  @ResponseBody
+  public ResponseData<List<Accommodations>> getTestAccommodations (@RequestParam (value = "testKey", required = false) String testKey) throws ReturnStatusException, TDSSecurityException {
+    return getSegmentsAccommodations (testKey);
   }
 
   /***
@@ -264,12 +320,14 @@ public class MasterShellHandler extends TDSHandler
   @RequestMapping (value = "MasterShell.axd/getSegmentsAccommodations")
   @ResponseBody
   public ResponseData<List<Accommodations>> getSegmentsAccommodations (@RequestParam (value = "testKey", required = false) String testKey) throws ReturnStatusException, TDSSecurityException {
+    long startTime = System.currentTimeMillis (); 
     List<Accommodations> segmentAccsList = null;
     checkAuthenticated ();
     TestSession session = StudentContext.getSession ();
     Testee testee = StudentContext.getTestee ();
     // get test/segment accommodations
     segmentAccsList = _accsService.getTestee (testKey, isGuestSession (session), testee.getKey ());
+    _logger.info ("<<<<<<<<< getSegmentsAccommodations Total Execution Time : "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
     return new ResponseData<List<Accommodations>> (TDSReplyCode.OK.getCode (), "OK", segmentAccsList);
   }
 
@@ -293,7 +351,7 @@ public class MasterShellHandler extends TDSHandler
   public ResponseData<OpportunityInfoJsonModel> openTest (@RequestParam (value = "testKey", required = false) String testKey, @RequestParam (value = "testID", required = false) String testID,
       @RequestParam (value = "subject", required = false) String subject, @RequestParam (value = "grade", required = false) String grade, @RequestParam (value = "oppKey", required = false) UUID oppKey)
       throws ReturnStatusException, TDSSecurityException, StudentContextException {
-    OpportunityInfoJsonModel opportunityInfoJsonModel = new OpportunityInfoJsonModel ();
+    long startTime = System.currentTimeMillis ();
     checkAuthenticated ();
     // get test properties
     TestSession session = StudentContext.getSession ();
@@ -303,14 +361,10 @@ public class MasterShellHandler extends TDSHandler
     if (session == null || testee == null) {
       StudentContext.throwMissingException ();
     }
-    
-    
-    // create json response
-    opportunityInfoJsonModel.setTestForms (new ArrayList<TestForm> ());
-    opportunityInfoJsonModel.setTesteeForms (new ArrayList<String> ());
-    OpportunityInfo oppInfo = null;
 
-    oppInfo = _oppService.openTest (testee, session, testKey);
+    _logger.info ("<<<<<<<<<OpenTest Start " + getTime () + " -- " + Thread.currentThread ().getId () + " >>>>>>>>>>>> testID : " + testID + " Name " + session.getName () + " Id " + session.getId ());
+
+    OpportunityInfo oppInfo = _oppService.openTest (testee, session, testKey);
     OpportunityInstance oppInstance = oppInfo.createOpportunityInstance (session.getKey ());
 
     // if we are in PT mode and the session is proctorless then we need to
@@ -325,7 +379,14 @@ public class MasterShellHandler extends TDSHandler
     StudentContext.saveOppInfo (testKey, testID, oppInfo);
     StudentContext.saveSubject (subject);
     StudentContext.saveGrade (grade);
-    StudentCookie.writeStore();
+    StudentCookie.writeStore ();
+   _logger.info ("<<<<<<<<< openTest Total Execution Time : "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
+    // create json response
+    OpportunityInfoJsonModel opportunityInfoJsonModel = new OpportunityInfoJsonModel ();
+    opportunityInfoJsonModel.setTestForms (new ArrayList<TestForm> ());
+    opportunityInfoJsonModel.setTesteeForms (new ArrayList<String> ());
+    opportunityInfoJsonModel.setBrowserKey (oppInfo.getBrowserKey ());
+    opportunityInfoJsonModel.setOppKey (oppInfo.getOppKey ());
     return new ResponseData<OpportunityInfoJsonModel> (TDSReplyCode.OK.getCode (), "OK", opportunityInfoJsonModel);
   }
 
@@ -343,7 +404,7 @@ public class MasterShellHandler extends TDSHandler
   public ResponseData<ApprovalInfo> checkTestApproval () throws ReturnStatusException, TDSSecurityException, StudentContextException {
     // check if test is approved
     ApprovalInfo oppApproval = null;
-
+    long startTime = System.currentTimeMillis ();
     checkAuthenticated ();
 
     OpportunityInstance oppInstance = StudentContext.getOppInstance ();
@@ -359,7 +420,9 @@ public class MasterShellHandler extends TDSHandler
     // check if the proctor has responded and get back accommodations if
     // student has been approved
     boolean isGuestSession = isGuestSession (testSession);
+    _logger.info ("<<<<<<<<< checkTestApproval Execution Time 1: "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
     oppApproval = _oppService.checkTestApproval (oppInstance);
+    _logger.info ("<<<<<<<<< checkTestApproval Execution Time 2: "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
     // clean up comment
     oppApproval.setComment (oppApproval.getComment ());
     // if the opportunity was approved and a testkey was provided load
@@ -370,13 +433,14 @@ public class MasterShellHandler extends TDSHandler
       segmentsAccommodations = _accsService.getApproved (oppInstance, testKey, isGuestSession);
       oppApproval.setSegmentsAccommodations (segmentsAccommodations);
     }
-
+    _logger.info ("<<<<<<<<< checkTestApproval Execution Time 3 "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
     // if there are accommodations then proctor approved us
     if (oppApproval.getSegmentsAccommodations () != null) {
       // save cookie
       StudentContext.saveSegmentsAccommodations (oppApproval.getSegmentsAccommodations ());
       StudentCookie.writeStore();
     }
+    _logger.info ("<<<<<<<<< checkTestApproval Total Execution Time : "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
     return new ResponseData<ApprovalInfo> (TDSReplyCode.OK.getCode (), "OK", oppApproval);
   }
 
@@ -390,6 +454,7 @@ public class MasterShellHandler extends TDSHandler
   @RequestMapping (value = "MasterShell.axd/denyApproval")
   @ResponseBody
   private ResponseData<Long> denyApproval () throws ReturnStatusException, TDSSecurityException, StudentContextException {
+    long startTime = System.currentTimeMillis ();
     checkAuthenticated ();
     OpportunityInstance oppInstance = StudentContext.getOppInstance ();
     // validate context
@@ -397,7 +462,7 @@ public class MasterShellHandler extends TDSHandler
       StudentContext.throwMissingException ();
     // deny
     _oppService.denyApproval (oppInstance);
-
+    _logger.info ("<<<<<<<<< denyApproval Total Execution Time : "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
     return new ResponseData<Long> (TDSReplyCode.OK.getCode (), "OK", TDSReplyCode.OK.getCode ());
   }
 
@@ -411,10 +476,10 @@ public class MasterShellHandler extends TDSHandler
    */
   @RequestMapping (value = "MasterShell.axd/startTest")
   @ResponseBody
-  private ResponseData<TestConfig> startTest (@RequestParam (value = "formKey", required = false) String formKey) throws ReturnStatusException, TDSSecurityException, StudentContextException {
+  private ResponseData<TestInfo> startTest (@RequestParam (value = "formKey", required = false) String formKey) throws ReturnStatusException, TDSSecurityException, StudentContextException {
     // try and start test
     TestConfig testConfig = null;
-
+    long startTime = System.currentTimeMillis ();
     checkAuthenticated ();
 
     // validate context
@@ -434,12 +499,132 @@ public class MasterShellHandler extends TDSHandler
 
     // save test config info
     StudentContext.saveTestConfig (testConfig);
-    StudentCookie.writeStore();
-    sendTestStatus(StudentContext.getTestee ().getId (), testKey, oppInstance.getKey (), TestStatusType.STARTED);
+    StudentCookie.writeStore ();
+    sendTestStatus (StudentContext.getTestee ().getId (), testKey, oppInstance.getKey (), TestStatusType.STARTED);
     // log browser info
     logBrowser (oppInstance, testConfig.getRestart ());
-    
-    return new ResponseData<TestConfig> (TDSReplyCode.OK.getCode (), "OK", testConfig);
+   _logger.info ("<<<<<<<<< startTest Total Execution Time : "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
+    TestInfo testInfo = loadTestInfo (oppInstance, testConfig);
+
+    return new ResponseData<TestInfo> (TDSReplyCode.OK.getCode (), "OK", testInfo);
+  }
+
+  TestInfo loadTestInfo (OpportunityInstance oppInstance, TestConfig testConfig) throws ReturnStatusException
+  {
+    TestProperties testProps = _ibrepository.getTestProperties (StudentContext.getTestKey ()); // getTestProperties(testIdentifiers.TestKey);
+
+    TestInfo testInfo = new TestInfo ();
+    testInfo.setReviewPage (0);
+    testInfo.setUrlBase (UrlHelper.getBase ());
+    testInfo.setHasAudio (testProps.getRequirements ().isHasAudio ());
+
+    // config (var tdsTestConfig = {})
+    testInfo.setTestName (testProps.getDisplayName ());
+    testInfo.setTestLength (testConfig.getTestLength ());
+    testInfo.setStartPosition (testConfig.getStartPosition ());
+    testInfo.setContentLoadTimeout (testConfig.getContentLoadTimeout ());
+    testInfo.setRequestInterfaceTimeout (testConfig.getRequestInterfaceTimeout ());
+    testInfo.setOppRestartMins (testConfig.getOppRestartMins ());
+    testInfo.setInterfaceTimeout (testConfig.getInterfaceTimeout ());
+    testInfo.setPrefetch (testConfig.getPrefetch ());
+    testInfo.setValidateCompleteness (testConfig.isValidateCompleteness ());
+
+    testInfo.setInterfaceTimeoutDialog (TestShellSettings.getTimeoutDialog ().getValue ());
+    testInfo.setAutoSaveInterval (TestShellSettings.getAutoSaveInterval ().getValue ());
+    testInfo.setForbiddenAppsInterval (TestShellSettings.getForbiddenAppsInterval ().getValue ());
+    testInfo.setDisableSaveWhenInactive (TestShellSettings.isDisableSaveWhenInactive ().getValue ());
+    testInfo.setDisableSaveWhenForbiddenApps (TestShellSettings.isDisableSaveWhenForbiddenApps ().getValue ());
+    testInfo.setAllowSkipAudio (TestShellSettings.isAllowSkipAudio ().getValue ());
+    testInfo.setShowSegmentLabels (TestShellSettings.isShowSegmentLabels ().getValue ());
+    testInfo.setAudioTimeout (TestShellSettings.getAudioTimeout ().getValue ());
+    testInfo.setEnableLogging (TestShellSettings.isEnableLogging ().getValue ());
+    testInfo.setDictionaryUrl (TestShellSettings.getDictionaryUrl ().getValue ());
+
+    // segments (var tdsSegments = [])
+    testInfo.setSegments (loadTestSegments (oppInstance, testProps));
+
+    // comments (TDS.Comments = [])
+    testInfo.setComments (IteratorUtils.toList (this._studentSettings.getComments ().iterator ()));
+    return testInfo;
+  }
+
+  List<TestSegment> loadTestSegments (OpportunityInstance oppInstance, TestProperties testProps) throws ReturnStatusException
+  {
+    List<TestSegment> testSegments = new ArrayList<TestSegment> ();
+    OpportunitySegments oppSegments = null;
+
+    // load opp segments only if there are any test segments
+    if (testProps.getSegments ().size () > 0)
+    {
+      // IOpportunityService oppService =
+      // ServiceLocator.Resolve<IOpportunityService>();
+      oppSegments = _oppService.getSegments (oppInstance, !this._studentSettings.isReadOnly ());
+    }
+
+    for (final TestSegment testSegment : testProps.getSegments ())
+    {
+      OpportunitySegment oppSegment = null;
+
+      // find opportunity segment
+      if (oppSegments != null)
+      {
+        oppSegment = (OpportunitySegment) CollectionUtils.find (oppSegments, new Predicate ()
+        {
+          @Override
+          public boolean evaluate (Object arg0) {
+            if (StringUtils.equals (((OpportunitySegment) arg0).getId (), testSegment.getId ()))
+              return true;
+            return false;
+          }
+        });
+      }
+
+      // figure out segment permeability
+      int isPermeable = testSegment.getIsPermeable ();
+      int updatePermeable = isPermeable;
+
+      // these are local override rules (reviewed with Larry)
+      if (oppSegment != null)
+      {
+        /*
+         * if -1, use the defined value for the segment as returned by
+         * IB_GetSegments if not -1, then the local value defines the temporary
+         * segment permeability
+         */
+        if (oppSegment.getIsPermeable () != -1)
+        {
+          isPermeable = oppSegment.getIsPermeable ();
+
+          /*
+           * The default permeability is restored when the student leaves the
+           * segment while testing. Assuming the segment is impermeable, this
+           * allows the student one entry into the segment during the sitting.
+           * When the student leaves the segment, is membrane is enforced by the
+           * student app. The database will restore the default value of the
+           * segment membrane when the test is paused.
+           */
+          if (!"segment".equals (oppSegment.getRestorePermOn ()))
+          {
+            updatePermeable = oppSegment.getIsPermeable ();
+          }
+        }
+
+        // NOTE: When student enters segment, set isPermeable = updatePermeable
+      }
+
+      TestSegment tSegment = new TestSegment ();
+      tSegment.setId (testSegment.getId ());
+      tSegment.setPosition (testSegment.getPosition ());
+      tSegment.setLabel (testSegment.getLabel ());
+      tSegment.setItemReview (testSegment.isItemReview ());
+      tSegment.setIsPermeable (isPermeable);
+      tSegment.setUpdatePermable (updatePermeable);
+      tSegment.setEntryApproval (testSegment.getEntryApproval ());
+      tSegment.setExitApproval (testSegment.getExitApproval ());
+      testSegments.add (tSegment);
+    }
+
+    return testSegments;
   }
 
   /***
@@ -481,32 +666,36 @@ public class MasterShellHandler extends TDSHandler
 
     TestManager testManager = new TestManager (testOpp);
     testManager.LoadResponses (true);
+
     // If there are more adaptive item groups to take then stop here and
     // return
     testManager.CheckIfTestComplete ();
 
     if (!testManager.IsTestLengthMet ()) {
       String message = "Review: A student has tried to complete the test but there are still more items left to be generated.";
-       _tdsLogger.applicationError(message, "scoreTest", request, null);
+      _tdsLogger.applicationError (message, "scoreTest", request, null);
       HttpContext.getCurrentContext ().getResponse ().setStatus (HttpStatus.SC_FORBIDDEN);
       return new ResponseData<TestSummary> (TDSReplyCode.Denied.getCode (), message, null);
     }
+
     // check if all visible pages are completed
     PageList pages = testManager.GetVisiblePages ();
 
     if (!pages.isAllCompleted ()) {
       String message = "Review: A student has tried to complete the test but all the questions are not completed.";
-      _tdsLogger.applicationError(message, "scoreTest", request, null);
+      _tdsLogger.applicationError (message, "scoreTest", request, null);
       HttpContext.getCurrentContext ().getResponse ().setStatus (HttpStatus.SC_FORBIDDEN);
       return new ResponseData<TestSummary> (TDSReplyCode.Denied.getCode (), message, null);
     }
+
     // complete test
     _oppService.setStatus (testOpp.getOppInstance (), new OpportunityStatusChange (OpportunityStatusType.Completed, true));
-    
-     sendTestStatus(StudentContext.getTestee ().getId(), testOpp.getTestKey (), testOpp.getOppInstance ().getKey (), TestStatusType.COMPLETED);
+
+    sendTestStatus (StudentContext.getTestee ().getId (), testOpp.getTestKey (), testOpp.getOppInstance ().getKey (), TestStatusType.COMPLETED);
 
     // score the test
     TestScoreStatus scoreStatus = _testScoringService.scoreTest (testOpp.getOppInstance ().getKey (), testOpp.getTestKey ());
+
     // if we successfully scored the record the server latency
     if (scoreStatus == TestScoreStatus.Submitted) {
       ServerLatency latency = ServerLatency.getCurrent (HttpContext.getCurrentContext ());
@@ -514,9 +703,9 @@ public class MasterShellHandler extends TDSHandler
     }
 
     // try and get scores
-    ResponseData<TestSummary> testSummary =  getTestSummary ();
-    _logger.info ("<<<<<<<<< scoreTest Total Execution Time : "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
-    return testSummary;
+_logger.info ("<<<<<<<<< scoreTest Total Execution Time : "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
+    return getTestSummary ();
+
   }
 
   /***
@@ -569,7 +758,8 @@ public class MasterShellHandler extends TDSHandler
 
     // check if we are showing item scores
     if (showItemScores) {
-      // check if the items are done scoring and we are not polling for test
+      // check if the items are done scoring and we are not polling for
+      // test
       // scores
       if (testDisplayScores.isCompleted () && !testSummary.isPollForScores ()) {
         // get item scores
@@ -577,7 +767,8 @@ public class MasterShellHandler extends TDSHandler
         testSummary.setItemScores (_scoringRepository.getResponseRationales (testOpp.getOppInstance ()));
         testSummary.setViewResponses (accProps.isItemScoreReportResponses ());
       }
-      // wait for items to finish scoring or polling for test scores to finish
+      // wait for items to finish scoring or polling for test scores to
+      // finish
       else {
         testSummary.setPollForScores (true);
       }
@@ -652,7 +843,7 @@ public class MasterShellHandler extends TDSHandler
       throw re;
     }
   }
-  
+
   /**
    * Sends testStatus
    * 
@@ -664,19 +855,18 @@ public class MasterShellHandler extends TDSHandler
   private void sendTestStatus (String testeeId, String testKey, UUID oppKey, TestStatusType testStatusType) {
     try {
       if (testeeId.substring (0, 7).equalsIgnoreCase ("guest -")) {
-         return;
-       }
+        return;
+      }
       TestStatus testStatus = new TestStatus ();
       testStatus.setStudentId (testeeId);
       testStatus.setTestId (testKey);
-      testStatus.setOpportunity (_oppRepository.getOpportunityNumber(oppKey));
+      testStatus.setOpportunity (_oppRepository.getOpportunityNumber (oppKey));
       testStatus.setUpdatedTime (DateTime.getFormattedDate (new Date (), "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"));
       testStatus.setStatus (testStatusType.name ());
-      _studentPackageService.sendTestStatus(testStatus);
+      _studentPackageService.sendTestStatus (testStatus);
     } catch (Exception e) {
-       _logger.error ("MasterShellHandler.sendTestStatus: "  + e.getMessage (), e);
-    } 
+      _logger.error ("MasterShellHandler.sendTestStatus: " + e.getMessage (), e);
+    }
   }
-  
-  
+
 }

@@ -129,7 +129,11 @@
         var region = YAHOO.util.Region.getRegion(node);
         menuXY[1] += region.height;
 
-        ContentManager.Menu.show(evt, menuItems, menuXY);
+        ContentManager.Menu.show({
+            custom: menuItems,
+            evt: evt,
+            xy: menuXY
+        });
     };
 
     // initialize the language selector 
@@ -228,6 +232,20 @@
         // add language dropdown
         initLanguages(editor);
 
+        // add to CKEditor context menu
+        if (editor.contextMenu) {
+            editor.addMenuGroup('spellCheckGroup');
+            editor.addMenuItem('spellCheckItem', {
+                label: 'Spell Check',
+                icon: 'spellchecker',
+                command: cmdName,
+                group: 'spellCheckGroup'
+            });
+
+            editor.contextMenu.addListener(function (element) {
+                return { spellCheckItem: CKEDITOR.TRISTATE_ON };
+            });
+        }
     }
 
     CKEDITOR.plugins.add(pluginName, {

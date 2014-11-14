@@ -171,10 +171,10 @@ Simulator.Display.Panel = function (sim, panelNum) {
         }
     };
 
-    this.saveInputs = function () {
+    this.saveInputs = function (forcedSave) {
         for (var i = 0; i < ioElements.length; i++) {
             if (ioElements[i].recordInput)
-                ioElements[i].recordInput();
+                ioElements[i].recordInput(null, null, null, forcedSave);
         }
     };
 
@@ -195,6 +195,13 @@ Simulator.Display.Panel = function (sim, panelNum) {
             if (iElement.getName() == elementID) iElement.setElementSelectState('true', contents);
         }
     };
+
+    this.setLiveAttribute = function (liveValue) { // set aria-live to enable announcements of live regions (WCAG)
+        if (!liveValue)
+            this.getHTMLElement().setAttribute('aria-live', 'off'); // default value
+        else
+            this.getHTMLElement().setAttribute('aria-live', liveValue);
+    }
 
     // check if there is any choice list selection that is left empty (i.e., no option selected)
     this.hasEmptyChoiceListSelection = function () {
@@ -284,6 +291,8 @@ Simulator.Display.Panel = function (sim, panelNum) {
         }
         div.id = this.getNodeID();
         div.setAttribute('class', 'panel' + panelNumber + ' panelSingle ' + this.getName());
+        div.setAttribute('role', 'region'); // WCAG
+        div.setAttribute('aria-live', 'off'); // WCAG (default)
         if (this.getHeaderText()) {
             var div2 = simDocument().createElement('div');
             div2.setAttribute('class', 'holderInfo');

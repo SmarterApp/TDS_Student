@@ -48,6 +48,7 @@ Simulator.SimulationManager = function (sim) {
         TrialLimitReached: 6,    // Most commands are disabled until the number of trials goes below the MaxTrial limit
         Playing: 7,   // An animation is playing
         ReadOnly: 8
+        // note: any future states with state number > Loaded should comply with this.isLoaded() below
     };
 
     var currentState = state.Uninitialized;
@@ -65,6 +66,7 @@ Simulator.SimulationManager = function (sim) {
     var dbg = function () { return sim.getDebug(); };
     var dataTable = function () { return sim.getDataTable(); };
     var simDocument = function () { return sim.getSimDocument(); };
+    var transDictionary = function () { return sim.getTranslationDictionary(); };
 
     //  Register for all required events
     registerAllEvents = function (simMgr) {
@@ -223,7 +225,7 @@ Simulator.SimulationManager = function (sim) {
                     case 'startTrial':
                         var redoingATrial = this.adjustForRedoTrials();
                         if (!this.checkTrialLimitReached(redoingATrial)) {
-                            layout().saveInputs();
+                            layout().saveInputs(true);
                             tableUpdated = false;
                             animationFinished = false;
                             this.setAnimationCompleteWithoutOutput(false);
@@ -458,7 +460,8 @@ Simulator.SimulationManager = function (sim) {
 
     // The string displayed when the user is notified that the trial limit has been reached
     this.getNoMoreTrialString = function () {
-        return noMoreTrialsString;
+        // retrieve translated string
+        return transDictionary().translate(noMoreTrialsString);
     };
 
     this.getBaseURL = function () {
@@ -477,6 +480,12 @@ Simulator.SimulationManager = function (sim) {
     this.isReadOnly = function () {
         return this.getStateName() == 'ReadOnly';
     };
+
+    // has the simulator at least loaded (can it return a response XML)
+    this.isLoaded = function () {
+        // any state including "Loaded" and above
+        return (this.getState() >= state.Loaded);
+    }
 
     // has the simulator finished loading and is ready to use
     this.isReady = function () {
@@ -561,7 +570,7 @@ Simulator.SimulationManager = function (sim) {
         //debug('After initialization of SimulationManager variables, CurrentTrial = ' + currentTrial);
         if (whtBrd.itemExists('initialization', 'MaxTrials')) {
             maxTrials = whtBrd.getItem('initialization', 'MaxTrials');
-			if ((maxTrials) && (maxTrials > 0)) {
+            if ((maxTrials) && (maxTrials > 0)) {
                 scoringTable().setMaxRowNum(maxTrials);
             }
         }

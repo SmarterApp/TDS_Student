@@ -11,8 +11,8 @@ function TTSService_SB()
     this.isSpeakable = new RegExp(/[A-Za-z0-9_]+/);  // This regex checks if a match has any speakable characters in it. Only those get a sync tag around them
 	this.BOOKMARK_TAG = '<bookmark mark="start"/> ';  // This is our sync tag - WINDOWS ONLY!!! This is OS specific
     this.bookmarks = []; // our registry of sync tags added
-    
-	this.supportsVolumeControl = function() {
+
+    this.supportsVolumeControl = function() {
         return true;
     };
 
@@ -23,17 +23,41 @@ function TTSService_SB()
     this.supportsRateControl = function() {
         return true;
     };
-	
-    this.isSupported = function()
+
+    this.isSupported = function ()
     {
-        return (typeof (window.Runtime) == 'function');
+        return typeof (Runtime) == 'function' || (Components && Components.classes["@mozilla.org/securebrowser;1"]);
     };
 
-    this.load = function () 
-    {
-            if (!this.isSupported()) return false;
-            this.runtime = new Runtime();
-            
+    this.load = function () {
+        try {
+            if (!this.isSupported()) {
+                return false;
+            }
+            if (typeof(Runtime) == 'function') {
+                this.runtime = new Runtime();
+            } else {
+                var success = Mozilla.execPrivileged(function() {
+                    var sbClass = Components.classes["@mozilla.org/securebrowser;1"];
+                    if (sbClass) {
+                        this.runtime = sbClass.createInstance(Components.interfaces.mozISecureBrowser);
+                    }
+                }.bind(this));
+                if (!success) {
+                    console.log('SB runtime component failed to load');
+                }
+            }
+
+            // check if this was a SB and we got the runtime
+            if (!this.runtime) {
+                return false;
+            }
+
+            // dispose of runtime. Neospeech voice is finicky
+            // and we need to make sure that it gets closed out correctly before we try to use it
+            // again. Specifically, we are trying to address an issue with VW Julie where page reloads 
+            // can cause TTS to stop working while Julie is reestablishing
+            YUE.on(window, 'beforeunload', this.dispose.bind(this));            
 
             this.runtime.initialize();
 
@@ -44,10 +68,21 @@ function TTSService_SB()
             // this.setVolume(10);
             setTimeout(function() { TTS.Manager.Events.onServiceLoad.fire(); }, 0);
             return true;
-        
+        }
+        catch (ex) {
+            return false;
+        }
     };
 
-    this.osHacks = function(){
+    this.dispose = function () {
+        console.log('Disposing TTS Runtime...');
+        if (this.runtime != null) {
+            delete this.runtime;
+            this.runtime = null;
+        }
+    };
+
+    this.osHacks = function () {
       this.pluginWordBoundaryFunction = null;
       if(Util.Browser.isLinux()){
         this.pluginWordBoundaryFunction = null;
@@ -318,17 +353,5 @@ function TTSService_SB()
         
         return this.BOOKMARK_TAG + newText;
     };
-    
-    // clean the runtime before leaving. Neospeech voice is finicky
-    // and we need to make sure that it gets closed out correctly before we try to use it
-    // again. Specifically, we are trying to address an issue with VW Julie where page reloads 
-    // can cause TTS to stop working while Julie is reestablishing
-    var cleanup = function() {
-        if (this.runtime != null) {           
-            delete this.runtime;
-            this.runtime = null;
-        }        
-    };
-    
-    YUE.on(window, 'beforeunload', cleanup.bind(this));
+  
 }

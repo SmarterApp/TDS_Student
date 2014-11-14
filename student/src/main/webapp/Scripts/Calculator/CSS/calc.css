@@ -729,9 +729,15 @@ body.TDS_CCYellow .matricesContainer .tab a, body.TDS_CCYellow2  .matricesContai
 	background-color: #000;
 	color: #fff;
 }
-.TDS_CCInvert .calculatorWidget input, .TDS_CCInvert #equations input, .TDS_CCInvert #graphwindow input, .TDS_CCInvert #datatableHolder input, .TDS_CCInvert #datatableHolder label{
+.TDS_CCInvert .calculatorWidget input, .TDS_CCInvert #equations input, .TDS_CCInvert #graphwindow input, .TDS_CCInvert #datatableHolder input, .TDS_CCInvert #datatableHolder label,
+.TDS_CCWhiteN .calculatorWidget input, .TDS_CCWhiteN #equations input, .TDS_CCWhiteN #graphwindow input, .TDS_CCWhiteN#datatableHolder input, .TDS_CCWhiteN #datatableHolder label{
 	color: #fff;
 }
+.TDS_CCWhiteN .calculatorWidget, .TDS_CCWhiteN .calculatorWidget a, .TDS_CCWhiteN .calculatorWidget input[type="button"], .TDS_CCWhiteN #resetgraph, .TDS_CCWhiteN #previous5, .TDS_CCWhiteN #next5, .TDS_CCWhiteN #calczoomin, .TDS_CCWhiteN#calczoomout, .TDS_CCWhiteN #equations select, .TDS_CCWhiteN .memory input, .TDS_CCWhiteN.numberCells select{
+	background-color: transparent;
+	color: #fff;
+}
+
 .TDS_CCInvert .matrixHolder, .TDS_CCInvert .matricesContainer .tab.active a.switchTab {
 	border-color: #fff;
 	background-color: #000;
@@ -744,7 +750,8 @@ body.TDS_CCYellow .matricesContainer .tab a, body.TDS_CCYellow2  .matricesContai
 .TDS_CCInvert .calculatorWidget a:hover, .TDS_CCInvert .calculatorWidget input[type="button"]:hover{
 	background-color: #e7761f !important;
 }
-.TDS_CCInvert #minus, .TDS_CCInvert #resetgraph, .TDS_CCInvert #previous5, .TDS_CCInvert #next5, .TDS_CCInvert #calczoomin, .TDS_CCInvert #calczoomout, .TDS_CCInvert .graphControls a{
+.TDS_CCInvert #minus, .TDS_CCInvert #resetgraph, .TDS_CCInvert #previous5, .TDS_CCInvert #next5, .TDS_CCInvert #calczoomin, .TDS_CCInvert #calczoomout, .TDS_CCInvert .graphControls a,
+.TDS_CCWhiteN #minus, .TDS_CCWhiteN #resetgraph, .TDS_CCWhiteN #previous5, .TDS_CCWhiteN #next5, .TDS_CCWhiteN #calczoomin, .TDS_CCWhiteN #calczoomout, .TDS_CCWhiteN .graphControls a{
 	background-image: url("../Images/arrows_white.gif");
 	}
 .TDS_CCInvert .matricesContainer .tab{
@@ -849,7 +856,7 @@ body.TDS_CCYellow .matricesContainer .tab a, body.TDS_CCYellow2  .matricesContai
 .TDS_PS_L1 .advancedFunctions a{
 	width: 36px;
 }
-.TDS_PS_L1 .matrices .advancedFunctions{ width: 138px;}
+.TDS_PS_L1 .matrices .advancedFunctions{ width: 141px;}
 .TDS_PS_L1 .memLogic{ width: 65px;}
 .TDS_PS_L1 .numbersWrap{ width: 158px; }
 .TDS_PS_L1 .basicFunctions{ width: 53px;}
@@ -875,6 +882,9 @@ body.TDS_CCYellow .matricesContainer .tab a, body.TDS_CCYellow2  .matricesContai
 .TDS_PS_L2 .scientific, .TDS_PS_L3 .scientific, .TDS_PS_L4 .scientific{
 	width: 555px !important;
 }
+.platform_linux.TDS_PS_L2 .scientific, .platform_linux.TDS_PS_L3 .scientific, .platform_linux.TDS_PS_L4 .scientific{
+	width: 565px !important;
+}
 #initX {
 	width: 170px;
 }
@@ -894,12 +904,12 @@ body.TDS_CCYellow .matricesContainer .tab a, body.TDS_CCYellow2  .matricesContai
 }
 
 .TDS_PS_L1 .mGroup {
-    left: -68px;
-    width: 50px;
+    left: -71px;
+    width: 53px;
 }
 .TDS_PS_L2 .mGroup, .TDS_PS_L3 .mGroup, .TDS_PS_L4 .mGroup {
-    left: -78px;
-    width: 60px; 
+    left: -73px;
+    width: 55px; 
 }
 .TDS_PS_L1 .matrixHolder {
     margin-left: 38px;
@@ -980,7 +990,7 @@ body.TDS_CCYellow .matricesContainer .tab a, body.TDS_CCYellow2  .matricesContai
 	width: 40px;
 }
 .TDS_PS_L2 .matrices .advancedFunctions, .TDS_PS_L3 .matrices .advancedFunctions, .TDS_PS_L4 .matrices .advancedFunctions{
-	width: 151px;
+	width: 154px;
 }
 .TDS_PS_L2 .graphmodes, .TDS_PS_L3 .graphmodes, .TDS_PS_L4 .graphmodes {
 	font-size: .8em;
@@ -1131,7 +1141,7 @@ body.TDS_CCYellow .matricesContainer .tab a, body.TDS_CCYellow2  .matricesContai
 .matricesContainer {
 	position: relative;
 	width: 418px;
-    min-height: 289px;
+    min-height: 314px;
 }
 .matrices #matrices {
 	background: url(../Images/mediumGrey.png) repeat;/*path will need to update*/
@@ -1291,7 +1301,7 @@ a.switchTab {
     left: -58px;
     padding: 5px;
     position: absolute;
-    top: 144px;
+    top: 173px;
     width: 40px;
 }
 
@@ -1409,7 +1419,7 @@ input[type="button"].disabled {
 
 /* Disabled SquareRoot Background glitch ... please fix this in the future*/
 .calculatorWidget a#sqrt{
-	background-image: url(../Images/sqroot.png) !important;
+	background-image: url(../images/sqroot.png) !important;
 	background-repeat: no-repeat;
 	background-position: 0px -5px;
 	display: block;
@@ -1445,7 +1455,7 @@ input[type="button"].disabled {
 .TDS_PS_L4 .calculatorWidget a#sqrt
 {
 	padding: 25px 44px 0 0;
-	background-image: url("../Images/sqroot-zoomed.png") !important;
+	background-image: url("../images/sqroot-zoomed.png") !important;
 	background-position: 7px -5px;
 }
 .TDS_PS_L2.TDS_CCInvert .calculatorWidget a#sqrt,

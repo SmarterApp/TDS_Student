@@ -25,12 +25,12 @@ Simulator.Utils.Table = function (incompleteRows, tableName, sim) {
     };
 
     if (incompleteRows) contentsForInCompleteRows = true;
-	
-	this.setMaxRowNum = function (num) {
+
+    this.setMaxRowNum = function (num) {
         if (num) maxRowNum = num;
     };
-    
-	this.addElement = function (name, type) {
+
+    this.addElement = function (name, type) {
         if (!(name in columns)) {
             //debug('Adding column in ' + type + ' of ' + name + '  for ' + name);
             columns[name] = [];
@@ -202,11 +202,10 @@ Simulator.Utils.Table = function (incompleteRows, tableName, sim) {
             maxLen = Math.max(len, maxLen);
             colNames[i++] = p;
         }
-	// limit the output rows to be the maximum rows allowed, if there is such a limit
+        // limit the output rows to be the maximum rows allowed, if there is such a limit
         if ((maxRowNum > 0) && (maxLen > maxRowNum)) {
             maxLen = maxRowNum;
         }
-		
         buff.push('   </tr>');
         var size = colNames.length;
         var value = null;

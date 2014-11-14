@@ -173,7 +173,7 @@ Util.Xml._createMsXmlDocument = function() {
     // Add a try catch block because accessing these properties will throw an
     // error on unsupported MSXML versions. This affects Windows machines
     // running IE6 or IE7 that are on XP SP2 or earlier without MSXML updates.
-    // See http://msdn.microsoft.com/en-us/library/ms766391(VS.85).xhtml for
+    // See http://msdn.microsoft.com/en-us/library/ms766391(VS.85).aspx for
     // specific details on which MSXML versions support these properties.
     try {
         doc.setProperty('ProhibitDTD', true);
@@ -184,4 +184,16 @@ Util.Xml._createMsXmlDocument = function() {
     }
 
     return doc;
+};
+
+/*
+Cross browser way of getting inner html of an xml node.
+NOTE: If the browser supports innerHTML on a node it does not
+work like I want. It would turn <div></div> into just <div/>. 
+This causes rendering problems in browsers since <div> cannot be
+self closing. 
+*/
+Util.Xml.innerHTML = function (node) {
+    var str = Util.Xml.serializeToString(node);
+    return $(str).html();
 };

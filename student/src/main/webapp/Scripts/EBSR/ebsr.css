@@ -16,12 +16,13 @@
 	padding-left: .2em;
 	line-height: 1.5em;
 }
+/* not needed
 .format_ebsr .optionContainer {
 	border: solid 1px transparent;
 }
 .format_ebsr .optionContainer.contextAreaFocus {
 	border: dotted 1px #00AEEF;
-}
+}*/
 .EBSR_ms .optionClicker {
 	background-image: url(../../Shared/Images/checks.png) !important;
 	background-position: 0px 0px !important;

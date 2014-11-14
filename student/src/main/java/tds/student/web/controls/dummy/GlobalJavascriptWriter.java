@@ -1,13 +1,16 @@
 /*******************************************************************************
- * Educational Online Test Delivery System 
- * Copyright (c) 2014 American Institutes for Research
- *     
- * Distributed under the AIR Open Source License, Version 1.0 
- * See accompanying file AIR-License-1_0.txt or at
- * http://www.smarterapp.org/documents/American_Institutes_for_Research_Open_Source_Software_License.pdf
+ * Educational Online Test Delivery System Copyright (c) 2014 American
+ * Institutes for Research
+ * 
+ * Distributed under the AIR Open Source License, Version 1.0 See accompanying
+ * file AIR-License-1_0.txt or at http://www.smarterapp.org/documents/
+ * American_Institutes_for_Research_Open_Source_Software_License.pdf
  ******************************************************************************/
 package tds.student.web.controls.dummy;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -38,8 +41,10 @@ import tds.student.web.StudentContext;
 import tds.student.web.StudentSettings;
 import tds.student.web.dummy.ResourcesSingleton;
 import AIR.Common.Json.JsonHelper;
+import AIR.Common.Utilities.TDSStringUtils;
 import AIR.Common.Web.BrowserParser;
 import AIR.Common.Web.UrlHelper;
+import AIR.Common.Web.Session.HttpContext;
 import TDS.Shared.Exceptions.ReadOnlyException;
 import TDS.Shared.Exceptions.ReturnStatusException;
 import TDS.Shared.Messages.IMessageService;
@@ -102,10 +107,11 @@ public class GlobalJavascriptWriter
     _writer.write ("\n\r");
     // Are we in a geographically distributed architecture?
     String testeeCheckin = _studentSettings.getTesteeCheckin ();
-    if (!StringUtils.isEmpty (testeeCheckin)) {
-      _writer.write (String.format ("TDS.testeeCheckin= \"%s\";", testeeCheckin));
-      _writer.write ("\n\r");
-    }
+
+    /*
+     * if (!StringUtils.isEmpty (testeeCheckin)) { _writer.write (String.format
+     * ("TDS.testeeCheckin= \"%s\";", testeeCheckin)); _writer.write ("\n\r"); }
+     */
 
     // are we entering scores/responses
     _writer.write (String.format ("TDS.isDataEntry = %s;", getBooleanJs (_studentSettings.getIsDataEntry ())));
@@ -173,12 +179,13 @@ public class GlobalJavascriptWriter
       addClass ("practiceTest", styles);
 
     // get session
-    TestSession testSession = StudentContext.getSession ();
+    /* TestSession testSession = StudentContext.getSession (); */
 
     // add class if the test is unproctored
-    if (testSession != null && testSession.isProctorless ()) {
-      addClass ("unproctored", styles);
-    }
+    /*
+     * if (testSession != null && testSession.isProctorless ()) { addClass
+     * ("unproctored", styles); }
+     */
 
     // add app class
     addClass ("app_" + _studentSettings.getAppName (), styles);
@@ -186,15 +193,14 @@ public class GlobalJavascriptWriter
     // add mode class
     addClass ("mode_" + _studentSettings.getModeName (), styles);
 
-    TestConfig testConfig = StudentContext.getTestConfig ();
+    /* TestConfig testConfig = StudentContext.getTestConfig (); */
 
     // add test config flags
-    if (testConfig != null) {
-      if (_studentSettings.isReadOnly ())
-        addClass ("readonly", styles);
-      if (_studentSettings.getShowItemScores ())
-        addClass ("itemscores", styles);
-    }
+    /*
+     * if (testConfig != null) { if (_studentSettings.isReadOnly ()) addClass
+     * ("readonly", styles); if (_studentSettings.getShowItemScores ()) addClass
+     * ("itemscores", styles); }
+     */
 
     String stylesJson = JsonHelper.serialize (styles);
     _writer.write (String.format ("TDS.Config.styles = %s; ", stylesJson));
@@ -239,7 +245,12 @@ public class GlobalJavascriptWriter
     JsonGenerator jsonWriter = jsonFactory.createGenerator (sw);
 
     jsonWriter.writeStartObject ();
+
+    // TODO Shajib:
+    // jsonWriter.writeBooleanField ("showExceptions",
+    // DebugSettings.showClientExceptions());
     jsonWriter.writeBooleanField ("ignoreForbiddenApps", DebugSettings.ignoreForbiddenApps ());
+    jsonWriter.writeBooleanField ("ignoreBrowserChecks", DebugSettings.ignoreBrowserChecks ());
     jsonWriter.writeEndObject ();
     jsonWriter.close ();
     _writer.write (String.format ("TDS.Debug = %s; ", sw.toString ()));
@@ -334,6 +345,16 @@ public class GlobalJavascriptWriter
         _writer.write (", ");
       _writer.write ("{");
       _writer.write (String.format ("name: \"%s\", desc: \"%s\"", app.getName (), app.getDescription ()));
+
+      // TODO Shajib, no Exemptions property now in app
+      /*
+       * if (StringUtils.isEmpty (app.Exemptions)) {
+       * _writer.Write("name: \"{0}\", desc: \"{1}\"", app.Name,
+       * app.Description); } else {
+       * _writer.Write("name: \"{0}\", desc: \"{1}\", exemptions: \"{2}\"",
+       * app.Name, app.Description, app.Exemptions); }
+       */
+
       _writer.write ("}");
       appCount++;
     }
@@ -391,37 +412,37 @@ public class GlobalJavascriptWriter
      */
   }
 
-  public void writeCLSProperties () throws IOException {
-    _writer.write ("if (typeof(TDS.CLS) == 'undefined') TDS.CLS = {}; ");
-
-    // build json
-    _writer.write (String.format ("TDS.CLS.isCLSLogin = %s; ", getBooleanJs (false)));
-    _writer.write ("\n\r");
-    _writer.write (String.format ("TDS.CLS.loginPage = '%s'; ", FormsAuthentication.getLoginUrl ()));
-    _writer.write ("\n\r");
-    _writer.write (String.format ("TDS.CLS.logoutPage = '%s/Pages/Proxy/logout.aspx'; ", UrlHelper.getBase ()));
-    _writer.write ("\n\r");
-    _writer.write (String.format ("TDS.CLS.confirmExitPage = '%s/Pages/Proxy/ConfirmExit.aspx'; ", UrlHelper.getBase ()));
-    _writer.write ("\n\r");
-    _writer.write (String.format ("TDS.CLS.defaultPage = '%s'; ", FormsAuthentication.getDefaultUrl ()));
-    _writer.write ("\n\r");
-    _writer.write (String.format ("TDS.CLS.isScoreEntry = %s; ", getBooleanJs (_studentSettings.isProxyLogin ())));
-    _writer.write ("\n\r");
-    // we use local domains to detect when a user is navigating away from the
-    // proxy site.
-    String defaultDomains = "localhost|airws.org|tds.airast.org";
-
-    // TODO Shajib: Uncomment following line when AppSettings.get() method is
-    // implemented
-    // _writer.write (String.format ("TDS.CLS.localDomains = '%s'; ",
-    // AppSettings.get ("CLS.localDomains", defaultDomains)));
-
-    // get proctor info
-    Proctor proctorUser = ProxyContext.GetProctor ();
-
-    _writer.write (String.format ("TDS.CLS.isProctorLoggedIn = %s; ", getBooleanJs (proctorUser.isAuth ())));
-    _writer.write ("\n\r");
-  }
+  // Removed in new code
+  /*
+   * public void writeCLSProperties () throws IOException { _writer.write
+   * ("if (typeof(TDS.CLS) == 'undefined') TDS.CLS = {}; ");
+   * 
+   * // build json _writer.write (String.format ("TDS.CLS.isCLSLogin = %s; ",
+   * getBooleanJs (false))); _writer.write ("\n\r"); _writer.write
+   * (String.format ("TDS.CLS.loginPage = '%s'; ",
+   * FormsAuthentication.getLoginUrl ())); _writer.write ("\n\r"); _writer.write
+   * (String.format ("TDS.CLS.logoutPage = '%s/Pages/Proxy/logout.aspx'; ",
+   * UrlHelper.getBase ())); _writer.write ("\n\r"); _writer.write
+   * (String.format
+   * ("TDS.CLS.confirmExitPage = '%s/Pages/Proxy/ConfirmExit.aspx'; ",
+   * UrlHelper.getBase ())); _writer.write ("\n\r"); _writer.write
+   * (String.format ("TDS.CLS.defaultPage = '%s'; ",
+   * FormsAuthentication.getDefaultUrl ())); _writer.write ("\n\r");
+   * _writer.write (String.format ("TDS.CLS.isScoreEntry = %s; ", getBooleanJs
+   * (_studentSettings.isProxyLogin ()))); _writer.write ("\n\r"); // we use
+   * local domains to detect when a user is navigating away from the // proxy
+   * site. String defaultDomains = "localhost|airws.org|tds.airast.org";
+   * 
+   * // TODO Shajib: Uncomment following line when AppSettings.get() method is
+   * // implemented // _writer.write (String.format
+   * ("TDS.CLS.localDomains = '%s'; ", // AppSettings.get ("CLS.localDomains",
+   * defaultDomains)));
+   * 
+   * // get proctor info Proctor proctorUser = ProxyContext.GetProctor ();
+   * 
+   * _writer.write (String.format ("TDS.CLS.isProctorLoggedIn = %s; ",
+   * getBooleanJs (proctorUser.isAuth ()))); _writer.write ("\n\r"); }
+   */
 
   public void writeLoginRequirements () throws ReturnStatusException, JsonGenerationException, JsonMappingException, IOException {
     List<TesteeAttributeMetadata> loginRequirements = new ArrayList<TesteeAttributeMetadata> ();
@@ -487,6 +508,29 @@ public class GlobalJavascriptWriter
     _writer.write ("\n");
   }
 
+  public void writeTestShellButtons () throws IOException
+  {
+    String toolbarsFile = HttpContext.getCurrentContext ().getServer ().mapPath ("~/Templates/Shells/toolbars.json");
+    BufferedReader br = new BufferedReader (new FileReader (toolbarsFile));
+
+    String toolbarsJson = null;
+    try {
+      StringBuilder sb = new StringBuilder ();
+      String line = null;
+      while ((line = br.readLine ()) != null)
+      {
+        sb.append (line);
+        sb.append (System.lineSeparator ());
+      }
+      br.close ();
+      toolbarsJson = sb.toString ();
+    } catch (Exception e) {
+
+    }
+    _writer.write (TDSStringUtils.format ("TDS.Config.testShellButtons = {0};", toolbarsJson));
+    _writer.write ("\n");
+  }
+
   private <T> String getBooleanJs (T value) {
     if (value == null)
       return "false";
@@ -502,6 +546,11 @@ public class GlobalJavascriptWriter
     if (!styles.contains (name)) {
       styles.add (name);
     }
+  }
+
+  public String getScript ()
+  {
+    return _writer.toString ();
   }
 
 }

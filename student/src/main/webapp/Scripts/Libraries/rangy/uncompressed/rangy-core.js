@@ -2462,7 +2462,7 @@ rangy.createCoreModule("WrappedRange", ["DomRange"], function(api, module) {
 
 
             // Deal with nodes that cannot "contain rich HTML markup". In practice, this means form inputs, images and
-            // similar. See http://msdn.microsoft.com/en-us/library/aa703950%28VS.85%29.xhtml
+            // similar. See http://msdn.microsoft.com/en-us/library/aa703950%28VS.85%29.aspx
             if (!containerElement.canHaveHTML) {
                 var pos = new DomPosition(containerElement.parentNode, dom.getNodeIndex(containerElement));
                 return {

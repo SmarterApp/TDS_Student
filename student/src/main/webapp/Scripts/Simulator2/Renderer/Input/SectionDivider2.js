@@ -6,7 +6,7 @@
 * Creates a new SectionDivider class.
 *****************************************************************************
 */
-Simulator.Input.SectionDivider = function (sim, panel, theSection) {
+Simulator.Input.SectionDivider = function (sim, panel, theSection, container) {
 
     Simulator.Input.StaticElement.call(this, sim); // Inherit Instance variables
 
@@ -38,7 +38,7 @@ Simulator.Input.SectionDivider = function (sim, panel, theSection) {
 
     this.render = function () {
 
-        var panelHtml = panel.getHTMLElement();
+        var panelHtml = container;
 
         divElement = simDocument().createElement('div');
         divElement.id = 'hrHolder';

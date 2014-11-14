@@ -4,22 +4,23 @@
 <cc:interface componentType="tds.itemrenderer.webcontrols.templates.MCTable">
 </cc:interface>
 <cc:implementation>
-<tds:DataTable value="#{cc.options}" var="dataItem" styleClass="mc_stacked" repeatColumns="2" repeatDirection="Vertical" >
-    
-    <div id="Item_OptionContainer_#{cc.getName(dataItem)}" title="Option #{cc.getKey(dataItem)}"
-         class="optionContainer contextArea option#{cc.getKey(dataItem)} #{cc.getIsSelected(dataItem, 'optionSelected')} #{cc.getIsDisabled(dataItem, 'optionDisabled')} ">
-		<span class="striked"></span>
-	    <span class="optionClicker"></span>
+	<div id="OptionsContainer_#{cc.data.position}" class="optionsContainer">
+		<tds:DataTable value="#{cc.options}" var="dataItem" styleClass="mc_stacked" repeatColumns="2" repeatDirection="Vertical">
 
-		<tds:CustomInput type="checkbox" id1="Item_#{cc.getName(dataItem)}"
-			styleClass="option" name="Item_#{cc.getId(dataItem)}" value="#{cc.getKey(dataItem)}"
-			checked="#{cc.getIsSelected(dataItem)}" disabled="#{cc.getIsDisabled(dataItem)}"
-			data-tts-prefix="TDSTTS.Speak.Select#{option.key}" />
+			<div id="Item_OptionContainer_#{cc.getName(dataItem)}" title="Option #{cc.getKey(dataItem)}"
+				class="optionContainer contextArea option#{cc.getKey(dataItem)} #{cc.getIsSelected(dataItem, 'optionSelected')} #{cc.getIsDisabled(dataItem, 'optionDisabled')} ">
+				<span class="striked"></span> <span class="optionClicker"></span>
 
-			<div class="optionContent"><h:outputText value="#{cc.getText(dataItem)}" escape="false"/></div>
+				<tds:CustomInput type="checkbox" id1="Item_#{cc.getName(dataItem)}" styleClass="option" name="Item_#{cc.getId(dataItem)}" value="#{cc.getKey(dataItem)}" checked="#{cc.getIsSelected(dataItem)}"
+					disabled="#{cc.getIsDisabled(dataItem)}" data-tts-prefix="TDSTTS.Speak.Select#{option.key}" />
 
-    </div>
+				<div class="optionContent">
+					<h:outputText value="#{cc.getText(dataItem)}" escape="false" />
+				</div>
 
-</tds:DataTable>
+			</div>
+
+		</tds:DataTable>
+	</div>
 </cc:implementation>
 </html>

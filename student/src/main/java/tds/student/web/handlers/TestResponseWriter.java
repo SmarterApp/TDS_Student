@@ -1,15 +1,16 @@
 /*******************************************************************************
- * Educational Online Test Delivery System 
- * Copyright (c) 2014 American Institutes for Research
- *     
- * Distributed under the AIR Open Source License, Version 1.0 
- * See accompanying file AIR-License-1_0.txt or at
- * http://www.smarterapp.org/documents/American_Institutes_for_Research_Open_Source_Software_License.pdf
+ * Educational Online Test Delivery System Copyright (c) 2014 American
+ * Institutes for Research
+ * 
+ * Distributed under the AIR Open Source License, Version 1.0 See accompanying
+ * file AIR-License-1_0.txt or at http://www.smarterapp.org/documents/
+ * American_Institutes_for_Research_Open_Source_Software_License.pdf
  ******************************************************************************/
 package tds.student.web.handlers;
 
 import java.io.OutputStream;
 import java.util.List;
+import java.util.UUID;
 
 import javax.xml.stream.FactoryConfigurationError;
 import javax.xml.stream.XMLStreamException;
@@ -34,13 +35,11 @@ public class TestResponseWriter // : IDisposable
 {
   private XMLStreamWriter _writer;
 
-  public TestResponseWriter (OutputStream stream) throws XMLStreamException, FactoryConfigurationError
-  {
+  public TestResponseWriter (OutputStream stream) throws XMLStreamException, FactoryConfigurationError {
     _writer = TdsXmlOutputFactory.newInstance ().createXMLStreamWriter (stream);
   }
 
-  public void writeStart (int eventID) throws XMLStreamException
-  {
+  public void writeStart (int eventID) throws XMLStreamException {
     _writer.writeStartElement ("results");
 
     // TODO Shajib: In .net code server's machinename's hashcode is used
@@ -51,24 +50,24 @@ public class TestResponseWriter // : IDisposable
 
   }
 
-  public void writeSummary (TestManager tm, TestOpportunity testOpp, boolean prefetched) throws XMLStreamException
-  {
-    _writer.writeStartElement ("summary");
+  public void writeSummary (TestManager tm, TestOpportunity testOpp, boolean prefetched) throws XMLStreamException {
+    _writer.writeStartElement ("testsummary");
 
     // write out test info (NOTE: if you modify any of xml notify load test tool
     // developer)
     PageList pageList = tm.GetVisiblePages ();
-    _writer.writeAttribute ("testLength", Integer.toString (testOpp.getTestConfig ().getTestLength ()));
-    _writer.writeAttribute ("testLengthMet", Boolean.toString (tm.IsTestLengthMet ()));
-    _writer.writeAttribute ("testFinished", Boolean.toString (tm.IsTestLengthMet () && pageList.isAllCompleted ()));
+    // SB:Merge Start
+    // _writer.writeAttribute ("testLength", Integer.toString
+    // (testOpp.getTestConfig ().getTestLength ()));
+    _writer.writeAttribute ("lengthMet", Boolean.toString (tm.IsTestLengthMet ()));
+    _writer.writeAttribute ("finished", Boolean.toString (tm.IsTestLengthMet () && pageList.isAllCompleted ()));
     _writer.writeAttribute ("prefetched", Boolean.toString (prefetched));
-
+    // SB:Merge End
     _writer.writeEndElement ();
 
   }
 
-  public void writeTimestamps (long timeClientSent, long timeServerReceived, long timeServerCompleted) throws XMLStreamException
-  {
+  public void writeTimestamps (long timeClientSent, long timeServerReceived, long timeServerCompleted) throws XMLStreamException {
     _writer.writeStartElement ("timestamps");
 
     // timestamp of when the message was sent from the client
@@ -83,60 +82,100 @@ public class TestResponseWriter // : IDisposable
     _writer.writeEndElement ();
   }
 
-  public void writeResponseUpdates (List<ItemResponseUpdateStatus> responseUpdates) throws XMLStreamException
-  {
+  public void writeResponseUpdates (List<ItemResponseUpdateStatus> responseUpdates) throws XMLStreamException {
     _writer.writeStartElement ("updates");
 
-    for (ItemResponseUpdateStatus responseStatus : responseUpdates)
-    {
+    for (ItemResponseUpdateStatus responseStatus : responseUpdates) {
       _writer.writeStartElement ("response");
       _writer.writeAttribute ("position", Integer.toString (responseStatus.getPosition ()));
       _writer.writeAttribute ("status", responseStatus.getStatus ());
-      _writer.writeAttribute ("reason", responseStatus.getReason ()!=null?responseStatus.getReason ():"");
+      _writer.writeAttribute ("reason", responseStatus.getReason () != null ? responseStatus.getReason () : "");
       _writer.writeEndElement ();
     }
 
     _writer.writeEndElement ();
   }
 
-  public void writeGroups (PageList groups) throws XMLStreamException
-  {
-    if (groups.size () == 0)
+  public void writePages (PageList pages) throws XMLStreamException {
+    if (pages.size () == 0)
       return;
 
-    _writer.writeStartElement ("groups");
+    _writer.writeStartElement ("pages");
 
-    for (PageGroup group : groups)
-    {
-      // add group
-      _writer.writeStartElement ("group");
-
-      // add group properties
-      if (!StringUtils.equals (group.getId (), null))
-        _writer.writeAttribute ("id", group.getId ());
-
-      _writer.writeAttribute ("page", Integer.toString (group.getNumber ()));
-      _writer.writeAttribute ("numRequired", Integer.toString (group.getItemsRequired ()));
-
-      // add segment properties
-      ItemResponse firstResponse = group.getFirst ();
-      _writer.writeAttribute ("segment", Integer.toString (firstResponse.getSegment ()));
-      _writer.writeAttribute ("segmentID", firstResponse.getSegmentID ());
-
-      // add responses
-      for (ItemResponse response : group)
-      {
-        writeResponse (response);
-      }
-
-      _writer.writeEndElement ();
+    for (PageGroup page : pages) {
+      writePage (page);
     }
 
     _writer.writeEndElement ();
   }
 
-  private void writeResponse (ItemResponse response) throws XMLStreamException
-  {
+  private void writePage (PageGroup page) throws XMLStreamException {
+    // add group
+    _writer.writeStartElement ("page");
+    _writer.writeAttribute ("type", "contentpage");
+    _writer.writeAttribute ("number", "" + page.getNumber ());
+
+    writeSegment (page);
+    writeGroup (page);
+    writeItems (page);
+
+    _writer.writeEndElement ();
+  }
+
+  private void writeItems (PageGroup page) throws XMLStreamException {
+    _writer.writeStartElement ("items");
+
+    // add responses
+    for (ItemResponse item : page) {
+      writeItem (item);
+    }
+
+    _writer.writeEndElement ();
+  }
+
+  private void writeItem (ItemResponse item)  throws XMLStreamException {
+    _writer.writeStartElement ("item");
+
+    // response properties
+    _writer.writeAttribute ("id", item.getItemID ());
+    _writer.writeAttribute ("bankKey", "" + item.getBankKey ());
+    _writer.writeAttribute ("itemKey", "" + item.getItemKey ());
+    _writer.writeAttribute ("position", "" + item.getPosition ());
+    _writer.writeAttribute ("sequence", "" + item.getSequence ());
+    // TODO SB:Merge. We have a util somewhere to generate JSON string for
+    // booleans.
+    // use that below.
+    _writer.writeAttribute ("marked", "" + item.isMarkForReview ());
+    // TODO SB:Merge. We do not support SIRVE but this may 
+    _writer.writeAttribute ("readOnly", "false");
+    _writer.writeAttribute ("selected", "" + item.getIsSelected ());
+    _writer.writeAttribute ("required", "" + item.isRequired ());
+    _writer.writeAttribute ("valid", "" + item.getIsValid ());
+    _writer.writeAttribute ("prefetched", "" + item.isPrefetched ());
+
+    _writer.writeEndElement ();
+  }
+
+  private void writeGroup (PageGroup page) throws XMLStreamException {
+    _writer.writeStartElement ("group");
+    _writer.writeAttribute ("id", page.getId ());
+    // TODO Shiva: SB:Merge UUID random
+    _writer.writeAttribute ("key", UUID.randomUUID ().toString ());
+    // TODO Shiva: SB:Merge datecreated. see writeResponse below.
+    _writer.writeAttribute ("created", "");
+    _writer.writeAttribute ("required", "" + page.getItemsRequired ());
+    _writer.writeEndElement ();
+  }
+
+  private void writeSegment (PageGroup page) throws XMLStreamException {
+    _writer.writeStartElement ("segment");
+    ItemResponse firstResponse = page.getFirst ();
+    _writer.writeAttribute ("position", "" + firstResponse.getSegment ());
+    _writer.writeAttribute ("id", firstResponse.getSegmentID ());
+    _writer.writeEndElement ();
+  }
+
+  private void writeResponse (ItemResponse response) throws XMLStreamException {
     _writer.writeStartElement ("response");
 
     // response properties
@@ -156,20 +195,15 @@ public class TestResponseWriter // : IDisposable
     _writer.writeEndElement ();
   }
 
-  public void writeEnd () throws XMLStreamException
-  {
+  public void writeEnd () throws XMLStreamException {
     _writer.writeEndElement ();
     _writer.close ();
   }
 
-  public void dispose () throws XMLStreamException
-  {
-    if (_writer != null)
-    {
+  public void dispose () throws XMLStreamException {
+    if (_writer != null) {
       _writer.close ();
     }
   }
 
 }
-
-

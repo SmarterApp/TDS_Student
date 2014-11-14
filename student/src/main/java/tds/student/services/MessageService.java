@@ -1,16 +1,18 @@
 /*******************************************************************************
- * Educational Online Test Delivery System 
- * Copyright (c) 2014 American Institutes for Research
- *     
- * Distributed under the AIR Open Source License, Version 1.0 
- * See accompanying file AIR-License-1_0.txt or at
- * http://www.smarterapp.org/documents/American_Institutes_for_Research_Open_Source_Software_License.pdf
+ * Educational Online Test Delivery System Copyright (c) 2014 American
+ * Institutes for Research
+ * 
+ * Distributed under the AIR Open Source License, Version 1.0 See accompanying
+ * file AIR-License-1_0.txt or at http://www.smarterapp.org/documents/
+ * American_Institutes_for_Research_Open_Source_Software_License.pdf
  ******************************************************************************/
 package tds.student.services;
 
 import java.io.File;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,9 +39,9 @@ import TDS.Shared.Messages.MessageXml;
 public class MessageService implements IMessageService
 {
 
-	@Autowired
-	private ITDSLogger _tdsLogger;
-	
+  @Autowired
+  private ITDSLogger               _tdsLogger;
+
   private static final Logger      _logger        = LoggerFactory.getLogger (MessageService.class);
   private final IMessageRepository _messageRepository;
   private final MessageSystem      _messageSystem = new MessageSystem ();
@@ -65,6 +67,7 @@ public class MessageService implements IMessageService
     } catch (ReturnStatusException se) {
       throw se;
     }
+
     // filter out messages that are just the same
     load (messageDTOs);
     return _messageSystem;
@@ -109,7 +112,7 @@ public class MessageService implements IMessageService
         add (messageDTO);
       } catch (Exception ex) {
         String message = String.format ("MESSAGES: Error loading translation \"%b\" (%s).", messageDTO.getAppKey () != null, messageDTO.getMessageId ());
-        _tdsLogger.applicationError(message, "MessageService.load", null, ex);
+        _tdsLogger.applicationError (message, "MessageService.load", null, ex);
       }
     }
   }

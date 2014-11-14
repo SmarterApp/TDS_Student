@@ -17,6 +17,13 @@
     border-radius: 3px;
     visibility: hidden;
 }
+.TDS_CCBlue .TDS_Line_Reader, 
+.TDS_CCBlue2 .TDS_Line_Reader, 
+.TDS_CCYellowB .TDS_Line_Reader {
+	background-color: rgba(244,167,0,0.2);
+	border-color: #f48300;
+}
+
 
 .TDS_Line_Reader_Relative_Pos {
   position: relative;

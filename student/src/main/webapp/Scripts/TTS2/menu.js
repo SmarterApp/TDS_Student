@@ -54,8 +54,12 @@ var CFG = {
         css: 'resumespeaking',
         cb: false
     },
+    MODE: {
+        Label: 'TDSTTS.Label.SpeakOption',
+        cb: false
+    },
     ORDER: [ //Order in which they should be added to the menu, / happy iterator support.
-        'PRI', 'SEC', 'PRI_OP', 'SEC_OP', 'SEL_PRI', 'SEL_SEC', 'STOP', 'PAUSE', 'RESUME'
+        'PRI', 'SEC', 'PRI_OP', 'SEC_OP', 'SEL_PRI', 'SEL_SEC', 'STOP', 'PAUSE', 'RESUME', 'MODE'
     ]
 };
 
@@ -194,6 +198,20 @@ TTS.Menu.prototype.checkSelection = function (cfg, dom, sel, win) {
     cfg.SEL_SEC.cb = this.getPlayFunction(pnSecondary, secLang);
 };
 
+// Add TTS Mode "Speak Option" to menu
+TTS.Menu.prototype.addMode = function(cfg, cb) {
+
+    cfg = cfg || this.cfg;
+
+    var ctrl = TTS.getInstance();
+    if (ctrl.isPlaying()) {
+        return;
+    }
+
+    cfg.MODE.cb = cb;
+    return cfg;
+};
+
 // This is legacy code that is currently only used for the EBSR item type. Probably should be replaced there, too. Regular MC options are handled in
 // assembleLanguageContent when it calls getResponseArea.
 // addOptions passes a set of dom nodes that represent the stem and the options of the currently focused piece of the EBSR
@@ -305,6 +323,11 @@ TTS.Menu.prototype.getDomTitle = function (dom, label, lang) {
     // sometimes an array, in that case use the first element.
     if (YAHOO.lang.isArray(dom) && dom.length > 0) {
         dom = dom[0];
+    }
+
+    // NOTE: Logs showed error: "dom.getAttribute is not a function".. so this object wasn't an element, why?
+    if (!Util.Dom.isElement(dom)) {
+        return label;
     }
 
     // try and get key from special attribute

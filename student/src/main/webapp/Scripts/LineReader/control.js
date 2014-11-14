@@ -1,4 +1,4 @@
-﻿/// <reference path="Libraries/yahoo.js" />
+﻿9/// <reference path="Libraries/yahoo.js" />
 /// <reference path="Libraries/dom.js" />
 /// <reference path="Libraries/event.js" />
 /// <reference path="Libraries/selector.js" />
@@ -111,6 +111,7 @@ TDS.LineReaderControl = {
     setupEvents: function(){
         if(window.ContentManager){
             ContentManager.onItemEvent('zoom', TDS.LineReaderControl.reset);
+            ContentManager.onItemEvent('hide', TDS.LineReaderControl.off);
             ContentManager.onPageEvent('hide', TDS.LineReaderControl.off);
             ContentManager.onEntityEvent('menushow', TDS.LineReaderControl.off);
         }
@@ -173,30 +174,36 @@ TDS.LineReader = function (el) {
 	//*********PROCESS METHODS*********//
 	//SEARCH SUBMITTED ELEMENT FOR TEXT CONTAINERS
 	this._findElements = function (el) {
+        
 		var _foundElementsArray = [];
 		var _criteria = function (x) {
-		    	//IS ELEMENT SCROLLABLE? YES, SAVE REFERENCE TO IT.
-		        //BUG 109466 YUD.getStyle crashes the script in SB when given a non-standard tag like <math>
-		        var overflow = $(x.parentNode).css('overflow').toLowerCase();
-		    	if (overflow === 'auto' || overflow === 'scroll') {
-		    		that._scrollableContainers.push(x.parentNode);
-		    	}
-		    	overflow = null;
+
+		    // make sure CM hasn't hidden the item container
+		    if ($(x).closest('div.itemContainer.hiding').length) {
+		        return false;
+		    }
+
+		    //IS ELEMENT SCROLLABLE? YES, SAVE REFERENCE TO IT.
+		    //BUG 109466 YUD.getStyle crashes the script in SB when given a non-standard tag like <math>
+		    var overflow = $(x.parentNode).css('overflow').toLowerCase();
+		    if (overflow === 'auto' || overflow === 'scroll') {
+		    	that._scrollableContainers.push(x.parentNode);
+		    }
+		    overflow = null;
 				
-		    	//FIND ELEMENT SPECIFIC CRITERIA PARSER
-		    	var p = that._get_parser(x.nodeName);
-				  if (p) {
-		    		return p._criteria.call(that, x); //CALL FOUND PARSER
-		    	}
-		    	else {
-					//IF NO PARSER
-		    		return false;
-		    	}
-		    },
-			_saveElementToTextContainers = function (x) { //Passed test
-				if (that._ignoreContainers.indexOf(x) === -1 && _foundElementsArray.indexOf(x) === -1) { 
-				  _foundElementsArray.push(x);
-			  }
+		    //FIND ELEMENT SPECIFIC CRITERIA PARSER
+		    var p = that._get_parser(x.nodeName);
+				if (p) {
+		    	return p._criteria.call(that, x); //CALL FOUND PARSER
+		    } else {
+				//IF NO PARSER
+		    	return false;
+		    }
+		},
+		_saveElementToTextContainers = function (x) { //Passed test
+            if (that._ignoreContainers.indexOf(x) === -1 && _foundElementsArray.indexOf(x) === -1) { 
+                _foundElementsArray.push(x);
+            }
 		};
 
 		//SEARCH AND SAVE
@@ -619,8 +626,10 @@ TDS.LineReader = function (el) {
     if(excludeClass(x)){return;}
 		var parEles = YAHOO.util.Dom.getAncestorBy(x, function (E) { return true; });
 
-		//IF THE NEAREST PARENT IS A TD TAG IGNORE // THE ROW SHOULD BE HIGHLIGHTED
-		if (!exclude[parEles.nodeName] && !excludeClass(parEles)){
+		//IF THE NEAREST PARENT IS A TD TAG IGNORE. THE ROW SHOULD BE HIGHLIGHTED. UNLESS IT IS A SINGLE COLUMN TABLE
+		if ((!exclude[parEles.nodeName] &&
+            !excludeClass(parEles)) ||
+            ((parEles.nodeName == 'TD') && $(parEles).siblings().length == 0)) {    // Single column table
 		    for (var i = 0; i < x.childNodes.length; i++) {
 		        
 		        var cn = x.childNodes[i];
@@ -646,12 +655,18 @@ TDS.LineReader = function (el) {
 
     par._criteria = function (x) {
         var parent = x.parentNode;
-        if(x.nodeName == 'P' && ( //is p with parent of th or td
-                parent.nodeName == 'TH' ||
-                parent.nodeName == 'TD')
-            ) {
-            //don't include it
-            return false;
+        if (x.nodeName == 'P' &&        //is p with parent of th or td 
+            (parent.nodeName == 'TH' ||
+            parent.nodeName == 'TD')) {
+
+            // if the parent TD is the only column in this row, then include it
+            if (parent.nodeName == 'TD' &&
+                $(parent).siblings().length == 0) {
+                return dfsText(x);
+            } else {
+                // for multiple column table, don't include it (<TD>)
+                return false;
+            }
         }
         return dfsText(x);
     };

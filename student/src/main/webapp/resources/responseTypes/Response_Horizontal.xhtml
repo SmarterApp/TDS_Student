@@ -5,23 +5,22 @@
 </cc:interface>
 <cc:implementation>
 
-<table class="flat">
-    <tr>
-    <ui:repeat value="#{cc.options}" var="option">
-        <td>
-            <div id="Item_OptionContainer_#{option.name}" title="Option #{option.key}"
-                 class="optionContainer contextArea option#{option.key} #{(option.selected) ? 'optionSelected' : ''} #{(option.disabled) ? 'optionDisabled' : ''}">
-				<span class="striked"></span>
-            	<span class="optionClicker"></span>
+	<table class="flat">
+		<tr id="OptionsContainer_#{cc.data.position}" class="optionsContainer">
+			<ui:repeat value="#{cc.options}" var="option">
+				<td>
+					<div id="Item_OptionContainer_#{option.name}" title="Option #{option.key}"
+						class="optionContainer contextArea option#{option.key} #{(option.selected) ? 'optionSelected' : ''} #{(option.disabled) ? 'optionDisabled' : ''}">
+						<span class="striked"></span> <span class="optionClicker"></span>
 
-				<tds:CustomInput type="radio" id1="Item_#{option.name}"  name="Item_#{option.id}" value="#{option.key}" styleClass="option" checked="#{option.selected}" disabled="#{option.disabled}"/>
-                <div class="optionContent">
-                	<h:outputText value="#{option.text}" escape="false"/>
-                </div>
-            </div>
-        </td>
-    </ui:repeat>
-    </tr>
-</table>
+						<tds:CustomInput type="radio" id1="Item_#{option.name}" name="Item_#{option.id}" value="#{option.key}" styleClass="option" checked="#{option.selected}" disabled="#{option.disabled}" />
+						<div class="optionContent">
+							<h:outputText value="#{option.text}" escape="false" />
+						</div>
+					</div>
+				</td>
+			</ui:repeat>
+		</tr>
+	</table>
 </cc:implementation>
 </html>

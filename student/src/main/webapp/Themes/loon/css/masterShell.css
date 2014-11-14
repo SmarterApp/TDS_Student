@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 /*Lake Theme */
 
 /* @group general */
@@ -8,7 +8,7 @@
 .ot-shadowBox .instructions {
 	border-color: #0F6797;
 }
-.ot-shadowBox h2 {
+.ot-shadowBox h1 {
 	border-color: #94B6D9;
 }
 /* @end */
@@ -16,8 +16,7 @@
 /* @group header and footer */
 #tds-ot-header {
 	border-bottom: none;
-	background: #617D6E url(../Images/loon.jpg) no-repeat left top;
-	height:117px;
+	background: #617D6E url(../images/loon.jpg) no-repeat left top;
 }
 #tds-ot-branding {
 	background-color: transparent;
@@ -66,7 +65,7 @@
 	background-color: #fff;
 }
 #ot-logo_spot1 {
-	background: url(../Images/logo_default.png) no-repeat center center;
+	background: url(../images/logo_default.png) no-repeat center center;
 	width: 306px;
 	height: 90px;
 }
@@ -78,27 +77,31 @@
 	background-image: none;
 	border: none !important;
 	/*height: 31px;*/
-	padding-top: 61px;
+	padding-top: 48px;
 }
 #ot-brand2 strong {
 	border-left: none;
 	float: left;
 	color: #fff;
 	margin-left: 0px;
-	background: url(../Images/sys_bg.gif) repeat-y #456854;
+	background: url(../../../Images/masterShell/tablet/tablet_sm_white.png) 5px center no-repeat #456854;
 	padding-top: 0px;
 	padding-bottom: 0px;
-	height: 31px;
-	line-height: 31px;
 	margin-top: 0px;
 	font-weight: normal;
+	border-right: none;
 }
 
+.practiceTest #ot-brand2{
+	float: none;
+	padding-top: 0;
+	clear: both;
+}
 .practiceTest #ot-brand2 strong {
-	background-image: url(../Images/bike/bikeTop.gif);
+	/*background-image: url(../images/bike/bikeTop.gif);
 	background-color: #436853;
 	border-right: none;
-	padding-right: 50px;
+	padding-right: 50px;*/
 }
 #tds-ot-footer span, #tds-ot-footer a {
 	color: #446351;
@@ -106,7 +109,7 @@
 /*.header .titleThing {
 	color: #000;
 	background-color: #9ebec4;
-	background-image: url(../Images/breadcrumb.gif);
+	background-image: url(../images/breadcrumb.gif);
 }*/
 /* @end */
 
@@ -122,7 +125,8 @@
 /* @end */
 
 /* @group Section Login */
-#sectionLogin .ot-innerShadow {
+#sectionLogin .ot-innerShadow,
+#sectionLoginProctor .ot-innerShadow {
 	background-color: #fff !important;
 	background-image: none !important;
 	border-color: #b4272c;
@@ -144,8 +148,8 @@
 	border-color:#446351;
 	background-color: #446351 !important;
 }
-.practiceTest #sectionLogin .ot-shadowBox h2 {
-	background-image: url(../Images/bike/bikeTitle.gif);
+.practiceTest #sectionLogin .ot-shadowBox h1 {
+	
 }
 .practiceTest #loginForm1, .practiceTest #loginForm2 {
 	border-color: #0F6797;
@@ -169,7 +173,7 @@
 	color: #0F6797 !important;
 }
 .goPractice {
-	background-image: url(../Images/bike/goPractice.gif);
+	
 }
 a.goPractice:focus{ background-color: #446351 !important;}
 
@@ -212,7 +216,7 @@ a.goPractice:focus{ background-color: #446351 !important;}
 }
 .resumeTest, .newTest {
 	background-color: #DCEBF5;
-    background-image: url("../Images/select.gif");
+    background-image: url("../images/select.gif");
     border: 1px solid #164C7E;
 }
 #sectionTestSelection .resumeTest:hover, #sectionTestSelection .newTest:hover {
@@ -263,6 +267,12 @@ body.practiceTest .proctorMessage {
 .gridtraining a {
 	color: #ffd377;
 }*/
+
+fieldset.sessionID legend{
+	min-width: 10em;
+}
+
+
 /* @end */
 
 

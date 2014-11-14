@@ -42,3 +42,24 @@ TDS.Interaction.compareOrder = function(obj1, obj2)
 {
     return Util.Dom.compareNodeOrder(obj1.getElement(), obj2.getElement());
 };
+
+TDS.Interaction.parseXmlRoot = function (xml) {
+
+    // parse string
+    var xmlDoc;
+    if (typeof xml == 'string') {
+        xmlDoc = Util.Xml.parseFromString(xml);
+    } else {
+        xmlDoc = xml;
+    }
+
+    // get root node
+    var xmlRoot;
+    if (xmlDoc.documentElement) {
+        xmlRoot = xmlDoc.documentElement;
+    } else {
+        xmlRoot = xml;
+    }
+
+    return xmlRoot;
+}

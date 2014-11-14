@@ -2,16 +2,27 @@
 Code used for showing comments.
 */
 
-(function (CM, TS) {
+(function (CM, TS, TM) {
 
-    // listen for item comments
+    // called before showing comments
+    function beforeShow() {
+        TM.hideAll();
+    }
+
+    // listen for when someone triggers opening item comments
     CM.onItemEvent('comment', function (page, item) {
+        beforeShow();
         TS.Comments.showItem(item);
     });
 
-    // Close Comments
+    // hide comments when page changes
     CM.onPageEvent('beforeHide', function () {
-        TestShell.Comments.hide();
+        TS.Comments.hide();
+    });
+
+    // hide comments when tools show
+    TM.Events.subscribe('onShow', function () {
+        TS.Comments.hide();
     });
 
     // setup comments
@@ -20,7 +31,8 @@ Code used for showing comments.
         TS.Comments.init();
 
         // listen for global comments
-        TS.UI.addClick('btnGlobalNotes', function() {
+        TS.UI.addClick('btnGlobalNotes', function () {
+            beforeShow();
             TS.Comments.showGlobal();
         });
     }
@@ -28,4 +40,4 @@ Code used for showing comments.
     // listen for test shell init (needs to work on legacy and geo)
     TS.Events.subscribe('init', load);
 
-})(ContentManager, TestShell);
+})(window.ContentManager, window.TestShell, window.TDS.ToolManager);

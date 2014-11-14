@@ -165,7 +165,8 @@
 .matchItemDemoAccesible-Ideal .matchItem_cellChecked label {
 	background-position: 7px -294px;
 }
-.matchItemDemoAccesible-Ideal input:active + label {
+.matchItemDemoAccesible-Ideal input:active + label, 
+.matchItemDemoAccesible-Ideal input:focus + label {
 	background-color: #00abf4;
 }
 

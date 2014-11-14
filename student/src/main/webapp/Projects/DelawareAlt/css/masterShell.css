@@ -6,7 +6,7 @@
 /* @group Header Stuff */
 
 #ot-logo_spot1 {
-	background-image:url(../Images/logo_delaware_alt_large.gif);
+	background-image:url(../images/logo_delaware_alt_large.gif);
 	width: 350px;
 }
 #tds-ot-header {
@@ -16,10 +16,10 @@
     background-color: inherit;
 }
 #ot-brand1 {
-    background: transparent url(../Images/lighthouse_top.gif) no-repeat right bottom;
+    background: transparent url(../images/lighthouse_top.gif) no-repeat right bottom;
 }
 #ot-brand2 {
-    background: url("../Images/lighthouse_bottom.gif") no-repeat scroll right center transparent;
+    background: url("../images/lighthouse_bottom.gif") no-repeat scroll right center transparent;
     border-bottom-color: #4D83C3;
     height: 28px;
 }
@@ -55,7 +55,7 @@
 }
 
 .preloader .logo_small {
-	background-image: url(../Images/logo_medium.gif);
+	background-image: url(../images/logo_medium.gif);
 }
 
 

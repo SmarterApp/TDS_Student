@@ -46,7 +46,7 @@ Simulator.Input.GroupList = function(sim) {
             for ( var j = 0; j < node.childNodes.length; j++) {
                 id = node.childNodes[j].nodeName;
                 if (id[0] != '#') {
-                    if (id == 'item') {
+                    if (id == 'item' || id == 'ITEM') { // uppercase version required for re-created nodes (accessibility/streamlined mode: e.g., counters --> dropLists)
                         theItem = node.childNodes[j];
                         attr = theItem.attributes;
                         var attributes = new Simulator.Utils.Dictionary(sim);
@@ -192,7 +192,8 @@ Simulator.Input.GroupList = function(sim) {
                     HTMLItem.selected = 'selected';
                 }
             } else {
-                if(HTMLItem.checked) HTMLItem.removeAttribute('checked');
+                if (HTMLItem.checked) HTMLItem.checked = false;
+//                if (HTMLItem.checked) HTMLItem.removeAttribute('checked');
                 else {
                     HTMLItem.checked = 'checked';
                     this.recordInput(this);

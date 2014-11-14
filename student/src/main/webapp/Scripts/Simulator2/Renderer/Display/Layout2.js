@@ -177,12 +177,12 @@ Simulator.Display.Layout = function (sim, container) {
         }
     };
 
-    this.saveInputs = function () {
+    this.saveInputs = function (forcedSave) {
         for (var panel in panelList) {
             if (panel) {
                 var panelObj = panelList[panel];
                 if (panelObj.saveInputs)
-                    panelObj.saveInputs();
+                    panelObj.saveInputs(forcedSave);
             }
         }
     };

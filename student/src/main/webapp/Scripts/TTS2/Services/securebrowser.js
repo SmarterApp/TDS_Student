@@ -32,8 +32,8 @@ function TTSService_Generic() {
         else
             return TTS.Status.Unknown;
     };
-	
-	this.supportsVolumeControl = function () {
+
+    this.supportsVolumeControl = function () {
         return false;
     };
 

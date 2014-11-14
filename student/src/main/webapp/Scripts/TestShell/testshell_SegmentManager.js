@@ -230,15 +230,43 @@ TestShell.SegmentManager.ApprovalStatus =
 // call this when first loading the page
 TestShell.SegmentManager.init = function()
 {
-    // add all the tds segments
-    Util.Array.each(window.tdsSegments, function(tdsSegment)
-    {
-        var segment = new TestShell.Segment(
-            tdsSegment.id, tdsSegment.position, tdsSegment.label, tdsSegment.isPermeable,
-            tdsSegment.entryApproval, tdsSegment.exitApproval, tdsSegment.itemReview, tdsSegment.updatePermeable);
+    var testInfo = TDS.Student.Storage.getTestInfo();
+    var testSession = TDS.Student.Storage.getTestSession();
+    var isGuestSession = (testSession && testSession.isGuest);
+    var isReadOnly = TDS.isReadOnly; // TODO: Review if this still works
+    var isReviewing = (TestShell.Config.reviewPage > 0);
 
-        this._segments.set(tdsSegment.id, segment);
-        this._segmentPositions.set(tdsSegment.position, segment);
+    // add all the tds segments
+    Util.Array.each(testInfo.segments, function (segmentInfo) {
+
+        // if read only mode is enabled then we should let user have access
+        if (isReadOnly) {
+            segmentInfo.isPermeable = 1;
+            segmentInfo.updatePermeable = 1;
+        }
+
+        // NOTE: If proctorless test then don't require entry/exit approval (nobody to approve it)
+        if (isReadOnly || isGuestSession) {
+            segmentInfo.entryApproval = 0;
+            segmentInfo.exitApproval = 0;
+        } else if (isReviewing) {
+            // BUG #22642: Entry and Exit approvals are not needed from Test level review screen when approval = 2
+            if (segmentInfo.entryApproval === 2) {
+                segmentInfo.entryApproval = 0;
+            }
+            if (segmentInfo.exitApproval === 2) {
+                segmentInfo.exitApproval = 0;
+            }
+        }
+
+        // create segment from json
+        var segment = new TestShell.Segment(
+            segmentInfo.id, segmentInfo.position, segmentInfo.label, segmentInfo.isPermeable,
+            segmentInfo.entryApproval, segmentInfo.exitApproval, segmentInfo.itemReview, segmentInfo.updatePermeable);
+
+        // add segment
+        this._segments.set(segmentInfo.id, segment);
+        this._segmentPositions.set(segmentInfo.position, segment);
 
     }, this);
 

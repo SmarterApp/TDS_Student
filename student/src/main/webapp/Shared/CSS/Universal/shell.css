@@ -1,0 +1,2724 @@
+html {
+	height:100%;
+	max-height:100%;
+	padding:0;
+	margin:0;
+	border:0;
+	background:#fff;
+	font-family: "Lucida Grande", "Lucida Sans", Arial, Helvetica, sans-serif;
+	overflow: hidden;
+}
+body {
+	height:100%;
+	max-height:100%;
+	overflow:hidden;
+}
+/* prevent tablets from getting copy/paste options*/
+.touch #topBar, 
+.touch #dialogs, 
+.touch #content {
+	-webkit-touch-callout:none;
+	-webkit-user-select:none;
+	-khtml-user-select:none;
+	-moz-user-select:none;
+	-ms-user-select:none;
+	user-select:none;
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+
+/* @group Hiding/Showing */
+.contentHidden {
+	visibility: hidden !important;
+	height: 0px !important;
+	width: 0px !important;
+	overflow: hidden !important;
+	margin: 0px !important;
+	padding: 0px !important;
+}
+#topBar .contentHidden {
+	display: none;
+}
+#skipNav {
+	display: block;
+	position: absolute;
+	visibility: visible;
+	height: 0px;
+	width: 0px;
+	overflow: hidden;
+	left: -900px;
+}
+.contentHidden object, 
+.contentHidden embed, 
+.contentHidden video {
+	overflow: hidden !important;
+	visibility: hidden !important;
+	margin-left: -9999px;
+}
+/* RENDERER: Direct */
+#contents div.pageWrapper {
+	display: block;
+	visibility: visible;
+}
+#contents div.pageWrapper.hiding {
+	visibility: hidden;
+	height: 0px;
+	width: 0px;
+}
+/* fb-85688 prevents overlapping of Grid SVG objects in IE9/10 */
+#contents div.pageWrapper.hiding object {
+	overflow: hidden;
+	margin-left: -9999px;
+}
+/* make each page aboslutely positioned, with a default z-index of 0*/
+.browser_ie #contents div.pageWrapper, 
+.browser_chrome #contents div.pageWrapper {
+	position: absolute;
+	z-index: 0;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+}
+/* move each hidden page below the shims that are drawn */
+.browser_ie #contents div.pageWrapper.hiding, 
+.browser_chrome #contents div.pageWrapper.hiding {
+	height: 0px;
+	width: 0px;
+	left: -9999px;
+	z-index: -1 !important;
+}
+/* NOTE: if <object> is set to 'none' it will get reloaded */
+#contents div.pageWrapper object, 
+#contents div.pageWrapper embed, 
+#contents div.pageWrapper video {
+	display: block !important; 
+}
+#contents div.pageWrapper.hiding object, 
+#contents div.pageWrapper.hiding embed, 
+#contents div.pageWrapper.hiding video {
+	visibility: hidden !important;
+}
+
+/* keeps scroll bar from peeking through in latest versions of chrome */
+#contents div.pageWrapper.hiding .thePassage, 
+#contents div.pageWrapper.hiding .theQuestions {
+	visibility: hidden;
+	overflow:hidden;
+}
+/* changing visiblity of containing elements prevents certain MathML symobls fromshowing up in iOS*/
+.platform_ios #contents div.pageWrapper.hiding, 
+.platform_ios #contents div.pageWrapper.hiding .thePassage, 
+.platform_ios #contents div.pageWrapper.hiding .theQuestions {
+	visibility: inherit;
+	position: relative;
+	overflow: hidden;
+}
+
+/* @end */
+
+/* @group Hide items */
+/* 
+NOTE: 
+I can't hide passages because when they show they 
+have a scrolling motion. I think it is because of 
+the expand/collapse styles we applied.
+*/
+div.pageWrapper div.itemContainer.hiding {
+	overflow: hidden !important;
+	height: 0px !important;
+	width: 0px !important;
+	border: none !important;
+	margin: 0px !important;
+	left: -9999px !important;
+	z-index: -1 !important;
+	padding: 0px !important;
+}
+
+/* 
+Hide passage if it is hidden and has no content.
+Read note from above why we don't always hide passages. 
+*/
+div.pageWrapper div.thePassage.hiding.contentEmpty {
+	display: none !important;
+}
+
+/* @end */
+
+/* @group Context Area */
+
+.contextArea {
+ 	background-color: transparent;
+ 	-moz-transition: background-color .2s ease-in;
+    -webkit-transition: background-color .2s ease-in;
+    transition: background-color .2s ease-in;
+}
+.contextAreaMode .contextArea {
+	background-color: rgba(0, 174, 239, .1);
+	border: solid 1px #c6eefd;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box; 
+	
+}
+.contextAreaMode .contextArea.optionContainer {
+ 	margin-bottom: .1em;
+}
+.contextAreaMode .contextArea:hover, .contextAreaMode .contextArea:focus {
+	background-color: rgba(0, 174, 239, .3);
+	border-color: #00aeef;
+}
+.contextAreaMode .stemContainer.contextArea {
+	border-top-color: #c6eefd;
+}
+
+/* @end */
+
+
+
+#topBar {
+	position: fixed;
+	z-index: 1;
+	top: 0px;
+	left: 0px;
+	height: 74px;
+	width: 100%;
+	font: 62.5% "Lucida Grande", Lucida, Verdana, sans-serif;
+	background-color: #fff;
+	/*-moz-box-shadow: 0 0 5px 2px rgba(200,200,200,.7);
+   	-webkit-box-shadow: 0 0 5px 2px rgba(200,200,200,.7);
+	box-shadow: 0 0 5px 2px rgba(200,200,200,.7);*/
+}
+#tobBar * {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+#topBar a {
+	display: block;
+	float: left;
+	text-decoration: none;
+	color: #000;
+	background-color: transparent;
+ 	-moz-transition: background-color .2s ease-in;
+    -webkit-transition: background-color .2s ease-in;
+ 	-ms-transition: background-color .2s ease-in;
+    transition: background-color .2s ease-in;
+}
+
+/* @group Small Bar */
+
+#infoBar {
+	background-color: rgba(211,242,254,0.3);
+	height: 21px;
+	border-bottom: solid 1px #c2c2c2;
+	font-size: 11px;
+	line-height: 21px;
+	padding: 0px 10px;
+}
+#jumpQuestions, #jumpQuestions label {
+	float: left;
+	line-height: 15px;
+}
+#jumpQuestions label {
+	padding-top: 2px;
+}
+#jumpQuestions #ddlNavigation {
+	margin-top: 2px;
+	margin-left: 3px;
+	float: left;
+}
+.platform_linux #jumpQuestions #ddlNavigation, 
+.platform_unix #jumpQuestions #ddlNavigation {
+	margin-top: 0px;
+	font-size: 9px;
+	height: 20px;
+}
+#jumpGo {
+	height: 17px;
+	width: 17px;
+	text-align: center;
+	border: solid 2px #c2c2c2;
+	-moz-border-radius:  50%;
+	-webkit-border-radius:  50%;
+    border-radius: 50%;
+    margin-top: 2px;
+    margin-left: 3px;
+    font-size: 10px;
+    overflow: hidden;
+    text-indent: -9999px;
+    display: block;
+    float: right;
+    -moz-transition: background-color .2s ease-in;
+    -webkit-transition: background-color .2s ease-in;
+ 	-ms-transition: background-color .2s ease-in;
+    transition: background-color .2s ease-in;
+    background: #fff url(../../Images/universal/universal_shell.png) no-repeat center -7px;
+    padding: 0px;
+}
+#jumpGo:active,
+#jumpGo:focus, 
+#jumpGo:hover {
+	background-color: #00aeef;
+	border-color: #fff;
+	-webkit-box-shadow: 0px 0px 2px #b4b4b4;
+	-moz-box-shadow: 0px 0px 2px #b4b4b4;
+	box-shadow: 0px 0px 2px #b4b4b4;
+	color: #fff;
+	background-position: center -47px;
+}
+#smallButtons {
+	float: right;
+}
+#smallButtons a {
+	overflow: hidden;
+	text-align: center;
+	text-indent: -9999px;
+	height: 14px;
+	width: 14px;
+	margin-right: 0px;
+	margin-left: 15px;
+	border: solid 2px #c2c2c2;
+	-moz-border-radius:  50%;
+	-webkit-border-radius:  50%;
+    border-radius: 50%;
+    margin-top: 2px;
+    position: relative;
+    background: transparent url(../../Images/universal/universal_shell.png) no-repeat center -7px;
+}
+#smallButtons a:active,
+#smallButtons a:focus, 
+#smallButtons a:hover {
+	background-color: #00aeef;
+	border-color: #fff;
+	-webkit-box-shadow: 0px 0px 2px #b4b4b4;
+	-moz-box-shadow: 0px 0px 2px #b4b4b4;
+	box-shadow: 0px 0px 2px #b4b4b4;
+}
+#smallButtons #btnHelp {
+	background-position: center -748px;
+}
+#smallButtons #btnHelp:active, 
+#smallButtons #btnHelp:focus, 
+#smallButtons #btnHelp:hover {
+	background-position: center -777px;
+}
+#smallButtons #btnSettings {
+	background-position: center -3832px;
+}
+#smallButtons #btnSettings:active, 
+#smallButtons #btnSettings:focus, 
+#smallButtons #btnSettings:hover {
+	background-position: center -3856px;
+}
+#smallButtons #proctorLogout {
+	background-position: center -3884px;
+}
+#smallButtons #proctorLogout:active, 
+#smallButtons #proctorLogout:focus, 
+#smallButtons #proctorLogout:hover {
+	background-position: center -3905px;
+}
+#infoBar h1, 
+#infoBar h2 {
+	float: left;
+	margin-left: 10px;
+}
+
+/* @end */
+
+/* @group Nav Icons */
+
+#navigation {
+	height: 53px;
+	border-bottom: solid 1px #c2c2c2;
+	font-size: 9px;
+}
+#navigation ul {
+	display: block;
+	float: left;
+}
+ul#studentTools {
+	float: right;
+	/* for better experience in ItemPreview 
+	max-width: 550px;
+	height: 53px;
+	overflow: auto;*/
+}
+#navigation li {
+	display: inline-block;
+	height: 53px;
+}
+#navigation a {
+	min-width: 44px;
+	position: relative;
+	text-align: center;
+	padding: 39px 3px 0;
+}
+#navigation a:active .icon,
+#navigation a:focus .icon,
+#navigation a:hover .icon {
+	background-color: #00aeef;
+	border-color: #fff;
+	-webkit-box-shadow: 0px 0px 3px #b4b4b4;
+	-moz-box-shadow: 0px 0px 3px #b4b4b4;
+	box-shadow: 0px 0px 3px #b4b4b4;
+}
+#navigation .inactive {
+	color: #ccc;
+	cursor: default;
+}
+#navigation .inactive .icon, 
+#navigation .inactive a:active .icon,
+#navigation .inactive a:focus .icon,
+#navigation .inactive a:hover .icon {
+	background-color: transparent;
+	-webkit-box-shadow: inherit;
+	-moz-box-shadow: inherit;
+	box-shadow: inherit;
+	opacity: .3;
+	border-color: #ccc;
+}
+#navigation .icon {
+	display: block;
+	height: 30px;
+	width: 30px;
+	position: absolute;
+	top: 4px;
+	left: 50%;
+	margin-left: -16px;
+	border: solid 2px #c2c2c2;
+	-moz-border-radius:  50%;
+	-webkit-border-radius:  50%;
+    border-radius: 50%;
+ 	-moz-transition: background-color .2s ease-in;
+    -webkit-transition: background-color .2s ease-in;
+ 	-ms-transition: background-color .2s ease-in;
+    transition: background-color .2s ease-in;
+    text-align: center;
+	background: transparent url(../../Images/universal/universal_shell.png) no-repeat;
+}
+#btnNext .icon {
+	background-position: center -1016px;
+}
+#btnNext:active .icon, 
+#btnNext:focus .icon, 
+#btnNext:hover .icon {
+	background-position: center -1066px;
+}
+#btnBack .icon {
+	background-position: center -1116px;
+}
+#btnBack:active .icon, 
+#btnBack:focus .icon, 
+#btnBack:hover .icon {
+	background-position: center -1166px;
+}
+#navigation .inactive a#btnBack .icon, 
+#navigation .inactive a#btnBack:active .icon,
+#navigation .inactive a#btnBack:focus .icon,
+#navigation .inactive a#btnBack:hover .icon {
+	background-position: center -1116px;
+}
+#btnPause .icon {
+	background-position: center -1217px;
+}
+#btnPause:active .icon, 
+#btnPause:focus .icon, 
+#btnPause:hover .icon {
+	background-position: center -1267px;
+}
+#btnEnd .icon, 
+#btnResults .icon {
+	background-position: center -1317px;
+}
+#btnEnd:active .icon, 
+#btnEnd:focus .icon, 
+#btnEnd:hover .icon, 
+#btnResults:active .icon, 
+#btnResults:focus .icon, 
+#btnResults:hover .icon {
+	background-position: center -1367px;
+}
+#btnSave .icon {
+	background-position: center -1418px;
+}
+#btnSave:active .icon, 
+#btnSave:focus .icon, 
+#btnSave:hover .icon {
+	background-position: center -1468px;
+}
+
+
+#btnZoomIn .icon {
+	background-position: center -818px;
+}
+#btnZoomIn:active .icon, 
+#btnZoomIn:focus .icon, 
+#btnZoomIn:hover .icon {
+	background-position: center -868px;
+}
+#btnZoomOut .icon {
+	background-position: center -918px;
+}
+#btnZoomOut:active .icon, 
+#btnZoomOut:focus .icon, 
+#btnZoomOut:hover .icon {
+	background-position: center -968px;
+}
+#btnPrint .icon, 
+#btnPagePrint .icon {
+	background-position: center -3943px;
+}
+#btnPrint:active .icon, 
+#btnPrint:focus .icon, 
+#btnPrint:hover .icon, 
+#btnPagePrint:active .icon, 
+#btnPagePrint:focus .icon, 
+#btnPagePrint:hover .icon {
+	background-position: center -3993px;
+}
+/* hide Print Page unless bith Item and Passage printing are enabled */
+#studentTools #btnPagePrint {
+	display: none;
+}
+.TDS_PoD_Item.TDS_PoD_Stim #studentTools #btnPagePrint {
+	display: block;
+}
+
+#studentTools .printer, #studentTools .printerPractice {
+	display:none;
+}
+#btnCalculator .icon {
+	background-position: center -1817px;
+}
+#btnCalculator:active .icon, 
+#btnCalculator:focus .icon, 
+#btnCalculator:hover .icon {
+	background-position: center -1867px;
+}
+#btnFormula .icon {
+	background-position: center -1615px;
+}
+#btnFormula:active .icon, 
+#btnFormula:focus .icon, 
+#btnFormula:hover .icon {
+	background-position: center -1665px;
+}
+#btnPeriodic .icon {
+	background-position: center -1715px;
+}
+#btnPeriodic:active .icon, 
+#btnPeriodic:focus .icon, 
+#btnPeriodic:hover .icon {
+	background-position: center -1765px;
+}
+#btnItemScore .icon {
+	background-position: center -1918px;
+}
+#btnItemScore:active .icon, 
+#btnItemScore:focus .icon, 
+#btnItemScore:hover .icon {
+	background-position: center -1968px;
+}
+#btnCompass .icon {
+	background-position: center -2020px;
+}
+#btnCompass:active .icon, 
+#btnCompass:focus .icon, 
+#btnCompass:hover .icon {
+	background-position: center -2070px;
+}
+#btnProtractor .icon {
+	background-position: center -2117px;
+}
+#btnProtractor:active .icon, 
+#btnProtractor:focus .icon, 
+#btnProtractor:hover .icon {
+	background-position: center -2167px;
+}
+#btnRuler .icon {
+	background-position: center -2217px;
+}
+#btnRuler:active .icon, 
+#btnRuler:focus .icon, 
+#btnRuler:hover .icon {
+	background-position: center -2267px;
+}
+#btnGlobalNotes .icon {
+	background-position: center -2624px;
+}
+#btnGlobalNotes:active .icon, 
+#btnGlobalNotes:focus .icon, 
+#btnGlobalNotes:hover .icon {
+	background-position: center -2675px;
+}
+#btnLineReader .icon {
+	background-position: center -2923px;
+}
+#btnLineReader:active .icon, 
+#btnLineReader:focus .icon, 
+#btnLineReader:hover .icon {
+	background-position: center -2973px;
+}
+#btnMask .icon, 
+#btnMasking .icon {
+	background-position: center -3442px;
+}
+#btnMask:active .icon, 
+#btnMask:focus .icon, 
+#btnMask:hover .icon, 
+#btnMasking:active .icon, 
+#btnMasking:focus .icon, 
+#btnMasking:hover .icon {
+	background-position: center -3492px;
+}
+#btnRubric .icon {
+	background-position: center -3545px;
+}
+#btnRubric:active .icon, 
+#btnRubric:focus .icon, 
+#btnRubric:hover .icon {
+	background-position: center -3595px;
+}
+#btnDictionary .icon {
+	background-position: center -3650px;
+}
+#btnDictionary:active .icon, 
+#btnDictionary:focus .icon, 
+#btnDictionary:hover .icon {
+	background-position: center -3700px;
+}
+#topBar a#btnContext {
+	display: none;
+}
+/* still need to show menu button in nav bar for tablets when we use the inidividial item tool buttons */
+.touch #topBar a#btnContext {
+	display: block;
+}
+.touch.TDS_ITM1 #topBar a#btnContext {
+	display: none;
+}
+
+#btnContext .icon {
+	background-position: center -2319px;
+}
+#btnContext:active .icon, 
+#btnContext:focus .icon, 
+#btnContext:hover .icon {
+	background-position: center -2369px;
+}
+
+#navigation .math, 
+#navigation .periodic, 
+#navigation .calculator, 
+#btnLineReader, 
+#navigation .inactive .endTest, 
+#navigation .inactive .startTest, 
+#navigation .inactive .pause {
+	display: none !important;
+}
+#navigation #btnSave, 
+#navigation #btnGlobalNotes, 
+#navigation #btnRubric {
+	display:none;
+}
+#navigation #btnSave.enable {
+	display:block;
+}
+
+/* @end */
+
+/* @group Alert Bar */
+
+.alertBar {
+	display: none;
+	font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
+	top: -50px;
+	-moz-transition: all .2s ease-in;
+    -webkit-transition: all .2s ease-in;
+ 	-ms-transition: all .2s ease-in;
+    transition: all .2s ease-in;
+
+}
+.alertBar.alertActive {
+	display: block; 
+	position: fixed;
+	top: 5px;
+	left: 50%;
+	width: 300px;
+	min-height: 30px;
+	margin-left: -150px;
+	background-color: rgba(248,253,211,0.7);
+	border: solid 1px #ccc;
+	z-index: 10;
+	line-height: 1.5em;
+}
+.alertBar .alertDismiss {
+	display: block;
+	background: transparent url(../../Images/universal/universal_shell.png) no-repeat center -3233px;
+	height: 30px;
+	width: 30px;
+	overflow: hidden;
+	text-indent: -9999px;
+	float: right;
+	-moz-transition: background-color .2s ease-in;
+    -webkit-transition: background-color .2s ease-in;
+ 	-ms-transition: background-color .2s ease-in;
+    transition: background-color .2s ease-in;
+}
+.alertBar .alertDismiss:active, 
+.alertBar .alertDismiss:focus, 
+.alertBar .alertDismiss:hover {
+	background-position: center -3338px;
+}
+.alertBar.alertActive.alertClosed {
+	top: 0px;
+	left: 50%;
+	width: 30px;
+	height: 10px;
+	margin-left: -15px;
+	border-top: none;
+	-webkit-box-shadow: 0px 0px 3px #b4b4b4;
+	-moz-box-shadow: 0px 0px 3px #b4b4b4;
+	box-shadow: 0px 0px 3px #b4b4b4;
+}
+.alertBar.alertActive.alertClosed .alertContent {
+	display: none;
+}
+.alertBar.alertActive.alertClosed {
+	top: 0px;
+	left: 50%;
+	width: 30px;
+	height: 15px;
+	min-height: 15px;
+	margin-left: -15px;
+	border-top: none;
+}
+.alertBar.alertActive.alertClosed .alertDismiss {
+	background-position: center -87px;
+	height: 15px;
+}
+.alertBar.alertActive.alertClosed .alertDismiss:active, 
+.alertBar.alertActive.alertClosed .alertDismiss:focus,
+.alertBar.alertActive.alertClosed .alertDismiss:hover {
+	background-position: center -127px;
+	background-color: #00aeef;
+}
+.alertBar .alertContent {
+	list-style: none;
+}
+.alertBar .alertContent li {
+	border-top: solid 1px #ccc;
+	padding: 6px;
+}
+.alertBar .alertContent li:nth-child(1) {
+	border-top: none;
+}
+
+/* @end */
+#contents {
+	position: absolute;
+	top: 75px;
+	left: 0px;
+	width: 100%;
+	bottom: 0px;
+	z-index: 0;
+}
+
+/* @group Context Menu */
+
+.yui-skin-sam .yuimenu {
+	background-color: #fff !important;
+	-moz-border-radius:  5px;
+	-webkit-border-radius:  5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0em 0em .4em #666;
+	-moz-box-shadow: 0em 0em .4em #666;
+	box-shadow: 0em 0em .4em #666;
+	font-size: 10px;
+	line-height: 16px;
+	font-family: "Lucida Grande", "Lucida Sans", Arial, Helvetica, sans-serif;
+}
+.yui-skin-sam .yuimenu .bd {
+	background-color: transparent;
+	border: none !important;
+}
+.yui-skin-sam .yuimenu ul {
+	padding: 0px !important;
+}
+.yui-skin-sam .yuimenu li  {
+    display: block;
+    border: none !important;
+    background-color: transparent !important;
+}
+.yuimenuitemlabel:focus {
+    outline: none;
+}
+.yui-skin-sam .yuimenu li a {
+    border-bottom: solid 1px #ccc;
+	padding: 5px 10px 5px 40px;
+	background: transparent url(../../Images/universal/universal_context.png) no-repeat -9999px 0px;
+}
+.yui-skin-sam .yuimenu li:nth-child(1) a {
+   	-moz-border-radius: 5px 5px 0 0;
+   	-webkit-border-radius: 5px 5px 0 0;
+	border-radius: 5px 5px 0 0;
+}
+.yui-skin-sam .yuimenu li:nth-last-child(1) a {
+   -moz-border-radius: 0 0 5px 5px;
+   	-webkit-border-radius: 0 0 5px 5px;
+	border-radius: 0 0 5px 5px;
+	border-bottom: none;
+}
+.yui-skin-sam .yuimenu li.first-of-type:nth-last-child(1) a {
+   -moz-border-radius: 5px;
+   	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	border-bottom: none;
+}
+.yui-skin-sam .yuimenu li a::-moz-selection {
+   background-color: transparent;
+}
+.yui-skin-sam .yuimenu li a::-selection {
+   border-color: transparent;
+}
+.yuimenu li a:hover, .yuimenu li a:focus, .yuimenu li a:active {
+	background-color: #00aeef;
+	color: #fff !important;
+}
+.yuimenu .yuimenuitemlabel-disabled, 
+.yuimenu .yuimenuitemlabel-disabled:hover  {
+    color: #A6A6A6 !important;
+    background-color: #cccbce !important;
+}
+.yui-skin-sam .yuimenu .yuimenuitem-selected {
+	background-color: transparent;
+	border: none !important;
+}
+.touch .yuimenu li {
+	position: static !important;
+}
+.touch .yuimenu li a:focus {
+	outline: none;
+}
+
+
+/* @group icons */
+.yui-skin-sam .yuimenu .speaksection a, 
+.yui-skin-sam .yuimenu .speaktext a {
+	background-position: left -4px;
+}
+.yui-skin-sam .yuimenu .speaksection a.yuimenuitemlabel-disabled, 
+.yui-skin-sam .yuimenu .speaktext a.yuimenuitemlabel-disabled {
+	background-position: left -4px !important;
+}
+
+.yui-skin-sam .yuimenu .speaksection a:hover, 
+.yui-skin-sam .yuimenu .speaktext a:hover, 
+.yui-skin-sam .yuimenu .speaksection a:focus, 
+.yui-skin-sam .yuimenu .speaktext a:focus, 
+.yui-skin-sam .yuimenu .speaksection a:active, 
+.yui-skin-sam .yuimenu .speaktext a:active {
+	background-position: left -2004px;
+}
+.yui-skin-sam .yuimenu .playquestion a, 
+.yui-skin-sam .yuimenu .playrecording a, 
+.yui-skin-sam .yuimenu .sound_instructions a, 
+.yui-skin-sam .yuimenu .resumespeaking a {
+	background-position: left -1605px;
+}
+.yui-skin-sam .yuimenu .playquestion a.yuimenuitemlabel-disabled, 
+.yui-skin-sam .yuimenu .playrecording a.yuimenuitemlabel-disabled, 
+.yui-skin-sam .yuimenu .sound_instructions a.yuimenuitemlabel-disabled, 
+.yui-skin-sam .yuimenu .resumespeaking a.yuimenuitemlabel-disabled {
+	background-position: left -1605px !important;
+}
+.yui-skin-sam .yuimenu .playquestion a:hover, 
+.yui-skin-sam .yuimenu .playrecording a:hover, 
+.yui-skin-sam .yuimenu .sound_instructions a:hover, 
+.yui-skin-sam .yuimenu .resumespeaking a:hover, 
+.yui-skin-sam .yuimenu .playquestion a:focus, 
+.yui-skin-sam .yuimenu .playrecording a:focus, 
+.yui-skin-sam .yuimenu .sound_instructions a:focus, 
+.yui-skin-sam .yuimenu .resumespeaking a:focus, 
+.yui-skin-sam .yuimenu .playquestion a:active, 
+.yui-skin-sam .yuimenu .playrecording a:active, 
+.yui-skin-sam .yuimenu .sound_instructions a:active, 
+.yui-skin-sam .yuimenu .resumespeaking a:active {
+	background-position: left -3605px;
+}
+.yui-skin-sam .yuimenu .speakstop a, 
+.yui-skin-sam .yuimenu .stopspeaking a, 
+.yui-skin-sam .yuimenu .stoprecording a, 
+.yui-skin-sam .yuimenu .stopquestion a {
+	background-position: left -85px;
+}
+.yui-skin-sam .yuimenu .speakstop a.yuimenuitemlabel-disabled, 
+.yui-skin-sam .yuimenu .stopspeaking a.yuimenuitemlabel-disabled, 
+.yui-skin-sam .yuimenu .stoprecording a.yuimenuitemlabel-disabled, 
+.yui-skin-sam .yuimenu .stopquestion a.yuimenuitemlabel-disabled {
+	background-position: left -85px !important;
+}
+.yui-skin-sam .yuimenu .speakstop a:hover, 
+.yui-skin-sam .yuimenu .stopspeaking a:hover, 
+.yui-skin-sam .yuimenu .stoprecording a:hover, 
+.yui-skin-sam .yuimenu .stopquestion a:hover, 
+.yui-skin-sam .yuimenu .speakstop a:focus, 
+.yui-skin-sam .yuimenu .stopspeaking a:focus, 
+.yui-skin-sam .yuimenu .stoprecording a:focus, 
+.yui-skin-sam .yuimenu .stopquestion a:focus, 
+.yui-skin-sam .yuimenu .speakstop a:active, 
+.yui-skin-sam .yuimenu .stopspeaking a:active, 
+.yui-skin-sam .yuimenu .stoprecording a:active, 
+.yui-skin-sam .yuimenu .stopquestion a:active {
+	background-position: left -2085px;
+}
+.yui-skin-sam .yuimenu .highlight a, 
+.yui-skin-sam .yuimenu .highlighttext a {
+	background-position:left -163px;
+}
+.yui-skin-sam .yuimenu .highlight a.yuimenuitemlabel-disabled, 
+.yui-skin-sam .yuimenu .highlighttext a.yuimenuitemlabel-disabled {
+	background-position: left -163px !important;
+}
+.yui-skin-sam .yuimenu .highlight a:hover, 
+.yui-skin-sam .yuimenu .highlighttext a:hover, 
+.yui-skin-sam .yuimenu .highlight a:focus, 
+.yui-skin-sam .yuimenu .highlighttext a:focus, 
+.yui-skin-sam .yuimenu .highlight a:active, 
+.yui-skin-sam .yuimenu .highlighttext a:active {
+	background-position:left -2163px;
+}
+.yui-skin-sam .yuimenu .removehighlight a, 
+.yui-skin-sam .yuimenu .highlightclear a, 
+.yui-skin-sam .yuimenu .removehighlighttext a, 
+.yui-skin-sam .yuimenu .highlighttextclear a {
+	background-position: left -245px;
+}
+.yui-skin-sam .yuimenu .removehighlight a.yuimenuitemlabel-disabled, 
+.yui-skin-sam .yuimenu .highlightclear a.yuimenuitemlabel-disabled, 
+.yui-skin-sam .yuimenu .removehighlighttext a.yuimenuitemlabel-disabled, 
+.yui-skin-sam .yuimenu .highlighttextclear a.yuimenuitemlabel-disabled {
+	background-position: left -245px !important;
+}
+.yui-skin-sam .yuimenu .removehighlight a:hover, 
+.yui-skin-sam .yuimenu .highlightclear a:hover, 
+.yui-skin-sam .yuimenu .removehighlight a:hover, 
+.yui-skin-sam .yuimenu .highlightclear a:hover, 
+.yui-skin-sam .yuimenu .removehighlight a:focus, 
+.yui-skin-sam .yuimenu .highlightclear a:focus, 
+.yui-skin-sam .yuimenu .removehighlight a:focus, 
+.yui-skin-sam .yuimenu .highlightclear a:focus, 
+.yui-skin-sam .yuimenu .removehighlight a:active, 
+.yui-skin-sam .yuimenu .highlightclear a:active, 
+.yui-skin-sam .yuimenu .removehighlight a:active, 
+.yui-skin-sam .yuimenu .highlightclear a:active {
+	background-position: left -2245px;
+}
+.yui-skin-sam .yuimenu .strikethrough a {
+	background-position: left -321px;
+}
+.yui-skin-sam .yuimenu .strikethrough a.yuimenuitemlabel-disabled {
+	background-position: left -321px !important;
+}
+.yui-skin-sam .yuimenu .strikethrough a:hover, 
+.yui-skin-sam .yuimenu .strikethrough a:focus, 
+.yui-skin-sam .yuimenu .strikethrough a:active {
+	background-position: left -2321px;
+}
+.yui-skin-sam .yuimenu .pause a, 
+.yui-skin-sam .yuimenu .pausespeaking a {
+	background-position: left -645px;
+}
+.yui-skin-sam .yuimenu .pause a.yuimenuitemlabel-disabled, 
+.yui-skin-sam .yuimenu .pausespeaking a.yuimenuitemlabel-disabled {
+	background-position: left -645px !important;
+}
+.yui-skin-sam .yuimenu .pause a:hover, 
+.yui-skin-sam .yuimenu .pausespeaking a:hover, 
+.yui-skin-sam .yuimenu .pause a:focus, 
+.yui-skin-sam .yuimenu .pausespeaking a:focus, 
+.yui-skin-sam .yuimenu .pause a:active, 
+.yui-skin-sam .yuimenu .pausespeaking a:active {
+	background-position: left -2645px;
+}
+.yui-skin-sam .yuimenu .next a {
+	background-position: left -725px;
+}
+.yui-skin-sam .yuimenu .next a.yuimenuitemlabel-disabled {
+	background-position: left -725px !important;
+}
+.yui-skin-sam .yuimenu .next a:hover, 
+.yui-skin-sam .yuimenu .next a:focus, 
+.yui-skin-sam .yuimenu .next a:active {
+	background-position: left -2725px;
+}
+.yui-skin-sam .yuimenu .back a {
+	background-position: left -805px;
+}
+.yui-skin-sam .yuimenu .back a.yuimenuitemlabel-disabled {
+	background-position: left -805px !important;
+}
+.yui-skin-sam .yuimenu .back a:hover, 
+.yui-skin-sam .yuimenu .back a:focus, 
+.yui-skin-sam .yuimenu .back a:active {
+	background-position: left -2805px;
+}
+.yui-skin-sam .yuimenu .zoomIn a {
+	background-position: left -885px;
+}
+.yui-skin-sam .yuimenu .zoomIn a.yuimenuitemlabel-disabled {
+	background-position: left -885px !important;
+}
+.yui-skin-sam .yuimenu .zoomIn a:hover, 
+.yui-skin-sam .yuimenu .zoomIn a:focus, 
+.yui-skin-sam .yuimenu .zoomIn a:active {
+	background-position: left -2885px;
+}
+.yui-skin-sam .yuimenu .zoomOut a {
+	background-position: left -965px;
+}
+.yui-skin-sam .yuimenu .zoomOut a.yuimenuitemlabel-disabled {
+	background-position: left -965px !important;
+}
+.yui-skin-sam .yuimenu .zoomOut a:hover, 
+.yui-skin-sam .yuimenu .zoomOut a:focus, 
+.yui-skin-sam .yuimenu .zoomOut a:active {
+	background-position: left -2965px;
+}
+.yui-skin-sam .yuimenu .calculator a {
+	background-position: left -1045px;
+}
+.yui-skin-sam .yuimenu .calculator a.yuimenuitemlabel-disabled {
+	background-position: left -1045px !important;
+}
+.yui-skin-sam .yuimenu .calculator a:hover, 
+.yui-skin-sam .yuimenu .calculator a:focus, 
+.yui-skin-sam .yuimenu .calculator a:active {
+	background-position: left -3045px;
+}
+.yui-skin-sam .yuimenu .math a {
+	background-position: left -1284px;
+}
+.yui-skin-sam .yuimenu .math a.yuimenuitemlabel-disabled {
+	background-position: left -1284px !important;
+}
+.yui-skin-sam .yuimenu .math a:hover, 
+.yui-skin-sam .yuimenu .math a:focus, 
+.yui-skin-sam .yuimenu .math a:active {
+	background-position: left -3284px;
+}
+.yui-skin-sam .yuimenu .periodic a {
+	background-position: left -1202px;
+}
+.yui-skin-sam .yuimenu .periodic a.yuimenuitemlabel-disabled {
+	background-position: left -1202px !important;
+}
+.yui-skin-sam .yuimenu .periodic a:hover, 
+.yui-skin-sam .yuimenu .periodic a:focus, 
+.yui-skin-sam .yuimenu .periodic a:active {
+	background-position: left -3202px;
+}
+.yui-skin-sam .yuimenu .printerPractice a, 
+.yui-skin-sam .yuimenu .printer a, 
+.yui-skin-sam .yuimenu .printItem a, 
+.yui-skin-sam .yuimenu .printPassage a, 
+.yui-skin-sam .yuimenu .printPage a {
+	background-position: left -405px;
+}
+.yui-skin-sam .yuimenu .printerPractice a.yuimenuitemlabel-disabled, 
+.yui-skin-sam .yuimenu .printer a.yuimenuitemlabel-disabled, 
+.yui-skin-sam .yuimenu .printItem a.yuimenuitemlabel-disabled, 
+.yui-skin-sam .yuimenu .printPassage a.yuimenuitemlabel-disabled, 
+.yui-skin-sam .yuimenu .printPage a.yuimenuitemlabel-disabled {
+	background-position: left -405px !important;
+}
+.yui-skin-sam .yuimenu .printerPractice a:hover, 
+.yui-skin-sam .yuimenu .printer a:hover, 
+.yui-skin-sam .yuimenu .printItem a:hover, 
+.yui-skin-sam .yuimenu .printPassage a:hover, 
+.yui-skin-sam .yuimenu .printPage a:hover, 
+.yui-skin-sam .yuimenu .printerPractice a:focus, 
+.yui-skin-sam .yuimenu .printer a:focus, 
+.yui-skin-sam .yuimenu .printItem a:focus, 
+.yui-skin-sam .yuimenu .printPassage a:focus, 
+.yui-skin-sam .yuimenu .printPage a:focus, 
+.yui-skin-sam .yuimenu .printerPractice a:active, 
+.yui-skin-sam .yuimenu .printer a:active, 
+.yui-skin-sam .yuimenu .printItem a:active, 
+.yui-skin-sam .yuimenu .printPassage a:active, 
+.yui-skin-sam .yuimenu .printPage a:active {
+	background-position: left -2405px;
+}
+.yui-skin-sam .yuimenu .help a, 
+.yui-skin-sam .yuimenu .tutorial a, 
+.yui-skin-sam .yuimenu .helpItem a {
+	background-position: left -1125px;
+}
+.yui-skin-sam .yuimenu .help a.yuimenuitemlabel-disabled, 
+.yui-skin-sam .yuimenu .tutorial a.yuimenuitemlabel-disabled, 
+.yui-skin-sam .yuimenu .helpItem a.yuimenuitemlabel-disabled {
+	background-position: left -1125px !important;
+}
+.yui-skin-sam .yuimenu .help a:hover, 
+.yui-skin-sam .yuimenu .tutorial a:hover, 
+.yui-skin-sam .yuimenu .helpItem a:hover, 
+.yui-skin-sam .yuimenu .help a:focus, 
+.yui-skin-sam .yuimenu .tutorial a:focus, 
+.yui-skin-sam .yuimenu .helpItem a:focus, 
+.yui-skin-sam .yuimenu .help a:active, 
+.yui-skin-sam .yuimenu .tutorial a:active, 
+.yui-skin-sam .yuimenu .helpItem a:active {
+	background-position: left -3125px;
+}
+.yui-skin-sam .yuimenu .markReview a {
+	background-position: left -564px;
+}
+.yui-skin-sam .yuimenu .markReview a.yuimenuitemlabel-disabled {
+	background-position: left -564px !important;
+}
+.yui-skin-sam .yuimenu .markReview a:hover, 
+.yui-skin-sam .yuimenu .markReview a:focus, 
+.yui-skin-sam .yuimenu .markReview a:active {
+	background-position: left -2564px;
+}
+.yui-skin-sam .yuimenu .comment a {
+	background-position: left -485px;
+}
+.yui-skin-sam .yuimenu .comment a.yuimenuitemlabel-disabled {
+	background-position: left -485px !important;
+}
+.yui-skin-sam .yuimenu .comment a:hover, 
+.yui-skin-sam .yuimenu .comment a:focus, 
+.yui-skin-sam .yuimenu .comment a:active {
+	background-position: left -2485px;
+}
+.yui-skin-sam .yuimenu .save a {
+	background-position: left -1445px;
+}
+.yui-skin-sam .yuimenu .save a.yuimenuitemlabel-disabled {
+	background-position: left -1445px !important;
+}
+.yui-skin-sam .yuimenu .save a:hover, 
+.yui-skin-sam .yuimenu .save a:focus, 
+.yui-skin-sam .yuimenu .save a:active {
+	background-position: left -3445px;
+}
+.yui-skin-sam .yuimenu .endTest a {
+	background-position: left -1365px;
+}
+.yui-skin-sam .yuimenu .endTest a.yuimenuitemlabel-disabled {
+	background-position: left -1365px !important;
+}
+.yui-skin-sam .yuimenu .endTest a:hover, 
+.yui-skin-sam .yuimenu .endTest a:focus, 
+.yui-skin-sam .yuimenu .endTest a:active {
+	background-position: left -3365px;
+}
+.yui-skin-sam .yuimenu .caretMode a {
+	background-position: left -1524px;
+}
+.yui-skin-sam .yuimenu .caretMode a.yuimenuitemlabel-disabled {
+	background-position: left -1524px !important;
+}
+.yui-skin-sam .yuimenu .caretMode a:hover, 
+.yui-skin-sam .yuimenu .caretMode a:focus, 
+.yui-skin-sam .yuimenu .caretMode a:active {
+	background-position: left -3524px;
+}
+.yui-skin-sam .yuimenu .startrecording a {
+	background-position: left -1685px;
+}
+.yui-skin-sam .yuimenu .startrecording a.yuimenuitemlabel-disabled {
+	background-position: left -1685px !important;
+}
+.yui-skin-sam .yuimenu .startrecording a:hover, 
+.yui-skin-sam .yuimenu .startrecording a:focus, 
+.yui-skin-sam .yuimenu .startrecording a:active {
+	background-position: left -3685px;
+}
+.yui-skin-sam .yuimenu .gtrItem a {
+	background-position: left -1765px;
+}
+.yui-skin-sam .yuimenu .gtrItem a.yuimenuitemlabel-disabled {
+	background-position: left -1765px !important;
+}
+.yui-skin-sam .yuimenu .gtrItem a:hover, 
+.yui-skin-sam .yuimenu .gtrItem a:focus, 
+.yui-skin-sam .yuimenu .gtrItem a:active {
+	background-position: left -3765px;
+}
+.yui-skin-sam .yuimenu .changePrompt a {
+	background-position: left -1845px;
+}
+.yui-skin-sam .yuimenu .changePrompt a.yuimenuitemlabel-disabled {
+	background-position: left -1845px !important;
+}
+.yui-skin-sam .yuimenu .changePrompt a:hover, 
+.yui-skin-sam .yuimenu .changePrompt a:focus, 
+.yui-skin-sam .yuimenu .changePrompt a:active {
+	background-position: left -3845px;
+}
+.yuimenu .changePrompt, 
+.TDS_PS_L1 .yuimenu .changePrompt, 
+.TDS_PS_L2 .yuimenu .changePrompt, 
+.TDS_PS_L3 .yuimenu .changePrompt, 
+.TDS_PS_L4 .yuimenu .changePrompt {
+	font-size: 1em;
+	height: inherit;
+	font-family: "Lucida Grande", "Lucida Sans", Arial, Helvetica, sans-serif;
+}
+.yui-skin-sam .yuimenu .lineReader a {
+	background-position: left -3993px;
+}
+.yui-skin-sam .yuimenu .lineReader a.yuimenuitemlabel-disabled {
+	background-position: left -3993px !important;
+}
+.yui-skin-sam .yuimenu .lineReader a:hover, 
+.yui-skin-sam .yuimenu .lineReader a:focus, 
+.yui-skin-sam .yuimenu .lineReader a:active {
+	background-position: left -3928px;
+}
+.yui-skin-sam .yuimenu .globalNotes a {
+	background-position: left -4049px;
+}
+.yui-skin-sam .yuimenu .globalNotes a.yuimenuitemlabel-disabled {
+	background-position: left -4049px !important;
+}
+.yui-skin-sam .yuimenu .globalNotes a:hover, 
+.yui-skin-sam .yuimenu .globalNotes a:focus, 
+.yui-skin-sam .yuimenu .globalNotes a:active {
+	background-position: left -4119px;
+}
+.yui-skin-sam .yuimenu .ASL a {
+	background-position: left -4182px;
+}
+.yui-skin-sam .yuimenu .ASL a.yuimenuitemlabel-disabled {
+	background-position: left -4182px !important;
+}
+.yui-skin-sam .yuimenu .ASL a:hover, 
+.yui-skin-sam .yuimenu .ASL a:focus, 
+.yui-skin-sam .yuimenu .ASL a:active {
+	background-position: left -4242px;
+}
+.yui-skin-sam .yuimenu .maskingtool a {
+	background-position: left -4304px;
+}
+.yui-skin-sam .yuimenu .maskingtool a.yuimenuitemlabel-disabled {
+	background-position: left -4304px !important;
+}
+.yui-skin-sam .yuimenu .maskingtool a:hover, 
+.yui-skin-sam .yuimenu .maskingtool a:focus, 
+.yui-skin-sam .yuimenu .maskingtool a:active {
+	background-position: left -4364px;
+}
+.yui-skin-sam .yuimenu .rubric a {
+	background-position: left -4663px;
+}
+.yui-skin-sam .yuimenu .rubric a.yuimenuitemlabel-disabled {
+	background-position: left -4663px !important;
+}
+.yui-skin-sam .yuimenu .rubric a:hover, 
+.yui-skin-sam .yuimenu .rubric a:focus, 
+.yui-skin-sam .yuimenu .rubric a:active {
+	background-position: left -4723px;
+}
+.yui-skin-sam .yuimenu .fullscreen a {
+	background-position: left -4543px;
+}
+.yui-skin-sam .yuimenu .fullscreen a.yuimenuitemlabel-disabled {
+	background-position: left -4543px !important;
+}
+.yui-skin-sam .yuimenu .fullscreen a:hover, 
+.yui-skin-sam .yuimenu .fullscreen a:focus, 
+.yui-skin-sam .yuimenu .fullscreen a:active {
+	background-position: left -4603px;
+}
+.yui-skin-sam .yuimenu .dictionary a {
+	background-position: left -4787px;
+}
+.yui-skin-sam .yuimenu .dictionary a.yuimenuitemlabel-disabled {
+	background-position: left -4787px !important;
+}
+.yui-skin-sam .yuimenu .dictionary a:hover, 
+.yui-skin-sam .yuimenu .dictionary a:focus, 
+.yui-skin-sam .yuimenu .dictionary a:active {
+	background-position: left -4847px;
+}
+.yui-skin-sam .yuimenu .systemdialog a {
+	background-position: left -4908px;
+}
+.yui-skin-sam .yuimenu .systemdialog a.yuimenuitemlabel-disabled {
+	background-position: left -4908px !important;
+}
+.yui-skin-sam .yuimenu .systemdialog a:hover, 
+.yui-skin-sam .yuimenu .systemdialog a:focus, 
+.yui-skin-sam .yuimenu .systemdialog a:active {
+	background-position: left -4968px;
+}
+.yui-skin-sam .yuimenu .mt_ruler a {
+	background-position: left -5274px;
+}
+.yui-skin-sam .yuimenu .mt_ruler a.yuimenuitemlabel-disabled {
+	background-position: left -5274px !important;
+}
+.yui-skin-sam .yuimenu .mt_ruler a:hover, 
+.yui-skin-sam .yuimenu .mt_ruler a:focus, 
+.yui-skin-sam .yuimenu .mt_ruler a:active {
+	background-position: left -5334px;
+}
+.yui-skin-sam .yuimenu .mt_compass a {
+	background-position: left -5028px;
+}
+.yui-skin-sam .yuimenu .mt_compass a.yuimenuitemlabel-disabled {
+	background-position: left -5028px !important;
+}
+.yui-skin-sam .yuimenu .mt_compass a:hover, 
+.yui-skin-sam .yuimenu .mt_compass a:focus, 
+.yui-skin-sam .yuimenu .mt_compass a:active {
+	background-position: left -5087px;
+}
+.yui-skin-sam .yuimenu .mt_protractor a {
+	background-position: left -5150px;
+}
+.yui-skin-sam .yuimenu .mt_protractor a.yuimenuitemlabel-disabled {
+	background-position: left -5150px !important;
+}
+.yui-skin-sam .yuimenu .mt_protractor a:hover, 
+.yui-skin-sam .yuimenu .mt_protractor a:focus, 
+.yui-skin-sam .yuimenu .mt_protractor a:active {
+	background-position: left -5210px;
+}
+/* @end */
+
+/* @end */
+
+/* @group dialog tweaks */
+
+.yui-skin-sam .yui-dialog .ft span.default button {
+	color: inherit;
+}
+.yui-skin-sam .yui-dialog .ft span.default button:hover {
+	color: #fff;
+}
+
+
+#dialogPrompt, #dialogAlert, #dialogProgress, #dialogPracticePrint {
+	position: fixed;
+	z-index: 500;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	display:none;
+}
+#logOut {
+	display:none;
+}
+.yui-panel td.incorrect {
+	background-image: url(../../Images/RedX.png);
+	background-repeat: no-repeat;
+	background-position: center center;	
+}
+.yui-panel td.correct {
+	background-image: url(../../Images/GreenCheck.png);
+	background-repeat: no-repeat;
+	background-position: center center;	
+}
+.yui-panel td.na {
+	background-image: url(../../Images/YellowDash.png);
+	background-repeat: no-repeat;
+	background-position: center center;	
+}
+.yui-panel-container .comment-selectbox {
+	margin: 8px;
+}
+/* ensure that dialog messages are always on top */
+#yuiSimpleDialog_c {
+	z-index: 2010 !important;
+}
+#yuiSimpleDialog_mask {
+	z-index: 2000 !important;
+	background: url(../../Images/universal/mask.png) repeat;
+	opacity: 1;
+}
+
+/* @group ASL video window */
+/* need to explicitly set dimensions or OS X will not correctly calculate sizes when zoomed */
+.TDS_PS_L0 .tool.tool-video {
+	width: 420px !important;
+	height: 285px !important;
+}
+.TDS_PS_L1 .tool.tool-video {
+	width: 520px !important;
+	height: 340px !important;
+}
+.TDS_PS_L2 .tool.tool-video {
+	width: 620px !important;
+	height: 400px !important;
+}
+.TDS_PS_L3 .tool.tool-video {
+	width: 720px !important;
+	height: 455px !important;
+}
+.TDS_PS_L4 .tool.tool-video {
+	width: 820px !important;
+	height: 510px !important;
+}
+
+/* @end */
+
+/* @group tutorials, etc... */
+#dialogContent {
+	display:none;
+}
+#dialogContent.enable {
+	position: fixed;
+	z-index: 500;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	display:block;
+}
+#dialogContent .dialogWrapper {
+	height: 610px;
+    margin-left: 10px;
+    margin-top: 10px;
+    position: relative;
+    width: 900px;
+    -moz-border-radius:  5px;
+	-webkit-border-radius:  5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0em 0em .4em #666;
+	-moz-box-shadow: 0em 0em .4em #666;
+	box-shadow: 0em 0em .4em #666;
+	background-color:#FFFFFF;
+	border:2px solid #fff;
+}
+#dialogContentFrames {
+	/*border-top:2px solid #F6C501;*/
+}
+#dialogContentHeader{
+	background-color: #ecebed;
+	text-align: left;
+	margin-left: auto;
+	margin-right: auto;
+	height: 25px;
+	line-height: 25px;
+	font-family:"Lucida Grande","Lucida Sans",Arial,Helvetica,sans-serif;
+}
+/* when a content iframe is hidden it is assigned this class, display none is needed to prevent audio from playing when it shouldn't with flash files */
+#dialogContentFrames .contentFrameHide {
+	width: 0px !important;
+	height: 0px !important;
+	visibility: hidden;
+	display: none;
+	overflow: hidden;
+}
+
+#dialogContentTitle {
+	display: block;
+	padding-left: 10px;
+	font-weight: bold;
+	-moz-border-radius: 5px 5px 0px 0px;
+	-webkit-border-radius: 5px 5px 0px 0px;
+	border-radius: 5px 5px 0px 0px; 
+}
+#dialogContentHeader a {
+    color: #000000;
+    display: block;
+    float: right;
+    height: 25px;
+    width: 25px;
+    overflow: hidden;
+    text-indent: -9999px;
+    line-height: 25px;
+    margin-top: -25px;
+    text-decoration: none;
+	background: url(../../Images/modern/sprites_mobile_0.png) center -2730px no-repeat;
+}
+#dialogContentHeader a:hover {
+	background-position: center -2831px;
+	text-decoration:underline;
+	color: #FFFFFF;
+}
+#dialogContentControls {
+	display: none;
+}
+#dialogContentControls.enable {
+	background-color: #F6C501;
+	width: 700px;
+	text-align: left;
+	margin-left: auto;
+	margin-right: auto;
+	height: 40px;
+	line-height: 40px;
+	padding-left: 2px;
+	padding-right: 2px;
+	font-family:"Lucida Grande","Lucida Sans",Arial,Helvetica,sans-serif;
+	display: block;
+}
+#dialogContentFrames iframe {
+	width: 100%;
+	height: 585px;
+	-moz-border-radius: 0px 0px 5px 5px;
+	-webkit-border-radius: 0px 0px 5px 5px;
+	border-radius: 0px 0px 5px 5px;
+}
+
+/* @end */
+
+
+/* @end */
+#tools iframe {
+	overflow: auto;
+}
+
+/* @group formulas */
+
+.tool-formula, 
+.touch .tool-rubric {
+	height: 510px !important;
+	width: 630px !important;
+}
+/* lets tablets scroll iframes */
+.touch .tool-formula .bd, 
+.touch .tool-rubric .bd {
+	-webkit-overflow-scrolling:touch; 
+	overflow: auto;
+}
+.TDS_PS_L1 .tool-formula, 
+.TDS_PS_L1 .tool-rubric {
+	width: 772px !important;
+}
+.TDS_PS_L2 .tool-formula, .TDS_PS_L3 .tool-formula, .TDS_PS_L4 .tool-formula, 
+.TDS_PS_L2 .tool-rubric, .TDS_PS_L3 .tool-rubric, .TDS_PS_L4 .tool-rubric {
+	width: 915px !important;
+}
+
+/* @end */
+
+/* @group MN formulas */
+
+.TDS_F_MN_6Math .tool-formula, .TDS_F_MN_7Math .tool-formula {
+	height: 540px !important;
+	width: 390px !important;
+}
+.TDS_F_MN_6Math.TDS_PS_L1 .tool-formula, .TDS_F_MN_7Math.TDS_PS_L1 .tool-formula {
+	width: 470px !important;
+}
+.TDS_F_MN_6Math.TDS_PS_L2 .tool-formula, .TDS_F_MN_6Math.TDS_PS_L3 .tool-formula, .TDS_F_MN_6Math.TDS_PS_L4 .tool-formula, .TDS_F_MN_7Math.TDS_PS_L2 .tool-formula, .TDS_F_MN_7Math.TDS_PS_L3 .tool-formula, .TDS_F_MN_7Math.TDS_PS_L4 .tool-formula {
+	width: 580px !important;
+}
+.TDS_F_MN_8Math .tool-formula {
+	width: 430px !important;
+}
+.TDS_F_MN_8Math.TDS_PS_L1 .tool-formula {
+	width: 528px !important;
+}
+.TDS_F_MN_8Math.TDS_PS_L2 .tool-formula, .TDS_F_MN_8Math.TDS_PS_L3 .tool-formula, .TDS_F_MN_8Math.TDS_PS_L4 .tool-formula {
+	width: 625px !important;
+}
+.TDS_F_MN_5Math .tool-formula {
+	width: 370px !important;
+	height: 300px !important;
+}
+.TDS_F_MN_5Math.TDS_PS_L1 .tool-formula {
+	width: 470px !important;
+	height: 400px !important;
+}
+.TDS_F_MN_5Math.TDS_PS_L2 .tool-formula, .TDS_F_MN_5Math.TDS_PS_L3 .tool-formula, .TDS_F_MN_5Math.TDS_PS_L4 .tool-formula {
+	width: 570px !important;
+	height: 500px !important;
+}
+
+/* @end */
+
+/* @group periodic table */
+
+.tool-periodictable {
+	height: 570px !important;
+	width: 680px !important;
+}
+#tool-TDS_PT_HTMLv2 {
+	height: 720px !important;
+	width: 830px !important;
+}
+/* lets tablets scroll iframes */
+.tool-periodictable .bd {
+	overflow: hidden;
+}
+.touch .tool-periodictable .bd {
+	-webkit-overflow-scrolling:touch; 
+	overflow: auto;
+}
+.TDS_PS_L1.TDS_PT_HTML .tool-periodictable {
+	width: 725px !important;
+}
+.TDS_PS_L2.TDS_PT_HTML .tool-periodictable, .TDS_PS_L3.TDS_PT_HTML .tool-periodictable, .TDS_PS_L4.TDS_PT_HTML .tool-periodictable {
+	width: 830px !important;
+}
+.TDS_PT_Expanded .tool-periodictable, .TDS_PT_Basic .tool-periodictable {
+	height: 442px !important;
+}
+.TDS_PT_Expanded #toolPeriodicTable iframe, .TDS_PT_Basic #toolPeriodicTable iframe {
+	height: 402px;
+}
+.TDS_PS_L1.TDS_PT_Expanded .tool-periodictable, .TDS_PS_L1.TDS_PT_Basic .tool-periodictable {
+	width: 766px !important;
+}
+.TDS_PS_L2.TDS_PT_Expanded .tool-periodictable, .TDS_PS_L2.TDS_PT_Basic .tool-periodictable, .TDS_PS_L3.TDS_PT_Expanded .tool-periodictable, .TDS_PS_L3.TDS_PT_Basic .tool-periodictable, .TDS_PS_L4.TDS_PT_Expanded .tool-periodictable, .TDS_PS_L4.TDS_PT_Basic .tool-periodictable {
+	width: 912px !important;
+}
+
+/* @end */
+/* @group calculator */
+.tool-calculator {
+	height: 530px !important;
+	width: 740px !important;
+	max-height: inherit !important;
+}
+.TDS_CalcBasic .tool-calculator,
+.TDS_CalcBasic .tool-calculator  {
+	height: 364px !important;
+	width: 265px !important;
+}
+.TDS_PS_L1.TDS_CalcBasic .tool-calculator {
+	height: 364px !important;
+	width: 297px !important;
+}
+.TDS_PS_L2.TDS_CalcBasic .tool-calculator, .TDS_PS_L3.TDS_CalcBasic .tool-calculator, .TDS_PS_L4.TDS_CalcBasic .tool-calculator {
+	width: 390px !important;
+	height: 360px !important;
+}
+.TDS_CalcStd .tool-calculator, .TDS_CalcStdMem .tool-calculator {
+	height: 340px !important;
+	width: 304px !important;
+}
+.TDS_PS_L1.TDS_CalcStd .tool-calculator, .TDS_PS_L1.TDS_CalcStdMem .tool-calculator {
+	height: 340px !important;
+	width: 366px !important;
+}
+.TDS_PS_L2.TDS_CalcStd .tool-calculator, .TDS_PS_L3.TDS_CalcStd .tool-calculator, .TDS_PS_L4.TDS_CalcStd .tool-calculator, 
+.TDS_PS_L2.TDS_CalcStdMem .tool-calculator, .TDS_PS_L3.TDS_CalcStdMem .tool-calculator, .TDS_PS_L4.TDS_CalcStdMem .tool-calculator {
+	height: 344px !important;
+	width: 390px !important;
+}
+/* scientific with just one or fewer other modes available */
+#tools .TDS_CalcSci .tool-calculator,
+#tools .TDS_CalcSciInv .tool-calculator  {
+	height: 445px !important;
+	width: 447px !important;
+}
+.TDS_PS_L1 #tools .TDS_CalcSci .tool-calculator,
+.TDS_PS_L1 #tools .TDS_CalcSciInv .tool-calculator {
+	width: 524px !important;
+	height: 445px !important;
+}
+.TDS_PS_L2 #tools .TDS_CalcSci .tool-calculator, 
+.TDS_PS_L3 #tools .TDS_CalcSci .tool-calculator, 
+.TDS_PS_L4 #tools .TDS_CalcSci .tool-calculator,
+
+.TDS_PS_L2 #tools .TDS_CalcSciInv .tool-calculator, 
+.TDS_PS_L3 #tools .TDS_CalcSciInv .tool-calculator, 
+.TDS_PS_L4 #tools .TDS_CalcSciInv .tool-calculator {
+	width: 580px !important;
+	height: 450px !important;
+}
+
+
+/* scientific with two other modes available */
+.TDS_CalcMatrices.TDS_CalcRegress #tools .TDS_CalcSci .tool-calculator,
+.TDS_CalcMatrices.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator
+.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator,
+
+.TDS_CalcMatrices.TDS_CalcRegress #tools .TDS_CalcSciInv .tool-calculator,
+.TDS_CalcMatrices.TDS_CalcGraphing #tools .TDS_CalcSciInv .tool-calculator
+.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSciInv .tool-calculator  
+ {
+	height: 443px !important;
+	width: 504px !important;
+}
+.TDS_PS_L1.TDS_CalcMatrices.TDS_CalcRegress #tools .TDS_CalcSci .tool-calculator,
+.TDS_PS_L1.TDS_CalcMatrices.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator,
+.TDS_PS_L1.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator,
+
+.TDS_PS_L1.TDS_CalcMatrices.TDS_CalcRegress #tools .TDS_CalcSciInv .tool-calculator,
+.TDS_PS_L1.TDS_CalcMatrices.TDS_CalcGraphing #tools .TDS_CalcSciInv .tool-calculator,
+.TDS_PS_L1.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSciInv .tool-calculator {
+	width: 535px !important;
+	height: 450px !important;
+}
+.TDS_PS_L2.TDS_CalcMatrices.TDS_CalcRegress #tools .TDS_CalcSci .tool-calculator,
+.TDS_PS_L2.TDS_CalcMatrices.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator
+.TDS_PS_L2.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator, 
+
+.TDS_PS_L3.TDS_CalcMatrices.TDS_CalcRegress #tools .TDS_CalcSci .tool-calculator,
+.TDS_PS_L3.TDS_CalcMatrices.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator
+.TDS_PS_L3.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator, 
+
+.TDS_PS_L4.TDS_CalcMatrices.TDS_CalcRegress #tools .TDS_CalcSci .tool-calculator,
+.TDS_PS_L4.TDS_CalcMatrices.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator
+.TDS_PS_L4.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator,
+
+.TDS_PS_L2.TDS_CalcMatrices.TDS_CalcRegress #tools .TDS_CalcSciInv .tool-calculator,
+.TDS_PS_L2.TDS_CalcMatrices.TDS_CalcGraphing #tools .TDS_CalcSciInv .tool-calculator
+.TDS_PS_L2.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSciInv .tool-calculator, 
+
+.TDS_PS_L3.TDS_CalcMatrices.TDS_CalcRegress #tools .TDS_CalcSciInv .tool-calculator,
+.TDS_PS_L3.TDS_CalcMatrices.TDS_CalcGraphing #tools .TDS_CalcSciInv .tool-calculator
+.TDS_PS_L3.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSciInv .tool-calculator, 
+
+.TDS_PS_L4.TDS_CalcMatrices.TDS_CalcRegress #tools .TDS_CalcSciInv .tool-calculator,
+.TDS_PS_L4.TDS_CalcMatrices.TDS_CalcGraphing #tools .TDS_CalcSciInv .tool-calculator
+.TDS_PS_L4.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSciInv .tool-calculator  {
+	width: 760px !important;
+	height: 450px !important;
+}
+
+/* scientific with three other modes available */
+.TDS_CalcMatrices.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator,
+.TDS_CalcMatrices.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSciInv .tool-calculator {
+	height: 450px !important;
+	width: 505px !important;
+}
+.TDS_PS_L1.TDS_CalcMatrices.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator,
+.TDS_PS_L1.TDS_CalcMatrices.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSciInv .tool-calculator  {
+	width: 720px !important;
+	height: 430px !important;
+}
+
+.TDS_PS_L2.TDS_CalcMatrices.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator, 
+.TDS_PS_L3.TDS_CalcMatrices.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator, 
+.TDS_PS_L4.TDS_CalcMatrices.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator,
+
+.TDS_PS_L2.TDS_CalcMatrices.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSciInv .tool-calculator, 
+.TDS_PS_L3.TDS_CalcMatrices.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSciInv .tool-calculator, 
+.TDS_PS_L4.TDS_CalcMatrices.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSciInv .tool-calculator  {
+	width: 760px !important;
+	height: 460px !important;
+}
+
+
+
+#tools .TDS_CalcMatrices .tool-calculator {
+	height: 503px !important;
+	width: 700px !important;
+}
+.TDS_PS_L1 #tools .TDS_CalcMatrices .tool-calculator {
+	height: 503px !important;
+	width: 710px !important;
+}
+.TDS_PS_L2 #tools .TDS_CalcMatrices .tool-calculator, 
+.TDS_PS_L3 #tools .TDS_CalcMatrices .tool-calculator, 
+.TDS_PS_L4 #tools .TDS_CalcMatrices .tool-calculator {
+	height: 505px !important;
+	width: 758px !important;
+}
+
+
+#tools .TDS_CalcRegress .tool-calculator {
+	height: 520px !important;
+	width: 700px !important;
+}
+.TDS_PS_L1 #tools .TDS_CalcRegress .tool-calculator {
+	height: 540px !important;
+	width: 740px !important;
+}
+.TDS_PS_L2 #tools .TDS_CalcRegress .tool-calculator, 
+.TDS_PS_L3 #tools .TDS_CalcRegress .tool-calculator, 
+.TDS_PS_L4 #tools .TDS_CalcRegress .tool-calculator {
+	height: 555px !important;
+	width: 760px !important;
+}
+
+
+#tools .TDS_CalcGraphing .tool-calculator,
+#tools .TDS_CalcGraphingInv .tool-calculator  {
+	height: 530px !important;
+	width: 700px !important;
+}
+.TDS_PS_L1 #tools .TDS_CalcGraphing .tool-calculator,
+.TDS_PS_L1 #tools .TDS_CalcGraphingInv .tool-calculator {
+	width: 800px !important;
+	height: 550px !important;
+}
+.TDS_PS_L2 #tools .TDS_CalcGraphing .tool-calculator, 
+.TDS_PS_L3 #tools .TDS_CalcGraphing .tool-calculator, 
+.TDS_PS_L4 #tools .TDS_CalcGraphing .tool-calculator,
+
+.TDS_PS_L2 #tools .TDS_CalcGraphingInv .tool-calculator, 
+.TDS_PS_L3 #tools .TDS_CalcGraphingInv .tool-calculator, 
+.TDS_PS_L4 #tools .TDS_CalcGraphingInv .tool-calculator  {
+	width: 824px !important;
+	height: 560px !important;
+}
+
+/* @end */
+
+/* @group help guide */
+
+.tool-help {
+	height: 530px !important;
+	width: 720px !important;
+}
+.TDS_PS_L1 .tool-help {
+	width: 820px !important;
+}
+.TDS_PS_L2 .tool-help, .TDS_PS_L3 .tool-help, .TDS_PS_L4 .tool-help {
+	width: 900px !important;
+}
+.platform_ios .tool-helpguide .bd {
+	overflow: auto !important;
+	-webkit-overflow-scrolling:touch;
+}
+
+/* @end */
+/* @group sound cues */
+
+#soundCues {
+	display: block;
+	float: right;
+	height: 52px;
+	position: relative;
+	overflow: hidden;
+	z-index: 1;
+	max-width: 55px;
+}
+#soundCues .sound_cue {
+	display:block;
+	height: 52px;
+	padding: 0px;
+	width: 38px;
+	min-width: inherit;
+	text-decoration: none;
+	background: url(../../Images/universal/soundCue.png) no-repeat center 10px;
+	background-color: rgba(243,243,243,0.3);
+	border-left: solid 1px #e6e6e6;
+	border-right: solid 1px #e6e6e6;
+	margin: 0px 5px 0 10px;
+}
+#soundCues .sound_cue:active, 
+#soundCues .sound_cue:focus {
+	background-position: center -50px !important;
+	outline: none;
+}
+#soundCues .sound_cue:hover {
+	background-position: center -50px !important;
+}
+#soundCues .sound_cue.load_incomplete, 
+#soundCues .sound_cue.disabled, 
+#soundCues .sound_cue.load_incomplete:active, 
+#soundCues .sound_cue.disabled:active {
+	background-position: center -109px !important;
+	cursor: default;
+}
+#soundCues .sound_cue.playing_start, 
+#soundCues .sound_cue.playing_start:active {
+	background: url(../../Images/universal/animatedSpeaker.gif) no-repeat center 8px !important;
+}
+#soundCues .sound_cue.load_fail, 
+#soundCues .sound_cue.decode_fail, 
+#soundCues .sound_cue.playing_fail, 
+#soundCues .sound_cue.load_fail:active, 
+#soundCues .sound_cue.decode_fail:active, 
+#soundCues .sound_cue.playing_fail:active {
+	background-position: center -169px !important;
+	cursor: default;
+}
+#soundCues .sound_cue.load_start, 
+#soundCues .sound_cue.load_complete, 
+#soundCues .sound_cue.decode_start, 
+#soundCues .sound_cue.load_start:active, 
+#soundCues .sound_cue.load_complete:active, 
+#soundCues .sound_cue.decode_start:active {
+	cursor: default;
+	background: url(../../Images/controls/loader15.gif) no-repeat center 15px !important;
+}
+/* @end */
+
+/* @group TTS */
+
+.startSpeak, .stopSpeak {
+	display: block;
+	float: left;
+	color: #000;
+	text-decoration: none;
+	width: 18px;
+	height: 18px;
+	text-indent: -9999px;
+	background: url(../../Images/controls/audio2013.png) no-repeat;
+	margin-left: 2px;
+}
+.startSpeak {
+	background-position: -422px -416px;
+	display: block;
+}
+.startSpeak:hover {
+	background-position: -441px -416px;
+}
+.stopSpeak {
+	background-position: -459px -416px;
+	display: block;
+}
+.stopSpeak:hover {
+	background-position: -477px -416px;
+}
+.startSpeak.disabled, .startSpeak.disabled:hover {
+	background-position: -422px -416px;
+	cursor: default;
+	-khtml-opacity: 0.3;
+	-moz-opacity: 0.3;
+	opacity: 0.3;
+}
+.stopSpeak.disabled, .disableSpeak.disabled:hover {
+	background-position: -459px -416px;
+	cursor: default;
+	-khtml-opacity: 0.3;
+	-moz-opacity: 0.3;
+	opacity: 0.3;
+}
+#ttsHelp {
+	height: 18px;
+	line-height: 18px;
+	background-color: #fdf5e0;
+	padding: 2px;
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
+	border-bottom-color: #f6c501;
+}
+.ttsText {
+	margin-left: 5px;
+}
+.tts-highlight {
+	background-color: rgba(236,143,179,0.76) !important;
+}
+.TDS_CCMagenta .tts-highlight, .TDS_CCMagenta2 .tts-highlight {
+	background-color: rgba(236,127,25,0.76) !important;
+}
+.tts-highlight img {
+	border: 3px solid #ec8fb3;
+}
+.TDS_CCMagenta .tts-highlight img, .TDS_CCMagenta2 .tts-highlight img {
+	border-color: #ec7f19;
+}
+/* keeps highlighting visible when dealing with interaction items*/
+.tts-highlight.interaction.selected, 
+.interaction.selected .tts-highlight.highlight {
+	background-color: rgba(236,143,179,0.76) !important;
+}
+.TDS_CCMagenta .tts-highlight.interaction.selected, 
+.TDS_CCMagenta .interaction.selected .tts-highlight.highlight,  
+.TDS_CCMagenta2 .tts-highlight.interaction.selected, 
+.TDS_CCMagenta2 .interaction.selected .tts-highlight.highlight {
+	background-color: rgba(236,127,25,0.76) !important;
+}
+
+
+/* @end */
+/* @group Review page */
+.Content_No #studentTools {
+	display: none;
+}
+.TDS_PS_L1 .reviewContainer {
+	font-size: 1.5em;
+}
+.TDS_PS_L2 .reviewContainer {
+	font-size: 2em;
+}
+.TDS_PS_L3 .reviewContainer {
+	font-size: 2.5em;
+}
+.TDS_PS_L4 .reviewContainer {
+	font-size: 3em;
+}
+#contents #reviews div.review {
+	display: none;
+	visibility: hidden;
+	height: 0px;
+	width: 0px;	
+}
+#contents #reviews div.review.showing {
+	display: block;
+	visibility: visible;
+	height: 100%;
+	width: 100%;
+	overflow: auto;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	text-align: center;
+}
+.reviewContainer {
+	width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: left;
+	padding: 40px;
+}
+.reviewInstructions {
+	float: right;
+	width: 570px;
+}
+.TDS_PS_L2 .reviewInstructions {
+	width: 545px;
+}
+.TDS_PS_L3 .reviewInstructions {
+	width: 505px;
+}
+.TDS_PS_L4 .reviewInstructions {
+	width: 475px;
+}
+.reviewContainer p {
+	font-size: 1.4em;
+	line-height: 1.2em;
+}
+.review h2, .review h3 {
+	border-bottom: solid 1px #ccc;
+	font-size: 1.6em;
+	line-height: 1.7em;
+	margin-bottom: 1em;
+	font-weight: bold;
+}
+.review h3 {
+	font-size: 1.5em;
+}
+.TDS_IF_S14 .reviewContainer p {
+	font-size: 1.5em;
+}
+.review .pages {
+	border-right: solid 1px #ccc;
+	float: left;
+	padding-right: 40px;
+	width: 150px;
+}
+.review .pages a, .review .pages li {
+	display: block;
+}
+.review .pages ul {
+	display: block;
+	line-height: 1.9em;
+}
+.TDS_PS_L2 .review .pages {
+	width: 180px;
+}
+.TDS_PS_L3 .review .pages {
+	width: 215px;
+}
+.TDS_PS_L4 .review .pages {
+	width: 245px;
+}
+.review .pages a {
+	color: #000;
+	text-decoration: none;
+	border: solid 1px #000;
+	margin-bottom: 1em;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	padding: .3em 35px .3em .3em;
+}
+.TDS_CCYellowB .review .pages a {
+	color: #FC0;
+	border-color: #FC0;
+}
+.TDS_CCInvert .review .pages a, .TDS_CCWhiteN .review .pages a {
+	color: #FFF;
+	border-color: #FFF;
+}
+.TDS_CCYellowB .review .pages a:hover {
+	color: #FFF;
+	border-color: #FFF;
+}
+.TDS_CCInvert .review .pages a:hover, .TDS_CCWhiteN .review .pages a:hover {
+	color: #FC0;
+	border-color: #FC0;
+}
+.review .pages a:hover, .review .pages a:focus {
+	color: #336699;
+	text-decoration: underline;
+	background: url(../../Images/lightGrey.png) repeat;
+}
+.review .pages a:visited {
+	color: #666;
+}
+.review .pages a:active {
+	font-style: italic;
+	border-color: #336699;
+}
+.pages a.marked {
+	background: url(../../Images/controls/review.gif) no-repeat 100% 3px;
+	border-color: #3b90fc;
+	border-width: 3px;
+}
+.TDS_PS_L1 .pages a.marked {
+	background-position: 100% 9px;
+}
+.TDS_PS_L2 .pages a.marked {
+	background-position: 100% 17px;
+}
+.TDS_PS_L3 .pages a.marked {
+	background-position: 100% 26px;
+}
+.TDS_PS_L4 .pages a.marked {
+	background-position: 100% 35px;
+}
+.pages a.marked:hover {
+	background: url(../../Images/controls/review.gif) no-repeat 100% -67px;
+	border-color: #148a0c;
+}
+.TDS_PS_L1 .pages a.marked:hover {
+	background-position: 100% -61px;
+}
+.TDS_PS_L2 .pages a.marked:hover {
+	background-position: 100% -53px;
+}
+.TDS_PS_L3 .pages a.marked:hover {
+	background-position: 100% -44px;
+}
+.TDS_PS_L4 .pages a.marked:hover {
+	background-position: 100% -35px;
+}
+/* @end */
+/* @group new comments */
+/* remove inline height from the bd panel */
+.yui-panel.comment .bd.comment-body {
+	height: auto !important;
+}
+/* smaller header sizes */
+.yui-skin-sam .yui-panel .hd {
+	font-size: 1.5em !important;
+}
+
+/* lets comment form elements scale*/
+.yui-skin-sam .yui-panel.comment .bd select, 
+.yui-skin-sam .yui-panel.comment .bd textarea {
+	font-size: .9em;
+	width: 100%;
+}
+.yui-skin-sam .yui-panel.comment .bd textarea {
+	overflow: auto;
+	margin: 0px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+/*sets default height of comments container for desktops*/
+.TDS_SCNotepad .yui-panel.comment, 
+#global.comment, 
+#Global.comment {
+	height: 430px !important;
+}
+.yui-panel.comment {
+	min-height: 165px;
+}
+
+/* set dimensions of textarea */
+.TDS_SCNotepad .yui-panel.comment textarea, 
+#global.comment textarea, 
+#Global_c textarea, 
+#yuiSimpleDialog_c textarea {
+	height: 310px;
+}
+.TDS_SCTextArea .yui-panel.comment {
+	height: 210px !important;
+}
+.TDS_SCTextArea .yui-panel.comment textarea {
+	height: 110px;
+}
+.TDS_SCDropDown .yui-panel.comment {
+	height: 120px !important;
+}
+.TDS_PS_L1 #comments textarea, 
+.TDS_PS_L1 .notes_dialog_container textarea, 
+.TDS_PS_L1 #comments select {
+	font-size: 1.25em;
+}
+.TDS_PS_L2 #comments textarea, 
+.TDS_PS_L2 .notes_dialog_container textarea, 
+.TDS_PS_L2 #comments select {
+	font-size: 1.5em;
+}
+.TDS_PS_L3 #comments textarea, 
+.TDS_PS_L3 .notes_dialog_container textarea, 
+.TDS_PS_L3 #comments select {
+	font-size: 2em;
+}
+.TDS_PS_L4 #comments textarea, 
+.TDS_PS_L4 .notes_dialog_container textarea, 
+.TDS_PS_L4 #comments select {
+	font-size: 2.5em;
+}
+
+/* @end */
+
+/* @group Data Entry */
+.app_ResponseEntry .startSpeak, .app_ResponseEntry .stopSpeak, .app_ResponseEntry .speakHelp {
+	visibility: hidden;
+	overflow: hidden;
+	height: 0px;
+	width: 0px;
+}
+.app_ResponseEntry .NotForScoreEntry, .app_ResponseEntry .ForScoreEntry {
+	display: none;
+}
+.app_ResponseEntry .NotForScoreEntry {
+	display: inline;
+}
+.app_ResponseEntry .topBar {
+	background-image: url(../../Images/logo_delaware_alt_small.gif);
+	padding-right:375px;
+}
+.app_ResponseEntry .ForScoreEntry {
+	display: inline;
+}
+/* @end */
+
+/* @group Full Screen Mode */
+#navigation #btnFullScreen {
+	display: none;
+}
+.TDS_FS_On #navigation #btnFullScreen, 
+.TDS_FS_Pass #navigation #btnFullScreen {
+	display: block;
+}
+#btnFullScreen .icon {
+	background-position: center -3029px;
+}
+#btnFullScreen:active .icon, 
+#btnFullScreen:focus .icon, 
+#btnFullScreen:hover .icon {
+	background-position: center -3079px;
+}
+/*resize top navigation so it's the same size as the button*/
+.fs-enabled #topBar {
+	position: fixed;
+	background: none;
+	width: 60px;
+	height: 60px;
+	border: none;
+	margin: 0px;
+	padding: 0px;
+}
+.fs-enabled #navigation {
+	border: none;
+	width: 60px;
+	height: 60px;
+	padding: 0px;
+}
+/*hide navigation elements not needed in the top bar*/
+.fs-enabled #infoBar, .fs-enabled #studentTools {
+	visibility: hidden;
+	height: 0px;
+	width: 0px;
+	overflow: hidden;
+	position: absolute;
+	top: -200px;
+	left: -200px;
+}
+.fs-enabled #studentControls {
+	height: 60px;
+	width: 60px;
+	float: none;
+}
+.fs-enabled #studentControls li {
+	margin: 0px;
+}
+/* shift content up to take advantange of extra space*/
+.fs-enabled #contents {
+    top: 0px;
+}
+/*hide all buttons except for toggle*/
+.fs-enabled #studentControls a {
+	display: none !important;
+}
+.fs-enabled #studentControls #btnFullScreen {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	text-indent: -9999px;
+	overflow: hidden;
+	width: 60px;
+	height: 60px;
+	max-width: 60px;
+	min-width: 60px;
+	padding: 0px;
+	display: block !important;
+}
+.fs-enabled ul#studentControls a#btnFullScreen .icon {
+	border: none !important;
+	background-position: center -3122px;
+	width: 60px;
+	height: 60px;
+	max-width: 60px;
+	min-width: 60px;
+	margin: 0px;
+	-moz-border-radius: inherit;
+	-webkit-border-radius: inherit;
+    border-radius: inherit;
+    position: absolute;
+    top: 0px;
+	left: 0px;
+}
+/* @end */
+
+/* @group pagination widget */
+
+.multi-page {
+	list-style: none;
+	position: fixed;
+	right: 0px;
+	top: 76px;
+	z-index: 5;
+	padding-right: 25px;
+	float: right;
+}
+.fs-enabled .multi-page {
+	top: 0px;
+}
+.layout_11 .multi-page, 
+.layout_17 .multi-page {
+	max-width: 35%;
+}
+.layout_21 .multi-page, 
+.layout_24 .multi-page, 
+.layout_29 .multi-page {
+	max-width: 55%;
+}
+.layout25 .multi-page {
+	max-width: 65%;
+}
+.layout26 .multi-page {
+	max-width: 45%;
+}
+.layout27 .multi-page, 
+.layout28 .multi-page {
+	max-width: 25%;
+}
+.platform_ios .layoutSingleMulti .multi-page{
+	position: -webkit-sticky;
+}
+.pageWrapper.hiding .multi-page {
+	display: none;
+}
+.multi-page li {
+	margin-bottom: 6px;
+	margin-left: 5px;
+	border: solid 1px #fff;
+	-moz-box-shadow: 0 0 3px 2px rgba(209,209,209,.3);
+   	-webkit-box-shadow: 0 0 3px 2px rgba(209,209,209,.3);
+	box-shadow: 0 0 3px 2px rgba(209,209,209,.3);
+	position: relative;
+	float: left;
+	border-top-style: none;
+}
+.multi-page a {
+	color: #000;
+    display: block;
+    font-family: "Lucida Grande","Lucida Sans",Arial,Helvetica,sans-serif;
+    font-size: 10px;
+    line-height: 25px;
+    min-width: 12px;
+    padding: 8px 5px 0px;
+    text-align: center;
+    text-decoration: none;
+	-moz-transition: background-color .2s ease-in;
+    -webkit-transition: background-color .2s ease-in;
+    transition: background-color .2s ease-in;
+}
+.TDS_CC0 .multi-page a {
+	background-color: rgba(252,252,252,0.9);
+}
+.TDS_CCYellow .multi-page a {
+	background-color: rgba(255,255,206,0.9);
+}
+.TDS_CCYellow2 .multi-page a {
+	background-color: rgba(252,252,226,0.9);
+}
+.TDS_CCGreen .multi-page a {
+	background-color: rgba(207,247,153,0.9);
+}
+.TDS_CCGreen2 .multi-page a {
+	background-color: rgba(224,246,193,0.9);
+}
+.TDS_CCBlue .multi-page a {
+	background-color: rgba(153,255,255,0.9);
+}
+.TDS_CCBlue2 .multi-page a {
+	background-color: rgba(207,255,255,0.9);
+}
+.TDS_CCMagenta .multi-page a {
+	background-color: rgba(255,208,255,0.9);
+}
+.TDS_CCMagenta2 .multi-page a {
+	background-color: rgba(253,227,253,0.9);
+}
+.TDS_CCGray .multi-page a {
+	background-color: rgba(206,207,206,0.9);
+}
+.TDS_CCGray2 .multi-page a, 
+.TDS_CCMedGrayLtGray .multi-page a {
+	background-color: rgba(229,229,229,0.9);
+}
+.TDS_CCInvert .multi-page a {
+	background-color: rgba(0,0,0,0.9);
+}
+.TDS_CCWhiteN .multi-page a {
+	background-color: rgba(0,51,102,0.9);
+}
+.TDS_CCYellowB .multi-page a {
+	background-color: rgba(0,51,153,0.9);
+}
+.multi-page a:active, 
+.multi-page a:focus, 
+.multi-page a:hover {
+	color: #fff;
+	background-color: #00aeef;
+	outline: none;
+}
+.page-answered:after {
+	content: "";  
+	display:block !important;
+	height: 12px;
+	width: 12px;
+	background: url(../../Images/universal/universal_content.png) no-repeat center -200px;
+	position: absolute;
+	z-index: 1;
+	left: 50%;
+	top: 2px;
+	margin-left: -6px;
+}
+li.page-active {
+	border-color: #0085ad;
+	-webkit-box-shadow: 0px 0px 3px #b4b4b4;
+	-moz-box-shadow: 0px 0px 3px #b4b4b4;
+	box-shadow: 0px 0px 3px #b4b4b4;
+}
+li.page-active a {
+	background-color: rgba(255,255,255,0.9);
+}
+
+.questionAnswerGroup.page-item-hidden {
+	overflow:hidden;
+	height:0px;
+	width: 0px;
+	border: none !important;
+	margin: 0px !important;
+	left: -9999px;
+	z-index: -1 !important;
+	padding: 0px !important;
+}
+/* make room for widget 
+.thePassage .padding, 
+.layoutSingleMulti .layoutColumnLeft .questionAnswerGroup {
+	padding-left: 30px !important;
+}*/
+
+/* @end */
+
+.TDS_CCYellow #topBar {
+	background-color: #ffffce;
+}
+.TDS_CCYellow2 #topBar {
+	background-color: #fcfce2;
+}
+.TDS_CCGreen #topBar {
+	background-color: #cff799;
+}
+.TDS_CCGreen2 #topBar {
+	background-color: #e0f6c1;
+}
+.TDS_CCBlue #topBar {
+	background-color: #99ffff;
+}
+.TDS_CCBlue2 #topBar {
+	background-color: #cfffff;
+}
+.TDS_CCMagenta #topBar {
+	background-color: #ffd0ff;
+}
+.TDS_CCMagenta2 #topBar {
+	background-color: #fde3fd;
+}
+.TDS_CCGray #topBar {
+	background-color: #cecfce;
+}
+.TDS_CCGray2 #topBar, 
+.TDS_CCMedGrayLtGray #topBar {
+	background-color: #e5e5e5;
+}
+.TDS_CCInvert #topBar {
+	background-color: #000;
+}
+.TDS_CCWhiteN #topBar {
+	background-color: #003366;
+}
+.TDS_CCYellowB #topBar {
+	background-color: #003399;
+}
+
+.TDS_CCInvert #jumpGo:active, 
+.TDS_CCInvert #jumpGo:focus, 
+.TDS_CCInvert #jumpGo:hover, 
+.TDS_CCWhiteN #jumpGo:active, 
+.TDS_CCWhiteN #jumpGo:focus, 
+.TDS_CCWhiteN #jumpGo:hover
+.TDS_CCYellowB #jumpGo:active, 
+.TDS_CCYellowB #jumpGo:focus, 
+.TDS_CCYellowB #jumpGo:hover 
+.TDS_CCYellow #jumpGo:active, 
+.TDS_CCYellow #jumpGo:focus, 
+.TDS_CCYellow #jumpGo:hover, 
+.TDS_CCYellow2 #jumpGo:active, 
+.TDS_CCYellow2 #jumpGo:focus, 
+.TDS_CCYellow2 #jumpGo:hover, 
+.TDS_CCGreen #jumpGo:active, 
+.TDS_CCGreen #jumpGo:focus, 
+.TDS_CCGreen #jumpGo:hover, 
+.TDS_CCGreen2 #jumpGo:active, 
+.TDS_CCGreen2 #jumpGo:focus, 
+.TDS_CCGreen2 #jumpGo:hover, 
+.TDS_CCBlue #jumpGo:active, 
+.TDS_CCBlue #jumpGo:focus, 
+.TDS_CCBlue #jumpGo:hover, 
+.TDS_CCBlue2 #jumpGo:active, 
+.TDS_CCBlue2 #jumpGo:focus, 
+.TDS_CCBlue2 #jumpGo:hover, 
+.TDS_CCMagenta #jumpGo:active, 
+.TDS_CCMagenta #jumpGo:focus, 
+.TDS_CCMagenta #jumpGo:hover, 
+.TDS_CCMagenta2 #jumpGo:active, 
+.TDS_CCMagenta2 #jumpGo:focus, 
+.TDS_CCMagenta2 #jumpGo:hover, 
+.TDS_CCGray #jumpGo:active, 
+.TDS_CCGray #jumpGo:focus, 
+.TDS_CCGray #jumpGo:hover, 
+.TDS_CCGray2 #jumpGo:active, 
+.TDS_CCGray2 #jumpGo:focus, 
+.TDS_CCGray2 #jumpGo:hover, 
+.TDS_CCMedGrayLtGray #jumpGo:active, 
+.TDS_CCMedGrayLtGray #jumpGo:focus, 
+.TDS_CCMedGrayLtGray #jumpGo:hover {
+	background-color: #00aeef !important;
+}
+
+
+.TDS_CCInvert #navigation .inactive {
+    color: #909090;
+}
+.TDS_CCInvert #topBar a {
+    color: #fff;
+}
+.TDS_CCInvert .alertBar.alertActive {
+    background-color: rgba(103,105,86,0.7);
+}
+.TDS_CCWhiteN #navigation .inactive {
+    color: #909090;
+}
+.TDS_CCWhiteN #topBar a {
+    color: #fff;
+}
+.TDS_CCWhiteN .alertBar.alertActive {
+    background-color: rgba(103,105,86,0.7);
+}
+.TDS_CCYellowB #navigation .inactive {
+    color: #a48200;
+}
+.TDS_CCYellowB #topBar a {
+    color: #ffcc00;
+}
+.TDS_CCYellowB .alertBar.alertActive {
+    background-color: rgba(39,90,105,0.7);
+}
+
+/* keeps the spinner from sliding */
+.touch .mask, .touch .yui-panel-container {
+	max-height: 1000px !important;
+	max-width: 3000px !important;
+}
+/* shrinks comment dialog to fit on screen while keyboard is visible */
+.touch.TDS_SCNotepad .yui-panel.comment, 
+.touch.TDS_SCTextArea .yui-panel.comment,  
+.touch #global.comment {
+	height: 240px !important;
+	margin-top: 0px !important;
+	top: 20px;
+	left: 50%;
+	margin-left: -200px;
+}
+
+.touch #yuiSimpleDialog_c {
+	top: 20px !important;
+	position: fixed !important;
+}
+.touch .comment {
+	top: 20px !important;
+	position: fixed !important;
+}
+.touch .TDS_SCDropDown #1_notes_c {
+	top: 20px !important;
+	position: fixed !important;
+}
+/*.platform_ios #global.comment, 
+.touch.platform_ios.TDS_SCNotepad .yui-panel.comment, 
+.touch.platform_ios.TDS_SCTextArea .yui-panel.comment {
+	left: 0%;
+}*/
+/* keep global notes centered for Android*/
+.platform_android #global.comment {
+	left: 50%;
+}
+/* keep comments notes centered for Android*/
+.platform_android .yui-panel.comment {
+	left: 33%;
+}
+.touch.TDS_SCNotepad .yui-panel.comment textarea, 
+.touch.TDS_SCTextArea .yui-panel.comment textarea, 
+.touch #global.comment textarea {
+	height: 120px;
+}
+.touch #yuiSimpleDialog_mask, 
+.touch #comment_mask, 
+.touch #global_mask {
+	min-width: 100.05% !important;
+	min-height: 150% !important;
+	position: fixed;
+}
+/*lets comments be editiable in iOS */
+.platform_ios.touch.TDS_SCNotepad #comments #comment_c .comment, 
+.platform_ios.touch.TDS_SCTextArea #comments #comment_c .comment, 
+.platform_ios.touch #comments #global_c .comment {
+	top: -320px !important;
+	position: absolute !important;
+}
+.touch.platform_android input, .touch.platform_android select {
+	font-family: "Lucida Grande", Lucida, Verdana, sans-serif !important;
+}
+.showingDialog.touch #contents {
+	overflow: hidden;
+	position: fixed;
+}
+/* prevents duplicate android text boxes */
+.touch.platform_android #comment-input.comment-textbox, .touch.platform_android .answerCell textarea, .touch.platform_android .answerContainer textarea, 
+.touch.platform_android .stemContainer input {
+	-webkit-user-modify: read-write-plaintext-only;
+}
+
+.touch .yui-module.yui-overlay.yuimenu.visible {
+	position: fixed !important;
+}
+
+#landscapePlease {
+	display:none;
+	width:0px;
+	height:0px;
+	overflow: hidden;
+}
+@media screen and (orientation:portrait) {
+	
+	.touch.browser_safari.platform_ios #landscapePlease, 
+	.touch.browser_chrome.platform_android #landscapePlease, 
+	.platform_chrome #landscapePlease {
+		display:block !important;
+		position:absolute;
+		z-index:3000;
+		background-color: rgba(0, 0, 0, .3);
+		top:0;
+		left:0;
+		width:100%;
+		height:100%;
+	}
+	.orientationMessage {
+		padding: 20px 20px 105px;
+		margin-left:auto;
+		margin-right:auto;
+		margin-top:150px;
+		width:50%;
+		-webkit-box-shadow: 0px 0px 5px 0px ;
+		box-shadow: 0px 0px 5px 0px ; 
+		border: solid 1px #ccc;
+		-webkit-border-radius: 5px;
+		border-radius: 5px;
+		background: #fff url(../../Images/modern/rotate_please.png) no-repeat center bottom;
+	}
+	.orientationMessage h3 {
+		border-bottom:solid 1px #ccc;
+		font-weight:bold;
+		font-size:1.4em;
+		margin-bottom:10px;
+	}
+}
+/* When an input has focus on a touch device hide the nav bar */
+body.platform_ios.inputFocus #topBar {
+    height: 0px;
+	overflow: hidden;
+	top:-200px;
+}
+body.platform_ios.inputFocus #contents {
+    top: 0px;
+}
+body.platform_ios {
+	position: static;
+	-webkit-transform: translateY(0px);
+	transform: translateY(0px);
+}
+body.platform_ios.inputFocus {
+	position: relative;
+}
+body.platform_windows.browser_chrome #contents, 
+body.platform_windows.browser_safari #contents, 
+body.platform_chrome.browser_chrome #contents
+ {
+    position: fixed;
+}
+/* helps keep calculator from shifting above the top of the window in android */
+body.platform_android.showingTools #tools .TDS_CalcSci, 
+body.platform_android.showingTools #tools .TDS_CalcBasic, 
+body.platform_android.showingTools #tools .TDS_CalcStd, 
+body.platform_android.showingTools #tools .TDS_CalcMatrices, 
+body.platform_android.showingTools #tools .TDS_CalcGraphing, 
+body.platform_android.showingTools #tools .TDS_CalcRegress {
+	bottom: 20px !important;
+}
+
+/* keeps the calculator hidden when closed for tablets/chromebooks*/
+#tools .yui-panel-container.yui-overlay-hidden {
+	z-index: -1 !important;
+	opacity: 0 !important;
+	pointer-events:none;
+}
+
+/* Nexus 10 troubleshooting */
+/*fb-90461, masking element is 100% opaque instead of transparent */
+#htmlBody.touch.platform_android.yui-skin-sam .mask, 
+#htmlBody.touch.platform_android.yui-skin-sam #yuiSimpleDialog, 
+#htmlBody.touch.platform_android.yui-skin-sam #Global_mask {
+	 background-color: rgba(0,0,0,0.3) !important;
+	 opacity: 1 !important;
+}
+/*fb-74479, masking flashes red when tools get dragged*/
+.platform_android #yui-ddm-shim {
+	background-color: transparent !important;
+}
+
+/*adding class name to page scale tools (Ruler/Protractor) to contain some general sytles for them*/
+.mtPageScaleTools {
+    position: absolute;
+    z-index: 7;
+}
+
+/* adjusting ckeditor styles in 4.3 */
+.cke_dialog_footer .cke_resizer {
+	position: absolute;
+	right: 2px;
+	bottom: 0px;
+}
+.cke_dialog_footer .cke_dialog_footer_buttons {
+	margin-right: 20px;
+}
+.cke_dialog_close_button {
+    right: 4px;
+}
+
+

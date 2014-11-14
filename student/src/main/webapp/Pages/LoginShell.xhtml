@@ -8,26 +8,32 @@
 
 	<ui:define name="headerHolder">
 		<tds:ResourcesLink file="~/Scripts/scripts_student.xml" name="loginshell" />
-		<tds:GlobalJavascript contextName="LoginShell" />
+		<tds:GlobalJavascript contextName="LoginShell" binding="#{loginBacking.globalJavascript}" />
 	</ui:define>
+
 
 
 	<ui:define name="contentHolder">
 		<section:Diagnostics />
-		<section:SoundCheck />
-		<section:TTSCheck />
+
 
 		<section:LoginProctor rendered="#{loginBacking.isProxyLogin()}" />
+		<c:choose>
+			<c:when test="#{loginBacking.doNothaveLoginData()}">
+				<section:Login />
+				<section:LoginVerify />
+			</c:when>
+			<c:otherwise>
+				<section:TestSelection />
+				<section:TestApproval />
+				<section:Accommodations />
+				<section:TestVerify />
+			</c:otherwise>
+		</c:choose>
 
-		<section:Login />
-
-		<section:LoginVerify />
-		<section:TestSelection />
-		<section:TestApproval />
-		<section:Accommodations />
-		<section:TestVerify />
+		<section:SoundCheck />
+		<section:TTSCheck />
 		<section:Instructions />
-
 
 		<c:if test="#{loginBacking.isPrefetchEnabled()}">
 			<iframe src="#{loginBacking.resolveUrl('~/Pages/API/Prefetch.axd/load')}" style="display: none;"> </iframe>

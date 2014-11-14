@@ -560,56 +560,13 @@ Grid.ImportExport = function(gquestion)
         // write out other shapes (e.x., circles)
         Grid.ImportExport.writeShapes(QuestionPartNode, gridquestion);
 
-        var currentTime = new Date();
-        var month = currentTime.getMonth() + 1;
-        var day = currentTime.getDate();
-        var year = currentTime.getFullYear() + '';
-
-        var hours = currentTime.getHours();
-        var minutes = currentTime.getMinutes();
-
-        var APM = 'AM';
-        if (hours > 11) APM = 'PM';
-
-
-        var timeInfo = month + '/' + day + '/' + year.substring(2, 4) + '  ' + hours + ':' + minutes + ' ' + APM;
-
-        var header =
-            '<?xml version="1.0" encoding="UTF-8"?>\n' +
-            '<!-- MACHINE GENERATED ' + timeInfo + '. DO NOT EDIT -->\n' +
-            '<!DOCTYPE AnswerSet [\n' +
-            '<!ELEMENT AnswerSet (Question+)>\n' +
-            '<!ELEMENT AtomicObject (#PCDATA)>\n' +
-            '<!ELEMENT EdgeVector (#PCDATA)>\n' +
-            '<!ELEMENT GridImageTestPoints (TestPoint*)>\n' +
-            '<!ELEMENT LabelList (#PCDATA)>\n' +
-            '<!ELEMENT Object (PointVector,EdgeVector,LabelList,ValueList)>\n' +
-            '<!ELEMENT ObjectSet (Object,AtomicObject+)>\n' +
-            '<!ELEMENT PointVector (#PCDATA)>\n' +
-            '<!ELEMENT Question (QuestionPart)>\n' +
-            '<!ATTLIST Question id NMTOKEN #REQUIRED>\n' +
-            '<!ELEMENT QuestionPart (LabelList,GridImageTestPoints,ObjectSet)>\n' +
-            '<!ATTLIST QuestionPart id NMTOKEN #REQUIRED>\n' +
-            '<!ELEMENT TestPoint (#PCDATA)>\n' +
-            '<!ELEMENT ValueList (#PCDATA)>\n' +
-            ']>\n';
+        var header = '<?xml version="1.0" encoding="UTF-8"?>';
 
         if (typeof XMLSerializer != 'undefined')
         {
             // serialize xmldoc into a xml string
             var serializer = new XMLSerializer();
             var answerXml = serializer.serializeToString(AnswerSetNode);
-
-            /*if (typeof XML != 'undefined')
-            {
-                try {
-                    // format xml
-                    answerXml = XML(answerXml).toXMLString();
-                } catch(ex) {
-                    // on newer Firefox this can throw "SyntaxError: invalid XML markup"
-                }
-            }*/
-
             return (header + answerXml);
         }
         else if (AnswerSetNode.xml)
@@ -1108,6 +1065,10 @@ Grid.ImportExport = function(gquestion)
 // takes a xml string and returns a xml document
 Grid.ImportExport.parseFromString = function(text)
 {
+    if (typeof text != 'string') {
+        return text;
+    }
+
     var xmlDoc;
     
     if (window.DOMParser) {

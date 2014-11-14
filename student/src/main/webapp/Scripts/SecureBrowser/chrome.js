@@ -3,42 +3,59 @@
 /*
 The chrome browser running our security extension (mainly on chrome OS)
 */
-TDS.SecureBrowser.Chrome = function () {
-    // This is disabled for now since we use the hardware buttons on chrome books to control volume. We may reenable this once the chrome.audio apis make it into the stable channel
-    /*
-    this.isMuted = false;
-    this.volume = -1;
+
+(function (SB) {
     
-    var messageHandler = function (event) {
-        if (event.data.type && event.data.type == "CHROME RESPONSE" && event.data.command == "APP GETVOLUME" && event.data.status == "OK") {
-            this.volume = event.data.result.volume;
-            this.isMuted = event.data.result.isMuted;
-        }
-        if (event.data.type && event.data.type == "CHROME RESPONSE" && event.data.command == "APP SETVOLUME" && event.data.status == "OK") {
-            this.volume = event.data.params.volume;
-            this.isMuted = event.data.params.isMuted;
-        }
+    function Chrome() {
+        Chrome.superclass.constructor.call(this);
+        // This is disabled for now since we use the hardware buttons on chrome books to control volume. We may reenable this once the chrome.audio apis make it into the stable channel
+        /*
+        this.isMuted = false;
+        this.volume = -1;
+    
+        var messageHandler = function (event) {
+            if (event.data.type && event.data.type == "CHROME RESPONSE" && event.data.command == "APP GETVOLUME" && event.data.status == "OK") {
+                this.volume = event.data.result.volume;
+                this.isMuted = event.data.result.isMuted;
+            }
+            if (event.data.type && event.data.type == "CHROME RESPONSE" && event.data.command == "APP SETVOLUME" && event.data.status == "OK") {
+                this.volume = event.data.params.volume;
+                this.isMuted = event.data.params.isMuted;
+            }
+        };
+    
+        TDS.AppWindow.addEventListener("message", messageHandler.bind(this), true);
+        TDS.AppWindow.postMessage({ type: "CHROME COMMAND", command: "APP GETVOLUME", params: { } }, "*");   // Get the current volume
+        */
     };
-    
-    TDS.AppWindow.addEventListener("message", messageHandler.bind(this), true);
-    TDS.AppWindow.postMessage({ type: "CHROME COMMAND", command: "APP GETVOLUME", params: { } }, "*");   // Get the current volume
-    */
-};
 
-YAHOO.lang.extend(TDS.SecureBrowser.Chrome, TDS.SecureBrowser.Base);
+    YAHOO.lang.extend(Chrome, TDS.SecureBrowser.Base);
 
-TDS.SecureBrowser.Chrome.prototype.enableLockDown = function (lockDown) {
-    TDS.AppWindow.postMessage({ type: "CHROME COMMAND", command: "UI FULLSCREEN", params: { enable: lockDown, interval: 500 } }, "*");
-};
+    Chrome.prototype.initialize = function() {
+        TDS.AppWindow = window;
 
-TDS.SecureBrowser.Chrome.prototype.close = function () {
-    // post a message in case we are a packaged app and the app launcher can shut us down if it is around
-    TDS.AppWindow.postMessage({ type: "CHROME COMMAND", command: "APP CLOSE", params: {} }, "*");
+        var bootstrap = function (event) {
+            if (event.data.type && event.data.type == "CHROME RESPONSE" && event.data.command == "APP WELCOME") {
+                TDS.AppWindow = event.source;
+                window.removeEventListener(bootstrap);
+            }
+        };
 
-    // continue to execute the "old" way closing - ie returning to 
-    if (typeof TDS.logout == 'function') TDS.logout();
-    return false;
-};
+        window.addEventListener("message", bootstrap, true);
+    };
+
+    Chrome.prototype.enableLockDown = function (lockDown) {
+        TDS.AppWindow.postMessage({ type: "CHROME COMMAND", command: "UI FULLSCREEN", params: { enable: lockDown, interval: 500 } }, "*");
+    };
+
+    Chrome.prototype.close = function () {
+        // post a message in case we are a packaged app and the app launcher can shut us down if it is around
+        TDS.AppWindow.postMessage({ type: "CHROME COMMAND", command: "APP CLOSE", params: {} }, "*");
+
+        // continue to execute the "old" way closing - ie returning to 
+        if (typeof TDS.logout == 'function') TDS.logout();
+        return false;
+    };
 
 /*
 // Mute the system volume
@@ -73,15 +90,6 @@ TDS.SecureBrowser.Chrome.prototype.setVolume = function (percent) {
 };
 */
 
-(function () {
-    TDS.AppWindow = window;
+    SB.Chrome = Chrome;
 
-    var bootstrap = function (event) {
-        if (event.data.type && event.data.type == "CHROME RESPONSE" && event.data.command == "APP WELCOME") {
-            TDS.AppWindow = event.source;
-            window.removeEventListener(bootstrap);
-        }
-    };
-
-    window.addEventListener("message", bootstrap, true);
-})();
+})(TDS.SecureBrowser);

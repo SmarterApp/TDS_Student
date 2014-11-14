@@ -229,6 +229,14 @@ TDS.Audio = TDS.Audio || {};
         return (Recorder.isReady() && service.retrieveQuality(id, eventListener));
     };
 
+    Recorder.getSources = function (callback) {
+        return (Recorder.isReady() && service.getSources(callback)) || [];
+    };
+
+    Recorder.setSource = function (deviceId) {
+        return Recorder.isReady() && service.setSource(deviceId);
+    };
+
     Audio.Recorder = Recorder;
 
 })(TDS.Audio);

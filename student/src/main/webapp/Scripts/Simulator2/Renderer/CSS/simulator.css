@@ -261,7 +261,7 @@
 /* @end */
 
 
-/* with Images */
+/* with images */
 
 .simulator .singleSelect.withImages li, .simulator .multiSelect.withImages li {
 	min-height: 25px;
@@ -601,7 +601,7 @@
 }*/
 
 
-/* with Images 
+/* with images 
 .simulator .withImages .dropHolder {
 	margin-left: 85px;
 	margin-top: -37px;
@@ -1354,7 +1354,7 @@
     left:5px;
 }
 .simulator .yui-slider-max {
-    position:absolute;
+    position:relative;
     left:180px;
 }
 .simulator .yui-h-slider {
@@ -1555,7 +1555,7 @@
 }
 .selectHolder.selectOpened select {
 	height: inherit;
-	position: absolute;
+	position: relative; /* changed to relative to fix bug where keyboard-selected dropDowns would not wrap if needed */
 	background-color: #fff;
 }
 .selectHolder.selectOpened option[focused="focused"] {
@@ -1580,7 +1580,7 @@
 }
 
 
-/* overide opacity hack for inline Window's Images */
+/* overide opacity hack for inline Window's images */
 .platform_windows .simulator .Image {
 	filter:alpha(opacity=100) !important;
 	-moz-opacity: 1 !important;
@@ -1596,4 +1596,14 @@
 	width: 0px !important;
 	position: absolute;
 	left: -9999;
+}
+
+.inputpanelrow {
+   clear: both;
+}
+
+.inputpanelcell {
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
 }

@@ -18,7 +18,7 @@ SimulationLoader.prototype.start = function()
 
 /*************************************************************/
 
-SimulationLoader._regex_images1 = /Image[\s]*=[\s]*".*"/g;
+SimulationLoader._regex_images1 = /image[\s]*=[\s]*".*"/g;
 SimulationLoader._regex_images2 = /src[\s]*=[\s]*".*(.jpg | .png | .gif)\s*"/g;
 SimulationLoader._regex_flash1 = /flash[\s]*=[\s]*\".*\"/g;
 SimulationLoader._regex_flash2 = /src[\s]*=[\s]*\".*(swf)\s*\"/g;

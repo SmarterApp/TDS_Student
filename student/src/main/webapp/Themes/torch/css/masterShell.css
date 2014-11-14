@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 /*Torch Theme */
 
 /* @group general */
@@ -8,7 +8,7 @@
 .ot-shadowBox .instructions {
 	border-color: #0F6797;
 }
-.ot-shadowBox h2 {
+.ot-shadowBox h1 {
 	border-color: #94B6D9;
 }
 /* @end */
@@ -52,7 +52,7 @@
 	background: url(../images/mo-banner-beta.jpg) no-repeat transparent left bottom;
 	min-width: 730px;
 	height: 120px;
-	float: left;
+	float: none;
 	border: none;
 }
 #ot-logo_spot1 {
@@ -65,33 +65,33 @@
 }
 #ot-brand2 {
 	border: none;
-	background: none transparent;
+	background: transparent;
+	border-bottom: 1px solid #ccc;
+	border-top: 1px solid #ccc;
 	height: auto;
 	padding-top:0px;
 	float: none;
 }
 #ot-brand2 strong {
 	border-left: none;
-	float: left;
-	color: #fff;
 	margin-left: 0px;
-	background: #3983ac url(../images/gradientH3.gif) repeat-x right top;
 	padding-top: 0px;
 	padding-bottom: 0px;
-	height: 25px;
-	line-height: 25px;
 	margin-top: 0px;
-	position: absolute;
-    right: 0;
-    top: 121px;
 	border-right: none;
+	background-color: #fff;
+}
+
+.practiceTest #ot-brand2{
+	float: none;
 }
 .practiceTest #ot-brand2 strong {
-	background-image: url(../images/bike/bikeTop.gif);
+	/*background-image: url(../images/bike/bikeTop.gif);
 	background-color: #3983ac;
-	
-	padding-right: 50px;
-	
+	padding-right: 50px;*/
+	float: none;
+		position:relative;
+	top: 0;
 }
 #tds-ot-footer span, #tds-ot-footer a {
 	color: #164c7e;
@@ -116,11 +116,12 @@
 /* @end */
 
 /* @group Section Login */
-#sectionLogin .ot-innerShadow {
+#sectionLogin .ot-innerShadow,
+#sectionLoginProctor .ot-innerShadow {
 	background: #ddefff url(../images/shadowboxes/greenGradient.gif) repeat-x !important;
 }
-.practiceTest #sectionLogin .ot-shadowBox h2 {
-	background-image: url(../images/bike/bikeTitle.gif);
+.practiceTest #sectionLogin .ot-shadowBox h1{
+	
 }
 .practiceTest #loginForm1, .practiceTest #loginForm2 {
 	border-color: #0F6797;
@@ -144,7 +145,6 @@
 	color: #0F6797 !important;
 }
 .goPractice {
-	background-image: url(../images/bike/goPractice.gif);
 }
 .browserWrong {
 	border: 1px solid #0F6797;

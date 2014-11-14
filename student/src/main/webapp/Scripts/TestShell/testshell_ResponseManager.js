@@ -43,7 +43,8 @@ TestShell.ResponseManager.Events =
 
     onFailure: TestShell.ResponseManager.createEvent('onFailure'),
     onSuccess: TestShell.ResponseManager.createEvent('onSuccess'),
-    onGroups: TestShell.ResponseManager.createEvent('onGroups')
+    onGroups: TestShell.ResponseManager.createEvent('onGroups'),
+    onFinished: TestShell.ResponseManager.createEvent('onFinished')
 };
 
 TestShell.ResponseManager.fireEvent = function(name, obj) { this.Events[name].fire(obj); };
@@ -57,7 +58,7 @@ TestShell.ResponseManager._setLastError = function(error, message) { this._lastE
 TestShell.ResponseManager._setLastStatus = function(statusCode, statusText)
 {
     this._lastStatusCode = statusCode;
-    this._lastStatusText = statusText;  
+    this._lastStatusText = statusText; 
 };
 
 TestShell.ResponseManager.getPendingResponses = function() { return this._pendingResponses; };
@@ -176,21 +177,25 @@ TestShell.ResponseManager._createUrl = function()
 {
     var urlBuilder = [];
     urlBuilder.push(TDS.baseUrl);
-    urlBuilder.push('Pages/API/Response.axd/update');
-
-    // add last page
-    var lastGroup = TestShell.PageManager.getLastGroup();
-    urlBuilder.push('?lastPage=' + (lastGroup ? lastGroup.pageNum : 0)); // last page
-
+    urlBuilder.push('Pages/API/TestShell.axd/updateResponses');
     return urlBuilder.join('');
 };
 
 // create the xhr xml
-TestShell.ResponseManager._createRequest = function()
-{
-    var timestamp = new Date().getTime();
-    var requestXml = TestShell.Xml.createRequest(this._attemptTotal, timestamp, this._outgoingResponses);
-    return requestXml;
+TestShell.ResponseManager._createRequest = function() {
+
+    var lastGroup = TestShell.PageManager.getLastGroup();
+
+    var data = {
+        id: this._attemptTotal,
+        timestamp: new Date().getTime(),
+        lastPage: (lastGroup ? lastGroup.pageNum : 0),
+        prefetch: TestShell.Config.prefetch,
+        accommodations: TDS.Student.Storage.serializeAccs(),
+        responses: this._outgoingResponses
+    };
+
+    return TestShell.Xml.createRequest(data);
 };
 
 // send outgoing responses
@@ -214,12 +219,19 @@ TestShell.ResponseManager._sendOutgoing = function()
     {
         outgoingResponse.sequence++;
     });
+    
+    try {
+        TestShell.ResponseManager._auditOutgoing();
+    } catch (ex) {
+        // This is just auditing so we can ignore..
+    }
 
     // send xhr
     var url = this._createUrl();
     var content = this._createRequest();
-    YUC.setDefaultPostHeader(false);
-    YUC.initHeader("Content-Type", "application/xml; charset=utf-8", false);
+    
+    YUC.setDefaultPostHeader(false); // allow custom 'Content-Type'
+    YUC.initHeader('Content-Type', 'application/xml; charset=UTF-8');
     this._transaction = YUC.asyncRequest('POST', url, callback, content);
     YUC.setDefaultPostHeader(true);
 
@@ -310,6 +322,7 @@ TestShell.ResponseManager._sendSuccess = function(xhrObj)
         });
     }
 
+    // TODO: send this to the error log
     if (TestShell.ResponseManager.getOutgoingResponses().length > 0)
     {
         Util.log('ResponseManager possible problem: Outgoing responses were not all sent');
@@ -317,8 +330,12 @@ TestShell.ResponseManager._sendSuccess = function(xhrObj)
 
     // update test shell properties (TODO: move this out of here)
     TestShell.testLengthMet = results.summary.testLengthMet;
-    TestShell.testFinished = results.summary.testFinished;
-    TestShell.Config.testLength = results.summary.testLength;
+
+    // check for when test is completed
+    if (!TestShell.testFinished && results.summary.testFinished) {
+        TestShell.testFinished = results.summary.testFinished;
+        this.fireEvent('onFinished');
+    }
 
     // go to the review page if the test is completed and there are no groups to show 
     if (TestShell.PageManager.getGroups().length == 0 && results.groups.length == 0 && TestShell.testLengthMet)
@@ -327,9 +344,15 @@ TestShell.ResponseManager._sendSuccess = function(xhrObj)
         return;
     }
 
+    // if content was provided then cache it
+    if (results.contents) {
+        TestShell.ContentLoader.addContents(results.contents);
+    }
+
     // fire event for groups if any
     if (results.groups && results.groups.length > 0)
     {
+        // NOTE: content gets requested here
         this.fireEvent('onGroups', results.groups);
     }
 
@@ -378,6 +401,16 @@ TestShell.ResponseManager.Events.onSuccess.subscribe(function(response)
     TestShell.UI.updateControls();
 });
 
+// show message on notification bar when we receive response from the server we are finished with the test
+TestShell.ResponseManager.Events.onFinished.subscribe(function () {
+    // check if we are showing item scores
+    if (TDS.showItemScores) {
+        TDS.Shell.Notification.add(Messages.get('TestItemScores'));
+    } else if (TestShell.testFinished) {
+        TDS.Shell.Notification.add(Messages.get('TestCompleted'));
+    }
+});
+
 // on XHR failure
 TestShell.ResponseManager.Events.onFailure.subscribe(function(error)
 {
@@ -421,3 +454,56 @@ TestShell.ResponseManager.Events.onFailure.subscribe(function(error)
 
 });
 
+// audit code
+(function(RM) {
+
+    var positions = {};
+
+    function processResponse(response) {
+
+        // get the sequence #'s for this position
+        var sequences = positions[response.position];
+        if (!sequences) {
+            // create sequence array since we have never used it
+            positions[response.position] = sequences = [];
+        }
+
+        // find any duplicate sequences in previous array
+        var duplicate = Util.Array.find(sequences, function (obj) {
+            return response.sequence == obj.sequence;
+        });
+
+        // add out current sequence
+        sequences.push({
+            sequence: response.sequence,
+            timestamp: new Date()
+        });
+
+        // write out error log
+        if (duplicate) {
+
+            // create error message
+            var error = YAHOO.lang.substitute('Duplicate item sequence: pos={position} seq={sequence}', response);
+            var details = new Util.StringBuilder();
+
+            // get last 20 sequences and add them to details
+            sequences.slice(-20).forEach(function (obj) {
+                details.appendSub('Seq={sequence} Time={timestamp}', obj);
+                details.appendLine();
+            });
+
+            // add loggers
+            details.appendLine();
+            TDS.Diagnostics.appendDivider(details);
+            TDS.Diagnostics.appendLoggers(details);
+
+            // send error message
+            TDS.Diagnostics.logServerError(error, details);
+        }
+    }
+
+    RM._auditOutgoing = function () {
+        this._outgoingResponses.forEach(processResponse);
+    }
+
+})(TestShell.ResponseManager);

@@ -3,7 +3,7 @@
 // TODO:
 // - https://github.com/tcorral/Hermes.js
 
-(function(TDS) {
+TDS.Diagnostics = (function (TDS) {
 
     var loggers = [];
     var sendCount = 0;
@@ -66,6 +66,7 @@
         YAHOO.util.Connect.asyncRequest('POST', url, callback, data);
     }
 
+    // log a message and optional details to the server to the server
     function logServerError(message, details, completed) {
 
         if (!message) {
@@ -92,6 +93,7 @@
         }
     };
 
+    // get the debug log messages
     function getServerDebugDetails() {
         var details = 'TDS LOGS: ' + Util.getDebugLog();
         details += '\n\n';
@@ -245,18 +247,6 @@
         console.warn(serverDetails);
     };
 
-    // public api
-    TDS.Diagnostics = {
-        report: report,
-        addErrorHandler: addErrorHandler,
-        logServerError: logServerError,
-        logServerDebug: logServerDebug,
-        showError: setDebugMode.bind(null, true),
-        registerLogger: registerLogger,
-        appendDivider: appendDivider,
-        appendLoggers: appendLoggers
-    };
-
     // initialize logging
     if (Kit) {
 
@@ -274,10 +264,26 @@
             }
 
             // 2 lines before, the offending line, 2 lines after
-            TraceKit.linesOfContext = 6;
+            TraceKit.linesOfContext = 5;
         }
 
     }
+
+    // check if we should show exceptions
+    $(document).ready(function() {
+        setDebugMode(TDS.Debug.showExceptions);
+    });
+
+    return {
+        report: report,
+        addErrorHandler: addErrorHandler,
+        logServerError: logServerError,
+        logServerDebug: logServerDebug,
+        showError: setDebugMode.bind(null, true),
+        registerLogger: registerLogger,
+        appendDivider: appendDivider,
+        appendLoggers: appendLoggers
+    };
 
 })(TDS);
 

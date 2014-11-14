@@ -6,7 +6,7 @@
  * @return - instance of a ChoiceList
  *******************************************************************************
  */
-Simulator.Input.ChoiceList = function(sim, node, panel, theSection) {
+Simulator.Input.ChoiceList = function(sim, node, panel, theSection, container) {
 
     Simulator.Input.GroupList.call(this, sim); // Inherit Instance variables
     
@@ -18,7 +18,8 @@ Simulator.Input.ChoiceList = function(sim, node, panel, theSection) {
     var keyboardInput = function () { return sim.getKeyboardInput(); };  // get keyboard input instance
     var scoringTable = function () { return sim.getScoringTable(); }; // get scoring table instance
     var simDocument = function() { return sim.getSimDocument(); };
-    
+    var transDictionary = function () { return sim.getTranslationDictionary(); };
+
     if(sim) {
         this.setPanel(panel);
         this.setSection(theSection);
@@ -175,7 +176,10 @@ Simulator.Input.ChoiceList = function(sim, node, panel, theSection) {
         var items = this.getItems();
         var nextNum = utils().getNextSequenceNumber();
         var image = null;
-        var panelHtml = panel.getHTMLElement();
+        var labelledByID = this.getSectionID(); // default aria-labelledby to containing section (WCAG) 
+        var panelHtml = container;
+        var outerDiv = simDocument().createElement("div");
+        outerDiv.className = "inputChoiceList";
 
         this.setFocusable(true, true); // Don't set the element itself to accept keyboard input
         
@@ -196,11 +200,18 @@ Simulator.Input.ChoiceList = function(sim, node, panel, theSection) {
         else 
 */      
 
-        if(this.getLabel()) {
-        	var textLabelEl = simDocument().createTextNode(this.getLabel());
+        if (this.getLabel()) {
+            var h5LabelElement = simDocument().createElement('h5'); // using h5 rather than simple text node (WCAG)
+            var h5ID = this.createLabelID();
+            h5LabelElement.id = h5ID; // ID for WCAG
+            labelledByID = labelledByID + ' ' + h5ID; // if there is an element label, add to the aria-laballedby attribute (WCAG)
+            h5LabelElement.innerHTML = this.getLabel();
+            panelHtml.appendChild(h5LabelElement);
+            /*
+            var textLabelEl = simDocument().createTextNode(this.getLabel());
         	panelHtml.appendChild(textLabelEl);
-        	var brElement = simDocument().createElement('br');
-        	panelHtml.appendChild(brElement);
+        	var brElement = simDocument().createElement('br'); 
+        	panelHtml.appendChild(brElement); */
         }        
         
         for ( var x = 0; x < items.length; x++) {
@@ -217,8 +228,13 @@ Simulator.Input.ChoiceList = function(sim, node, panel, theSection) {
                 	ulElement = simDocument().createElement('ul');
                 	ulElement.id = nodeID;
                 	ulElement.setAttribute('class', 'multiSelect');
+                	ulElement.setAttribute('role', 'group'); // WCAG
+                	ulElement.setAttribute('aria-labelledby', labelledByID); // WCAG
                 }
-                panelHtml.appendChild(ulElement);
+                if (theSection.getSectionSettings().elementorientation === "horizontal") {
+                    outerDiv.classList.add("inputpanelcell");
+                }
+                outerDiv.appendChild(ulElement);
             }
             var labelForID = 'labelFor' + itemID;
             items[x].setValue('labelForID', labelForID);
@@ -257,7 +273,9 @@ Simulator.Input.ChoiceList = function(sim, node, panel, theSection) {
             	}
             	var listLabelSpanEl = simDocument().createElement('span');
             	listLabelSpanEl.setAttribute('class', 'listLabel');
-            	listLabelSpanEl.innerHTML = (items[x]).lookup('val');
+                // retrieve translated text
+            	var innerHTMLtag = (items[x]).lookup('val');
+            	listLabelSpanEl.innerHTML = transDictionary().translate(innerHTMLtag);
             	labelEl.appendChild(listLabelSpanEl);
             	listElement.appendChild(labelEl);
             	ulElement.appendChild(listElement);
@@ -268,7 +286,7 @@ Simulator.Input.ChoiceList = function(sim, node, panel, theSection) {
             	keyboardInput().addFocusableElementItem(this, this.getNodeID(), itemID);
             }
         }
-        
+        panelHtml.appendChild(outerDiv);
         this.setDefaultSelections();
         this.mapHTML2JS(ulElement);
     };

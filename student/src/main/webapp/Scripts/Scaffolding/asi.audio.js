@@ -5,7 +5,7 @@
 AsiItem.AudioInterface = function () {
     this._tracksToPlay = [];
     this._lastPlayed = 0;
-    this._audioQ = Util.Audio.createQueue();
+    this._audioQ = AsiItem.Audio.createQueue();
     var self = this;
     this.disposed = false;
 
@@ -23,10 +23,11 @@ AsiItem.AudioInterface = function () {
             instance: instance
         };
         this._tracksToPlay.push(obj);
+
         // Create audio data
         var audioData = AsiItem.AudioInterface.audioData[id];
         if (audioData == null) {
-            audioData = Util.Audio.createSound(id, url);
+            audioData = AsiItem.Audio.createSound(id, url);
             AsiItem.AudioInterface.audioData[id] = audioData;
         }
 
@@ -37,6 +38,7 @@ AsiItem.AudioInterface = function () {
                 return;
             self.onStart();
         });
+
         audioData.onIdle.subscribe(function () {
             // Avoid late callback events.
             if (self.disposed)

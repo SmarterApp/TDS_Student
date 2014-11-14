@@ -53,6 +53,8 @@ Simulator.Animation.AnimationSet = function (sim, panel) {
 
     var simDocument = function() { return sim.getSimDocument(); };
 
+    var transDictionary = function () { return sim.getTranslationDictionary(); };
+
     function registerEvents(instance) {
         // Register some events
         //eventMgr().registerEvent(new Simulator.Event(this, 'info', 'inputAvailable'));
@@ -156,7 +158,10 @@ Simulator.Animation.AnimationSet = function (sim, panel) {
     };
 
     this.getPosterSrc = function () {
-        return poster['image'];
+        // retrieve language-specific version of poster image
+        var translatedPosterSource = transDictionary().translate(poster['image']);
+        debug("Getting a poster image using AnimationSet2.js method: " + translatedPosterSource);
+        return translatedPosterSource;
     };
 
     this.getPosterShow = function () {

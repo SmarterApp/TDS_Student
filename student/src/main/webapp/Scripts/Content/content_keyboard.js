@@ -2,156 +2,172 @@
 This contains general content manager keyboard subscriptions. 
 */
 
-// attach event listeners to a documentframe for key events
-ContentManager.addKeyEvents = function(keyEventObj) 
-{
-    if (!this.enableKeyEvents) return false;
-    if (keyEventObj == null) return false;
-    if (keyEventObj.__tds_keyEventsEnabled === true) return false;
+(function(CM) {
 
-    YUE.addListener(keyEventObj, "keydown", this.onKeyEvent, this, true);
-    YUE.addListener(keyEventObj, "keypress", this.onKeyEvent, this, true);
-    YUE.addListener(keyEventObj, "keyup", this.onKeyEvent, this, true);
+    // call this function when any keyboard event gets fired
+    function onKeyEvent(evt) {
 
-    keyEventObj.__tds_keyEventsEnabled = true;
-    return true;
-};
-
-// call this function when any keyboard event gets fired
-ContentManager.onKeyEvent = function(evt)
-{
-    // BUG #15461: Able to open the context menu using Ctl M in the background while warning dialog box is open
-    if (ContentManager.isDialogShowing()) return;
-
-    // CTRL-M (this check must be before isMenuShowing())
-    if (evt.ctrlKey && evt.keyCode == 77)
-    {
-        YUE.stopEvent(evt);
-        if (evt.type == 'keydown') {
-            ContentManager.Menu.show(evt);
+        // FB 146275 - hardware keyboards act different under iOS >= 7 so we're going to disallow Ctrl key shortcuts because
+        //  Caps-Lock on sets Ctrl key flag to true for all subsequent key presses
+        //  Ctrl-key sets Meta = true and only generates a key up event
+        //  Shift/Alt keys works fine
+        if (evt.ctrlKey && !Util.Browser.supportsModifierKeys()) {
+            return;
         }
+
+        // BUG #15461: Able to open the context menu using Ctl M in the background while warning dialog box is open
+        if (CM.isDialogShowing()) return;
+
+        // CTRL-M (this check must be before isMenuShowing())
+        if (evt.ctrlKey && evt.keyCode == 77) {
+            YUE.stopEvent(evt);
+            if (evt.type == 'keydown') {
+                CM.Menu.show({ evt: evt });
+            }
+        };
+
+        // if the menu is showing then don't process key events (menu deals with its own key events)
+        if (CM.Menu.isShowing()) return;
+        if (CM.isDialogShowing()) return;
+
+        // need to stop tab or it will tab to different elements (inputs, links)
+        if (evt.keyCode == 9) {
+            YUE.stopEvent(evt);
+        }
+
+        var currentPage = CM.getCurrentPage();
+        if (currentPage == null) return;
+
+        var currentEntity = currentPage.getActiveEntity();
+        if (currentEntity == null) return;
+
+        // assign some DOM3 key names to the event if they don't exist
+        if (!evt.key) {
+            switch (evt.keyCode) {
+                case 9: evt.key = 'Tab'; break;
+                case 13: evt.key = 'Enter'; break;
+                case 27: evt.key = 'Esc'; break;
+                case 32: evt.key = 'Space'; break;
+                case 37: evt.key = 'Left'; break;
+                case 38: evt.key = 'Up'; break;
+                case 39: evt.key = 'Right'; break;
+                case 40: evt.key = 'Down'; break;
+            }
+        }
+
+        // fire events
+        currentPage.fire('keyevent', evt);
+        currentEntity.fire('keyevent', evt);
+    }
+
+    // attach event listeners to a documentframe for key events
+    CM.addKeyEvents = function (keyEventObj) {
+        if (!CM.enableKeyEvents) return false;
+        if (keyEventObj == null) return false;
+        if (keyEventObj.__tds_keyEventsEnabled === true) return false;
+
+        YUE.addListener(keyEventObj, "keydown", onKeyEvent);
+        YUE.addListener(keyEventObj, "keypress", onKeyEvent);
+        YUE.addListener(keyEventObj, "keyup", onKeyEvent);
+
+        keyEventObj.__tds_keyEventsEnabled = true;
+        return true;
     };
 
-    // if the menu is showing then don't process key events (menu deals with its own key events)
-    if (ContentManager.Menu.isShowing()) return;
-    if (ContentManager.isDialogShowing()) return;
+    ////////////////////////////////////////////////////////////////////
 
-    // need to stop tab or it will tab to different elements (inputs, links)
-    if (evt.keyCode == 9) YUE.stopEvent(evt);
+    function processTab(page, evt) {
 
-    var currentPage = ContentManager.getCurrentPage();
-    if (currentPage == null) return;
+        // move back or forward
+        var moveBack = evt && evt.shiftKey;
 
-    var currentEntity = currentPage.getActiveEntity();
-    if (currentEntity == null) return;
+        // get a list of entity/components
+        var mapping = page.getComponents();
+        var currentEntity = page.getActiveEntity();
+        var currentComponent = currentEntity.getActiveComponent();
 
-    // assign some DOM3 key names to the event if they don't exist
-    if (!evt.key) {
-        switch (evt.keyCode) {
-            case 9:  evt.key = 'Tab'; break;
-            case 13: evt.key = 'Enter'; break;
-            case 27: evt.key = 'Esc'; break;
-            case 32: evt.key = 'Space'; break;
-            case 37: evt.key = 'Left'; break;
-            case 38: evt.key = 'Up'; break;
-            case 39: evt.key = 'Right'; break;
-            case 40: evt.key = 'Down'; break;
-        }
-    }
+        // find the current itemComponent object
+        var currentIC = Util.Array.find(mapping, function (ic) {
+            return ic.entity == currentEntity && ic.component == currentComponent;
+        });
 
-    // fire events
-    this.firePageEvent('keyevent', currentPage, [evt], false);
-    this.fireEntityEvent('keyevent', currentEntity, [evt], false);
-};
-
-// listen for page key events
-ContentManager.onPageEvent('keyevent', function(page, evt)
-{
-    if (evt.type != 'keydown') return;
-
-    // entity focus (items and passage)
-    if (evt.key == 'Tab' && !evt.ctrlKey && !evt.altKey)
-    {
-        // shift-tab
-        if (evt.shiftKey) page.prevEntity();
-        // tab
-        else page.nextEntity();
-    }
-});
-
-// listen for up/down keys
-// listen for item/passage key events
-ContentManager.onEntityEvent('keyevent', function(page, entity, evt)
-{
-    var keyCode = evt.keyCode;
-
-    // make sure an arrow key
-    var arrowKeys = (keyCode >= 37 && keyCode <= 40);
-    if (!arrowKeys) return;
-
-    // make sure no other keys are held down
-    if (Util.Event.hasModifier(evt)) return;
-
-    // make sure not in caret mode
-    if (Mozilla.inCaretMode()) return;
-
-    var target = YAHOO.util.Event.getTarget(evt);
-
-    // if we are in an text area then lets leave here
-    if (Util.Event.inTextInput(evt)) return;
-
-    // make sure not on a form element
-    if (Util.Dom.isFormElement(target)) return;
-
-    // make sure not in grid
-    if (target.tagName == 'svg') return;
-
-    // stop event
-    YUE.stopEvent(evt);
-
-    // only scroll on ctrl and keydown
-    if (evt.type != 'keydown') return; // !evt.domEvent.ctrlKey
-
-    // scroll page
-    page.scroll(evt.key); // up/down/left/right
-});
-
-// listen for tab keys
-ContentManager.onEntityEvent('keyevent', function(page, entity, evt)
-{
-    if (evt.type != 'keydown') return;
-
-    // check if in caret mode
-    if (Mozilla.inCaretMode())
-    {
-        // if esc is held down then exit from caret mode
-        if (evt.key == 'Esc')
-        {
-            ContentManager.enableCaretMode(false);
+        // figure out what the next itemComponent is in the tab order
+        var nextIC;
+        var iter = Util.Iterator(mapping);
+        iter.jumpTo(currentIC);
+        if (moveBack) {
+            nextIC = iter.prev();
+        } else {
+            nextIC = iter.next();
         }
 
-        // leave here and ignore up/down while in caret mode
-        return;
+        var nextEntity = nextIC.entity;
+        var nextComponent = nextIC.component;
+
+        // check if entity has changed
+        if (nextEntity && nextEntity != currentEntity) {
+            nextEntity.setActive(evt);
+        }
+
+        // set new component
+        if (nextComponent && nextComponent != currentComponent) {
+            nextEntity.setActiveComponent(nextComponent);
+        }
+
     }
 
-    // component focus within an item/passage (ctrl-tab/ctrl-shift-tab)
-    if (evt.key == 'Tab' && evt.ctrlKey && !evt.altKey)
-    {
-        if (evt.shiftKey) entity.prevComponent();
-        else entity.nextComponent();
+    CM.onPageEvent('keyevent', function (page, evt) {
 
+        if (evt.type != 'keydown') return;
+
+        // entity focus (items and passage)
+        if (evt.key == 'Tab' && !evt.ctrlKey && !evt.altKey) {
+            processTab(page, evt);
+        }
+    });
+    
+    // listen for up/down keys
+    // listen for item/passage key events
+    CM.onPageEvent('keyevent', function (page, evt) {
+
+        var keyCode = evt.keyCode;
+
+        // make sure an arrow key
+        var arrowKeys = (keyCode >= 37 && keyCode <= 40);
+        if (!arrowKeys) return;
+
+        // make sure no other keys are held down
+        if (Util.Event.hasModifier(evt)) return;
+
+        // make sure not in caret mode
+        if (Mozilla.inCaretMode()) return;
+
+        var targetEl = YAHOO.util.Event.getTarget(evt);
+
+        // if we are in an text area then lets leave here
+        if (Util.Event.inTextInput(evt)) return;
+
+        // make sure not on a form element
+        if (Util.Dom.isFormElement(targetEl)) return;
+
+        // make sure not in grid
+        if (targetEl.tagName == 'svg') return;
+
+        // stop event
         YUE.stopEvent(evt);
-        return;
-    }
-});
 
-// this function is for fixing for when the cursor goes out of a selected components container
-(function()
-{
+        // only scroll on ctrl and keydown
+        if (evt.type != 'keydown') return; // !evt.domEvent.ctrlKey
+
+        // scroll page
+        page.scroll(evt.key); // up/down/left/right
+    });
+    
+    // this function is for fixing for when the cursor goes out of a selected components container
     var lastRange = null;
 
-    ContentManager.onEntityEvent('keyevent', function(page, entity, evt)
-    {
+    CM.onEntityEvent('keyevent', function (page, entity, evt) {
+
         // ignore up/down while in caret mode
         if (!Mozilla.inCaretMode()) return;
 
@@ -163,8 +179,7 @@ ContentManager.onEntityEvent('keyevent', function(page, entity, evt)
         var selection = pageWin.getSelection();
         var range;
 
-        try
-        {
+        try {
             range = selection.getRangeAt(0);
         }
         catch (ex) { return; } // "Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsISelection.getRangeAt]" nsresult: "0x80070057 (NS_ERROR_ILLEGAL_VALUE)"
@@ -177,17 +192,15 @@ ContentManager.onEntityEvent('keyevent', function(page, entity, evt)
         var startElement = range.startContainer;
         var endElement = range.endContainer;
 
-        var outOfBounds = (ContentManager.getAncestor(startElement, [activeElement]) == null);
-        if (!outOfBounds) outOfBounds = (ContentManager.getAncestor(endElement, [activeElement]) == null);
+        var outOfBounds = (CM.getAncestor(startElement, [activeElement]) == null);
+        if (!outOfBounds) outOfBounds = (CM.getAncestor(endElement, [activeElement]) == null);
 
         // if the cursor is out of bounds and we have a last know good range then select that
-        if (outOfBounds)
-        {
+        if (outOfBounds) {
             // make sure we have a last known in bounds range
             if (!lastRange) return;
 
-            try
-            {
+            try {
                 // reselect last known in bounds range
                 selection.collapseToStart();
                 selection.removeAllRanges();
@@ -195,62 +208,10 @@ ContentManager.onEntityEvent('keyevent', function(page, entity, evt)
             }
             catch (ex) { return; } // possible component returned exception
         }
-        else
-        {
+        else {
             lastRange = range.cloneRange();
         }
     });
+    
+})(ContentManager);
 
-})();
-
-// HACK: This fixes an issue on the old Mac OS X securebrowser where you cannot select text
-(function()
-{
-    // check if this browser requires the fix
-    var needsSelectionFix = (Util.Browser.isMac() && Util.Browser.isSecure() && Util.Browser.getFirefoxVersion() == 2);
-    if (!needsSelectionFix) return;
-
-    // function for applying fix
-    var applyfix = function(el)
-    {
-        YUD.addClass(el, 'selectionFix');
-        YUE.on(el, 'focus', function() { top.focus(); });
-        YUE.on(el, 'mouseover', function() { top.focus(); });
-    };
-
-    // apply fix to elements that can be selected
-    ContentManager.onPassageEvent('available', function(page, passage)
-    {
-        applyfix(passage.getElement());
-    });
-
-    ContentManager.onItemEvent('available', function(page, item)
-    {
-        applyfix(item.getStemElement());
-    });
-
-})();
-
-
-// listen for up/down keys
-// listen for item/passage key events
-ContentManager.onEntityEvent('keyevent', function(page, entity, evt)
-{
-    if (evt.type != 'keyup') return;
-
-    if (evt.key == 'Esc')
-    {
-        setTimeout(function()
-        {
-            // entity.setActive(null, true);
-
-            var activeComponent = entity.getActiveComponent();
-
-            if (activeComponent)
-            {
-                entity.setActiveComponent(activeComponent, true);
-            }
-        }, 0);
-    }
-
-});

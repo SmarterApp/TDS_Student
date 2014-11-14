@@ -157,13 +157,13 @@ input.mje_cursor_field {
 
 /*.mje_controls_content button{
 	padding: 0px !important;
-	background: url('Images/button_bg.png') transparent repeat-x;
+	background: url('images/button_bg.png') transparent repeat-x;
 }
 .row_color_dark button{
-	background: url('Images/button_mid_bg.png') transparent repeat-x;
+	background: url('images/button_mid_bg.png') transparent repeat-x;
 }
 .row_color_gold button{
-	background: url('Images/button_brown_bg.png') transparent repeat-x;
+	background: url('images/button_brown_bg.png') transparent repeat-x;
 } */
 .mje_row_Variables button{
 	font-style: italic;
@@ -228,7 +228,7 @@ input.mje_cursor_field {
 }
 .mje_nav_next, .mje_nav_prev {
 	text-indent: -9999px;
-	background: url(Images/next_back.png) no-repeat 6px 5px;
+	background: url(images/next_back.png) no-repeat 6px 5px;
 	width: 30px;
 }
 
@@ -276,7 +276,7 @@ input.mje_cursor_field {
 /*Icons for Undo, Redo, and Delete*/
 .mje_nav_undo, .mje_nav_redo, .mje_nav_del{
 /*.mje_nav_undo, .mje_nav_redo{*/
-	background: url(Images/undo_redo_delete.png) no-repeat 6px center;
+	background: url(images/undo_redo_delete.png) no-repeat 6px center;
 	text-indent: -9999px;
 	width: 30px;
 }
@@ -587,7 +587,7 @@ div.mje_selected_tab, div.mje_selected_tab:hover {
 .TDS_CCInvert.TDS_PS_L2 .mje_nav_next, .TDS_CCInvert.TDS_PS_L2 .mje_nav_prev,
 .TDS_CCYellowB.TDS_PS_L2 .mje_nav_next, .TDS_CCYellowB.TDS_PS_L2 .mje_nav_prev,
 .TDS_CCWhiteN.TDS_PS_L2 .mje_nav_next, .TDS_CCWhiteN.TDS_PS_L2 .mje_nav_prev{
-	background-image:  url("Images/next_back_L2.png"); 
+	background-image:  url("images/next_back_L2.png"); 
 }
 .TDS_PS_L2 .mje_nav_next, .TDS_PS_L2 .mje_nav_prev{
 	background-position: 6px 7px;
@@ -634,7 +634,7 @@ div.mje_selected_tab, div.mje_selected_tab:hover {
 }
 
 .TDS_PS_L2 .mje_nav_undo, .TDS_PS_L2 .mje_nav_redo, .TDS_PS_L2 .mje_nav_del{
-	background-image: url(Images/undo_redo_delete_L2.png);	
+	background-image: url(images/undo_redo_delete_L2.png);	
 }
 .TDS_PS_L2.TDS_CCInvert .mje_nav_undo,
 .TDS_PS_L2.TDS_CCWhiteN .mje_nav_undo{
@@ -719,7 +719,7 @@ div.mje_selected_tab, div.mje_selected_tab:hover {
 .TDS_CCInvert.TDS_PS_L3 .mje_nav_next, .TDS_CCInvert.TDS_PS_L3 .mje_nav_prev,
 .TDS_CCYellowB.TDS_PS_L3 .mje_nav_next, .TDS_CCYellowB.TDS_PS_L3 .mje_nav_prev,
 .TDS_CCWhiteN.TDS_PS_L3 .mje_nav_next, .TDS_CCWhiteN.TDS_PS_L3 .mje_nav_prev{
-	background-image:  url("Images/next_back_L2.png"); 
+	background-image:  url("images/next_back_L2.png"); 
 }
 .TDS_PS_L3 .mje_nav_next, .TDS_PS_L3 .mje_nav_prev{
 	background-position: 6px 7px;
@@ -766,7 +766,7 @@ div.mje_selected_tab, div.mje_selected_tab:hover {
 }
 
 .TDS_PS_L3 .mje_nav_undo, .TDS_PS_L3 .mje_nav_redo, .TDS_PS_L3 .mje_nav_del{
-	background-image: url(Images/undo_redo_delete_L2.png);	
+	background-image: url(images/undo_redo_delete_L2.png);	
 }
 .TDS_PS_L3.TDS_CCInvert .mje_nav_undo,
 .TDS_PS_L3.TDS_CCWhiteN .mje_nav_undo{
@@ -851,7 +851,7 @@ div.mje_selected_tab, div.mje_selected_tab:hover {
 .TDS_CCInvert.TDS_PS_L4 .mje_nav_next, .TDS_CCInvert.TDS_PS_L4 .mje_nav_prev,
 .TDS_CCYellowB.TDS_PS_L4 .mje_nav_next, .TDS_CCYellowB.TDS_PS_L4 .mje_nav_prev,
 .TDS_CCWhiteN.TDS_PS_L4 .mje_nav_next, .TDS_CCWhiteN.TDS_PS_L4 .mje_nav_prev{
-	background-image:  url("Images/next_back_L2.png"); 
+	background-image:  url("images/next_back_L2.png"); 
 }
 .TDS_PS_L4 .mje_nav_next, .TDS_PS_L4 .mje_nav_prev{
 	background-position: 9px 9px;
@@ -898,7 +898,7 @@ div.mje_selected_tab, div.mje_selected_tab:hover {
 }
 
 .TDS_PS_L4 .mje_nav_undo, .TDS_PS_L4 .mje_nav_redo, .TDS_PS_L4 .mje_nav_del{
-	background-image: url(Images/undo_redo_delete_L2.png);	
+	background-image: url(images/undo_redo_delete_L2.png);	
 }
 .TDS_PS_L4 .mje_nav_undo{
 	background-position: 12px 9px;
@@ -964,16 +964,16 @@ div.mje_selected_tab, div.mje_selected_tab:hover {
 /* @end */
 
 .mje_button_fraction, .mje_button_sqrt, .mje_button_nrt, .mje_button_sup, .mje_button_sub, .mje_button_subsup, .mje_button_dot {
-	background: url(Images/equations_level1.png) no-repeat center 200px;
+	background: url(images/equations_level1.png) no-repeat center 200px;
 	width: 32px;
 	text-indent: -9999px;
 }
 .TDS_CCInvert .mje_button_fraction, .TDS_CCInvert .mje_button_sqrt, .TDS_CCInvert .mje_button_nrt, .TDS_CCInvert .mje_button_sup, .TDS_CCInvert .mje_button_sub, .TDS_CCInvert .mje_button_subsup, 
 .TDS_CCWhiteN .mje_button_fraction, .TDS_CCWhiteN .mje_button_sqrt, .TDS_CCWhiteN .mje_button_nrt, .TDS_CCWhiteN .mje_button_sup, .TDS_CCWhiteN .mje_button_sub, .TDS_CCWhiteN .mje_button_subsup, .TDS_CCInvert .mje_button_dot, .TDS_CCWhiteN .mje_button_dot{
-	background-image: url(Images/equations_level1_white.png);
+	background-image: url(images/equations_level1_white.png);
 }
 .TDS_CCYellowB .mje_button_fraction, .TDS_CCYellowB .mje_button_sqrt, .TDS_CCYellowB .mje_button_nrt, .TDS_CCYellowB .mje_button_sup, .TDS_CCYellowB .mje_button_sub, .TDS_CCYellowB .mje_button_subsup, .TDS_CCYellowB .mje_button_dot {
-	background-image: url(Images/equations_level1_yellow.png);
+	background-image: url(images/equations_level1_yellow.png);
 }
 .mje_button_fraction {
 	background-position: center -154px;
@@ -1032,11 +1032,11 @@ div.mje_selected_tab, div.mje_selected_tab:hover {
 }
 
 .TDS_PS_L2 .mje_button_fraction, .TDS_PS_L2 .mje_button_sqrt, .TDS_PS_L2 .mje_button_nrt, .TDS_PS_L2 .mje_button_sup, .TDS_PS_L2 .mje_button_sub, .TDS_PS_L2 .mje_button_subsup, .TDS_PS_L2 .mje_button_dot  {
-	background-image: url(Images/equations_level2.png);
+	background-image: url(images/equations_level2.png);
 }
 .TDS_CCInvert.TDS_PS_L2 .mje_button_fraction, .TDS_CCInvert.TDS_PS_L2 .mje_button_sqrt, .TDS_CCInvert.TDS_PS_L2 .mje_button_nrt, .TDS_CCInvert.TDS_PS_L2 .mje_button_sup, .TDS_CCInvert.TDS_PS_L2 .mje_button_sub, .TDS_CCInvert.TDS_PS_L2 .mje_button_subsup, .TDS_CCInvert.TDS_PS_L2 .mje_button_dot,
 .TDS_CCWhiteN.TDS_PS_L2 .mje_button_fraction, .TDS_CCWhiteN.TDS_PS_L2 .mje_button_sqrt, .TDS_CCWhiteN.TDS_PS_L2 .mje_button_nrt, .TDS_CCWhiteN.TDS_PS_L2 .mje_button_sup, .TDS_CCWhiteN.TDS_PS_L2 .mje_button_sub, .TDS_CCWhiteN.TDS_PS_L2 .mje_button_subsup, .TDS_CCWhiteN.TDS_PS_L2 .mje_button_dot{
-	background-image: url(Images/equations_level2_white.png);
+	background-image: url(images/equations_level2_white.png);
 }
 .TDS_CCInvert .mje_controls_content_el button,
 .TDS_CCWhiteN .mje_controls_content_el button{
@@ -1045,7 +1045,7 @@ div.mje_selected_tab, div.mje_selected_tab:hover {
 
 .TDS_CCYellowB.TDS_PS_L2 .mje_button_fraction, .TDS_CCYellowB.TDS_PS_L2 .mje_button_sqrt, .TDS_CCYellowB.TDS_PS_L2 .mje_button_nrt, .TDS_CCYellowB.TDS_PS_L2 .mje_button_sup, .TDS_CCYellowB.TDS_PS_L2 .mje_button_sub, .TDS_CCYellowB.TDS_PS_L2 .mje_button_subsup,
 .TDS_CCYellowB.TDS_PS_L2 .mje_button_dot {
-	background-image: url(Images/equations_level2_yellow.png);
+	background-image: url(images/equations_level2_yellow.png);
 }
 .TDS_CCYellowB .mje_controls_content_el button{
 	color: #FFCC00;
@@ -1077,7 +1077,7 @@ div.mje_selected_tab, div.mje_selected_tab:hover {
 
 .TDS_PS_L3 .mje_button_fraction, .TDS_PS_L3 .mje_button_sqrt, .TDS_PS_L3 .mje_button_nrt, .TDS_PS_L3 .mje_button_sup, .TDS_PS_L3 .mje_button_sub, .TDS_PS_L3 .mje_button_subsup, .TDS_PS_L3 .mje_button_dot, 
 .TDS_PS_L4 .mje_button_fraction, .TDS_PS_L4 .mje_button_sqrt, .TDS_PS_L4 .mje_button_nrt, .TDS_PS_L4 .mje_button_sup, .TDS_PS_L4 .mje_button_sub, .TDS_PS_L4 .mje_button_subsup , .TDS_PS_L4 .mje_button_dot{
-	background-image: url(Images/equations_level3.png);
+	background-image: url(images/equations_level3.png);
 }
 .TDS_CCInvert.TDS_PS_L3 .mje_button_fraction, .TDS_CCInvert.TDS_PS_L3 .mje_button_sqrt, .TDS_CCInvert.TDS_PS_L3 .mje_button_nrt,
 .TDS_CCInvert.TDS_PS_L3 .mje_button_sup, .TDS_CCInvert.TDS_PS_L3 .mje_button_sub, .TDS_CCInvert.TDS_PS_L3 .mje_button_subsup, 
@@ -1091,14 +1091,14 @@ div.mje_selected_tab, div.mje_selected_tab:hover {
 .TDS_CCWhiteN.TDS_PS_L4 .mje_button_fraction, .TDS_CCWhiteN.TDS_PS_L4 .mje_button_sqrt, .TDS_CCWhiteN.TDS_PS_L4 .mje_button_nrt,
 .TDS_CCWhiteN.TDS_PS_L4 .mje_button_sup, .TDS_CCWhiteN.TDS_PS_L4 .mje_button_sub, .TDS_CCWhiteN.TDS_PS_L4 .mje_button_subsup, 
 .TDS_CCWhiteN.TDS_PS_L4 .mje_button_dot{
-	background-image: url(Images/equations_level3_white.png);
+	background-image: url(images/equations_level3_white.png);
 }
 
 .TDS_CCYellowB.TDS_PS_L3 .mje_button_fraction, .TDS_CCYellowB.TDS_PS_L3 .mje_button_sqrt, .TDS_CCYellowB.TDS_PS_L3 .mje_button_nrt, .TDS_CCYellowB.TDS_PS_L3 .mje_button_sup, .TDS_CCYellowB.TDS_PS_L3 .mje_button_sub, .TDS_CCYellowB.TDS_PS_L3 .mje_button_subsup, 
 .TDS_CCYellowB.TDS_PS_L3 .mje_button_dot,
 .TDS_CCYellowB.TDS_PS_L4 .mje_button_fraction, .TDS_CCYellowB.TDS_PS_L4 .mje_button_sqrt, .TDS_CCYellowB.TDS_PS_L4 .mje_button_nrt, .TDS_CCYellowB.TDS_PS_L4 .mje_button_sup, .TDS_CCYellowB.TDS_PS_L4 .mje_button_sub, .TDS_CCYellowB.TDS_PS_L4 .mje_button_subsup, 
 .TDS_CCYellowB.TDS_PS_L4 .mje_button_dot {
-	background-image: url(Images/equations_level3_yellow.png);
+	background-image: url(images/equations_level3_yellow.png);
 }
 
 .TDS_PS_L3 .mje_button_fraction {
@@ -1229,7 +1229,7 @@ div.mje_selected_tab, div.mje_selected_tab:hover {
     content: "";
     width: 15px;
     height: .8em;
-    background: url(Images/arrow.png) no-repeat center center;
+    background: url(images/arrow.png) no-repeat center center;
 }*/
 .mje_box_selection.mje_insert_select
 {
@@ -1307,7 +1307,6 @@ span.MathJax
 {
 	width:100%;
 }
-
 
 /* bug 138778 zooming in caused the equation button to shift around when transistions were applied */
 .browser_chrome .mje_controls_content *, 

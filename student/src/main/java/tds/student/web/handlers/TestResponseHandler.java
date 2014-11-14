@@ -1,10 +1,10 @@
 /*******************************************************************************
- * Educational Online Test Delivery System 
- * Copyright (c) 2014 American Institutes for Research
- *     
- * Distributed under the AIR Open Source License, Version 1.0 
- * See accompanying file AIR-License-1_0.txt or at
- * http://www.smarterapp.org/documents/American_Institutes_for_Research_Open_Source_Software_License.pdf
+ * Educational Online Test Delivery System Copyright (c) 2014 American
+ * Institutes for Research
+ * 
+ * Distributed under the AIR Open Source License, Version 1.0 See accompanying
+ * file AIR-License-1_0.txt or at http://www.smarterapp.org/documents/
+ * American_Institutes_for_Research_Open_Source_Software_License.pdf
  ******************************************************************************/
 package tds.student.web.handlers;
 
@@ -33,6 +33,7 @@ import TDS.Shared.Data.ReturnStatus;
 import TDS.Shared.Exceptions.ReturnStatusException;
 import TDS.Shared.Exceptions.TDSSecurityException;
 import tds.blackbox.ContentRequestException;
+import tds.student.sbacossmerge.data.TestResponseReaderSax;
 import tds.student.services.abstractions.IItemScoringService;
 import tds.student.services.data.NextItemGroupResult;
 import tds.student.services.data.PageList;
@@ -67,10 +68,9 @@ public class TestResponseHandler extends TDSHandler
 
   @Autowired
   private StudentSettings     _studentSettings;
-  
+
   @Autowired
   private ITDSLogger          _tdsLogger;
-
 
   // ServiceLocator.resolve<IItemScoringService>();
 
@@ -79,8 +79,7 @@ public class TestResponseHandler extends TDSHandler
   // prefetch generation.
   // / </summary>
 
-  private void UpdateResponsesTemp (HttpServletRequest request, HttpServletResponse response) throws TDSSecurityException
-  {
+  private void UpdateResponsesTemp (HttpServletRequest request, HttpServletResponse response) throws TDSSecurityException {
     if (request.getContentLength () == 0)
       return;
     // TODO Shajib: following line is commented temporarily
@@ -93,8 +92,7 @@ public class TestResponseHandler extends TDSHandler
       BufferedReader bfr = new BufferedReader (new FileReader (contentXmlUrl.getFile ()));
       StringBuffer output = new StringBuffer ();
       String line = null;
-      while ((line = bfr.readLine ()) != null)
-      {
+      while ((line = bfr.readLine ()) != null) {
         output.append (line);
       }
       bfr.close ();
@@ -105,10 +103,15 @@ public class TestResponseHandler extends TDSHandler
     }
   }
 
+  @RequestMapping (value = "TestShell.axd/updateResponses", produces = "application/xml")
+  @ResponseBody
+  private void updateResponsesTestShell (HttpServletRequest request, HttpServletResponse response) throws Exception {
+    updateResponses (request, response);
+  }
+
   @RequestMapping (value = "Response.axd/update", produces = "application/xml")
   @ResponseBody
-  private void updateResponses (HttpServletRequest request, HttpServletResponse response) throws Exception
-  {
+  private void updateResponses (HttpServletRequest request, HttpServletResponse response) throws Exception {
     try {
       if (request.getContentLength () == 0)
         return;
@@ -119,6 +122,7 @@ public class TestResponseHandler extends TDSHandler
 
       // get context objects
       TestOpportunity testOpp = StudentContext.getTestOpportunity ();
+
       // validate context
       if (testOpp == null)
         StudentContext.throwMissingException ();
@@ -134,7 +138,8 @@ public class TestResponseHandler extends TDSHandler
        ****************/
 
       // get the request information from tehe browser
-      TestResponseReader responseReader = TestResponseReader.parse (request.getInputStream (), testOpp);
+      TestResponseReader responseReader = TestResponseReaderSax.parseSax (request.getInputStream (), testOpp);
+
       /*
        * Ping
        */
@@ -151,21 +156,23 @@ public class TestResponseHandler extends TDSHandler
       List<ItemResponseUpdateStatus> responseResults = null;
       try {
         responseResults = _itemScoringService.updateResponses (testOpp.getOppInstance (), responseReader.getResponses ());
-/*    } catch (ReturnStatusException rse) {      
-        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-        
-        response.setContentType("application/json");
-        ObjectMapper mapper = new ObjectMapper();
-        ResponseData<ReturnStatus> out = new ResponseData<ReturnStatus> (TDSReplyCode.ReturnStatus.getCode(), rse.getReturnStatus().getReason(), null);
-        mapper.writeValue(response.getOutputStream(), out);
-        return;      */
-      } catch (Exception e) {	
+        /*
+         * } catch (ReturnStatusException rse) {
+         * response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+         * 
+         * response.setContentType("application/json"); ObjectMapper mapper =
+         * new ObjectMapper(); ResponseData<ReturnStatus> out = new
+         * ResponseData<ReturnStatus> (TDSReplyCode.ReturnStatus.getCode(),
+         * rse.getReturnStatus().getReason(), null);
+         * mapper.writeValue(response.getOutputStream(), out); return;
+         */
+      } catch (Exception e) {
         e.printStackTrace ();
         throw e;
       }
+
       // save updating responses latency
-      for (ItemResponseUpdateStatus responseResult : responseResults)
-      {
+      for (ItemResponseUpdateStatus responseResult : responseResults) {
         latency.setDbLatency (latency.getDbLatency () + responseResult.getDbLatency ());
       }
 
@@ -176,10 +183,11 @@ public class TestResponseHandler extends TDSHandler
       // get test manager
       TestManager testManager = new TestManager (testOpp);
 
-      // if we didn't update responses then we need to validate (unless we are in
+      // if we didn't update responses then we need to validate (unless we are
+      // in
       // read only mode)
       boolean validateResponses = (responseReader.getResponses ().size () == 0);
-      if (_studentSettings.isReadOnly ()){
+      if (_studentSettings.isReadOnly ()) {
         validateResponses = false;
       }
 
@@ -188,16 +196,19 @@ public class TestResponseHandler extends TDSHandler
       dbTimer.start ();
       testManager.LoadResponses (validateResponses);
       dbTimer.stop ();
+
       // save loading responses latency
       // TODO Shajib: need verify this is same as dbTimer.ElapsedMilliseconds
       latency.setDbLatency (dbTimer.getTime ());
       // add item info to latency
       LoadServerLatencyItems (latency, responseReader);
+
       // update the test config
       // UpdateTestConfig(testManager);
 
       int prefetchCount = 0; // how many times prefetch occured
-      int prefetchMax = testOpp.getTestConfig ().getTestLength () + 1; // max # of
+      int prefetchMax = testOpp.getTestConfig ().getTestLength () + 1; // max #
+                                                                       // of
                                                                        // times
                                                                        // prefetch
       // can occur (safety)
@@ -211,8 +222,7 @@ public class TestResponseHandler extends TDSHandler
       _logger.info (new StringBuilder ("<<<<<<<<< Response update 7 Execution Time : ").append ((System.currentTimeMillis ()-timeServerReceived)).append (" ms. ").append(" prefetchMax: ").append (prefetchMax).append (" ThreadId: ").append (Thread.currentThread ().getId ()).toString ());
       //temp counter for debuging
       // if the test is not completed then check if prefetch is available
-      while (testManager.CheckPrefetchAvailability (testOpp.getTestConfig ().getPrefetch ()))
-      {
+      while (testManager.CheckPrefetchAvailability (testOpp.getTestConfig ().getPrefetch ())) {
         // call adaptive algorithm to get the next item group
         NextItemGroupResult nextItemGroup = testManager.CreateNextItemGroup ();
         latency.setDbLatency (latency.getDbLatency () + nextItemGroup.getDbLatency ());
@@ -242,6 +252,7 @@ public class TestResponseHandler extends TDSHandler
 
       // new groups
       PageList pageList = testManager.GetVisiblePages (lastPage);
+
       /****************
        * WRITE XML
        ****************/
@@ -262,19 +273,21 @@ public class TestResponseHandler extends TDSHandler
       long timeClientSent = responseReader.getTimestamp ();
       long timeServerCompleted = System.currentTimeMillis ();
       responseWriter.writeTimestamps (timeClientSent, timeServerReceived, timeServerCompleted);
+
       // response updates performed
       responseWriter.writeResponseUpdates (responseResults);
+
       // new groups
-      responseWriter.writeGroups (pageList);
+      responseWriter.writePages (pageList);
 
       // generate the HTML for each group and write it out
       // xmlResponse.WriteContents(testOpp, itemResponseGroups);
-      
+
       // close writing
       responseWriter.writeEnd ();
       _logger.info ("<<<<<<<<< Response update Total Execution Time : "+((System.currentTimeMillis ()-timeServerReceived)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
     } catch (Exception e) {
-      _logger.error (e.toString (),e);
+      _logger.error (e.toString (), e);
       throw e;
     }
   }
@@ -294,16 +307,14 @@ public class TestResponseHandler extends TDSHandler
    * StudentContext.SaveTestConfig(testManager.TestOpportunity.Config); } }
    */
 
-  private static void LoadServerLatencyItems (ServerLatency latency, TestResponseReader responseReader)
-  {
+  private static void LoadServerLatencyItems (ServerLatency latency, TestResponseReader responseReader) {
     if (responseReader.getResponses ().size () == 0)
       return;
 
     HashSet<String> items = new HashSet<String> ();
     HashSet<String> pages = new HashSet<String> ();
 
-    for (ItemResponseUpdate responseUpdate : responseReader.getResponses ())
-    {
+    for (ItemResponseUpdate responseUpdate : responseReader.getResponses ()) {
       items.add (Long.toString (responseUpdate.getItemKey ()));
       pages.add (Integer.toString (responseUpdate.getPage ()));
     }

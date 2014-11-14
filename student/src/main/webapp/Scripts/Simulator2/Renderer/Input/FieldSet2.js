@@ -15,11 +15,12 @@ Simulator.Input.FieldSet = function(sim) {
     var dbg = function() { return sim.getDebug(); };    
     var persistentVarDB = function() { return sim.getPersistentVariableDataBase(); };
     var simDocument = function() { return sim.getSimDocument(); };
-    
+    var transDictionary = function () { return sim.getTranslationDictionary(); };
+
     var defaultValue = 0; 
     var minValue = 0;
     var increment = 0;
-    var units = ''; 
+    var unitsTag = ''; 
     var data = '';
     var valueModifier = null;
     var valueChanged = false;
@@ -90,12 +91,13 @@ Simulator.Input.FieldSet = function(sim) {
         return this;
     };
 
-    this.getUnits = function() {
-        return units;
+    this.getUnits = function () {
+        // retrieve translated units text
+        return transDictionary().translate(unitsTag);
     };
 
     this.setUnits = function(newUnits) {
-        units = newUnits;
+        unitsTag = newUnits;
         return this;
     };    
     

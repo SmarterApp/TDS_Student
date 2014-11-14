@@ -194,17 +194,37 @@ TTS.Util = {
         return text;
     },
     
-    replaceLeadSemicolon: function (text) {
+    replaceLeadDirectives: function (text) {
+        var replaceText = function (expString, target) {
+            var exp = new RegExp(expString);
+            
+            // Create regular expression to find TTS prefix and leading replacement target
+            var prefix = TTS.Util.getTTSPrefix();
+            var prefixRegExp = new RegExp('^' + prefix + '\\s*' + expString);
+
+            var replacement = prefixRegExp.exec(target); // get string containing prefix, separating whitespace, and replacement target
+            if (replacement && replacement[0]) {
+                var spaces = exp.exec(replacement[0]); // get replacement target
+                if (spaces && spaces[0]) {
+                    // Convert characters of replacement target to spaces, preserving the string length
+                    spaces = spaces[0].replace(/\S/g, ' ');
+                    replacement = replacement[0].replace(exp, spaces); 
+                }
+            }
+
+            target = target.replace(prefixRegExp, replacement);
+            return target;
+
+        };
+
+        // replace leading semicolons
+        var expString = ';'; 
+        text = replaceText(expString, text);
         
-        var targetString = new RegExp("^[ ;]+");
-        var prefix = TTS.Util.getTTSPrefix();
-        text = text.replace(prefix, "");
-        var matchedText = text.match(targetString);
-        var replacementText = prefix;
-        if (matchedText && matchedText[0]) {
-            replacementText = replacementText + matchedText[0].replace(/;/g, ' ');
-        }
-        text = text.replace(targetString, replacementText);  //Bug 123219 Remove leading semicolons
+        // replace leading Windows silences
+        expString = ',<silence msec="[0-9]*"\/>';
+        text = replaceText(expString, text);
+        
         return text;
 
     },

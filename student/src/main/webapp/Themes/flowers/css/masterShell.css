@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 /*Flower Theme */
 
 /* @group general */
@@ -8,7 +8,7 @@
 .ot-shadowBox .instructions {
 	border-color: #6fc9c7;
 }
-.ot-shadowBox h2 {
+.ot-shadowBox h1 {
 	border-color: #94B6D9;
 }
 /* @end */
@@ -37,28 +37,28 @@
     padding: 1px 5px;
     text-decoration: none;
     text-transform: uppercase;
-    border: solid 1px #77aadf;
+    /*border: solid 1px #77aadf;
     -moz-border-radius: 3px;
-	border-radius: 3px; 
+	border-radius: 3px;*/ 
 }
 .ot-smallButtons a:hover {
 	background-color: #ffa20c;
 }
 #ot-brand1 {
-	background-image: url(../Images/gradient_top.gif);
+	background-image: url(../images/gradient_top.gif);
 	border-bottom-color: #4d83c3;
 	background-repeat: repeat-x;
 	background-position: left bottom;
 }
 #ot-logo_spot1 {
-	background-image: url(../Images/logo_default.gif);
+	background-image: url(../images/logo_default.gif);
 	width: 419px;
 }
 #ot-logo_spot2 {
 	display: block;
 	height: 60px;
 	width: 475px;
-	background: url(../Images/flowers.gif) no-repeat left bottom;
+	background: url(../images/flowers.gif) no-repeat left bottom;
 	float: right;
 }
 #ot-brand2 {
@@ -66,13 +66,13 @@
 	border-bottom-color: #4d83c3;
 }
 #ot-brand2 strong {
-	border-left-color: #4d83c3;
+	border-color: #4d83c3;
 	background-color: #fcd597;
 }
 .practiceTest #ot-brand2 strong {
-	background-image: url(../Images/bike/bikeTop.gif);
+	/*background-image: url(../images/bike/bikeTop.gif);
 	background-color: #FCD597;
-	border-right-color: #FCD597;
+	border-right-color: #FCD597;*/
 }
 #tds-ot-footer span, #tds-ot-footer a {
 	color: #164c7e;
@@ -80,7 +80,7 @@
 /*.header .titleThing {
 	color: #000;
 	background-color: #9ebec4;
-	background-image: url(../Images/breadcrumb.gif);
+	background-image: url(../images/breadcrumb.gif);
 }*/
 /* @end */
 
@@ -97,11 +97,12 @@
 /* @end */
 
 /* @group Section Login */
-#sectionLogin .ot-innerShadow {
-	background: #fff0d8 url(../Images/shadowboxes/greenGradient.gif) repeat-x !important;
+#sectionLogin .ot-innerShadow,
+#sectionLoginProctor .ot-innerShadow {
+	background: #fff0d8 url(../images/shadowboxes/greenGradient.gif) repeat-x !important;
 }
-.practiceTest #sectionLogin .ot-shadowBox h2 {
-	background-image: url(../Images/bike/bikeTitle.gif);
+.practiceTest #sectionLogin .ot-shadowBox h1 {
+	/*background-image: url(../images/bike/bikeTitle.gif);*/
 }
 .practiceTest #loginForm1, .practiceTest #loginForm2 {
 	border-color: #ffd377;
@@ -122,7 +123,7 @@
 	color: #ffa20c !important;
 }
 .goPractice {
-	background-image: url(../Images/bike/goPractice.gif);
+	
 }
 .browserWrong {
 	border: 1px solid #ffa20c;
@@ -162,7 +163,7 @@
 .resumeTest, .newTest {
 	background-color: #fff0d8;
 	border: 1px solid #164c7e;
-	background-image: url(../Images/select.gif);
+	background-image: url(../images/select.gif);
 }
 #sectionTestSelection .resumeTest:hover, #sectionTestSelection .newTest:hover {
 	background-color: #164c7e;
@@ -174,7 +175,7 @@
 /* @group Section Approval */
 
 #sectionTestApproval .ot-innerShadow {
-	background: #fff0d8 url(../Images/shadowboxes/greenGradient.gif) repeat-x !important;
+	background: #fff0d8 url(../images/shadowboxes/greenGradient.gif) repeat-x !important;
 }
 
 /* @end */
@@ -215,8 +216,10 @@ body.practiceTest .proctorMessage {
 
 /* Fix for bug 81441 - put here to ONLY target Hawaii*/
 .loginForm label{
-	min-width: 9.5em;
+	/*min-width: 9.5em;
+	min-width: 7.5em; moving labels over for the 3 ID input change */
 }
+
 
 
 

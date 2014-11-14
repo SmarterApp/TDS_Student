@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:tds="http://airast.org/jsfcustom"
+	xmlns:p="http://java.sun.com/jsf/passthrough">
+<h:head>
+	<title>IRiS Sample Page</title>
+	<!-- Required by CTB and only scripts required for reference purposes -->
+	<tds:ScriptLink source="~/Scripts/Libraries/jquery/jquery-1.10.2.min.js" type="text/javascript"></tds:ScriptLink>
+	<tds:ScriptLink source="~/Scripts/Utilities/util_xdm.js" type="text/javascript"></tds:ScriptLink>
+	<tds:ScriptLink source="~/Scripts/client.js" type="text/javascript"></tds:ScriptLink>
+	<!-- Styling for this page only and not for IRiS interface. -->
+	<tds:CSSLink href="~/IrisStyles/style.css" media="screen" type="text/css" rel="stylesheet" />
+	<tds:CSSLink href="~/IrisStyles/pagenavi-css.css" media="screen" type="text/css" rel="stylesheet" />
+	<tds:CSSLink href="~/IrisStyles/jd.css" media="screen" type="text/css" rel="stylesheet" />
+	<tds:CSSLink href="~/IrisStyles/jd_002.css" media="screen" type="text/css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.9.0/build/container/assets/skins/sam/container.css" />
+</h:head>
+<h:body>
+	<div id="page">
+		<div id="header">
+			<div id="header_title">
+				<h1>IRiS Integration Demonstration Page</h1>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div id="body">
+			<textarea id="txtToken" rows="2" cols="50"></textarea>
+			<button id="btnLoadToken">Load Token</button>
+			<br /> <br />
+
+			<textarea id="txtResponse" rows="2" cols="50"></textarea>
+			<button id="btnSetResponse">Set Response</button>
+			<button id="btnGetResponse">Get Response</button>
+			<br /> <br />
+
+			<!-- IriS viewport -->
+			<iframe src="/iris/" width="1000" height="650"></iframe>
+		</div>
+	</div>
+
+
+
+
+	<script type="text/javascript">
+		// In our case the first frame is the content frame but use whichever frame is the content frame in your particular application.
+		IRiS.setFrame(frames[0]);
+
+		// set the vendor guid - in the OSS IRiS case we do not care for this.
+		var vendorId = '2B3C34BF-064C-462A-93EA-41E9E3EB8333';
+
+		function disableAll() {
+			$('#btnLoadItem').attr('disabled', true);
+			$('#btnGetResponse').attr('disabled', true);
+		}
+
+		function enableAll() {
+			$('#btnLoadItem').attr('disabled', false);
+			$('#btnGetResponse').attr('disabled', false);
+		}
+
+		function processError(err) {
+			var msg = err.message || err.responseText || 'Unknown';
+			alert(msg);
+		}
+
+		// load item bank/item keys
+		$('#btnLoadItem').on('click', function(evt) {
+
+			// get parameters
+			var bankKey = $('#txtBankKey').val() * 1;
+			var itemKey = $('#txtItemKey').val() * 1;
+			var response = $('#txtResponse').val();
+
+			// check parameters
+			if (bankKey > 0 &amp;&amp; itemKey > 0) {
+				var request = {
+					items : [ {
+						bankKey : bankKey,
+						itemKey : itemKey,
+						response : response
+					} ]
+				}
+
+				IRiS.loadItem(request).done(function() {
+					enableAll();
+				}).fail(function(err) {
+					processError(err);
+				});
+
+			} else {
+				alert('Must enter valid key format');
+			}
+		});
+
+		// load secure token
+		$('#btnLoadToken').on('click', function() {
+			var token = $('#txtToken').val();
+			IRiS.loadToken(vendorId, token).done(function() {
+				enableAll();
+			}).fail(function(err) {
+				processError(err);
+			});
+		});
+
+		$('#btnSetResponse').on('click', function(evt) {
+			var value = $('#txtResponse').val();
+			IRiS.setResponse(value);
+		});
+
+		$('#btnGetResponse').on('click', function(evt) {
+			IRiS.getResponse().then(function(value) {
+				if (value) {
+					$('#txtResponse').val(value);
+				}
+			}, function(ex) {
+				alert('Error setting response: ' + ex.message);
+			});
+		});
+	</script>
+
+</h:body>
+</html>

@@ -1,11 +1,3 @@
-/*******************************************************************************
- * Educational Online Test Delivery System 
- * Copyright (c) 2014 American Institutes for Research
- *     
- * Distributed under the AIR Open Source License, Version 1.0 
- * See accompanying file AIR-License-1_0.txt or at
- * http://www.smarterapp.org/documents/American_Institutes_for_Research_Open_Source_Software_License.pdf
- ******************************************************************************/
 package AIR.ResourceBundler.Console;
 
 import java.io.BufferedReader;
@@ -26,6 +18,7 @@ import AIR.Common.time.DateTime;
 import AIR.ResourceBundler.Xml.FileSet;
 import AIR.ResourceBundler.Xml.FileSetInput;
 import AIR.ResourceBundler.Xml.Resources;
+
 
 // / <summary>
 // / This takes a resouces object and combines all the file sets.

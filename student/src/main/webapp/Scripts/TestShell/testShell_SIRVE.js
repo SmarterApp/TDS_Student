@@ -29,6 +29,9 @@
     if (TDS.isSIRVE) {
         var totalNumberOfItems = 0;
         //we will assume that the elements in the group are sorted by increasing segment id.
+
+        throw new Error('TODO: You need to add segments to the storage test info object.');
+
         window.tdsSegments = [];
         for (var groupIndex = 0; groupIndex < results.groups.length; ++groupIndex) {
             var group = results.groups[groupIndex];

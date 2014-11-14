@@ -187,9 +187,18 @@
 .TDS_EDIT_SPAN.contextAreaFocus {
 	border: none;
 }
-.TDS_EDIT_SPAN.contextAreaFocus .edit-newtext, .TDS_EDIT_SPAN.contextAreaFocus .edit-originaltext {
+.TDS_EDIT_SPAN.contextAreaFocus .edit-newtext, 
+.TDS_EDIT_SPAN.contextAreaFocus .edit-originaltext {
 	border-color: #00aeef;
+	background-color: rgba(0, 174, 239, 0.3);
 }
+
+.TDS_CCYellowB .TDS_EDIT_SPAN.contextAreaFocus .edit-newtext, 
+.TDS_CCYellowB .TDS_EDIT_SPAN.contextAreaFocus .edit-originaltext {
+	border-color: #f07b00;
+	background-color: rgba(238,228,197,0.3);
+}
+
 .editTaskMessage .bd {
 	padding-bottom: 0px;
 }
@@ -212,4 +221,16 @@
 	-webkit-text-size-adjust: 100%;
 	font-size: 100%;
 	color: red !important;
+}
+
+.hidden-spoken {
+	display: inline-block;
+	/*visibility: hidden;*/
+	height: 0px !important;
+	width: 0px !important;
+	overflow: hidden !important;
+	padding: 0px !important;
+	margin: 0px !important;
+	position: absolute;
+	left: -9999px;
 }

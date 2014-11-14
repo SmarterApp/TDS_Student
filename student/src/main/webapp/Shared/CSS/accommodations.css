@@ -27,8 +27,15 @@
 .TDS_ItmNum0 .bigTable .questionCell h2, .TDS_ItmNum0 .bigTable .questionContainer h2  {
 	display: none;
 }
-.TDS_SC1 .commentItem, .TDS_SCTextArea .commentItem, .TDS_SCDropDown .commentItem, .TDS_SCNotepad .commentItem, .TDS_T1 .contexthelp, .TDS_MfR1 .markReview, .TDS_MfR1 .markReviewMarked, .TDS_PoD_Item .printItem {
-	display: block;
+.TDS_SC1 a.commentItem, 
+.TDS_SCTextArea a.commentItem, 
+.TDS_SCDropDown a.commentItem, 
+.TDS_SCNotepad a.commentItem, 
+.TDS_T1 a.contexthelp, 
+.TDS_MfR1 a.markReview, 
+.TDS_MfR1 a.markReviewMarked, 
+.TDS_PoD_Item a.printItem {
+	display: block !important;
 }
 .TDS_FT_San-Serif, .TDS_FT_San-Serif math, .TDS_FT_San-Serif #contents input, .TDS_FT_San-Serif #contents textarea {
 	font-family: Arial, Helvetica, sans-serif !important;
@@ -70,8 +77,7 @@ math {
 .TDS_R_G911Argue #navigation a#btnRubric, 
 .TDS_R_G911Inform #navigation a#btnRubric, 
 .TDS_PT_HTML #navigation a.periodic, .TDS_PT_HTMLv2 #navigation a.periodic, .TDS_PT_Basic #navigation a.periodic, a.TDS_PT_Expanded #navigation a.periodic, .TDS_Masking1 #navigation a#btnMask, .TDS_Masking1 #navigation button#btnMask, 
-.TDS_PoD_Stim #navigation a.printer, .TDS_GN1 #navigation #btnGlobalNotes, .TDS_LR1 #btnLineReader, .TDS_CalcGraphingInv #btnCalculator, .TDS_CalcSciInv #btnCalculator, .TDS_CalcBasicInv #btnCalculator, .TDS_CalcStdInv #btnCalculator, .TDS_CalcBasicInv #foot a.calculator, .TDS_CalcStdInv #foot a.calculator, .TDS_CalcSciInv #foot a.calculator, .TDS_CalcGraphingInv #foot a.calculator, .TDS_CalcRegressInv #foot a.calculator, .TDS_CalcMatricesInv #foot a.calculator, .TDS_CalcStdMemInv #foot a.calculator, 
-.TDS_Ruler1 #navigation #btnRuler, .TDS_Protractor1 #navigation #btnProtractor {
+.TDS_PoD_Stim #navigation a.printer, .TDS_GN1 #navigation #btnGlobalNotes, .TDS_LR1 #btnLineReader, .TDS_CalcGraphingInv #btnCalculator, .TDS_CalcSciInv #btnCalculator, .TDS_CalcBasicInv #btnCalculator, .TDS_CalcStdInv #btnCalculator, .TDS_CalcBasicInv #foot a.calculator, .TDS_CalcStdInv #foot a.calculator, .TDS_CalcSciInv #foot a.calculator, .TDS_CalcGraphingInv #foot a.calculator, .TDS_CalcRegressInv #foot a.calculator, .TDS_CalcMatricesInv #foot a.calculator, .TDS_CalcStdMemInv #foot a.calculator  {
 	display: block !important;
 }
 .TDS_PoD_Stim #foot.Passage_No a.printer, .TDS_PoD_Stim #navigation.Passage_No a.printer {
@@ -114,7 +120,9 @@ body.TDS_CCYellow .plaintext textarea,
 .TDS_CCYellow div.mathjax_editor_selected_tab, 
 .TDS_CCYellow div.mathjax_editor_selected_tab:hover, 
 .TDS_CCYellow .mathjax_editor_nav button:hover, 
-.TDS_CCYellow #helpContent {
+.TDS_CCYellow #helpContent,
+.TDS_CCYellow .ot-innerShadow, 
+.TDS_CCYellow .cke_editable.cke_wysiwyg_div {
 	background-color: #ffffce !important;
 }
 body.TDS_CCYellow .multipleChoiceItem {
@@ -146,7 +154,9 @@ body.TDS_CCYellow2 .plaintext textarea,
 .TDS_CCYellow2 div.mathjax_editor_selected_tab, 
 .TDS_CCYellow2 div.mathjax_editor_selected_tab:hover, 
 .TDS_CCYellow2 .mathjax_editor_nav button:hover, 
-.TDS_CCYellow2 #helpContent {
+.TDS_CCYellow2 #helpContent,
+.TDS_CCYellow2 .ot-innerShadow, 
+.TDS_CCYellow2 .cke_editable.cke_wysiwyg_div {
 	background-color: #fcfce2 !important;
 }
 body.TDS_CCYellow2 .multipleChoiceItem {
@@ -178,7 +188,9 @@ body.TDS_CCBlue .plaintext textarea,
 .TDS_CCBlue div.mathjax_editor_selected_tab, 
 .TDS_CCBlue div.mathjax_editor_selected_tab:hover, 
 .TDS_CCBlue .mathjax_editor_nav button:hover, 
-.TDS_CCBlue #helpContent {
+.TDS_CCBlue #helpContent,
+.TDS_CCBlue .ot-innerShadow, 
+.TDS_CCBlue .cke_editable.cke_wysiwyg_div {
 	background-color: #99ffff !important;
 }
 body.TDS_CCBlue .multipleChoiceItem {
@@ -210,7 +222,9 @@ body.TDS_CCBlue2 .plaintext textarea,
 .TDS_CCBlue2 div.mathjax_editor_selected_tab, 
 .TDS_CCBlue2 div.mathjax_editor_selected_tab:hover, 
 .TDS_CCBlue2 .mathjax_editor_nav button:hover, 
-.TDS_CCBlue2 #helpContent {
+.TDS_CCBlue2 #helpContent,
+.TDS_CCBlue2 .ot-innerShadow, 
+.TDS_CCBlue2 .cke_editable.cke_wysiwyg_div {
 	background-color: #cfffff !important;
 }
 body.TDS_CCBlue2 .multipleChoiceItem {
@@ -243,7 +257,9 @@ body.TDS_CCMagenta .plaintext textarea,
 .TDS_CCMagenta div.mathjax_editor_selected_tab, 
 .TDS_CCMagenta div.mathjax_editor_selected_tab:hover, 
 .TDS_CCMagenta .mathjax_editor_nav button:hover, 
-.TDS_CCMagenta #helpContent {
+.TDS_CCMagenta #helpContent,
+.TDS_CCMagenta .ot-innerShadow, 
+.TDS_CCMagenta .cke_editable.cke_wysiwyg_div {
 	background-color: #ffd0ff !important;
 }
 body.TDS_CCMagenta .multipleChoiceItem {
@@ -275,7 +291,9 @@ body.TDS_CCMagenta2 .plaintext textarea,
 .TDS_CCMagenta2 div.mathjax_editor_selected_tab, 
 .TDS_CCMagenta2 div.mathjax_editor_selected_tab:hover, 
 .TDS_CCMagenta2 .mathjax_editor_nav button:hover, 
-.TDS_CCMagenta2 #helpContent {
+.TDS_CCMagenta2 #helpContent,
+.TDS_CCMagenta2 .ot-innerShadow, 
+.TDS_CCMagenta2 .cke_editable.cke_wysiwyg_div {
 	background-color: #fde3fd !important;
 }
 body.TDS_CCMagenta2 .multipleChoiceItem {
@@ -307,7 +325,9 @@ body.TDS_CCGray .plaintext textarea,
 .TDS_CCGray div.mathjax_editor_selected_tab, 
 .TDS_CCGray div.mathjax_editor_selected_tab:hover, 
 .TDS_CCGray .mathjax_editor_nav button:hover, 
-.TDS_CCGray #helpContent {
+.TDS_CCGray #helpContent,
+.TDS_CCGray .ot-innerShadow, 
+.TDS_CCGray .cke_editable.cke_wysiwyg_div {
 	background-color: #cecfce !important;
 }
 body.TDS_CCGray .multipleChoiceItem {
@@ -343,7 +363,9 @@ body.TDS_CCGray2 .plaintext textarea,
 .TDS_CCGray2 div.mathjax_editor_selected_tab, 
 .TDS_CCGray2 div.mathjax_editor_selected_tab:hover, 
 .TDS_CCGray2 .mathjax_editor_nav button:hover, 
-.TDS_CCGray2 #helpContent {
+.TDS_CCGray2 #helpContent,
+.TDS_CCGray2 .ot-innerShadow, 
+.TDS_CCGray2 .cke_editable.cke_wysiwyg_div {
 	background-color: #e5e5e5 !important;
 }
 body.TDS_CCMedGrayLtGray, 
@@ -364,7 +386,9 @@ body.TDS_CCMedGrayLtGray .plaintext textarea,
 .TDS_CCMedGrayLtGray div.mathjax_editor_selected_tab, 
 .TDS_CCMedGrayLtGray div.mathjax_editor_selected_tab:hover, 
 .TDS_CCMedGrayLtGray .mathjax_editor_nav button:hover, 
-.TDS_CCMedGrayLtGray #helpContent {
+.TDS_CCMedGrayLtGray #helpContent,
+.TDS_CCMedGrayLgGray .ot-innerShadow, 
+.TDS_CCMedGrayLgGray .cke_editable.cke_wysiwyg_div {
 	background-color: #e5e5e5 !important;
 	color: #666;
 }
@@ -416,7 +440,9 @@ body.TDS_CCGreen .plaintext textarea,
 .TDS_CCGreen div.mathjax_editor_selected_tab, 
 .TDS_CCGreen div.mathjax_editor_selected_tab:hover, 
 .TDS_CCGreen .mathjax_editor_nav button:hover, 
-.TDS_CCGreen #helpContent {
+.TDS_CCGreen #helpContent,
+.TDS_CCGreen .ot-innerShadow, 
+.TDS_CCGreen .cke_editable.cke_wysiwyg_div {
 	background-color: #cff799 !important;
 }
 body.TDS_CCGreen .multipleChoiceItem {
@@ -449,7 +475,9 @@ body.TDS_CCGreen2 .plaintext textarea,
 .TDS_CCGreen2 div.mathjax_editor_selected_tab, 
 .TDS_CCGreen2 div.mathjax_editor_selected_tab:hover, 
 .TDS_CCGreen2 .mathjax_editor_nav button:hover, 
-.TDS_CCGreen2 #helpContent {
+.TDS_CCGreen2 #helpContent,
+.TDS_CCGreen2 .ot-innerShadow, 
+.TDS_CCGreen2 .cke_editable.cke_wysiwyg_div {
 	background-color: #e0f6c1 !important;
 }
 body.TDS_CCGreen2 .multipleChoiceItem {
@@ -484,7 +512,9 @@ body.TDS_CCGreen2.touch {
 .TDS_CCYellowB div.mathjax_editor_selected_tab, 
 .TDS_CCYellowB div.mathjax_editor_selected_tab:hover, 
 .TDS_CCYellowB .mathjax_editor_nav button:hover, 
-.TDS_CCYellowB #helpContent {
+.TDS_CCYellowB #helpContent,
+.TDS_CCYellowB .ot-innerShadow, 
+.TDS_CCYellowB .cke_editable.cke_wysiwyg_div {
 	background-color: #039 !important;
 	color:#FC0;
 }
@@ -577,7 +607,9 @@ body.TDS_CCYellowB.touch {
 .TDS_CCInvert div.mathjax_editor_selected_tab, 
 .TDS_CCInvert div.mathjax_editor_selected_tab:hover, 
 .TDS_CCInvert .mathjax_editor_nav button:hover, 
-.TDS_CCInvert #helpContent {
+.TDS_CCInvert #helpContent,
+.TDS_CCInvert .ot-innerShadow, 
+.TDS_CCInvert .cke_editable.cke_wysiwyg_div {
 	background-color: #000 !important;
 	color:#FFF;
 }
@@ -660,9 +692,9 @@ body.TDS_CCInvert.touch {
 	border-bottom: solid 50px #000;
 }
 /* keeps images visible, especially math images, when dealing with reverse contrast*/
-body.TDS_CCInvert .Image, 
-body.TDS_CCYellowB .Image, 
-body.TDS_CCWhiteN .Image {
+body.TDS_CCInvert .pageWrapper img, 
+body.TDS_CCYellowB .pageWrapper img, 
+body.TDS_CCWhiteN .pageWrapper img {
 	background-color: #fff;
 }
 
@@ -688,7 +720,9 @@ body.TDS_CCWhiteN .Image {
 .TDS_CCWhiteN div.mathjax_editor_selected_tab:hover, 
 .TDS_CCWhiteN .editor_controls_tabs_el:hover, 
 .TDS_CCWhiteN .mathjax_editor_nav button:hover, 
-.TDS_CCWhiteN #helpContent {
+.TDS_CCWhiteN #helpContent,
+.TDS_CCWhiteN .ot-innerShadow, 
+.TDS_CCWhiteN .cke_editable.cke_wysiwyg_div {
 	background-color: #003366 !important;
 	color:#FFF;
 }
@@ -768,7 +802,8 @@ body.TDS_CCGray .TDS_WORD_LIST {
 }
 
 /*temporarily disable color choices in formula pages*/
-.TDS_CCInvert .formula, .TDS_CCYellowB .formula, .TDS_CCWhiteN .formula {
+.TDS_CCInvert .formula, .TDS_CCYellowB .formula, .TDS_CCWhiteN .formula,
+.TDS_CCInvert .formula img, .TDS_CCYellowB .formula img, .TDS_CCWhiteN .formula img{
 	background-color: #fff;
 }
 
@@ -777,7 +812,7 @@ body.TDS_CCGray .TDS_WORD_LIST {
 
 /* @group colors- login */
 
-.TDS_CCYellow #sectionLogin .ot-innerShadow, .TDS_CCYellow2 #sectionLogin .ot-innerShadow, .TDS_CCBlue #sectionLogin .ot-innerShadow, .TDS_CCBlue2 #sectionLogin .ot-innerShadow, .TDS_CCMagenta #sectionLogin .ot-innerShadow, .TDS_CCMagenta2 #sectionLogin .ot-innerShadow, .TDS_CCGray #sectionLogin .ot-innerShadow, .TDS_CCGray2 #sectionLogin .ot-innerShadow, .TDS_CCGreen #sectionLogin .ot-innerShadow, .TDS_CCGreen2 #sectionLogin .ot-innerShadow, .TDS_CCYellowB #sectionLogin .ot-innerShadow, .TDS_CCInvert #sectionLogin .ot-innerShadow, .TDS_CCWhiteN #sectionLogin .ot-innerShadow, 
+
 .TDS_CCYellow .blurb, .TDS_CCYellow2 .blurb, .TDS_CCBlue .blurb, .TDS_CCBlue2 .blurb, .TDS_CCMagenta .blurb, .TDS_CCMagenta2 .blurb, .TDS_CCGray .blurb, .TDS_CCGray2 .blurb, .TDS_CCGreen .blurb, .TDS_CCGreen2 .blurb, .TDS_CCYellowB .blurb, .TDS_CCInvert .blurb, .TDS_CCWhiteN .blurb, 
 
 .TDS_CCYellow #sectionTestApproval .ot-innerShadow, .TDS_CCYellow2 #sectionTestApproval .ot-innerShadow, .TDS_CCBlue #sectionTestApproval .ot-innerShadow, .TDS_CCBlue2 #sectionTestApproval .ot-innerShadow, .TDS_CCMagenta #sectionTestApproval .ot-innerShadow, .TDS_CCMagenta2 #sectionTestApproval .ot-innerShadow, .TDS_CCGray #sectionTestApproval .ot-innerShadow, .TDS_CCGray2 #sectionTestApproval .ot-innerShadow, .TDS_CCGreen #sectionTestApproval .ot-innerShadow, .TDS_CCGreen2 #sectionTestApproval .ot-innerShadow, .TDS_CCYellowB #sectionTestApproval .ot-innerShadow, .TDS_CCInvert #sectionTestApproval .ot-innerShadow, .TDS_CCWhiteN #sectionTestApproval .ot-innerShadow {
@@ -1026,4 +1061,13 @@ src:url("../Fonts/9908cdad-7524-4206-819e-4f345a666324.woff") format("woff"),url
 .platform_linux.TDS_CCBlue2 .ot-innerShadow select {
 	background-color: transparent !important;
 	-moz-appearance: button !important;
+}
+
+/*Fix for Bug 121253 - Dictionary Accomodations */
+.TDS_CCInvert #tool-dictionary .headword{
+	background-color: #323232;
+}
+.TDS_CCWhiteN #tool-dictionary .headword,
+.TDS_CCYellowB #tool-dictionary .headword{
+	background-color: #000033;
 }

@@ -98,11 +98,11 @@ TTS.Config.UI.prototype.buildSliders = function(){
     this.volumeSlider = YAHOO.widget.Slider.getHorizSlider(
         'TTS_Adjust_Volume', 
         'volumeThumb', 
-        0, //Set to 0 for slider purposes, min is actually set by this.cfg.MinVolume which sets the plugin volume limits
+        0,
         this.cfg.LengthInPixels, 
-        this.cfg.TickSize
+        25 //this.cfg.TickSize
     );
-    this.subscribeToEvents('Volume', this.volumeSlider, TTS.Config.User.getVolume());
+    this.subscribeToEvents('Volume', this.volumeSlider);
 
 
     //=================================================
@@ -111,11 +111,11 @@ TTS.Config.UI.prototype.buildSliders = function(){
     this.pitchSlider = YAHOO.widget.Slider.getHorizSlider(
         'TTS_Adjust_Pitch', 
         'pitchThumb', 
-        this.cfg.MinPitch, 
+        0, 
         this.cfg.LengthInPixels,
         this.cfg.TickSize
     );
-    this.subscribeToEvents('Pitch', this.pitchSlider, TTS.Config.User.getPitch()); 
+    this.subscribeToEvents('Pitch', this.pitchSlider); 
 
     //=================================================
     // INIT RATE SLIDER
@@ -123,17 +123,18 @@ TTS.Config.UI.prototype.buildSliders = function(){
     this.rateSlider = YAHOO.widget.Slider.getHorizSlider(
         'TTS_Adjust_Rate', 
         'rateThumb', 
-        this.cfg.MinRate, 
+        0, 
         this.cfg.LengthInPixels, 
         this.cfg.TickSize
     );
-    this.subscribeToEvents('Rate', this.rateSlider, TTS.Config.User.getRate());
+    this.subscribeToEvents('Rate', this.rateSlider);
 };
 
 /**
  *  Subscribe to the various events that come from the YUI elements
  */
-TTS.Config.UI.prototype.subscribeToEvents = function(property, thisSlider, defaultValue){
+TTS.Config.UI.prototype.subscribeToEvents = function (property, thisSlider) {
+
     // subscribe slider to slide event
     thisSlider.subscribe('change', function (newOffset) {
         var val = this.calculateValue(property, newOffset);
@@ -143,13 +144,13 @@ TTS.Config.UI.prototype.subscribeToEvents = function(property, thisSlider, defau
     // subscribe slider to end event
     thisSlider.subscribe('slideEnd', function () {
       try{
-        var language     = this.getLangCode();
-        var value = (TTS.Config.User['get' + property])();
-        if (thisSlider.valueChangeSource == 1 || thisSlider.valueChangeSource == 3) {
+        var language = this.getLangCode();
+        var value = (TTS.Config.User['get' + property])(language);
+        if (thisSlider.valueChangeSource == 1 || thisSlider.valueChangeSource == 3) { // 1 means UI event, don't know what 3 means
             value = this.calculateValue(property, thisSlider.getValue());
             var func = TTS.Config.User['set' + property];
             if(typeof func == 'function'){
-                func(value);
+                func(value, language);
                 this.changed();
             }
         }
@@ -160,18 +161,19 @@ TTS.Config.UI.prototype.subscribeToEvents = function(property, thisSlider, defau
     }.bind(this));
 
 };
-  
+
+// Converts between slider input values (0-200) and Volume (2-10) / Pitch (1-20) / Rate (1-20) values
 TTS.Config.UI.prototype.calculateValue = function (property, inputValue){
     var returnValue = inputValue;
     switch (property) {
         case 'Volume':
-            returnValue = parseInt(2 + (inputValue / this.cfg.TickSize) * 0.8); // volume is never supposed to be allowed    to go to 0 so we establish a floor of 2. Max volume is restricted to 10
+            returnValue = parseInt(2 + (inputValue / 25)); // volume is never supposed to be allowed to go to 0 so we establish a floor of 2. Max volume is restricted to 10
             break;
         case 'Pitch':
-            returnValue = parseInt(inputValue / this.cfg.TickSize * 2); // the divide by 2 because the rate has a range      from 0-20
+            returnValue = parseInt(inputValue / this.cfg.TickSize * 2); // divide by 2 because the rate has a range from 0-20
             break;
         case 'Rate':
-            returnValue = parseInt(inputValue / this.cfg.TickSize * 2); // the divide by 2 because the rate has a range      from 0-20
+            returnValue = parseInt(inputValue / this.cfg.TickSize * 2); // divide by 2 because the rate has a range from 0-20
             break;
         default:
             break;
@@ -254,14 +256,19 @@ TTS.Config.UI.prototype.renderSliders = function(){
     this.cfg.ShowPitch  ? this.show(this.DOM.PITCH)  : this.hide(this.DOM.PITCH.parentNode);
 
     //Determine if I have to re-calculate these?
-    var volume = TTS.Config.User.getVolume();
-    var rate   = TTS.Config.User.getRate();
-    var pitch  = TTS.Config.User.getPitch();
+    var language = this.getLangCode();
+    var volume = TTS.Config.User.getVolume(language);
+    var rate = TTS.Config.User.getRate(language);
+    var pitch = TTS.Config.User.getPitch(language);
 
-    //This doesn't seem to position the slider correctly, that seems horribly broken.
-    this.volumeSlider && this.volumeSlider.setValue(parseInt(volume * this.cfg.TickSize *2));
-    this.rateSlider   && this.rateSlider.setValue(parseInt(rate * this.cfg.TickSize / 2));
-    this.pitchSlider  && this.pitchSlider.setValue(parseInt(pitch * this.cfg.TickSize / 2));
+    TTS.Manager.setVolume(volume);
+    TTS.Manager.setPitch(pitch);
+    TTS.Manager.setRate(rate);
+
+    //This positions the sliders correctly.
+    this.volumeSlider && this.volumeSlider.setValue(parseInt((volume - 2) * (this.cfg.LengthInPixels / 8)));
+    this.rateSlider && this.rateSlider.setValue(parseInt(rate * (this.cfg.LengthInPixels / 20)));
+    this.pitchSlider && this.pitchSlider.setValue(parseInt(pitch * (this.cfg.LengthInPixels / 20)));
 };
 
 
@@ -315,9 +322,9 @@ TTS.Config.UI.prototype.renderVoice = function(){
     var ctrl     = TTS.getInstance();
     var voices   = ctrl.getVoicesForLanguage(langCode);
     var vPack    = ctrl.getVoiceForLanguage(langCode);
-    var voice    = vPack ? vPack.ServiceVoiceName : null;
+    var voice = vPack ? vPack.ServiceVoiceName : null;
 
-    if(this.cfg.ShowVoicePacks){ //build a selection tool
+    if (this.cfg.ShowVoicePacks) { //build a selection tool
       this.renderVoicePacks(voices, voice, langCode);
     }else{  //Only set one vs
       this.renderVoiceName(vPack, voice, langCode);

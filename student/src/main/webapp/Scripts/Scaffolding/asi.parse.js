@@ -100,7 +100,7 @@ AsiItem.Parse.prototype.processSoundLinks = function (parentSpan) {
     var anchors = parentSpan.getElementsByTagName('a');
     for (var i = 0; i < anchors.length; ++i) {
         var anchor = anchors[i];
-        var source = Util.Audio.getPlayableSource(anchor);
+        var source = AsiItem.Audio.getPlayableSource(anchor);
         if (source != null) {
             anchor.parentNode.removeChild(anchor);
             return source.url;

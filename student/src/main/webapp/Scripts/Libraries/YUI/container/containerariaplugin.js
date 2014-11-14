@@ -84,6 +84,7 @@
 
 			if (oIFrame) {
 				setARIARole(oIFrame, _PRESENTATION);
+				setARIAProperty(oIFrame, _HIDDEN, true);
 				oIFrame.tabIndex = -1;
 			}		
 		

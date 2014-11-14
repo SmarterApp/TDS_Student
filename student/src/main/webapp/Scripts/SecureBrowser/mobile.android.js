@@ -37,11 +37,11 @@ TDS.SecureBrowser.Mobile.Android.prototype.initialize = function () {
             config.keyboardChanged = true;
         });
 
-		// detect if the content of the clipboard has been changed, and if there is change, treat as a breach of security
+        // detect if the content of the clipboard has been changed, and if there is change, treat as a breach of security
         sb.listen(sb.EVENT_CLIPBOARD_CHANGED, window.document, function () {
             config.clipboardChanged = true;
         });
-		
+
         // This is the code to capture the event that will be fired when mini apps are running
         // (Samsung Galaxy Tab 2 only)
         sb.listen(sb.EVENT_MINI_APP_DETECTED, window.document, function () {

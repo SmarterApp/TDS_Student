@@ -6,47 +6,15 @@ function preinit()
 
 var ReviewShell =
 {
-    api: null, // xhr api
     workflow: null // section behavior management
-};
-
-// get the # of mins before a idle timeout should occur
-ReviewShell.getTimeoutMins = function () {
-    // get interface timeout from T_StartTestOpportunity
-    var interfaceTimeout = YAHOO.util.Cookie.getSub('TDS-Student-Data', 'TC_IT');
-    if (interfaceTimeout) {
-        return interfaceTimeout * 1;
-    } else {
-        return TDS.timeout;
-    }
-};
-
-ReviewShell.startTimeoutIdle = function() {
-    var waitMins = ReviewShell.getTimeoutMins();
-    if (waitMins > 0) {
-        var respondSecs = 30;
-        var idleTimer = new TimeoutIdle(waitMins, respondSecs, function() {
-            // send notice to db
-            TDS.Diagnostics.logServerError('Idle timeout on review shell.', null, function () {
-                // redirect back to login shell (TODO: Do a proper pause here)
-                TDS.logout();
-            });
-        });
-        idleTimer.start();
-    }
 };
 
 ReviewShell.init = function()
 {
-    // create xhr api with 30 sec timeout and 1 retry
-    this.api = new Sections.XhrManager(ReviewShell);
-
     // create workflow
     this.workflow = ReviewShell.createWorkflow();
     ReviewShell.start();
-
-    // start idle timer
-    ReviewShell.startTimeoutIdle();
+    sbacossChanges();
 };
 
 ReviewShell.start = function()
@@ -62,8 +30,14 @@ ReviewShell.createWorkflow = function()
     // logging
     wf.Events.subscribe('onRequest', function(activity) { Util.log('Section Request: ' + activity); });
     wf.Events.subscribe('onReady', function(activity) { Util.log('Section Ready: ' + activity); });
-    wf.Events.subscribe('onLeave', function(activity) { Util.log('Section Hide: ' + activity); });
-    wf.Events.subscribe('onEnter', function(activity) { Util.log('Section Show: ' + activity); });
+    wf.Events.subscribe('onLeave', function (activity) { Util.log('Section Hide: ' + activity); });
+    wf.Events.subscribe('onEnter', function (activity) { Util.log('Section Show: ' + activity); });
+
+    // section is showing
+    wf.Events.subscribe('onEnter', function (activity) {
+        // hide the sb logout
+        $('#logOut').hide();
+    });
 
     // create sections
     wf.addActivity(new Sections.TestReview());

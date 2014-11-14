@@ -1,10 +1,10 @@
 /*******************************************************************************
- * Educational Online Test Delivery System 
- * Copyright (c) 2014 American Institutes for Research
- *     
- * Distributed under the AIR Open Source License, Version 1.0 
- * See accompanying file AIR-License-1_0.txt or at
- * http://www.smarterapp.org/documents/American_Institutes_for_Research_Open_Source_Software_License.pdf
+ * Educational Online Test Delivery System Copyright (c) 2014 American
+ * Institutes for Research
+ * 
+ * Distributed under the AIR Open Source License, Version 1.0 See accompanying
+ * file AIR-License-1_0.txt or at http://www.smarterapp.org/documents/
+ * American_Institutes_for_Research_Open_Source_Software_License.pdf
  ******************************************************************************/
 package tds.student.web.controls.dummy;
 
@@ -83,31 +83,36 @@ public class GlobalJavascript extends UIComponentBase
     writer.writeStyles (); // required
     writer.writeVoicePacks (); // required on login and test shell
     writer.writeForbiddenApps (); // required on login and test shell
-    writer.writeTestAccommodations (); // required on test and review shell
+    // writer.writeTestAccommodations (); // required on test and review shell
     writer.writeBrowserInfo ();
 
     // required on login shell
     if (StringUtils.equals (getContextName (), "LoginShell")) {
       writer.writeLoginRequirements ();
-      writer.writeGrades ();
+      // writer.writeGrades ();
       writer.writeGlobalAccommodations ();
       writer.writeNetworkDiagnosticsTestInfo ();
     }
 
     // required for test shell
     if (StringUtils.equals (getContextName (), "TestShell")) {
+      writer.writeTestShellButtons ();
       writer.writeManifest ();
     }
 
     writeMessages (writer); // required
 
+    // removed in new code
     // required for score entry app
-    if (_studentSettings.isProxyLogin ()) {
-      writer.writeCLSProperties ();
-    }
+    /*
+     * if (_studentSettings.isProxyLogin ()) { // writer.writeCLSProperties ();
+     * }
+     */
   }
 
   public static List<String> getContexts (String contextName) {
+    // TODO GeoSettings
+    // GeoType geoServer = GeoSettings.GetServerType();
     List<String> contextList = new ArrayList<String> ();
 
     // GLOBAL CONTEXT:
@@ -119,15 +124,23 @@ public class GlobalJavascript extends UIComponentBase
 
     // LEGACY CONTEXTS:
     if (StringUtils.equals (contextName, "LoginShell")) {
+      // TODO
+      /*
+       * if (geoServer == GeoType.Login) { contextList.AddRange(new[] {
+       * "Student.Master", "Default.aspx" }); } else following
+       */
       String[] pagesArray = { "Student.Master", "AccType", "AccValue", "Default.aspx", "Diagnostics.aspx", "Opportunity.aspx", "Approval.aspx", "SoundCheck.aspx", "TTSCheck.aspx",
           "TestInstructions.aspx", "Approval.aspx" };
       // ServerSide
       contextList.addAll (Arrays.asList (pagesArray));
     } else if (StringUtils.equals (contextName, "TestShell")) {
-      // ServerSide
-      contextList.add ("TestShell.aspx");
 
-      String[] jsArray = { "tds_common.js", "tds_content_events.js", "tds_content.js", "tds_shell.js", "tds_shell_objects.js", "tds_shell_ui.js", "tds_shell_xhr.js", "TestShell.aspx", "tds_audio.js",
+      // Removed in new code
+      // ServerSide
+      /* contextList.add ("TestShell.aspx"); */
+
+      String[] jsArray = { "tds_common.js", "tds_content_events.js", "tds_content.js", "tds_shell.js", "tds_shell_objects.js", "tds_shell_ui.js", "tds_shell_xhr.js", "TestShell.aspx",
+          "tds_audio.js",
           "tds_grid.js", "tds_writing.js", "tds_timeout.js", "grid.js", "grid_question.js", "grid_ui.js", "tds_mc.js", "tds_tts.js", "calculator" };
 
       // ClientSide
@@ -160,20 +173,19 @@ public class GlobalJavascript extends UIComponentBase
       languages.add (language);
       writer.writeMessages (contextList, languages, subject, grade);
     } else {
-      // if there is no language specified then write out messages for all
-      // possible languages
-      AccLookup globalAccsLookup = _configRepository.getGlobalAccommodations ().createLookup (-1);
+      // Removed in new code
+      /*
+       * // if there is no language specified then write out messages for all //
+       * possible languages AccLookup globalAccsLookup =
+       * _configRepository.getGlobalAccommodations ().createLookup (-1);
+       * 
+       * // get all the language codes (HACK: add "ENU" if there are no codes)
+       * List<String> languages = (List<String>) globalAccsLookup.getCodes
+       * ("Language"); if (languages.size () == 0) languages.add ("ENU");
+       */
+      List<String> languages = new ArrayList<String> ();
+      languages.add ("ENU");
 
-      // get all the language codes (HACK: add "ENU" if there are no codes)
-      //   	10/28/2014: added "ESN" to default language list for loading See (SB-350)
-      // 	**Other possible changes will be in Database - setting language for GlobalStudent settings
-      //	**or using the blackbox_messages.js files which are pre-configured with Spanish translation
-      List<String> languages = (List<String>) globalAccsLookup.getCodes ("Language");
-      if (languages.size () == 0){
-    	  languages.add ("ENU");
-    	  languages.add("ESN"); //add Spanish to DOM
-      }
-      
       writer.writeMessages (contextList, languages, null, null);
     }
 

@@ -151,7 +151,7 @@ TTS.Parse.ParseNode = function (lang, node, offset, startIndex, endOffset, doNot
                     insertSpace = true;
                 }
             }
-            insertSpace = insertSpace || (TTS.Util.getDisplayType(child) == 'block');
+            insertSpace = insertSpace || (TTS.Util.getDisplayType(child) == 'block') || $(child).hasClass('draggable');
             start = pn.getEndIndex();
             _endIndex = pn.getEndIndex();
             Debug("start: " + _startIndex + " end: " + _endIndex + " " + " chunk" + '--Dom Node--' + _domNode);

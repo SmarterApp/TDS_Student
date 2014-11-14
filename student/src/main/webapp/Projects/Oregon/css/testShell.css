@@ -4,9 +4,9 @@
 /* @group logos */
 
 .topBar {
-	background-image: url(../Images/logoStudentTop.gif);}
+	background-image: url(../images/logoStudentTop.gif);}
 .bottomBar {
-	background-image: url(../Images/logoStudentBottomInside.gif);
+	background-image: url(../images/logoStudentBottomInside.gif);
 	background-repeat: no-repeat;
 	background-position: right top;
 }

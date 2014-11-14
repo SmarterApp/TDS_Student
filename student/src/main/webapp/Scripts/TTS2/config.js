@@ -37,11 +37,14 @@ TTS.Config = {
     return TTS.Config.i18n[lang] ? TTS.Config.i18n[lang][key] : key;
   },
   User: {
-    reset: function(){
-        TTS.Config.User.setVolume(TTS.Config.UserSet.Volume);
-        TTS.Config.User.setRate(TTS.Config.UserSet.Rate);
-        TTS.Config.User.setPitch(TTS.Config.UserSet.Pitch);
-        TTS.Config.User.setVoice('', [TTS.Config.Lang.ESN.Code, TTS.Config.Lang.ENU.Code]);
+    reset: function () {
+      var langs = [TTS.Config.Lang.ESN.Code, TTS.Config.Lang.ENU.Code];
+      langs.forEach(function (lang) {
+          TTS.Config.User.setVolume(TTS.Config.UserSet.Volume, lang);
+          TTS.Config.User.setRate(TTS.Config.UserSet.Rate, lang);
+          TTS.Config.User.setPitch(TTS.Config.UserSet.Pitch, lang);
+      });
+      TTS.Config.User.setVoice('', langs);
     },
     getVoice: function(lang){
       return TTS.Config.User.getLocalStorage('Voice', lang);
@@ -54,32 +57,39 @@ TTS.Config = {
       }
       TTS.Config.User.setLocalStorage('Voice', val, langs);
     },
-    getRate: function(){
-      return TTS.Config.User.getLocalStorage('Rate');
+    getRate: function (lang) {
+      lang = lang || TTS.Config.Lang.ENU.Code;
+      return TTS.Config.User.getLocalStorage('Rate', lang);
     },
-    setRate: function(val){
+    setRate: function(val, lang){
+      lang = lang || TTS.Config.Lang.ENU.Code;
       TTS.getInstance().setRate(val);
-      TTS.Config.User.setLocalStorage('Rate', val);
+      TTS.Config.User.setLocalStorage('Rate', val, lang);
     },
-    getPitch: function(){
-      return TTS.Config.User.getLocalStorage('Pitch');
+    getPitch: function(lang){
+      lang = lang || TTS.Config.Lang.ENU.Code;
+      return TTS.Config.User.getLocalStorage('Pitch', lang);
     },
-    setPitch: function(val){
+    setPitch: function(val, lang){
+      lang = lang || TTS.Config.Lang.ENU.Code;
       TTS.getInstance().setPitch(val);
-      TTS.Config.User.setLocalStorage('Pitch', val);
+      TTS.Config.User.setLocalStorage('Pitch', val, lang);
     },
-    getVolume: function(){
-      return TTS.Config.User.getLocalStorage('Volume');
+    getVolume: function(lang){
+      lang = lang || TTS.Config.Lang.ENU.Code;
+      return TTS.Config.User.getLocalStorage('Volume', lang);
     },
-    setVolume: function(val){
+    setVolume: function(val, lang){
+      lang = lang || TTS.Config.Lang.ENU.Code;
       TTS.getInstance().setVolume(val);
-      TTS.Config.User.setLocalStorage('Volume', val);
+      TTS.Config.User.setLocalStorage('Volume', val, lang);
     },
-    resetToDefaults: function(cfg){
+    resetToDefaults: function(cfg, lang){
+        lang = lang || TTS.Config.Lang.ENU.Code;
         cfg = cfg || TTS.Config.UserSet;
-        TTS.Config.User.setVolume(cfg.Volume);
-        TTS.Config.User.setRate(cfg.Rate);
-        TTS.Config.User.setPitch(cfg.Pitch);
+        TTS.Config.User.setVolume(cfg.Volume, lang);
+        TTS.Config.User.setRate(cfg.Rate, lang);
+        TTS.Config.User.setPitch(cfg.Pitch, lang);
     },
     getKey: function(val, lang){
         lang = lang || TTS.Config.Lang.ENU.Code; //Default to english.

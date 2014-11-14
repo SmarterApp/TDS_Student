@@ -87,8 +87,15 @@ SimParser.EvaluationUnit = function (sim) {
         return results;
     };
 
+    //Start - Function Verifier
+    //Function Verifier call to Evaluate the Functions
+    this.functionVerifierEvaluation = function () {
+        return runEvaluation(1);
+    }
+    //End - Function Verifier
+
     // evaluate all functions
-    var runEvaluation = function () {
+    var runEvaluation = function (funcVerifier) {
         
         var result = false;
         var d1 = new Date();
@@ -108,8 +115,13 @@ SimParser.EvaluationUnit = function (sim) {
                     var fCount = fMng.getFunctions().length + fMng.getLFunctions().length + fMng.getJFunctions().length;
                     if (fCount > 0) {
                         // evaluate all functions
-                        fEvaluation.process('greedy');
-                        result = true;
+                        if (!funcVerifier) {
+                            fEvaluation.process('greedy');
+                            result = true;
+                        }
+                        else {
+                            result = fEvaluation.process('greedy');
+                        }
                     }
                 }
             }

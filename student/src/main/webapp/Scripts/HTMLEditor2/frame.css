@@ -53,10 +53,18 @@ textarea {
 /* @end */
 
 /* makes most of the body clickable without causing scroll bar to be visible*/
-body {
-	min-height:96%;
+body.cke_editable {
+	position: absolute;
+	overflow: auto;
+	top: .3em;
+	bottom: .3em;
+	left: .3em;
+	right: .3em;
 }
-
+html {
+	position: relative;
+	height: 100%;
+}
 
 .TDS_PS_L1 { 
 	font-size: 1.065em; 
@@ -69,9 +77,6 @@ body {
 }
 .TDS_PS_L4 { 
 	font-size: 2.5em; 
-}
-body.cke_editable {
-	padding: 0.3em;
 }
 .cke_editable ul, 
 .cke_editable ol {

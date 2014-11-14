@@ -161,14 +161,16 @@ public class ItemBankRepository extends AbstractDAO implements IItemBankReposito
 
   public AccList getTestAccommodations (String testKey) throws ReturnStatusException {
     AccList accList = new AccList ();
-
+    long startTime = System.currentTimeMillis ();
     try (SQLConnection connection = getSQLConnection ()) {
 
       Iterator<SingleDataResultSet> results = _commonDll.IB_GetTestAccommodations_SP (connection, testKey).getResultSets ();
+      _logger.info ("<<<<<<<<< checkTestApproval getTestAccommodations 1: "+((System.currentTimeMillis ()-startTime)) + " ms. testKey: "+ testKey +" ThreadId: " +Thread.currentThread ().getId ());
       if (results.hasNext ()) {
         SingleDataResultSet firstResultSet = results.next ();
         ReturnStatusException.getInstanceIfAvailable (firstResultSet);
         Iterator<DbResultRecord> records = firstResultSet.getRecords ();
+        _logger.info ("<<<<<<<<< checkTestApproval getTestAccommodations 1.1: firstResultSet count :" + firstResultSet.getCount () +" Time: "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
         while (records.hasNext ()) {
           DbResultRecord record = records.next ();
           AccList.Data accData = AccList.parseData (record);
@@ -179,6 +181,7 @@ public class ItemBankRepository extends AbstractDAO implements IItemBankReposito
         }
         if (results.hasNext ()) {
           SingleDataResultSet secondResultSet = results.next ();
+          _logger.info ("<<<<<<<<< checkTestApproval getTestAccommodations 1.2: secondResultSet count :" + secondResultSet.getCount () +" Time: "+((System.currentTimeMillis ()-startTime)) + " ms.  ThreadId: " +Thread.currentThread ().getId ());
           records = secondResultSet.getRecords ();
           while (records.hasNext ()) {
             DbResultRecord record = records.next ();
@@ -186,6 +189,7 @@ public class ItemBankRepository extends AbstractDAO implements IItemBankReposito
           }
         }
       }
+      _logger.info ("<<<<<<<<< checkTestApproval getTestAccommodations 2: "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
       Collections.sort (accList, new Comparator<AccList.Data> ()
       {
         @Override
@@ -199,7 +203,7 @@ public class ItemBankRepository extends AbstractDAO implements IItemBankReposito
           return 0;
         }
       });
-
+      _logger.info ("<<<<<<<<< checkTestApproval getTestAccommodations Total: "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
     } catch (SQLException e) {
       _logger.error (e.getMessage ());
       throw new ReturnStatusException (e);
