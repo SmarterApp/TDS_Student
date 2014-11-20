@@ -6,8 +6,8 @@
 
 	<c:if test="#{debugSettings.includeUnitTests()}">
 		<!-- This is only included on debug builds for testing purposes -->
-		<tds:ScriptLink src="~/Scripts/Libraries/YUI/event-simulate/event-simulate.js" type="text/javascript"></tds:ScriptLink>
-		<tds:ScriptLink src="~/Scripts/TestShell/testshell_UnitTests.js" type="text/javascript"></tds:ScriptLink>
+		<tds:ScriptLink source="~/Scripts/Libraries/YUI/event-simulate/event-simulate.js" type="text/javascript"></tds:ScriptLink>
+		<tds:ScriptLink source="~/Scripts/TestShell/testshell_UnitTests.js" type="text/javascript"></tds:ScriptLink>
 	</c:if>
 
 	<tds:GlobalJavascript contextName="TestShell" />

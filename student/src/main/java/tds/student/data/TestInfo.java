@@ -23,60 +23,60 @@ public class TestInfo
 {
   // PROPERTIES:
 
-  private String            _urlBase;
+  private String        _urlBase;
 
-  private boolean           _hasAudio;
+  private boolean       _hasAudio;
 
-  private boolean           _autoMute;
+  private boolean       _autoMute;
 
-  private int               _reviewPage;
+  private int           _reviewPage;
 
   // CONFIG:
 
-  private String            _testName;
+  private String        _testName;
 
-  private int               _testLength;
+  private int           _testLength;
 
-  private int               _startPosition;
+  private int           _startPosition;
 
-  private int               _contentLoadTimeout;
+  private int           _contentLoadTimeout;
 
-  private int               _requestInterfaceTimeout;
+  private int           _requestInterfaceTimeout;
 
-  private int               _oppRestartMins;
+  private int           _oppRestartMins;
 
-  private int               _interfaceTimeout;
+  private int           _interfaceTimeout;
 
-  private int               _prefetch;
+  private int           _prefetch;
 
-  private boolean           _validateCompleteness;
+  private boolean       _validateCompleteness;
 
   // APP SETTINGS:
 
-  private int               _interfaceTimeoutDialog;
+  private int           _interfaceTimeoutDialog;
 
-  private int               _autoSaveInterval;
+  private int           _autoSaveInterval;
 
-  private int               _forbiddenAppsInterval;
+  private int           _forbiddenAppsInterval;
 
-  private boolean           _disableSaveWhenInactive;
+  private boolean       _disableSaveWhenInactive;
 
-  private boolean           _disableSaveWhenForbiddenApps;
+  private boolean       _disableSaveWhenForbiddenApps;
 
-  private boolean           _allowSkipAudio;
+  private boolean       _allowSkipAudio;
 
-  private boolean           _showSegmentLabels;
+  private boolean       _showSegmentLabels;
 
-  private int               _audioTimeout;
+  private int           _audioTimeout;
 
-  private boolean           _enableLogging;
+  private boolean       _enableLogging;
 
-  private String            _dictionaryUrl;
+  private String        _dictionaryUrl;
 
-  private List<TestSegment> _segments;
+  private List<Segment> _segments;
 
   // TDS.Comments = [];
-  private List<String>      _comments;
+  private List<String>  _comments;
 
   @JsonProperty ("urlBase")
   public String getUrlBase () {
@@ -295,11 +295,11 @@ public class TestInfo
   }
 
   @JsonProperty ("segments")
-  public List<TestSegment> getSegments () {
+  public List<Segment> getSegments () {
     return _segments;
   }
 
-  public void setSegments (List<TestSegment> value) {
+  public void setSegments (List<Segment> value) {
     this._segments = value;
   }
 }

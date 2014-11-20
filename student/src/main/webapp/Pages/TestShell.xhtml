@@ -33,10 +33,10 @@
 	<tds:CSSLink href="~/Projects/%s/css/elpa.css" media="screen" type="text/css" rel="stylesheet" />
 	<tds:CSSLink href="~/Projects/%s/css/modernItems.css" media="screen" type="text/css" rel="stylesheet" />
 
-	<!-- 	if(Name == "modern") {
-        <tds:CSSLink runat="server" href="~/Shared/CSS/Universal/modernish.css" media="screen" type="text/css" rel="stylesheet" />
-     }
- -->
+	<c:if test="#{param['Name']=='modern'}">
+		<tds:CSSLink href="~/Shared/CSS/Universal/modernish.css" media="screen" type="text/css" rel="stylesheet" />
+	</c:if>
+
 
 	<!-- Widget Styles -->
 	<ui:include src="TestShellStyles.xhtml" />

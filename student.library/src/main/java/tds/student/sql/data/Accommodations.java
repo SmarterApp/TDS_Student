@@ -482,6 +482,8 @@ public class Accommodations
   // TODO
   public Accommodations getSubset (List<String> codes, Predicate filter) throws ReadOnlyException {
     Accommodations accommodations = new Accommodations (this._position, this._id, this._label);
+    //TODO mpatel/Shiva Accomodation dependency fix - Need to compare with Dot net
+    accommodations.setDependencies (this.getDependencies ());
     List<AccommodationValue> existingValues = getValues (codes);
 
     if (filter == null)

@@ -39,6 +39,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import tds.itemrenderer.data.AccLookup;
 import tds.itemrenderer.data.AccProperties;
+import tds.student.data.Segment;
 import tds.student.data.TestInfo;
 import tds.student.proxy.data.Proctor;
 import tds.student.sbacossmerge.data.GeoComponent;
@@ -220,8 +221,8 @@ public class MasterShellHandler extends TDSHandler
       error = (error != null) ? error : "Unknown";
       String message = String.format ("LOGIN: %s [Values: %s, Session: %s]", error, keyValues, sessionID);
       _tdsLogger.applicationWarn (message, "loginStudent", request, null);
-      
-      _logger.error ("Error validating login info : "+message);
+
+      _logger.error ("Error validating login info : " + message);
       // send error to client
       response.setStatus (HttpStatus.SC_FORBIDDEN);
       return new ResponseData<tds.student.sbacossmerge.data.LoginInfo> (TDSReplyCode.Denied.getCode (), error, null);
@@ -320,14 +321,14 @@ public class MasterShellHandler extends TDSHandler
   @RequestMapping (value = "MasterShell.axd/getSegmentsAccommodations")
   @ResponseBody
   public ResponseData<List<Accommodations>> getSegmentsAccommodations (@RequestParam (value = "testKey", required = false) String testKey) throws ReturnStatusException, TDSSecurityException {
-    long startTime = System.currentTimeMillis (); 
+    long startTime = System.currentTimeMillis ();
     List<Accommodations> segmentAccsList = null;
     checkAuthenticated ();
     TestSession session = StudentContext.getSession ();
     Testee testee = StudentContext.getTestee ();
     // get test/segment accommodations
     segmentAccsList = _accsService.getTestee (testKey, isGuestSession (session), testee.getKey ());
-    _logger.info ("<<<<<<<<< getSegmentsAccommodations Total Execution Time : "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
+    _logger.info ("<<<<<<<<< getSegmentsAccommodations Total Execution Time : " + ((System.currentTimeMillis () - startTime)) + " ms. ThreadId: " + Thread.currentThread ().getId ());
     return new ResponseData<List<Accommodations>> (TDSReplyCode.OK.getCode (), "OK", segmentAccsList);
   }
 
@@ -356,7 +357,7 @@ public class MasterShellHandler extends TDSHandler
     // get test properties
     TestSession session = StudentContext.getSession ();
     Testee testee = StudentContext.getTestee ();
-    
+
     // validate context
     if (session == null || testee == null) {
       StudentContext.throwMissingException ();
@@ -380,7 +381,7 @@ public class MasterShellHandler extends TDSHandler
     StudentContext.saveSubject (subject);
     StudentContext.saveGrade (grade);
     StudentCookie.writeStore ();
-   _logger.info ("<<<<<<<<< openTest Total Execution Time : "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
+    _logger.info ("<<<<<<<<< openTest Total Execution Time : " + ((System.currentTimeMillis () - startTime)) + " ms. ThreadId: " + Thread.currentThread ().getId ());
     // create json response
     OpportunityInfoJsonModel opportunityInfoJsonModel = new OpportunityInfoJsonModel ();
     opportunityInfoJsonModel.setTestForms (new ArrayList<TestForm> ());
@@ -420,9 +421,9 @@ public class MasterShellHandler extends TDSHandler
     // check if the proctor has responded and get back accommodations if
     // student has been approved
     boolean isGuestSession = isGuestSession (testSession);
-    _logger.info ("<<<<<<<<< checkTestApproval Execution Time 1: "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
+    _logger.info ("<<<<<<<<< checkTestApproval Execution Time 1: " + ((System.currentTimeMillis () - startTime)) + " ms. ThreadId: " + Thread.currentThread ().getId ());
     oppApproval = _oppService.checkTestApproval (oppInstance);
-    _logger.info ("<<<<<<<<< checkTestApproval Execution Time 2: "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
+    _logger.info ("<<<<<<<<< checkTestApproval Execution Time 2: " + ((System.currentTimeMillis () - startTime)) + " ms. ThreadId: " + Thread.currentThread ().getId ());
     // clean up comment
     oppApproval.setComment (oppApproval.getComment ());
     // if the opportunity was approved and a testkey was provided load
@@ -433,14 +434,14 @@ public class MasterShellHandler extends TDSHandler
       segmentsAccommodations = _accsService.getApproved (oppInstance, testKey, isGuestSession);
       oppApproval.setSegmentsAccommodations (segmentsAccommodations);
     }
-    _logger.info ("<<<<<<<<< checkTestApproval Execution Time 3 "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
+    _logger.info ("<<<<<<<<< checkTestApproval Execution Time 3 " + ((System.currentTimeMillis () - startTime)) + " ms. ThreadId: " + Thread.currentThread ().getId ());
     // if there are accommodations then proctor approved us
     if (oppApproval.getSegmentsAccommodations () != null) {
       // save cookie
       StudentContext.saveSegmentsAccommodations (oppApproval.getSegmentsAccommodations ());
-      StudentCookie.writeStore();
+      StudentCookie.writeStore ();
     }
-    _logger.info ("<<<<<<<<< checkTestApproval Total Execution Time : "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
+    _logger.info ("<<<<<<<<< checkTestApproval Total Execution Time : " + ((System.currentTimeMillis () - startTime)) + " ms. ThreadId: " + Thread.currentThread ().getId ());
     return new ResponseData<ApprovalInfo> (TDSReplyCode.OK.getCode (), "OK", oppApproval);
   }
 
@@ -462,7 +463,7 @@ public class MasterShellHandler extends TDSHandler
       StudentContext.throwMissingException ();
     // deny
     _oppService.denyApproval (oppInstance);
-    _logger.info ("<<<<<<<<< denyApproval Total Execution Time : "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
+    _logger.info ("<<<<<<<<< denyApproval Total Execution Time : " + ((System.currentTimeMillis () - startTime)) + " ms. ThreadId: " + Thread.currentThread ().getId ());
     return new ResponseData<Long> (TDSReplyCode.OK.getCode (), "OK", TDSReplyCode.OK.getCode ());
   }
 
@@ -503,7 +504,7 @@ public class MasterShellHandler extends TDSHandler
     sendTestStatus (StudentContext.getTestee ().getId (), testKey, oppInstance.getKey (), TestStatusType.STARTED);
     // log browser info
     logBrowser (oppInstance, testConfig.getRestart ());
-   _logger.info ("<<<<<<<<< startTest Total Execution Time : "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
+    _logger.info ("<<<<<<<<< startTest Total Execution Time : " + ((System.currentTimeMillis () - startTime)) + " ms. ThreadId: " + Thread.currentThread ().getId ());
     TestInfo testInfo = loadTestInfo (oppInstance, testConfig);
 
     return new ResponseData<TestInfo> (TDSReplyCode.OK.getCode (), "OK", testInfo);
@@ -548,9 +549,9 @@ public class MasterShellHandler extends TDSHandler
     return testInfo;
   }
 
-  List<TestSegment> loadTestSegments (OpportunityInstance oppInstance, TestProperties testProps) throws ReturnStatusException
+  List<Segment> loadTestSegments (OpportunityInstance oppInstance, TestProperties testProps) throws ReturnStatusException
   {
-    List<TestSegment> testSegments = new ArrayList<TestSegment> ();
+    List<Segment> testSegments = new ArrayList<Segment> ();
     OpportunitySegments oppSegments = null;
 
     // load opp segments only if there are any test segments
@@ -612,12 +613,12 @@ public class MasterShellHandler extends TDSHandler
         // NOTE: When student enters segment, set isPermeable = updatePermeable
       }
 
-      TestSegment tSegment = new TestSegment ();
+      Segment tSegment = new Segment ();
       tSegment.setId (testSegment.getId ());
       tSegment.setPosition (testSegment.getPosition ());
       tSegment.setLabel (testSegment.getLabel ());
       tSegment.setItemReview (testSegment.isItemReview ());
-      tSegment.setIsPermeable (isPermeable);
+      tSegment.setIsPermable (isPermeable);
       tSegment.setUpdatePermable (updatePermeable);
       tSegment.setEntryApproval (testSegment.getEntryApproval ());
       tSegment.setExitApproval (testSegment.getExitApproval ());
@@ -703,7 +704,7 @@ public class MasterShellHandler extends TDSHandler
     }
 
     // try and get scores
-_logger.info ("<<<<<<<<< scoreTest Total Execution Time : "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
+    _logger.info ("<<<<<<<<< scoreTest Total Execution Time : " + ((System.currentTimeMillis () - startTime)) + " ms. ThreadId: " + Thread.currentThread ().getId ());
     return getTestSummary ();
 
   }
@@ -854,7 +855,8 @@ _logger.info ("<<<<<<<<< scoreTest Total Execution Time : "+((System.currentTime
    */
   private void sendTestStatus (String testeeId, String testKey, UUID oppKey, TestStatusType testStatusType) {
     try {
-      if (testeeId.substring (0, 7).equalsIgnoreCase ("guest -")) {
+      final String GUESTID = "guest";
+      if (testeeId != null && testeeId.toLowerCase ().startsWith (GUESTID)) {
         return;
       }
       TestStatus testStatus = new TestStatus ();
