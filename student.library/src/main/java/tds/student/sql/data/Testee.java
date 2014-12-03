@@ -19,6 +19,7 @@ import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
 
+import tds.dll.api.IStudentDLL;
 import AIR.Common.time.DateTime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -26,6 +27,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Testee
 {
 
+  private static final String UNKNOWN_BIRTH_DAY_VALUE = "None";
+  
   private String           _id;
   private long             _key;
   private String           _firstName;
@@ -174,16 +177,22 @@ public class Testee
     _districtName = testeeAttributes.getValue ("District");
 
     // get date and convert into presentable string
-    Date birthdayDT = testeeAttributes.getDateTime ("DOB");
-
-    if (birthdayDT != null && birthdayDT.after (DateTime.getMinValue ())) {
-      // _birthday = birthdayDT.toString ("MMMM d, yyyy");
-      // TODO Ravi/Shiva see if you can use AbstractDateUtilDll.dateFormat here
-      // instead.
-      SimpleDateFormat sdf = new SimpleDateFormat ("MMMM d, yyyy");
-      _birthday = sdf.format (birthdayDT);
+    System.out.println(testeeAttributes.getValue ("DOB"));
+    String birthDay = testeeAttributes.getValue ("DOB");
+    if (birthDay == null || birthDay.equals (IStudentDLL.UNKNOWN_ATTRIBUTE_VALUE)) {
+      _birthday = UNKNOWN_BIRTH_DAY_VALUE;
     } else {
-      _birthday = "None";
+      Date birthdayDT = testeeAttributes.getDateTime ("DOB");
+  
+      if (birthdayDT != null && birthdayDT.after (DateTime.getMinValue ())) {
+        // _birthday = birthdayDT.toString ("MMMM d, yyyy");
+        // TODO Ravi/Shiva see if you can use AbstractDateUtilDll.dateFormat here
+        // instead.
+        SimpleDateFormat sdf = new SimpleDateFormat ("MMMM d, yyyy");
+        _birthday = sdf.format (birthdayDT);
+      } else {
+        _birthday =  UNKNOWN_BIRTH_DAY_VALUE;
+      }
     }
 
   }

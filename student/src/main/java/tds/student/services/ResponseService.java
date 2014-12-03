@@ -98,8 +98,7 @@ public class ResponseService implements IResponseService
     // get testee responses for this groupID
 	OpportunityItems sqlResult = _responseRepository.getItemGroup (oppInstance, page, groupID, dateCreated, validate);
 
-  _logger.info("loadTest: ResponseService.getItemGroup sqlResult : " + sqlResult.size ());
-    try {
+  try {
       for (int i = 0; i < sqlResult.size (); i++) {
         OpportunityItem opportunityItem = sqlResult.get (i);
         // check for return status error

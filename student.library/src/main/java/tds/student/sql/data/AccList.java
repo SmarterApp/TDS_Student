@@ -487,6 +487,7 @@ public class AccList extends ArrayList<AccList.Data>
   }
 
   public static Data parseData (ColumnResultSet reader) throws ReturnStatusException {
+    long startTime = System.currentTimeMillis ();
     Data acc = null;
     try {
       acc = new AccList ().new Data ();
@@ -539,6 +540,7 @@ public class AccList extends ArrayList<AccList.Data>
       e.printStackTrace ();
       throw new ReturnStatusException (e);
     }
+    _logger.info ("<<<<<<<<< parseData(ColumnResultSet reader) Total: "+((System.currentTimeMillis ()-startTime)) + " ms.  ThreadId: " +Thread.currentThread ().getId ());
     return acc;
   }
 
@@ -549,7 +551,7 @@ public class AccList extends ArrayList<AccList.Data>
     acc.setType (reader.<String> get ("AccType"));
     acc.setValue (reader.<String> get ("AccValue"));
     acc.setCode (reader.<String> get ("AccCode"));
-
+    _logger.info ("<<<<<<<<< parseData 0: "+((System.currentTimeMillis ()-startTime)) + " ms.  ThreadId: " +Thread.currentThread ().getId ());
     acc.setIsDefault (reader.<Boolean> get ("IsDefault"));
     acc.setAllowCombine (reader.<Boolean> get ("AllowCombine"));
     acc.setAllowChange (reader.<Boolean> get ("AllowChange"));
@@ -557,7 +559,7 @@ public class AccList extends ArrayList<AccList.Data>
     acc.setIsVisible (reader.<Boolean> get ("IsVisible"));
     acc.setStudentControl (reader.<Boolean> get ("StudentControl"));
     acc.setIsFunctional (reader.<Boolean> get ("IsFunctional"));
-
+    _logger.info ("<<<<<<<<< parseData 1: "+((System.currentTimeMillis ()-startTime)) + " ms.  ThreadId: " +Thread.currentThread ().getId ());
     // for 2012 read the segment column
     if (reader.hasColumn ("Segment")) {
       acc.setSegmentPosition (reader.<Integer> get ("Segment"));
@@ -574,7 +576,7 @@ public class AccList extends ArrayList<AccList.Data>
     else {
       acc.setSegmentPosition (-1);
     }
-
+    _logger.info ("<<<<<<<<< parseData 2: "+((System.currentTimeMillis ()-startTime)) + " ms.  ThreadId: " +Thread.currentThread ().getId ());
     // we only have these when loading test accommodations
     if (reader.hasColumn ("DependsOnToolType")) {
       acc.setDependsOnToolType (reader.<String> get ("DependsOnToolType"));
@@ -583,7 +585,7 @@ public class AccList extends ArrayList<AccList.Data>
     if (reader.hasColumn ("DisableOnGuestSession")) {
       acc.setDisableOnGuestSession (reader.<Boolean> get ("DisableOnGuestSession"));
     }
-
+    _logger.info ("<<<<<<<<< parseData 3: "+((System.currentTimeMillis ()-startTime)) + " ms.  ThreadId: " +Thread.currentThread ().getId ());
     // check if sort orders
     if (reader.hasColumn ("ToolTypeSortOrder") && reader.hasColumn ("ToolValueSortOrder")) {
       acc.setToolTypeSortOrder (reader.<Integer> get ("ToolTypeSortOrder"));

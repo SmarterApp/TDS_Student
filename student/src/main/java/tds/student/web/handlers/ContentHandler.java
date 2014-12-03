@@ -106,7 +106,6 @@ public class ContentHandler extends BaseContentRendererController
     if (testOpp == null) {
       StudentContext.throwMissingException ();
     }
-    _logger.info ("loadTest: ContentHandler.loadGroup  Opportunity ID: " + testOpp.getOppInstance ().getKey () + "  group id: " + groupId);
 
     PageGroup pageGroup = _responseService.getItemGroup (testOpp.getOppInstance (), page, groupId, dateCreated, !_studentSettings.isReadOnly ());
 

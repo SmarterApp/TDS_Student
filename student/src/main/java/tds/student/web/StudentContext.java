@@ -94,7 +94,6 @@ public class StudentContext
     StudentCookie.setCookieData ("S_KEY", session.getKey ().toString ());
     StudentCookie.setCookieData ("S_ID", session.getId ());
     StudentCookie.setCookieData ("S_NAME", session.getName ());
-    _logger.info("loadTest: StudentContext.saveSession sesskey: " + session.getKey ().toString ());
   }
 
   public static TestSession getSession () {
@@ -152,7 +151,6 @@ public class StudentContext
   public static void saveOppInfo (String testKey, String testID, OpportunityInfo oppInfo) {
     // TODO mpatel
     
-    _logger.info("loadTest: StudentContext.saveOppInfo testkey: " + testKey  +  " O_TID: " + testID + " O_KEY: "  +  oppInfo.getOppKey ().toString ());
     TDSIdentity.getCurrentTDSIdentity ().setAuthCookieValue ("O_TKEY", testKey);
     TDSIdentity.getCurrentTDSIdentity ().setAuthCookieValue ("O_TID", testID);
     TDSIdentity.getCurrentTDSIdentity ().setAuthCookieValue ("O_KEY", oppInfo.getOppKey ().toString ());
@@ -202,8 +200,6 @@ public class StudentContext
     if (oppKey == null || sessionKey == null || browserKey == null)
       return null;
 
-    _logger.info("loadTest: StudentContext.getOppInstance oppKey: " + oppKey.toString () +  "  sessionKey: "  + sessionKey.toString ());
-    
     OpportunityInstance oppInstance = new OpportunityInstance (oppKey, sessionKey, browserKey);
     return oppInstance;
   }
@@ -269,7 +265,7 @@ public class StudentContext
 
     // get test opp from cache
     TestOpportunity testOpp = (TestOpportunity) getCacheData ("TestOpportunity");
-    _logger.info("loadTest: StudentContext.getTestOpportunity TestOpportunity " + testOpp );
+
     if (testOpp != null) {
       return testOpp;
     }
