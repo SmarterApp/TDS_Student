@@ -177,7 +177,6 @@ public class Testee
     _districtName = testeeAttributes.getValue ("District");
 
     // get date and convert into presentable string
-    System.out.println(testeeAttributes.getValue ("DOB"));
     String birthDay = testeeAttributes.getValue ("DOB");
     if (birthDay == null || birthDay.equals (IStudentDLL.UNKNOWN_ATTRIBUTE_VALUE)) {
       _birthday = UNKNOWN_BIRTH_DAY_VALUE;

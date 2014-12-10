@@ -19,49 +19,32 @@ import tds.iris.abstractions.repository.ContentException;
 import tds.iris.abstractions.repository.IContentBuilder;
 import tds.itempreview.ConfigBuilder;
 import tds.itemrenderer.data.IITSDocument;
+import tds.itemrenderer.data.IrisITSDocument;
+import tds.itemrenderer.data.ItsItemIdUtil;
+import tds.itemrenderer.data.ITSTypes.ITSEntityType;
 
 @Component
-@Scope ("prototype")
+@Scope ("singleton")
 public class ContentBuilder implements IContentBuilder
 {
-  private static final Logger       _logger = LoggerFactory.getLogger (ContentBuilder.class);
-  private String                    _contentPath;
-  private Map<String, IITSDocument> _documentLookup;
-  private Exception                 _error  = null;
-
-  @PostConstruct
-  public void init () throws ContentException {
+  private static final Logger _logger           = LoggerFactory.getLogger (ContentBuilder.class);
+  private String              _contentPath;
+  private ConfigBuilder       _directoryScanner = null;
+  
+  public synchronized void init () throws ContentException {
     try {
       // scan the local folder.
       _contentPath = AppSettingsHelper.get ("iris.ContentPath");
-      ConfigBuilder directoryScanner = new ConfigBuilder (_contentPath);
-      directoryScanner.create ();
-      // a side effect of the create() call is that there is now a list of
-      // ITSDocuments in directoryScanner.
-      Collection<IITSDocument> documents = directoryScanner.getDocuments ();
-
-      // now run through the documents and build the key set.
-      Map<String, IITSDocument> documentsMap = new CaseInsensitiveMap<IITSDocument> ();
-      for (IITSDocument document : documents) {
-        String id = String.format ("I-%s-%s", document.getBankKey (), document.getItemKey ());
-        documentsMap.put (id, document);
-      }
-      _documentLookup = Collections.unmodifiableMap (documentsMap);
+      _directoryScanner = new ConfigBuilder (_contentPath);
+      _directoryScanner.create ();
     } catch (Exception exp) {
       _logger.error ("Error loading IRiS content.", exp);
-      _error = exp;
       throw new ContentException (exp);
     }
   }
 
   @Override
   public IITSDocument getITSDocument (String id) throws ContentRequestException {
-    if (_error != null) {
-      throw new ContentRequestException ("Content not loaded properly.", _error);
-    }
-    if (_documentLookup.containsKey (id)) {
-      return _documentLookup.get (id);
-    }
-    throw new ContentRequestException (String.format ("No content found by id %s", id));
+    return _directoryScanner.getRenderableDocument (id);
   }
 }

@@ -19,6 +19,16 @@ public class ContentRequest
   private static final Logger      _logger = LoggerFactory.getLogger (ContentRequest.class);
   private ContentRequestPassage    _passage;
   private List<ContentRequestItem> _items;
+  private String                   _layout;
+
+  @JsonProperty ("layout")
+  public String getLayout () {
+    return _layout;
+  }
+
+  public void setLayout (String value) {
+    _layout = value;
+  }
 
   @JsonProperty ("passage")
   public ContentRequestPassage getPassage () {
@@ -65,7 +75,7 @@ public class ContentRequest
               {
                 {
                   setId ("I-187-1383");
-                  setResponse("<response><math xmlns=\"http://www.w3.org/1998/Math/MathML\" title=\"12\"><mstyle><mn>12</mn></mstyle></math></response>");
+                  setResponse ("<response><math xmlns=\"http://www.w3.org/1998/Math/MathML\" title=\"12\"><mstyle><mn>12</mn></mstyle></math></response>");
                 }
               });
             }

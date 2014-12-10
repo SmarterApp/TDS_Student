@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import TDS.Shared.Data.ReturnStatus;
 
-import tds.student.sql.data.AccList.Data;
+import tds.student.sql.data.Data;
 
 /**
  * @author temp_rreddy

@@ -27,7 +27,8 @@ import tds.dll.api.ICommonDLL;
 import tds.dll.api.IStudentDLL;
 import tds.student.sql.abstractions.IItemBankRepository;
 import tds.student.sql.data.AccList;
-import tds.student.sql.data.AccList.Data;
+import tds.student.sql.data.AccListParseData;
+import tds.student.sql.data.Data;
 import tds.student.sql.data.TestForm;
 import tds.student.sql.data.TestGrade;
 import tds.student.sql.data.TestProperties;
@@ -171,26 +172,29 @@ public class ItemBankRepository extends AbstractDAO implements IItemBankReposito
         ReturnStatusException.getInstanceIfAvailable (firstResultSet);
         Iterator<DbResultRecord> records = firstResultSet.getRecords ();
         _logger.info ("<<<<<<<<< checkTestApproval getTestAccommodations 1.1: firstResultSet count :" + firstResultSet.getCount () +" Time: "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
+        startTime = System.currentTimeMillis ();
         while (records.hasNext ()) {
           DbResultRecord record = records.next ();
-          AccList.Data accData = AccList.parseData (record);
+          Data accData = AccListParseData.parseData (record);
           // HACK: Skip loading non-functional accommodations
           if (!accData.isFunctional ())
             continue;
           accList.add (accData);
         }
+        long time = (System.currentTimeMillis ()-startTime);
+          System.out.println  ("<<<<<<<<< checkTestApproval getTestAccommodations 1.2:  Time: "+(time) + " ms.  ThreadId: " +Thread.currentThread ().getId ());
         if (results.hasNext ()) {
           SingleDataResultSet secondResultSet = results.next ();
-          _logger.info ("<<<<<<<<< checkTestApproval getTestAccommodations 1.2: secondResultSet count :" + secondResultSet.getCount () +" Time: "+((System.currentTimeMillis ()-startTime)) + " ms.  ThreadId: " +Thread.currentThread ().getId ());
+          _logger.info  ("<<<<<<<<< checkTestApproval getTestAccommodations 1.2: secondResultSet count :" + secondResultSet.getCount () +" Time: "+((System.currentTimeMillis ()-startTime)) + " ms.  ThreadId: " +Thread.currentThread ().getId ());
           records = secondResultSet.getRecords ();
           while (records.hasNext ()) {
             DbResultRecord record = records.next ();
-            accList.getDependencies ().add (AccList.parseDependency (record));
+            accList.getDependencies ().add (AccListParseData.parseDependency (record));
           }
         }
       }
       _logger.info ("<<<<<<<<< checkTestApproval getTestAccommodations 2: "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
-      Collections.sort (accList, new Comparator<AccList.Data> ()
+      Collections.sort (accList, new Comparator<Data> ()
       {
         @Override
         public int compare (Data acc1, Data acc2) {

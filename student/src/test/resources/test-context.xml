@@ -14,6 +14,7 @@
 	<context:property-placeholder location="classpath:test-settings.xml" ignore-unresolvable="true" order="900" local-override="true"/>
 	
 	<beans:import resource="classpath:opentestsystem.shared.test-db-context-module.xml"/>
+	<beans:import resource="classpath:opentestsystem.shared.tr-api-context-module.xml" />
 
 	
 	<!-- TDSSettings bean. This gives access to clientname and any other info such as session type etc. -->
@@ -35,8 +36,8 @@
 	<!-- Current timestamp source -->
 	<beans:bean id="abstractDateUtilDll" class="tds.dll.mysql.DateUtilDLL" />
 	
-    <beans:bean id="iTDSLogger" class="tds.student.tdslogger.TDSLogger" scope="singleton"/>
-	<beans:bean id="iTrClient" class="org.opentestsystem.shared.trapi.TrClient" />
+    <beans:bean id="iTDSLogger" class="tds.student.tdslogger.TDSLogger" scope="singleton" lazy-init="true"/>
+	<beans:bean id="iTrClient" class="org.opentestsystem.shared.trapi.TrClient"  lazy-init="true"/>
 	
 	<!-- Beans for tests -->
 	<!-- <beans:bean id="httpWebHelper" class="tds.itemscoringengine.web.server.ItemScoringEngineHttpWebHelper"/> -->
@@ -49,8 +50,8 @@
 	<beans:bean id="ibRepository" class="tds.student.sql.repository.ItemBankRepository"/>
 	<beans:bean id="iOppRepository" class="tds.student.sql.repository.OpportunityRepository"/>
 	<!-- For TestScoringServiceTest -->
-	<beans:bean id="iScoringRepository" class="tds.student.sql.repository.ScoringRepository"/>
-	<beans:bean id="iTestScoringService" class="tds.student.services.TestScoringService"/>
+	<!-- <beans:bean id="iScoringRepository" class="tds.student.sql.repository.ScoringRepository"/>
+	<beans:bean id="iTestScoringService" class="tds.student.services.TestScoringService"/> -->
 	<beans:bean id="iClientManager" class="tds.student.sql.singletons.ClientManager"/>
 
 
@@ -64,16 +65,16 @@
 	<beans:bean id="applicationDataSource" destroy-method="close"
 		  class="com.mchange.v2.c3p0.ComboPooledDataSource" >
 		    <beans:property name="driverClass" value="${datasource.driverClassName:com.mysql.jdbc.Driver}"/>
-		    <beans:property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/session"/>
-		    <beans:property name="user" value="root"/>
-		    <beans:property name="password" value="root"/>
-		    <beans:property name="minPoolSize" value="${datasource.minPoolSize:5}"/>
-		<beans:property name="acquireIncrement" value="${datasource.acquireIncrement:5}" />
-		<beans:property name="maxPoolSize" value="${datasource.maxPoolSize:20}" />
+		    <beans:property name="jdbcUrl" value="jdbc:mysql://dev-loadtest-rds-001.c6cqetfcrpzd.us-east-1.rds.amazonaws.com:3306/session?useServerPrepStmts=false&amp;rewriteBatchedStatements=true"/>
+		    <beans:property name="user" value="dbsbac"/>
+		    <beans:property name="password" value="osTyMhRM1C"/>
+		    <beans:property name="minPoolSize" value="${datasource.minPoolSize:1200}"/>
+		<beans:property name="acquireIncrement" value="${datasource.acquireIncrement:500}" />
+		<beans:property name="maxPoolSize" value="${datasource.maxPoolSize:1200}" />
 		<beans:property name="checkoutTimeout" value="${datasource.checkoutTimeout:60000}" />
 		<beans:property name="preferredTestQuery" value="SELECT 1" />
 		<beans:property name="maxConnectionAge" value="${datasource.maxConnectionAge:0}"/>
-		<beans:property name="acquireRetryAttempts" value="${datasource.acquireRetryAttempts:5}"/>
+		<beans:property name="acquireRetryAttempts" value="${datasource.acquireRetryAttempts:30}"/>
 	</beans:bean>
 	
 	

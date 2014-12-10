@@ -11,14 +11,14 @@
 	<entry key="tds.itemPreview.showDevTools">false</entry>
 	<entry key="tds.itemPreview.forceHttpContent">false</entry>
 	<entry key="tds.itemPreview.encryptPaths">false</entry>
-	<entry key="tds.itemPreview.resourceLookupPath">content\resources.json</entry>
+	<entry key="tds.itemPreview.resourceLookupPath">content/resources.json</entry>
 	<entry key="tds.itemPreview.readOnly">false</entry>
 	<entry key="tds.itemPreview.showLoading">false</entry>
 	<entry key="tds.itemPreview.ignorePassages">false</entry>
 	<entry key="tds.itemPreview.passageLayout"></entry>
 	<entry key="tds.itemPreview.configCache.minutes">0</entry>
 	<entry key="tds.itemPreview.configCache.id"></entry>
-	<entry key="iris.ContentPath">C:\tmp\Bank-187</entry>
+	<entry key="iris.ContentPath">/usr/local/tomcat/content/</entry>
 	<!-- End Item Preview Settings -->
 	<!-- Start BlackBox Settings -->
 	<!-- legacy settings -->
@@ -32,7 +32,6 @@
 	<entry key="tds.itemRenderer.enableBase64">false</entry>
 	<entry key="tds.itemRenderer.enableFeedback">false</entry>
 	<entry key="tds.itemRenderer.forceQTI">true</entry>
-	<entry key="iris.ContentPath">C:\tmp\Bank-187</entry>
 	
 	<!-- End BlackBox Settings -->
 </properties>

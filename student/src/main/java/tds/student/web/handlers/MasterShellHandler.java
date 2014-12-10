@@ -856,7 +856,7 @@ public class MasterShellHandler extends TDSHandler
   private void sendTestStatus (String testeeId, String testKey, UUID oppKey, TestStatusType testStatusType) {
     try {
       final String GUESTID = "guest";
-      if (testeeId != null && testeeId.toLowerCase ().startsWith (GUESTID)) {
+      if (testeeId == null || testeeId.toLowerCase ().startsWith (GUESTID)) {
         return;
       }
       TestStatus testStatus = new TestStatus ();

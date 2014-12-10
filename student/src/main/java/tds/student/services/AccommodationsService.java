@@ -33,6 +33,7 @@ import tds.student.sql.data.AccList;
 import tds.student.sql.data.AccommodationType;
 import tds.student.sql.data.AccommodationValue;
 import tds.student.sql.data.Accommodations;
+import tds.student.sql.data.Data;
 import tds.student.sql.data.OpportunityAccommodation;
 import tds.student.sql.data.OpportunityInstance;
 import tds.student.sql.data.RTSAccommodation;
@@ -400,7 +401,7 @@ public class AccommodationsService implements IAccommodationsService
         CollectionUtils.removeAll (accList, CollectionUtils.select (accList, new Predicate ()
         {
           public boolean evaluate (Object object) {
-            return ((AccList.Data) object).isDisableOnGuestSession ();
+            return ((Data) object).isDisableOnGuestSession ();
           }
         }));
       _logger.info ("<<<<<<<<< checkTestApproval getTestSegments 2: "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());

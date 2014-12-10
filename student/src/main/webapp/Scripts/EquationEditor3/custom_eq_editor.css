@@ -1623,3 +1623,6 @@ div.mje_selected_tab, div.mje_selected_tab:hover {
 .mathquill-rendered-math .mq-fraction{
 	vertical-align: middle;
 }
+.mathquill-editable .mq-empty {
+    min-height: 1em;
+}

@@ -27,13 +27,15 @@ import org.springframework.stereotype.Component;
 
 import tds.student.services.abstractions.AbstractConfigLoader;
 import tds.student.sql.data.AccList;
+import tds.student.sql.data.AccListParseData;
 import tds.student.sql.data.AppExterns;
+import tds.student.sql.data.Data;
 import tds.student.sql.data.ForbiddenApps;
 import tds.student.sql.data.ItemScoringConfig;
-import tds.student.sql.data.TesteeAttributeMetadata;
 import tds.student.sql.data.NetworkDiagnostic;
 import tds.student.sql.data.PTSetup;
 import tds.student.sql.data.TTSVoicePack;
+import tds.student.sql.data.TesteeAttributeMetadata;
 import AIR.Common.Configuration.AppSettingsHelper;
 import AIR.Common.DB.SQLConnection;
 import AIR.Common.DB.SqlParametersMaps;
@@ -371,7 +373,7 @@ public class ConfigLoader extends AbstractConfigLoader
 
       while (records.hasNext ()) {
         DbResultRecord record = records.next ();
-        AccList.Data accData = AccList.parseData (record);
+        Data accData = AccListParseData.parseData (record);
         // HACK: Skip loading non-functional accommodations
         if (!accData.isFunctional ())
           continue;

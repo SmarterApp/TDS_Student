@@ -11,10 +11,6 @@
         frame = frameWindow;
     };
 
-    api.loadItem = function (bankKey, itemKey) {
-        return XDM(frame).post('IRiS:loadItem', bankKey, itemKey);
-    };
-
     api.loadToken = function (vendorId, token) {
         return XDM(frame).post('IRiS:loadToken', vendorId, token);
     };

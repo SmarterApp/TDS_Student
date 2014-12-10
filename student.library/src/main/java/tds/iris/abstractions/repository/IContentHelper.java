@@ -6,4 +6,6 @@ import tds.itemrenderer.data.ItemRenderGroup;
 public interface IContentHelper
 {
   public ItemRenderGroup loadRenderGroup (ContentRequest contentRequest);
+
+  public boolean reloadContent ();
 }

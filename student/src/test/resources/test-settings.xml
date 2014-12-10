@@ -3,5 +3,9 @@
 <properties>
 	<entry key="TestRegistrationApplicationUrl">${student.TestRegistrationApplicationUrl}</entry>
 	<entry key="TDSReportsRootDirectory">${student.TDSReportsRootDirectory}</entry>
-
+	<entry key="TDSSessionDBName">session</entry>
+	<entry key="ItembankDBName">itembank</entry>
+	<entry key="TDSArchiveDBName">archive</entry>
+	<entry key="TDSConfigsDBName">configs</entry>
+		
 </properties>

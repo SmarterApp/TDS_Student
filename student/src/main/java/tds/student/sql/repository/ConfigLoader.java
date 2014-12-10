@@ -36,7 +36,9 @@ import tds.dll.api.ICommonDLL;
 import tds.dll.api.IStudentDLL;
 import tds.student.services.abstractions.AbstractConfigLoader;
 import tds.student.sql.data.AccList;
+import tds.student.sql.data.AccListParseData;
 import tds.student.sql.data.AppExterns;
+import tds.student.sql.data.Data;
 import tds.student.sql.data.ForbiddenApps;
 import tds.student.sql.data.ItemScoringConfig;
 import tds.student.sql.data.TesteeAttributeMetadata;
@@ -353,7 +355,7 @@ public class ConfigLoader extends AbstractConfigLoader implements ServletContext
 
       while (records.hasNext ()) {
         DbResultRecord record = records.next ();
-        AccList.Data accData = AccList.parseData (record);
+        Data accData = AccListParseData.parseData (record);
         // HACK: Skip loading non-functional accommodations
         if (!accData.isFunctional ())
           continue;

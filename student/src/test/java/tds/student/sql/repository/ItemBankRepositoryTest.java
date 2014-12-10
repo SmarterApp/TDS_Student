@@ -12,29 +12,38 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import TDS.Shared.Exceptions.ReturnStatusException;
 import tds.student.sql.abstractions.IItemBankRepository;
 import tds.student.sql.data.AccList;
 import tds.student.sql.data.TestForm;
 import tds.student.sql.data.TestProperties;
 import tds.student.sql.data.TestSegment;
+import AIR.Common.Utilities.SpringApplicationContext;
 import AIR.test.framework.AbstractTest;
 
-@ComponentScan
+//@ComponentScan
+@RunWith (SpringJUnit4ClassRunner.class)
+@ContextConfiguration (locations = "/test-context.xml")
 public class ItemBankRepositoryTest extends AbstractTest
 {
 	private static final Logger _logger  = LoggerFactory.getLogger(ItemBankRepositoryTest.class);	
 	
 	@Autowired
-	@Qualifier("iItemBankRepository")
+	@Qualifier("ibRepository")
 	IItemBankRepository _itemRepository = null;
   
-  @Test
+  //@Test
   public void testListTests () throws Exception{
     //((ItemBankRepository) _itemRepository)._commonDll._CanChangeOppStatus_FN (null, "abc", "123");
     try {
@@ -94,10 +103,46 @@ public class ItemBankRepositoryTest extends AbstractTest
     }
   }
   
-  //@Test
+  public static void main (String[] args) throws Exception{
+    ApplicationContext appContext = new ClassPathXmlApplicationContext("/test-context.xml");
+    IItemBankRepository _itemRepository = appContext.getBean ("ibRepository",IItemBankRepository.class);
+    
+    
+    for(int i=0;i<3000;i++) {
+      new Thread (new TestAccomodationThread(_itemRepository)).start ();
+    }
+    for(int i=0;i<3000;i++) {
+      new Thread (new TestAccomodationThread(_itemRepository)).start ();
+    }
+    for(int i=0;i<1000;i++) {
+      new Thread (new TestAccomodationThread(_itemRepository)).start ();
+    }
+  }
+  
+  static class TestAccomodationThread implements Runnable
+  {
+    IItemBankRepository _itemRepository;
+    public TestAccomodationThread(IItemBankRepository itemRepository) {
+      this._itemRepository = itemRepository;
+    }
+   @Override
+   public void run () {
+     try {
+       AccList accList = _itemRepository.getTestAccommodations ("(SBAC_PT)SBAC-Mathematics-11-Spring-2013-2015");
+     } catch (ReturnStatusException e) {
+       e.printStackTrace();
+     }
+   }
+    
+  }
+ 
+  
+  @Test
   public void testGetTestAccommodations () throws Exception{
     try {
-      AccList accList = _itemRepository.getTestAccommodations ("(Oregon)Oregon-Student Help-NA-Winter-2011-2012");
+      //AccList accList = _itemRepository.getTestAccommodations ("(Oregon)Oregon-Student Help-NA-Winter-2011-2012");
+      AccList accList = _itemRepository.getTestAccommodations ("(SBAC_PT)SBAC-Mathematics-11-Spring-2013-2015");
+      
       Assert.assertTrue (accList.size () > 0);
       if (accList != null)
         _logger.info ("SIZE::" + accList.getDependencies ().size ());

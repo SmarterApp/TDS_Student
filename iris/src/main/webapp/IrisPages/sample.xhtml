@@ -13,8 +13,29 @@
 	<tds:CSSLink href="~/IrisStyles/jd.css" media="screen" type="text/css" rel="stylesheet" />
 	<tds:CSSLink href="~/IrisStyles/jd_002.css" media="screen" type="text/css" rel="stylesheet" />
 	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.9.0/build/container/assets/skins/sam/container.css" />
+
+	<style>
+.boxBtn {
+	border: none;
+	margin-top: 10px;
+	margin-left: 20px;
+}
+
+.boxBtn:hover {
+	background-color: #591c38;
+}
+
+.txtArea {
+	width: 90%;
+	height: 50px;
+	margin-top: 10px;
+	margin-left: 10px;
+}
+</style>
+
 </h:head>
 <h:body>
+
 	<div id="page">
 		<div id="header">
 			<div id="header_title">
@@ -23,28 +44,32 @@
 			<div class="clear"></div>
 		</div>
 		<div id="body">
-			<textarea id="txtToken" rows="2" cols="50"></textarea>
-			<button id="btnLoadToken">Load Token</button>
+			<textarea id="txtToken" rows="2" cols="50" class="txtArea"></textarea>
+			<button id="btnLoadToken" class="boxBtn">Load Token</button>
 			<br /> <br />
 
-			<textarea id="txtResponse" rows="2" cols="50"></textarea>
-			<button id="btnSetResponse">Set Response</button>
-			<button id="btnGetResponse">Get Response</button>
+			<textarea id="txtResponse" rows="2" cols="50" class="txtArea"></textarea>
+			<button id="btnSetResponse" class="boxBtn">Set Response</button>
+			<button id="btnGetResponse" class="boxBtn">Get Response</button>
 			<br /> <br />
-
+			<hr width="100%" style="display: block" />
 			<!-- IriS viewport -->
-			<iframe src="/iris/" width="1000" height="650"></iframe>
+			<!-- Note: Change the src below to whatever IRiS website you want to use.
+				Please now how the url only contains the context/application name and not 
+				a page url and is terminated with a "/". This is required. Scripts use 
+				this root URL to create XHR end points and resources.
+			 -->
+			<iframe src="http://iris-dev.opentestsystem.org:8080/iris/" width="1000" height="650" frameBorder="0"></iframe>
 		</div>
 	</div>
-
-
 
 
 	<script type="text/javascript">
 		// In our case the first frame is the content frame but use whichever frame is the content frame in your particular application.
 		IRiS.setFrame(frames[0]);
 
-		// set the vendor guid - in the OSS IRiS case we do not care for this.
+		// set the vendor guid.
+		//Note: in the OSS IRiS case we do not care for this.
 		var vendorId = '2B3C34BF-064C-462A-93EA-41E9E3EB8333';
 
 		function disableAll() {
@@ -62,35 +87,6 @@
 			alert(msg);
 		}
 
-		// load item bank/item keys
-		$('#btnLoadItem').on('click', function(evt) {
-
-			// get parameters
-			var bankKey = $('#txtBankKey').val() * 1;
-			var itemKey = $('#txtItemKey').val() * 1;
-			var response = $('#txtResponse').val();
-
-			// check parameters
-			if (bankKey > 0 &amp;&amp; itemKey > 0) {
-				var request = {
-					items : [ {
-						bankKey : bankKey,
-						itemKey : itemKey,
-						response : response
-					} ]
-				}
-
-				IRiS.loadItem(request).done(function() {
-					enableAll();
-				}).fail(function(err) {
-					processError(err);
-				});
-
-			} else {
-				alert('Must enter valid key format');
-			}
-		});
-
 		// load secure token
 		$('#btnLoadToken').on('click', function() {
 			var token = $('#txtToken').val();
@@ -98,6 +94,8 @@
 				enableAll();
 			}).fail(function(err) {
 				processError(err);
+			}).always(function() {
+				enableAll();
 			});
 		});
 

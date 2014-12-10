@@ -4,6 +4,10 @@ This code implements the XDM API for use within item preview app.
 
 (function (XDM, CM) {
 
+    // set read only
+    CM.setReadOnly(true);
+
+    // setup cross domain api 
     XDM.init(window);
 
     function loadContent(xmlDoc) {
@@ -19,15 +23,16 @@ This code implements the XDM API for use within item preview app.
         page.once('loaded', function () {
             TDS.Dialog.hideProgress();
             page.show();
+            deferred.resolve();
         });
-        return deferred;
+        return deferred.promise();
     }
     
     function loadToken(vendorId, token) {
         TDS.Dialog.showProgress();
         var url = location.href + '/Pages/API/content/load?id=' + vendorId;
         return $.post(url, token, null, 'text').then(function (data) {
-            loadContent(data);
+            return loadContent(data);
         });
     }
 

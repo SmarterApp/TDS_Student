@@ -24,7 +24,8 @@ import org.springframework.stereotype.Component;
 
 import tds.student.sql.abstractions.IItemBankRepository;
 import tds.student.sql.data.AccList;
-import tds.student.sql.data.AccList.Data;
+import tds.student.sql.data.AccListParseData;
+import tds.student.sql.data.Data;
 import tds.student.sql.data.TestForm;
 import tds.student.sql.data.TestGrade;
 import tds.student.sql.data.TestProperties;
@@ -164,7 +165,7 @@ public class ItemBankRepository extends AbstractDAO implements IItemBankReposito
       Iterator<DbResultRecord> records = firstResultSet.getRecords ();
       while (records.hasNext ()) {
         DbResultRecord record = records.next ();
-        AccList.Data accData = AccList.parseData (record);
+        Data accData = AccListParseData.parseData (record);
         // HACK: Skip loading non-functional accommodations
         if (!accData.isFunctional ())
           continue;
@@ -175,9 +176,9 @@ public class ItemBankRepository extends AbstractDAO implements IItemBankReposito
       records = secondResultSet.getRecords ();
       while (records.hasNext ()) {
         DbResultRecord record = records.next ();
-        accList.getDependencies ().add (AccList.parseDependency (record));
+        accList.getDependencies ().add (AccListParseData.parseDependency (record));
       }
-      Collections.sort (accList, new Comparator<AccList.Data> ()
+      Collections.sort (accList, new Comparator<Data> ()
       {
         @Override
         public int compare (Data acc1, Data acc2) {
