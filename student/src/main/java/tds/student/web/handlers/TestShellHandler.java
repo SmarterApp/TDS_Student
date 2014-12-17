@@ -124,7 +124,19 @@ public class TestShellHandler extends TDSHandler
         _printService.printPassage (testOpp.getOppInstance (), pageToPrint, accDelimited);
       }
 
-    } else if (type.equals ("item")) {
+    } else if (type.equals ("page"))
+    {
+      if (accProps.isBrailleEnabled ())
+      {
+        _printService.printPageBraille (testOpp, pageToPrint, accLookup);
+      }
+      else
+      {
+        _printService.printPage (testOpp.getOppInstance (), pageToPrint, accDelimited);
+      }
+
+    }
+    else if (type.equals ("item")) {
       // find the item
       ItemResponse itemToPrint = (ItemResponse) CollectionUtils.find (pageToPrint, new Predicate ()
       {

@@ -25,6 +25,7 @@
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/Pages/API/*</url-pattern>
+		<url-pattern>/Pages/Pages/API/*</url-pattern>
 		<url-pattern>/API.axd/*</url-pattern>
 		<url-pattern>/TIS/API/*</url-pattern>
 		<url-pattern>/Pages/SpellEngine.axd/*</url-pattern>
