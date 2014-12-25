@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -105,7 +106,9 @@ public class TestShellHandler extends TDSHandler
   @RequestMapping (value = "TestShell.axd/print")
   @ResponseBody
   public void Print (@RequestParam (value = "type", required = false) String type, @RequestParam (value = "page", required = false) int page,
-      @RequestParam (value = "position", required = false) final Integer position, @RequestParam (value = "accommodations", required = false) String accDelimited) throws TDSSecurityException,
+      @RequestParam (value = "pageKey", required = false) UUID pageKey,
+      @RequestParam (value = "params", required = false) String requestParams,
+      @RequestParam (value = "position", required = false) final Integer position) throws TDSSecurityException,
       ReturnStatusException {
     checkAuthenticated ();
 
@@ -121,7 +124,7 @@ public class TestShellHandler extends TDSHandler
       if (accProps.isBrailleEnabled ()) {
         _printService.printPassageBraille (testOpp, pageToPrint, accLookup);
       } else {
-        _printService.printPassage (testOpp.getOppInstance (), pageToPrint, accDelimited);
+        _printService.printPassage (testOpp.getOppInstance (), pageToPrint, requestParams);
       }
 
     } else if (type.equals ("page"))
@@ -132,7 +135,7 @@ public class TestShellHandler extends TDSHandler
       }
       else
       {
-        _printService.printPage (testOpp.getOppInstance (), pageToPrint, accDelimited);
+        _printService.printPage (testOpp.getOppInstance (), pageToPrint, requestParams);
       }
 
     }
@@ -150,7 +153,7 @@ public class TestShellHandler extends TDSHandler
       if (accProps.isBrailleEnabled ()) {
         _printService.printItemBraille (testOpp, itemToPrint, accLookup);
       } else {
-        _printService.printItem (testOpp.getOppInstance (), itemToPrint, accDelimited);
+        _printService.printItem (testOpp.getOppInstance (), itemToPrint, requestParams);
       }
     }
   }
