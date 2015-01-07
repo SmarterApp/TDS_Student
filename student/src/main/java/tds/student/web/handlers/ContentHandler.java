@@ -212,6 +212,12 @@ public class ContentHandler extends BaseContentRendererController
 
       // create item render object, this represents a renderable item
       IItemRender itemRender = new ItemRender (item.getDocument (), item.getPosition ());
+      //EF: resetting itemkey and bankkey to values from itembank db 
+      // rather than values read from item xml file.
+      // it is done to try to be consistent with
+      // response to Response.axd/update web API
+      itemRender.getItem ().setItemKey (item.getItemKey ());
+      itemRender.getItem ().setBankKey (item.getBankKey ());
       itemRender.setResponse (item.getValue ());
       itemRender.setDisabled (false);
       itemRender.setMark (item.isMarkForReview ());

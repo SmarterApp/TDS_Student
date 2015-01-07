@@ -85,6 +85,8 @@ Like other SBAC applications, Student must be set up with active profiles and pr
 -Djavax.net.ssl.trustStorePassword="xxxxxx"
 ```
 
+* Add the `vvt` mime type to Tomcat’s *web.xml* file for the student site. This enables support for closed-captioning.
+
 ## Program Management Properties
 Program Management properties need to be set for running Student. Example Student properties at [/Documents/Installation/student-progman-config.txt](https://bitbucket.org/sbacoss/studentdev/src/dc1a542849ebc6c51aceeca2ccc90e6149e4c8c1/Documents/Installation/student-progman-config.txt?at=default)
 
