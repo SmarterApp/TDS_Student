@@ -7,7 +7,7 @@
   </parent>
   <groupId>AIR.SpellCheck</groupId>
   <artifactId>spellcheck</artifactId>
-  <version>0.0.1</version>
+  <version>R01.00.17</version>
   <name>spellcheck</name>
   
   	<licenses>

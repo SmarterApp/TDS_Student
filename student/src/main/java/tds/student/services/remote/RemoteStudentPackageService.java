@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component;
 
 import tds.student.services.abstractions.IStudentPackageService;
 import tds.student.sql.abstractions.IOpportunityRepository;
+import tds.student.sql.abstractions.ITestRepository;
 import AIR.Common.Utilities.UrlEncoderDecoderUtils;
 
 @Component
@@ -40,6 +41,9 @@ public class RemoteStudentPackageService implements IStudentPackageService
   @Autowired
   private IOpportunityRepository _oppRepository;
 
+  @Autowired
+  private ITestRepository _testRepository;
+  
   @Value ("${StateCode}")
   private String              _stateCode;
 
@@ -72,9 +76,17 @@ public class RemoteStudentPackageService implements IStudentPackageService
 
   @Override
   @Async
-  public void sendTestStatus ( TestStatus testStatus ) {
+  public void sendTestStatus (TestStatus testStatus ) {
     try {
+      
+      String testId = _testRepository.getTrTestId (testStatus.getStudentId (), testStatus.getTestId ());
+      if (testId == null) {
+        _logger.warn ("RemoteStudentPackageService.sendTestStatus: TR Test ID not found for " + testStatus.getTestId ());
+        return;
+      }
+      testStatus.setTestId (testId);
       testStatus.setStateAbbreviation (_stateCode.toUpperCase ());
+      
       TestStatus[] testStatuses = new TestStatus[1];
       testStatuses[0] = testStatus;
       _trClient.put ("testStatus", testStatuses);

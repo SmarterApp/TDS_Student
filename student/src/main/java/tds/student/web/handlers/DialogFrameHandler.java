@@ -1,10 +1,10 @@
 /*******************************************************************************
- * Educational Online Test Delivery System 
- * Copyright (c) 2014 American Institutes for Research
- *     
- * Distributed under the AIR Open Source License, Version 1.0 
- * See accompanying file AIR-License-1_0.txt or at
- * http://www.smarterapp.org/documents/American_Institutes_for_Research_Open_Source_Software_License.pdf
+ * Educational Online Test Delivery System Copyright (c) 2014 American
+ * Institutes for Research
+ * 
+ * Distributed under the AIR Open Source License, Version 1.0 See accompanying
+ * file AIR-License-1_0.txt or at http://www.smarterapp.org/documents/
+ * American_Institutes_for_Research_Open_Source_Software_License.pdf
  ******************************************************************************/
 package tds.student.web.handlers;
 
@@ -29,28 +29,32 @@ import AIR.Common.Web.WebHelper;
 
 /**
  * @author mpatel
- *
+ * 
  */
 @Scope ("prototype")
 @Controller
 public class DialogFrameHandler extends TDSHandler
 {
-  
-  private static Logger _logger = LoggerFactory.getLogger (DialogFrameHandler.class);
+
+  private static Logger       _logger       = LoggerFactory.getLogger (DialogFrameHandler.class);
   @Autowired
   private IItemBankRepository _ibRepository = null;
-  
+
   @Autowired
-  private PageLayout _pageLayout;
-  
+  private PageLayout          _pageLayout;
+
   @RequestMapping (value = "DialogFrame.axd/getContent", produces = "application/xml")
   @ResponseBody
-  public String getDialogFrameContent() {
- // get query String params
+  public String getDialogFrameContent () {
+    // get query String params
     long bankKey = WebHelper.getQueryValueLong ("bankKey");
     long itemKey = WebHelper.getQueryValueLong ("itemKey");
 
-    String contentLanguage = StudentContext.getLanguage ();
+    //SB-483
+    String contentLanguage = WebHelper.getQueryString ("language");
+    if (StringUtils.isEmpty (contentLanguage))
+      contentLanguage = StudentContext.getLanguage ();
+
     String studentHelpFile;
 
     try

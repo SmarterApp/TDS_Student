@@ -31,6 +31,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 
+import tds.dll.api.ICommonDLL;
+import tds.dll.api.IReportingDLL;
 import tds.dll.api.IStudentDLL;
 import AIR.Common.DB.AbstractDAO;
 import AIR.Common.DB.DATABASE_TYPE;
@@ -54,6 +56,10 @@ public class TestStudentDLL extends AbstractTest
   @Autowired
   @Qualifier ("iStudentDLL")
   IStudentDLL                 _dll    = null;
+  
+  @Autowired
+  @Qualifier ("iCommonDLL")
+  ICommonDLL                 _commondll    = null;
 
   @Autowired
   AbstractDateUtilDll         _dateUtil;
@@ -853,7 +859,7 @@ public class TestStudentDLL extends AbstractTest
     _Ref<Long> newIdRef = new _Ref<> ();
 
     try (SQLConnection connection = _myDllHelper.getSQLConnection ()) {
-      _dll._CreateClientReportingID_SP (connection, clientname, oppKey, newIdRef);
+      _commondll._CreateClientReportingID_SP (connection, clientname, oppKey, newIdRef);
       _logger.info (String.format ("NewID: %d", newIdRef.get ()));
       // each call c=increases newid number, that's why we do not check for
       // known
@@ -869,7 +875,7 @@ public class TestStudentDLL extends AbstractTest
     _Ref<Long> newIdRef = new _Ref<> ();
 
     try (SQLConnection connection = _myDllHelper.getSQLConnection ()) {
-      _dll._CreateClientReportingID_SP (connection, clientname, oppKey, newIdRef);
+      _commondll._CreateClientReportingID_SP (connection, clientname, oppKey, newIdRef);
       _logger.info (String.format ("NewID: %d", newIdRef.get ()));
       assertTrue (newIdRef.get () == null);
     }
