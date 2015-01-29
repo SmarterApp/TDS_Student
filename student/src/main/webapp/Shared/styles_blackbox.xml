@@ -30,7 +30,7 @@
         <input>../Scripts/EquationEditor3/custom_eq_editor.css</input>
         <input>../Scripts/LineReader/lineReader.css</input>
         <input>../Scripts/MatchItem/mi.css</input>
-        <input>../Scripts/Slideshow/show.css</input>
+        <input>../Scripts/Slideshow2/show.css</input>
         <input>../Scripts/Simulator2/Renderer/CSS/simulator.css</input>
         <input>../Scripts/Simulator2/Renderer/CSS/slider.css</input>
         <input>../Scripts/HTMLEditor2/editor.css</input>
@@ -41,12 +41,15 @@
         <input>../Scripts/Mask/mask.css</input>
         <input>../Scripts/TableInput/base.css</input>
         <input>../Scripts/Moogle/CSS/moogle.css</input>
+        <input>../Scripts/Audio2/ClosedCaptioning.css</input>
 
     </fileSet>
 
     <fileSet name="navigator_widgets">
         <input>../Scripts/Interaction/CSS/interaction.css</input>
-        <input>../Scripts/EquationEditor2/mathjax_editor.css</input>
+        <!--<input>../Scripts/EquationEditor2/mathjax_editor.css</input>-->
+        <input>../Scripts/EquationEditor3/eq_editor.css</input>
+        <input>../Scripts/EquationEditor3/custom_eq_editor.css</input>
         <input>../Scripts/Simulator2/Renderer/CSS/simulator.css</input>
         <input>../Scripts/Simulator2/Renderer/CSS/slider.css</input>
         <input>../Scripts/EditTask/edit.css</input>
@@ -99,9 +102,9 @@
         <input>../Scripts/Libraries/YUI/editor/assets/skins/sam/editor.css</input>
 
         <!-- Shell -->
-        <input>CSS/modernFrame.css</input>
+        <input>CSS/Modern/frame.css</input>
         <input>CSS/normalize.css</input>
-        <input>CSS/modernShell.css</input>
+        <input>CSS/Modern/shell.css</input>
         <input>../Projects/{0}/css/modernShell.css</input>
         <input>CSS/dialogs.css</input>
         <input>CSS/accommodations.css</input>

@@ -31,6 +31,9 @@ hr, .clear {
 	display: block;
 	clear: both;
 }
+caption {
+	text-align: left;
+}
 .noSpace {
 	margin-bottom: -20px !important;
 	font-style: italic;

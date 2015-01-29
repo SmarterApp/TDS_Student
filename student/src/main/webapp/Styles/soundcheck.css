@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 
 #sectionSoundCheck .instructions, #sectionTTSCheck .instructions {
 	border: none;
@@ -68,13 +68,15 @@
 #TTS_Adjustments .actions {
 	margin-bottom: 1em;
 }
-#TTS_Adjustments h2 {
+#TTS_Adjustments h2,
+#sectionSoundCheck h2 {
 	margin-top: -1.5em;
 	background: url(../Images/masterShell/plus.png) no-repeat right top;
 	display: block;
 	text-align: center;
 } 
-#TTS_Adjustments .sliderWrap {
+#TTS_Adjustments .sliderWrap,
+#sectionSoundCheck .sliderWrap {
 	background: url(../Images/masterShell/minus.png) no-repeat left top;
 }
 
@@ -82,11 +84,11 @@
 	display: none;
 }
 
-#TTS_Adjust_Pitch, #TTS_Adjust_Volume, #TTS_Adjust_Rate{
+#TTS_Adjust_Pitch, #TTS_Adjust_Volume, #TTS_Adjust_Rate, #SoundCheck_Adjust_Volume{
     background:url(../Scripts/Libraries/YUI/slider/assets/bg-fader.gif) 5px bottom no-repeat;
     padding-top: 1.5em;
 }
-#TTS_Adjust_Pitch .yui-slider-thumb img, #TTS_Adjust_Volume .yui-slider-thumb img, #TTS_Adjust_Rate .yui-slider-thumb img {
+#TTS_Adjust_Pitch .yui-slider-thumb img, #TTS_Adjust_Volume .yui-slider-thumb img, #TTS_Adjust_Rate .yui-slider-thumb img, #SoundCheck_Adjust_Volume .yui-slider-thumb img {
 	margin-top: 1.7em !important;
 }
 

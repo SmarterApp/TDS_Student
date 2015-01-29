@@ -61,12 +61,14 @@
 }
 #ot-brand2 {
 	border-bottom-color: #4d83c3;
-	background: url(../images/lighthouse_bottom.gif) no-repeat right;
-	height: 28px;
+	background: url(../images/lighthouse_bottom.gif) no-repeat right top;
+	height: 73px;
+	position: relative;
+	overflow: hidden;
 }
 #ot-brand2 strong {
 	border-left: none;
-	float: left;
+	float: none;
 	color: #fff;
 	background: url(../../../Images/masterShell/tablet/tablet_sm_white.png) no-repeat #3983ac 5px center;
 	padding-top: 0px;
@@ -74,6 +76,8 @@
 	height: 45px;
 	line-height: 45px;
 	margin-top: 29px;
+	position: absolute;
+	width: 100%;
 }
 .practiceTest #ot-brand2 strong {
 	/*background-image: url(../images/bike/bikeTop.gif);
@@ -101,7 +105,8 @@
 .actions .positive button {
 	color: #0d4373;
 }
-.actions .positive button:hover, #sectionLogin .actions button:hover {
+.actions .positive button:hover, #sectionLogin .actions button:hover,
+.actions .positive button:hover, .actions .positive input:hover, .actions .positive button:active, .actions .positive input:active, .actions .positive button:focus, .actions .positive input:focus {
 	background-color: #0d4373 !important;
 }
 /* @end */
@@ -122,16 +127,15 @@
 	background-color: #0F6797;
 }
 #diagnostics .browserVersion {
-	color: #A6C9E3;
+	color: #0F6797;
 }
 #diagnostics a {
-    color: #0F6797;
+    color: #0F4066;
     display: none;
     float: left;
-    text-decoration: none;
 }
 #diagnostics a:focus, #diagnostics a:active, #loginLinks a:focus, #loginLinks a:active {
-    color: #FFF !important;
+    
 }
 #loginLinks a {
 	color: #0F6797 !important;
@@ -228,26 +232,8 @@ body.practiceTest .proctorMessage {
 }*/
 /* @end */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*Theme specific styles for Bug 153388 */
+.TDS_Glogin_User_Hide.TDS_Glogin_Session_Hide .tds-button.positive
+{
+    border-color: #0d4373;
+}

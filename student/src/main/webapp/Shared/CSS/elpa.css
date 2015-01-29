@@ -1,4 +1,4 @@
-﻿@charset "UTF-8";
+@charset "UTF-8";
 /* CSS Document */
 
 /* @group Contextual Help */
@@ -321,6 +321,21 @@ a.contexthelp:hover {
 
 .abcd .key-delete {
 	float:right;
+}
+.TDS_IF_S14 .keyboard {
+	font-size: .86em;
+}
+.TDS_IF_S14.TDS_PS_L1 .keyboard {
+	font-size: .95em;
+}
+.TDS_IF_S14.TDS_PS_L2 .keyboard {
+	font-size: 1em;
+}
+.TDS_IF_S14.TDS_PS_L3 .keyboard {
+	font-size: 1.16em;
+}
+.TDS_IF_S14.TDS_PS_L4 .keyboard {
+	font-size: 1.25em;
 }
 
 /* @end */

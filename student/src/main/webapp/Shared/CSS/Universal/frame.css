@@ -6,9 +6,23 @@
    Selection can be enabled on sub-elements using "-moz-user-select:text". */
 body * {
     -moz-user-select: -moz-none; 
-    -webkit-user-select: none; 
+    -webkit-user-select: none;
     -ms-user-select: none; 
 }
+
+/* Bug #141857 === works, but have to manually add each element we don't want selectable === */
+body.platform_ios * {
+	-webkit-user-select: text;
+}
+body.platform_ios .optionContainer *, 
+body.platform_ios .questionNumber, 
+body.platform_ios .toolsContainer, 
+body.platform_ios #dialogs *,
+body.platform_ios #topBar * {
+	-webkit-user-select: none !important;
+	user-select: none !important;
+}
+
 
 /* The text can be selected by the user on the passage and stem */
 .thePassage.contextAreaFocus *, 

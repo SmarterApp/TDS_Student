@@ -360,7 +360,9 @@ div#tools div.tool iframe {
     text-decoration: none;
 	background: url(../Images/modern/sprites_mobile_0.png) center -2730px no-repeat;
 }
-.yui-skin-sam .container-close:hover {
+.yui-skin-sam .container-close:hover, 
+.yui-skin-sam .container-close:active, 
+.yui-skin-sam .container-close:focus {
 	background-position: center -2831px;
 	text-decoration:underline;
 	color: #FFFFFF;
@@ -522,7 +524,7 @@ div#tools div.tool iframe {
 .ft.noTTS .noTTS {
 	display: inline;
 	font-weight: bold;
-	color: red;
+	color: #AD1A00;
 }
 .noTTS .button-group, .hasTTS .button-group{
 	float: right;
@@ -618,8 +620,10 @@ div#tools div.tool iframe {
 /* @end */
 
 
-.platform_android #tools .ttsHelpSpeakButtonClass button, .platform_android #tools .container-close {
-	margin-top: -3px;
+/* Not sure why this was here but it looks like it is causing Bug 148237*/
+/*.platform_android #tools .ttsHelpSpeakButtonClass button, */
+.platform_android #tools .container-close {
+	margin-top: -4px;
 }
 
 

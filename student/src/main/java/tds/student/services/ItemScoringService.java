@@ -244,7 +244,7 @@ public class ItemScoringService implements IItemScoringService
 
     dbTimer.stop ();
 
-    if (updateStatus.getStatus () != "updated" && updateStatus.getStatus () != "warning") {
+    if (!updateStatus.getStatus ().equals ("updated") && !updateStatus.getStatus ().equals ("warning")) {
       throw new ReturnStatusException (updateStatus);
     }
 

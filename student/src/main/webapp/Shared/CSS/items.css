@@ -613,10 +613,16 @@ a.markReviewDisabled, a.markReviewDisabled:hover {
 	float:left;
 }
 /* clears the question for the question number */
-.questionCell p, .questionContainer p {
+.questionCell p, 
+.questionContainer p {
 	display: block;
 	clear: both;
 }
+.questionCell .optionContainer p, 
+.questionContainer .optionContainer p {
+	clear: inherit;
+}
+
 .bigTable  .thePassage h2 {
 	text-transform: uppercase;
 	font-size: 1.3em;
@@ -2595,7 +2601,9 @@ BUG: This code prevents svgweb from loading.
 .TDS_CCGray2 .TDS_WORD_LIST {
 	border-color: #000;
 }
-.TDS_WORD_LIST:hover
+.TDS_WORD_LIST:hover, 
+.TDS_WORD_LIST:active, 
+.TDS_WORD_LIST:focus
 {
     background-color: #6bd4fc;
     background-color: rgba(0, 174, 239, .3);

@@ -102,7 +102,8 @@
 	border-color: #0d4373;
 	color: #0d4373;
 }
-.actions .positive:hover, #sectionLogin .actions a:hover,.actions .positive button:hover, .actions .positive input:hover {
+.actions .positive:hover, #sectionLogin .actions a:hover,.actions .positive button:hover, .actions .positive input:hover,
+.actions .positive button:hover, .actions .positive input:hover, .actions .positive button:active, .actions .positive input:active, .actions .positive button:focus, .actions .positive input:focus {
 	background-color: #0d4373 !important;
 }
 /* @end */
@@ -124,13 +125,12 @@
 	background-color: #0F6797;
 }
 #diagnostics .browserVersion {
-	color: #A6C9E3;
+	color: #606060;
 }
 #diagnostics a {
-    color: #0F6797;
+    color: #1A5D8B;
     display: none;
     float: left;
-    text-decoration: none;
 }
 #diagnostics a:focus, #diagnostics a:active, #loginLinks a:focus, #loginLinks a:active {
     color: #FFF !important;

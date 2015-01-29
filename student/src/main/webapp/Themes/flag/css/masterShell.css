@@ -16,26 +16,28 @@
 /* @group header and footer */
 #tds-ot-header {
 	border-bottom: none;
-	background: #7da5c7 url(../images/flag.jpg) no-repeat right top;
+	background: #5487ab url(../images/flag.png) no-repeat 115% -60px;
 	
 	border-bottom: 1px solid #44515b;
 }
 .browser_safari #ot-topBar{
 	max-width: 100%;
 	overflow: hidden;
-	margin-right: 5px;
+	/*margin-right: 5px; removing due to Bug 147471*/
+	margin-right: 0px;
 	padding: 0;
 }
+/* removing due to Bug 147471
 .browser_safari #ot-topBar a#btnHelp{
 	min-width: 25px;
 	display: block;
-}
+}*/
 
 #tds-ot-branding {
 	background-color: transparent;
 }
 #ot-topBar {
-	background-color: transparent;
+	background-color: #820024;
 	color: #fff;
 	border-bottom: none;
 }
@@ -85,7 +87,6 @@
 #ot-brand2 {
 	background: url(../images/title.png) no-repeat 20px 0px transparent;
 	border: none !important;
-	height: 28px;
 }
 .browser_ie.browserVer_6 #ot-brand2{ background: url(../images/title.gif) no-repeat 20px 0px transparent; }
 
@@ -93,14 +94,14 @@
 	border-left: none;
 	color: #fff;
 	margin-left: 0px;
-	background: url(../../../Images/masterShell/tablet/tablet_sm_white.png) 5px center no-repeat #ee0131;
+	background: url(../../../Images/masterShell/tablet/tablet_sm_white.png) 5px center no-repeat #820024;
 	padding-top: 0px;
 	padding-bottom: 0px;
 	margin-top: 29px;
 	font-weight: normal;
-	float: left;
-	border: none;
-	width: 100%;
+	float: none;
+	width: auto;
+	display: block;
 }
 
 
@@ -149,8 +150,9 @@
 	border-color: #034577;
 	background-color: #034577;
 }
-#sectionLogin .actions .positive:hover span button{
-	color: #fff;
+#sectionLogin .actions .positive:hover span button,
+.actions .positive button:hover, .actions .positive input:hover, .actions .positive button:active, .actions .positive input:active, .actions .positive button:focus, .actions .positive input:focus{
+	color: #fff !important;
 	border-color:#034577;
 	background-color: #034577 !important;
 }
@@ -164,16 +166,20 @@
 	background-color: #034577;
 }
 #diagnostics .browserVersion {
-	color: #A6C9E3;
+	color: #777777;
 }
 #diagnostics a {
-    color: #0F6797;
+    color: #034577;
     display: none;
     float: left;
-    text-decoration: none;
+    text-decoration: underline;
 }
+    #diagnostics a:hover
+    {
+        text-decoration: none;
+    }
 #diagnostics a:focus, #diagnostics a:active, #loginLinks a:focus, #loginLinks a:active {
-    color: #FFF !important;
+    
 }
 #loginLinks a {
 	color: #0F6797 !important;
@@ -287,25 +293,3 @@ fieldset.sessionID legend{
 	min-width: 10em;
 }
 
-/* ohio - disable user credentals of login on practice test site */
-.practiceTest #loginForm1{
-	border-color: #ccc;
-	color: #ccc;
-}
-.practiceTest #loginForm1 .checkHolder{
-	background-color: #ccc;
-}
-.practiceTest #loginForm1 .checkHolder input{
-	visibility: hidden;
-	-moz-user-select: none;
-	-webkit-user-select:none;
-	user-select: none;
-}
-.practiceTest #loginForm1 input{
-	color: #ccc;
-}
-.goPractice{
-	background-image: url(../../../Images/goPractice-blank.png);
-	background-position: 100% -4px;
-}
-/* end */

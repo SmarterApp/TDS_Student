@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>org.opentestsystem.shared</groupId>
 		<artifactId>shared-master</artifactId>
-		<version>1.0.1</version>
+		<version>1.0.1-BUILD-SNAPSHOT</version>
 	</parent>
 	
 	<groupId>AIR</groupId>
 	<artifactId>ResourceBundler</artifactId>
-	<version>R01.00.17</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>ResourceBundler</name>

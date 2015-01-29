@@ -30,8 +30,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.HtmlUtils;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import tds.itemrenderer.data.AccLookup;
 import tds.itemrenderer.data.AccProperties;
 import tds.student.services.PrintService;
@@ -57,13 +55,14 @@ import tds.student.web.StudentContext;
 import tds.student.web.TestManager;
 import tds.student.web.data.TestShellAudit;
 import AIR.Common.TDSLogger.ITDSLogger;
-import AIR.Common.Utilities.UrlEncoderDecoderUtils;
 import AIR.Common.Web.TDSReplyCode;
 import AIR.Common.Web.Session.HttpContext;
 import AIR.Common.data.ResponseData;
 import TDS.Shared.Data.ReturnStatus;
 import TDS.Shared.Exceptions.ReturnStatusException;
 import TDS.Shared.Exceptions.TDSSecurityException;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author mpatel

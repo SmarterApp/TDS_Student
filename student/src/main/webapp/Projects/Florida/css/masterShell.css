@@ -33,7 +33,7 @@
 
 
 /* @group Force ananyomous login for now */
-
+/*
 .practiceTest .loginForm {
 	opacity: .3;
 	pointer-events:none;
@@ -54,7 +54,7 @@
 .practiceTest #loginForm1, 
 .practiceTest #loginForm2 {
     border-color: #ccc;
-}
+}*/
 
 /* @end */
 

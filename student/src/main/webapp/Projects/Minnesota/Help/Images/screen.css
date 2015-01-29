@@ -52,6 +52,9 @@ body {
 	border-left-style: solid;
 	border-left-color: #999999;
 }
+caption {
+	text-align: left;
+}
 .TDS_PS_L1 #navigation {
 	width:250px;
 }

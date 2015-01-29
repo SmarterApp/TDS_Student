@@ -6,20 +6,22 @@
 /* @group Header Stuff */
 
 #ot-logo_spot1 {
-	background-image:url(../images/logo_delaware_alt_large.gif);
+	background-image:url(../images/logo2.png);
 	width: 350px;
 }
 #tds-ot-header {
-	background-color: #6bad63;
+	
 }
 #tds-ot-branding {
-    background-color: inherit;
+    background: url(../images/lightgreenlighthouse.png) #aae095 no-repeat top right;
 }
 #ot-brand1 {
-    background: transparent url(../images/lighthouse_top.gif) no-repeat right bottom;
+    /*background: transparent url(../images/lighthouse_top.gif) no-repeat right bottom;*/
+	background: transparent;
 }
 #ot-brand2 {
-    background: url("../images/lighthouse_bottom.gif") no-repeat scroll right center transparent;
+    /*background: url("../images/lighthouse_bottom.gif") no-repeat scroll right center transparent;*/
+	background: transparent;
     border-bottom-color: #4D83C3;
     height: 28px;
 }

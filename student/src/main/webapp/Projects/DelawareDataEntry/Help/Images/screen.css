@@ -44,6 +44,9 @@ body {
 	/* scrollbars show up in Mozilla when they shouldn't 
 	overflow: hidden;*/
 }
+caption {
+	text-align: left;
+}
 #helpContent {
 	left:200px;
 	width:500px;

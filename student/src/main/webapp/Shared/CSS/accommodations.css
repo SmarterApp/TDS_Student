@@ -23,8 +23,15 @@
 .TDS_IF_S14 .thePassage {
 	font-size: 1.3em;
 }
-.TDS_SC0 .commentItem, .TDS_T0 .contexthelp, .TDS_MfR0 .markReview, .TDS_MfR0 .markReviewMarked, .TDS_ItmNum0 .questionContainer h2, .TDS_ItmNum0 .questionCell h2, 
-.TDS_ItmNum0 .bigTable .questionCell h2, .TDS_ItmNum0 .bigTable .questionContainer h2  {
+.TDS_SC0 .commentItem, 
+.TDS_T0 .contexthelp, 
+.TDS_MfR0 .markReview, 
+.TDS_MfR0 .markReviewMarked, 
+.TDS_ItmNum0 .questionContainer h2, 
+.TDS_ItmNum0 .questionCell h2, 
+.TDS_ItmNum0 .bigTable .questionCell h2, 
+.TDS_ItmNum0 .bigTable .questionContainer h2, 
+.TDS_Nav0 #jumpQuestions  {
 	display: none;
 }
 .TDS_SC1 a.commentItem, 
@@ -34,7 +41,8 @@
 .TDS_T1 a.contexthelp, 
 .TDS_MfR1 a.markReview, 
 .TDS_MfR1 a.markReviewMarked, 
-.TDS_PoD_Item a.printItem {
+.TDS_PoD_Item a.printItem, 
+.TDS_GfR1 a.guideToRevision  {
 	display: block !important;
 }
 .TDS_FT_San-Serif, .TDS_FT_San-Serif math, .TDS_FT_San-Serif #contents input, .TDS_FT_San-Serif #contents textarea {
@@ -69,6 +77,17 @@ math {
 .TDS_CalcBasic #navigation a.calculator, .TDS_CalcStd #navigation a.calculator, .TDS_CalcSci #navigation a.calculator, .TDS_CalcGraphing #navigation a.calculator, .TDS_CalcRegress #navigation a.calculator, .TDS_CalcMatrices #navigation a.calculator, .TDS_CalcStdMem #navigation a.calculator, 
 .TDS_F_OR3_5 #navigation a.math, .TDS_FOR6_8Math #navigation a.math, .TDS_F_ORCIM_Math #navigation a.math, .TDS_F_DE_6_8Math #navigation a.math, .TDS_F_DE_9_10Math #navigation a.math, .TDS_F_HI_4Math #navigation a.math, .TDS_F_HI_5Math #navigation a.math, .TDS_F_HI_6Math #navigation a.math, .TDS_F_HI_7Math #navigation a.math, .TDS_F_HI_8Math #navigation a.math, .TDS_F_HI_10Math #navigation a.math, .TDS_F_HI_11Sci #navigation a.math, .TDS_F_HI_AlgII #navigation a.math, .TDS_F_DE_2Math #navigation a.math, .TDS_F_DE_EOC2Math #navigation a.math, 
 .TDS_F_MN_5Math #navigation a.math, .TDS_F_MN_6Math #navigation a.math, .TDS_F_MN_7Math #navigation a.math, .TDS_F_MN_8Math #navigation a.math, .TDS_F_MN_11Math #navigation a.math, .TDS_F_MN_GRADMath #navigation a.math, .TDS_F_AR_9_10Math #navigation a.math, .TDS_F_AR_6_8Math #navigation a.math, .TDS_F_OH_HS_Physics #navigation a.math, .TDS_F_UT_HS_Physics #navigation a.math, .TDS_F_UT_HS_Science #navigation a.math, .TDS_F_UT_HS_PT #navigation a.math, 
+.TDS_F_FL_Math_4 #navigation a.math, 
+.TDS_F_FL_Math_5 #navigation a.math, 
+.TDS_F_FL_Math_6 #navigation a.math, 
+.TDS_F_FL_Math_5-6 #navigation a.math, 
+.TDS_F_FL_Math_7 #navigation a.math, 
+.TDS_F_FL_Math_8 #navigation a.math, 
+.TDS_F_FL_Math_7-8 #navigation a.math, 
+.TDS_F_FL_EOC_Algebra1 #navigation a.math, 
+.TDS_F_FL_EOC_Algebra2 #navigation a.math, 
+.TDS_F_FL_EOC_Geometry #navigation a.math, 
+.TDS_F_FL_EOC_All #navigation a.math, 
 .TDS_F_MO_alg1 #navigation a.math, .TDS_F_MO_alg2 #navigation a.math, .TDS_F_MO_geo #navigation a.math, .TDS_F_MO_math_eoc #navigation a.math, 
 .TDS_R_G35Argue #navigation a#btnRubric, 
 .TDS_R_G35Inform #navigation a#btnRubric, 
@@ -122,7 +141,8 @@ body.TDS_CCYellow .plaintext textarea,
 .TDS_CCYellow .mathjax_editor_nav button:hover, 
 .TDS_CCYellow #helpContent,
 .TDS_CCYellow .ot-innerShadow, 
-.TDS_CCYellow .cke_editable.cke_wysiwyg_div {
+.TDS_CCYellow .cke_editable.cke_wysiwyg_div, 
+.TDS_CCYellow .passage-expanded .maskQuestions {
 	background-color: #ffffce !important;
 }
 body.TDS_CCYellow .multipleChoiceItem {
@@ -156,7 +176,8 @@ body.TDS_CCYellow2 .plaintext textarea,
 .TDS_CCYellow2 .mathjax_editor_nav button:hover, 
 .TDS_CCYellow2 #helpContent,
 .TDS_CCYellow2 .ot-innerShadow, 
-.TDS_CCYellow2 .cke_editable.cke_wysiwyg_div {
+.TDS_CCYellow2 .cke_editable.cke_wysiwyg_div, 
+.TDS_CCYellow2 .passage-expanded .maskQuestions {
 	background-color: #fcfce2 !important;
 }
 body.TDS_CCYellow2 .multipleChoiceItem {
@@ -190,7 +211,8 @@ body.TDS_CCBlue .plaintext textarea,
 .TDS_CCBlue .mathjax_editor_nav button:hover, 
 .TDS_CCBlue #helpContent,
 .TDS_CCBlue .ot-innerShadow, 
-.TDS_CCBlue .cke_editable.cke_wysiwyg_div {
+.TDS_CCBlue .cke_editable.cke_wysiwyg_div, 
+.TDS_CCBlue .passage-expanded .maskQuestions {
 	background-color: #99ffff !important;
 }
 body.TDS_CCBlue .multipleChoiceItem {
@@ -224,7 +246,8 @@ body.TDS_CCBlue2 .plaintext textarea,
 .TDS_CCBlue2 .mathjax_editor_nav button:hover, 
 .TDS_CCBlue2 #helpContent,
 .TDS_CCBlue2 .ot-innerShadow, 
-.TDS_CCBlue2 .cke_editable.cke_wysiwyg_div {
+.TDS_CCBlue2 .cke_editable.cke_wysiwyg_div, 
+.TDS_CCBlue2 .passage-expanded .maskQuestions {
 	background-color: #cfffff !important;
 }
 body.TDS_CCBlue2 .multipleChoiceItem {
@@ -259,7 +282,8 @@ body.TDS_CCMagenta .plaintext textarea,
 .TDS_CCMagenta .mathjax_editor_nav button:hover, 
 .TDS_CCMagenta #helpContent,
 .TDS_CCMagenta .ot-innerShadow, 
-.TDS_CCMagenta .cke_editable.cke_wysiwyg_div {
+.TDS_CCMagenta .cke_editable.cke_wysiwyg_div, 
+.TDS_CCMagenta .passage-expanded .maskQuestions {
 	background-color: #ffd0ff !important;
 }
 body.TDS_CCMagenta .multipleChoiceItem {
@@ -293,7 +317,8 @@ body.TDS_CCMagenta2 .plaintext textarea,
 .TDS_CCMagenta2 .mathjax_editor_nav button:hover, 
 .TDS_CCMagenta2 #helpContent,
 .TDS_CCMagenta2 .ot-innerShadow, 
-.TDS_CCMagenta2 .cke_editable.cke_wysiwyg_div {
+.TDS_CCMagenta2 .cke_editable.cke_wysiwyg_div, 
+.TDS_CCMagenta2 .passage-expanded .maskQuestions {
 	background-color: #fde3fd !important;
 }
 body.TDS_CCMagenta2 .multipleChoiceItem {
@@ -327,7 +352,8 @@ body.TDS_CCGray .plaintext textarea,
 .TDS_CCGray .mathjax_editor_nav button:hover, 
 .TDS_CCGray #helpContent,
 .TDS_CCGray .ot-innerShadow, 
-.TDS_CCGray .cke_editable.cke_wysiwyg_div {
+.TDS_CCGray .cke_editable.cke_wysiwyg_div, 
+.TDS_CCGray .passage-expanded .maskQuestions {
 	background-color: #cecfce !important;
 }
 body.TDS_CCGray .multipleChoiceItem {
@@ -365,7 +391,8 @@ body.TDS_CCGray2 .plaintext textarea,
 .TDS_CCGray2 .mathjax_editor_nav button:hover, 
 .TDS_CCGray2 #helpContent,
 .TDS_CCGray2 .ot-innerShadow, 
-.TDS_CCGray2 .cke_editable.cke_wysiwyg_div {
+.TDS_CCGray2 .cke_editable.cke_wysiwyg_div, 
+.TDS_CCGray2 .passage-expanded .maskQuestions {
 	background-color: #e5e5e5 !important;
 }
 body.TDS_CCMedGrayLtGray, 
@@ -387,8 +414,9 @@ body.TDS_CCMedGrayLtGray .plaintext textarea,
 .TDS_CCMedGrayLtGray div.mathjax_editor_selected_tab:hover, 
 .TDS_CCMedGrayLtGray .mathjax_editor_nav button:hover, 
 .TDS_CCMedGrayLtGray #helpContent,
-.TDS_CCMedGrayLgGray .ot-innerShadow, 
-.TDS_CCMedGrayLgGray .cke_editable.cke_wysiwyg_div {
+.TDS_CCMedGrayLtGray .ot-innerShadow, 
+.TDS_CCMedGrayLtGray .cke_editable.cke_wysiwyg_div, 
+.TDS_CCMedGrayLtGray .passage-expanded .maskQuestions {
 	background-color: #e5e5e5 !important;
 	color: #666;
 }
@@ -422,6 +450,43 @@ body.TDS_CCGray2 .multipleChoiceItem, body.TDS_CCMedGrayLtGray .multipleChoiceIt
 body.TDS_CCGray2 .mc_stacked tr, body.TDS_CCMedGrayLtGray .mc_stacked tr {
 	border-right-color: #e5e5e5;	
 }
+
+.TDS_CCGray .itemTools a, 
+.TDS_CCGray.TDS_PS_L1 .itemTools a, 
+.TDS_CCGray.TDS_PS_L2 .itemTools a, 
+.TDS_CCGray.TDS_PS_L3 .itemTools a, 
+.TDS_CCGray.TDS_PS_L4 .itemTools a, 
+.TDS_CCGray2 .itemTools a, 
+.TDS_CCGray2.TDS_PS_L1 .itemTools a, 
+.TDS_CCGray2.TDS_PS_L2 .itemTools a, 
+.TDS_CCGray2.TDS_PS_L3 .itemTools a, 
+.TDS_CCGray2.TDS_PS_L4 .itemTools a, 
+.TDS_CCMedGrayLtGray .itemTools a, 
+.TDS_CCMedGrayLtGray.TDS_PS_L1 .itemTools a, 
+.TDS_CCMedGrayLtGray.TDS_PS_L2 .itemTools a, 
+.TDS_CCMedGrayLtGray.TDS_PS_L3 .itemTools a, 
+.TDS_CCMedGrayLtGray.TDS_PS_L4 .itemTools a {
+	background-image: url(../Images/universal/universal_itemsprites_grey.png) !important;
+}
+.TDS_CCGray .itemTools a.itemMenu, 
+.TDS_CCGray.TDS_PS_L1 .itemTools a.itemMenu, 
+.TDS_CCGray.TDS_PS_L2 .itemTools a.itemMenu, 
+.TDS_CCGray.TDS_PS_L3 .itemTools a.itemMenu, 
+.TDS_CCGray.TDS_PS_L4 .itemTools a.itemMenu, 
+.TDS_CCGray2 .itemTools a.itemMenu, 
+.TDS_CCGray2.TDS_PS_L1 .itemTools a.itemMenu, 
+.TDS_CCGray2.TDS_PS_L2 .itemTools a.itemMenu, 
+.TDS_CCGray2.TDS_PS_L3 .itemTools a.itemMenu, 
+.TDS_CCGray2.TDS_PS_L4 .itemTools a.itemMenu, 
+.TDS_CCMedGrayLtGray .itemTools a.itemMenu, 
+.TDS_CCMedGrayLtGray.TDS_PS_L1 .itemTools a.itemMenu, 
+.TDS_CCMedGrayLtGray.TDS_PS_L2 .itemTools a.itemMenu, 
+.TDS_CCMedGrayLtGray.TDS_PS_L3 .itemTools a.itemMenu, 
+.TDS_CCMedGrayLtGray.TDS_PS_L4 .itemTools a.itemMenu {
+	background-image: url(../Images/universal/universal_content.png) !important;
+}
+
+
 body.TDS_CCGreen, 
 body.TDS_CCGreen .inputCloze, 
 body.TDS_CCGreen .plaintext textarea, 
@@ -442,7 +507,8 @@ body.TDS_CCGreen .plaintext textarea,
 .TDS_CCGreen .mathjax_editor_nav button:hover, 
 .TDS_CCGreen #helpContent,
 .TDS_CCGreen .ot-innerShadow, 
-.TDS_CCGreen .cke_editable.cke_wysiwyg_div {
+.TDS_CCGreen .cke_editable.cke_wysiwyg_div, 
+.TDS_CCGreen .passage-expanded .maskQuestions {
 	background-color: #cff799 !important;
 }
 body.TDS_CCGreen .multipleChoiceItem {
@@ -477,7 +543,8 @@ body.TDS_CCGreen2 .plaintext textarea,
 .TDS_CCGreen2 .mathjax_editor_nav button:hover, 
 .TDS_CCGreen2 #helpContent,
 .TDS_CCGreen2 .ot-innerShadow, 
-.TDS_CCGreen2 .cke_editable.cke_wysiwyg_div {
+.TDS_CCGreen2 .cke_editable.cke_wysiwyg_div, 
+.TDS_CCGreen2 .passage-expanded .maskQuestions {
 	background-color: #e0f6c1 !important;
 }
 body.TDS_CCGreen2 .multipleChoiceItem {
@@ -514,7 +581,8 @@ body.TDS_CCGreen2.touch {
 .TDS_CCYellowB .mathjax_editor_nav button:hover, 
 .TDS_CCYellowB #helpContent,
 .TDS_CCYellowB .ot-innerShadow, 
-.TDS_CCYellowB .cke_editable.cke_wysiwyg_div {
+.TDS_CCYellowB .cke_editable.cke_wysiwyg_div, 
+.TDS_CCYellowB .passage-expanded .maskQuestions {
 	background-color: #039 !important;
 	color:#FC0;
 }
@@ -612,6 +680,13 @@ body.TDS_CCYellowB.touch {
 .TDS_CCInvert .cke_editable.cke_wysiwyg_div {
 	background-color: #000 !important;
 	color:#FFF;
+}
+.TDS_CCInvert .passage-expanded .maskQuestions {
+	background-color: #292929;
+}
+.TDS_CCInvert.platform_linux select option{
+	border-left: 1px solid #fff;
+	border-right: 1px solid #fff;
 }
 .TDS_CCInvert .ft .button-group button, 
 .TDS_CCInvert .mathjax_editor_button, 
@@ -722,7 +797,8 @@ body.TDS_CCWhiteN .pageWrapper img {
 .TDS_CCWhiteN .mathjax_editor_nav button:hover, 
 .TDS_CCWhiteN #helpContent,
 .TDS_CCWhiteN .ot-innerShadow, 
-.TDS_CCWhiteN .cke_editable.cke_wysiwyg_div {
+.TDS_CCWhiteN .cke_editable.cke_wysiwyg_div, 
+.TDS_CCWhiteN .passage-expanded .maskQuestions {
 	background-color: #003366 !important;
 	color:#FFF;
 }
@@ -802,8 +878,15 @@ body.TDS_CCGray .TDS_WORD_LIST {
 }
 
 /*temporarily disable color choices in formula pages*/
-.TDS_CCInvert .formula, .TDS_CCYellowB .formula, .TDS_CCWhiteN .formula,
-.TDS_CCInvert .formula img, .TDS_CCYellowB .formula img, .TDS_CCWhiteN .formula img{
+.TDS_CCInvert .formula, 
+.TDS_CCYellowB .formula, 
+.TDS_CCWhiteN .formula,
+.TDS_CCInvert .formula img, 
+.TDS_CCYellowB .formula img, 
+.TDS_CCWhiteN .formula img, 
+.TDS_CCInvert .popuptool img, 
+.TDS_CCYellowB .popuptool img, 
+.TDS_CCWhiteN .popuptool img {
 	background-color: #fff;
 }
 
@@ -826,17 +909,22 @@ body.TDS_CCGray .TDS_WORD_LIST {
 	background-image: url(../Images/mediumGrey.png);
 	color: #000;
 }
-.practiceTest.TDS_CCYellowB .checkHolder, .TDS_CCYellowB .linkbox, .TDS_CCYellowB .actions input, .TDS_CCYellowB .actions button {
+.practiceTest.TDS_CCYellowB .checkHolder, 
+.TDS_CCYellowB .linkbox, 
+.TDS_CCYellowB .actions input, 
+.TDS_CCYellowB .actions button, 
+.TDS_CCYellowB .loginForm legend {
 	color:#FC0;
 }
-.TDS_CCYellowB .summary-segment-type-values {
+.TDS_CCYellowB .summary-segment-type-values, 
+.TDS_CCYellowB .dependency .control {
 	color: #fdf968;
 }
 .TDS_CCYellowB .actions button:hover {
 	background-color: #002069 !important;
 }
 
-.practiceTest.TDS_CCWhiteN .checkHolder, .TDS_CCWhiteN .linkbox, .practiceTest.TDS_CCInvert .checkHolder, .TDS_CCInvert .linkbox, .TDS_CCInvert .actions button, .TDS_CCInvert .actions input, .TDS_CCWhiteN .actions button, .TDS_CCWhiteN .actions input {
+.practiceTest.TDS_CCWhiteN .checkHolder, .TDS_CCWhiteN .linkbox, .practiceTest.TDS_CCInvert .checkHolder, .TDS_CCInvert .linkbox, .TDS_CCInvert .actions button, .TDS_CCInvert .actions input, .TDS_CCWhiteN .actions button, .TDS_CCWhiteN .actions input, .TDS_CCWhiteN .loginForm legend, .TDS_CCInvert .loginForm legend {
 	color:#FFF;
 }
 
@@ -850,7 +938,9 @@ body.TDS_CCGray .TDS_WORD_LIST {
 	color: #fff;
 }
 .TDS_CCWhiteN .summary-segment-type-values, 
-.TDS_CCInvert .summary-segment-type-values {
+.TDS_CCInvert .summary-segment-type-values, 
+.TDS_CCWhiteN .control, 
+.TDS_CCInvert .control {
 	color: #d2f7fd;
 }
 .TDS_CCYellow.practiceTest #verifyGradeSelector, .TDS_CCYellow2.practiceTest #verifyGradeSelector, .TDS_CCBlue.practiceTest #verifyGradeSelector, .TDS_CCBlue2.practiceTest #verifyGradeSelector, .TDS_CCMagenta.practiceTest #verifyGradeSelector, .TDS_CCMagenta2.practiceTest #verifyGradeSelector, .TDS_CCGray.practiceTest #verifyGradeSelector, .TDS_CCGray2.practiceTest #verifyGradeSelector, .TDS_CCGreen.practiceTest #verifyGradeSelector, .TDS_CCGreen2.practiceTest #verifyGradeSelector, .TDS_CCYellowB.practiceTest #verifyGradeSelector, .TDS_CCInvert.practiceTest #verifyGradeSelector, .TDS_CCWhiteN.practiceTest #verifyGradeSelector, 
@@ -986,7 +1076,10 @@ src:url("../Fonts/9908cdad-7524-4206-819e-4f345a666324.woff") format("woff"),url
 /* Always used in conjunction with 14pt passages*/
 
 /* sets larger font size*/
-.TDS_IF_S14.TDS_PS_L0 .thePassage, .TDS_IF_S14.TDS_PS_L0 .theQuestions {
+.TDS_IF_S14 .thePassage, 
+.TDS_IF_S14 .theQuestions, 
+.TDS_IF_S14.TDS_PS_L0 .thePassage, 
+.TDS_IF_S14.TDS_PS_L0 .theQuestions {
 	font-size: 1.17em;
 }
 .TDS_IF_S14.TDS_PS_L1 .thePassage, .TDS_IF_S14.TDS_PS_L1 .theQuestions {
@@ -1003,10 +1096,12 @@ src:url("../Fonts/9908cdad-7524-4206-819e-4f345a666324.woff") format("woff"),url
 }
 /* font sizes are set differentlyt on single item layouts and writing, first declaration brings font up to 14pt, second keeps it there*/
 /*.TDS_TS_Classic.TDS_IF_S14.TDS_PS_L0 .theQuestions, */
+.TDS_IF_S14 .layout12, 
 .TDS_IF_S14.TDS_PS_L0 .layout12 {
 	font-size: 1.64em;
 }
 /*.TDS_TS_Classic.TDS_IF_S14.TDS_PS_L0 .theQuestions, */
+.TDS_IF_S14 .layout12 .thePassage, 
 .TDS_IF_S14.TDS_PS_L0 .layout12 .thePassage, 
 .TDS_IF_S14.TDS_PS_L1 .layout12 .thePassage, 
 .TDS_IF_S14.TDS_PS_L2 .layout12 .thePassage, 
@@ -1070,4 +1165,96 @@ src:url("../Fonts/9908cdad-7524-4206-819e-4f345a666324.woff") format("woff"),url
 .TDS_CCWhiteN #tool-dictionary .headword,
 .TDS_CCYellowB #tool-dictionary .headword{
 	background-color: #000033;
+}
+
+/*Login window color accomodation force.  Cannot be transparent because of bicycle/tricycle*/
+.TDS_CCWhiteN #sectionLogin .ot-innerShadow, 
+.TDS_CCWhiteN #sectionLoginProctor .ot-innerShadow, 
+.TDS_CCWhiteN .blurb{ 
+	background-color: #003366 !important;
+	background-image: none !important;
+}
+.TDS_CCBlue #sectionLogin .ot-innerShadow, 
+.TDS_CCBlue #sectionLoginProctor .ot-innerShadow, 
+.TDS_CCBlue .blurb{ 
+	background-color: #99ffff !important;
+	background-image: none !important;
+}
+.TDS_CCBlue2 #sectionLogin .ot-innerShadow, 
+.TDS_CCBlue2 #sectionLoginProctor .ot-innerShadow, 
+.TDS_CCBlue2 .blurb{ 
+	background-color: #cfffff !important;
+	background-image: none !important;
+}
+.TDS_CCYellow #sectionLogin .ot-innerShadow, 
+.TDS_CCYellow #sectionLoginProctor .ot-innerShadow, 
+.TDS_CCYellow .blurb{ 
+	background-color: #ffffce !important;
+	background-image: none !important;
+}
+.TDS_CCYellow2 #sectionLogin .ot-innerShadow, 
+.TDS_CCYellow2 #sectionLoginProctor .ot-innerShadow, 
+.TDS_CCYellow2 .blurb{ 
+	background-color: #fcfce2 !important;
+	background-image: none !important;
+}
+.TDS_CCYellowB #sectionLogin .ot-innerShadow, 
+.TDS_CCYellowB #sectionLoginProctor .ot-innerShadow, 
+.TDS_CCYellowB .blurb{ 
+	background-color: #039 !important;
+	background-image: none !important;
+} 
+.TDS_CCGray #sectionLogin .ot-innerShadow, 
+.TDS_CCGray #sectionLoginProctor .ot-innerShadow, 
+.TDS_CCGray .blurb{ 
+	background-color: #cecfce !important;
+	background-image: none !important;
+}
+.TDS_CCGray2 #sectionLogin .ot-innerShadow, 
+.TDS_CCGray2 #sectionLoginProctor .ot-innerShadow, 
+.TDS_CCGray2 .blurb{ 
+	background-color: #e5e5e5 !important;
+	background-image: none !important;
+}
+.TDS_CCMedGrayLtGray #sectionLogin .ot-innerShadow, 
+.TDS_CCMedGrayLtGray #sectionLoginProctor .ot-innerShadow, 
+.TDS_CCMedGrayLtGray .blurb{ 
+	background-color: #e5e5e5 !important;
+	background-image: none !important;
+}
+.TDS_CCMedGrayLtGray .loginForm legend {
+	color: #666;
+}
+.TDS_CCMagenta #sectionLogin .ot-innerShadow, 
+.TDS_CCMagenta #sectionLoginProctor .ot-innerShadow, 
+.TDS_CCMagenta .blurb{ 
+	background-color: #ffd0ff !important;
+	background-image: none !important;
+}
+.TDS_CCMagenta2 #sectionLogin .ot-innerShadow, 
+.TDS_CCMagenta2 #sectionLoginProctor .ot-innerShadow, 
+.TDS_CCMagenta2 .blurb{ 
+	background-color: #fde3fd !important;
+	background-image: none !important;
+}
+.TDS_CCGreen #sectionLogin .ot-innerShadow, 
+.TDS_CCGreen #sectionLoginProctor .ot-innerShadow, 
+.TDS_CCGreen .blurb{ 
+	background-color: #cff799 !important;
+	background-image: none !important;
+}
+.TDS_CCGreen2 #sectionLogin .ot-innerShadow, 
+.TDS_CCGreen2 #sectionLoginProctor .ot-innerShadow, 
+.TDS_CCGreen2 .blurb{ 
+	background-color: #e0f6c1 !important;
+	background-image: none !important;
+}
+.TDS_CCInvert #sectionLogin .ot-innerShadow, 
+.TDS_CCInvert #sectionLoginProctor .ot-innerShadow, 
+.TDS_CCInvert .blurb{ 
+	background-color: #000 !important;
+	background-image: none !important;
+}
+.embedded .closeInstructions {
+	display:none;	
 }

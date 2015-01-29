@@ -148,8 +148,9 @@
 	border-color: #034577;
 	background-color: #034577;
 }
-#sectionLogin .actions .positive:hover span button{
-	color: #fff;
+#sectionLogin .actions .positive:hover span button,
+.actions .positive button:hover, .actions .positive input:hover, .actions .positive button:active, .actions .positive input:active, .actions .positive button:focus, .actions .positive input:focus{
+	color: #fff !important;
 	border-color:#034577;
 	background-color: #034577 !important;
 }
@@ -164,16 +165,15 @@
 	background-color: #034577;
 }
 #diagnostics .browserVersion {
-	color: #A6C9E3;
+	color: #444528;
 }
 #diagnostics a {
-    color: #0F6797;
+    color: #034577;
     display: none;
     float: left;
-    text-decoration: none;
 }
 #diagnostics a:focus, #diagnostics a:active, #loginLinks a:focus, #loginLinks a:active {
-    color: #FFF !important;
+   
 }
 #loginLinks a {
 	color: #0F6797 !important;

@@ -18,62 +18,62 @@ a.passageMenu {
 	margin-top: -35px;
 	background: url(../../Images/universal/universal_content.png) no-repeat center 6px;
 }
-.TDS_ITM1 .itemTools a.itemMenu {
+.TDS_ITM1 .toolsContainer a.itemMenu, 
+.TDS_ITM1 .toolsContainer a.passageMenu {
 	display: block;
 }
-.itemTools a.itemMenu {
+div.toolsContainer a.itemMenu {
 	background: url(../../Images/universal/universal_content.png) no-repeat center 6px;
 	margin-top: 0px;
 }
-a.itemMenu:active, 
-a.itemMenu:focus, 
-a.itemMenu:hover, 
-a.passageMenu:active, 
-a.passageMenu:focus, 
-a.passageMenu:hover, 
-
-.TDS_PS_L1 a.itemMenu:active, 
-.TDS_PS_L1 a.itemMenu:focus, 
-.TDS_PS_L1 a.itemMenu:hover, 
-.TDS_PS_L1 a.passageMenu:active, 
-.TDS_PS_L1 a.passageMenu:focus, 
-.TDS_PS_L1 a.passageMenu:hover {
+div.toolsContainer a.itemMenu:active, 
+div.toolsContainer a.itemMenu:focus, 
+div.toolsContainer a.itemMenu:hover, 
+.TDS_PS_L1 div.toolsContainer a.itemMenu:active, 
+.TDS_PS_L1 div.toolsContainer a.itemMenu:focus, 
+.TDS_PS_L1 div.toolsContainer a.itemMenu:hover, 
+div.toolsContainer a.passageMenu:active, 
+div.toolsContainer a.passageMenu:focus, 
+div.toolsContainer a.passageMenu:hover, 
+.TDS_PS_L1 div.toolsContainer a.passageMenu:active, 
+.TDS_PS_L1 div.toolsContainer a.passageMenu:focus, 
+.TDS_PS_L1 div.toolsContainer a.passageMenu:hover {
 	background-position: center -44px;
 }
-.TDS_PS_L2 a.itemMenu, 
-.TDS_PS_L3 a.itemMenu,  
-.TDS_PS_L2 a.passageMenu, 
-.TDS_PS_L3 a.passageMenu {
+.TDS_PS_L2 div.toolsContainer a.itemMenu, 
+.TDS_PS_L3 div.toolsContainer a.itemMenu, 
+.TDS_PS_L2 div.toolsContainer a.passageMenu, 
+.TDS_PS_L3 div.toolsContainer a.passageMenu {
 	background-position: center -542px;
     height: 34px;
     width: 45px;
 }
-.TDS_PS_L2 a.itemMenu:active, 
-.TDS_PS_L3 a.itemMenu:active, 
-.TDS_PS_L2 a.itemMenu:focus, 
-.TDS_PS_L3 a.itemMenu:focus, 
-.TDS_PS_L2 a.itemMenu:hover, 
-.TDS_PS_L3 a.itemMenu:hover, 
-.TDS_PS_L2 a.passageMenu:active, 
-.TDS_PS_L3 a.passageMenu:active, 
-.TDS_PS_L2 a.passageMenu:focus, 
-.TDS_PS_L3 a.passageMenu:focus, 
-.TDS_PS_L2 a.passageMenu:hover, 
-.TDS_PS_L3 a.passageMenu:hover {
+.TDS_PS_L2 div.toolsContainer a.itemMenu:active, 
+.TDS_PS_L3 div.toolsContainer a.itemMenu:active, 
+.TDS_PS_L2 div.toolsContainer a.itemMenu:focus, 
+.TDS_PS_L3 div.toolsContainer a.itemMenu:focus, 
+.TDS_PS_L2 div.toolsContainer a.itemMenu:hover, 
+.TDS_PS_L3 div.toolsContainer a.itemMenu:hover, 
+.TDS_PS_L2 div.toolsContainer a.passageMenu:active, 
+.TDS_PS_L3 div.toolsContainer a.passageMenu:active, 
+.TDS_PS_L2 div.toolsContainer a.passageMenu:focus, 
+.TDS_PS_L3 div.toolsContainer a.passageMenu:focus, 
+.TDS_PS_L2 div.toolsContainer a.passageMenu:hover, 
+.TDS_PS_L3 div.toolsContainer a.passageMenu:hover {
 	background-position: center -592px;
 }
-.TDS_PS_L4 a.itemMenu,  
-.TDS_PS_L4 a.passageMenu {
+.TDS_PS_L4 div.toolsContainer a.itemMenu,  
+.TDS_PS_L4 div.toolsContainer.passageTools a.passageMenu {
 	background-position: center -741px;
     height: 45px;
     width: 60px;
 }
-.TDS_PS_L4 a.itemMenu:active, 
-.TDS_PS_L4 a.itemMenu:focus, 
-.TDS_PS_L4 a.itemMenu:hover, 
-.TDS_PS_L4 a.passageMenu:active, 
-.TDS_PS_L4 a.passageMenu:focus, 
-.TDS_PS_L4 a.passageMenu:hover {
+.TDS_PS_L4 div.toolsContainer a.itemMenu:active, 
+.TDS_PS_L4 div.toolsContainer a.itemMenu:focus, 
+.TDS_PS_L4 div.toolsContainer a.itemMenu:hover, 
+.TDS_PS_L4 div.toolsContainer a.passageMenu:active, 
+.TDS_PS_L4 div.toolsContainer a.passageMenu:focus, 
+.TDS_PS_L4 div.toolsContainer a.passageMenu:hover {
 	background-position: center -791px;
 }
 
@@ -335,12 +335,10 @@ a.passageMenu:hover,
 /* @end */
 
 /* @group item tools */
-.markComment a, 
-.layout_wai .itemMenu a, 
-.layout_wai .itemTools a {
+.toolsContainer .toolButton {
 	display: none;
 	float: left;
-	width: 35px;
+	width: 30px;
 	overflow: hidden;
 	text-indent: -9999px;
 	background: url(../../Images/universal/universal_itemsprites.png) no-repeat 100px 100px;
@@ -349,25 +347,29 @@ a.passageMenu:hover,
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 }
-a.markReview:hover, 
-a.markReview:focus, 
-a.markReviewMarked:hover, 
-a.markReviewMarked:focus, 
-a.markReview:active {
+.TDS_PS_L1 .toolsContainer a, 
+.TDS_PS_L2 .toolsContainer a {
+	width: 30px;
+	height: 35px;
+}
+.toolsContainer a.markReview:hover, 
+.toolsContainer a.markReview:focus, 
+.toolsContainer a.markReviewMarked:hover, 
+.toolsContainer a.markReviewMarked:focus, 
+.toolsContainer a.markReview:active {
 	background: url(../../Images/universal/universal_itemsprites.png) no-repeat -515px -75px !important;
 }
-a.markReviewMarked {
+.toolsContainer a.markReviewMarked {
 	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
 	background-position: -530px -75px !important;
 }
-.markComment, 
-.layout_wai .itemTools {
+.toolsContainer {
 	height: 35px;
 	margin-top: -2.1em;
 	margin-left: 4em;
 	float: right;
 }
-.layout22 .markComment {
+.layout22 .toolsContainer {
 	height: 35px;
 	margin-top: 0em;
 	margin-bottom: -0.8em;
@@ -375,356 +377,298 @@ a.markReviewMarked {
 .layoutSingleMulti .layoutColumnLeft .questionContainer h2 {
 	margin-bottom:-.5em;
 }
-.TDS_PS_L1 .markComment, 
-.TDS_PS_L1 .layout_wai .itemTools {
+.TDS_PS_L1 .toolsContainer{
 	margin-top: -1.6em;
 }
-.TDS_PS_L2 .layout_wai .itemTools {
+.TDS_PS_L2 .toolsContainer {
 	margin-top: -1.5em;
 }
-.markComment a {
-	width: 30px !important;
-	height: 35px !important;
-}
-a.commentItem {
+.toolsContainer a.commentItem {
 	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
 	background-position: -280px -125px !important;
 }
-.commentItem:hover, 
-.commentItem:focus, 
-.commentItem:active {
+.toolsContainer .commentItem:hover, 
+.toolsContainer .commentItem:focus, 
+.toolsContainer .commentItem:active {
 	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
 	background-position: -315px -125px !important;
 }
-a.markReview {
+.toolsContainer a.markReview.toolButton {
 	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
 	background-position: 0px -125px !important;
+	width: 35px;
+	margin-right: 0px;
 }
-a.markReview:hover, 
-a.markReview:focus, 
-a.markReview:active, 
-a.markReviewMarked:hover, 
-a.markReviewMarked:focus, 
-a.markReviewMarked:active
+.toolsContainer a.markReview.toolButton:hover, 
+.toolsContainer a.markReview.toolButton:focus, 
+.toolsContainer a.markReview.toolButton:active, 
+.toolsContainer a.markReviewMarked.toolButton:hover, 
+.toolsContainer a.markReviewMarked.toolButton:focus, 
+.toolsContainer a.markReviewMarked.toolButton:active
 {
 	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
 	background-position: -35px -125px !important;
 	width: 35px;
 	height: 35px;
+	margin-right: 0px;
 }
-.layout_wai .itemMenu a.markReview:hover, 
-.layout_wai .itemMenu a.markReview:focus, 
-.layout_wai .itemMenu a.markReview:active, 
-.layout_wai .itemMenu a.markReviewMarked:hover, 
-.layout_wai .itemMenu a.markReviewMarked:focus, 
-.layout_wai .itemMenua.markReviewMarked:active {
-	width: 35px !important;
-	height: 35px !important;
-}
-a.markReviewMarked:hover, 
-a.markReviewMarked:focus, 
-a.markReviewMarked
+.toolsContainer a.markReviewMarked.toolButton:hover, 
+.toolsContainer a.markReviewMarked.toolButton:focus, 
+.toolsContainer a.markReviewMarked.toolButton:active, 
+.toolsContainer a.markReviewMarked.toolButton 
  {
 	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
 	background-position: -70px -125px !important;
 }
-.questionAnswerGroup.itemContainer .questionContainer .markComment a.printItem, 
-.itemContainer .questionCell .markComment a.printItem,  
-.layout_wai .itemMenu a.printItem {
+.toolsContainer a.printItem {
 	background-image: url(../../Images/universal/universal_itemsprites.png);
 	background-position: -105px -125px !important;
 	opacity: 1;
 	font-size: 1em;
+	width: 30px !important;
+	height: 35px !important;
 }
-.itemContainer .questionCell .markComment a.printItem:hover, 
-.itemContainer .questionCell .markComment a.printItem:focus
-.itemContainer .questionCell .markComment a.printItem:active, 
-.questionAnswerGroup.itemContainer .questionContainer .markComment a.printItem:hover, 
-.questionAnswerGroup.itemContainer .questionContainer .markComment a.printItem:focus
-.questionAnswerGroup.itemContainer .questionContainer .markComment a.printItem:active, 
-.layout_wai .itemMenu a.printItem:hover, 
-.layout_wai .itemMenu a.printItem:focus
-.layout_wai .itemMenu a.printItem:active {
+.toolsContainer a.printItem:hover, 
+.toolsContainer a.printItem:focus
+.toolsContainer a.printItem:active {
 	background-position: -140px -125px !important;
 }
-a.contexthelp, 
-.TDS_PS_L1 a.contexthelp, 
-.TDS_PS_L2 a.contexthelp, 
-.layout_wai .itemMenu a.contexthelp, 
-.TDS_PS_L1 .layout_wai .itemMenu a.contexthelp, 
-.TDS_PS_L2 .layout_wai .itemMenu a.contexthelp {
+.toolsContainer a.contexthelp, 
+.TDS_PS_L1 .toolsContainer a.contexthelp, 
+.TDS_PS_L2 .toolsContainer a.contexthelp {
 	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
 	background-position: -210px -125px;
 }
-a.contexthelp:hover, 
-a.contexthelp:focus, 
-a.contexthelp:active, 
-.TDS_PS_L1 a.contexthelp:hover, 
-.TDS_PS_L1 a.contexthelp:focus, 
-.TDS_PS_L1 a.contexthelp:active, 
-.TDS_PS_L2 a.contexthelp:hover, 
-.TDS_PS_L2 a.contexthelp:focus, 
-.TDS_PS_L2 a.contexthelp:active {
+.toolsContainer a.contexthelp:hover, 
+.toolsContainer a.contexthelp:focus, 
+.toolsContainer a.contexthelp:active, 
+.TDS_PS_L1 .toolsContainer a.contexthelp:hover, 
+.TDS_PS_L1 .toolsContainer a.contexthelp:focus, 
+.TDS_PS_L1 .toolsContainer a.contexthelp:active, 
+.TDS_PS_L2 .toolsContainer a.contexthelp:hover, 
+.TDS_PS_L2 .toolsContainer a.contexthelp:focus, 
+.TDS_PS_L2 .toolsContainer a.contexthelp:active {
 	background-position: -245px -125px !important;
 }
-.TDS_GfR1 a.guideToRevision {
+.toolsContainer a.guideToRevision {
 	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
 	background-position: -750px -125px !important;
 }
-a.guideToRevision:hover, 
-a.guideToRevision:focus, 
-a.guideToRevision:active {
+.toolsContainer a.guideToRevision:hover, 
+.toolsContainer a.guideToRevision:focus, 
+.toolsContainer a.guideToRevision:active {
 	background-position: -785px -126px !important;
 }
+.TDS_PoD_Item .toolsContainer a.printItem {
+	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
+	background-position: -105px -126px !important;
+	opacity: 1;
+}
+.TDS_PoD_Item .toolsContainer a.printItem:hover, 
+.TDS_PoD_Item .toolsContainer a.printItem:active, 
+.TDS_PoD_Item .toolsContainer a.printItem:focus {
+	background-position: -140px -126px !important;
+}
+.TDS_PS_L3.TDS_PoD_Item .toolsContainer a.printItem, 
+.TDS_PS_L4.TDS_PoD_Item .toolsContainer a.printItem {
+	background-position: -150px -75px !important;
+}
+.TDS_PS_L3.TDS_PoD_Item .toolsContainer a.printItem:hover, 
+.TDS_PS_L3.TDS_PoD_Item .toolsContainer a.printItem:active, 
+.TDS_PS_L3.TDS_PoD_Item .toolsContainer a.printItem:focus, 
+.TDS_PS_L4.TDS_PoD_Item .toolsContainer a.printItem:hover, 
+.TDS_PS_L4.TDS_PoD_Item .toolsContainer a.printItem:active, 
+.TDS_PS_L4.TDS_PoD_Item .toolsContainer a.printItem:focus {
+	background-position: -201px -75px !important;
+}
+.TDS_PoD_Item .toolsContainer a.printItem.printSubmitted, 
+.TDS_PS_L1.TDS_PoD_Item .toolsContainer a.printItem.printSubmitted, 
+.TDS_PS_L2.TDS_PoD_Item .toolsContainer a.printItem.printSubmitted, 
+.TDS_Emboss_Item .toolsContainer .printItem.printSubmitted, 
+.TDS_PS_L1.TDS_Emboss_Item .toolsContainer .printItem.printSubmitted, 
+.TDS_PS_L2.TDS_Emboss_Item .toolsContainer .printItem.printSubmitted {
+	background-position: -175px -126px !important;
+}
+.TDS_PS_L3.TDS_PoD_Item .toolsContainer a.printItem.printSubmitted, 
+.TDS_PS_L4.TDS_PoD_Item .toolsContainer a.printItem.printSubmitted, 
+.TDS_PS_L3.TDS_Emboss_Item .toolsContainer .printItem.printSubmitted, 
+.TDS_PS_L4.TDS_Emboss_Item .toolsContainer .printItem.printSubmitted {
+	background-position: -250px -75px !important;
+}
+.TDS_PoD_Item.TDS_CCYellowB .toolsContainer a.printItem.printSubmitted, 
+.TDS_PS_L3.TDS_PoD_Item.TDS_CCYellowB .toolsContainer a.printItem.printSubmitted, 
+.TDS_PS_L4.TDS_PoD_Item.TDS_CCYellowB .toolsContainer a.printItem.printSubmitted, 
+.TDS_PoD_Item.TDS_CCInvert .toolsContainer a.printItem.printSubmitted, 
+.TDS_PS_L3.TDS_PoD_Item.TDS_CCInvert .toolsContainer a.printItem.printSubmitted, 
+.TDS_PS_L4.TDS_PoD_Item.TDS_CCInvert .toolsContainer a.printItem.printSubmitted, 
+.TDS_PoD_Item.TDS_CCWhiteN .toolsContainer a.printItem.printSubmitted, 
+.TDS_PS_L3.TDS_PoD_Item.TDS_CCWhiteN .toolsContainer a.printItem.printSubmitted, 
+.TDS_PS_L4.TDS_PoD_Item.TDS_CCWhiteN .toolsContainer a.printItem.printSubmitted {
+	background-image: url("../../Images/universal/universal_itemsprites_colorchoices.png") !important;
+}
 
-.TDS_PS_L2 .markComment {
+.TDS_PS_L2 .toolsContainer {
 	height: 40px;
 	margin-top: -1.4em;
 }
-.TDS_PS_L2 .layout_wai .itemMenu, 
-.TDS_PS_L2 .layout_wai .itemTools {
+/*.TDS_PS_L2 .layout_wai .itemMenu, */
+.TDS_PS_L2 .layout_wai .toolsContainer {
 	height: 40px;
 }
-.TDS_PS_L2 .layout_wai .itemTools a.markReview:hover {
+.TDS_PS_L2 .layout_wai .toolsContainer a.markReview:hover {
     height: 35px;
     width: 35px;
 }
 
 /*level 3 zoom*/
-.TDS_PS_L3 .markComment, 
-.TDS_PS_L3 .layout_wai .itemTools {
+.TDS_PS_L3 .toolsContainer {
 	height: 50px;
 	margin-top: -1.4em;
 }
-.TDS_PS_L3.TDS_IF_S14 .markComment, 
-.TDS_PS_L3.TDS_IF_S14 .layout_wai .itemTools {
+.TDS_PS_L3.TDS_IF_S14 .toolsContainer {
 	margin-top: -1.6em;
 }
-.TDS_PS_L4 .markComment, 
-.TDS_PS_L4 .layout_wai .itemTools {
+.TDS_PS_L4 .toolsContainer {
 	height: 50px;
 	margin-top: -1.1em;
 }
-.TDS_PS_L4.TDS_IF_S14 .markComment, 
-.TDS_PS_L4.TDS_IF_S14 .layout_wai .itemTools {
+.TDS_PS_L4.TDS_IF_S14 .toolsContainer {
 	margin-top: -1.4em;
 }
-.TDS_PS_L3 .markComment a, 
-.TDS_PS_L4 .markComment a, 
-.TDS_PS_L3 .layout_wai .itemMenu a, 
-.TDS_PS_L4 .layout_wai .itemMenu a, 
-.TDS_PS_L3 .layout_wai .itemTools a, 
-.TDS_PS_L4 .layout_wai .itemTools a {
+.TDS_PS_L3 .toolsContainer a, 
+.TDS_PS_L4 .toolsContainer a {
 	width: 40px !important;
 	height: 50px !important;
 }
-.TDS_PS_L3 a.commentItem, 
-.TDS_PS_L4 a.commentItem {
+.TDS_PS_L3 .toolsContainer a.commentItem, 
+.TDS_PS_L4 .toolsContainer a.commentItem {
 	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
 	background-position: -400px -75px !important;
 }
-.TDS_PS_L3 .commentItem:hover, 
-.TDS_PS_L3 .commentItem:focus, 
-.TDS_PS_L3 .commentItem:active,  
-.TDS_PS_L4 .commentItem:hover, 
-.TDS_PS_L4 .commentItem:focus, 
-.TDS_PS_L4 .commentItem:active {
+.TDS_PS_L3 .toolsContainer .commentItem:hover, 
+.TDS_PS_L3 .toolsContainer .commentItem:focus, 
+.TDS_PS_L3 .toolsContainer .commentItem:active,  
+.TDS_PS_L4 .toolsContainer .commentItem:hover, 
+.TDS_PS_L4 .toolsContainer .commentItem:focus, 
+.TDS_PS_L4 .toolsContainer .commentItem:active {
 	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
 	background-position: -450px -75px !important;
 }
-.TDS_PS_L3 a.markReview, 
-.TDS_PS_L4 a.markReview {
+.TDS_PS_L3 .toolsContainer a.markReview, 
+.TDS_PS_L4 .toolsContainer a.markReview {
 	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
 	background-position: 0px -75px !important;
 }
-.TDS_PS_L3 a.markReview:hover, 
-.TDS_PS_L3 a.markReview:focus, 
-.TDS_PS_L3 a.markReview:active, 
-.TDS_PS_L4 a.markReview:hover, 
-.TDS_PS_L4 a.markReview:focus, 
-.TDS_PS_L4 a.markReview:active {
+.TDS_PS_L3 .toolsContainer a.markReview:hover, 
+.TDS_PS_L3 .toolsContainer a.markReview:focus, 
+.TDS_PS_L3 .toolsContainer a.markReview:active, 
+.TDS_PS_L4 .toolsContainer a.markReview:hover, 
+.TDS_PS_L4 .toolsContainer a.markReview:focus, 
+.TDS_PS_L4 .toolsContainer a.markReview:active {
 	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
 	background-position: -50px -75px !important;
 	width: 40px;
 	height: 50px;
 }
-.TDS_PS_L3 .layout_wai .itemMenu a.markReview:hover, 
-.TDS_PS_L3 .layout_wai .itemMenu a.markReview:focus, 
-.TDS_PS_L3 .layout_wai .itemMenu a.markReview:active, 
-.TDS_PS_L4 .layout_wai .itemMenu a.markReview:hover, 
-.TDS_PS_L4 .layout_wai .itemMenu a.markReview:focus, 
-.TDS_PS_L4 .layout_wai .itemMenu a.markReview:active, 
-.TDS_PS_L3 .layout_wai .itemMenu a.markReviewMarked, 
-.TDS_PS_L4 .layout_wai .itemMenu a.markReviewMarked, 
-.TDS_PS_L3 .layout_wai .itemMenu a.markReviewMarked:hover, 
-.TDS_PS_L3 .layout_wai .itemMenu a.markReviewMarked:focus, 
-.TDS_PS_L3 .layout_wai .itemMenu a.markReviewMarked:active, 
-.TDS_PS_L4 .layout_wai .itemMenu a.markReviewMarked:hover, 
-.TDS_PS_L4 .layout_wai .itemMenu a.markReviewMarked:focus, 
-.TDS_PS_L4 .layout_wai .itemMenu a.markReviewMarked:active, 
-.TDS_PS_L3 .layout_wai .itemTools a.markReview:hover, 
-.TDS_PS_L3 .layout_wai .itemTools a.markReview:focus, 
-.TDS_PS_L3 .layout_wai .itemTools a.markReview:active, 
-.TDS_PS_L4 .layout_wai .itemTools a.markReview:hover, 
-.TDS_PS_L4 .layout_wai .itemTools a.markReview:focus, 
-.TDS_PS_L4 .layout_wai .itemTools a.markReview:active, 
-.TDS_PS_L3 .layout_wai .itemTools a.markReviewMarked, 
-.TDS_PS_L4 .layout_wai .itemTools a.markReviewMarked, 
-.TDS_PS_L3 .layout_wai .itemTools a.markReviewMarked:hover, 
-.TDS_PS_L3 .layout_wai .itemTools a.markReviewMarked:focus, 
-.TDS_PS_L3 .layout_wai .itemTools a.markReviewMarked:active, 
-.TDS_PS_L4 .layout_wai .itemTools a.markReviewMarked:hover, 
-.TDS_PS_L4 .layout_wai .itemTools a.markReviewMarked:focus, 
-.TDS_PS_L4 .layout_wai .itemTools a.markReviewMarked:active {
+.TDS_PS_L3 .layout_wai .toolsContainer a.markReview:hover, 
+.TDS_PS_L3 .layout_wai .toolsContainer a.markReview:focus, 
+.TDS_PS_L3 .layout_wai .toolsContainer a.markReview:active, 
+.TDS_PS_L4 .layout_wai .toolsContainer a.markReview:hover, 
+.TDS_PS_L4 .layout_wai .toolsContainer a.markReview:focus, 
+.TDS_PS_L4 .layout_wai .toolsContainer a.markReview:active, 
+.TDS_PS_L3 .layout_wai .toolsContainer a.markReviewMarked, 
+.TDS_PS_L4 .layout_wai .toolsContainer a.markReviewMarked, 
+.TDS_PS_L3 .layout_wai .toolsContainer a.markReviewMarked:hover, 
+.TDS_PS_L3 .layout_wai .toolsContainer a.markReviewMarked:focus, 
+.TDS_PS_L3 .layout_wai .toolsContainer a.markReviewMarked:active, 
+.TDS_PS_L4 .layout_wai .toolsContainer a.markReviewMarked:hover, 
+.TDS_PS_L4 .layout_wai .toolsContainer a.markReviewMarked:focus, 
+.TDS_PS_L4 .layout_wai .toolsContainer a.markReviewMarked:active {
 	width: 40px !important;
 	height: 50px !important;
 }
-.TDS_PS_L3 a.markReviewMarked, 
-.TDS_PS_L4 a.markReviewMarked, 
-.TDS_PS_L3 a.markReviewMarked:hover, 
-.TDS_PS_L3 a.markReviewMarked:focus, 
-.TDS_PS_L3 a.markReviewMarked:active, 
-.TDS_PS_L4 a.markReviewMarked:hover, 
-.TDS_PS_L4 a.markReviewMarked:focus, 
-.TDS_PS_L4 a.markReviewMarked:active {
+.TDS_PS_L3 .toolsContainer a.markReviewMarked, 
+.TDS_PS_L4 .toolsContainer a.markReviewMarked, 
+.TDS_PS_L3 .toolsContainer a.markReviewMarked:hover, 
+.TDS_PS_L3 .toolsContainer a.markReviewMarked:focus, 
+.TDS_PS_L3 .toolsContainer a.markReviewMarked:active, 
+.TDS_PS_L4 .toolsContainer a.markReviewMarked:hover, 
+.TDS_PS_L4 .toolsContainer a.markReviewMarked:focus, 
+.TDS_PS_L4 .toolsContainer a.markReviewMarked:active {
 	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
 	background-position: -100px -75px !important;
 }
-.TDS_PS_L3 .itemContainer .questionCell .markComment a.printItem, 
-.TDS_PS_L4 .itemContainer .questionCell .markComment a.printItem, 
-.TDS_PS_L3 .questionAnswerGroup.itemContainer .questionContainer .markComment a.printItem, 
-.TDS_PS_L4 .questionAnswerGroup.itemContainer .questionContainer .markComment a.printItem, 
-.TDS_PS_L3 .layout_wai .itemMenu a.printItem, 
-.TDS_PS_L4 .layout_wai .itemMenu a.printItem, 
-.TDS_PS_L3 .layout_wai .itemTools a.printItem, 
-.TDS_PS_L4 .layout_wai .itemTools a.printItem {
+.TDS_PS_L3 .toolsContainer a.printItem, 
+.TDS_PS_L4 .toolsContainer a.printItem {
 	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
 	background-position: -150px -75px !important;
-	width: 40px;
-	height: 50px;
+	width: 40px !important;
+	height: 50px !important;
 }
-.TDS_PS_L3 .itemContainer .questionCell .markComment a.printItem:hover, 
-.TDS_PS_L3 .itemContainer .questionCell .markComment a.printItem:focus, 
-.TDS_PS_L3 .itemContainer .questionCell .markComment a.printItem:active, 
-.TDS_PS_L4 .itemContainer .questionCell .markComment a.printItem:hover, 
-.TDS_PS_L4 .itemContainer .questionCell .markComment a.printItem:focus, 
-.TDS_PS_L4 .itemContainer .questionCell .markComment a.printItem:active, 
-.TDS_PS_L3 .questionAnswerGroup.itemContainer .questionContainer .markComment a.printItem:hover, 
-.TDS_PS_L3 .questionAnswerGroup.itemContainer .questionContainer .markComment a.printItem:focus, 
-.TDS_PS_L3 .questionAnswerGroup.itemContainer .questionContainer .markComment a.printItem:active, 
-.TDS_PS_L4 .questionAnswerGroup.itemContainer .questionContainer .markComment a.printItem:hover, 
-.TDS_PS_L4 .questionAnswerGroup.itemContainer .questionContainer .markComment a.printItem:focus, 
-.TDS_PS_L4 .questionAnswerGroup.itemContainer .questionContainer .markComment a.printItem:active, 
-.TDS_PS_L3 .layout_wai .itemMenu a.printItem:hover, 
-.TDS_PS_L3 .layout_wai .itemMenu a.printItem:focus, 
-.TDS_PS_L3 .layout_wai .itemMenu a.printItem:active, 
-.TDS_PS_L4 .layout_wai .itemMenu a.printItem:hover, 
-.TDS_PS_L4 .layout_wai .itemMenu a.printItem:focus, 
-.TDS_PS_L4 .layout_wai .itemMenu a.printItem:active, 
-.TDS_PS_L3 .layout_wai .itemTools a.printItem:hover, 
-.TDS_PS_L3 .layout_wai .itemTools a.printItem:focus, 
-.TDS_PS_L3 .layout_wai .itemTools a.printItem:active, 
-.TDS_PS_L4 .layout_wai .itemTools a.printItem:hover, 
-.TDS_PS_L4 .layout_wai .itemTools a.printItem:focus, 
-.TDS_PS_L4 .layout_wai .itemTools a.printItem:active {
+.TDS_PS_L3 .layout_wai .toolsContainer a.printItem:hover, 
+.TDS_PS_L3 .layout_wai .toolsContainer a.printItem:focus, 
+.TDS_PS_L3 .layout_wai .toolsContainer a.printItem:active, 
+.TDS_PS_L4 .layout_wai .toolsContainer a.printItem:hover, 
+.TDS_PS_L4 .layout_wai .toolsContainer a.printItem:focus, 
+.TDS_PS_L4 .layout_wai .toolsContainer a.printItem:active {
 	background-position: -200px -75px !important;
 }
-.TDS_PS_L3 a.contexthelp, 
-.TDS_PS_L4 a.contexthelp, 
-.TDS_PS_L3 .layout_wai .itemMenu a.contexthelp, 
-.TDS_PS_L4 .layout_wai .itemMenu a.contexthelp, 
-.TDS_PS_L3 .layout_wai .itemTools a.contexthelp, 
-.TDS_PS_L4 .layout_wai .itemTools a.contexthelp {
+.TDS_PS_L3 .toolsContainer a.contexthelp, 
+.TDS_PS_L4 .toolsContainer a.contexthelp {
 	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
 	background-position: -300px -75px;
 }
-.TDS_PS_L3 a.contexthelp:hover, 
-.TDS_PS_L3 a.contexthelp:focus, 
-.TDS_PS_L3 a.contexthelp:active, 
-.TDS_PS_L4 a.contexthelp:hover, 
-.TDS_PS_L4 a.contexthelp:focus, 
-.TDS_PS_L4 a.contexthelp:active {
+.TDS_PS_L3 .toolsContainer a.contexthelp:hover, 
+.TDS_PS_L3 .toolsContainer a.contexthelp:focus, 
+.TDS_PS_L3 .toolsContainer a.contexthelp:active, 
+.TDS_PS_L4 .toolsContainer a.contexthelp:hover, 
+.TDS_PS_L4 .toolsContainer a.contexthelp:focus, 
+.TDS_PS_L4 .toolsContainer a.contexthelp:active {
 	background-position: -350px -75px !important;
 }
-.TDS_PS_L3.TDS_GfR1 a.guideToRevision, 
-.TDS_PS_L4.TDS_GfR1 a.guideToRevision {
+.TDS_PS_L3.TDS_GfR1 .toolsContainer a.guideToRevision, 
+.TDS_PS_L4.TDS_GfR1 .toolsContainer a.guideToRevision {
 	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
 	background-position: -750px -75px !important;
 }
-.TDS_PS_L3 a.guideToRevision:hover, 
-.TDS_PS_L3 a.guideToRevision:focus, 
-.TDS_PS_L3 a.guideToRevision:active, 
-.TDS_PS_L4 a.guideToRevision:hover, 
-.TDS_PS_L4 a.guideToRevision:focus, 
-.TDS_PS_L4 a.guideToRevision:active {
+.TDS_PS_L3 .toolsContainer a.guideToRevision:hover, 
+.TDS_PS_L3 .toolsContainer a.guideToRevision:focus, 
+.TDS_PS_L3 .toolsContainer a.guideToRevision:active, 
+.TDS_PS_L4 .toolsContainer a.guideToRevision:hover, 
+.TDS_PS_L4 .toolsContainer a.guideToRevision:focus, 
+.TDS_PS_L4 .toolsContainer a.guideToRevision:active {
 	background-position: -799px -75px !important;
 }
 
 /* @group Reset-Remove answer */
 
-.markComment .removeResponse, 
-.TDS_PS_L1 .markComment .removeResponse, 
-.TDS_PS_L2 .markComment .removeResponse, 
-.layout_wai .itemMenu .removeResponse, 
-.TDS_PS_L1 .layout_wai .itemMenu .removeResponse, 
-.TDS_PS_L2 .layout_wai .itemMenu .removeResponse, 
-.TDS_PS_L1 .layout_wai .itemTools .removeResponse, 
-.TDS_PS_L2 .layout_wai .itemTools .removeResponse {
+.toolsContainer .removeResponse, 
+.TDS_PS_L1 .toolsContainer .removeResponse, 
+.TDS_PS_L2 .toolsContainer .removeResponse {
 	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
 	background-position: -254px -160px;
 }
-.markComment .removeResponse:hover, 
-.markComment .removeResponse:active, 
-.markComment .removeResponse:focus, 
-.TDS_PS_L1 .markComment .removeResponse:hover, 
-.TDS_PS_L1 .markComment .removeResponse:active, 
-.TDS_PS_L1 .markComment .removeResponse:focus, 
-.TDS_PS_L2 .markComment .removeResponse:hover, 
-.TDS_PS_L2 .markComment .removeResponse:active, 
-.TDS_PS_L2 .markComment .removeResponse:focus, 
-.layout_wai .itemMenu .removeResponse:hover, 
-.layout_wai .itemMenu .removeResponse:active, 
-.layout_wai .itemMenu .removeResponse:focus, 
-.TDS_PS_L1 .layout_wai .itemMenu .removeResponse:hover, 
-.TDS_PS_L1 .layout_wai .itemMenu .removeResponse:active, 
-.TDS_PS_L1 .layout_wai .itemMenu .removeResponse:focus, 
-.TDS_PS_L2 .layout_wai .itemMenu .removeResponse:hover, 
-.TDS_PS_L2 .layout_wai .itemMenu .removeResponse:active, 
-.TDS_PS_L2 .layout_wai .itemMenu .removeResponse:focus, 
-.TDS_PS_L1 .layout_wai .itemTools .removeResponse:hover, 
-.TDS_PS_L1 .layout_wai .itemTools .removeResponse:active, 
-.TDS_PS_L1 .layout_wai .itemTools .removeResponse:focus, 
-.TDS_PS_L2 .layout_wai .itemTools .removeResponse:hover, 
-.TDS_PS_L2 .layout_wai .itemTools .removeResponse:active, 
-.TDS_PS_L2 .layout_wai .itemTools .removeResponse:focus {
+.toolsContainer .removeResponse:hover, 
+.toolsContainer .removeResponse:active, 
+.toolsContainer .removeResponse:focus, 
+.TDS_PS_L1 .toolsContainer .removeResponse:hover, 
+.TDS_PS_L1 .toolsContainer .removeResponse:active, 
+.TDS_PS_L1 .toolsContainer .removeResponse:focus, 
+.TDS_PS_L2 .toolsContainer .removeResponse:hover, 
+.TDS_PS_L2 .toolsContainer .removeResponse:active, 
+.TDS_PS_L2 .toolsContainer .removeResponse:focus {
 	background-position: -289px -160px;
 }
-.TDS_PS_L3 .markComment .removeResponse, 
-.TDS_PS_L4 .markComment .removeResponse, 
-.TDS_PS_L3 .layout_wai .itemMenu .removeResponse, 
-.TDS_PS_L4 .layout_wai .itemMenu .removeResponse, 
-.TDS_PS_L3 .layout_wai .itemTools .removeResponse, 
-.TDS_PS_L4 .layout_wai .itemTools .removeResponse {
+.TDS_PS_L3 .toolsContainer .removeResponse, 
+.TDS_PS_L4 .toolsContainer .removeResponse {
 	background-position: -156px -160px;
 }
-.TDS_PS_L3 .markComment .removeResponse:hover, 
-.TDS_PS_L3 .markComment .removeResponse:active, 
-.TDS_PS_L3 .markComment .removeResponse:focus, 
-.TDS_PS_L4 .markComment .removeResponse:hover, 
-.TDS_PS_L4 .markComment .removeResponse:active, 
-.TDS_PS_L4 .markComment .removeResponse:focus, 
-.TDS_PS_L3 .layout_wai .itemMenu .removeResponse:hover, 
-.TDS_PS_L3 .layout_wai .itemMenu .removeResponse:active, 
-.TDS_PS_L3 .layout_wai .itemMenu .removeResponse:focus, 
-.TDS_PS_L4 .layout_wai .itemMenu .removeResponse:hover, 
-.TDS_PS_L4 .layout_wai .itemMenu .removeResponse:active, 
-.TDS_PS_L4 .layout_wai .itemMenu .removeResponse:focus, 
-.TDS_PS_L3 .layout_wai .itemTools .removeResponse:hover, 
-.TDS_PS_L3 .layout_wai .itemTools .removeResponse:active, 
-.TDS_PS_L3 .layout_wai .itemTools .removeResponse:focus, 
-.TDS_PS_L4 .layout_wai .itemTools .removeResponse:hover, 
-.TDS_PS_L4 .layout_wai .itemTools .removeResponse:active, 
-.TDS_PS_L4 .layout_wai .itemTools .removeResponse:focus {
+.TDS_PS_L3 .toolsContainer .removeResponse:hover, 
+.TDS_PS_L3 .toolsContainer .removeResponse:active, 
+.TDS_PS_L3 .toolsContainer .removeResponse:focus, 
+.TDS_PS_L4 .toolsContainer .removeResponse:hover, 
+.TDS_PS_L4 .toolsContainer .removeResponse:active, 
+.TDS_PS_L4 .toolsContainer .removeResponse:focus {
 	background-position: -206px -160px;
 }
 
@@ -741,11 +685,10 @@ a.guideToRevision:active {
 }
 
 /* remove extra pargraph tags */
-.TDS_ITM1 .itemToolsBreak {
-	display: none !important;
+.questionCell p.itemToolsBreak {
+	display: none;
 }
-.layout_22 .itemTools, 
-.TDS_ITM1.TDS_PS_L0 .layout_22 .itemTools {
+.TDS_PS_L0 .layout_22 .itemTools {
 	margin-top: -35px;
 }
 .TDS_PS_L3 .layout_22 .itemTools a.itemMenu {
@@ -756,12 +699,9 @@ a.guideToRevision:active {
 .TDS_PS_L3 .layout_22 .itemTools a.itemMenu:focus {
     background-position: center -584px;
 }
-/*.TDS_ITM1.TDS_PS_L1 .layout_22 .itemTools, 
-.TDS_ITM1.TDS_PS_L2 .layout_22 .itemTools, 
-.TDS_ITM1.TDS_PS_L3 .layout_22 .itemTools, 
-.TDS_ITM1.TDS_PS_L4 .layout_22 .itemTools {
-	margin-top: 0px;
-}*/
+.TDS_ITM1 .layout_30 .itemTools a.itemMenu {
+    float: right;
+}
 /* @end */
 
 .keyboard a {
@@ -957,7 +897,9 @@ a.guideToRevision:active {
 }
 
 /* text areas */
-.questionCell .inputCloze, .questionContainer .inputCloze, .answerCell textarea, .answerContainer textarea {
+.questionCell .inputCloze, 
+.questionContainer .inputCloze, 
+.answerCell textarea, .answerContainer textarea {
     border: 1px solid #7a7a7a;
     -moz-border-radius:  .3em;
 	-webkit-border-radius:  .3em;
@@ -969,14 +911,18 @@ a.guideToRevision:active {
   	box-sizing: border-box;
   	-webkit-overflow-scrolling: touch;
 }
-.questionCell .inputCloze, .questionContainer .inputCloze {
+.questionCell .inputCloze, 
+.questionContainer .inputCloze {
     height: 1.8em;
 	line-height: 1.2em;
 }
 .answerCell textarea, .answerContainer textarea {
 	padding:.3em;
 }
-.questionCell .inputCloze:focus, .questionContainer .inputCloze:focus, .answerCell textarea:focus, .answerContainer textarea:focus {
+.questionCell .inputCloze:focus, 
+.questionContainer .inputCloze:focus, 
+.answerCell textarea:focus, 
+.answerContainer textarea:focus {
     border-color: #00abf4;
     -webkit-box-shadow: 0em 0em .4em #666;
 	-moz-box-shadow: 0em 0em .4em #666;
@@ -992,6 +938,14 @@ a.guideToRevision:active {
     opacity: 0.95;
     background-color: #f5f5f5;
 }
+/* add drop shadow back fro expanded passages */
+.passage-expanded .thePassage.contextAreaFocus, 
+.passage-expanded .layoutColumnLeft.contextAreaFocus {
+	-webkit-box-shadow: 10px 10px 10px 5px rgba(0, 0, 0, .3);
+	-moz-box-shadow: 10px 10px 10px 5px rgba(0, 0, 0, .3);
+	box-shadow: 10px 10px 10px 5px rgba(0, 0, 0, .3);
+}
+
 /* fixes for simulator items in passages */
 .passage-expanded .layoutSingleMulti .layoutColumnLeft .thePassage {
 	width:100% !important;
@@ -1034,7 +988,7 @@ a.guideToRevision:active {
 	}
 }
 @media only screen and (max-device-height: 600px) {
-   .theQuestions, .thePassage {
+   .touch .theQuestions, .touch .thePassage {
 		padding-bottom: 5000px !important;
 	} 
 }
@@ -1097,10 +1051,20 @@ a.guideToRevision:active {
 	background-color: #e7e7e7;
 	background-image: none;
 }
-#wordListPanel .yui-nav .selected a, #wordListPanel .yui-nav a:hover {
+#wordListPanel .yui-nav .selected a {
 	background-color: #00aeef;
 	border-color: #008fc5;
 	color: #fff;
+}
+#wordListPanel .yui-nav a:hover, 
+#wordListPanel .yui-nav a:focus, 
+#wordListPanel .yui-nav a:active, 
+#wordListPanel .yui-nav .selected a:hover, 
+#wordListPanel .yui-nav .selected a:active,
+#wordListPanel .yui-nav .selected a:focus {
+	background-color: rgba(0, 174, 239, 0.3);
+	border-color: #008fc5;
+	color: #000;
 }
 #wordListPanel .yui-content {
 	border-color: #00aeef;
@@ -1159,8 +1123,14 @@ a.guideToRevision:active {
 	width: 640px !important;
 }
 /* adjusting line height to prevent borders from overlapping */
-.TDS_WORD_LIST, .TDS_WORD_LIST_HOVER, .TDS_WORD_LIST:hover {
+.TDS_WORD_LIST, 
+.TDS_WORD_LIST_HOVER, 
+.TDS_WORD_LIST:hover {
    line-height: 1.5em;
+}
+/*for screen readers*/
+#wordListPanel div.yui-hidden {
+	display: none;
 }
 /* @end */
 
@@ -1419,7 +1389,9 @@ a.ASL:hover {
 	top: 76px;
 }
 .touch.platform_android .layout_12 .theQuestions, 
-.touch.platform_android .layout_12 .thePassage {
+.touch.platform_android .layout_12 .thePassage, 
+.touch.platform_android .layout_wai .theQuestions, 
+.touch.platform_android .layout_wai .thePassage {
 	position: static;
 }
 
@@ -1470,8 +1442,10 @@ a.ASL:hover {
 /* @end */
 
 /*lets iOS scroll text areas*/
-.touch .answerCell textarea, .touch .answerContainer textarea, 
-.touch .questionCell input, .touch .stemContainer input {
+.touch .answerCell textarea, 
+.touch .answerContainer textarea, 
+.touch .questionCell input, 
+.touch .stemContainer input {
 	-webkit-overflow-scrolling: touch;
 	overflow: auto !important;
 }
@@ -1569,28 +1543,37 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 	font-size: .9em;
 	padding: .5em .55em;
 }
-.compound .markComment {
-	height: 35px;
+.compound .toolsContainer {
 	margin-top: -2.1em;
 }
-.TDS_PS_L1 .compound .markComment {
+.TDS_PS_L1 .compound .toolsContainer {
 	margin-top: -1.6em;
 }
-.TDS_PS_L2 .compound .markComment {
+.TDS_PS_L2 .compound .toolsContainer {
 	margin-top: -1.5em;
+}
+.TDS_PS_L3 .compound .toolsContainer {
+	margin-top: -1.4em;
+}
+.TDS_PS_L4 .compound .toolsContainer {
+	margin-top: -1.1em;
+}
+
+
+.TDS_PS_L2.TDS_ITM1 .compound .toolsContainer {
 	height: 34px;
 	width: 45px;
 }
-.TDS_PS_L3 .compound .markComment {
+.TDS_PS_L3.TDS_ITM1 .compound .toolsContainer {
+	height: 50px;
+	width: 40px;
 	margin-top: -1.15em;
+}
+.TDS_PS_L4.TDS_ITM1 .compound .toolsContainer {
 	height: 50px;
 	width: 40px;
 }
-.TDS_PS_L4 .compound .markComment {
-	margin-top: -1.1em;
-	height: 50px;
-	width: 40px;
-}
+
 .compound .questionContainer {
 	padding: 0px;
 	margin: .5em 1.25em;
@@ -1629,33 +1612,33 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
     background-position: center -992px;
 }
 /*Level 0 - disabled sound icon*/
-.sound_repeat.load_incomplete, 
-.sound_repeat.disabled,
-.sound_repeat.load_incomplete:hover, 
-.sound_repeat.disabled:hover {
+.audioControls.load_incomplete .sound_repeat,
+.audioControls.disabled .sound_repeat,
+.audioControls.load_incomplete .sound_repeat:hover, 
+.audioControls.disabled .sound_repeat:hover {
 	background-position: center -1059px;
 }
 /*Level 0 - crossed out sound icon*/
-.sound_repeat.load_fail, 
-.sound_repeat.load_fail:hover, 
-.sound_repeat.playing_fail, 
-.sound_repeat.playing_fail:hover, 
-.sound_repeat.decode_fail, 
-.sound_repeat.decode_fail:hover {
+.audioControls.load_fail .sound_repeat, 
+.audioControls.load_fail .sound_repeat:hover, 
+.audioControls.playing_fail .sound_repeat, 
+.audioControls.playing_fail .sound_repeat:hover, 
+.audioControls.decode_fail .sound_repeat, 
+.audioControls.decode_fail .sound_repeat:hover {
 	background-position: center -2200px;
 }
 /*Level 0 - stop sound icon */
-.sound_repeat.playing_start, 
-.sound_repeat.playing_paused {
+.audioControls.playing_start .sound_repeat, 
+.audioControls.playing_paused .sound_repeat {
 	background-position: center -1126px;
 }
 /*Level 0 - stop sound icon hover */
-.sound_repeat.playing_start:hover, 
-.sound_repeat.playing_paused:hover, 
-.sound_repeat.playing_start:active, 
-.sound_repeat.playing_paused:active, 
-.sound_repeat.playing_start:focus, 
-.sound_repeat.playing_paused:focus {
+.audioControls.playing_start .sound_repeat:hover, 
+.audioControls.playing_paused .sound_repeat:hover, 
+.audioControls.playing_start .sound_repeat:active, 
+.audioControls.playing_paused .sound_repeat:active, 
+.audioControls.playing_start .sound_repeat:focus, 
+.audioControls.playing_paused .sound_repeat:focus {
 	background-position: center -1194px;
 }
 
@@ -1672,33 +1655,33 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
     background-position: center -588px;
 }
 /*Level 1 - disabled sound icon*/
-.TDS_PS_L1 .sound_repeat.load_incomplete, 
-.TDS_PS_L1 .sound_repeat.disabled,
-.TDS_PS_L1 .sound_repeat.load_incomplete:hover, 
-.TDS_PS_L1 .sound_repeat.disabled:hover {
+.TDS_PS_L1 .audioControls.load_incomplete .sound_repeat, 
+.TDS_PS_L1 .audioControls.disabled .sound_repeat,
+.TDS_PS_L1 .audioControls.load_incomplete .sound_repeat:hover, 
+.TDS_PS_L1 .audioControls.disabled .sound_repeat:hover {
 	background-position: center -672px;
 }
 /*Level 1 - crossed out sound icon*/
-.TDS_PS_L1 .sound_repeat.load_fail, 
-.TDS_PS_L1 .sound_repeat.load_fail:hover, 
-.TDS_PS_L1 .sound_repeat.playing_fail, 
-.TDS_PS_L1 .sound_repeat.playing_fail:hover, 
-.TDS_PS_L1 .sound_repeat.decode_fail, 
-.TDS_PS_L1 .sound_repeat.decode_fail:hover {
+.TDS_PS_L1 .audioControls.load_fail .sound_repeat, 
+.TDS_PS_L1 .audioControls.load_fail .sound_repeat:hover, 
+.TDS_PS_L1 .audioControls.playing_fail .sound_repeat, 
+.TDS_PS_L1 .audioControls.playing_fail .sound_repeat:hover, 
+.TDS_PS_L1 .audioControls.decode_fail .sound_repeat, 
+.TDS_PS_L1 .audioControls.decode_fail .sound_repeat:hover {
 	background-position: center -2100px;
 }
 /*Level 1 - stop sound icon */
-.TDS_PS_L1 .sound_repeat.playing_start, 
-.TDS_PS_L1 .sound_repeat.playing_paused {
+.TDS_PS_L1 .audioControls.playing_start .sound_repeat, 
+.TDS_PS_L1 .audioControls.playing_paused .sound_repeat {
 	background-position: center -755px;
 }
 /*Level 1 - stop sound icon hover */
-.TDS_PS_L1 .sound_repeat.playing_start:hover, 
-.TDS_PS_L1 .sound_repeat.playing_paused:hover, 
-.TDS_PS_L1 .sound_repeat.playing_start:active, 
-.TDS_PS_L1 .sound_repeat.playing_paused:active, 
-.TDS_PS_L1 .sound_repeat.playing_start:focus, 
-.TDS_PS_L1 .sound_repeat.playing_paused:focus {
+.TDS_PS_L1 .audioControls.playing_start .sound_repeat:hover, 
+.TDS_PS_L1 .audioControls.playing_paused .sound_repeat:hover, 
+.TDS_PS_L1 .audioControls.playing_start .sound_repeat:active, 
+.TDS_PS_L1 .audioControls.playing_paused .sound_repeat:active, 
+.TDS_PS_L1 .audioControls.playing_start .sound_repeat:focus, 
+.TDS_PS_L1 .audioControls.playing_paused .sound_repeat:focus {
 	background-position: center -839px;
 }
 
@@ -1723,69 +1706,69 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
     background-position: center -105px;
 }
 /*Levels 2-4 - disabled sound icon*/
-.TDS_PS_L2 .sound_repeat.load_incomplete, 
-.TDS_PS_L2 .sound_repeat.disabled,
-.TDS_PS_L2 .sound_repeat.load_incomplete:hover, 
-.TDS_PS_L2 .sound_repeat.disabled:hover, 
-.TDS_PS_L3 .sound_repeat.load_incomplete, 
-.TDS_PS_L3 .sound_repeat.disabled,
-.TDS_PS_L3 .sound_repeat.load_incomplete:hover, 
-.TDS_PS_L3 .sound_repeat.disabled:hover, 
-.TDS_PS_L4 .sound_repeat.load_incomplete, 
-.TDS_PS_L4 .sound_repeat.disabled,
-.TDS_PS_L4 .sound_repeat.load_incomplete:hover, 
-.TDS_PS_L4 .sound_repeat.disabled:hover {
+.TDS_PS_L2 .audioControls.load_incomplete .sound_repeat, 
+.TDS_PS_L2 .audioControls.disabled .sound_repeat,
+.TDS_PS_L2 .audioControls.load_incomplete .sound_repeat:hover, 
+.TDS_PS_L2 .audioControls.disabled .sound_repeat:hover, 
+.TDS_PS_L3 .audioControls.load_incomplete .sound_repeat, 
+.TDS_PS_L3 .audioControls.disabled .sound_repeat,
+.TDS_PS_L3 .audioControls.load_incomplete .sound_repeat:hover, 
+.TDS_PS_L3 .audioControls.disabled .sound_repeat:hover, 
+.TDS_PS_L4 .audioControls.load_incomplete .sound_repeat, 
+.TDS_PS_L4 .audioControls.disabled .sound_repeat,
+.TDS_PS_L4 .audioControls.load_incomplete .sound_repeat:hover, 
+.TDS_PS_L4 .audioControls.disabled .sound_repeat:hover {
 	background-position: center -205px;
 }
 /*Levels 2-4 - crossed out sound icon*/
-.TDS_PS_L2 .sound_repeat.load_fail, 
-.TDS_PS_L2 .sound_repeat.load_fail:hover, 
-.TDS_PS_L2 .sound_repeat.playing_fail, 
-.TDS_PS_L2 .sound_repeat.playing_fail:hover, 
-.TDS_PS_L2 .sound_repeat.decode_fail, 
-.TDS_PS_L2 .sound_repeat.decode_fail:hover, 
-.TDS_PS_L3 .sound_repeat.load_fail, 
-.TDS_PS_L3 .sound_repeat.load_fail:hover, 
-.TDS_PS_L3 .sound_repeat.playing_fail, 
-.TDS_PS_L3 .sound_repeat.playing_fail:hover, 
-.TDS_PS_L3 .sound_repeat.decode_fail, 
-.TDS_PS_L3 .sound_repeat.decode_fail:hover, 
-.TDS_PS_L4 .sound_repeat.load_fail, 
-.TDS_PS_L4 .sound_repeat.load_fail:hover, 
-.TDS_PS_L4 .sound_repeat.playing_fail, 
-.TDS_PS_L4 .sound_repeat.playing_fail:hover, 
-.TDS_PS_L4 .sound_repeat.decode_fail, 
-.TDS_PS_L4 .sound_repeat.decode_fail:hover {
+.TDS_PS_L2 .audioControls.load_fail .sound_repeat, 
+.TDS_PS_L2 .audioControls.load_fail .sound_repeat:hover, 
+.TDS_PS_L2 .audioControls.playing_fail .sound_repeat, 
+.TDS_PS_L2 .audioControls.playing_fail .sound_repeat:hover, 
+.TDS_PS_L2 .audioControls.decode_fail .sound_repeat, 
+.TDS_PS_L2 .audioControls.decode_fail .sound_repeat:hover, 
+.TDS_PS_L3 .audioControls.load_fail .sound_repeat, 
+.TDS_PS_L3 .audioControls.load_fail .sound_repeat:hover, 
+.TDS_PS_L3 .audioControls.playing_fail .sound_repeat, 
+.TDS_PS_L3 .audioControls.playing_fail .sound_repeat:hover, 
+.TDS_PS_L3 .audioControls.decode_fail .sound_repeat, 
+.TDS_PS_L3 .audioControls.decode_fail .sound_repeat:hover, 
+.TDS_PS_L4 .audioControls.load_fail .sound_repeat, 
+.TDS_PS_L4 .audioControls.load_fail .sound_repeat:hover, 
+.TDS_PS_L4 .audioControls.playing_fail .sound_repeat, 
+.TDS_PS_L4 .audioControls.playing_fail .sound_repeat:hover, 
+.TDS_PS_L4 .audioControls.decode_fail .sound_repeat, 
+.TDS_PS_L4 .audioControls.decode_fail .sound_repeat:hover {
 	background-position: center -2000px;
 }
 /*Levels 2-4 - stop sound icon */
-.TDS_PS_L2 .sound_repeat.playing_start, 
-.TDS_PS_L2 .sound_repeat.playing_paused, 
-.TDS_PS_L3 .sound_repeat.playing_start, 
-.TDS_PS_L3 .sound_repeat.playing_paused, 
-.TDS_PS_L4 .sound_repeat.playing_start, 
-.TDS_PS_L4 .sound_repeat.playing_paused {
+.TDS_PS_L2 .audioControls.playing_start .sound_repeat, 
+.TDS_PS_L2 .audioControls.playing_paused .sound_repeat, 
+.TDS_PS_L3 .audioControls.playing_start .sound_repeat, 
+.TDS_PS_L3 .audioControls.playing_paused .sound_repeat, 
+.TDS_PS_L4 .audioControls.playing_start .sound_repeat, 
+.TDS_PS_L4 .audioControls.playing_paused .sound_repeat {
 	background-position: center -305px;
 }
 /*Levels 2-4 - stop sound icon hover */
-.TDS_PS_L2 .sound_repeat.playing_start:hover, 
-.TDS_PS_L2 .sound_repeat.playing_paused:hover, 
-.TDS_PS_L3 .sound_repeat.playing_start:hover, 
-.TDS_PS_L3 .sound_repeat.playing_paused:hover, 
-.TDS_PS_L4 .sound_repeat.playing_start:hover, 
-.TDS_PS_L4 .sound_repeat.playing_paused:hover, 
-.TDS_PS_L2 .sound_repeat.playing_start:active, 
-.TDS_PS_L2 .sound_repeat.playing_paused:active, 
-.TDS_PS_L3 .sound_repeat.playing_start:active, 
-.TDS_PS_L3 .sound_repeat.playing_paused:active, 
-.TDS_PS_L4 .sound_repeat.playing_start:active, 
-.TDS_PS_L4 .sound_repeat.playing_paused:active, 
-.TDS_PS_L2 .sound_repeat.playing_start:focus, 
-.TDS_PS_L2 .sound_repeat.playing_paused:focus, 
-.TDS_PS_L3 .sound_repeat.playing_start:focus, 
-.TDS_PS_L3 .sound_repeat.playing_paused:focus, 
-.TDS_PS_L4 .sound_repeat.playing_start:focus, 
-.TDS_PS_L4 .sound_repeat.playing_paused:focus {
+.TDS_PS_L2 .audioControls.playing_start .sound_repeat:hover, 
+.TDS_PS_L2 .audioControls.playing_paused .sound_repeat:hover, 
+.TDS_PS_L3 .audioControls.playing_start .sound_repeat:hover, 
+.TDS_PS_L3 .audioControls.playing_paused .sound_repeat:hover, 
+.TDS_PS_L4 .audioControls.playing_start .sound_repeat:hover, 
+.TDS_PS_L4 .audioControls.playing_paused .sound_repeat:hover, 
+.TDS_PS_L2 .audioControls.playing_start .sound_repeat:active, 
+.TDS_PS_L2 .audioControls.playing_paused .sound_repeat:active, 
+.TDS_PS_L3 .audioControls.playing_start .sound_repeat:active, 
+.TDS_PS_L3 .audioControls.playing_paused .sound_repeat:active, 
+.TDS_PS_L4 .audioControls.playing_start .sound_repeat:active, 
+.TDS_PS_L4 .audioControls.playing_paused .sound_repeat:active, 
+.TDS_PS_L2 .audioControls.playing_start .sound_repeat:focus, 
+.TDS_PS_L2 .audioControls.playing_paused .sound_repeat:focus, 
+.TDS_PS_L3 .audioControls.playing_start .sound_repeat:focus, 
+.TDS_PS_L3 .audioControls.playing_paused .sound_repeat:focus, 
+.TDS_PS_L4 .audioControls.playing_start .sound_repeat:focus, 
+.TDS_PS_L4 .audioControls.playing_paused .sound_repeat:focus {
 	background-position: center -405px;
 }
 
@@ -1804,6 +1787,17 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 	box-shadow: 0em 0em .1em #ccc;
 	vertical-align: middle;
 	margin-bottom: 5px;
+}
+.audio-layout-single.audioControls{
+	background-color: transparent;
+	border: none;
+	height: inherit;
+	padding: 0px;
+	-webkit-box-shadow: inherit;
+	-moz-box-shadow: inherit;
+	box-shadow: inherit;
+	vertical-align: inherit;
+	margin-bottom: 0px;
 }
 .audioControls .playPause, 
 .audioControls.playing_pause .playPause {
@@ -1831,6 +1825,22 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 	box-shadow: 0 0 5px 2px rgba(0,174,239,.3);
 }
 
+.audioControls.audio-layout-scrubber a, 
+.audioControls.audio-layout-scrubber .slide_controls_slider {
+	float: left;
+}
+.audioControls.audio-layout-scrubber .slide_controls_slider {
+	margin-top: 10px;
+}
+.TDS_PS_L1 .audioControls.audio-layout-scrubber .slide_controls_slider {
+	margin-top: 13px;
+}
+.TDS_PS_L2 .audioControls.audio-layout-scrubber .slide_controls_slider, 
+.TDS_PS_L3 .audioControls.audio-layout-scrubber .slide_controls_slider, 
+.TDS_PS_L4 .audioControls.audio-layout-scrubber .slide_controls_slider {
+	margin-top: 18px;
+}
+
 /*Level 0 - sound icon hover*/
 .audioControls.playing_done .playPause:hover, 
 .audioControls.playing_pause .playPause:hover, 
@@ -1846,6 +1856,7 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 .audioControls.load_incomplete .playPause:hover, 
 .audioControls.disabled .playPause:hover {
 	background-position: center -1059px;
+	cursor: default;
 }
 /*Level 0 - crossed out sound icon*/
 .audioControls.load_fail .playPause, 
@@ -1865,13 +1876,6 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 .audioControls.playing_start .playPause:active, 
 .audioControls.playing_start .playPause:focus {
 	background-position: center -1194px;
-}
-.audioControls.load_incomplete .playPause, 
-.audioControls.disabled .playPause,
-.audioControls.load_incomplete .playPause:hover, 
-.audioControls.disabled .playPause:hover {
-	background-position: -121px -56px;
-	cursor: default;
 }
 /*level 0 - loading icons*/
 .audioControls.load_start, 
@@ -2131,52 +2135,52 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 }
 
 /*Level 0 - sound icon for option*/
-.optionSound a {
+.optionsContainer .optionSound .audioControls a {
 	background: url(../../Images/modern/newSound.png) no-repeat center -1814px;
 	height: 19px;
 	width: 18px;
 	margin-top: 1px;
 }
 /*Level 0 - sound icon hover for option*/
-.optionSound a:hover, 
-.optionSound a:active, 
-.optionSound a:focus {
+.optionsContainer .optionSound .audioControls a:hover, 
+.optionsContainer .optionSound .audioControls a:active, 
+.optionsContainer .optionSound .audioControls a:focus {
 	background-position: center -1843px;
 }
 /*Level 0 - disabled sound icon for option*/
-.optionSound a.load_incomplete, 
-.optionSound a.disabled,
-.optionSound a.load_incomplete:hover, 
-.optionSound a.disabled:hover {
+.optionSound .audioControls.load_incomplete a, 
+.optionSound .audioControls.disabled a,
+.optionSound .audioControls.load_incomplete a:hover, 
+.optionSound .audioControls.disabled a:hover {
 	background-position: center -1873px;
 }
 /*Level 0 - crossed out sound icon for options*/
-.optionSound a.load_fail, 
-.optionSound a.load_fail:hover, 
-.optionSound a.playing_fail, 
-.optionSound a.playing_fail:hover, 
-.optionSound a.decode_fail, 
-.optionSound a.decode_fail:hover {
+.optionSound .audioControls.load_fail a, 
+.optionSound .audioControls.load_fail a:hover, 
+.optionSound .audioControls.playing_fail a, 
+.optionSound .audioControls.playing_fail a:hover, 
+.optionSound .audioControls.decode_fail a, 
+.optionSound .audioControls.decode_fail a:hover {
 	background-position: center -2374px;
 }
 /*Level 0 - stop sound icon for option*/
-.optionSound a.playing_start, 
-.optionSound a.playing_paused {
+.optionSound .audioControls.playing_start a, 
+.optionSound .audioControls.playing_paused a {
 	background-position: center -1902px;
 }
 /*Level 0 - stop sound icon hover for option*/
-.optionSound a.playing_start:hover, 
-.optionSound a.playing_paused:hover, 
-.optionSound a.playing_start:active, 
-.optionSound a.playing_paused:active, 
-.optionSound a.playing_start:focus, 
-.optionSound a.playing_paused:focus {
+.optionSound .audioControls.playing_start a:hover, 
+.optionSound .audioControls.playing_paused a:hover, 
+.optionSound .audioControls.playing_start a:active, 
+.optionSound .audioControls.playing_paused a:active, 
+.optionSound .audioControls.playing_start a:focus, 
+.optionSound .audioControls.playing_paused a:focus {
 	background-position: center -1931px;
 }
 
 
 /*Level 1 - sound icon for option*/
-.TDS_PS_L1 .optionSound a {
+.TDS_PS_L1 .optionSound .audioControls a {
 	background-position: center -1574px;
 	height: 30px;
 	width: 28px;
@@ -2184,135 +2188,135 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 	margin-left: -7px;
 }
 /*Level 1 - sound icon hover for option*/
-.TDS_PS_L1 .optionSound a:hover, 
-.TDS_PS_L1 .optionSound a:active, 
-.TDS_PS_L1 .optionSound a:focus {
+.TDS_PS_L1 .optionSound .audioControls a:hover, 
+.TDS_PS_L1 .optionSound .audioControls a:active, 
+.TDS_PS_L1 .optionSound .audioControls a:focus {
 	background-position: center -1622px;
 }
 /*Level 1 - disabled sound icon for option*/
-.TDS_PS_L1 .optionSound a.load_incomplete, 
-.TDS_PS_L1 .optionSound a.disabled,
-.TDS_PS_L1 .optionSound a.load_incomplete:hover, 
-.TDS_PS_L1 .optionSound a.disabled:hover {
+.TDS_PS_L1 .optionSound .audioControls.load_incomplete a, 
+.TDS_PS_L1 .optionSound .audioControls.disabled a,
+.TDS_PS_L1 .optionSound .audioControls.load_incomplete a:hover, 
+.TDS_PS_L1 .optionSound .audioControls.disabled a:hover {
 	background-position: center -1669px;
 }
 /*Level 1 - crossed out sound icon for options*/
-.TDS_PS_L1 .optionSound a.load_fail, 
-.TDS_PS_L1 .optionSound a.load_fail:hover, 
-.TDS_PS_L1 .optionSound a.playing_fail, 
-.TDS_PS_L1 .optionSound a.playing_fail:hover, 
-.TDS_PS_L1 .optionSound a.decode_fail, 
-.TDS_PS_L1 .optionSound a.decode_fail:hover {
+.TDS_PS_L1 .optionSound .audioControls.load_fail a, 
+.TDS_PS_L1 .optionSound .audioControls.load_fail a:hover, 
+.TDS_PS_L1 .optionSound .audioControls.playing_fail a, 
+.TDS_PS_L1 .optionSound .audioControls.playing_fail a:hover, 
+.TDS_PS_L1 .optionSound .audioControls.decode_fail a, 
+.TDS_PS_L1 .optionSound .audioControls.decode_fail a:hover {
 	background-position: center -2320px;
 }
 /*Level 1 - stop sound icon for option*/
-.TDS_PS_L1 .optionSound a.playing_start, 
-.TDS_PS_L1 .optionSound a.playing_paused {
+.TDS_PS_L1 .optionSound .audioControls.playing_start a, 
+.TDS_PS_L1 .optionSound .audioControls.playing_paused a {
 	background-position: center -1717px;
 }
 /*Level 1 - stop sound icon hover for option*/
-.TDS_PS_L1 .optionSound a.playing_start:hover, 
-.TDS_PS_L1 .optionSound a.playing_paused:hover, 
-.TDS_PS_L1 .optionSound a.playing_start:active, 
-.TDS_PS_L1 .optionSound a.playing_paused:active, 
-.TDS_PS_L1 .optionSound a.playing_start:focus, 
-.TDS_PS_L1 .optionSound a.playing_paused:focus {
+.TDS_PS_L1 .optionSound .audioControls.playing_start a:hover, 
+.TDS_PS_L1 .optionSound .audioControls.playing_paused a:hover, 
+.TDS_PS_L1 .optionSound .audioControls.playing_start a:active, 
+.TDS_PS_L1 .optionSound .audioControls.playing_paused a:active, 
+.TDS_PS_L1 .optionSound .audioControls.playing_start a:focus, 
+.TDS_PS_L1 .optionSound .audioControls.playing_paused a:focus {
 	background-position: center -1765px;
 }
 
 
 /*Levels 2-4 - sound icon for option*/
-.TDS_PS_L2 .optionSound a, 
-.TDS_PS_L3 .optionSound a, 
-.TDS_PS_L4 .optionSound a {
+.TDS_PS_L2 .optionSound .audioControls a, 
+.TDS_PS_L3 .optionSound .audioControls a, 
+.TDS_PS_L4 .optionSound .audioControls a {
 	background-position: center -1274px;
 	height: 37px;
 	width: 36px;
 	margin-top: 6px;
 	margin-left: -8px;
 }
-.TDS_PS_L3 .optionSound a{
+.TDS_PS_L3 .optionSound .audioControls a {
 	margin-top: 13px;
 }
-.TDS_PS_L4 .optionSound a{
+.TDS_PS_L4 .optionSound .audioControls a {
 	margin-top: 20px;
 }
 /*Levels 2-4 - sound icon hover for option*/
-.TDS_PS_L2 .optionSound a:hover, 
-.TDS_PS_L3 .optionSound a:hover, 
-.TDS_PS_L4 .optionSound a:hover, 
-.TDS_PS_L2 .optionSound a:active, 
-.TDS_PS_L3 .optionSound a:active, 
-.TDS_PS_L4 .optionSound a:active, 
-.TDS_PS_L2 .optionSound a:focus, 
-.TDS_PS_L3 .optionSound a:focus, 
-.TDS_PS_L4 .optionSound a:focus {
+.TDS_PS_L2 .optionSound .audioControls a:hover, 
+.TDS_PS_L3 .optionSound .audioControls a:hover, 
+.TDS_PS_L4 .optionSound .audioControls a:hover, 
+.TDS_PS_L2 .optionSound .audioControls a:active, 
+.TDS_PS_L3 .optionSound .audioControls a:active, 
+.TDS_PS_L4 .optionSound .audioControls a:active, 
+.TDS_PS_L2 .optionSound .audioControls a:focus, 
+.TDS_PS_L3 .optionSound .audioControls a:focus, 
+.TDS_PS_L4 .optionSound .audioControls a:focus {
 	background-position: center -1334px;
 }
 /*Levels 2-4 - disabled sound icon for option*/
-.TDS_PS_L2 .optionSound a.load_incomplete, 
-.TDS_PS_L2 .optionSound a.disabled,
-.TDS_PS_L2 .optionSound a.load_incomplete:hover, 
-.TDS_PS_L2 .optionSound a.disabled:hover, 
-.TDS_PS_L3 .optionSound a.load_incomplete, 
-.TDS_PS_L3 .optionSound a.disabled,
-.TDS_PS_L3 .optionSound a.load_incomplete:hover, 
-.TDS_PS_L3 .optionSound a.disabled:hover, 
-.TDS_PS_L4 .optionSound a.load_incomplete, 
-.TDS_PS_L4 .optionSound a.disabled,
-.TDS_PS_L4 .optionSound a.load_incomplete:hover, 
-.TDS_PS_L4 .optionSound a.disabled:hover {
+.TDS_PS_L2 .optionSound .audioControls.load_incomplete a, 
+.TDS_PS_L2 .optionSound .audioControls.disabled a,
+.TDS_PS_L2 .optionSound .audioControls.load_incomplete a:hover, 
+.TDS_PS_L2 .optionSound .audioControls.disabled a:hover, 
+.TDS_PS_L3 .optionSound .audioControls.load_incomplete a, 
+.TDS_PS_L3 .optionSound .audioControls.disabled a,
+.TDS_PS_L3 .optionSound .audioControls.load_incomplete a:hover, 
+.TDS_PS_L3 .optionSound .audioControls.disabled a:hover, 
+.TDS_PS_L4 .optionSound .audioControls.load_incomplete a, 
+.TDS_PS_L4 .optionSound .audioControls.disabled a,
+.TDS_PS_L4 .optionSound .audioControls.load_incomplete a:hover, 
+.TDS_PS_L4 .optionSound .audioControls.disabled a:hover {
 	background-position: center -1395px;
 }
 /*Levels 2-4 - crossed out sound icon for options*/
-.TDS_PS_L2 .optionSound a.load_fail, 
-.TDS_PS_L2 .optionSound a.load_fail:hover, 
-.TDS_PS_L2 .optionSound a.playing_fail, 
-.TDS_PS_L2 .optionSound a.playing_fail:hover, 
-.TDS_PS_L2 .optionSound a.decode_fail, 
-.TDS_PS_L2 .optionSound a.decode_fail:hover, 
-.TDS_PS_L3 .optionSound a.load_fail, 
-.TDS_PS_L3 .optionSound a.load_fail:hover, 
-.TDS_PS_L3 .optionSound a.playing_fail, 
-.TDS_PS_L3 .optionSound a.playing_fail:hover, 
-.TDS_PS_L3 .optionSound a.decode_fail, 
-.TDS_PS_L3 .optionSound a.decode_fail:hover, 
-.TDS_PS_L4 .optionSound a.load_fail, 
-.TDS_PS_L4 .optionSound a.load_fail:hover, 
-.TDS_PS_L4 .optionSound a.playing_fail, 
-.TDS_PS_L4 .optionSound a.playing_fail:hover, 
-.TDS_PS_L4 .optionSound a.decode_fail, 
-.TDS_PS_L4 .optionSound a.decode_fail:hover {
+.TDS_PS_L2 .optionSound .audioControls.load_fail a, 
+.TDS_PS_L2 .optionSound .audioControls.load_fail a:hover, 
+.TDS_PS_L2 .optionSound .audioControls.playing_fail a, 
+.TDS_PS_L2 .optionSound .audioControls.playing_fail a:hover, 
+.TDS_PS_L2 .optionSound .audioControls.decode_fail a, 
+.TDS_PS_L2 .optionSound .audioControls.decode_fail a:hover, 
+.TDS_PS_L3 .optionSound .audioControls.load_fail a, 
+.TDS_PS_L3 .optionSound .audioControls.load_fail a:hover, 
+.TDS_PS_L3 .optionSound .audioControls.playing_fail a, 
+.TDS_PS_L3 .optionSound .audioControls.playing_fail a:hover, 
+.TDS_PS_L3 .optionSound .audioControls.decode_fail a, 
+.TDS_PS_L3 .optionSound .audioControls.decode_fail a:hover, 
+.TDS_PS_L4 .optionSound .audioControls.load_fail a, 
+.TDS_PS_L4 .optionSound .audioControls.load_fail a:hover, 
+.TDS_PS_L4 .optionSound .audioControls.playing_fail a, 
+.TDS_PS_L4 .optionSound .audioControls.playing_fail a:hover, 
+.TDS_PS_L4 .optionSound .audioControls.decode_fail a, 
+.TDS_PS_L4 .optionSound .audioControls.decode_fail a:hover {
 	background-position: center -2263px;
 }
 /*Levels 2-4 - stop sound icon for option*/
-.TDS_PS_L2 .optionSound a.playing_start, 
-.TDS_PS_L2 .optionSound a.playing_paused, 
-.TDS_PS_L3 .optionSound a.playing_start, 
-.TDS_PS_L3 .optionSound a.playing_paused, 
-.TDS_PS_L4 .optionSound a.playing_start, 
-.TDS_PS_L4 .optionSound a.playing_paused {
+.TDS_PS_L2 .optionSound .audioControls.playing_start a, 
+.TDS_PS_L2 .optionSound .audioControls.playing_paused a, 
+.TDS_PS_L3 .optionSound .audioControls.playing_start a, 
+.TDS_PS_L3 .optionSound .audioControls.playing_paused a, 
+.TDS_PS_L4 .optionSound .audioControls.playing_start a, 
+.TDS_PS_L4 .optionSound .audioControls.playing_paused a {
 	background-position: center -1455px;
 }
 /*Levels 2-4 - stop sound icon hover for option*/
-.TDS_PS_L2 .optionSound a.playing_start:hover, 
-.TDS_PS_L2 .optionSound a.playing_paused:hover, 
-.TDS_PS_L3 .optionSound a.playing_start:hover, 
-.TDS_PS_L3 .optionSound a.playing_paused:hover, 
-.TDS_PS_L4 .optionSound a.playing_start:hover, 
-.TDS_PS_L4 .optionSound a.playing_paused:hover, 
-.TDS_PS_L2 .optionSound a.playing_start:active, 
-.TDS_PS_L2 .optionSound a.playing_paused:active, 
-.TDS_PS_L3 .optionSound a.playing_start:active, 
-.TDS_PS_L3 .optionSound a.playing_paused:active, 
-.TDS_PS_L4 .optionSound a.playing_start:active, 
-.TDS_PS_L4 .optionSound a.playing_paused:active, 
-.TDS_PS_L2 .optionSound a.playing_start:focus, 
-.TDS_PS_L2 .optionSound a.playing_paused:focus, 
-.TDS_PS_L3 .optionSound a.playing_start:focus, 
-.TDS_PS_L3 .optionSound a.playing_paused:focus, 
-.TDS_PS_L4 .optionSound a.playing_start:focus, 
-.TDS_PS_L4 .optionSound a.playing_paused:focus {
+.TDS_PS_L2 .optionSound .audioControls.playing_start a:hover, 
+.TDS_PS_L2 .optionSound .audioControls.playing_paused a:hover, 
+.TDS_PS_L3 .optionSound .audioControls.playing_start a:hover, 
+.TDS_PS_L3 .optionSound .audioControls.playing_paused a:hover, 
+.TDS_PS_L4 .optionSound .audioControls.playing_start a:hover, 
+.TDS_PS_L4 .optionSound .audioControls.playing_paused a:hover, 
+.TDS_PS_L2 .optionSound .audioControls.playing_start a:active, 
+.TDS_PS_L2 .optionSound .audioControls.playing_paused a:active, 
+.TDS_PS_L3 .optionSound .audioControls.playing_start a:active, 
+.TDS_PS_L3 .optionSound .audioControls.playing_paused a:active, 
+.TDS_PS_L4 .optionSound .audioControls.playing_start a:active, 
+.TDS_PS_L4 .optionSound .audioControls.playing_paused a:active, 
+.TDS_PS_L2 .optionSound .audioControls.playing_start a:focus, 
+.TDS_PS_L2 .optionSound .audioControls.playing_paused a:focus, 
+.TDS_PS_L3 .optionSound .audioControls.playing_start a:focus, 
+.TDS_PS_L3 .optionSound .audioControls.playing_paused a:focus, 
+.TDS_PS_L4 .optionSound .audioControls.playing_start a:focus, 
+.TDS_PS_L4 .optionSound .audioControls.playing_paused a:focus {
 	background-position: center -1515px;
 }
 
@@ -2997,6 +3001,11 @@ math .symbol .highlight {
 	font-family: arial;
 }
 
+/* Pi symbol doesn't render well when sans-serifed */
+.symbol_960 {
+	font-family: "Times New Roman", Times, serif !important;
+}
+
 /* @end */
 
 
@@ -3197,13 +3206,21 @@ math .symbol .highlight {
    -webkit-box-shadow:inset 0 0 5px 2px rgba(0,174,239,.3);
 	box-shadow:inset 0 0 5px 2px rgba(0,174,239,.3);
 }
+
+/* hide letters for some QTI options */
+.hideOptionLabels .format_mc .optionClicker {
+	background-image: url("../../Images/controls/options/optionBlank.png") !important;
+}
+
+
 /* @group fixed expand/collapse button */
 
-.passageTools {
+.passageTools.toolsContainer {
 	position: fixed;
 	top: 90px;
 	left: 40%;
 	margin-left: -160px;
+	margin-top: 0px !important;
 	right: inherit;
 	z-index: 7 !important;
 	width: 130px;
@@ -3213,18 +3230,29 @@ math .symbol .highlight {
 	-o-transition: all .3s linear;
 	transition: all .3s linear;
 }
-.fs-enabled .passageTools {
+.pageWrapper.hiding .passage-expanded .passageTools.toolsContainer, 
+.pageWrapper.hiding .passage-collapsed .passageTools.toolsContainer {
+	-webkit-transition: all .0s linear;
+	-moz-transition: all .0s linear;
+	-ms-transition: all .0s linear;
+	-o-transition: all .0s linear;
+	transition: all .0s linear;
+}
+.fs-enabled .passageTools.toolsContainer {
 	top: 15px;
 }
-.app_Student.platform_ios .passageTools, 
-.app_Student.platform_ios .multi-page {
+.app_Student.platform_ios .passageTools.toolsContainer {
 	top: 40px;
 }
-.TDS_ITM0 .passageTools {
+.platform_ios .multi-page {
+	top: 0px;
+	position: -webkit-sticky !important;
+}
+.TDS_ITM0 .passageTools.toolsContainer {
 	margin-left: -95px;
 	width: 65px;
 }
-.passageTools a {
+.passageTools.toolsContainer a {
 	position: static !important;
 	margin: 0px;
 	-moz-box-sizing:border-box;
@@ -3234,110 +3262,124 @@ math .symbol .highlight {
 	box-shadow: 0 0 3px 2px rgba(209,209,209,.3);
 	float: right;
 }
-a.passageMenu {
+.passageTools.toolsContainer a.passageMenu {
 	background-color: #fff;
-}
-.passageTools .expand-collapse-passage, 
-.TDS_PS_L1 .passageTools .expand-collapse-passage {
-	background: #fff url(../../Images/universal/universal_content.png) no-repeat center -95px;
+	display: block;
+	background: url(../../Images/universal/universal_content.png) no-repeat center 6px;
+	width: 45px;
 	height: 29px;
-	width: 40px;
 }
-.passageTools .expand-collapse-passage:active, 
-.passageTools .expand-collapse-passage:focus, 
-.passageTools .expand-collapse-passage:hover, 
-.TDS_PS_L1 .passageTools .expand-collapse-passage:active, 
-.TDS_PS_L1 .passageTools .expand-collapse-passage:focus, 
-.TDS_PS_L1 .passageTools .expand-collapse-passage:hover {
+.passageTools.toolsContainer .expand-collapse-passage, 
+.TDS_PS_L1 .passageTools.toolsContainer .expand-collapse-passage {
+	background: #fff url(../../Images/universal/universal_content.png) no-repeat center -95px;
+	height: 29px !important;
+	width: 40px !important;
+}
+.passageTools.toolsContainer .expand-collapse-passage:active, 
+.passageTools.toolsContainer .expand-collapse-passage:focus, 
+.passageTools.toolsContainer .expand-collapse-passage:hover, 
+.TDS_PS_L1 .passageTools.toolsContainer .expand-collapse-passage:active, 
+.TDS_PS_L1 .passageTools.toolsContainer .expand-collapse-passage:focus, 
+.TDS_PS_L1 .passageTools.toolsContainer .expand-collapse-passage:hover {
 	background-position: center -145px !important;
 }
-.TDS_PS_L2 .passageTools .expand-collapse-passage, 
-.TDS_PS_L3 .passageTools .expand-collapse-passage {
+.TDS_PS_L2 .passageTools.toolsContainer .expand-collapse-passage, 
+.TDS_PS_L3 .passageTools.toolsContainer .expand-collapse-passage {
 	background-position: center -644px !important;
     height: 34px !important;
     width: 45px !important;
 }
-.TDS_PS_L2 .passageTools .expand-collapse-passage:active, 
-.TDS_PS_L2 .passageTools .expand-collapse-passage:focus, 
-.TDS_PS_L2 .passageTools .expand-collapse-passage:hover, 
-.TDS_PS_L3 .passageTools .expand-collapse-passage:active, 
-.TDS_PS_L3 .passageTools .expand-collapse-passage:focus, 
-.TDS_PS_L3 .passageTools .expand-collapse-passage:hover {
+.TDS_PS_L2 .passageTools.toolsContainer .expand-collapse-passage:active, 
+.TDS_PS_L2 .passageTools.toolsContainer .expand-collapse-passage:focus, 
+.TDS_PS_L2 .passageTools.toolsContainer .expand-collapse-passage:hover, 
+.TDS_PS_L3 .passageTools.toolsContainer .expand-collapse-passage:active, 
+.TDS_PS_L3 .passageTools.toolsContainer .expand-collapse-passage:focus, 
+.TDS_PS_L3 .passageTools.toolsContainer .expand-collapse-passage:hover {
 	background-position: center -695px !important;
 }
-.TDS_PS_L2 .passageMenu, 
-.TDS_PS_L3 .passageMenu {
-	width: 91px;
+.TDS_PS_L2 .passageTools.toolsContainer .passageMenu, 
+.TDS_PS_L3 .passageTools.toolsContainer .passageMenu {
+	height: 34px !important;
+    width: 52px !important;
 }
-.TDS_PS_L4 .passageTools .expand-collapse-passage {
+.TDS_PS_L4 .passageTools.toolsContainer .expand-collapse-passage {
 	background-position: center -843px !important;
     height: 45px !important;
     width: 60px !important;
 }
-.TDS_PS_L4 .passageTools .expand-collapse-passage:active, 
-.TDS_PS_L4 .passageTools .expand-collapse-passage:focus, 
-.TDS_PS_L4 .passageTools .expand-collapse-passage:hover {
+.TDS_PS_L4 .passageTools.toolsContainer .expand-collapse-passage:active, 
+.TDS_PS_L4 .passageTools.toolsContainer .expand-collapse-passage:focus, 
+.TDS_PS_L4 .passageTools.toolsContainer .expand-collapse-passage:hover {
 	background-position: center -893px !important;
 }
-.TDS_PS_L4 .passageMenu {
-	width: 121px;
+.TDS_PS_L4 .passageTools.toolsContainer .passageMenu {
+	height: 45px !important;
+    width: 70px !important;
 }
-.passage-expanded .passageTools {
+.passage-expanded .passageTools.toolsContainer {
 	left: 90% !important;
 }
-.layout11 .passageTools, 
-.layout17 .passageTools {
+.layout11 .passageTools.toolsContainer, 
+.layout17 .passageTools.toolsContainer {
 	left: 60%;
 }
-.layout21 .passageTools {
+.layout21 .passageTools.toolsContainer {
 	left: 40%;
 }
-.layout23 .passageTools,  
-.passage-expanded .layout23 .passageTools {
+.layout23 .passageTools.toolsContainer,  
+.passage-expanded .layout23 .passageTools.toolsContainer {
 	left: 100% !important;
 }
-.layout24 .passageTools, 
-.layout29 .passageTools {
+.layout24 .passageTools.toolsContainer, 
+.layout29 .passageTools.toolsContainer {
 	left: 38%;
 }
-.layout25 .passageTools {
+.layout25 .passageTools.toolsContainer {
 	left: 30%;
 }
-.layout26 .passageTools {
+.layout26 .passageTools.toolsContainer {
 	left: 50%;
 }
-.layout27 .passageTools, 
-.layout28 .passageTools {
+.layout27 .passageTools.toolsContainer, 
+.layout28 .passageTools.toolsContainer {
 	left: 70%;
 }
-.platform_ios .pageWrapper.hiding .passageTools {
+.platform_ios .pageWrapper.hiding .passageTools.toolsContainer {
 	display: none !important;
 }
-.platform_ios .passageTools {
+.platform_ios .passageTools.toolsContainer {
 	position: -webkit-sticky !important;
 	top:  10px !important;
 	left: 70%;
 }
-.platform_ios .layout11 .passageTools, 
-.platform_ios .layout17 .passageTools, 
-.platform_ios .layout26 .passageTools {
+.platform_ios .layout11 .passageTools.toolsContainer, 
+.platform_ios .layout17 .passageTools.toolsContainer, 
+.platform_ios .layout26 .passageTools.toolsContainer {
 	left: 80%;
 }
-.platform_ios .layout23 .passageTools,  
-.passage-expanded.platform_ios .layout23 .passageTools {
+.platform_ios .layout23 .passageTools.toolsContainer,  
+.passage-expanded.platform_ios .layout23 .passageTools.toolsContainer {
 	left: 90%;
 }
-.platform_ios .layout27 .passageTools, 
-.platform_ios .layout28 .passageTools {
+.platform_ios .layout27 .passageTools.toolsContainer, 
+.platform_ios .layout28 .passageTools.toolsContainer {
 	left: 85%;
+}
+
+.platform_linux .optionClicker {
+	border-right: 1px solid rgba(255,255,255,0.01) !important;
+}
+
+.platform_ios .pageWrapper img {
+	pointer-events:none !important;
 }
 
 /* Safari 6 hack - Safari calculates the viewport differently than in iOS 7, so this style shifts the button down */
 @media screen and (-webkit-min-device-pixel-ratio:0) {
-::i-block-chrome,.platform_ios .passageTools {
+::i-block-chrome,.platform_ios .passageTools.toolsContainer {
 	top:  95px !important;
 }
-::i-block-chrome,.platform_ios.fs-enabled .passageTools {
+::i-block-chrome,.platform_ios.fs-enabled .passageTools.toolsContainer {
 	top: 10px !important;
 }
 

@@ -1,6 +1,6 @@
 #topBar {
 	height: 100px;
-	background: url(../../Images/universal/topShadows.png) repeat-x left top;
+	background: transparent url(../../Images/universal/topShadows.png) repeat-x left top !important;
 	color: #fff;
 	-webkit-box-shadow: inherit;
 	-moz-box-shadow: inherit;
@@ -25,6 +25,10 @@
     padding-left: 5px;
     padding-right: 5px;
 }
+#infoBar .sessionID {
+	margin-left: 5px;
+}
+
 #jumpQuestions {
 	height: 24px;
 	line-height: 22px;
@@ -41,6 +45,9 @@
 #jumpGo {
 	margin-top: 4px;
 	background-color: #e9e9e9;
+}
+#smallButtons {
+	right: 0px;
 }
 #smallButtons a {
 	float: left;
@@ -201,7 +208,8 @@
 	background-position: center -1709px !important;
 }
 #btnPrint .icon, 
-#btnPrintPractice .icon {
+#btnPrintPractice .icon, 
+#btnPagePrint .icon {
 	background-position: center -1514px !important;
 }
 #btnItemScore .icon {
@@ -249,11 +257,11 @@
 	background-color: rgba(0,174,239,0.8);
 }
 
-.fs-enabled #studentControls, 
-.fs-enabled #studentTools a {
+.fs-enabled #studentTools, 
+.fs-enabled #studentControls a {
     display: none;
 }
-.fs-enabled #studentTools {
+.fs-enabled #studentControls {
     height: 60px;
     width: 60px;
     visibility: visible;
@@ -281,22 +289,27 @@
 	height: 60px;
 	width: 60px;
 }
-#contents {
+.fs-enabled #topBar {
+	background-image: none !important;
+}
+
+#contents, 
+.layout_wai, 
+body.platform_chrome #contents {
     top: 96px;
 }
 .multi-page {
     top: 96px;
 }
-.passageTools {
+.toolsContainer.passageTools {
     top: 115px;
 }
 .fs-enabled .multi-page {
 	top: 0px;
 }
-.fs-enabled .passageTools {
+.fs-enabled .toolsContainer.passageTools {
 	top: 15px;
 }
-
 
 /* @group sound cues */
 
@@ -304,7 +317,7 @@
 	height: 69px;
 	max-width: 46px;
 }
-#soundCues .sound_cue {
+#soundCues .audioControls.audio-layout-single a {
 	height: 69px;
 	border-color:#63676e;
 	border-right: none;
@@ -312,36 +325,36 @@
 	width: 40px;
 	background: transparent url(../../Images/universal/soundCue_modern.png) no-repeat center 15px;
 }
-#soundCues .sound_cue:active, 
-#soundCues .sound_cue:focus, 
-#soundCues .sound_cue:hover {
+#soundCues .audioControls.audio-layout-single a:active, 
+#soundCues .audioControls.audio-layout-single a:focus, 
+#soundCues .audioControls.audio-layout-single a:hover {
 	background-position: center -46px !important;
 }
-#soundCues .sound_cue.load_incomplete, 
-#soundCues .sound_cue.disabled, 
-#soundCues .sound_cue.load_incomplete:active, 
-#soundCues .sound_cue.disabled:active {
+#soundCues .audioControls.audio-layout-single.load_incomplete a, 
+#soundCues .audioControls.audio-layout-single.disabled a, 
+#soundCues .audioControls.audio-layout-single.load_incomplete a:active, 
+#soundCues .audioControls.audio-layout-single.disabled a:active {
 	background-position: center -104px !important;
 }
-#soundCues .sound_cue.playing_start, 
-#soundCues .sound_cue.playing_start:active {
-	background-position: center 14px !important;
+#soundCues .audioControls.audio-layout-single.playing_start a, 
+#soundCues .audioControls.audio-layout-single.playing_start a:active {
+	background-position: center 15px !important;
 	background-color: #fff !important;
 }
-#soundCues .sound_cue.load_fail, 
-#soundCues .sound_cue.decode_fail, 
-#soundCues .sound_cue.playing_fail, 
-#soundCues .sound_cue.load_fail:active, 
-#soundCues .sound_cue.decode_fail:active, 
-#soundCues .sound_cue.playing_fail:active {
+#soundCues .audioControls.audio-layout-single.load_fail a, 
+#soundCues .audioControls.audio-layout-single.decode_fail a, 
+#soundCues .audioControls.audio-layout-single.playing_fail a, 
+#soundCues .audioControls.audio-layout-single.load_fail a:active, 
+#soundCues .audioControls.audio-layout-single.decode_fail a:active, 
+#soundCues .audioControls.audio-layout-single.playing_fail a:active {
 	background-position: center -164px !important;
 }
-#soundCues .sound_cue.load_start, 
-#soundCues .sound_cue.load_complete, 
-#soundCues .sound_cue.decode_start, 
-#soundCues .sound_cue.load_start:active, 
-#soundCues .sound_cue.load_complete:active, 
-#soundCues .sound_cue.decode_start:active {
+#soundCues .audioControls.audio-layout-single.load_start a, 
+#soundCues .audioControls.audio-layout-single.load_complete a, 
+#soundCues .audioControls.audio-layout-single.decode_start a, 
+#soundCues .audioControls.audio-layout-single.load_start a:active, 
+#soundCues .audioControls.audio-layout-single.load_complete a:active, 
+#soundCues .audioControls.audio-layout-single.decode_start a:active {
 	background-position: center 22px !important;
 	background-color: #fff !important;
 }
@@ -357,4 +370,18 @@
 }
 .TDS_Masking1.msk-enabled #navigation #studentTools #btnMask {
     background-position: center -295px !important;
+}
+/* add old foucs styles back to modern theme */
+.answerCell .contextAreaFocus.optionContainer, 
+.theQuestions .answerContainer .contextAreaFocus.optionContainer, 
+.compound .questionContainer .contextAreaFocus.optionContainer {
+	border: dotted 1px #00aeef;
+	 -webkit-box-shadow: inherit !important;
+	-moz-box-shadow: inherit !important;
+	box-shadow: inherit !important;
+}
+/* less opaque mask, similar to 2013 */
+#yuiSimpleDialog_mask {
+	background-image: url(../../Images/universal/mask_lighter.png);
+	opacity: .9;
 }

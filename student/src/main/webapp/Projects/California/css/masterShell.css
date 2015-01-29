@@ -1,13 +1,10 @@
 @charset "UTF-8";
-@import url(../../../Themes/pillars/css/masterShell.css);
+@import url(../../../Themes/california/css/masterShell.css);
 
 /* SBAC's logos */
 #ot-logo_spot1 {
-    background-image:  url(../images/logo_sbac.png);
+    background-image:  url(../images/logo.png);
 	width: 390px;
-}
-.browser_ie.browserVer_6 #ot-logo_spot1{
-	background: url(../images/logo_sbac.gif) no-repeat transparent;
 }
 .languages {
 	display: none;

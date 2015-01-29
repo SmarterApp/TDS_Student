@@ -91,7 +91,8 @@
 .actions .positive button {
 	color: #0d4373;
 }
-.actions .positive button:hover, #sectionLogin .actions button:hover {
+.actions .positive button:hover, #sectionLogin .actions button:hover,
+.actions .positive button:hover, .actions .positive input:hover, .actions .positive button:active, .actions .positive input:active, .actions .positive button:focus, .actions .positive input:focus {
 	background-color: #0d4373 !important;
 }
 /* @end */
@@ -111,13 +112,12 @@
 	background-color: #ffd377;
 }
 #diagnostics .browserVersion {
-	color: #ffd377;
+	color: #A04811;
 }
 #diagnostics a {
-    color: #ffa20c;
+    color: #0d4373;
     display: none;
     float: left;
-    text-decoration: none;
 }
 #loginLinks a {
 	color: #ffa20c !important;
@@ -220,26 +220,8 @@ body.practiceTest .proctorMessage {
 	min-width: 7.5em; moving labels over for the 3 ID input change */
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*Theme specific styles for Bug 153388 */
+.TDS_Glogin_User_Hide.TDS_Glogin_Session_Hide .tds-button.positive
+{
+    border-color: #0d4373;
+}
