@@ -23,6 +23,12 @@ The ResourceBundler module provides the classes to parse the xml files in Studen
 ### SpellCheck
 The SpellCheck module contains REST APIs related to dictionary and spell check for student tests with passages. It contains integration to the [Hunspell](http://hunspell.sourceforge.net) Engine for spell check.
 
+### IRiS
+IRiS (Item Rendering System) provides a web service to render content using the same control paths that the student application uses except that it is very lightweight. This rendered content can be embedded in an iFrame for purposes such as item review.
+ 
+### Student.library
+Rendering is now common to three different projects: Proctor, Student and IRiS. All three projects however have different underlying business rules. All such interfaces have been abstracted in student.library and the concrete implementations are provided by each individual application using Spring dependency injection.
+
 ## Setup
 In general, building the code and deploying the WAR file is a good first step.  The Student application, however, has a number of other steps that need to be performed in order to fully setup the system.
 
@@ -215,10 +221,8 @@ Student has a number of direct dependencies that are necessary for it to functio
 * jsp-api
 * c3p0
 
-
 ### Test Dependencies
 * junit
-
 
 ### Runtime Dependencies
 * Servlet API
