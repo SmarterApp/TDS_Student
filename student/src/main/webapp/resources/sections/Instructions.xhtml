@@ -9,23 +9,27 @@
 	<tds:SectionWrapper id="sectionInstructions" headerKey="TestInstructions.Label.TestInstructions">
 
 		<div class="instructions">
-			<span i18n-content="TestInstructions.Label.ClickImagePart1"></span> <span i18n-content="TestInstructions.Label.ClickImagePart2"></span> <span i18n-content="StaticContent.Label.AdditionalHelp"></span>
+			<span i18n-content="TestInstructions.Label.ClickImagePart1"></span>
+			 <span i18n-content="TestInstructions.Label.ClickImagePart2"></span> 
+			 <span i18n-content="StaticContent.Label.AdditionalHelp"></span>
 		</div>
 
-		<div id="speakHelp">
-			<a id='startSpeakingButton' class="startSpeak disabled" href="#" tabindex="0">Start Speaking</a> <a id='stopSpeakingButton' class="stopSpeak disabled" href="#" tabindex="0">Stop Speaking</a>
-			<!--- Help text. We show one of these divs conditionally -->
-			<div id="ttsHelpMessage" i18n-content="TestInstructions.Label.Help"></div>
-			<div id="noTTSHelpMessage" style="display: none;" i18n-content="TestInstructions.Label.NoTTSHelp"></div>
-			<!--- End Help text -->
-		</div>
-
-		<div id="quickQuide">
-			<iframe id='helpFrame' width="100%" height="300px" tabindex="0" title="Help Guide"></iframe>
-		</div>
-
-		<span class="actions"> <tds:Button id="btnCancelTest" styleClass="negative" key="TestInstructions.Button.CancelTest" /> <tds:Button id="btnStartTest" styleClass="positive"
-				key="TestInstructions.Button.BeginTest" />
+    <div id="speakHelp">
+        <a id='startSpeakingButton' class="startSpeak disabled" href="#" tabindex="0" aria-hidden="true">Start Speaking</a>
+        <a id='stopSpeakingButton' class="stopSpeak disabled" href="#" tabindex="0" aria-hidden="true">Stop Speaking</a>
+        <!--- Help text. We show one of these divs conditionally -->
+        <div id="ttsHelpMessage" i18n-content="TestInstructions.Label.Help" aria-hidden="true"></div>
+        <div id="noTTSHelpMessage" style="display:none;" i18n-content="TestInstructions.Label.NoTTSHelp" aria-hidden="true"></div>
+        <!--- End Help text -->
+	</div>
+    
+    <div id="quickQuide">
+    	<iframe id='helpFrame' width="100%" height="300px" tabindex="0" title="Help Guide"></iframe>
+	</div>
+	
+	<span class="actions"> 
+	<tds:Button id="btnCancelTest" styleClass="negative" key="TestInstructions.Button.CancelTest" /> 
+	<tds:Button id="btnStartTest" styleClass="positive"	key="TestInstructions.Button.BeginTest" />
 		</span>
 
 	</tds:SectionWrapper>

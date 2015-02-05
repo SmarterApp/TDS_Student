@@ -65,7 +65,7 @@ public class DialogFrameBacking extends BasePage
     try {
       HttpServletRequest request = HttpContext.getCurrentContext ().getRequest ();
       StringBuilder urlSB = new StringBuilder ();
-      urlSB.append (request.getRequestURL ().toString ().replace ("DialogFrame.xhtml", "API/DialogFrame.axd/getContent"));
+      urlSB.append (request.getRequestURL ().toString ().replace ("DialogFrame.aspx", "API/DialogFrame.axd/getContent"));
       urlSB.append ("?language=").append (StudentContext.getLanguage ());
       urlSB.append ("&bankKey=").append (bankKey);
       urlSB.append ("&itemKey=").append (itemKey);

@@ -270,12 +270,18 @@ public class ResponseRepository extends AbstractDAO implements IResponseReposito
       response.setDateCreated (reader.<String> get ("dateCreated"));
       response.setFormat (reader.<String> get ("Format").toUpperCase ());
 
-      response.setIsVisible (reader.<Boolean> get ("isVisible"));
+      if(reader.get ("isVisible")!=null){
+        response.setIsVisible (Boolean.parseBoolean (reader.get ("isVisible").toString ()));
+      }
+      
       //response.setScore (reader.<Integer> get ("Score"));
       response.setMarkForReview (reader.<Boolean> get ("Mark"));
 
       response.setGroupItemsRequired (reader.<Integer> get ("GroupItemsRequired"));
-      response.setIsRequired (reader.<Boolean> get ("IsRequired"));
+      if(reader.get ("IsRequired")!=null){
+        response.setIsRequired (Boolean.parseBoolean (reader.get ("IsRequired").toString ()));
+      }
+      
       response.setIsSelected (reader.<Boolean> get ("IsSelected"));
       //response.setIsFieldTest (reader.<Boolean> get ("IsFieldTest"));
       response.setIsValid (reader.<Boolean> get ("IsValid"));

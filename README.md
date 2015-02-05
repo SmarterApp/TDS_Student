@@ -25,7 +25,11 @@ The SpellCheck module contains REST APIs related to dictionary and spell check f
 
 ### IRiS
 IRiS (Item Rendering System) provides a web service to render content using the same control paths that the student application uses except that it is very lightweight. This rendered content can be embedded in an iFrame for purposes such as item review.
- 
+
+#### Deploying Content to IRiS
+IRiS is a JAR file that can be deployed to its own Tomcat web container. The easiest way to deploy content is to scp the file to the server. Content needs to be deployed to the folder `/usr/local/tomcat/content`.
+Once content has been deployed as above, the system should pick it up automatically. However, this feature may not be reliable - especially when deploying massive number of files by copying from a remote location. The only reliable way to make sure the system picks up all newly deployed content is to hit this API endpoint:  `/iris/Pages/API/content/reload`. This is a blocking call and is an initial attempt at providing an API that doesn’t involve restarting the server.
+
 ### Student.library
 Rendering is now common to three different projects: Proctor, Student and IRiS. All three projects however have different underlying business rules. All such interfaces have been abstracted in student.library and the concrete implementations are provided by each individual application using Spring dependency injection.
 

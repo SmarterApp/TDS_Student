@@ -10,11 +10,10 @@
 		<div class="instructions" i18n-content="StaticContent.Label.ReviewSubmit"></div>
 
 		<div id="markedWarning" style="display: none;" i18n-content="QuestionsAreMarkedForReview"></div>
-
+		<div id="unansweredWarning" style="display: none;" i18n-content="QuestionsAreUnanswered"></div>
 		<div class="choices">
 			<!-- A Clegg: I am removing the size attribute from this select tag to try and fix bug 88470 for mobile -->
-			<label class="labelTestReview" i18n-content="TestReview.Label.ItemNavigation" for="ddlNavigation">Select question(s) to review:</label> 
-			<select id="ddlNavigation" title="Select question to review"></select>
+			<label class="labelTestReview" i18n-content="TestReview.Label.ItemNavigation" for="ddlNavigation">Select question(s) to review:</label> <select id="ddlNavigation" title="Select question to review"></select>
 
 			<div class="actions">
 				<tds:Button id="btnReviewTest" styleClass="negative" key="TestReview.Button.MyAnswers" />

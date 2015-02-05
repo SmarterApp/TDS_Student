@@ -11,12 +11,21 @@
 			<h1 i18n-content="SoundCheck.Label.DidYouHear"></h1>
 
 			<div class="instructions">
-				<p>
-					<a id="audioPlayer" autoplay="False" visible="True" class="sound_repeat" type="audio/ogg" href="#{request.contextPath}/Shared/Audio/SoundCheckSample.ogg" tabindex="1" /> <span
-						i18n-content="SoundCheck.Label.ClickToHear"></span>
-				</p>
+				<div class="audioControls">
+					<a id="audioPlayer" autoplay="False" visible="True" class="sound_repeat" type="audio/ogg" href="#{request.contextPath}/Shared/Audio/SoundCheckSample.ogg" tabindex="0" /> 
+				</div>	
+					<span i18n-content="SoundCheck.Label.ClickToHear"></span>
+				
 				<p i18n-content="SoundCheck.Label.HeardYesOrNo"></p>
 			</div>
+	
+		<div class="sliderWrap" style="display: none;">
+            <div id="SoundCheck_Adjust_Volume" class="yui-h-slider">
+                <h2 i18n-content="SoundCheck.Label.SliderVolume"></h2>
+                <div id="volumeSCThumb" class="yui-slider-thumb"><img src="../Scripts/Libraries/YUI/slider/assets/thumb-n.gif" /></div>
+            </div>
+            <div id="Volume_SCValue" class="sliderValue">0</div>
+        </div>
 
 			<span class="actions"> <tds:Button id="btnSoundNo" styleClass="negative" key="SoundCheck.Label.HeardNo" /> <tds:Button id="btnSoundYes" styleClass="positive disabled"
 					key="SoundCheck.Label.HeardYes" />
