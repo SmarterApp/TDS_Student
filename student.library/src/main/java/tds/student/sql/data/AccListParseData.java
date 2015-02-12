@@ -27,7 +27,6 @@ public class AccListParseData
   
   private static Logger _logger = LoggerFactory.getLogger (AccListParseData.class);
   public static Data parseData (ColumnResultSet reader) throws ReturnStatusException {
-    long startTime = System.currentTimeMillis ();
     Data acc = null;
     try {
       acc = new Data ();
@@ -79,12 +78,10 @@ public class AccListParseData
       _logger.error (e.getMessage (),e);
       throw new ReturnStatusException (e);
     }
-    _logger.info ("<<<<<<<<< parseData(ColumnResultSet reader) Total: "+((System.currentTimeMillis ()-startTime)) + " ms.  ThreadId: " +Thread.currentThread ().getId ());
     return acc;
   }
 
   public static Data parseData (DbResultRecord reader) throws ReturnStatusException {
-    long startTime = System.currentTimeMillis ();
     Data acc = null;
     acc = new Data ();
     acc.setType (reader.<String> get ("AccType"));
@@ -125,7 +122,6 @@ public class AccListParseData
       acc.setToolTypeSortOrder (reader.<Integer> get ("ToolTypeSortOrder"));
       acc.setToolValueSortOrder (reader.<Integer> get ("ToolValueSortOrder"));
     }
-    _logger.info ("<<<<<<<<< parseData Total: "+((System.currentTimeMillis ()-startTime)) + " ms.  ThreadId: " +Thread.currentThread ().getId ());
     return acc;
   }
 

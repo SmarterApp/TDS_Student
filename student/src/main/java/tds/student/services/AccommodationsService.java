@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -177,7 +176,6 @@ public class AccommodationsService implements IAccommodationsService
   }
 
   public List<Accommodations> getApproved (OpportunityInstance oppInstance, String testKey, boolean isGuestSession) throws ReturnStatusException {
-    long startTime = System.currentTimeMillis ();
     List<OpportunityAccommodation> oppAccs = null;
     List<Accommodations> segmentAccsList = null;
     // get all the test and segment accommodations
@@ -185,11 +183,8 @@ public class AccommodationsService implements IAccommodationsService
     try {
       
       testProps = _ibRepository.getTestProperties (testKey);
-      _logger.info ("<<<<<<<<< checkTestApproval getApproved 1: "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
       segmentAccsList = getTestSegments (testProps, isGuestSession); 
-      _logger.info ("<<<<<<<<< checkTestApproval getApproved 2: "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
       oppAccs = _oppRepository.getOpportunityAccommodations (oppInstance, testKey);
-      _logger.info ("<<<<<<<<< checkTestApproval getApproved 3: "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
       Transformer groupTransformer = new Transformer ()
       {
         @Override
@@ -198,7 +193,6 @@ public class AccommodationsService implements IAccommodationsService
         }
       };
       List<IGrouping<Integer, OpportunityAccommodation>> oppAccsLookup = IGrouping.<Integer, OpportunityAccommodation> createGroups (oppAccs, groupTransformer);
-      _logger.info ("<<<<<<<<< checkTestApproval getApproved 4: "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
       //Collections.sort (oppAccsLookup, new Comparator<IGrouping<String, OpportunityAccommodation>> ()
       //{
       //  @Override
@@ -236,7 +230,6 @@ public class AccommodationsService implements IAccommodationsService
           accommodationsList.add (accommodations.getSubset (new ArrayList<String> ()));
         }
       }
-      _logger.info ("<<<<<<<<< checkTestApproval getApproved Total: "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
       return accommodationsList;
     } catch (ReadOnlyException e) {
       _logger.error (e.getMessage ());
@@ -394,7 +387,6 @@ public class AccommodationsService implements IAccommodationsService
     List<Accommodations> accommodationsList = new ArrayList<Accommodations> ();
     // get all the accommodations for this test
     AccList accList = _ibRepository.getTestAccommodations (testProps.getTestKey ());
-    _logger.info ("<<<<<<<<< checkTestApproval getTestSegments 1: "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
     // if this is PT then remove all acc's that are disabled for guest sessions
     try {
       if (isGuestSession)
@@ -404,11 +396,9 @@ public class AccommodationsService implements IAccommodationsService
             return ((Data) object).isDisableOnGuestSession ();
           }
         }));
-      _logger.info ("<<<<<<<<< checkTestApproval getTestSegments 2: "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
       // first create the test accommodations
       Accommodations testAccs = null;
       testAccs = accList.createAccommodations (0, testProps.getTestID (), testProps.getDisplayName ());
-      _logger.info ("<<<<<<<<< checkTestApproval getTestSegments 3: "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
       accommodationsList.add (testAccs);
       
       // then create the segments accommodations
@@ -421,7 +411,6 @@ public class AccommodationsService implements IAccommodationsService
         }
         accommodationsList.add (segmentAccs);
       }
-      _logger.info ("<<<<<<<<< checkTestApproval getTestSegments Total: "+((System.currentTimeMillis ()-startTime)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
     } catch (ReadOnlyException e1) {
       _logger.error (e1.getMessage ());
       throw new ReturnStatusException (e1);

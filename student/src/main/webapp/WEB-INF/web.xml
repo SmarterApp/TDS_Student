@@ -145,7 +145,7 @@
 		<filter-class>AIR.Common.Web.Session.CaseInsensitiveFileNameFilter</filter-class>
 		<init-param>
 			<param-name>extensionsToFilter</param-name>
-			<param-value>png|gif|jpeg|jpg|bmp|js|css</param-value>
+			<param-value>png|gif|jpeg|jpg|bmp|js|css|woff|ttf</param-value>
 		</init-param>
 		<init-param>
 			<param-name>extensionsMapping</param-name>

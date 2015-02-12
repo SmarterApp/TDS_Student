@@ -95,8 +95,6 @@ public class ContentHandler extends BaseContentRendererController
       @RequestParam (value = "attempt", required = false) int attempt) throws StudentContextException, ReturnStatusException, IOException {
     long startTime = System.currentTimeMillis ();
     response.setContentType ("text/xml");
-    _logger.info ("<<<<<<<<< loadGroup Start: page : groupID:" + groupId + " dateCreated: " + dateCreated + " new: " + prefetched + "  attempt: " + attempt + "  ThreadId: "
-        + Thread.currentThread ().getId ());
     // get test opp and accommodations
     TestOpportunity testOpp = getTestOpportunity ();
 
@@ -130,7 +128,6 @@ public class ContentHandler extends BaseContentRendererController
     ItemRenderGroup itemRenderGroup = createItemRenderGroup (pageGroup, accLookup);
 
     renderGroup (itemRenderGroup, accLookup, response);
-    _logger.info ("<<<<<<<<< loadGroup Total Execution Time : " + ((System.currentTimeMillis () - startTime)) + " ms. ThreadId: " + Thread.currentThread ().getId ());
   }
 
   private void autoEmbossing (TestOpportunity testOpp, AccLookup accLookup, PageGroup pageGroup) throws ReturnStatusException {

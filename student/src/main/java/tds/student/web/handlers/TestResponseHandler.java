@@ -9,29 +9,23 @@
 package tds.student.web.handlers;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import TDS.Shared.Data.ReturnStatus;
-import TDS.Shared.Exceptions.ReturnStatusException;
-import TDS.Shared.Exceptions.TDSSecurityException;
 import tds.blackbox.ContentRequestException;
 import tds.student.sbacossmerge.data.TestResponseReaderSax;
 import tds.student.services.abstractions.IItemScoringService;
@@ -44,18 +38,11 @@ import tds.student.sql.data.ServerLatency;
 import tds.student.web.StudentContext;
 import tds.student.web.StudentSettings;
 import tds.student.web.TestManager;
-import tds.student.web.handlers.TDSHandler;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.stream.FactoryConfigurationError;
-
 import AIR.Common.Helpers.StopWatch;
 import AIR.Common.TDSLogger.ITDSLogger;
-import AIR.Common.Web.TDSReplyCode;
 import AIR.Common.Web.WebHelper;
 import AIR.Common.Web.Session.HttpContext;
-import AIR.Common.data.ResponseData;
+import TDS.Shared.Exceptions.TDSSecurityException;
 
 @Controller
 @Scope ("request")
@@ -79,11 +66,11 @@ public class TestResponseHandler extends TDSHandler
   // prefetch generation.
   // / </summary>
 
+  @SuppressWarnings ("unused")
   private void UpdateResponsesTemp (HttpServletRequest request, HttpServletResponse response) throws TDSSecurityException {
     if (request.getContentLength () == 0)
       return;
     // TODO Shajib: following line is commented temporarily
-    long timeServerReceived = System.currentTimeMillis ();
 
     // make sure the student is authenticated before doing anything
     checkAuthenticated ();
@@ -219,7 +206,6 @@ public class TestResponseHandler extends TDSHandler
       } catch (Exception e) {
         e.printStackTrace ();
       }
-      _logger.info (new StringBuilder ("<<<<<<<<< Response update 7 Execution Time : ").append ((System.currentTimeMillis ()-timeServerReceived)).append (" ms. ").append(" prefetchMax: ").append (prefetchMax).append (" ThreadId: ").append (Thread.currentThread ().getId ()).toString ());
       //temp counter for debuging
       // if the test is not completed then check if prefetch is available
       while (testManager.CheckPrefetchAvailability (testOpp.getTestConfig ().getPrefetch ())) {
@@ -235,7 +221,6 @@ public class TestResponseHandler extends TDSHandler
         // check if test is completed
         testManager.CheckIfTestComplete ();
       }
-      _logger.info (new StringBuilder ("<<<<<<<<< Response update 8 Execution Time : ").append ((System.currentTimeMillis ()-timeServerReceived)).append (" ms. ").append(" prefetchCount: ").append (prefetchCount).append (" ThreadId: ").append (Thread.currentThread ().getId ()).toString ());
       if (prefetchCount == prefetchMax) {
 
       	String message = String.format (
@@ -285,7 +270,6 @@ public class TestResponseHandler extends TDSHandler
 
       // close writing
       responseWriter.writeEnd ();
-      _logger.info ("<<<<<<<<< Response update Total Execution Time : "+((System.currentTimeMillis ()-timeServerReceived)) + " ms. ThreadId: " +Thread.currentThread ().getId ());
     } catch (Exception e) {
       _logger.error (e.toString (), e);
       throw e;

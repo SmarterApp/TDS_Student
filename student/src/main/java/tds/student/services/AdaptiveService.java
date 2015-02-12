@@ -87,7 +87,6 @@ public class AdaptiveService extends AbstractDAO implements IAdaptiveService
   }
 
   public PageGroup createNextItemGroup (OpportunityInstance oppInstance, int lastPage, int lastPosition) throws ReturnStatusException {
-    long startTime = System.currentTimeMillis ();
     PageGroup pageGroup = null;
     try {
       // generate next item group
@@ -97,8 +96,6 @@ public class AdaptiveService extends AbstractDAO implements IAdaptiveService
     	  // this is main command! error is referenced String
     	_Ref<String> errorRef = new _Ref<>();
         itemGroup = _aironline.getNextItemGroup (connection, oppInstance.getKey (), errorRef);
-        _logger.info (new StringBuilder ("<<<<<<<<< Response update createNextItemGroup AdaptiveService.getNextItemGroup 1 Execution Time : ").append ((System.currentTimeMillis ()-startTime)).append ( " ms. ").append ("lastPage : ").append(lastPage).append(" ThreadId: ").append(Thread.currentThread ().getId ()).toString ());
-        _logger.info("<<<<<<<<< Response update createNextItemGroup AdaptiveService.getNextItemGroup : Opportunity ID: " + oppInstance.getKey () +  "  group id: " + itemGroup.getGroupID ());
           
         if(errorRef.get() != null  && !errorRef.get().isEmpty())
         {
@@ -114,17 +111,14 @@ public class AdaptiveService extends AbstractDAO implements IAdaptiveService
       // create own adaptive group wrapper
       lastPage++;
       AdaptiveGroup adaptiveGroup = createItemGroupAdaptive (itemGroup, lastPage);
-      _logger.info (new StringBuilder ("<<<<<<<<< Response update createNextItemGroup createItemGroupAdaptive 2 Execution Time : ").append ((System.currentTimeMillis ()-startTime)).append ( " ms. ").append (" lastPage : ").append(lastPage).append (" lastPosition : ").append(lastPosition).append(" ThreadId: ").append(Thread.currentThread ().getId ()).toString ());
       for (TestItem testItem : itemGroup.getItems ()) {
         lastPosition++;
 
         AdaptiveItem adaptiveItem = createItemAdaptive (adaptiveGroup, testItem, lastPosition);
         adaptiveGroup.getItems ().add (adaptiveItem);
       }
-      _logger.info (new StringBuilder ("<<<<<<<<< Response update createNextItemGroup createItemAdaptive for loop 3 Execution Time : ").append ((System.currentTimeMillis ()-startTime)).append ( " ms. ").append (" lastPosition : ").append(lastPosition).append(" ThreadId: ").append(Thread.currentThread ().getId ()).toString ());
       try {
         pageGroup = _responseService.insertItems (oppInstance, adaptiveGroup);
-        _logger.info (new StringBuilder ("<<<<<<<<< Response update createNextItemGroup insertItems 4  Execution Time : ").append ((System.currentTimeMillis ()-startTime)).append ( " ms. ThreadId: ").append(Thread.currentThread ().getId ()).toString ());
       } catch (Exception e) {
         _logger.error (e.getMessage ());
         throw new ReturnStatusException (e);
@@ -137,7 +131,6 @@ public class AdaptiveService extends AbstractDAO implements IAdaptiveService
       _logger.error (e.getMessage ());
       throw new ReturnStatusException (e);
     }
-    _logger.info (new StringBuilder ("<<<<<<<<< Response update createNextItemGroup Total Execution Time : ").append ((System.currentTimeMillis ()-startTime)).append ( " ms. ThreadId: ").append(Thread.currentThread ().getId ()).toString ());
     return pageGroup;
   }
 }
