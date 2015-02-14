@@ -46,7 +46,7 @@ public class TisHandler // extends TDSHandler
   @RequestMapping (value = "tisReply",method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
   @ResponseBody
   public void tisReply(@RequestBody (required=true) final TisState tisState,HttpServletResponse response) throws IOException {
-    
+    _logger.info ("<<<<<< tisReply received..>>>>>> : "+tisState);
     UUID testopp = null;
     try {
       testopp = UUID.fromString (tisState.getOppKey ());

@@ -38,5 +38,11 @@ public class TisState {
     this.error = error;
   }
   
+  @Override
+  public String toString () {
+    return "TisState [oppKey=" + oppKey + ", success=" + success + ", error=" + error + "]";
+  }
+  
+  
   
 }
