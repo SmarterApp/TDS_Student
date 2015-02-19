@@ -67,7 +67,7 @@ public class ContentRequest
       return JsonHelper.deserialize (builder.toString (), ContentRequest.class);
     } catch (Exception exp) {
       _logger.error ("Error deserializing ContentRequest from JSON", exp);
-      throw new ContentRequestException ("Error deserializing ContentRequest from JSON");
+      throw new ContentRequestException ("Error deserializing ContentRequest from JSON. " + exp.getMessage ());
     }
   }
 
