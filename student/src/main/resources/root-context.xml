@@ -59,7 +59,6 @@
 	<context:component-scan base-package="tds.itemscoringengine.web.server" />
 
 	<!-- Start item scoring engine Configuration. TODO Shiva: Please consolidate these in a config in item-scoring-engine project so that we can just do an import. -->
-	<beans:bean id="iEncryption" class="tds.itemscoringengine.web.server.NoEncryption" />
 	<beans:bean id="rubricCache" class="tds.itemscoringengine.complexitemscorers.RubricCache" scope="singleton" />
 
 	<beans:bean id="scoringMaster" class="tds.itemscoringengine.web.server.ScoringMaster" scope="singleton" destroy-method="shutdown">

@@ -147,6 +147,7 @@ The following parameters need to be configured inside Program Management for Stu
 * `student.Debug.AllowFTP=true` 
 * `student.TDSReportsRootDirectory=/usr/local/tomcat/resources/tds/tdsreports/`  - Directory on Student server box where TDS reports generated  after student finished the test are located.
 * `student.StudentMaxOpps=2` 
+* `EncryptionKey=testKey123456789123456789`  - Encryption key is used for encrypting the cookies and item file path. There is no default value set for this property. It must be set in program management. Minimum length of this key is 24 characters.
 
 ## Build Order
 These are the steps that should be taken in order to build all of the Student-related artifacts:

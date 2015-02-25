@@ -177,9 +177,11 @@ public class TesteeRepository extends AbstractDAO implements ITesteeRepository
           // student package, by calling
           // RtsPackageDll.createAndUpdateStudentIsCurrent().
           _rtsDll.createAndUpdateStudentIsCurrent (connection, testeeKey, clientName, studentPackage);
-          // END: 5. Create or update record in “r_studentpackage” table to hold
-          // student package, by calling
-          // RtsPackageDll.createAndUpdateStudentIsCurrent().
+          // END: 5. Create or update record in “r_studentpackage” table to hold student package, by calling RtsPackageDll.createAndUpdateStudentIsCurrent().
+          
+          // Create records in “r_studentpackagedetails” table by parsing the XML recieved from ART
+//          _rtsDll._InsertStudentPackageDetails (connection, testeeKey, clientName, studentPackage);
+          
         }
       }
 
