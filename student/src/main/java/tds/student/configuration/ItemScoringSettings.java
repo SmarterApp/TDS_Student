@@ -58,7 +58,7 @@ public class ItemScoringSettings
   // / </summary>
   public  String getCallbackUrl ()
   {
-    return appSettings.get  ("itemScoring.callbackUrl", null);
+    return appSettings.get  ("itemScoring.callbackUrl", "http://localhost:8080/student/ItemScoringCallback.axd");
   }
 
   public  Boolean getAlwaysLoadRubric ()

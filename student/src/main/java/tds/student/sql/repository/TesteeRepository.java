@@ -180,7 +180,8 @@ public class TesteeRepository extends AbstractDAO implements ITesteeRepository
           // END: 5. Create or update record in “r_studentpackage” table to hold student package, by calling RtsPackageDll.createAndUpdateStudentIsCurrent().
           
           // Create records in “r_studentpackagedetails” table by parsing the XML recieved from ART
-//          _rtsDll._InsertStudentPackageDetails (connection, testeeKey, clientName, studentPackage);
+          //TODO Shiva: talked to milan and the following line needs to remain commented out.
+          //_rtsDll._InsertStudentPackageDetails (connection, testeeKey, clientName, studentPackage);
           
         }
       }

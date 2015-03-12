@@ -1,10 +1,10 @@
 /*******************************************************************************
- * Educational Online Test Delivery System 
- * Copyright (c) 2014 American Institutes for Research
- *     
- * Distributed under the AIR Open Source License, Version 1.0 
- * See accompanying file AIR-License-1_0.txt or at
- * http://www.smarterapp.org/documents/American_Institutes_for_Research_Open_Source_Software_License.pdf
+ * Educational Online Test Delivery System Copyright (c) 2014 American
+ * Institutes for Research
+ * 
+ * Distributed under the AIR Open Source License, Version 1.0 See accompanying
+ * file AIR-License-1_0.txt or at http://www.smarterapp.org/documents/
+ * American_Institutes_for_Research_Open_Source_Software_License.pdf
  ******************************************************************************/
 package tds.student.services;
 
@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+import javax.xml.bind.JAXBException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import AIR.Common.TDSLogger.ITDSLogger;
 import AIR.Common.Web.EncryptionHelper;
 import AIR.Common.Web.WebValueCollection;
+import AIR.Common.Web.WebValueCollectionCorrect;
 import TDS.Shared.Data.ReturnStatus;
 import TDS.Shared.Exceptions.ReturnStatusException;
 import tds.itemrenderer.data.AccLookup;
@@ -103,7 +106,7 @@ public class ItemScoringService implements IItemScoringService
     while (configsIterator.hasNext ()) {
       ItemScoringConfig c = configsIterator.next ();
       // match format and context
-      if ((c.getItemType ().equals (format) || c.getItemType ().equals ("*")) && (c.getContext ().equals (testID) || c.getContext ().equals ("*"))) {
+      if ((c.getItemType ().equalsIgnoreCase (format) || c.getItemType ().equals ("*")) && (c.getContext ().equalsIgnoreCase (testID) || c.getContext ().equals ("*"))) {
         // now find the highest priority config
         if (selected == null || c.getPriority () > selected.getPriority ())
           selected = c;
@@ -192,6 +195,7 @@ public class ItemScoringService implements IItemScoringService
   }
 
   private String getDimensionsXmlForSP (ItemScore score) throws ReturnStatusException {
+    // TODO Shiva: Why are the rationales being set to null ?
     ItemScoreInfo scoreInfo = score.getScoreInfo ();
     scoreInfo.setRationale (null);
 
@@ -201,11 +205,13 @@ public class ItemScoringService implements IItemScoringService
       }
     }
 
-    XmlMapper mapper = new XmlMapper ();
     String xml;
     try {
-      xml = mapper.writeValueAsString (scoreInfo);
-    } catch (JsonProcessingException e) {
+      xml = scoreInfo.toXmlString ();
+      // TODO Shiva: hack!!! I am not sure at this late stage how the AA will
+      // react to the xml string. so i am going to take it out.
+      xml = StringUtils.replace (xml, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>", "");
+    } catch (JAXBException e) {
       _logger.error (e.getMessage ());
       throw new ReturnStatusException ("Could not parse scoreinfo xml");
     }
@@ -278,7 +284,12 @@ public class ItemScoringService implements IItemScoringService
         // for asynchronous we need to save the score first indicating it
         // is machine scorable and then submit to the scoring web site
         if (isScoringAsynchronous (itsDoc)) {
-          score = new ItemScore (-1, -1, ScoringStatus.WaitingForMachineScore, null, null, null, null);
+          score = new ItemScore (-1, -1, ScoringStatus.WaitingForMachineScore, null, new ScoreRationale ()
+          {
+            {
+              setMsg ("Waiting for machine score.");
+            }
+          }, new ArrayList<ItemScoreInfo> (), null);
           updateStatus = updateResponse (oppInstance, responseUpdate, score);
 
           // TODO: if score returned here ends up being
@@ -326,26 +337,21 @@ public class ItemScoringService implements IItemScoringService
    * @throws ReturnStatusException
    */
   private URL getServerUri (String format, String testID) throws ReturnStatusException {
-    String serverUrl = _itemScoringSettings.getServerUrl ();
+    String serverUrl = null;
 
+    // TODO shiva: this does not make sense? should we not look for in the
+    // itemscoring config table first for
+    // a more specific url before looking in a generic url? but that is how .NEt
+    // has been coded up.
+    // i am instead going to code it up differently.
     // if there is no url from settings then try and get from configs
-    if (serverUrl == null) {
-      // get server url from item scoring config SP
-      ItemScoringConfig itemScoringConfig = getItemScoringConfig (format, testID);
+    // get server url from item scoring config SP
+    ItemScoringConfig itemScoringConfig = getItemScoringConfig (format, testID);
 
-      if (itemScoringConfig != null && itemScoringConfig.getServerUrl () != null) {
-        // use config url
-        serverUrl = itemScoringConfig.getServerUrl ();
-      }
+    if (itemScoringConfig != null && itemScoringConfig.getServerUrl () != null) {
+      // use config url
+      serverUrl = itemScoringConfig.getServerUrl ();
     }
-
-    /*
-     * // ([^\(\)]+)(?:\((\d.\d)\))? //
-     * http://example.com(.1)|http://example.com(.9)
-     * 
-     * List<Tuple<Uri, Double>> urls = new List<Tuple<Uri, double>>();
-     * urls.Add(Tuple.Create(new Uri(""), 0.5));
-     */
 
     // check if multiple server urls was provided
     if (!StringUtils.isEmpty (serverUrl) && serverUrl.indexOf ("|") > 0) {
@@ -353,6 +359,10 @@ public class ItemScoringService implements IItemScoringService
       int serverIndex = (new Random ()).nextInt (servers.length);
       serverUrl = servers[serverIndex];
     }
+
+    // use the generic server.
+    if (serverUrl == null)
+      serverUrl = _itemScoringSettings.getServerUrl ();
 
     URL uri;
     try {
@@ -375,11 +385,11 @@ public class ItemScoringService implements IItemScoringService
     }
     return uri;
   }
-  
+
   // function for logging item scorer errors and use TDSLogger
   private void log (IItemResponseScorable responseScorable, String message, String methodName, Exception ex) {
-	  String error = String.format ("ITEM SCORER (%s): %s", responseScorable.getItemID (), message);
-	  _tdsLogger.applicationError(error, methodName, null, ex);
+    String error = String.format ("ITEM SCORER (%s): %s", responseScorable.getItemID (), message);
+    _tdsLogger.applicationError (error, methodName, null, ex);
 
   };
 
@@ -467,7 +477,7 @@ public class ItemScoringService implements IItemScoringService
     // TODO: Add warning at app startup if ItemScoringCallbackUrl is missing
     if (!StringUtils.isEmpty (_itemScoringSettings.getCallbackUrl ())) {
       // Create the token
-      WebValueCollection tokenData = new WebValueCollection ();
+      WebValueCollectionCorrect tokenData = new WebValueCollectionCorrect ();
       tokenData.put ("oppKey", oppKey);
       tokenData.put ("testKey", responseScorable.getTestKey ());
       tokenData.put ("testID", responseScorable.getTestID ());
@@ -488,48 +498,42 @@ public class ItemScoringService implements IItemScoringService
 
     ItemScore scoreItem = null;
 
-		// perform scoring
-	String message = null;
-	try {
-		WebProxyItemScorerCallback webProxyCallback = null;
+    // perform scoring
+    String message = null;
+    try {
+      WebProxyItemScorerCallback webProxyCallback = null;
 
-		// check if there is a URL which will make this call asynchronous
-		URL serverUri = getServerUri(itemFormat,
-				responseScorable.getTestID());
-		URL callbackUri = getCallbackUri();
+      // check if there is a URL which will make this call asynchronous
+      URL serverUri = getServerUri (itemFormat, responseScorable.getTestID ());
+      URL callbackUri = getCallbackUri ();
 
-		if (serverUri != null && callbackUri != null) {
-			webProxyCallback = new WebProxyItemScorerCallback(
-					serverUri.toString(), callbackUri.toString());
-		}
+      if (serverUri != null && callbackUri != null) {
+        webProxyCallback = new WebProxyItemScorerCallback (serverUri.toString (), callbackUri.toString ());
+      }
 
-		// call web proxy scorer
-		scoreItem = _itemScorer.ScoreItem(responseInfo, webProxyCallback);
+      // call web proxy scorer
+      scoreItem = _itemScorer.ScoreItem (responseInfo, webProxyCallback);
 
-		// validate results
-		if (scoreItem == null) {
-			log(responseScorable,"Web proxy returned NULL score.", "scoreItem",  null);
-		} else if (scoreItem.getScoreInfo().getStatus() == ScoringStatus.ScoringError) {
-			message = String.format("Web proxy returned a scoring error status: '%s'.", 
-					(scoreItem.getScoreInfo().getRationale() != null ? scoreItem.getScoreInfo().getRationale() : ""));
-			log(responseScorable, message, "scoreItem",  null);
-		} else if (webProxyCallback != null
-				&& scoreItem.getScoreInfo().getStatus() != ScoringStatus.WaitingForMachineScore) {
-			message = String.format("Web proxy is in asynchronous mode and returned a score status of %s. It should return %s.",
-					scoreItem.getScoreInfo().getStatus().toString(), ScoringStatus.WaitingForMachineScore.toString());
-			log(responseScorable, message,"scoreItem",  null);
-		} else if (webProxyCallback == null
-				&& scoreItem.getScoreInfo().getStatus() == ScoringStatus.WaitingForMachineScore) {
-			message = String.format("Web proxy is in synchronous mode but returned incorrect status of %s.",
-					scoreItem.getScoreInfo().getStatus().toString());
-			log(responseScorable, message,"scoreItem",  null);
-		}
-	} catch (Exception ex) {
-		message = String.format("EXCEPTION = '%s'.", ex.getMessage());
-		log(responseScorable, message, "scoreItem", ex);
-	}
+      // validate results
+      if (scoreItem == null) {
+        log (responseScorable, "Web proxy returned NULL score.", "scoreItem", null);
+      } else if (scoreItem.getScoreInfo ().getStatus () == ScoringStatus.ScoringError) {
+        message = String.format ("Web proxy returned a scoring error status: '%s'.", (scoreItem.getScoreInfo ().getRationale () != null ? scoreItem.getScoreInfo ().getRationale () : ""));
+        log (responseScorable, message, "scoreItem", null);
+      } else if (webProxyCallback != null && scoreItem.getScoreInfo ().getStatus () != ScoringStatus.WaitingForMachineScore) {
+        message = String.format ("Web proxy is in asynchronous mode and returned a score status of %s. It should return %s.", scoreItem.getScoreInfo ().getStatus ().toString (),
+            ScoringStatus.WaitingForMachineScore.toString ());
+        log (responseScorable, message, "scoreItem", null);
+      } else if (webProxyCallback == null && scoreItem.getScoreInfo ().getStatus () == ScoringStatus.WaitingForMachineScore) {
+        message = String.format ("Web proxy is in synchronous mode but returned incorrect status of %s.", scoreItem.getScoreInfo ().getStatus ().toString ());
+        log (responseScorable, message, "scoreItem", null);
+      }
+    } catch (Exception ex) {
+      message = String.format ("EXCEPTION = '%s'.", ex.getMessage ());
+      log (responseScorable, message, "scoreItem", ex);
+    }
 
-	return scoreItem;
+    return scoreItem;
   }
 
   /**

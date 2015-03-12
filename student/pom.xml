@@ -11,7 +11,8 @@
 	<artifactId>student</artifactId>
 	<name>student</name>
 	<packaging>war</packaging>
-        <version>R01.00.28</version>
+        <version>1.0.1</version>
+        <version>R01.00.32</version>
 
 	<licenses>
 		<license>

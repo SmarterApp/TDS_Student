@@ -29,6 +29,8 @@
 		<url-pattern>/API.axd/*</url-pattern>
 		<url-pattern>/TIS/API/*</url-pattern>
 		<url-pattern>/Pages/SpellEngine.axd/*</url-pattern>
+		<url-pattern>/ItemScoringRubric.axd/*</url-pattern>
+		<url-pattern>/ItemScoringCallback.axd/*</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
@@ -156,7 +158,7 @@
 		<filter-name>caseinsensitiveFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
+
 	<!-- SB-483 -->
 	<filter>
 		<filter-name>requestContextFilter</filter-name>
@@ -166,7 +168,7 @@
 		<filter-name>requestContextFilter</filter-name>
 		<url-pattern>*.xhtml</url-pattern>
 	</filter-mapping>
-	
+
 	<context-param>
 		<param-name>org.apache.myfaces.WRAP_SCRIPT_CONTENT_WITH_XML_COMMENT_TAG</param-name>
 		<param-value>false</param-value>

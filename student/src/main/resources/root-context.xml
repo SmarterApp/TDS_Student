@@ -74,7 +74,7 @@
 					<beans:bean class="tds.itemscoringengine.itemscorers.QTIItemScorer" scope="prototype" />
 				</beans:entry>
 				<beans:entry key="QTI">
-					<beans:bean class="tds.itemscoringengine.itemscorers.QTIItemScorer" scope="prototype" />
+					<beans:bean class="tds.itemscoringengine.itemscorers.ProxyItemScorer" scope="prototype" />
 				</beans:entry>
 				<beans:entry key="EBSR">
 					<beans:bean class="tds.itemscoringengine.itemscorers.QTIItemScorer" scope="prototype" />
@@ -83,10 +83,10 @@
 					<beans:bean class="tds.itemscoringengine.itemscorers.QTIItemScorer" scope="prototype" />
 				</beans:entry>
 				<beans:entry key="GI">
-					<beans:bean class="tds.itemscoringengine.itemscorers.QTIItemScorer" scope="prototype" />
+					<beans:bean class="tds.itemscoringengine.itemscorers.ProxyItemScorer" scope="prototype" />
 				</beans:entry>
 				<beans:entry key="EQ">
-					<beans:bean class="tds.itemscoringengine.itemscorers.QTIItemScorer" scope="prototype" />
+					<beans:bean class="tds.itemscoringengine.itemscorers.ProxyItemScorer" scope="prototype" />
 				</beans:entry>
 				<beans:entry key="TI">
 					<beans:bean class="tds.itemscoringengine.itemscorers.QTIItemScorer" scope="prototype" />
@@ -104,7 +104,7 @@
 	<beans:bean id="rubric-url-rewriter" class="AIR.Common.Web.PatternUrlRewriter">
 	</beans:bean>
 	<!-- End item scoring engine Configuration. -->
-	
+
 	<beans:bean id="iCommonDLL" class="tds.dll.mysql.CommonDLL" scope="singleton" />
 	<beans:bean id="iProctorDLL" class="tds.dll.mysql.ProctorDLL" scope="singleton" />
 
