@@ -104,7 +104,7 @@ public class AdaptiveService extends AbstractDAO implements IAdaptiveService
         }
         
       } catch (SQLException se) {
-        _logger.error (se.getMessage ());
+        _logger.error (se.getMessage (),se);
         throw new ReturnStatusException (se);
       }
 
@@ -120,7 +120,7 @@ public class AdaptiveService extends AbstractDAO implements IAdaptiveService
       try {
         pageGroup = _responseService.insertItems (oppInstance, adaptiveGroup);
       } catch (Exception e) {
-        _logger.error (e.getMessage ());
+        _logger.error (e.getMessage (),e);
         throw new ReturnStatusException (e);
       }
 
@@ -128,7 +128,7 @@ public class AdaptiveService extends AbstractDAO implements IAdaptiveService
         itemResponse.setPrefetched (true);
       }
     } catch (ReturnStatusException e) {
-      _logger.error (e.getMessage ());
+      _logger.error (e.getMessage (),e);
       throw new ReturnStatusException (e);
     }
     return pageGroup;

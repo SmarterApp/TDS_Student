@@ -154,7 +154,7 @@ public class TestResponseHandler extends TDSHandler
          * mapper.writeValue(response.getOutputStream(), out); return;
          */
       } catch (Exception e) {
-        e.printStackTrace ();
+        _logger.error ("Error in updateResponses : _itemScoringService.updateResponses ::: "+e);
         throw e;
       }
 
@@ -204,7 +204,7 @@ public class TestResponseHandler extends TDSHandler
       try {
         testManager.CheckIfTestComplete ();
       } catch (Exception e) {
-        e.printStackTrace ();
+        _logger.error ("Error in updateResponses :CheckIfTestComplete:: "+e);
       }
       //temp counter for debuging
       // if the test is not completed then check if prefetch is available
@@ -271,7 +271,7 @@ public class TestResponseHandler extends TDSHandler
       // close writing
       responseWriter.writeEnd ();
     } catch (Exception e) {
-      _logger.error (e.toString (), e);
+      _logger.error ("Error in updateResponses : "+e);
       throw e;
     }
   }

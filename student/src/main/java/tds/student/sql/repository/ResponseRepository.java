@@ -9,7 +9,6 @@
 package tds.student.sql.repository;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -22,8 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.gargoylesoftware.htmlunit.util.StringUtils;
-
 import tds.dll.api.ICommonDLL;
 import tds.dll.api.IStudentDLL;
 import tds.student.sql.abstractions.IResponseRepository;
@@ -33,8 +30,6 @@ import tds.student.sql.data.IItemResponseUpdate;
 import tds.student.sql.data.OpportunityInstance;
 import tds.student.sql.data.OpportunityItem;
 import tds.student.sql.data.OpportunityItem.OpportunityItems;
-import tds.student.sql.data.TestConfig;
-import tds.student.tdslogger.TDSLogger;
 import AIR.Common.Configuration.AppSettings;
 import AIR.Common.DB.AbstractDAO;
 import AIR.Common.DB.SQLConnection;
@@ -77,8 +72,8 @@ public class ResponseRepository extends AbstractDAO implements IResponseReposito
     // create item keys delimited string
     OpportunityItems opportunityItems = new OpportunityItem ().new OpportunityItems ();
 
-    // String itemKeys = getItemKeys (adaptiveGroup.getItems ());
-    String itemKeys = null;
+     String itemKeys = getItemKeys (adaptiveGroup.getItems ());
+//    String itemKeys = null;
     try (SQLConnection connection = getSQLConnection ()) {
 
       MultiDataResultSet resultSets = _studentDll.T_InsertItems_SP (connection, oppInstance.getKey (), oppInstance.getSessionKey (), oppInstance.getBrowserKey (), adaptiveGroup.getSegmentPosition (),
@@ -133,8 +128,10 @@ public class ResponseRepository extends AbstractDAO implements IResponseReposito
           // ai.ItemID == itemID);
           // check if item was found
           if (adaptiveItem == null) {
-            String error = "T_InsertItems: The item key  %1$d was returned but was not found in [%2$s].";
-            throw new ReturnStatusException (String.format (error, oppItem.getItemKey (), itemKeys));
+            _logger.error ("itemID:: "+itemID);
+            _logger.error ("adaptiveGroup.getItems ():: "+adaptiveGroup.getItems ());
+            String error = "T_InsertItems: The item key  %1$s was returned but was not found in [%2$s].";
+            throw new ReturnStatusException (String.format (error, itemID, adaptiveGroup.getItems ()));
           }
           // get data from adaptive algorithm
           oppItem.setGroupID (adaptiveGroup.getGroupID ());
@@ -170,6 +167,20 @@ public class ResponseRepository extends AbstractDAO implements IResponseReposito
       throw new ReturnStatusException (e);
     }
     return opportunityItems;
+  }
+  
+  private String getItemKeys(List<AdaptiveItem> itemList)  {
+    String itemKeys = null;
+    if(itemList!=null) {
+      StringBuilder sb = new StringBuilder ();
+      for(AdaptiveItem item: itemList ) {
+         sb.append (item.getItemID ()).append ("|");
+      }
+      if(!sb.toString ().isEmpty ()) {
+        itemKeys = sb.substring (0, sb.length ()-1);
+      }
+    }
+    return itemKeys;
   }
 
   public ReturnStatus updateScoredResponse (OpportunityInstance oppInstance, IItemResponseUpdate responseUpdate, int score, String scoreStatus, String scoreRationale, long scoreLatency)
@@ -396,7 +407,7 @@ public class ResponseRepository extends AbstractDAO implements IResponseReposito
     // SP returns nothing on SUCCESS.
     return returnStatus;
   }
-  public static class MyPredicate implements Predicate {
+  public  class MyPredicate implements Predicate {
 
     private String theItemId;
 
@@ -410,6 +421,5 @@ public class ResponseRepository extends AbstractDAO implements IResponseReposito
         return true;
       return false;
     }
-
-}
+  }
 }

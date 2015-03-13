@@ -97,4 +97,9 @@ public class AdaptiveItem
     this._segmentID = _segmentID;
   }
 
+  @Override
+  public String toString () {
+    return "AdaptiveItem [_itemID=" + _itemID + ", _groupID=" + _groupID + ", _page=" + _page + ", _position=" + _position + ", _segment=" + _segment + ", _segmentID=" + _segmentID + "]";
+  }
+
 }
