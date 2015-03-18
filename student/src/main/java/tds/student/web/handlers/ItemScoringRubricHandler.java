@@ -144,6 +144,7 @@ public class ItemScoringRubricHandler extends TDSHandler
     // i cannot reproduce this on my laptop
     // and i do not have time to investigate right now. so i wills stop anything
     // before the first "<" on the first line.
+    //Also see XmlReader (Reader) for more detailed information on this issue.
     WebHelper.setContentType (ContentType.Xml);
 
     int lineCounter = 0;

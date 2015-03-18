@@ -15,10 +15,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import scoringengine.Scorer;
 import tds.student.services.abstractions.ITestScoringService;
 import tds.student.services.data.TestScoreStatus;
 import tds.student.sql.abstractions.IScoringRepository;
@@ -52,6 +52,9 @@ public class TestScoringService implements ITestScoringService
 
   private static final Logger _logger = LoggerFactory.getLogger (TestScoringService.class);
 
+  @Value ("${opportunity.isScoredByTDS:false}")
+  private boolean isScoredByTDS;
+  
   @Autowired
   public TestScoringService (ITDSSettingsSource tdsSettings, ClientManager clientManager) {
     this._tdsSettings = tdsSettings;
@@ -134,8 +137,8 @@ public class TestScoringService implements ITestScoringService
       boolean oppReadyForScoringinTDS = sqlTestForScoringResult.getReturnStatus ().getStatus () != "failed";
       // Check 2: Is the opp ready to be submitted to QA
       boolean oppReadyforSubmissionToQA = oppReadyForScoringinTDS
-          || ("failed".equalsIgnoreCase (sqlTestForScoringResult.getReturnStatus ().getStatus ()) && "COMPLETE: Do Not Score"
-              .equalsIgnoreCase (sqlTestForScoringResult.getReturnStatus ().getReason ()));
+          || ("failed".equalsIgnoreCase (sqlTestForScoringResult.getReturnStatus ().getStatus ()) && (!isScoredByTDS || "COMPLETE: Do Not Score"
+              .equalsIgnoreCase (sqlTestForScoringResult.getReturnStatus ().getReason ())));
       String message = String.format ("TestScoring: Get test for scoring - %s \" %s\"", sqlTestForScoringResult.getReturnStatus ().getStatus (), sqlTestForScoringResult.getReturnStatus ()
           .getReason ());
 

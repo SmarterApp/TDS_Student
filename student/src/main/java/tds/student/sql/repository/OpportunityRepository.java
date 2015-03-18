@@ -85,7 +85,8 @@ public class OpportunityRepository extends AbstractDAO implements IOpportunityRe
 
     try (SQLConnection connection = getSQLConnection ()) {
       SingleDataResultSet firstResultSet = _studentDll.T_GetEligibleTests_SP (connection, testeeKey, sessionKey, grade);
-      ReturnStatusException.getInstanceIfAvailable (firstResultSet);
+//      ReturnStatusException.getInstanceIfAvailable (firstResultSet);
+      
       Iterator<DbResultRecord> records = firstResultSet.getRecords ();
       while (records.hasNext ()) {
         DbResultRecord record = records.next ();
