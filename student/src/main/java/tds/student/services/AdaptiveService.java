@@ -97,10 +97,15 @@ public class AdaptiveService extends AbstractDAO implements IAdaptiveService
     	_Ref<String> errorRef = new _Ref<>();
         itemGroup = _aironline.getNextItemGroup (connection, oppInstance.getKey (), errorRef);
           
+        
         if(errorRef.get() != null  && !errorRef.get().isEmpty())
         {
+          if(errorRef.get().equalsIgnoreCase ("Test Complete")) {
+            return null;
+          } else {
         	 _logger.error (errorRef.get());
         	 throw new ReturnStatusException (errorRef.get());
+          }
         }
         
       } catch (SQLException se) {

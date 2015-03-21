@@ -175,7 +175,8 @@ public class TestManager
     // check if we got any items back from our request
     if (pageGroup == null || pageGroup.size () == 0)
     {
-      throw new Exception ("A call to GetNextItemgroup was made but there were no items were returned.");
+      _isTestComplete = true;
+      return null;
     }
 
     _pageList.add (pageGroup);

@@ -211,6 +211,11 @@ public class TestResponseHandler extends TDSHandler
       while (testManager.CheckPrefetchAvailability (testOpp.getTestConfig ().getPrefetch ())) {
         // call adaptive algorithm to get the next item group
         NextItemGroupResult nextItemGroup = testManager.CreateNextItemGroup ();
+        
+        if(nextItemGroup==null) {
+          break;
+        }
+        
         latency.setDbLatency (latency.getDbLatency () + nextItemGroup.getDbLatency ());
         prefetchCount++;
 
