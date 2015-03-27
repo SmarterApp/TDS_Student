@@ -12,9 +12,8 @@
 			<ul>
 				<li><span i18n-content="TestResults.Label.StudentName"></span> <span id="lblName">***FIRST NAME***</span> (<span i18n-content="TestResults.Label.SSID"></span> <span id="lblSSID">***SSID***</span>)</li>
 				<li><span i18n-content="TestResults.Label.TestName"></span> <span id="lblTestName">***DISPLAY NAME***</span></li>
-				<li><span i18n-content="TestResults.Label.TestCompletedDate"></span> <span id="lblCompleted"> <h:outputText value="#{session.lastAccessedTime}">
-							<f:convertDateTime pattern="yyyy-MM-dd HH:mm" />
-						</h:outputText>
+				<li><span i18n-content="TestResults.Label.TestCompletedDate"></span> <span id="lblCompleted"> <h:outputText value="#{cc.currentTime}">
+						 </h:outputText>
 				</span></li>
 			</ul>
 

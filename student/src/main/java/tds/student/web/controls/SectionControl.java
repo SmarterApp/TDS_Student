@@ -9,6 +9,10 @@
 package tds.student.web.controls;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.faces.component.UINamingContainer;
 import javax.faces.context.FacesContext;
@@ -24,5 +28,17 @@ public class SectionControl extends UINamingContainer
   public String getFamily () {
     return "javax.faces.NamingContainer";
   }
-  
+  public String getCurrentTime()
+  {
+//    HttpServletRequest request = HttpContext.getCurrentContext ().getRequest ();
+//    Calendar calendar = Calendar.getInstance(request.getLocale());
+   
+    Calendar cal = Calendar.getInstance ();
+
+    cal.setTimeInMillis (System.currentTimeMillis ());
+    Date dt = cal.getTime ();
+    DateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd");
+    String dtStr = formatter.format (dt);
+    return dtStr;
+  }
 }
