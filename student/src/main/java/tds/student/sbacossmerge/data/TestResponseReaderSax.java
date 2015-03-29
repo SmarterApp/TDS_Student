@@ -1,10 +1,10 @@
 /*******************************************************************************
- * Educational Online Test Delivery System 
- * Copyright (c) 2014 American Institutes for Research
- *       
- * Distributed under the AIR Open Source License, Version 1.0 
- * See accompanying file AIR-License-1_0.txt or at
- * http://www.smarterapp.org/documents/American_Institutes_for_Research_Open_Source_Software_License.pdf
+ * Educational Online Test Delivery System Copyright (c) 2014 American
+ * Institutes for Research
+ * 
+ * Distributed under the AIR Open Source License, Version 1.0 See accompanying
+ * file AIR-License-1_0.txt or at http://www.smarterapp.org/documents/
+ * American_Institutes_for_Research_Open_Source_Software_License.pdf
  ******************************************************************************/
 package tds.student.sbacossmerge.data;
 
@@ -126,7 +126,15 @@ public class TestResponseReaderSax extends TestResponseReader
         // in based on this check.
         _filePathStringBuilder = null;
       } else if ("value".equalsIgnoreCase (qName)) {
-        _itemResponseUpdate.setValue (_responseStringBuilder.toString ());
+
+        // SB-1244
+        String resposeString = _responseStringBuilder.toString ();
+        String[] specialCharacters = new String[] { "\\", "\"" };
+        for (int i = 0; i < specialCharacters.length; i++)
+        {
+          resposeString = StringUtils.replace (resposeString, specialCharacters[i], "\\" + specialCharacters[i]);
+        }
+        _itemResponseUpdate.setValue (resposeString);
         _responseStringBuilder = null;
       }
 
