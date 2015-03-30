@@ -126,15 +126,7 @@ public class TestResponseReaderSax extends TestResponseReader
         // in based on this check.
         _filePathStringBuilder = null;
       } else if ("value".equalsIgnoreCase (qName)) {
-
-        // SB-1244
-        String resposeString = _responseStringBuilder.toString ();
-        String[] specialCharacters = new String[] { "\\", "\"" };
-        for (int i = 0; i < specialCharacters.length; i++)
-        {
-          resposeString = StringUtils.replace (resposeString, specialCharacters[i], "\\" + specialCharacters[i]);
-        }
-        _itemResponseUpdate.setValue (resposeString);
+        _itemResponseUpdate.setValue (_responseStringBuilder.toString ());
         _responseStringBuilder = null;
       }
 
