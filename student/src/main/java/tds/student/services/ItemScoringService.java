@@ -506,7 +506,7 @@ public class ItemScoringService implements IItemScoringService
       // check if there is a URL which will make this call asynchronous
       URL serverUri = getServerUri (itemFormat, responseScorable.getTestID ());
       URL callbackUri = getCallbackUri ();
-
+      
       if (serverUri != null && callbackUri != null) {
         webProxyCallback = new WebProxyItemScorerCallback (serverUri.toString (), callbackUri.toString ());
       }

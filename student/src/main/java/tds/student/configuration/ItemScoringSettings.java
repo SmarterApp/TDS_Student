@@ -11,6 +11,7 @@ package tds.student.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import AIR.Common.Configuration.AppSettingsHelper;
 import AIR.Common.Configuration.ConfigurationSection;
 
 /**
@@ -58,7 +59,7 @@ public class ItemScoringSettings
   // / </summary>
   public  String getCallbackUrl ()
   {
-    return appSettings.get  ("itemScoring.callbackUrl", "http://localhost:8080/student/ItemScoringCallback.axd");
+    return AppSettingsHelper.get ("itemScoring.callbackUrl");
   }
 
   public  Boolean getAlwaysLoadRubric ()

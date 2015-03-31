@@ -150,6 +150,13 @@ The following parameters need to be configured inside Program Management for Stu
 * `EncryptionKey=testKey123456789123456789`  - Encryption key is used for encrypting the cookies and item file path. There is no default value set for this property. It must be set in program management. Minimum length of this key is 24 characters.
 * `opportunity.isScoredByTDS=false`  - Set to false always. ScoreByTDS is not implemented yet and needs to be set false.
 
+#### Itemscoring properties
+The following parameters need to be configured inside Program Management for Student Itemscoring.
+
+* `itemscoring.qti.sympyServiceUrl=http://localhost:8084/` - URL for Python ItemscoringEngine
+* `itemscoring.qti.sympyMaxTries=3` - Maximum number of tries for Python ItemscoringEngine
+* `itemscoring.qti.sympyTimeoutMillis=10000` - Timeout for Python ItemscoringEngine
+* `itemScoring.callbackUrl=http://localhost:8080/student/ItemScoringCallback.axd`  - Itemscoring callback url
 
 ## Build Order
 These are the steps that should be taken in order to build all of the Student-related artifacts:

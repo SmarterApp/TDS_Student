@@ -41,6 +41,7 @@
 				<beans:entry key="itemscoring.qti.sympyServiceUrl" value="${itemscoring.qti.sympyServiceUrl}" />
 				<beans:entry key="itemscoring.qti.sympyMaxTries" value="${itemscoring.qti.sympyMaxTries}" />
 				<beans:entry key="itemscoring.qti.sympyTimeoutMillis" value="${itemscoring.qti.sympyTimeoutMillis}" />
+				<beans:entry key="itemScoring.callbackUrl" value="${itemScoring.callbackUrl}" />
 			</util:map>
 
 		</beans:constructor-arg>
