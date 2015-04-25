@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Educational Online Test Delivery System 
- * Copyright (c) 2014 American Institutes for Research
- *       
- * Distributed under the AIR Open Source License, Version 1.0 
- * See accompanying file AIR-License-1_0.txt or at
- * http://www.smarterapp.org/documents/American_Institutes_for_Research_Open_Source_Software_License.pdf
+ * Educational Online Test Delivery System Copyright (c) 2014 American
+ * Institutes for Research
+ * 
+ * Distributed under the AIR Open Source License, Version 1.0 See accompanying
+ * file AIR-License-1_0.txt or at http://www.smarterapp.org/documents/
+ * American_Institutes_for_Research_Open_Source_Software_License.pdf
  ******************************************************************************/
-package tds.iris.web.handlers;
+package tds.iris.web.handlers.blackbox;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
@@ -79,6 +80,15 @@ public class BlackBoxRequestHandler extends BaseContentRendererController
 
     ItemRenderGroup itemRenderGroup = ContentRequestParser.createPageLayout (contentRequest);
 
+    // Shiva: This is where our implementation differs from .NET.
+    // In .NET the IRIS method of populating PageLayout is different than the
+    // student way - the controllers are different.
+    // In our case we intend to keep one single point of entry. Only IRiS allows
+    // overriding of layout.
+    // we will implement it by overriding the layout in the first item.
+    if (!StringUtils.isEmpty (contentRequest.getLayoutName ()))
+      itemRenderGroup.setLayout (contentRequest.getLayoutName ());
+    
     renderGroup (itemRenderGroup, accLookup, response);
   }
 

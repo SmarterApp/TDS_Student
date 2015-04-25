@@ -33,5 +33,7 @@
 	<entry key="tds.itemRenderer.enableFeedback">false</entry>
 	<entry key="tds.itemRenderer.forceQTI">true</entry>
 	
+	<entry key="EncryptionKey">${tds.iris.EncryptionKey}</entry>
+	
 	<!-- End BlackBox Settings -->
 </properties>

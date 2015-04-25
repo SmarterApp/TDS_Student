@@ -45,7 +45,7 @@ public class BaseContentRendererController extends TDSHandler
       AccProperties accProps = new AccProperties (accLookup);
 
       // // in braille mode force WAI layout
-      if (accProps.isBrailleEnabled () || (accProps.getTestShell () != null && accProps.getTestShell ().equals ("TDS_TS_Accessibility"))) {
+      if (accProps.isBrailleEnabled () || accProps.isStreamlinedMode ()) {
         pageLayout.setLayout ("WAI");
       }
       // use layout that is in the xml

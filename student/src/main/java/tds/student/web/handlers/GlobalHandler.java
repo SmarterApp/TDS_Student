@@ -136,7 +136,8 @@ public class GlobalHandler extends TDSHandler
     MessageJson messageJson = new MessageJson (messageSystem, language, subject, grade);
     String json = messageJson.create ();
 
-    writeString (json);
+    // SB-366
+    writeJsonString (json);
 
   }
 
