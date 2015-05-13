@@ -8,10 +8,7 @@
  ******************************************************************************/
 package tds.student.web.backing;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.util.Arrays;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -19,12 +16,19 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.myfaces.shared.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 
 import tds.student.web.StudentContext;
 import tds.student.web.handlers.DialogFrameHandler;
 import AIR.Common.Web.WebHelper;
 import AIR.Common.Web.Session.HttpContext;
 import TDS.Shared.Web.BasePage;
+import TDS.Shared.Web.client.GenericRestAPIClient;
 
 /**
  * @author mpatel This Managed Bean is used as integration with the
@@ -61,7 +65,6 @@ public class DialogFrameBacking extends BasePage
   }
 
   private String getContent (long bankKey, long itemKey) {
-    HttpURLConnection conn = null;
     try {
       HttpServletRequest request = HttpContext.getCurrentContext ().getRequest ();
       StringBuilder urlSB = new StringBuilder ();
@@ -69,33 +72,28 @@ public class DialogFrameBacking extends BasePage
       urlSB.append ("?language=").append (StudentContext.getLanguage ());
       urlSB.append ("&bankKey=").append (bankKey);
       urlSB.append ("&itemKey=").append (itemKey);
-      _logger.debug ("REST API URL for getting Dialog Frame Content :: " + urlSB.toString ());
-      URL url = new URL (urlSB.toString ());
-      conn = (HttpURLConnection) url.openConnection ();
-      conn.setRequestMethod ("GET");
-      conn.setRequestProperty ("Accept", "application/xml");
+      if (_logger.isDebugEnabled ()) {
+         _logger.debug ("REST API URL for getting Dialog Frame Content :: " + urlSB.toString ());
+      }
+      HttpHeaders headers = new HttpHeaders();
+      headers.setAccept(Arrays.asList(MediaType.APPLICATION_XML));
+      HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
+      GenericRestAPIClient restApiClient = new GenericRestAPIClient(urlSB.toString ());
+      ResponseEntity<String> responseEntity = restApiClient.exchange(HttpMethod.GET, httpEntity, String.class);
 
-      if (conn.getResponseCode () != 200) {
+      if (responseEntity.getStatusCode () != HttpStatus.OK) {
         throw new RuntimeException ("Failed : HTTP error code : "
-            + conn.getResponseCode ());
+            + responseEntity.getStatusCode ());
+      }
+      if (_logger.isDebugEnabled ()) {
+         _logger.debug ("DialogFrame Content :: " + responseEntity.getBody ());
       }
 
-      BufferedReader br = new BufferedReader (new InputStreamReader (
-          (conn.getInputStream ())));
-      String output;
-      StringBuilder sb = new StringBuilder ();
-      while ((output = br.readLine ()) != null) {
-        sb.append (output);
-      }
-      _logger.debug ("DialogFrame Content :: " + sb.toString ());
-      return sb.toString ();
+      return responseEntity.getBody ().trim ();
+      
     } catch (Exception e) {
       _logger.error (e.getMessage (), e);
       return "Error while getting Content";
-    } finally {
-      if (conn != null) {
-        conn.disconnect ();
-      }
     }
   }
 }
