@@ -1,19 +1,21 @@
 /*******************************************************************************
- * Educational Online Test Delivery System 
- * Copyright (c) 2014 American Institutes for Research
- *       
- * Distributed under the AIR Open Source License, Version 1.0 
- * See accompanying file AIR-License-1_0.txt or at
- * http://www.smarterapp.org/documents/American_Institutes_for_Research_Open_Source_Software_License.pdf
+ * Educational Online Test Delivery System Copyright (c) 2014 American
+ * Institutes for Research
+ * 
+ * Distributed under the AIR Open Source License, Version 1.0 See accompanying
+ * file AIR-License-1_0.txt or at http://www.smarterapp.org/documents/
+ * American_Institutes_for_Research_Open_Source_Software_License.pdf
  ******************************************************************************/
 package tds.iris.web.handlers;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
-
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jetty.http.HttpStatus;
 import org.slf4j.Logger;
@@ -24,10 +26,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import AIR.Common.Web.TDSReplyCode;
 import AIR.Common.data.ResponseData;
-import TDS.Shared.Exceptions.TDSSecurityException;
 import tds.iris.abstractions.repository.ContentException;
 import tds.iris.abstractions.repository.IContentHelper;
 import tds.iris.web.data.ContentRequest;
@@ -55,7 +55,8 @@ public class IrisWebHandler extends BaseContentRendererController
   @RequestMapping (value = "content/load", produces = "application/xml")
   @ResponseBody
   public void loadContentRequest (HttpServletRequest request, HttpServletResponse response) throws ContentRequestException, IOException {
-    ContentRequest contentRequest = ContentRequest.getContentRequest (request.getInputStream ());
+
+    ContentRequest contentRequest = ContentRequest.getContentRequest (modifyPostData (request));
     ItemRenderGroup itemRenderGroup = _contentHelper.loadRenderGroup (contentRequest);
 
     // Shiva: This is where our implementation differs from .NET.
@@ -84,5 +85,30 @@ public class IrisWebHandler extends BaseContentRendererController
     _logger.error (excp.getMessage (), excp);
     response.setStatus (HttpStatus.INTERNAL_SERVER_ERROR_500);
     return new ResponseData<String> (TDSReplyCode.Error.getCode (), excp.getMessage (), "");
+  }
+
+  InputStream modifyPostData (HttpServletRequest request)
+  {
+    BufferedReader bufferedReader = null;
+    try {
+      bufferedReader = new BufferedReader (new InputStreamReader (request.getInputStream ()));
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace ();
+    }
+    String line = null;
+    StringBuilder builder = new StringBuilder ();
+    try {
+      while ((line = bufferedReader.readLine ()) != null) {
+        builder.append (line);
+      }
+    } catch (IOException e1) {
+      // TODO Auto-generated catch block
+      e1.printStackTrace ();
+    }
+
+    String response = builder.toString ();
+    response = response.replace ("\\|", "\\\\|");
+    return new ByteArrayInputStream (response.getBytes ());
   }
 }

@@ -37,6 +37,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import tds.itemrenderer.data.IITSDocument;
+import tds.itemrenderer.data.ITSMachineRubric;
 import tds.student.services.abstractions.IContentService;
 import AIR.Common.Web.ContentType;
 import AIR.Common.Web.EncryptionHelper;
@@ -59,7 +60,8 @@ public class ItemScoringRubricHandler extends TDSHandler
 
   @ResponseStatus (value = org.springframework.http.HttpStatus.NOT_FOUND)
   @ExceptionHandler (FileNotFoundException.class)
-  public @ResponseBody ResponseData<Object> handleFileNotFoundException (FileNotFoundException e, HttpServletResponse response) {
+  public @ResponseBody
+  ResponseData<Object> handleFileNotFoundException (FileNotFoundException e, HttpServletResponse response) {
     _logger.error (e.getMessage (), e);
     return new ResponseData<Object> (TDSReplyCode.Error.getCode (), e.getMessage (), null);
   }
@@ -123,41 +125,55 @@ public class ItemScoringRubricHandler extends TDSHandler
       itsDocument = _contentService.getItemContent (Long.parseLong (bankId), Long.parseLong (itemId), null);
     }
 
-    if (itsDocument == null || itsDocument.getMachineRubric () == null || StringUtils.isEmpty (itsDocument.getMachineRubric ().getData ()))
-      throw new FileNotFoundException (String.format ("No machine rubric specified in <%s, %s>.", bankId, itemId));
-
-    // stream this file.
-    File machineRubricFile = null;
-    try {
-      machineRubricFile = new File (new URI (itsDocument.getMachineRubric ().getData ()));
-      if (!machineRubricFile.isFile ()) {
-        String message = String.format ("File %s does not exist.", machineRubricFile.getAbsolutePath ());
-        _logger.debug (message);
-        throw new FileNotFoundException (message);
-      }
-    } catch (URISyntaxException exp) {
-      throw new IOException (exp.getMessage ());
+    // SB-1328 Begin
+    if (itsDocument != null && (itsDocument.getFormat ().equalsIgnoreCase ("MC") || itsDocument.getFormat ().equalsIgnoreCase ("MS")))
+    {
+      ITSMachineRubric machineRubric = null;
+      machineRubric = new ITSMachineRubric (ITSMachineRubric.ITSMachineRubricType.Text, itsDocument.getAnswerKey () + "|" + itsDocument.getMaxScore ());
+      WebHelper.setContentType (ContentType.Text);
+      WebHelper.writeString (machineRubric.getData ());
     }
+    // SB-1328 End
+    else {
+      if (itsDocument == null || itsDocument.getMachineRubric () == null || StringUtils.isEmpty (itsDocument.getMachineRubric ().getData ()))
+        throw new FileNotFoundException (String.format ("No machine rubric specified in <%s, %s>.", bankId, itemId));
 
-    // stream it.
-    // TODO Shiva: hack! there is some character in i-200-54115 at the begining.
-    // i cannot reproduce this on my laptop
-    // and i do not have time to investigate right now. so i wills stop anything
-    // before the first "<" on the first line.
-    //Also see XmlReader (Reader) for more detailed information on this issue.
-    WebHelper.setContentType (ContentType.Xml);
-
-    int lineCounter = 0;
-    try (BufferedReader bfr = new BufferedReader (new FileReader (machineRubricFile))) {
-      String line = null;
-      while ((line = bfr.readLine ()) != null) {
-        if (lineCounter == 0) {
-          int indexOf = line.indexOf ("<");
-          if (indexOf > 0)
-            line = line.substring (indexOf);
+      // stream this file.
+      File machineRubricFile = null;
+      try {
+        machineRubricFile = new File (new URI (itsDocument.getMachineRubric ().getData ()));
+        if (!machineRubricFile.isFile ()) {
+          String message = String.format ("File %s does not exist.", machineRubricFile.getAbsolutePath ());
+          _logger.debug (message);
+          throw new FileNotFoundException (message);
         }
-        ++lineCounter;
-        WebHelper.writeString (line);
+      } catch (URISyntaxException exp) {
+        throw new IOException (exp.getMessage ());
+      }
+
+      // stream it.
+      // TODO Shiva: hack! there is some character in i-200-54115 at the
+      // begining.
+      // i cannot reproduce this on my laptop
+      // and i do not have time to investigate right now. so i wills stop
+      // anything
+      // before the first "<" on the first line.
+      // Also see XmlReader (Reader) for more detailed information on this
+      // issue.
+      WebHelper.setContentType (ContentType.Xml);
+
+      int lineCounter = 0;
+      try (BufferedReader bfr = new BufferedReader (new FileReader (machineRubricFile))) {
+        String line = null;
+        while ((line = bfr.readLine ()) != null) {
+          if (lineCounter == 0) {
+            int indexOf = line.indexOf ("<");
+            if (indexOf > 0)
+              line = line.substring (indexOf);
+          }
+          ++lineCounter;
+          WebHelper.writeString (line);
+        }
       }
     }
   }
