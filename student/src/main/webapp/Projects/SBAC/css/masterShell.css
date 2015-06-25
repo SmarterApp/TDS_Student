@@ -30,3 +30,16 @@
 .practiceTest #sectionLogin .ot-shadowBox h2 {
     background-image: url(../images/practice1.png) !important;
 }
+
+
+/* Hiding trike in SBAC */
+.practiceTest #ot-brand2 strong, .practiceTest #sections{
+	background: transparent;
+}
+.practiceTest #ot-brand2 strong{
+	padding-left: 10px;
+}
+.goPractice{
+	background-image: url(../../../Images/goPractice-blank.png);
+	background-position: 100% -4px;
+}

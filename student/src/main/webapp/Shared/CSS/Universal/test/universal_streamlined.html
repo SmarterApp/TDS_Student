@@ -1,114 +1,176 @@
 <!doctype html>
-<html lang="en"><!-- language attribute, change if Spanish, etc. is in use -->
+<html lang="en">
+<!-- language attribute, change if Spanish, etc. is in use -->
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=Edge"> 
-<title>Student Test - Questions 1-4</title><!-- page title gets updated as student navigates between items -->
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>Student Test - Questions 1-4</title>
+<!-- page title gets updated as student navigates between items -->
 <!-- Shell Styles -->
 <link href="../../normalize.css" media="screen" type="text/css" rel="stylesheet">
 <link href="../shell.css" rel="stylesheet" type="text/css">
 <link href="../../dialogs.css" media="screen" type="text/css" rel="stylesheet">
 <link href="../../accommodations.css" media="screen" type="text/css" rel="stylesheet">
 <link href="../../frames.css" media="screen" type="text/css" rel="stylesheet">
+<link href="../modernishXXX.css" rel="stylesheet" type="text/css">
 
 <!-- Content Styles -->
 <link href="../../items.css" media="screen" type="text/css" rel="stylesheet">
 <link href="../../elpa.css" media="screen" type="text/css" rel="stylesheet">
 <link href="../items.css" media="screen" type="text/css" rel="stylesheet">
+<link href="../../../../Scripts/EBSR/ebsr.css" rel="stylesheet" type="text/css">
 </head>
 
-<body>
-
-<div id="topBar">
-	<a href="#contents" class="contentHidden" id="skipNav">Skip navigation</a>
-	<div id="infoBar" role="banner">
-    	<div id="jumpQuestions">
-        	<label for="jumpDrop">Question:</label>
-            <select name="jumpDrop" id="jumpDrop" aria-label="Number">
-              <option value="1-4" selected>1-4</option>
-              <option value="5">5 (marked)</option>
-              <option value="6-7">6-7</option>
-            </select>
-            <input value="Go" aria-controls="jumpDrop"><!-- DEQUE, what's the best way to show the relationship of the GO button to the drop-down -->
-        </div>
-        <h1>Test Name</h1>
-        <h2>Student Name</h2>
-        <div id="smallButtons">
-        	<a href="#" id="btnHelp" aria-haspopup="true">Help</a>
-            <a href="#" id="btnSettings" aria-haspopup="true">Settings</a>
-            <a href="#" id="proctorLogout" aria-hidden="true" class="contentHidden">Log Out</a>
-        </div>
+<body class="yui-skin-sam browser_firefox browserVer_35 platform_osx practiceTest app_Student mode_Student TDS_PS_L0 no-touch TDS_ASL0 TDS_APC_PSP TDS_Calc0 TDS_BT_G1 TDS_TTX_A206 TDS_TTSPause0 TDS_TTSAA0 TDS_T0 TDS_Emboss_Stim TDS_Emboss_Item TDS_ERT0 TDS_CC0 TDS_FT_Serif TDS_FS_Off TDS_ExpandablePassages0 TDS_HEBG_None TDS_IF_S14 TDS_ITM1 TDS_MfR0 TDS_Masking0 ENU-Braille TDS_Highlight0 TDS_HWPlayback TDS_SCNotepad TDS_SVC1 TDS_ST0 TDS_SLM1 TDS_TPI_ResponsesFix TDS_TTS0 TDS_TS_Universal TDS_F_S14 TDS_PM0 TDS_Mute1 TDS_PoD0">
+<div id="tdsStatus" class="element-invisible" role="status" aria-live="assertive">Page 2 is ready. 1 Passage and 1 Question</div>
+<a href="#contents" id="skipNav" tabindex="0">Skip navigation</a>
+<div id="topBar"> <a tabindex="0" id="skipNav" href="#contents">Skip navigation</a>
+  <div role="banner" id="infoBar">
+    <div id="jumpQuestions">
+      <label i18n-content="TestShellModern.Label.Items" id="jumpLabel">Questions:</label>
+      <select aria-labelledby="jumpLabel" name="ddlNavigation" id="ddlNavigation">
+        <option value="I-187-1690" class="">1</option>
+        <option value="G-187-3709-0" style="" class="">2</option>
+      </select>
+      <input type="button" style="" aria-label="Press enter to jump to question" value="Go" id="jumpGo">
     </div>
-    <nav id="navigation" role="navigation">
-    	<ul id="studentControls">
-        	<!-- example of disabled, but visible nav button -->
-            <li><a tabindex="-1" disabled="disabled" aria-disabled="true" id="btnBack" class="inactive" href="#"><span class="icon"></span>Back</a></li>
-            <li><a id="btnNext" href="#"><span class="icon"></span>Next</a></li>
-            <li><a id="btnPause" href="#"><span class="icon"></span>Pause</a></li>
-            <!-- example of disabled and hidden nav button -->
-            <li class="contentHidden" aria-hidden="true"><a tabindex="-1" disabled="disabled" aria-disabled="true" id="btnSave" href="#"><span class="icon"></span>Save</a></li>
-            <li><a id="btnEnd" href="#"><span class="icon"></span>End Test</a></li>
-      	</ul>
-    
-    	<ul id="studentTools">
-            <li><a id="btnZoomIn" href="#"><span class="icon"></span>Zoom In</a></li>
-            <li><a id="btnZoomOut" href="#"><span class="icon"></span>Zoom Out</a></li>
-            <!-- example of disabled and hidden nav button that will also open a modal window -->
-            <li aria-hidden="true" class="contentHidden"><a tabindex="-1" id="btnFormula" href="#" class="math" aria-haspopup="true"><span class="icon"></span>Formula</a>
-            </li>
-            <!-- example of nav button that will open a menu -->
-            <li><a id="btnContext" href="#" aria-haspopup="true"><span class="icon"></span>Menu</a></li>
-        </ul>
-    </nav>
+    <h1 id="lblTestName">WCAG-ELA 3-EBSR,MI (1 out of 2)</h1>
+    <h2 id="lblStudentName">GUEST, GUEST (SSID: GUEST)</h2>
+    <span class="sessionID">GUEST Session</span>
+    <div id="smallButtons"> <a aria-haspopup="true" id="btnHelp" href="#">Help</a> <a aria-haspopup="true" id="btnSettings" href="#" style="display: none;">Settings</a> <a style="display:none;" aria-hidden="true" id="proctorLogout" href="#">Log Out</a> </div>
+  </div>
+  <nav class="Content_Yes Layout_WAI Passage_Yes" id="navigation" role="navigation">
+    <ul id="studentControls">
+      <li class="active"><a id="btnBack" class="back" tabindex="0" href="#" role="button" aria-disabled="false" aria-hidden="false"><span class="icon"></span><span class="label">Back</span></a></li>
+      <li class="active"><a id="btnNext" class="next" tabindex="0" href="#" role="button" aria-disabled="false" aria-hidden="false"><span class="icon"></span><span class="label">Next</span></a></li>
+      <li class="active"><a id="btnSave" class="save enable" tabindex="0" href="#" role="button" aria-disabled="false" aria-hidden="false"><span class="icon"></span><span class="label">Save</span></a></li>
+      <li class="active"><a id="btnPause" class="pause" tabindex="0" href="#" role="button" aria-disabled="false" aria-hidden="false"><span class="icon"></span><span class="label">Pause</span></a></li>
+      <li class="inactive"><a id="btnEnd" class="endTest confirmexitCSS" tabindex="0" href="#" role="button" aria-disabled="true" aria-hidden="false" disabled="disabled"><span class="icon"></span><span class="label">End Test</span></a></li>
+      <li class="active" style="display: none;"><a id="btnItemScore" tabindex="0" href="#" role="button" aria-disabled="false" aria-hidden="true"><span class="icon"></span><span class="label">Item Score</span></a></li>
+      <li class="inactive"><a id="btnResults" class="endTest" tabindex="0" href="#" role="button" aria-disabled="true" aria-hidden="false"><span class="icon"></span><span class="label">Test Results</span></a></li>
+    </ul>
+    <div id="soundCues"></div>
+    <ul id="studentTools">
+      <li class="active" style="display: inline-block;"><a id="btnRubric" class="rubric" tabindex="0" href="#" role="button" aria-disabled="false" aria-hidden="false"><span class="icon"></span><span class="label">Scoring Guide</span></a></li>
+      <li class="active" style="display: none;"><a id="btnProtractor" class="mt_protractor" tabindex="0" href="#" role="button" aria-disabled="false" aria-hidden="true"><span class="icon"></span><span class="label">Protractor</span></a></li>
+      <li class="active" style="display: none;"><a id="btnRuler" class="mt_ruler" tabindex="0" href="#" role="button" aria-disabled="false" aria-hidden="true"><span class="icon"></span><span class="label">Ruler</span></a></li>
+      <li class="active" style="display: none;"><a id="btnMask" class="maskingtool" tabindex="0" href="#" role="button" aria-disabled="false" aria-hidden="true"><span class="icon"></span><span class="label">Masking</span></a></li>
+      <li class="active" style="display: inline-block;"><a id="btnDictionary" class="dictionary" tabindex="0" href="#" role="button" aria-disabled="false" aria-hidden="false" style="display: none;"><span class="icon"></span><span class="label">Dictionary</span></a></li>
+      <li class="active"><a id="btnPeriodic" class="periodic" tabindex="0" href="#" role="button" aria-disabled="false" aria-hidden="false"><span class="icon"></span><span class="label">Periodic Table</span></a></li>
+      <li class="active"><a id="btnFormula" class="math" tabindex="0" href="#" role="button" aria-disabled="false" aria-hidden="false"><span class="icon"></span><span class="label">Formula</span></a></li>
+      <li class="active"><a id="btnCalculator" class="calculator" tabindex="0" href="#" role="button" aria-disabled="false" aria-hidden="false"><span class="icon"></span><span class="label">Calculator</span></a></li>
+      <li class="active"><a id="btnGlobalNotes" class="globalNotes" tabindex="0" href="#" role="button" aria-disabled="false" aria-hidden="false"><span class="icon"></span><span class="label">Notes</span></a></li>
+      <li class="active"><a id="btnLineReader" class="lineReader" tabindex="0" href="#" role="button" aria-disabled="false" aria-hidden="false"><span class="icon"></span><span class="label">Line Reader</span></a></li>
+      <li class="active"><a id="btnPrint" class="printer excludeMenu" tabindex="0" href="#" role="button" aria-disabled="false" aria-hidden="false"><span class="icon"></span><span class="label">Print Passage</span></a></li>
+      <li class="active"><a id="btnPagePrint" class="printerPage" tabindex="0" href="#" role="button" aria-disabled="false" aria-hidden="false"><span class="icon"></span><span class="label">Print Page</span></a></li>
+      <li class="active"><a id="btnZoomOut" class="zoomOut" tabindex="0" href="#" role="button" aria-disabled="false" aria-hidden="false"><span class="icon"></span><span class="label">Zoom Out</span></a></li>
+      <li class="active"><a id="btnZoomIn" class="zoomIn" tabindex="0" href="#" role="button" aria-disabled="false" aria-hidden="false"><span class="icon"></span><span class="label">Zoom In</span></a></li>
+      <li class="active"><a id="btnContext" class="openContext" tabindex="0" href="#" role="button" aria-disabled="false" aria-hidden="false"><span class="icon"></span><span class="label"></span></a></li>
+    </ul>
+  </nav>
 </div>
 
 <!-- default state is hidden-->
-<div class="alertBar alertActive" aria-hidden="false" role="alertdialog">
-	<a href="#" class="alertClose">Dismiss Message</a>
-    <div class="alertContent">You've reached the end of the test!</div>
+<div role="alertdialog" class="alertBar alertClosed"> <a href="#" class="alertDismiss" role="button" aria-expanded="false"> <span class="alertDismissOpen">Open alerts</span> <span class="alertDismissClose">Close alerts</span> </a>
+  <ul class="alertContent">
+  </ul>
 </div>
-
 <div id="contents" role="main">
-	<div class="pageWrapper showing" aria-hidden="false">
-    	<div id="Page_G-131-100068" class="itemcount_4 layout_17 browser_firefox browserVer_30 platform_osx passage-collapsed">
-        	<div class="item format_mc" role="group" aria-labelledby="questionnumber2 stem2" tabindex="0">
-                <!-- question number kept the same -->
-                <h3 id="questionnumber2"><span class="questionLabel">Question Number</span> <span class="questionNumber">2</span></h3>
-                <!-- replaces the three links previously found at the end of the question -->
-                <a class="itemTools" href="#" aria-haspopup="true">Item Tools</a>
-                <!-- helps label the overal group when it's tabbed to -->
-                <div title="Question" class="stemContainer" id="stem2">
-                    <p style="">The question would go here?</p>
-                </div>
-                
-                <div class="optionGroup" role="radiogroup" id="question2Response">
-                
-                  <div class="optionContainer contextArea optionA">
-                    <!-- changed label structure so that the radio button is getting it's description from optionContent -->
-                    <input type="radio" value="A" class="option" id="Item_Response_MC_2_A" aria-labelledby="radiobuttoncontentA" aria-required="true" title="Option A">
-                    <!-- moved the title down from radio button to its new label to help with readibility -->
-                    <div class="optionContent" id="radiobuttoncontentA" title="Option A">
-                      <p style="">Contents of first radio button.</p>
-                    </div>
-                  </div>
-                  <div class="optionContainer contextArea optionB"> 
-                    <input type="radio" value="B" class="option" id="Item_Response_MC_2_B" aria-labelledby="radiobuttoncontentB" aria-required="true" title="Option B">
-                    <div class="optionContent" id="radiobuttoncontentB" title="Option B">
-                      <p style="">Contents of second radio button.</p>
-                    </div>
-                  </div>
-                  
-                </div>
-              
-              
+  <div class="pageWrapper showing" aria-hidden="false">
+    <div class="itemcount_1 layout_wai browser_firefox browserVer_35 platform_osx" id="Page_G-187-3709-0" xmlns="http://www.w3.org/1999/xhtml" data-zoom="0">
+      <div class="grouping">
+        <div title="Passage" class="thePassage contextArea showing" aria-hidden="false" tabindex="0">
+          <h3 tabindex="-1"> <span class="passageLabel">Passage Title:</span> <span class="passageTitle">&nbsp;</span> </h3>
+          <p style="font-weight:bold; ">A Family of <span id="passage_3709_TAG_1_BEGIN">Artists</span></p>
+          <p style="">"I think we should paint a mural," suggested Beth.</p>
+          
+        </div>
+        <div class="theQuestions">
+          <div class="item questionAnswerGroup itemContainer format_ebsr response_ebsr firstItem lastItem showing" id="Item_2" aria-hidden="false" tabindex="0">
+            <h3 id="QuestionNumber_2"> <span class="questionLabel">Question Number</span> <span class="questionNumber">2</span> </h3>
+            <div class="toolsContainer itemTools"><a class="toolButton itemMenu" href="#" tabindex="0" aria-label="Menu" role="button" aria-haspopup="true"></a></div>
+            <div class="illustration"> </div>
+            <div class="stemContainer" id="Stem_2">
+              <p style="">The following question has two parts. First, answer part A. Then, answer part B. </p>
             </div>
-    	</div>
-    </div><!-- end pagewrapper-->
-
-
-
-</div><!-- end contents-->
-
-
+            <div title="Response" class="response">
+              <div class="optionGroup">
+                <div id="EBSR_2" role="group" aria-label="Two part multple choice and/or multiple select.">
+                  <div id="Item_Container_EBSR_2_1" role="radiogroup" class="interactionContainer">
+                    <h3 ssml="sub" ssml_alias="{silence}Part A.{silence}" class="TTS speakAs">Part A</h3>
+                    <div id="Item_InteractionPrompt_Response_EBSR_2_1" class="interactionPrompt" tabindex="0">
+                      <p style="">Choose the sentence that <span id="item_1700_TAG_6_BEGIN"><span style="font-weight:bold; ">best</span></span> explains what the use of <span data-word-index="1" data-tag-boundary="start" data-tag="word" class="its-tag" id="item_1700_TAG_7"></span>dialogue<span data-tag-boundary="end" data-tag-ref="item_1700_TAG_7" class="its-tag"></span> shows about the relationship between Sam and his older brother, Tim.</p>
+                    </div>
+                    <div id="Item_OptionContainer_Response_EBSR_2_Part1_A" title="Part A Option A" class="optionContainer optionA EBSR_mc" role="radio" aria-checked="false" aria-label="Option A" aria-labelledby="Item_OptionContent_Response_EBSR_2_Part1_A" tabindex="0"><span class="striked"></span><span class="optionClicker" style="text-indent:-9999px;overflow:hidden;">&nbsp;</span>
+                      <input type="radio" name="Item_Response_EBSR_2_Part1" value="A" id="Item_Response_EBSR_2_Part1_A" class="option">
+                      <div class="optionContent" id="Item_OptionContent_Response_EBSR_2_Part1_A">
+                        <p style="">It shows that they care about each other.</p>
+                      </div>
+                    </div>
+                    <div id="Item_OptionContainer_Response_EBSR_2_Part1_B" title="Part A Option B" class="optionContainer optionB EBSR_mc" role="radio" aria-checked="false" aria-label="Option B" aria-labelledby="Item_OptionContent_Response_EBSR_2_Part1_B" tabindex="0"><span class="striked"></span><span class="optionClicker" style="text-indent:-9999px;overflow:hidden;">&nbsp;</span>
+                      <input type="radio" name="Item_Response_EBSR_2_Part1" value="B" id="Item_Response_EBSR_2_Part1_B" class="option">
+                      <div class="optionContent" id="Item_OptionContent_Response_EBSR_2_Part1_B">
+                        <p style="">It shows that Tim does not want Sam to be <span data-word-index="2" data-tag-boundary="start" data-tag="word" class="its-tag" id="item_1700_TAG_8"></span>lazy<span data-tag-boundary="end" data-tag-ref="item_1700_TAG_8" class="its-tag"></span>.</p>
+                      </div>
+                    </div>
+                    <div id="Item_OptionContainer_Response_EBSR_2_Part1_C" title="Part A Option C" class="optionContainer optionC EBSR_mc" role="radio" aria-checked="false" aria-label="Option C" aria-labelledby="Item_OptionContent_Response_EBSR_2_Part1_C" tabindex="0"><span class="striked"></span><span class="optionClicker" style="text-indent:-9999px;overflow:hidden;">&nbsp;</span>
+                      <input type="radio" name="Item_Response_EBSR_2_Part1" value="C" id="Item_Response_EBSR_2_Part1_C" class="option">
+                      <div class="optionContent" id="Item_OptionContent_Response_EBSR_2_Part1_C">
+                        <p style="">It shows that Tim needs Sam's help to finish the painting.</p>
+                      </div>
+                    </div>
+                    <div id="Item_OptionContainer_Response_EBSR_2_Part1_D" title="Part A Option D" class="optionContainer optionD EBSR_mc" role="radio" aria-checked="false" aria-label="Option D" aria-labelledby="Item_OptionContent_Response_EBSR_2_Part1_D" tabindex="0"><span class="striked"></span><span class="optionClicker" style="text-indent:-9999px;overflow:hidden;">&nbsp;</span>
+                      <input type="radio" name="Item_Response_EBSR_2_Part1" value="D" id="Item_Response_EBSR_2_Part1_D" class="option">
+                      <div class="optionContent" id="Item_OptionContent_Response_EBSR_2_Part1_D">
+                        <p style="">It shows that Tim tries to make Sam do things he does not like doing.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="Item_Container_EBSR_2_2" role="group" class="interactionContainer">
+                    <h3 ssml="sub" ssml_alias="{silence}Part B.{silence}" class="TTS speakAs">Part B</h3>
+                    <div id="Item_InteractionPrompt_Response_EBSR_2_2" class="interactionPrompt" tabindex="0">
+                      <p style="">Which sentences from the passage <span style="font-weight:bold; ">best</span> support your answer in Part A?</p>
+                    </div>
+                    <div id="Item_OptionContainer_Response_EBSR_2_Part2_A" title="Part B Option A" class="optionContainer optionA EBSR_ms" role="checkbox" aria-checked="false" aria-label="Option A" aria-labelledby="Item_OptionContent_Response_EBSR_2_Part2_A" tabindex="0"><span class="striked"></span><span class="optionClicker" style="text-indent:-9999px;overflow:hidden;">&nbsp;</span>
+                      <input type="checkbox" name="Item_Response_EBSR_2_Part2" value="A" id="Item_Response_EBSR_2_Part2_A" class="option" data-tts-prefix="TDSTTS.Speak.SelectA">
+                      <div class="optionContent" id="Item_OptionContent_Response_EBSR_2_Part2_A">
+                        <p style=""><span id="item_1700_TAG_1_BEGIN">“‘Sam, you can't just sit there.’”</span></p>
+                      </div>
+                    </div>
+                    <div id="Item_OptionContainer_Response_EBSR_2_Part2_B" title="Part B Option B" class="optionContainer optionB EBSR_ms" role="checkbox" aria-checked="false" aria-label="Option B" aria-labelledby="Item_OptionContent_Response_EBSR_2_Part2_B" tabindex="0"><span class="striked"></span><span class="optionClicker" style="text-indent:-9999px;overflow:hidden;">&nbsp;</span>
+                      <input type="checkbox" name="Item_Response_EBSR_2_Part2" value="B" id="Item_Response_EBSR_2_Part2_B" class="option" data-tts-prefix="TDSTTS.Speak.SelectB">
+                      <div class="optionContent" id="Item_OptionContent_Response_EBSR_2_Part2_B">
+                        <p style=""><span id="item_1700_TAG_2_BEGIN">“<span data-word-index="3" data-tag-boundary="start" data-tag="word" class="its-tag" id="item_1700_TAG_9"></span>On the other hand<span data-tag-boundary="end" data-tag-ref="item_1700_TAG_9" class="its-tag"></span>, Tim, Sam's older brother, made painting seem easy.”</span></p>
+                      </div>
+                    </div>
+                    <div id="Item_OptionContainer_Response_EBSR_2_Part2_C" title="Part B Option C" class="optionContainer optionC EBSR_ms" role="checkbox" aria-checked="false" aria-label="Option C" aria-labelledby="Item_OptionContent_Response_EBSR_2_Part2_C" tabindex="0"><span class="striked"></span><span class="optionClicker" style="text-indent:-9999px;overflow:hidden;">&nbsp;</span>
+                      <input type="checkbox" name="Item_Response_EBSR_2_Part2" value="C" id="Item_Response_EBSR_2_Part2_C" class="option" data-tts-prefix="TDSTTS.Speak.SelectC">
+                      <div class="optionContent" id="Item_OptionContent_Response_EBSR_2_Part2_C">
+                        <p style="">“Sam was not sure what his <span data-word-index="4" data-tag-boundary="start" data-tag="word" class="its-tag" id="item_1700_TAG_10"></span>role<span data-tag-boundary="end" data-tag-ref="item_1700_TAG_10" class="its-tag"></span> would be.”</p>
+                      </div>
+                    </div>
+                    <div id="Item_OptionContainer_Response_EBSR_2_Part2_D" title="Part B Option D" class="optionContainer optionD EBSR_ms" role="checkbox" aria-checked="false" aria-label="Option D" aria-labelledby="Item_OptionContent_Response_EBSR_2_Part2_D" tabindex="0"><span class="striked"></span><span class="optionClicker" style="text-indent:-9999px;overflow:hidden;">&nbsp;</span>
+                      <input type="checkbox" name="Item_Response_EBSR_2_Part2" value="D" id="Item_Response_EBSR_2_Part2_D" class="option" data-tts-prefix="TDSTTS.Speak.SelectD">
+                      <div class="optionContent" id="Item_OptionContent_Response_EBSR_2_Part2_D">
+                        <p style=""><span id="item_1700_TAG_3_BEGIN">“‘I don't want to <span data-word-index="5" data-tag-boundary="start" data-tag="word" class="its-tag" id="item_1700_TAG_11"></span>ruin<span data-tag-boundary="end" data-tag-ref="item_1700_TAG_11" class="its-tag"></span> any of your ideas.’”</span></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end pagewrapper--> 
+  
+</div>
+<!-- end contents-->
+<a id="btnNextBottom" class="next" tabindex="0" href="#" role="button">
+	<span class="icon"></span>
+	<span class="label">Next shortcut</span>
+</a>
 </body>
 </html>

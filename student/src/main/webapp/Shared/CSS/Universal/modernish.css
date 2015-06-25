@@ -26,7 +26,16 @@
     padding-right: 5px;
 }
 #infoBar .sessionID {
-	margin-left: 5px;
+	height: 24px;
+	line-height: 24px;
+	font-size: 12px;
+	margin: 0px;
+	float: left;
+	font-weight: normal;
+   padding-left: 5px;
+   padding-right: 5px;
+   max-height: none;
+   min-width: 7em;
 }
 
 #jumpQuestions {
@@ -242,6 +251,35 @@
 #btnContext .icon {
 	background-position: center -2311px !important;
 }
+
+/* @group Next shortcut */
+.TDS_SLM1 a#btnNextBottom:focus, 
+.TDS_SLM1 a#btnNextBottom:active {
+	width: 65px;
+    height: 55px;
+    background: transparent url(../../Images/universal/modernish_shell.png) no-repeat center -145px;
+    border: none;
+}
+.TDS_SLM1 #btnNextBottom:focus .icon, 
+.TDS_SLM1 #btnNextBottom:active .icon {
+	height: 55px;
+	width: 65px;
+	position: static;
+	margin: 0px;
+	border:none;
+	-moz-border-radius:  0%;
+	-webkit-border-radius:  0%;
+    border-radius: 0%;
+    text-align: center;
+	background: transparent url(../../Images/universal/modernish_shell.png) no-repeat center -1016px;
+	-webkit-box-shadow: inherit;
+	-moz-box-shadow: inherit;
+	box-shadow: inherit;
+}
+/* @end */
+
+
+
 #btnFullScreen .icon, 
 #btnFullScreen:active .icon, 
 #btnFullScreen:focus .icon, 
@@ -300,6 +338,11 @@ body.platform_chrome #contents {
 }
 .multi-page {
     top: 96px;
+}
+/* keeps passage and questions from running into each other */
+.touch.platform_android .theQuestions, 
+.touch.platform_android .thePassage {
+	top: 96px;
 }
 .toolsContainer.passageTools {
     top: 115px;
@@ -368,6 +411,8 @@ body.platform_chrome #contents {
 	-moz-box-shadow: inherit !important;
 	box-shadow: inherit !important;
 }
+/* add orange square to line reader too */
+.lr-enabled #btnLineReader.lineReader,
 .TDS_Masking1.msk-enabled #navigation #studentTools #btnMask {
     background-position: center -295px !important;
 }
@@ -384,4 +429,14 @@ body.platform_chrome #contents {
 #yuiSimpleDialog_mask {
 	background-image: url(../../Images/universal/mask_lighter.png);
 	opacity: .9;
+}
+
+/*Hide universal's line reader highlight in Modern Shell Mode*/
+.lr-enabled #btnLineReader .icon,
+.lr-enabled #btnLineReader:active .icon,
+.lr-enabled #btnLineReader:focus .icon,
+.lr-enabled #btnLineReader:hover .icon{
+    background-color: transparent !important;
+	border-color: none !important;
+	box-shadow: none !Important;
 }

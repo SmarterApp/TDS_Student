@@ -114,6 +114,7 @@ public class TestResponseWriter // : IDisposable
     _writer.writeStartElement ("page");
     _writer.writeAttribute ("type", "contentpage");
     _writer.writeAttribute ("number", "" + page.getNumber ());
+    _writer.writeAttribute ("prefetched", ""+page.getPrefetched ());
 
     writeSegment (page);
     writeGroup (page);

@@ -140,6 +140,26 @@ strong {
 .practiceTest .forPractice {
 	display: inherit;
 }
+
+/* @group End of test survery */
+
+#dialogTestSurvey{
+	height: 400px !important;
+}
+#dialogTestSurvey h2{
+	padding: 0.5em;
+}
+#dialogTestSurvey .bd {
+	line-height: 1em;
+	height: 290px;
+	overflow: auto;
+}
+#dialogTestSurvey .bd form {
+	padding-bottom: 10px;
+}
+
+/* @end */
+
 .element-invisible {
   position: absolute !important;
   clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
@@ -483,10 +503,12 @@ select option {
 	line-height: 75px;
 	display: block;
 }
+
+/* SB-1346:Eliminating tricycle in student UI
 .practiceTest #sections{
 	background: url(../Images/masterShell/trike/trike_bg.png) right center no-repeat;
 	min-height: 500px;
-}
+} */
 #tds-ot-footer {
 	color: #555555;
     padding-bottom: 2em;
@@ -785,7 +807,7 @@ select option {
 	max-width: 40%;
 	line-height: 1.3em; /*Bug 147712*/
 }
-.app_scoreentry .loginForm label{
+.app_scoreentry .loginForm label, .app_responseentry .loginForm label{
 	min-width: 9.5em;
 }
 .HAW .loginForm label {
@@ -881,6 +903,16 @@ select option {
 }
 #sectionLogin .instructions u {
 	line-height: 1.5em;
+}
+#sectionLogin #btnLogout {
+    display: none;
+}
+.app_ScoreEntry #sectionLogin #btnLogout,
+.app_ResponseEntry #sectionLogin #btnLogout,
+.app_scoreentry #sectionLogin #btnLogout,
+.app_responseentry #sectionLogin #btnLogout
+ {
+    display: block;
 }
 /* @group blurbs */
 
@@ -1232,7 +1264,20 @@ select option {
 	display: inline-block;
     float: none;
 	vertical-align: middle;
-}/*
+}
+ .accommodations .multiselect legend,
+    .summary-segment .multiselect legend
+    {
+        float: left;
+    }
+    .accommodations .multiselect fieldset,
+    .summary-segment .multiselect fieldset
+    {
+        overflow: hidden;
+        position: relative;
+        display: block;
+    }
+/*
 .platform_ios .accommodations label{
 	width: 7em;
 }*/
@@ -1568,7 +1613,9 @@ select.summary-segment-type-values {
 	display: none;
 }
 .app_ScoreEntry #sectionTestResults #btnEnterMoreScores, .app_ResponseEntry #sectionTestResults #btnEnterMoreScores,
-.app_ScoreEntry #sectionTestResults #btnChangeStudent, .app_ResponseEntry #sectionTestResults #btnChangeStudent {
+.app_ScoreEntry #sectionTestResults #btnChangeStudent, .app_ResponseEntry #sectionTestResults #btnChangeStudent,
+.app_scoreentry #sectionTestResults #btnEnterMoreScores, .app_responseentry #sectionTestResults #btnEnterMoreScores,
+.app_scoreentry #sectionTestResults #btnChangeStudent, .app_responseentry #sectionTestResults #btnChangeStudent {
 	display: block;
 }
 
@@ -2481,6 +2528,78 @@ TDS_Glogin_Session_Disable: #loginForm2 disable*/
 {
     border-color: #ccc !important;
 }
+
+/*Hide Bikes & Tricycles when Score Entry OR Response Entry is active.   */
+.app_ScoreEntry.practiceTest #sections,
+.app_ResponseEntry.practiceTest #sections,
+.app_ScoreEntry #sections,
+.app_ResponseEntry #sections,
+.app_scoreentry.practiceTest #sections,
+.app_responseentry.practiceTest #sections,
+.app_scoreentry #sections,
+.app_responseentry #sections
+{
+    background: none;
+}
+/* Do not display practice/non-practice test banner bar while in Score Entry OR Response Entry modes*/
+.app_ScoreEntry.practiceTest #ot-brand2,
+.app_ResponseEntry.practiceTest #ot-brand2,
+.app_ScoreEntry #ot-brand2,
+.app_ResponseEntry #ot-brand2,
+.app_scoreentry.practiceTest #ot-brand2,
+.app_responseentry.practiceTest #ot-brand2,
+.app_scoreentry #ot-brand2,
+.app_responseentry #ot-brand2
+{
+    display: none;
+}
+
+/* Hide Summary Segments on Score or Response Entry modes */
+.app_ScoreEntry.practiceTest #sectionTestVerify #summary-segments,
+.app_ResponseEntry.practiceTest #sectionTestVerify #summary-segments,
+.app_scoreentry #sectionTestVerify #summary-segments,
+.app_responseentry #sectionTestVerify #summary-segments{
+	display: none;
+}
+
+/* Hide Help button in Score & Response Entry modes */
+.app_ScoreEntry.practiceTest a#btnHelp,
+.app_ResponseEntry.practiceTest a#btnHelp,
+.app_ScoreEntry a#btnHelp,
+.app_ResponseEntry a#btnHelp,
+.app_scoreentry.practiceTest a#btnHelp,
+.app_responseentry.practiceTest a#btnHelp,
+.app_scoreentry a#btnHelp,
+.app_responseentry a#btnHelp{
+	display: none;
+}
+/* Hide more buttons after test submitting in Score & Response Entry modes WHILE in Practice tests */
+.app_ScoreEntry.practiceTest #sectionTestResults #btnEnterMoreScores,
+.app_ResponseEntry.practiceTest #sectionTestResults #btnEnterMoreScores,
+.app_ScoreEntry.practiceTest #sectionTestResults #btnChangeStudent,
+.app_ResponseEntry.practiceTest #sectionTestResults #btnChangeStudent,
+.app_scoreentry.practiceTest #sectionTestResults #btnEnterMoreScores,
+.app_responseentry.practiceTest #sectionTestResults #btnEnterMoreScores,
+.app_scoreentry.practiceTest #sectionTestResults #btnChangeStudent,
+.app_responseentry.practiceTest #sectionTestResults #btnChangeStudent{
+	display: none;
+}
+
+/*Hide large chunks of the grade selection screen in practice test Score & Response Entry Modes */
+.mode_ResponseEntry.practiceTest  #sectionLoginVerify ul.ot-infoConfirm li,
+.mode_ScoreEntry.practiceTest  #sectionLoginVerify ul.ot-infoConfirm li,
+.mode_responseentry.practiceTest  #sectionLoginVerify ul.ot-infoConfirm li,
+.mode_scoreentry.practiceTest  #sectionLoginVerify ul.ot-infoConfirm li
+{
+	 display: none;
+ }
+
+.mode_ResponseEntry.practiceTest  #sectionLoginVerify .ot-infoConfirm li#verifyGradeSelector,
+.mode_ScoreEntry.practiceTest  #sectionLoginVerify .ot-infoConfirm li#verifyGradeSelector,
+.mode_responseentry.practiceTest  #sectionLoginVerify .ot-infoConfirm li#verifyGradeSelector,
+.mode_scoreentry.practiceTest  #sectionLoginVerify .ot-infoConfirm li#verifyGradeSelector{
+	display: block;
+}
 /* @end */
 
 /* @group input focus styles */
@@ -2503,9 +2622,65 @@ TDS_Glogin_Session_Disable: #loginForm2 disable*/
 }
 /* @end */
 
-/* stops unnecessary scrolling when going between sections that are different in length, at least on the desktop */
+/* stops unnecessary scrolling when going between sections that are different in length, at least on the desktop - causes problems with Jwas and SB
 body.showingLoading {
 	position: fixed;
 	height: 100%;
 	width: 100%;
+}*/
+
+/* Hide Opprotunities Accomodation*/
+.TDS_TOI_Hide #sectionTestSelection .testSelection p{
+	display: none;
+}
+.TDS_TOI_Hide #testSelections .testSelection strong{
+	margin: 0.2em 0 0.7em;
+}
+
+/* Hide Pages for Data Entry and Response Entry */
+.mode_ResponseEntry.practiceTest #sectionLogin,
+.mode_ScoreEntry.practiceTest #secitonLogin,
+.mode_ResponseEntry.practiceTest #sectionTestApproval,
+.mode_ScoreEntry.practiceTest #sectionTestApproval,
+.mode_ResponseEntry.practiceTest #sectionInstructions,
+.mode_ScoreEntry.practiceTest #sectionInstructions,
+.mode_responseentry.practiceTest #sectionLogin,
+.mode_scoreentry.practiceTest #secitonLogin,
+.mode_responseentry.practiceTest #sectionTestApproval,
+.mode_scoreentry.practiceTest #sectionTestApproval,
+.mode_responseentry.practiceTest #sectionInstructions,
+.mode_scoreentry.practiceTest #sectionInstructions{
+	display: none !important;
+	visibility: hidden !important;
+}
+/* shortcut for help windows */
+a.yui-panel-bottom {
+	display: block;
+	position: absolute;
+	visibility: visible;
+	height: 0px;
+	width: 0px;
+	overflow: hidden;
+	left: -9999px;
+	text-indent: -9999px;
+}
+a.yui-panel-bottom:focus, 
+a.yui-panel-bottom:active
+{
+    width: 24px;
+    height: 24px;
+    z-index: 1;
+    -webkit-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, .9);
+	-moz-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, .9);
+	box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, .9);
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+    border-radius: 2px;
+    color: #fff;
+    border: solid 1px #fff;
+    left: 100%;
+    margin-left: -30px;
+    margin-top: -18px;
+    outline: none;
+	background-color: #9e0b0f;
 }

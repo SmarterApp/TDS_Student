@@ -237,3 +237,33 @@ body.practiceTest .proctorMessage {
 {
     border-color: #0d4373;
 }
+
+
+/* Score and Data Entry - sub banner modifications*/
+.app_ScoreEntry.practiceTest #ot-brand2,
+.app_ResponseEntry.practiceTest #ot-brand2,
+.app_ScoreEntry #ot-brand2,
+.app_ResponseEntry #ot-brand2,
+.app_scoreentry.practiceTest #ot-brand2,
+.app_responseentry.practiceTest #ot-brand2,
+.app_scoreentry #ot-brand2,
+.app_responseentry #ot-brand2
+{
+    display: block;
+    /*background: url("../images/lighthouse_bottom.gif") no-repeat scroll right top rgba(0, 0, 0, 0);*/
+    height: 28px;
+    border-bottom-color: #4d83c3;
+}
+.app_ScoreEntry.practiceTest #ot-brand2 strong,
+.app_ResponseEntry.practiceTest #ot-brand2 strong,
+.app_ScoreEntry #ot-brand2 strong,
+.app_ResponseEntry #ot-brand2 strong,
+.app_scoreentry.practiceTest #ot-brand2 strong,
+.app_responseentry.practiceTest #ot-brand2 strong,
+.app_scoreentry #ot-brand2 strong,
+.app_responseentry #ot-brand2 strong
+{
+
+    display: none;
+}
+/* end */

@@ -1,10 +1,10 @@
 /*******************************************************************************
- * Educational Online Test Delivery System 
- * Copyright (c) 2014 American Institutes for Research
- *     
- * Distributed under the AIR Open Source License, Version 1.0 
- * See accompanying file AIR-License-1_0.txt or at
- * http://www.smarterapp.org/documents/American_Institutes_for_Research_Open_Source_Software_License.pdf
+ * Educational Online Test Delivery System Copyright (c) 2014 American
+ * Institutes for Research
+ * 
+ * Distributed under the AIR Open Source License, Version 1.0 See accompanying
+ * file AIR-License-1_0.txt or at http://www.smarterapp.org/documents/
+ * American_Institutes_for_Research_Open_Source_Software_License.pdf
  ******************************************************************************/
 package tds.student.services.data;
 
@@ -30,6 +30,7 @@ public class PageGroup extends ItemResponses
   public boolean      _printed;
   public String       _id;
   public IITSDocument _document;
+  public boolean      _prefetched;
 
   public PageGroup (OpportunityItem responseData)
   {
@@ -127,6 +128,16 @@ public class PageGroup extends ItemResponses
     this._document = _document;
   }
 
+  public boolean getPrefetched ()
+  {
+    return _prefetched;
+  }
+
+  public void setPrefetched (boolean value)
+  {
+    this._prefetched = value;
+  }
+
   public static PageGroup Create (List<OpportunityItem> oppItems)
   {
     PageGroup pageGroup = null;
@@ -150,9 +161,9 @@ public class PageGroup extends ItemResponses
   // / </summary>
   public ItemResponse getFirst ()
   {
-	if (this.size() > 0)
-		return this.get (0);
-	return null;
+    if (this.size () > 0)
+      return this.get (0);
+    return null;
   }
 
   // / <summary>
@@ -160,8 +171,8 @@ public class PageGroup extends ItemResponses
   // / </summary>
   public ItemResponse getLast ()
   {
-	if (this.size() > 0)
-		return this.get (this.size ()-1);
+    if (this.size () > 0)
+      return this.get (this.size () - 1);
     return null;
   }
 
@@ -222,10 +233,10 @@ public class PageGroup extends ItemResponses
   // / <returns></returns>
   public int getItemsLeftUnanswered ()
   {
-	int countUnanswered = 0;
+    int countUnanswered = 0;
     for (ItemResponse itemResponse : this) {
       if (!itemResponse.getAnswered ())
-    	  countUnanswered++;
+        countUnanswered++;
     }
     return countUnanswered;
   }
@@ -271,9 +282,9 @@ public class PageGroup extends ItemResponses
   }
 
   /**
-   *  Make a clone of the page.
-   *  
-   *  @return PageGroup
+   * Make a clone of the page.
+   * 
+   * @return PageGroup
    */
   public PageGroup clone () {
     OpportunityItem opportunityItem = new OpportunityItem ();
@@ -289,17 +300,18 @@ public class PageGroup extends ItemResponses
   }
 
   /**
-   *  Make a clone of the page.
-   *  
-   *  @return PageGroup
+   * Make a clone of the page.
+   * 
+   * @return PageGroup
    */
   public PageGroup clone (boolean deep) {
-    PageGroup pageGroup = clone();
+    PageGroup pageGroup = clone ();
     // add responses
-    if (deep) pageGroup.addAll(this);
+    if (deep)
+      pageGroup.addAll (this);
     return pageGroup;
   }
-  
+
   public boolean equals (PageGroup other) {
     /*
      * if (ReferenceEquals(null, other)) return false; if (ReferenceEquals(this,

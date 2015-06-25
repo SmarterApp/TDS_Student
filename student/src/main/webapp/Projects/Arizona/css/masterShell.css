@@ -1,7 +1,7 @@
 ﻿@charset "UTF-8";
 @import url(../../../Themes/stars/css/masterShell.css);
 
-/* Idaho's logo */
+/* Arizona's logo */
 #ot-logo_spot1 {
     background-image:  url(../images/logo.png);
 }
@@ -24,3 +24,14 @@
     font-size: 2.35em;
 }
 
+/* Hiding trike in Oregon */
+.practiceTest #ot-brand2 strong, .practiceTest #sections{
+	background: transparent;
+}
+.practiceTest #ot-brand2 strong{
+	padding-left: 10px;
+}
+.goPractice{
+	background-image: url(../../../Images/goPractice-blank.png);
+	background-position: 100% -4px;
+}

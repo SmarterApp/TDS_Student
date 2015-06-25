@@ -70,3 +70,17 @@
 	background-image: url(../../../Images/goPractice-blank.png);
 	background-position: 100% -4px;
 }
+
+/* Score and Data Entry - sub banner modifications (because Oregon doesn't have a theme)*/
+.app_ScoreEntry.practiceTest #ot-brand2,
+.app_ResponseEntry.practiceTest #ot-brand2
+{
+    display: block;
+    background: #c39a6f;
+    height: 45px;
+}
+.app_ScoreEntry.practiceTest #ot-brand2 strong,
+.app_ResponseEntry.practiceTest #ot-brand2 strong{
+    display: none;
+}
+/* end */

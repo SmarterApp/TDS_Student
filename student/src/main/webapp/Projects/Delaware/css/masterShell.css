@@ -160,20 +160,25 @@
 
 /* @group Header Stuff */
 
-.mode_ScoreEntry #ot-logo_spot1 {
-	background-image:url(../images/logo_delaware_alt_large.gif);
+.mode_ScoreEntry #ot-logo_spot1,
+.mode_scoreentry #ot-logo_spot1 {
+	background-image:url(../images/logo2.png);
 	width: 350px;
 }
-.mode_ScoreEntry #tds-ot-header {
+.mode_ScoreEntry #tds-ot-header,
+.mode_scoreentry #tds-ot-header {
 	background-color: #6bad63;
 }
-.mode_ScoreEntry #tds-ot-branding {
+.mode_ScoreEntry #tds-ot-branding,
+.mode_scoreentry #tds-ot-branding {
     background-color: inherit;
 }
-.mode_ScoreEntry #ot-brand1 {
+.mode_ScoreEntry #ot-brand1,
+.mode_scoreentry #ot-brand1 {
     background: transparent url(../images/lighthouse_top_green.gif) no-repeat right bottom;
 }
-.mode_ScoreEntry #ot-brand2 {
+.mode_ScoreEntry #ot-brand2,
+.mode_scoreentry #ot-brand2 {
     background: url("../images/lighthouse_bottom_green.gif") no-repeat scroll right center transparent;
     border-bottom-color: #4D83C3;
     height: 28px;
@@ -183,13 +188,16 @@
 
 /* @group sectionLogin tweaks */
 
-.mode_ScoreEntry .loginForm label {
+.mode_ScoreEntry .loginForm label,
+.mode_scoreentry .loginForm label {
 	min-width: 9em;
 }
-.mode_ScoreEntry #sectionLogin .actions {
+.mode_ScoreEntry #sectionLogin .actions,
+.mode_scoreentry #sectionLogin .actions {
     padding-right: 14%;
 }  
-.mode_ScoreEntry .loginRow {
+.mode_ScoreEntry .loginRow,
+.mode_scoreentry .loginRow {
 	min-height: 2.5em;
 	clear:both;
 }
@@ -198,10 +206,12 @@
 
 /* @group sectionTestSelection tweaks */
 
-.mode_ScoreEntry #sectionTestSelection table tr th:first-child {  
+.mode_ScoreEntry #sectionTestSelection table tr th:first-child,
+.mode_scoreentry #sectionTestSelection table tr th:first-child {    
 	white-space: inherit;
 }
-.mode_ScoreEntry .resumeTest, .newTest {
+.mode_ScoreEntry .resumeTest, .newTest,
+.mode_scoreentry .resumeTest, .newTest {
 	width: inherit;
 	padding-right: 35px;
 }
@@ -210,23 +220,31 @@
 
 .mode_ScoreEntry #sectionTestResults .ptShow, 
 .mode_ScoreEntry #sectionTestResults.scoreUnavailableInPT .ptShow, 
-.mode_ScoreEntry .practiceTest #sectionTestResults .ptShow {
+.mode_ScoreEntry .practiceTest #sectionTestResults .ptShow,
+.mode_scoreentry #sectionTestResults .ptShow, 
+.mode_scoreentry #sectionTestResults.scoreUnavailableInPT .ptShow, 
+.mode_scoreentry.practiceTest #sectionTestResults .ptShow {
 	display: none !important;
 }
-.mode_ScoreEntry .practiceTest .singleUser .loginForm1 {
+.mode_ScoreEntry .practiceTest .singleUser .loginForm1,
+.mode_scoreentry .practiceTest .singleUser .loginForm1 {
 	border: none;
 }
-.mode_ScoreEntry .practiceTest .singleUser .ot-shadowBox {
+.mode_ScoreEntry .practiceTest .singleUser .ot-shadowBox,
+.mode_scoreentry .practiceTest .singleUser .ot-shadowBox {
 	float: none !important;
 }
-.mode_ScoreEntry .practiceTest .singleUser .ot-shadowBox h2 {
+.mode_ScoreEntry .practiceTest .singleUser .ot-shadowBox h2,
+.mode_scoreentry .practiceTest .singleUser .ot-shadowBox h2  {
 	background-image: none !important;
 }
-.mode_ScoreEntry .practiceTest #ot-brand2 strong {
+.mode_ScoreEntry .practiceTest #ot-brand2 strong,
+.mode_scoreentry .practiceTest #ot-brand2 strong {
 	background-image: none !important;
 	padding-right: 5px;
 }
-.mode_ScoreEntry #verifyTestForm {
+.mode_ScoreEntry #verifyTestForm,
+.mode_scoreentry #verifyTestForm {
     background-color: #DCEBF5;
     border-bottom: 1px solid #0F6797;
     border-top: 1px solid #0F6797;
@@ -235,7 +253,8 @@
     margin-right: -.6em;
     padding: 0 0 0 0.5em;
 }
-.mode_ScoreEntry .actions input {
+.mode_ScoreEntry .actions input,
+.mode_scoreentry .actions input {
 	border: none;
     display: block;
     margin: 0px;
@@ -246,29 +265,40 @@
     min-height: 2em;
     padding: 0px 1em;
 }
-.mode_ScoreEntry .actions input:hover {
+.mode_ScoreEntry .actions input:hover,
+.mode_scoreentry .actions input:hover {
 	background-color: #0E4878 !important;
 	color: #fff;
 }
-.mode_ScoreEntry.TDS_PS_L1 .actions input, .mode_ScoreEntry.TDS_PS_L2 .actions input, .mode_ScoreEntry.TDS_PS_L3 .actions input{
+.mode_ScoreEntry.TDS_PS_L1 .actions input, 
+.mode_ScoreEntry.TDS_PS_L2 .actions input, 
+.mode_ScoreEntry.TDS_PS_L3 .actions input,
+.mode_scoreentry.TDS_PS_L1 .actions input, 
+.mode_scoreentry.TDS_PS_L2 .actions input, 
+.mode_scoreentry.TDS_PS_L3 .actions input{
 	max-width: 250px;
 	line-height: 1em;
 }
-.mode_ScoreEntry.TDS_PS_L4 .actions input{
+.mode_ScoreEntry.TDS_PS_L4 .actions input,
+.mode_scoreentry.TDS_PS_L4 .actions input{
 	max-width: 260px;
 }
-.mode_ScoreEntry.TDS_PS_L3 .actions input{
+.mode_ScoreEntry.TDS_PS_L3 .actions input,
+.mode_scoreentry.TDS_PS_L3 .actions input{
 	max-width: 240px;
 	line-height: 1em;
 }
-.mode_ScoreEntry .actions .positive input {
+.mode_ScoreEntry .actions .positive input,
+.mode_scoreentry .actions .positive input {
 	color: #0d4373;
 }
-.mode_ScoreEntry .actions .positive input:hover {
+.mode_ScoreEntry .actions .positive input:hover,
+.mode_scoreentry .actions .positive input:hover {
 	background-color: #0d4373 !important;
 	color: #fff;
 }
-.mode_ScoreEntry .ForScoreEntry {
+.mode_ScoreEntry .ForScoreEntry,
+.mode_scoreentry .ForScoreEntry {
 	display: inline;
 }
 /* @end */

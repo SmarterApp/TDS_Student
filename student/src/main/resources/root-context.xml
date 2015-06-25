@@ -133,12 +133,14 @@
 		<beans:property name="jdbcUrl" value="${datasource.url:jdbc:mysql://tds-db.dev.opentestsystem.org:3306/session}" />
 		<beans:property name="user" value="${datasource.username:dbsbac}" />
 		<beans:property name="password" value="${datasource.password:osTyMhRM1C}" />
+		<beans:property name="initialPoolSize" value="${datasource.initialPoolSize:5}" />
 		<beans:property name="minPoolSize" value="${datasource.minPoolSize:5}" />
 		<beans:property name="acquireIncrement" value="${datasource.acquireIncrement:5}" />
 		<beans:property name="maxPoolSize" value="${datasource.maxPoolSize:20}" />
 		<beans:property name="checkoutTimeout" value="${datasource.checkoutTimeout:60000}" />
 		<!-- <beans:property name="preferredTestQuery" value="SELECT 1" /> -->
 		<beans:property name="maxConnectionAge" value="${datasource.maxConnectionAge:0}" />
+		<beans:property name="maxIdleTime" value="${datasource.maxIdleTime:0}" />
 		<beans:property name="acquireRetryAttempts" value="${datasource.acquireRetryAttempts:5}" />
 		<beans:property name="idleConnectionTestPeriod" value="${datasource.idleConnectionTestPeriod:300}" />
 		<beans:property name="testConnectionOnCheckout" value="${datasource.testConnectionOnCheckout:false}" />

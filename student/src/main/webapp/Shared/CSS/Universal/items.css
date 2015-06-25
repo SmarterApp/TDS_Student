@@ -401,10 +401,7 @@ div.toolsContainer a.passageMenu:hover,
 }
 .toolsContainer a.markReview.toolButton:hover, 
 .toolsContainer a.markReview.toolButton:focus, 
-.toolsContainer a.markReview.toolButton:active, 
-.toolsContainer a.markReviewMarked.toolButton:hover, 
-.toolsContainer a.markReviewMarked.toolButton:focus, 
-.toolsContainer a.markReviewMarked.toolButton:active
+.toolsContainer a.markReview.toolButton:active
 {
 	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
 	background-position: -35px -125px !important;
@@ -412,15 +409,17 @@ div.toolsContainer a.passageMenu:hover,
 	height: 35px;
 	margin-right: 0px;
 }
-.toolsContainer a.markReviewMarked.toolButton:hover, 
-.toolsContainer a.markReviewMarked.toolButton:focus, 
-.toolsContainer a.markReviewMarked.toolButton:active, 
-.toolsContainer a.markReviewMarked.toolButton 
+.itemMarked .toolsContainer a.markReview.toolButton, 
+.itemMarked .toolsContainer a.markReview.toolButton:active, 
+.itemMarked .toolsContainer a.markReview.toolButton:focus, 
+.itemMarked .toolsContainer a.markReview.toolButton:hover
  {
 	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
 	background-position: -70px -125px !important;
 }
-.toolsContainer a.printItem {
+.toolsContainer a.printItem, 
+.toolsContainer a.printPassage {
+	display:block;
 	background-image: url(../../Images/universal/universal_itemsprites.png);
 	background-position: -105px -125px !important;
 	opacity: 1;
@@ -428,10 +427,30 @@ div.toolsContainer a.passageMenu:hover,
 	width: 30px !important;
 	height: 35px !important;
 }
+.passageTools.toolsContainer a.printPassage {
+	float: right;
+    height: 29px !important;
+    margin-left: -10px;
+    width: 35px !important;
+    background-color: #fff;
+    background-position: -105px -128px !important;
+}
+.layout_wai .passageTools.toolsContainer a.printPassage {
+	-moz-box-shadow: inherit;
+   	-webkit-box-shadow: inherit;
+	box-shadow: inherit;
+    margin-left: 0px;
+}
 .toolsContainer a.printItem:hover, 
 .toolsContainer a.printItem:focus
-.toolsContainer a.printItem:active {
+.toolsContainer a.printItem:active
+.toolsContainer a.printPassage:active {
 	background-position: -140px -125px !important;
+}
+.toolsContainer a.printPassage:hover, 
+.toolsContainer a.printPassage:focus
+.toolsContainer a.printPassage:active {
+	background-position: -140px -128px !important;
 }
 .toolsContainer a.contexthelp, 
 .TDS_PS_L1 .toolsContainer a.contexthelp, 
@@ -469,9 +488,43 @@ div.toolsContainer a.passageMenu:hover,
 .TDS_PoD_Item .toolsContainer a.printItem:focus {
 	background-position: -140px -126px !important;
 }
+
+.TDS_PS_L2 .toolsContainer a.printPassage {
+	background-position: -150px -84px !important;
+    height: 34px !important;
+    margin-left: -27px;
+    width: 47px !important;
+}
+.TDS_PS_L2 .toolsContainer a.printPassage:hover, 
+.TDS_PS_L2 .toolsContainer a.printPassage:active, 
+.TDS_PS_L2 .toolsContainer a.printPassage:focus {
+	background-position: -201px -84px !important;
+}
 .TDS_PS_L3.TDS_PoD_Item .toolsContainer a.printItem, 
 .TDS_PS_L4.TDS_PoD_Item .toolsContainer a.printItem {
 	background-position: -150px -75px !important;
+}
+.TDS_PS_L3 .toolsContainer a.printPassage {
+	background-position: -150px -84px !important;
+	height: 34px !important;
+    margin-left: -27px;
+    width: 47px !important;
+}
+.TDS_PS_L4 .toolsContainer a.printPassage {
+    background-position: -148px -78px !important;
+    height: 45px !important;
+    margin-left: -49px;
+    width: 54px !important;
+}
+.TDS_PS_L3 .toolsContainer a.printPassage:hover, 
+.TDS_PS_L3 .toolsContainer a.printPassage:active, 
+.TDS_PS_L3 .toolsContainer a.printPassage:focus {
+	background-position: -201px -84px !important;
+}
+.TDS_PS_L4 .toolsContainer a.printPassage:hover, 
+.TDS_PS_L4 .toolsContainer a.printPassage:active, 
+.TDS_PS_L4 .toolsContainer a.printPassage:focus {
+	background-position: -198px -78px !important;
 }
 .TDS_PS_L3.TDS_PoD_Item .toolsContainer a.printItem:hover, 
 .TDS_PS_L3.TDS_PoD_Item .toolsContainer a.printItem:active, 
@@ -489,10 +542,21 @@ div.toolsContainer a.passageMenu:hover,
 .TDS_PS_L2.TDS_Emboss_Item .toolsContainer .printItem.printSubmitted {
 	background-position: -175px -126px !important;
 }
+.toolsContainer a.printPassage.printSubmitted, 
+.TDS_PS_L1 .toolsContainer a.printPassage.printSubmitted {
+	background-position: -173px -128px !important;
+}
+.TDS_PS_L2 .toolsContainer a.printPassage.printSubmitted, 
+.TDS_PS_L3 .toolsContainer a.printPassage.printSubmitted {
+	background-position: -250px -83px !important;
+}
+.TDS_PS_L4 .toolsContainer a.printPassage.printSubmitted {
+	background-position: -247px -78px !important;
+}
 .TDS_PS_L3.TDS_PoD_Item .toolsContainer a.printItem.printSubmitted, 
 .TDS_PS_L4.TDS_PoD_Item .toolsContainer a.printItem.printSubmitted, 
 .TDS_PS_L3.TDS_Emboss_Item .toolsContainer .printItem.printSubmitted, 
-.TDS_PS_L4.TDS_Emboss_Item .toolsContainer .printItem.printSubmitted {
+.TDS_PS_L4.TDS_Emboss_Item .toolsContainer .printItem.printSubmitted  {
 	background-position: -250px -75px !important;
 }
 .TDS_PoD_Item.TDS_CCYellowB .toolsContainer a.printItem.printSubmitted, 
@@ -503,7 +567,17 @@ div.toolsContainer a.passageMenu:hover,
 .TDS_PS_L4.TDS_PoD_Item.TDS_CCInvert .toolsContainer a.printItem.printSubmitted, 
 .TDS_PoD_Item.TDS_CCWhiteN .toolsContainer a.printItem.printSubmitted, 
 .TDS_PS_L3.TDS_PoD_Item.TDS_CCWhiteN .toolsContainer a.printItem.printSubmitted, 
-.TDS_PS_L4.TDS_PoD_Item.TDS_CCWhiteN .toolsContainer a.printItem.printSubmitted {
+.TDS_PS_L4.TDS_PoD_Item.TDS_CCWhiteN .toolsContainer a.printItem.printSubmitted, 
+
+.TDS_CCYellowB .toolsContainer a.printPassage.printSubmitted, 
+.TDS_PS_L3.TDS_CCYellowB .toolsContainer a.printPassage.printSubmitted, 
+.TDS_PS_L4.TDS_CCYellowB .toolsContainer a.printPassage.printSubmitted, 
+.TDS_CCInvert .toolsContainer a.printPassage.printSubmitted, 
+.TDS_PS_L3.TDS_CCInvert .toolsContainer a.printPassage.printSubmitted, 
+.TDS_PS_L4.TDS_CCInvert .toolsContainer a.printPassage.printSubmitted, 
+.TDS_CCWhiteN .toolsContainer a.printPassage.printSubmitted, 
+.TDS_PS_L3.TDS_CCWhiteN .toolsContainer a.printPassage.printSubmitted, 
+.TDS_PS_L4.TDS_CCWhiteN .toolsContainer a.printPassage.printSubmitted {
 	background-image: url("../../Images/universal/universal_itemsprites_colorchoices.png") !important;
 }
 
@@ -540,6 +614,13 @@ div.toolsContainer a.passageMenu:hover,
 	width: 40px !important;
 	height: 50px !important;
 }
+.TDS_PS_L1 .toolsContainer li a, 
+.TDS_PS_L2 .toolsContainer li a, 
+.TDS_PS_L3 .toolsContainer li a, 
+.TDS_PS_L4 .toolsContainer li a {
+	width: inherit !important;
+	height: inherit !important;
+}
 .TDS_PS_L3 .toolsContainer a.commentItem, 
 .TDS_PS_L4 .toolsContainer a.commentItem {
 	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
@@ -575,26 +656,18 @@ div.toolsContainer a.passageMenu:hover,
 .TDS_PS_L3 .layout_wai .toolsContainer a.markReview:active, 
 .TDS_PS_L4 .layout_wai .toolsContainer a.markReview:hover, 
 .TDS_PS_L4 .layout_wai .toolsContainer a.markReview:focus, 
-.TDS_PS_L4 .layout_wai .toolsContainer a.markReview:active, 
-.TDS_PS_L3 .layout_wai .toolsContainer a.markReviewMarked, 
-.TDS_PS_L4 .layout_wai .toolsContainer a.markReviewMarked, 
-.TDS_PS_L3 .layout_wai .toolsContainer a.markReviewMarked:hover, 
-.TDS_PS_L3 .layout_wai .toolsContainer a.markReviewMarked:focus, 
-.TDS_PS_L3 .layout_wai .toolsContainer a.markReviewMarked:active, 
-.TDS_PS_L4 .layout_wai .toolsContainer a.markReviewMarked:hover, 
-.TDS_PS_L4 .layout_wai .toolsContainer a.markReviewMarked:focus, 
-.TDS_PS_L4 .layout_wai .toolsContainer a.markReviewMarked:active {
+.TDS_PS_L4 .layout_wai .toolsContainer a.markReview:active {
 	width: 40px !important;
 	height: 50px !important;
 }
-.TDS_PS_L3 .toolsContainer a.markReviewMarked, 
-.TDS_PS_L4 .toolsContainer a.markReviewMarked, 
-.TDS_PS_L3 .toolsContainer a.markReviewMarked:hover, 
-.TDS_PS_L3 .toolsContainer a.markReviewMarked:focus, 
-.TDS_PS_L3 .toolsContainer a.markReviewMarked:active, 
-.TDS_PS_L4 .toolsContainer a.markReviewMarked:hover, 
-.TDS_PS_L4 .toolsContainer a.markReviewMarked:focus, 
-.TDS_PS_L4 .toolsContainer a.markReviewMarked:active {
+.TDS_PS_L3 .itemMarked .toolsContainer a.markReview.toolButton, 
+.TDS_PS_L3 .itemMarked .toolsContainer a.markReview.toolButton:active, 
+.TDS_PS_L3 .itemMarked .toolsContainer a.markReview.toolButton:focus, 
+.TDS_PS_L3 .itemMarked .toolsContainer a.markReview.toolButton:hover, 
+.TDS_PS_L4 .itemMarked .toolsContainer a.markReview.toolButton, 
+.TDS_PS_L4 .itemMarked .toolsContainer a.markReview.toolButton:active, 
+.TDS_PS_L4 .itemMarked .toolsContainer a.markReview.toolButton:focus, 
+.TDS_PS_L4 .itemMarked .toolsContainer a.markReview.toolButton:hover {
 	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
 	background-position: -100px -75px !important;
 }
@@ -673,14 +746,69 @@ div.toolsContainer a.passageMenu:hover,
 }
 
 /* @end */
-.TDS_CCWhiteN a.markReviewMarked, .TDS_CCYellowB a.markReviewMarked, .TDS_CCInvert a.markReviewMarked, 
-.TDS_PS_L1.TDS_CCWhiteN a.markReviewMarked, .TDS_PS_L1.TDS_CCYellowB a.markReviewMarked, .TDS_PS_L1.TDS_CCInvert a.markReviewMarked, .TDS_PS_L2.TDS_CCWhiteN a.markReviewMarked, .TDS_PS_L2.TDS_CCYellowB a.markReviewMarked, .TDS_PS_L2.TDS_CCInvert a.markReviewMarked, .TDS_PS_L3.TDS_CCWhiteN a.markReviewMarked, .TDS_PS_L3.TDS_CCYellowB a.markReviewMarked, .TDS_PS_L3.TDS_CCInvert a.markReviewMarked, .TDS_PS_L4.TDS_CCWhiteN a.markReviewMarked, .TDS_PS_L4.TDS_CCYellowB a.markReviewMarked, .TDS_PS_L4.TDS_CCInvert a.markReviewMarked, 
-.TDS_CCWhiteN a.markReviewMarked:focus, .TDS_CCYellowB a.markReviewMarked:focus, .TDS_CCInvert a.markReviewMarked:focus, 
-.TDS_PS_L1.TDS_CCWhiteN a.markReviewMarked:focus, .TDS_PS_L1.TDS_CCYellowB a.markReviewMarked:focus, .TDS_PS_L1.TDS_CCInvert a.markReviewMarked:focus, .TDS_PS_L2.TDS_CCWhiteN a.markReviewMarked:focus, .TDS_PS_L2.TDS_CCYellowB a.markReviewMarked:focus, .TDS_PS_L2.TDS_CCInvert a.markReviewMarked:focus, .TDS_PS_L3.TDS_CCWhiteN a.markReviewMarked:focus, .TDS_PS_L3.TDS_CCYellowB a.markReviewMarked:focus, .TDS_PS_L3.TDS_CCInvert a.markReviewMarked:focus, .TDS_PS_L4.TDS_CCWhiteN a.markReviewMarked:focus, .TDS_PS_L4.TDS_CCYellowB a.markReviewMarked:focus, .TDS_PS_L4.TDS_CCInvert a.markReviewMarked:focus, 
-.TDS_CCWhiteN a.markReviewMarked:active, .TDS_CCYellowB a.markReviewMarked:active, .TDS_CCInvert a.markReviewMarked:active, 
-.TDS_PS_L1.TDS_CCWhiteN a.markReviewMarked:active, .TDS_PS_L1.TDS_CCYellowB a.markReviewMarked:active, .TDS_PS_L1.TDS_CCInvert a.markReviewMarked:active, .TDS_PS_L2.TDS_CCWhiteN a.markReviewMarked:active, .TDS_PS_L2.TDS_CCYellowB a.markReviewMarked:active, .TDS_PS_L2.TDS_CCInvert a.markReviewMarked:active, .TDS_PS_L3.TDS_CCWhiteN a.markReviewMarked:active, .TDS_PS_L3.TDS_CCYellowB a.markReviewMarked:active, .TDS_PS_L3.TDS_CCInvert a.markReviewMarked:active, .TDS_PS_L4.TDS_CCWhiteN a.markReviewMarked:active, .TDS_PS_L4.TDS_CCYellowB a.markReviewMarked:active, .TDS_PS_L4.TDS_CCInvert a.markReviewMarked:active, 
-.TDS_CCWhiteN a.markReviewMarked:hover, .TDS_CCYellowB a.markReviewMarked:hover, .TDS_CCInvert a.markReviewMarked:hover, 
-.TDS_PS_L1.TDS_CCWhiteN a.markReviewMarked:hover, .TDS_PS_L1.TDS_CCYellowB a.markReviewMarked:hover, .TDS_PS_L1.TDS_CCInvert a.markReviewMarked:hover, .TDS_PS_L2.TDS_CCWhiteN a.markReviewMarked:hover, .TDS_PS_L2.TDS_CCYellowB a.markReviewMarked:hover, .TDS_PS_L2.TDS_CCInvert a.markReviewMarked:hover, .TDS_PS_L3.TDS_CCWhiteN a.markReviewMarked:hover, .TDS_PS_L3.TDS_CCYellowB a.markReviewMarked:hover, .TDS_PS_L3.TDS_CCInvert a.markReviewMarked:hover, .TDS_PS_L4.TDS_CCWhiteN a.markReviewMarked:hover, .TDS_PS_L4.TDS_CCYellowB a.markReviewMarked:hover, .TDS_PS_L4.TDS_CCInvert a.markReviewMarked:hover {
+.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton, 
+.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton, 
+.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton,
+.TDS_PS_L0.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton, 
+.TDS_PS_L0.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton, 
+.TDS_PS_L0.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton,
+.TDS_PS_L1.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton, 
+.TDS_PS_L1.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton, 
+.TDS_PS_L1.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton, 
+.TDS_PS_L2.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton, 
+.TDS_PS_L2.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton, 
+.TDS_PS_L2.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton, 
+.TDS_PS_L3.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton, 
+.TDS_PS_L3.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton, 
+.TDS_PS_L3.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton, 
+.TDS_PS_L4.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton, 
+.TDS_PS_L4.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton, 
+.TDS_PS_L4.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton, 
+.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton:focus, 
+.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton:focus, 
+.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton:focus, 
+.TDS_PS_L1.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton:focus, 
+.TDS_PS_L1.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton:focus, 
+.TDS_PS_L1.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton:focus, 
+.TDS_PS_L2.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton:focus, 
+.TDS_PS_L2.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton:focus, 
+.TDS_PS_L2.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton:focus, 
+.TDS_PS_L3.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton:focus, 
+.TDS_PS_L3.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton:focus, 
+.TDS_PS_L3.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton:focus, 
+.TDS_PS_L4.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton:focus, 
+.TDS_PS_L4.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton:focus, 
+.TDS_PS_L4.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton:focus, 
+.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton:active, 
+.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton:active, 
+.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton:active, 
+.TDS_PS_L1.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton:active, 
+.TDS_PS_L1.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton:active, 
+.TDS_PS_L1.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton:active, 
+.TDS_PS_L2.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton:active, 
+.TDS_PS_L2.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton:active, 
+.TDS_PS_L2.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton:active, 
+.TDS_PS_L3.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton:active, 
+.TDS_PS_L3.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton:active, 
+.TDS_PS_L3.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton:active, 
+.TDS_PS_L4.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton:active, 
+.TDS_PS_L4.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton:active, 
+.TDS_PS_L4.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton:active, 
+.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton:hover, 
+.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton:hover, 
+.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton:hover, 
+.TDS_PS_L1.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton:hover, 
+.TDS_PS_L1.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton:hover, 
+.TDS_PS_L1.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton:hover, 
+.TDS_PS_L2.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton:hover, 
+.TDS_PS_L2.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton:hover, 
+.TDS_PS_L2.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton:hover, 
+.TDS_PS_L3.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton:hover, 
+.TDS_PS_L3.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton:hover, 
+.TDS_PS_L3.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton:hover, 
+.TDS_PS_L4.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton:hover, 
+.TDS_PS_L4.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton:hover, 
+.TDS_PS_L4.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton:hover {
 	background-image: url(../../Images/universal/universal_itemsprites_colorchoices.png) !important;
 }
 
@@ -704,6 +832,31 @@ div.toolsContainer a.passageMenu:hover,
 }
 /* @end */
 
+.tdsIdentifier {
+	border-top: solid 1px #dbdbdb;
+	font-size: 10px;
+	padding: 0 2px;
+	line-height: 14px;
+	color: #999;
+}
+.activeItem .tdsIdentifier {
+	border-top-color: #6cb9d6;
+}
+.tdsIdentifier span {
+	display: block;
+	float: left;
+	margin-right: 5px;
+	margin-top: -7px;
+}
+.tdsIdentifier:after, 
+.tdsIdentifier:before  {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+}
 .keyboard a {
     background-image: url(../../Images/modern/keys.png) !important;
     font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
@@ -1420,11 +1573,20 @@ a.ASL:hover {
 .touch .pageWrapper.showing {
     width: 101%;
 }
+/* Bug #170183 this was causing issues with iOS and SIM items when in Streamlined mode
 .touch .pageWrapper .layout_wai {
     position: absolute;
     top: 0px;
-    padding-bottom: 20px;
+}*/
+.touch.TDS_SLM1 .pageWrapper.showing .layout_wai {
+	position: static;
+	padding-bottom: 20px;
 }
+.touch.TDS_SLM1 .pageWrapper.hiding {
+	overflow: hidden;
+}
+/* End Bug #170183*/
+
 /* some items weren't scrolling, switching to static positioning resolved that, but was interfering with fixed header for iOS, so only applying for android 
 .touch.platform_android .pageWrapper.showing .noColumns .theQuestions {
 	position: static;
@@ -2322,7 +2484,9 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 
 
 /* @end */
-
+.TDS_CC0 #contents .passageTools .passageMenu {
+	background-color: #fff;
+}
 .TDS_CCYellow #contents .passageTools a {
 	background-color: #ffffce;
 }
@@ -2433,6 +2597,14 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 }
 
 /* @group Streamlined Rendering */
+.startContent {
+	opacity: 0;
+	height: 1px;
+	width: 1px;
+	position: absolute;
+	left: -9999px;
+	overflow: hidden;
+}
 
 .layout_wai {
 	position: fixed;
@@ -2467,7 +2639,6 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 .layout_wai .optionContent {
 	margin-bottom: 1.5em;
 }
-
 .layout_wai .thePassage, 
 .layout_wai .theQuestions {
 	padding: 30px;
@@ -2529,7 +2700,7 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 /* @end */
 
 .layout_wai .activeItem h3 {
-    background-color: #6cb9d6;
+    background-color: #477a8c;
     color: #fff;
 }
 .layout_wai .itemContainer.itemMarked h3 {
@@ -2595,6 +2766,28 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 .layout_wai .plaintext textarea {
 	width:100%;
 	font-size: 1em;
+}
+
+/* passage tools */
+.layout_wai .passageTools.toolsContainer {
+	position: static;
+}
+.layout_wai .passageTools.toolsContainer .passageMenu {
+	-moz-box-shadow: inherit;
+   	-webkit-box-shadow:inherit;
+	box-shadow: inherit;
+	width: 30px;
+}
+.TDS_PS_L2 .layout_wai .passageTools.toolsContainer .passageMenu, 
+.TDS_PS_L3 .layout_wai .passageTools.toolsContainer .passageMenu {
+	width: 45px !important;
+}
+.TDS_PS_L4 .layout_wai .passageTools.toolsContainer .passageMenu {
+	width: 60px !important;
+}
+/* passage does not expand or collapse in streamlined mode */
+.layout_wai .passageTools.toolsContainer .expand-collapse-passage {
+	display: none !important; 
 }
 
 /* @end */
@@ -2678,31 +2871,40 @@ math .symbol_9633 {
 
 /*box for safari 7 - will need to add for secure browser in iOS, iOS 6 does not need these styles*/
 .browser_safari.browserVer_7.platform_osx math .symbol_9633, 
-.browser_safari.browserVer_7.platform_ios math .symbol_9633 {
+.browser_safari.browserVer_8.platform_osx math .symbol_9633, 
+.browser_safari.browserVer_7.platform_ios math .symbol_9633, 
+.browser_safari.browserVer_8.platform_ios math .symbol_9633 {
 	font-size: 30px;
 	letter-spacing: 5px;
 	background-position: center 1px;
 }
 .TDS_PS_L1 .browser_safari.browserVer_7.platform_osx math .symbol_9633, 
-.TDS_PS_L1 .browser_safari.browserVer_7.platform_ios math .symbol_9633 {
+.TDS_PS_L1 .browser_safari.browserVer_8.platform_osx math .symbol_9633, 
+.TDS_PS_L1 .browser_safari.browserVer_7.platform_ios math .symbol_9633, 
+.TDS_PS_L1 .browser_safari.browserVer_8.platform_ios math .symbol_9633 {
 	font-size: 42px;
 	letter-spacing: 5px;
 	background-position: center 1px;
 }
 .TDS_PS_L2 .browser_safari.browserVer_7.platform_osx math .symbol_9633, 
-.TDS_PS_L2 .browser_safari.browserVer_7.platform_ios math .symbol_9633 {
+.TDS_PS_L2 .browser_safari.browserVer_8.platform_osx math .symbol_9633, 
+.TDS_PS_L2 .browser_safari.browserVer_7.platform_ios math .symbol_9633, 
+.TDS_PS_L2 .browser_safari.browserVer_8.platform_ios math .symbol_9633 {
 	font-size: 54px;
 	letter-spacing: 2px;
 	background-position: center 1px;
 }
 .TDS_PS_L3 .browser_safari.browserVer_7.platform_osx  math .symbol_9633, 
-.TDS_PS_L3 .browser_safari.browserVer_7.platform_ios  math .symbol_9633 {
+.TDS_PS_L3 .browser_safari.browserVer_8.platform_osx  math .symbol_9633, 
+.TDS_PS_L3 .browser_safari.browserVer_7.platform_ios  math .symbol_9633, 
+.TDS_PS_L3 .browser_safari.browserVer_8.platform_ios  math .symbol_9633 {
 	font-size: 68px;
 	letter-spacing: 0px;
 	background-position: center 0px;
 }
 .TDS_PS_L4 .browser_safari.browserVer_7.platform_osx math .symbol_9633, 
-.TDS_PS_L4 .browser_safari.browserVer_7.platform_ios math .symbol_9633 {
+.TDS_PS_L4 .browser_safari.browserVer_7.platform_ios math .symbol_9633, 
+.TDS_PS_L4 .browser_safari.browserVer_8.platform_ios math .symbol_9633 {
 	font-size: 88px;
 	letter-spacing: 0px;
 	background-position: center 0px;
@@ -2780,59 +2982,84 @@ math .symbol_8736 {
 }
 /*angle for safari*/
 .browser_safari.browserVer_7.platform_osx math .symbol_8736, 
-.TDS_FT_Verdana .browser_safari.browserVer_7.platform_osx math .symbol_8736 {
+.TDS_FT_Verdana .browser_safari.browserVer_7.platform_osx math .symbol_8736, 
+.browser_safari.browserVer_8.platform_osx math .symbol_8736, 
+.TDS_FT_Verdana .browser_safari.browserVer_8.platform_osx math .symbol_8736 {
 	font-size: 38px;
 	letter-spacing: 0px !important;
 }
 .TDS_PS_L1 .browser_safari.browserVer_7.platform_osx math .symbol_8736, 
-.TDS_FT_Verdana.TDS_PS_L1 .browser_safari.browserVer_7.platform_osx math .symbol_8736 {
+.TDS_FT_Verdana.TDS_PS_L1 .browser_safari.browserVer_7.platform_osx math .symbol_8736, 
+.TDS_PS_L1 .browser_safari.browserVer_8.platform_osx math .symbol_8736, 
+.TDS_FT_Verdana.TDS_PS_L1 .browser_safari.browserVer_8.platform_osx math .symbol_8736 {
 	font-size: 45px;
 }
 .TDS_PS_L2 .browser_safari.browserVer_7.platform_osx math .symbol_8736, 
-.TDS_FT_Verdana.TDS_PS_L2 .browser_safari.browserVer_7 math .symbol_8736 {
+.TDS_FT_Verdana.TDS_PS_L2 .browser_safari.browserVer_7 math .symbol_8736, 
+.TDS_PS_L2 .browser_safari.browserVer_8.platform_osx math .symbol_8736, 
+.TDS_FT_Verdana.TDS_PS_L2 .browser_safari.browserVer_8 math .symbol_8736 {
 	font-size: 52px;
 }
 .TDS_PS_L3 .browser_safari.browserVer_7.platform_osx math .symbol_8736, 
-.TDS_FT_Verdana.TDS_PS_L3 .browser_safari.browserVer_7 math .symbol_8736 {
+.TDS_FT_Verdana.TDS_PS_L3 .browser_safari.browserVer_7 math .symbol_8736, 
+.TDS_PS_L3 .browser_safari.browserVer_8.platform_osx math .symbol_8736, 
+.TDS_FT_Verdana.TDS_PS_L3 .browser_safari.browserVer_8 math .symbol_8736 {
 	font-size: 68px;
 }
 .TDS_PS_L4 .browser_safari.browserVer_7.platform_osx math .symbol_8736, 
-.TDS_FT_Verdana.TDS_PS_L4 .browser_safari.browserVer_7.platform_osx math .symbol_8736 {
+.TDS_FT_Verdana.TDS_PS_L4 .browser_safari.browserVer_7.platform_osx math .symbol_8736, 
+.TDS_PS_L4 .browser_safari.browserVer_8.platform_osx math .symbol_8736, 
+.TDS_FT_Verdana.TDS_PS_L4 .browser_safari.browserVer_8.platform_osx math .symbol_8736 {
 	font-size: 85px;
 }
 .TDS_FT_Verdana .browser_safari.browserVer_7.platform_osx math .symbol_8736,
-.TDS_FT_Verdana.TDS_PS_L1 .browser_safari.browserVer_7.platform_osx math .symbol_8736 {
+.TDS_FT_Verdana.TDS_PS_L1 .browser_safari.browserVer_7.platform_osx math .symbol_8736, 
+.TDS_FT_Verdana .browser_safari.browserVer_8.platform_osx math .symbol_8736,
+.TDS_FT_Verdana.TDS_PS_L1 .browser_safari.browserVer_8.platform_osx math .symbol_8736 {
 	background-position: center 1px;
 }
 .TDS_FT_Verdana.TDS_PS_L2 .browser_safari.browserVer_7.platform_osx math .symbol_8736, 
 .TDS_FT_Verdana.TDS_PS_L3 .browser_safari.browserVer_7.platform_osx math .symbol_8736,
-.TDS_FT_Verdana.TDS_PS_L4 .browser_safari.browserVer_7.platform_osx math .symbol_8736 {
+.TDS_FT_Verdana.TDS_PS_L4 .browser_safari.browserVer_7.platform_osx math .symbol_8736, 
+.TDS_FT_Verdana.TDS_PS_L2 .browser_safari.browserVer_8.platform_osx math .symbol_8736, 
+.TDS_FT_Verdana.TDS_PS_L3 .browser_safari.browserVer_8.platform_osx math .symbol_8736,
+.TDS_FT_Verdana.TDS_PS_L4 .browser_safari.browserVer_8.platform_osx math .symbol_8736 {
 	background-position: center 2px;
 }
 /*angle for mobile safari*/
 .browser_safari.browserVer_7.platform_ios math .symbol_8736, 
-.TDS_FT_Verdana .browser_safari.browserVer_7.platform_ios math .symbol_8736 {
+.TDS_FT_Verdana .browser_safari.browserVer_7.platform_ios math .symbol_8736, 
+.browser_safari.browserVer_8.platform_ios math .symbol_8736, 
+.TDS_FT_Verdana .browser_safari.browserVer_8.platform_ios math .symbol_8736 {
 	font-size: 22px;
 	background-position: center -6px;
 	letter-spacing: 0px !important;
 }
 .TDS_PS_L1 .browser_safari.browserVer_7.platform_ios math .symbol_8736, 
-.TDS_FT_Verdana.TDS_PS_L1 .browser_safari.browserVer_7.platform_ios math .symbol_8736 {
+.TDS_FT_Verdana.TDS_PS_L1 .browser_safari.browserVer_7.platform_ios math .symbol_8736, 
+.TDS_PS_L1 .browser_safari.browserVer_8.platform_ios math .symbol_8736, 
+.TDS_FT_Verdana.TDS_PS_L1 .browser_safari.browserVer_8.platform_ios math .symbol_8736 {
 	font-size: 24px;
 	background-position: center 1px;
 }
 .TDS_PS_L2 .browser_safari.browserVer_7.platform_ios math .symbol_8736, 
-.TDS_FT_Verdana.TDS_PS_L2 .browser_safari.browserVer_7.platform_ios math .symbol_8736 {
+.TDS_FT_Verdana.TDS_PS_L2 .browser_safari.browserVer_7.platform_ios math .symbol_8736, 
+.TDS_PS_L2 .browser_safari.browserVer_8.platform_ios math .symbol_8736, 
+.TDS_FT_Verdana.TDS_PS_L2 .browser_safari.browserVer_8.platform_ios math .symbol_8736 {
 	font-size: 28px;
 	background-position: center 1px;
 }
 .TDS_PS_L3 .browser_safari.browserVer_7.platform_ios math .symbol_8736, 
-.TDS_FT_Verdana.TDS_PS_L3 .browser_safari.browserVer_7.platform_ios math .symbol_8736 {
+.TDS_FT_Verdana.TDS_PS_L3 .browser_safari.browserVer_7.platform_ios math .symbol_8736, 
+.TDS_PS_L3 .browser_safari.browserVer_8.platform_ios math .symbol_8736, 
+.TDS_FT_Verdana.TDS_PS_L3 .browser_safari.browserVer_8.platform_ios math .symbol_8736 {
 	font-size: 36px;
 	background-position: center 0px;
 }
 .TDS_PS_L4 .browser_safari.browserVer_7.platform_ios math .symbol_8736, 
-.TDS_FT_Verdana.TDS_PS_L4 .browser_safari.browserVer_7.platform_ios math .symbol_8736 {
+.TDS_FT_Verdana.TDS_PS_L4 .browser_safari.browserVer_7.platform_ios math .symbol_8736, 
+.TDS_PS_L4 .browser_safari.browserVer_8.platform_ios math .symbol_8736, 
+.TDS_FT_Verdana.TDS_PS_L4 .browser_safari.browserVer_8.platform_ios math .symbol_8736 {
 	font-size: 45px;
 	background-position: center 0px;
 }
@@ -2922,7 +3149,11 @@ math .symbol_8901 {
 .browser_safari.browserVer_7 math .symbol_8226, 
 .browser_safari.browserVer_7 math .symbol_8901, 
 .TDS_FT_Verdana .browser_safari.browserVer_7.platform_ios math .symbol_8226, 
-.TDS_FT_Verdana .browser_safari.browserVer_7.platform_ios math .symbol_8901 {
+.TDS_FT_Verdana .browser_safari.browserVer_7.platform_ios math .symbol_8901, 
+.browser_safari.browserVer_8 math .symbol_8226, 
+.browser_safari.browserVer_8 math .symbol_8901, 
+.TDS_FT_Verdana .browser_safari.browserVer_8.platform_ios math .symbol_8226, 
+.TDS_FT_Verdana .browser_safari.browserVer_8.platform_ios math .symbol_8901 {
 	background-position: center 0px;
 	font-size: 1.5em;
 	letter-spacing: 5px;
@@ -2930,13 +3161,21 @@ math .symbol_8901 {
 .TDS_PS_L1 .browser_safari.browserVer_7 math .symbol_8226,  
 .TDS_PS_L1 .browser_safari.browserVer_7 math .symbol_8901, 
 .TDS_FT_Verdana.TDS_PS_L1 .browser_safari.browserVer_7 math .symbol_8226,  
-.TDS_FT_Verdana.TDS_PS_L1 .browser_safari.browserVer_7 math .symbol_8901 {
+.TDS_FT_Verdana.TDS_PS_L1 .browser_safari.browserVer_7 math .symbol_8901, 
+.TDS_PS_L1 .browser_safari.browserVer_8 math .symbol_8226,  
+.TDS_PS_L1 .browser_safari.browserVer_8 math .symbol_8901, 
+.TDS_FT_Verdana.TDS_PS_L1 .browser_safari.browserVer_8 math .symbol_8226,  
+.TDS_FT_Verdana.TDS_PS_L1 .browser_safari.browserVer_8 math .symbol_8901 {
 	background-position: center 0px;
 }
 .TDS_PS_L2 .browser_safari.browserVer_7 math .symbol_8226,  
 .TDS_PS_L2 .browser_safari.browserVer_7 math .symbol_8901, 
 .TDS_FT_Verdana.TDS_PS_L2 .browser_safari.browserVer_7 math .symbol_8226,  
-.TDS_FT_Verdana.TDS_PS_L2 .browser_safari.browserVer_7 math .symbol_8901 {
+.TDS_FT_Verdana.TDS_PS_L2 .browser_safari.browserVer_7 math .symbol_8901, 
+.TDS_PS_L2 .browser_safari.browserVer_8 math .symbol_8226,  
+.TDS_PS_L2 .browser_safari.browserVer_8 math .symbol_8901, 
+.TDS_FT_Verdana.TDS_PS_L2 .browser_safari.browserVer_8 math .symbol_8226,  
+.TDS_FT_Verdana.TDS_PS_L2 .browser_safari.browserVer_8 math .symbol_8901 {
 	background-position: center 0px;
 	font-size: 1.6em;
 	letter-spacing: 5px;
@@ -2944,7 +3183,11 @@ math .symbol_8901 {
 .TDS_PS_L3 .browser_safari.browserVer_7 math .symbol_8226,  
 .TDS_PS_L3 .browser_safari.browserVer_7 math .symbol_8901, 
 .TDS_FT_Verdana.TDS_PS_L3 .browser_safari.browserVer_7 math .symbol_8226,  
-.TDS_FT_Verdana.TDS_PS_L3 .browser_safari.browserVer_7 math .symbol_8901 {
+.TDS_FT_Verdana.TDS_PS_L3 .browser_safari.browserVer_7 math .symbol_8901, 
+.TDS_PS_L3 .browser_safari.browserVer_8 math .symbol_8226,  
+.TDS_PS_L3 .browser_safari.browserVer_8 math .symbol_8901, 
+.TDS_FT_Verdana.TDS_PS_L3 .browser_safari.browserVer_8 math .symbol_8226,  
+.TDS_FT_Verdana.TDS_PS_L3 .browser_safari.browserVer_8 math .symbol_8901 {
 	background-position: center 0px;
 	font-size: 1.6em;
 	letter-spacing: 5px;
@@ -2952,7 +3195,11 @@ math .symbol_8901 {
 .TDS_PS_L4 .browser_safari.browserVer_7 math .symbol_8226,  
 .TDS_PS_L4 .browser_safari.browserVer_7 math .symbol_8901, 
 .TDS_FT_Verdana.TDS_PS_L4 .browser_safari.browserVer_7 math .symbol_8226,  
-.TDS_FT_Verdana.TDS_PS_L4 .browser_safari.browserVer_7 math .symbol_8901 {
+.TDS_FT_Verdana.TDS_PS_L4 .browser_safari.browserVer_7 math .symbol_8901, 
+.TDS_PS_L4 .browser_safari.browserVer_8 math .symbol_8226,  
+.TDS_PS_L4 .browser_safari.browserVer_8 math .symbol_8901, 
+.TDS_FT_Verdana.TDS_PS_L4 .browser_safari.browserVer_8 math .symbol_8226,  
+.TDS_FT_Verdana.TDS_PS_L4 .browser_safari.browserVer_8 math .symbol_8901 {
 	background-position: center 0px;
 	font-size: 1.6em;
 	letter-spacing: 5px;
@@ -3004,6 +3251,10 @@ math .symbol .highlight {
 /* Pi symbol doesn't render well when sans-serifed */
 .symbol_960 {
 	font-family: "Times New Roman", Times, serif !important;
+}
+/* Theta symbol should always be italic */
+.symbol_952 {
+	font-style: italic;
 }
 
 /* @end */
@@ -3353,8 +3604,7 @@ math .symbol .highlight {
 	left: 70%;
 }
 .platform_ios .layout11 .passageTools.toolsContainer, 
-.platform_ios .layout17 .passageTools.toolsContainer, 
-.platform_ios .layout26 .passageTools.toolsContainer {
+.platform_ios .layout17 .passageTools.toolsContainer {
 	left: 80%;
 }
 .platform_ios .layout23 .passageTools.toolsContainer,  

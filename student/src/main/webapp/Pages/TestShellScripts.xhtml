@@ -6,7 +6,7 @@
 
 	<c:if test="#{debugSettings.includeUnitTests()}">
 		<!-- This is only included on debug builds for testing purposes -->
-		<tds:ScriptLink source="~/Scripts/Libraries/YUI/event-simulate/event-simulate.js" type="text/javascript"></tds:ScriptLink>
+		<tds:ScriptLink source="~/Scripts/Libraries/yahoo/yui2/build/event-simulate/event-simulate.js" type="text/javascript"></tds:ScriptLink>
 		<tds:ScriptLink source="~/Scripts/TestShell/testshell_UnitTests.js" type="text/javascript"></tds:ScriptLink>
 	</c:if>
 
@@ -72,6 +72,8 @@
                 <h2 i18n-content="TestShellScripts.Label.Review">Review:</h2>
                 <p i18n-content="TestShellScripts.Label.ReviewInstructions">Please take the time to review your answers before continuing your test.</p>
             </div>
+			<div id="markedWarning" style="" i18n-content="QuestionsAreMarkedForReview">This symbol indicates items that you have marked for review.</div>
+            <div id="unansweredWarning" style="" i18n-content="QuestionsAreUnanswered">This symbol indicates unanswered items.</div>            
             <div class="pages">
                 <h3 i18n-content="TestShellScripts.Label.Questions">Questions:</h3>
                 <ul></ul>

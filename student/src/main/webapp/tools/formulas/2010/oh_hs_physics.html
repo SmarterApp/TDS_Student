@@ -3,6 +3,21 @@
 <head>
 <title>Ohio High School Physical Science Reference Sheet</title>
 <style>
+	@font-face{
+		font-family: 'LinuxLib';
+		src: url(LinLibertine_R.ttf);
+		font-style: normal;
+	}
+	@font-face{
+		font-family: 'LinuxLib';
+		src: url(LinLibertine_RI.ttf);
+		font-style: italic;
+	}
+	@font-face{
+		font-family: 'LinuxLib';
+		src: url(LinLibertine_RZI.ttf);
+		font-style: bold italic;
+	}
 	html, h1, h2, p, ul, li{
 		margin: 0;
 		padding: 0;
@@ -39,7 +54,7 @@
 		margin-bottom: 0.5em;
 	}
 	ul.formulaList li{
-		margin-left: 1.5em;
+		/*margin-left: 1.5em;*/
 		font-family: "Times New Roman", Times, serif;
 		line-height: 2em;
 		font-size: 1.1em;
@@ -76,6 +91,50 @@
 		width: 0;
 		height: 0;
 	}
+	.platform_linux svg text{
+		font-family: 'LinuxLib';
+	}
+	/*font-size styles*/
+	body, body.TDS_PS_L0{
+		font-size: 1em;
+	}
+	body.TDS_PS_L1{
+		font-size: 1.6em;
+	}
+	body.TDS_PS_L2{
+		font-size: 2.1em;
+	}
+	body.TDS_PS_L3{
+		font-size: 2.6em;
+	}
+	body.TDS_PS_L4{
+		font-size: 3.5em;
+	}
+	.TDS_PS_L1 svg,
+	.TDS_PS_L2 svg,
+	.TDS_PS_L3 svg,
+	.TDS_PS_L4 svg{
+		width: 60%;
+		height: 60%;
+	}
+	.TDS_PS_L1 svg.noZoom,
+	.TDS_PS_L2 svg.noZoom,
+	.TDS_PS_L3 svg.noZoom,
+	.TDS_PS_L4 svg.noZoom{
+		width: 100%;
+	}
+	.TDS_PS_L1 .leftColumn, .TDS_PS_L1 .rightColumn{
+		width: 41%;
+	}
+	.TDS_PS_L2 .leftColumn, .TDS_PS_L2 .rightColumn{
+		width: 40%;
+	}
+	.TDS_PS_L3 .leftColumn, .TDS_PS_L3 .rightColumn{
+		width: 38%;
+	}
+	.TDS_PS_L4 .leftColumn, .TDS_PS_L4 .rightColumn{
+		width: 90%;
+	}
 </style>
 </head>
 
@@ -87,7 +146,7 @@
     <ul class="formulaList">
     	<li>
         <span class="hiddenDescription">Change of x equals x final minus x initial</span>
-		<svg height="32px" width="100px" y="0px" x="0px" id="Layer_1" class="formula" aria-hidden="true">
+		<svg height="32px" width="100px" y="0px" x="0px" id="Layer_1" class="formula" aria-hidden="true" viewBox="0 0 100 32">
 	 	<title id="title">Change of X</title>
 		<desc is="desc">Change of x equals x final minus x initial</desc>
 <text style="font-weight:bold;" font-size="12" font-style="italic" font-family="'Times New Roman,Times,serif'" transform="matrix(1 0 0 1 55 24)">f</text>
@@ -196,8 +255,8 @@
     <ul class="formulaList">
     	<li>
         	<span class="hiddenDescription">Gravitational field strength equals ten meters per second squared equals ten newtons per kilograms</span>
-            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-	 width="180" height="47.875px" viewBox="0 0 180 47.875" enable-background="new 0 0 109.375 47.875" class="formula" aria-hidden="true">
+            <svg height="47.875px" width="189" viewBox="0 0 189.625 47.875" enable-background="new 0 0 189.625 47.875"
+	 xml:space="preserve" class="formula noZoom" aria-hidden="true">
      		<text transform="matrix(1 0 0 1 25 27.5)" font-family="'Times New Roman,Times,serif'"  font-size="20">=</text>
 <text transform="matrix(1 0 0 1 11.875 27.5)" font-style="italic" font-family="'Times New Roman,Times,serif'"  font-size="20">g</text>
 <text transform="matrix(1 0 0 1 39.875 27.5)" font-family="'Times New Roman,Times,serif'"  font-size="20">10 m/s</text>

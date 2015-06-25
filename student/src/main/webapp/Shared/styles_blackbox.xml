@@ -9,11 +9,11 @@
     <fileSet name="base">
 
         <!-- YUI styles -->
-        <input>../Scripts/Libraries/YUI/menu/assets/skins/sam/menu.css</input>
-        <input>../Scripts/Libraries/YUI/button/assets/skins/sam/button.css</input>
-        <input>../Scripts/Libraries/YUI/container/assets/skins/sam/container.css</input>
-        <input>../Scripts/Libraries/YUI/editor/assets/skins/sam/editor.css</input>
-        <input>../Scripts/Simulator2/Renderer/CSS/simulator.css</input>
+        <input>../Scripts/Libraries/yahoo/yui2/build/menu/assets/skins/sam/menu.css</input>
+        <input>../Scripts/Libraries/yahoo/yui2/build/button/assets/skins/sam/button.css</input>
+        <input>../Scripts/Libraries/yahoo/yui2/build/container/assets/skins/sam/container.css</input>
+         
+	<input>../Scripts/Simulator2/Renderer/CSS/simulator.css</input>
         <input>../Scripts/Simulator2/Renderer/CSS/slider.css</input>
 
         <!-- General -->
@@ -59,11 +59,10 @@
     <fileSet name="universal">
 
         <!-- YUI -->
-        <input>../Scripts/Libraries/YUI/menu/assets/skins/sam/menu.css</input>
-        <input>../Scripts/Libraries/YUI/button/assets/skins/sam/button.css</input>
-        <input>../Scripts/Libraries/YUI/container/assets/skins/sam/container.css</input>
-        <input>../Scripts/Libraries/YUI/editor/assets/skins/sam/editor.css</input>
-
+        <input>../Scripts/Libraries/yahoo/yui2/build/menu/assets/skins/sam/menu.css</input>
+        <input>../Scripts/Libraries/yahoo/yui2/build/button/assets/skins/sam/button.css</input>
+        <input>../Scripts/Libraries/yahoo/yui2/build/container/assets/skins/sam/container.css</input>
+        
         <!-- Shell -->
         <input>CSS/modernFrame.css</input>
         <input>CSS/normalize.css</input>
@@ -96,11 +95,10 @@
 
     <fileSet name="navigator">
         <!-- YUI -->
-        <input>../Scripts/Libraries/YUI/menu/assets/skins/sam/menu.css</input>
-        <input>../Scripts/Libraries/YUI/button/assets/skins/sam/button.css</input>
-        <input>../Scripts/Libraries/YUI/container/assets/skins/sam/container.css</input>
-        <input>../Scripts/Libraries/YUI/editor/assets/skins/sam/editor.css</input>
-
+        <input>../Scripts/Libraries/yahoo/yui2/build/menu/assets/skins/sam/menu.css</input>
+        <input>../Scripts/Libraries/yahoo/yui2/build/button/assets/skins/sam/button.css</input>
+        <input>../Scripts/Libraries/yahoo/yui2/build/container/assets/skins/sam/container.css</input>
+        
         <!-- Shell -->
         <input>CSS/Modern/frame.css</input>
         <input>CSS/normalize.css</input>

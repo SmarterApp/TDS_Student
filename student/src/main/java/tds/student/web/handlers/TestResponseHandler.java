@@ -42,6 +42,7 @@ import AIR.Common.Helpers.StopWatch;
 import AIR.Common.TDSLogger.ITDSLogger;
 import AIR.Common.Web.WebHelper;
 import AIR.Common.Web.Session.HttpContext;
+import TDS.Shared.Exceptions.ReturnStatusException;
 import TDS.Shared.Exceptions.TDSSecurityException;
 
 @Controller
@@ -100,6 +101,7 @@ public class TestResponseHandler extends TDSHandler
   @ResponseBody
   private void updateResponses (HttpServletRequest request, HttpServletResponse response) throws Exception {
     try {
+      long startTime = System.currentTimeMillis ();
       if (request.getContentLength () == 0)
         return;
       long timeServerReceived = System.currentTimeMillis ();
@@ -141,7 +143,6 @@ public class TestResponseHandler extends TDSHandler
       // If scoring is done asynchronously, then updateDB (with score -1 and
       // status WaitingForMachineScore) and then score
       List<ItemResponseUpdateStatus> responseResults = null;
-      try {
         responseResults = _itemScoringService.updateResponses (testOpp.getOppInstance (), responseReader.getResponses ());
         /*
          * } catch (ReturnStatusException rse) {
@@ -153,10 +154,6 @@ public class TestResponseHandler extends TDSHandler
          * rse.getReturnStatus().getReason(), null);
          * mapper.writeValue(response.getOutputStream(), out); return;
          */
-      } catch (Exception e) {
-        _logger.error ("Error in updateResponses : _itemScoringService.updateResponses ::: "+e);
-        throw e;
-      }
 
       // save updating responses latency
       for (ItemResponseUpdateStatus responseResult : responseResults) {
@@ -272,12 +269,15 @@ public class TestResponseHandler extends TDSHandler
 
       // generate the HTML for each group and write it out
       // xmlResponse.WriteContents(testOpp, itemResponseGroups);
-
+      _logger.info ("<<<updateResponse Total ...  Time: "+(System.currentTimeMillis ()-startTime)+" ms ThreadId: "+Thread.currentThread ().getId ());
       // close writing
       responseWriter.writeEnd ();
+    }  catch (ReturnStatusException e) {
+        _logger.error ("Error in updateResponses : ",e);
+        response.sendError(HttpServletResponse.SC_FORBIDDEN, e.getReturnStatus().getReason());
     } catch (Exception e) {
-      _logger.error ("Error in updateResponses : "+e);
-      throw e;
+	   _logger.error ("Error in updateResponses : ",e);
+       response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "A problem was encountered while processing the request. You will be logged out.");
     }
   }
 

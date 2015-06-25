@@ -13,9 +13,12 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jetty.http.HttpStatus;
 import org.slf4j.Logger;
@@ -26,6 +29,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import AIR.Common.Web.TDSReplyCode;
 import AIR.Common.data.ResponseData;
 import tds.iris.abstractions.repository.ContentException;
@@ -54,7 +58,7 @@ public class IrisWebHandler extends BaseContentRendererController
   // Controller starts here
   @RequestMapping (value = "content/load", produces = "application/xml")
   @ResponseBody
-  public void loadContentRequest (HttpServletRequest request, HttpServletResponse response) throws ContentRequestException, IOException {
+  public void loadContentRequest (HttpServletRequest request, HttpServletResponse response) throws Exception {
 
     ContentRequest contentRequest = ContentRequest.getContentRequest (modifyPostData (request));
     ItemRenderGroup itemRenderGroup = _contentHelper.loadRenderGroup (contentRequest);
@@ -87,14 +91,14 @@ public class IrisWebHandler extends BaseContentRendererController
     return new ResponseData<String> (TDSReplyCode.Error.getCode (), excp.getMessage (), "");
   }
 
-  InputStream modifyPostData (HttpServletRequest request)
+  InputStream modifyPostData (HttpServletRequest request) throws IOException, Exception
   {
     BufferedReader bufferedReader = null;
     try {
       bufferedReader = new BufferedReader (new InputStreamReader (request.getInputStream ()));
     } catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace ();
+      _logger.error (e.getMessage (), e);
+      throw new IOException ("Error while reading request.", e);
     }
     String line = null;
     StringBuilder builder = new StringBuilder ();
@@ -103,12 +107,52 @@ public class IrisWebHandler extends BaseContentRendererController
         builder.append (line);
       }
     } catch (IOException e1) {
-      // TODO Auto-generated catch block
-      e1.printStackTrace ();
+      _logger.error (e1.getMessage (), e1);
+      throw new IOException ("Error while reading request buffer.", e1);
+    }
+    String postData = builder.toString ();
+
+    // if student input '&' comes up as &amp;amp;
+    postData = postData.replace ("&amp;", "&");
+
+    // escaping double quote if it comes encoded
+    int index = -1;
+    while ((index = postData.indexOf ("&quot;")) != -1 && ((index - 1 >= 0 && postData.charAt (index - 1) != '\\') || index == 0))
+    {
+      postData = postData.substring (0, index) + "\\" + postData.substring (index);
     }
 
-    String response = builder.toString ();
-    response = response.replace ("\\|", "\\\\|");
-    return new ByteArrayInputStream (response.getBytes ());
+    // Begin: Decoding html entities and handling '<p></p>' in response
+    postData = StringEscapeUtils.unescapeHtml (postData);
+    postData = postData.replace ("<p>", "");
+    postData = postData.replace ("</p>", "</br>");
+    // End: Handling '<p></p>' in response
+
+    // Begin: Handling '\'
+    StringBuilder str = new StringBuilder ();
+    String specialChars = "\\\"";
+    while (postData.contains ("\\"))
+    {
+      index = postData.indexOf ("\\");
+      if (index + 1 < postData.length ())
+      {
+        if (!specialChars.contains ("" + postData.charAt (index + 1)) || (index + 2 < postData.length () && postData.charAt (index + 1) == '"' && postData.charAt (index + 2) == ','))
+        {
+          str.append (postData.substring (0, index + 1) + "\\");
+          postData = postData.substring (index + 1);
+        }
+        else
+        {
+          str.append (postData.substring (0, index + 2));
+          postData = postData.substring (index + 2);
+        }
+      }
+
+    }
+    str.append (postData);
+    postData = str.toString ();
+    // End: Handling '\'
+
+    return new ByteArrayInputStream (postData.getBytes ());
   }
 }

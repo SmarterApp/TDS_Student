@@ -93,18 +93,17 @@ public class AdaptiveService extends AbstractDAO implements IAdaptiveService
       ItemGroup itemGroup;
       try (SQLConnection connection = getSQLConnection ()) {
 
-    	  // this is main command! error is referenced String
-    	_Ref<String> errorRef = new _Ref<>();
+        // this is main command! error is referenced String
+      _Ref<String> errorRef = new _Ref<>();
         itemGroup = _aironline.getNextItemGroup (connection, oppInstance.getKey (), errorRef);
           
-        
         if(errorRef.get() != null  && !errorRef.get().isEmpty())
         {
           if(errorRef.get().equalsIgnoreCase ("Test Complete")) {
             return null;
           } else {
-        	 _logger.error (errorRef.get());
-        	 throw new ReturnStatusException (errorRef.get());
+           _logger.error (errorRef.get());
+           throw new ReturnStatusException (errorRef.get());
           }
         }
         
@@ -128,7 +127,6 @@ public class AdaptiveService extends AbstractDAO implements IAdaptiveService
         _logger.error (e.getMessage (),e);
         throw new ReturnStatusException (e);
       }
-
       for (ItemResponse itemResponse : pageGroup) {
         itemResponse.setPrefetched (true);
       }

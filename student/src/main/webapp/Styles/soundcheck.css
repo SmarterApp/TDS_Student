@@ -3,6 +3,12 @@
 #sectionSoundCheck .instructions, #sectionTTSCheck .instructions {
 	border: none;
 }
+
+.platform_ios #sectionTTSCheck #TTS_Adjustments .instructions,
+.platform_android #sectionTTSCheck #TTS_Adjustments .instructions {
+    display: none;
+}
+
 #sectionSoundCheck .elicitedwrap {
     float: right;
 }
@@ -85,7 +91,7 @@
 }
 
 #TTS_Adjust_Pitch, #TTS_Adjust_Volume, #TTS_Adjust_Rate, #SoundCheck_Adjust_Volume{
-    background:url(../Scripts/Libraries/YUI/slider/assets/bg-fader.gif) 5px bottom no-repeat;
+    background:url(../Scripts/Libraries/yahoo/yui2/build/slider/assets/bg-fader.gif) 5px bottom no-repeat;
     padding-top: 1.5em;
 }
 #TTS_Adjust_Pitch .yui-slider-thumb img, #TTS_Adjust_Volume .yui-slider-thumb img, #TTS_Adjust_Rate .yui-slider-thumb img, #SoundCheck_Adjust_Volume .yui-slider-thumb img {

@@ -473,4 +473,17 @@ public class TestShellHandler extends TDSHandler
     return new ResponseData<OpportunityStatusType> (TDSReplyCode.OK.getCode (), "OK", oppStatus.getStatus ());
   }
 
+  @RequestMapping (value = "TestShell.axd/timer")
+  @ResponseBody
+  private void timerBatch (HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+  }
+
+  @RequestMapping (value = "TestShell.axd/audit")
+  @ResponseBody
+  private ResponseData<String> audit (TestShellAudit testShellAudit) throws TDSSecurityException, ReturnStatusException {
+
+    return new ResponseData<String> (TDSReplyCode.OK.getCode (), "OK", "Logged");
+  }
+
 }

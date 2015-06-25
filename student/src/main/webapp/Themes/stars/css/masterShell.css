@@ -230,19 +230,6 @@ body.practiceTest .proctorMessage {
 	display: none;
 }
 
-/* SBAC & CA Update */
-#loginWrap{
-	width: 70em;
-}
-#sectionLogin .ot-shadowBox{
-	float: left;
-}
-#ot-blurbs, .practiceTest #ot-blurbs, .forOperational #ot-blurbs{
-	display: block;
-}
-.forOperational a.goPractice{
-	float: left;
-}
 /* end */
 
 /* For Multi-Input Session ID */

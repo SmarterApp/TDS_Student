@@ -1,3 +1,16 @@
+/*Session ID 2014 Font */
+@font-face{
+	font-family:'inconsolata';
+	src:url('../../../shared/fonts/inconsolata.otf');
+	src: url('../../../shared/fonts/inconsolata.eot?#iefix') format('embedded-opentype'),
+         url('../../../shared/fonts/inconsolata.woff') format('woff'),
+         url('../../../shared/fonts/inconsolata.ttf') format('truetype'),
+         url('../../../shared/fonts/inconsolata.svg#inconsolatamedium') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+/* @end */
+
 html {
 	height:100%;
 	max-height:100%;
@@ -130,9 +143,10 @@ body {
 	overflow:hidden;
 }
 /* changing visiblity of containing elements prevents certain MathML symobls fromshowing up in iOS*/
-.platform_ios #contents div.pageWrapper.hiding, 
-.platform_ios #contents div.pageWrapper.hiding .thePassage, 
-.platform_ios #contents div.pageWrapper.hiding .theQuestions {
+/* Bug #170272 making exclusive to standard, UI, not streamlined */
+.platform_ios.TDS_SLM0 #contents div.pageWrapper.hiding, 
+.platform_ios.TDS_SLM0 #contents div.pageWrapper.hiding .thePassage, 
+.platform_ios.TDS_SLM0 #contents div.pageWrapper.hiding .theQuestions {
 	visibility: inherit;
 	position: relative;
 	overflow: hidden;
@@ -355,9 +369,20 @@ div.pageWrapper div.thePassage.hiding.contentEmpty {
 	float: left;
 	margin-left: 10px;
 }
+
 #infoBar .sessionID {
 	margin-left: 10px;
+	font-family: inconsolata;
+	text-transform: uppercase;
+	font-size: 1.1em;
+	display: inline-block;
+	max-height: 18px;
 }
+
+.platform_android #infoBar .sessionID{
+	min-width: 7em;
+}
+
 
 /* @end */
 
@@ -602,6 +627,7 @@ ul#studentTools {
 #btnLineReader:hover .icon {
 	background-position: center -2973px;
 }
+
 #btnMask .icon, 
 #btnMasking .icon {
 	background-position: center -3442px;
@@ -670,6 +696,64 @@ ul#studentTools {
 
 /* @end */
 
+/* @group Next shortcut */
+
+#btnNextBottom {
+	display: none;
+}
+.TDS_SLM1 #btnNextBottom {
+	display: block;
+	position: absolute;
+	visibility: visible;
+	height: 0px;
+	width: 0px;
+	overflow: hidden;
+	left: -9999px;
+}
+.TDS_SLM1 a#btnNextBottom:focus, 
+.TDS_SLM1 a#btnNextBottom:active {
+	width: 50px;
+    height: 42px;
+    z-index: 1;
+    bottom: 10px;
+    left: 20px;
+    outline: none;
+    background-color: rgba(211, 242, 254, 0.3);
+    border: solid 1px #00aeef;
+}
+.TDS_SLM1 #btnNextBottom:focus .icon, 
+.TDS_SLM1 #btnNextBottom:active .icon {
+	display: block;
+	height: 30px;
+	width: 30px;
+	position: absolute;
+	top: 4px;
+	left: 50%;
+	margin-left: -16px;
+	border: solid 2px #fff;
+	-moz-border-radius:  50%;
+	-webkit-border-radius:  50%;
+    border-radius: 50%;
+ 	-moz-transition: background-color .2s ease-in;
+    -webkit-transition: background-color .2s ease-in;
+ 	-ms-transition: background-color .2s ease-in;
+    transition: background-color .2s ease-in;
+    text-align: center;
+	background: #00aeef url(../../Images/universal/universal_shell.png) no-repeat center -1066px;
+	-webkit-box-shadow: 0px 0px 3px #b4b4b4;
+	-moz-box-shadow: 0px 0px 3px #b4b4b4;
+	box-shadow: 0px 0px 3px #b4b4b4;
+}
+.TDS_SLM1 #btnNextBottom:focus .label, 
+.TDS_SLM1 #btnNextBottom:active .label {
+	height: 0px;
+	width: 0px;
+	position: absolute;
+	left: -9999px;
+	overflow: hidden;
+}
+
+/* @end */
 /* @group Alert Bar */
 
 .alertBar {
@@ -856,6 +940,10 @@ ul#studentTools {
 .touch .yuimenu li a:focus {
 	outline: none;
 }
+/*.TDS_SLM1 .yuimenu.visible {
+	left: 100% !important;
+	margin-left: -180px;
+}*/
 
 
 /* @group icons */
@@ -1353,6 +1441,20 @@ ul#studentTools {
 .yui-skin-sam .yuimenu .mt_protractor a:active {
 	background-position: left -5210px;
 }
+.yui-skin-sam .yuimenu .mt_protractor a.yuimenuitemlabel-disabled {
+	background-position: left -5150px !important;
+}
+.yui-skin-sam .yuimenu .resetItem a {
+	background-position: left -5513px;
+}
+.yui-skin-sam .yuimenu .resetItem a.yuimenuitemlabel-disabled {
+	background-position: left -5513px !important;
+}
+.yui-skin-sam .yuimenu .resetItem a:hover, 
+.yui-skin-sam .yuimenu .resetItem a:focus, 
+.yui-skin-sam .yuimenu .resetItem a:active {
+	background-position: left -5573px;
+}
 /* @end */
 
 /* @end */
@@ -1495,7 +1597,7 @@ ul#studentTools {
     overflow: hidden;
     text-indent: -9999px;
     line-height: 25px;
-    margin-top: 0px;
+    margin-top: -25px;
     text-decoration: none;
 	background: url(../../Images/modern/sprites_mobile_0.png) center -2730px no-repeat;
 }
@@ -1532,6 +1634,37 @@ ul#studentTools {
 	height: 585px;
 }
 /* @end */
+
+a.yui-panel-bottom {
+	display: block;
+	position: absolute;
+	visibility: visible;
+	height: 0px;
+	width: 0px;
+	overflow: hidden;
+	left: -9999px;
+	text-indent: -9999px;
+}
+a.yui-panel-bottom:focus, 
+a.yui-panel-bottom:active
+{
+    width: 24px;
+    height: 24px;
+    z-index: 1;
+    -webkit-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, .9);
+	-moz-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, .9);
+	box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, .9);
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+    border-radius: 2px;
+    color: #fff;
+    border: solid 1px #fff;
+    left: 100%;
+    margin-left: -30px;
+    margin-top: -18px;
+    outline: none;
+	background-color: #9e0b0f;
+}
 
 
 /* @end */
@@ -2149,6 +2282,23 @@ ul#studentTools {
 /* @end */
 
 /* @group Review New List View */
+.TDS_RSL_ListView #markedWarning, 
+.TDS_RSL_ListView #unansweredWarning {
+	background: url(../../Images/Universal/marked.png) no-repeat 1em center;
+	border: solid 1px #666;
+	font-size: 1.3em;
+	padding-left: 4em;
+	padding-right: 1em;
+	padding-bottom: 1em;
+	padding-top: 1em;
+	margin-bottom: 1em;
+}
+.TDS_RSL_ListView #markedWarning {
+	margin-top: 1em;
+}
+.TDS_RSL_ListView #unansweredWarning {
+	background-image: url(../../Images/Universal/unanswered.png);
+}
 .reviewListView {
 	position: absolute;
 	top: 0px;
@@ -2907,7 +3057,7 @@ li.page-active a {
 		margin-bottom:10px;
 	}
 }
-/* When an input has focus on a touch device hide the nav bar */
+/* When an input has focus on a touch device hide the nav bar - this method does away with the transfrom on the body to help make sure the nav becomes visible again after inputFocus gets removed*/
 body.platform_ios.inputFocus #topBar {
     height: 0px;
 	overflow: hidden;
@@ -2916,14 +3066,10 @@ body.platform_ios.inputFocus #topBar {
 body.platform_ios.inputFocus #contents {
     top: 0px;
 }
-body.platform_ios {
-	position: static;
-	-webkit-transform: translateY(0px);
-	transform: translateY(0px);
-}
 body.platform_ios.inputFocus {
-	position: relative;
+	border-bottom: solid 1px transparent;
 }
+
 body.platform_windows.browser_chrome #contents, 
 body.platform_windows.browser_safari #contents, 
 body.platform_chrome.browser_chrome #contents, 
@@ -2991,4 +3137,21 @@ body.browser_safari.platform_osx.showingLoading {
   position: absolute !important;
   clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
   clip: rect(1px, 1px, 1px, 1px);
+}
+
+/* Hide Help button in Score & Response Entry modes */
+.app_ScoreEntry.practiceTest a#btnHelp,
+.app_ResponseEntry.practiceTest a#btnHelp,
+.app_scoreEntry a#btnHelp,
+.app_responseEntry a#btnHelp{
+	display: none;
+}
+/* @end */
+
+/* Bug #160134 Safari 8 in OSX was calculating the height of #contents at 0px in some situations */
+/* Possible fix for Bugs #166154 and #165318 where SB on iOS loses the scroll bar */
+.platform_osx.browser_safari.tds-contentRedraw #contents, 
+.platform_ios.browser_airsecurebrowser.tds-contentRedraw #contents, 
+.platform_ios.browser_airmobilesecurebrowser.tds-contentRedraw #contents {
+	border-bottom: solid 1px transparent;
 }

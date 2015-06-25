@@ -128,7 +128,7 @@
 		"printpage": 
 		{
 			"id": "btnPagePrint",
-			"classname": "printerPage excludeMenu",
+			"classname": "printerPage",
 			"i18n": "TestShell.Link.PrintPage",
 			"label": "Print Page"
 		},
