@@ -117,16 +117,11 @@ public class IrisWebHandler extends BaseContentRendererController
 
     // escaping double quote if it comes encoded
     int index = -1;
-    while ((index = postData.indexOf ("&quot;")) != -1 && ((index - 1 >= 0 && postData.charAt (index - 1) != '\\') || index == 0))
-    {
-      postData = postData.substring (0, index) + "\\" + postData.substring (index);
-    }
-
-    // Begin: Decoding html entities and handling '<p></p>' in response
-    postData = StringEscapeUtils.unescapeHtml (postData);
-    postData = postData.replace ("<p>", "");
-    postData = postData.replace ("</p>", "</br>");
-    // End: Handling '<p></p>' in response
+    /*
+     * while ((index = postData.indexOf ("&quot;")) != -1 && ((index - 1 >= 0 &&
+     * postData.charAt (index - 1) != '\\') || index == 0)) { postData =
+     * postData.substring (0, index) + "\\" + postData.substring (index); }
+     */
 
     // Begin: Handling '\'
     StringBuilder str = new StringBuilder ();
@@ -153,6 +148,14 @@ public class IrisWebHandler extends BaseContentRendererController
     postData = str.toString ();
     // End: Handling '\'
 
+    // Handling double quot
+    postData = postData.replace ("&quot;", "\\\"");
+    // Begin: Decoding html entities and handling '<p></p>' in response
+    postData = StringEscapeUtils.unescapeHtml (postData);
+    postData = postData.replace ("<p>", "");
+    postData = postData.replace ("</p>", "</br>");
+    // End: Handling '<p></p>' in response
+    
     return new ByteArrayInputStream (postData.getBytes ());
   }
 }

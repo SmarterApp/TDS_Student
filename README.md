@@ -154,6 +154,7 @@ The following parameters need to be configured inside Program Management for Stu
 * `student.StudentMaxOpps=2` 
 * `EncryptionKey=testKey123456789123456789`  - Encryption key is used for encrypting the cookies and item file path. There is no default value set for this property. It must be set in program management. Minimum length of this key is 24 characters.
 * `opportunity.isScoredByTDS=false`  - Set to false always. ScoreByTDS is not implemented yet and needs to be set false.
+* `tds.testshell.dictionaryUrl=http://<host>/Dictionary`  - URL for the Dictionary project deployment.
 
 #### Itemscoring properties
 The following parameters need to be configured inside Program Management for Student Itemscoring.

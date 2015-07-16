@@ -10,7 +10,7 @@ package tds.student.web.configuration;
 
 import AIR.Common.Configuration.AppSetting;
 import AIR.Common.Configuration.AppSettings;
-import AIR.Common.Web.UrlHelper;
+import AIR.Common.Configuration.AppSettingsHelper;
 
 public class TestShellSettings
 {
@@ -94,15 +94,8 @@ public class TestShellSettings
     return AppSettings.getBoolean ("tds.testshell.enableLogging");
   }
 
-  // TODO needs review
-  public static AppSetting<String> getDictionaryUrl ()
+  public static String getDictionaryUrl ()
   {
-    // .net code
-    /*
-     * string defaultUrl = UrlHelper.GetApplication() +
-     * "Pages/Dictionary/default.aspx"; return
-     * AppSettings.Get<string>("tds.testshell.dictionaryUrl", defaultUrl);
-     */
-    return AppSettings.getString ("tds.testshell.dictionaryUrl");
+    return AppSettingsHelper.get ("tds.testshell.dictionaryUrl");
   }
 }

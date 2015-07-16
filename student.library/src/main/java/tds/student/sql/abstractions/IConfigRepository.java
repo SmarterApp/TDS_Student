@@ -71,5 +71,6 @@ public interface IConfigRepository
   Iterable<String> getComments () throws ReturnStatusException;
 
   Iterable<ItemScoringConfig> getItemScoringConfigs() throws ReturnStatusException;
-
+  
+  Map<String,Object> getClientAppSettings() throws ReturnStatusException;
 }

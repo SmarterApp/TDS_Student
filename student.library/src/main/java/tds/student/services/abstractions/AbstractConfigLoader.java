@@ -101,6 +101,10 @@ public abstract class AbstractConfigLoader extends AbstractDAO
     value = _appSettings.get (name);
     return value;
   }
+  
+  public Map<String,Object> getClientAppSettings () {
+	    return _appSettings;
+	  }
 
   public abstract List<String> getClients () throws ReturnStatusException;
 

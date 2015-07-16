@@ -9,13 +9,13 @@
 package tds.student.web.controls.dummy;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.context.ResponseWriter;
 
@@ -23,7 +23,6 @@ import org.apache.commons.lang.StringUtils;
 
 import tds.itemrenderer.configuration.ITSConfig;
 import tds.itemrenderer.data.AccLookup;
-import tds.student.proxy.data.Proctor;
 import tds.student.sql.abstractions.IConfigRepository;
 import tds.student.sql.abstractions.IItemBankRepository;
 import tds.student.sql.data.AccList;
@@ -31,16 +30,15 @@ import tds.student.sql.data.Accommodations;
 import tds.student.sql.data.ForbiddenApps;
 import tds.student.sql.data.NetworkDiagnostic;
 import tds.student.sql.data.TTSVoicePack;
-import tds.student.sql.data.TestConfig;
-import tds.student.sql.data.TestSession;
 import tds.student.sql.data.TesteeAttributeMetadata;
 import tds.student.sql.data.dummy.AccommodationsExtensions;
+import tds.student.sql.repository.ConfigRepository;
 import tds.student.web.DebugSettings;
-import tds.student.web.ProxyContext;
 import tds.student.web.StudentContext;
 import tds.student.web.StudentSettings;
 import tds.student.web.dummy.ResourcesSingleton;
 import AIR.Common.Json.JsonHelper;
+import AIR.Common.Utilities.SpringApplicationContext;
 import AIR.Common.Utilities.TDSStringUtils;
 import AIR.Common.Web.BrowserParser;
 import AIR.Common.Web.UrlHelper;
@@ -50,7 +48,6 @@ import TDS.Shared.Exceptions.ReturnStatusException;
 import TDS.Shared.Messages.IMessageService;
 import TDS.Shared.Messages.MessageJson;
 import TDS.Shared.Messages.MessageSystem;
-import TDS.Shared.Security.FormsAuthentication;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerationException;
@@ -551,6 +548,22 @@ public class GlobalJavascriptWriter
   public String getScript ()
   {
     return _writer.toString ();
+  }
+  
+  /// <summary>
+  /// Write out client side app settings.
+  /// </summary>
+  public void WriteAppSettings() throws IOException, ReturnStatusException
+  {
+      // get all the app settings
+      IConfigRepository configRepo = SpringApplicationContext.getBean(ConfigRepository.class);
+      Map<String, Object> appSettings = configRepo.getClientAppSettings();
+      
+      // write out json
+      String serializedSettings = JsonHelper.serialize(appSettings);
+      _writer.write("TDS.Config.appSettings = " + serializedSettings);
+      _writer.write ("\n\r");
+
   }
 
 }

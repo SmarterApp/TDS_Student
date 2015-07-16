@@ -102,6 +102,11 @@ public class ConfigRepository implements IConfigRepository, ApplicationContextAw
 	public Object getAppSetting(String name) {
 		return _loader.getAppSetting(name);
 	}
+	
+	
+	public Map<String,Object> getClientAppSettings() {
+		return _loader.getClientAppSettings();
+	}
 
 	public Iterable<BrowserRule> getBrowserRules() {
 		return _loader.getBrowserRules();

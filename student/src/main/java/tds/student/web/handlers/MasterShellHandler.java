@@ -30,6 +30,7 @@ import org.opentestsystem.shared.trapi.data.TestStatusType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -516,7 +517,7 @@ public class MasterShellHandler extends TDSHandler
     testInfo.setShowSegmentLabels (TestShellSettings.isShowSegmentLabels ().getValue ());
     testInfo.setAudioTimeout (TestShellSettings.getAudioTimeout ().getValue ());
     testInfo.setEnableLogging (TestShellSettings.isEnableLogging ().getValue ());
-    testInfo.setDictionaryUrl (TestShellSettings.getDictionaryUrl ().getValue ());
+    testInfo.setDictionaryUrl (TestShellSettings.getDictionaryUrl ());
 
     // segments (var tdsSegments = [])
     testInfo.setSegments (loadTestSegments (oppInstance, testProps));

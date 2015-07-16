@@ -6,15 +6,14 @@
 		<section:Diagnostics />
 		<section:TTSCheck />
 		<section:SoundCheck />
-		<script type="text/javascript" src="../Scripts/Shells/mastershell.js"></script>
+		<!-- SB-1350: mastershell.js for diagnostics is different to regular mastershell.js -->
+		<script type="text/javascript" src="../Scripts/DiagnosticShell/mastershell.js"></script>
 		<script type="text/javascript" src="../Scripts/Shells/diagnosticshell.js"></script>
 	</ui:define>
 
 	<ui:define name="headerHolder">
-		<tds:ResourcesLink file="~/Scripts/scripts_student.xml" name="base" />
 		<tds:ResourcesLink file="~/Scripts/scripts_diagnostics.xml" name="diagnostictool" />
-		<!-- TODO: "DiagnosticShell" used as contextName -->
-		<tds:GlobalJavascript contextName="diagnostictool" />
+		<tds:GlobalJavascript contextName="DiagnosticShell" />
 		<script src="#{request.contextPath}/Scripts/Blackbox/blackbox_messages_#{diagnosticsBackingBean.loginClientName}.js" type="text/javascript" />
 	</ui:define>
 

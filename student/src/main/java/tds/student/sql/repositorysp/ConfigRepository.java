@@ -178,4 +178,10 @@ public class ConfigRepository implements IConfigRepository, ApplicationContextAw
 		  throws ReturnStatusException {
 	  return _loader.getBrowserTestRules(testKey);
   }
+
+@Override
+public Map<String, Object> getClientAppSettings() throws ReturnStatusException {
+	// TODO Auto-generated method stub
+	return null;
+}
 }

@@ -127,4 +127,10 @@ public class ConfigRepository implements IConfigRepository, ApplicationContextAw
     return null;
   }
 
+@Override
+public Map<String, Object> getClientAppSettings() throws ReturnStatusException {
+	// TODO Auto-generated method stub
+	return null;
+}
+
 }

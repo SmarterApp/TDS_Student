@@ -22,15 +22,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import AIR.Common.Web.FacesContextHelper;
-import TDS.Shared.Exceptions.ReadOnlyException;
-import TDS.Shared.Exceptions.ReturnStatusException;
-import TDS.Shared.Messages.IMessageService;
-import tds.itemrenderer.data.AccLookup;
 import tds.student.sql.abstractions.IConfigRepository;
 import tds.student.sql.abstractions.IItemBankRepository;
 import tds.student.web.StudentContext;
 import tds.student.web.StudentSettings;
+import AIR.Common.Web.FacesContextHelper;
+import TDS.Shared.Exceptions.ReadOnlyException;
+import TDS.Shared.Exceptions.ReturnStatusException;
+import TDS.Shared.Messages.IMessageService;
 
 // / <summary>
 // / Adds global variables to a page
@@ -85,6 +84,7 @@ public class GlobalJavascript extends UIComponentBase
     writer.writeForbiddenApps (); // required on login and test shell
     // writer.writeTestAccommodations (); // required on test and review shell
     writer.writeBrowserInfo ();
+    writer.WriteAppSettings();
 
     // required on login shell
     if (StringUtils.equals (getContextName (), "LoginShell")) {
