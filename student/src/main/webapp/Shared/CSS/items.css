@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 /* VERSION 4, aka "al pastor" ////////////////////////////////*/
 
 /* @group Reset Code */
@@ -103,20 +103,10 @@ body {
 }
 .markComment a {
 	display: none;
-	background-image: url(../Images/controls/sprites_student.png);
-	background-repeat: no-repeat;
-	background-position: 0px -3360px;
 	text-indent: -9999px;
 	height: 16px;
 	width: 15px;
 	float: right;
-}
-/* moved to accommodations.css
-a.commentItem {
-	display: block;
-}*/
-.markComment a:hover {
-	background-position: 0px -3390px;
 }
 .markComment input {
 	display: block;
@@ -124,135 +114,82 @@ a.commentItem {
 	margin-right: 3px;
 }
 .TDS_PS_L1 .markComment a {
-	background-image: url(../Images/controls/sprites_student.png);
-	background-position: 0px -3480px;
 	height: 25px;
 	width: 25px;
 }
-.TDS_PS_L1 .markComment a:hover {
-	background-position: 0px -3520px;
-}
 .TDS_PS_L2 .markComment a, .TDS_PS_L3 .markComment a, .TDS_PS_L4 .markComment a {
-	background-image: url(../Images/controls/sprites_student.png);
-	background-position: 0px -3640px;
 	height: 30px;
 	width: 30px;
 }
-.TDS_PS_L2 .markComment a:hover, .TDS_PS_L3 .markComment a:hover, .TDS_PS_L4 .markComment a:hover {
-	background-position: 0px -3690px;
-}
 .markComment .removeResponse {
-	background-image: url(../Images/reset.png);
-	background-position: center 0px;
 	width: 15px;
 	margin-right: 4px;
 }
-.markComment .removeResponse:hover, .markComment .removeResponse:active, .markComment .removeResponse:focus {
-	background-position: center -30px;
-}
 .TDS_PS_L1 .markComment .removeResponse {
-	background-image: url(../Images/reset.png);
-	background-position: center -60px;
 	width: 20px;
 	margin-right: 6px;
 }
-.TDS_PS_L1 .markComment .removeResponse:hover, .TDS_PS_L1 .markComment .removeResponse:active, .TDS_PS_L1 .markComment .removeResponse:focus {
-	background-position: center -110px;
-}
-
 .TDS_PS_L2 .markComment .removeResponse, .TDS_PS_L3 .markComment .removeResponse, .TDS_PS_L4 .markComment .removeResponse {
-	background-image: url(../Images/reset.png);
-	background-position: center -160px;
 	width: 25px;
 	margin-right: 7px;
-}
-.TDS_PS_L2 .markComment .removeResponse:hover, .TDS_PS_L2 .markComment .removeResponse:active, .TDS_PS_L2 .markComment .removeResponse:focus, 
-.TDS_PS_L3 .markComment .removeResponse:hover, .TDS_PS_L3 .markComment .removeResponse:active, .TDS_PS_L3 .markComment .removeResponse:focus, 
-.TDS_PS_L4 .markComment .removeResponse:hover, .TDS_PS_L4 .markComment .removeResponse:active, .TDS_PS_L4 .markComment .removeResponse:focus {
-	background-position: center -210px;
 }
 /* @group mark for review zooming */
 
 /* Mark for Review */
 a.markReview, a.markReview:hover {
-	/*display: block;*/
 	margin-right: 4px;
-	background-image: url(../Images/controls/sprites_student.png);
 	width: 28px;
 	height: 17px;
-	background-position: 0px -3420px;
 }
 a.markReviewMarked, a.markReviewMarked:hover {
 	display: block;
 	margin-right: 4px;
-	background-image: url(../Images/controls/sprites_student.png);
 	width: 28px;
 	height: 17px;
-	background-position: 0px -3450px;
 }
 a.markReviewDisabled, a.markReviewDisabled:hover {
 	display: block;
 	margin-right: 4px;
-	background-image: url(../Images/controls/sprites_student.png);
 	width: 28px;
 	height: 17px;
-	background-position: 0px -3420px;
 	cursor: default;
 	filter:alpha(opacity=50);
 	-moz-opacity: 0.50;
 	opacity: 0.50;
 }
 .TDS_PS_L1 a.markReview, .TDS_PS_L1 a.markReview:hover {
-	/*display: block;*/
 	margin-right: 4px;
-	background-image: url(../Images/controls/sprites_student.png);
 	width: 34px;
 	height: 21px;
-	background-position: 0px -3560px;
 }
 .TDS_PS_L1 a.markReviewMarked, .TDS_PS_L1 a.markReviewMarked:hover {
-	/*display: block;*/
 	margin-right: 4px;
-	background-image: url(../Images/controls/sprites_student.png);
 	width: 34px;
 	height: 21px;
-	background-position: 0px -3600px;
 }
 .TDS_PS_L1 a.markReviewDisabled, .TDS_PS_L1 a.markReviewDisabled:hover {
-	/*display: block;*/
 	margin-right: 4px;
-	background-image: url(../Images/controls/sprites_student.png);
 	width: 34px;
 	height: 21px;
-	background-position: 0px -3560px;
 	cursor: default;
 	filter:alpha(opacity=50);
 	-moz-opacity: 0.50;
 	opacity: 0.50;
 }
 .TDS_PS_L2 a.markReview, .TDS_PS_L2 a.markReview:hover, .TDS_PS_L3 a.markReview, .TDS_PS_L3 a.markReview:hover, .TDS_PS_L4 a.markReview, .TDS_PS_L4 a.markReview:hover {
-	/*display: block;*/
 	margin-right: 4px;
-	background-image: url(../Images/controls/sprites_student.png);
 	width: 41px;
 	height: 25px;
-	background-position: 0px -3740px;
 }
 .TDS_PS_L2 a.markReviewMarked, .TDS_PS_L2 a.markReviewMarked:hover, .TDS_PS_L3 a.markReviewMarked, .TDS_PS_L3 a.markReviewMarked:hover, .TDS_PS_L4 a.markReviewMarked, .TDS_PS_L4 a.markReviewMarked:hover {
-	/*display: block;*/
 	margin-right: 4px;
-	background-image: url(../Images/controls/sprites_student.png);
 	width: 41px;
 	height: 25px;
-	background-position: 0px -3790px;
 }
 .TDS_PS_L2 a.markReviewDisabled, .TDS_PS_L2 a.markReviewDisabled:hover, .TDS_PS_L3 a.markReviewDisabled, .TDS_PS_L3 a.markReviewDisabled:hover, .TDS_PS_L4 a.markReviewDisabled, .TDS_PS_L4 a.markReviewDisabled:hover {
-	/*display: block;*/
 	margin-right: 4px;
-	background-image: url(../Images/controls/sprites_student.png);
 	width: 41px;
 	height: 25px;
-	background-position: 0px -3740px;
 	cursor: default;
 	filter:alpha(opacity=50);
 	-moz-opacity: 0.50;
@@ -889,7 +826,6 @@ a.markReviewDisabled, a.markReviewDisabled:hover {
 	display: none !important;
 }
 .optionClicker {
-	background-image: url(../Images/controls/options/optionBlank.png);
 	display: block;
 	height: 20px;
 	width: 20px;
@@ -897,9 +833,19 @@ a.markReviewDisabled, a.markReviewDisabled:hover {
 	background-position: 0px 0px;
 	float: left;
 }
-.format_ms .optionClicker {
-	background-image: url(../Images/checks.png) !important;
+.format_ms .optionClicker,
+.EBSR_ms .optionClicker {
+	/*background-image: url(../Images/checks.png) !important;*/
+  border: 1px solid #999;
+  border-radius: 3px;
+  box-shadow: 1px 1px 1px 1px #ddd inset;
+  height: 15px;
+  width: 15px;
+  display: inline-block;
+  position: relative;
+  text-indent: 0 !important;
 }
+
 .platform_unix .optionClicker, .platform_linux .optionClicker {
 	margin-top:4px;
 }
@@ -909,160 +855,68 @@ a.markReviewDisabled, a.markReviewDisabled:hover {
 	background-position: 0px -21px;
 }
 .format_ms .answerContainer .optionContainer:hover span, 
-.format_ms .answerCell .optionContainer:hover span {
-	background-position: 0px -149px;
+.format_ms .answerCell .optionContainer:hover span,
+.EBSR_ms:hover span.optionClicker{
+	/*background-position: 0px -149px;*/
+  border-color: #389867;
 }
-.optionA .optionClicker {
-	background-image: url(../Images/controls/options/optionA.png);
+.format_ms .answerContainer .optionContainer:hover .optionClicker::before,
+.format_ms .answerCell .optionContainer:hover .optionClicker::before,
+.EBSR_ms:hover .optionClicker::before{
+  font-family: 'icomoon';
+  content: "\e628";
+  position: absolute;
+  color: #bcdcac;
+  font-size: 0.7em;
+  height: 15px;
+  line-height: 16px;
+  vertical-align: middle;
+  width: 16px;
+  text-align: center;
+
 }
-.optionB .optionClicker {
-	background-image: url(../Images/controls/options/optionB.png);
-}
-.optionC .optionClicker {
-	background-image: url(../Images/controls/options/optionC.png);
-}
-.optionD .optionClicker {
-	background-image: url(../Images/controls/options/optionD.png);
-}
-.optionE .optionClicker {
-	background-image: url(../Images/controls/options/optionE.png);
-}
-.optionF .optionClicker {
-	background-image: url(../Images/controls/options/optionF.png);
-}
-.optionG .optionClicker {
-	background-image: url(../Images/controls/options/optionG.png);
-}
-.optionH .optionClicker {
-	background-image: url(../Images/controls/options/optionH.png);
-}
-.optionI .optionClicker {
-	background-image: url(../Images/controls/options/optionI.png);
-}
-.optionJ .optionClicker {
-	background-image: url(../Images/controls/options/optionJ.png);
-}
-.optionK .optionClicker {
-	background-image: url(../Images/controls/options/optionK.png);
-}
-.optionL .optionClicker {
-	background-image: url(../Images/controls/options/optionL.png);
-}
-.optionM .optionClicker {
-	background-image: url(../Images/controls/options/optionM.png);
-}
-.optionN .optionClicker {
-	background-image: url(../Images/controls/options/optionN.png);
-}
-.optionO .optionClicker {
-	background-image: url(../Images/controls/options/optionO.png);
-}
-.optionP .optionClicker {
-	background-image: url(../Images/controls/options/optionP.png);
-}
-.optionQ .optionClicker {
-	background-image: url(../Images/controls/options/optionQ.png);
-}
-.optionR .optionClicker {
-	background-image: url(../Images/controls/options/optionR.png);
-}
-.optionS .optionClicker {
-	background-image: url(../Images/controls/options/optionS.png);
-}
-.optionT .optionClicker {
-	background-image: url(../Images/controls/options/optionT.png);
-}
-.optionU .optionClicker {
-	background-image: url(../Images/controls/options/optionU.png);
-}
-.optionV .optionClicker {
-	background-image: url(../Images/controls/options/optionV.png);
-}
-.optionW .optionClicker {
-	background-image: url(../Images/controls/options/optionW.png);
-}
-.optionX .optionClicker {
-	background-image: url(../Images/controls/options/optionX.png);
-}
-.optionY .optionClicker {
-	background-image: url(../Images/controls/options/optionY.png);
-}
-.optionZ .optionClicker {
-	background-image: url(../Images/controls/options/optionZ.png);
-}
-.option9 .optionClicker {
-	background-image: url(../Images/controls/options/option9.png);
-}
-.option8 .optionClicker {
-	background-image: url(../Images/controls/options/option8.png);
-}
-.option7 .optionClicker {
-	background-image: url(../Images/controls/options/option7.png);
-}
-.option6 .optionClicker {
-	background-image: url(../Images/controls/options/option6.png);
-}
-.option5 .optionClicker {
-	background-image: url(../Images/controls/options/option5.png);
-}
-.option4 .optionClicker {
-	background-image: url(../Images/controls/options/option4.png);
-}
-.option3 .optionClicker {
-	background-image: url(../Images/controls/options/option3.png);
-}
-.option2 .optionClicker {
-	background-image: url(../Images/controls/options/option2.png);
-}
-.option1 .optionClicker {
-	background-image: url(../Images/controls/options/option1.png);
-}
-.option0 .optionClicker {
-	background-image: url(../Images/controls/options/option0.png);
-}
-/* used to be ...NR.png*/
-.optionNR .optionClicker {
-	background-image: url(../Images/controls/options/optionN.png);
-}
-/* used to be ...AL.png*/
-.optionAL .optionClicker {
-	background-image: url(../Images/controls/options/optionA.png);
-}
-/* for Hawaiian*/
-.HAW .optionA .optionClicker {
-	background-image: url(../Images/controls/options/optionA.png);
-}
-.HAW .optionB .optionClicker {
-	background-image: url(../Images/controls/options/optionE.png);
-}
-.HAW .optionC .optionClicker {
-	background-image: url(../Images/controls/options/optionI.png);
-}
-.HAW .optionD .optionClicker {
-	background-image: url(../Images/controls/options/optionO.png);
-}
+
+
 
 /* @group mc option zooming */
+.format_ms .optionSelected .optionClicker,
+.EBSR_ms.optionSelected .optionClicker {
+	/*background: url(../Images/checks.png) no-repeat 0px -299px !important;*/
+    background: #555;
+    box-shadow: 1px 1px 1px 1px #444 inset;
+}
+.format_ms .optionSelected .optionClicker::before,
+.EBSR_ms.optionSelected .optionClicker::before{
+    font-family: 'icomoon';
+    content: "\e628";
+    position: absolute;
+    color: #fff;
+    font-size: 0.7em;
+    height: 15px;
+    line-height: 16px;
+    vertical-align: middle;
+    width: 16px;
+    text-align: center;
+    border-color: #aaaaaa;
+}
+.EBSR_ms.optionSelected:hover .optionClicker::before
+{
+    color: #bcdcac;
+}
 
-.optionSelected .optionClicker {
-	background: url(../Images/controls/options/optionBlank.png) no-repeat 0px -40px !important;
-}
-.format_ms .optionSelected .optionClicker {
-	background: url(../Images/checks.png) no-repeat 0px -299px !important;
-}
 .answerContainer div.optionSelected:hover span, 
 .answerCell div.optionSelected:hover span, 
 .optionSelectedDisabled .optionClicker, 
 .answerContainer div.optionSelectedDisabled:hover span, 
 .answerCell div.optionSelectedDisabled:hover span  {
-	background-position: 0px -40px !important;
+	/*background-position: 0px -40px !important;*/
 }
 .format_ms .answerContainer div.optionSelected:hover span, 
 .format_ms .answerCell div.optionSelected:hover span, 
 .format_ms .optionSelectedDisabled .optionClicker, 
 .format_ms .answerContainer div.optionSelectedDisabled:hover span, 
 .format_ms .answerCell div.optionSelectedDisabled:hover span  {
-	background-position: 0px -299px !important;
+	/*background-position: 0px -299px !important;*/
 }
 .optionContent {
 	display: block;
@@ -1118,7 +972,24 @@ a.markReviewDisabled, a.markReviewDisabled:hover {
 .TDS_PS_L1 .format_ms .answerCell .optionContainer:hover span, 
 .TDS_PS_L1 .format_ms .answerContainer div.optionDisabled:hover span, 
 .TDS_PS_L1 .format_ms .answerCell div.optionDisabled:hover span {
-	background-position: 0px -625px;
+	/*background-position: 0px -625px;*/
+}
+.TDS_PS_L1 .format_ms .optionClicker
+{
+    border-width: 2px;
+    margin-top: 5px;
+}
+.TDS_PS_L1 .format_ms .optionSelected .optionClicker::before,
+.TDS_PS_L1 .format_ms .answerContainer .optionContainer:hover .optionClicker::before, 
+.TDS_PS_L1 .format_ms .answerCell .optionContainer:hover .optionClicker::before,
+.TDS_PS_L1 .EBSR_ms .optionClicker::before,
+.TDS_PS_L1 .EBSR_ms:hover optionClicker::before
+{
+    font-size: 1em;
+    height: 30px; 
+    width: 30px; 
+    line-height: 30px;
+    
 }
 .TDS_PS_L1 .answerContainer div.optionDisabled:hover span, 
 .TDS_PS_L1 .answerCell div.optionDisabled:hover span {
@@ -1162,7 +1033,24 @@ a.markReviewDisabled, a.markReviewDisabled:hover {
 .TDS_PS_L2 .format_ms .answerCell .optionContainer:hover span, 
 .TDS_PS_L2 .format_ms .answerContainer div.optionDisabled:hover span, 
 .TDS_PS_L2 .format_ms .answerCell div.optionDisabled:hover span {
-	background-position: 0px -1174px;
+	/*background-position: 0px -1174px;*/
+}
+.TDS_PS_L2 .format_ms .optionClicker
+{
+    border-width: 2px;
+    margin-top: 9px;
+}
+.TDS_PS_L2 .format_ms .optionSelected .optionClicker::before,
+.TDS_PS_L2 .format_ms .answerContainer .optionContainer:hover .optionClicker::before, 
+.TDS_PS_L2 .format_ms .answerCell .optionContainer:hover .optionClicker::before,
+.TDS_PS_L2 .EBSR_ms .optionClicker::before,
+.TDS_PS_L2 .EBSR_ms:hover optionClicker::before
+{
+    font-size: 1em;
+    height: 40px; 
+    width: 40px; 
+    line-height: 40px;
+
 }
 /* level 3 */
 .TDS_PS_L3 .optionClicker {
@@ -1200,7 +1088,23 @@ a.markReviewDisabled, a.markReviewDisabled:hover {
 .TDS_PS_L3 .format_ms .answerCell .optionContainer:hover span, 
 .TDS_PS_L3 .format_ms .answerContainer div.optionDisabled:hover span, 
 .TDS_PS_L3 .format_ms .answerCell div.optionDisabled:hover span {
-	background-position: 0px -1825px;
+	/*background-position: 0px -1825px;*/
+}
+.TDS_PS_L3 .format_ms .optionClicker
+{
+    border-width: 3px;
+    margin-top: 12px;
+}
+.TDS_PS_L3 .format_ms .optionSelected .optionClicker::before,
+.TDS_PS_L3 .format_ms .answerContainer .optionContainer:hover .optionClicker::before, 
+.TDS_PS_L3 .format_ms .answerCell .optionContainer:hover .optionClicker::before,
+.TDS_PS_L3 .EBSR_ms .optionClicker::before,
+.TDS_PS_L3 .EBSR_ms:hover optionClicker::before
+{
+    font-size: 1em;
+    height: 55px; 
+    width: 55px; 
+    line-height: 55px;
 }
 /* level 4 */
 .TDS_PS_L4 .optionClicker {
@@ -1238,9 +1142,356 @@ a.markReviewDisabled, a.markReviewDisabled:hover {
 .TDS_PS_L4 .format_ms .answerCell .optionContainer:hover span, 
 .TDS_PS_L4 .format_ms .answerContainer div.optionDisabled:hover span, 
 .TDS_PS_L4 .format_ms .answerCell div.optionDisabled:hover span {
-	background-position: 0px -2626px;
+	/*background-position: 0px -2626px;*/
+}
+.TDS_PS_L4 .format_ms .optionClicker
+{
+    border-width: 4px;
+    margin-top: 15px;
+}
+.TDS_PS_L4 .format_ms .optionSelected .optionClicker::before,
+.TDS_PS_L4 .format_ms .answerContainer .optionContainer:hover .optionClicker::before, 
+.TDS_PS_L4 .format_ms .answerCell .optionContainer:hover .optionClicker::before,
+.TDS_PS_L4 .EBSR_ms .optionClicker::before,
+.TDS_PS_L4 .EBSR_ms:hover optionClicker::before
+{
+    font-size: 1em;
+    height: 68px; 
+    width: 68px; 
+    line-height: 68px;
 }
 /* @end */
+
+/* @group New Mulitple Choice pure CSS */
+
+.format_mc .optionA .optionClicker,.format_ebsr .EBSR_mc.optionA .optionClicker, .format_si .optionA .optionClicker,
+.format_mc .optionB .optionClicker,.format_ebsr .EBSR_mc.optionB .optionClicker, .format_si .optionB .optionClicker,
+.format_mc .optionC .optionClicker,.format_ebsr .EBSR_mc.optionC .optionClicker, .format_si .optionC .optionClicker,
+.format_mc .optionD .optionClicker,.format_ebsr .EBSR_mc.optionD .optionClicker, .format_si .optionD .optionClicker,
+.format_mc .optionE .optionClicker,.format_ebsr .EBSR_mc.optionE .optionClicker, .format_si .optionE .optionClicker,
+.format_mc .optionF .optionClicker,.format_ebsr .EBSR_mc.optionF .optionClicker, .format_si .optionF .optionClicker,
+.format_mc .optionG .optionClicker,.format_ebsr .EBSR_mc.optionG .optionClicker, .format_si .optionG .optionClicker,
+.format_mc .optionH .optionClicker,.format_ebsr .EBSR_mc.optionH .optionClicker, .format_si .optionH .optionClicker,
+.format_mc .optionI .optionClicker,.format_ebsr .EBSR_mc.optionI .optionClicker, .format_si .optionI .optionClicker,
+.format_mc .optionJ .optionClicker,.format_ebsr .EBSR_mc.optionJ .optionClicker, .format_si .optionJ .optionClicker,
+.format_mc .optionK .optionClicker,.format_ebsr .EBSR_mc.optionK .optionClicker, .format_si .optionK .optionClicker,
+.format_mc .optionL .optionClicker,.format_ebsr .EBSR_mc.optionL .optionClicker, .format_si .optionL .optionClicker,
+.format_mc .optionM .optionClicker,.format_ebsr .EBSR_mc.optionM .optionClicker, .format_si .optionM .optionClicker,
+.format_mc .optionN .optionClicker,.format_ebsr .EBSR_mc.optionN .optionClicker, .format_si .optionN .optionClicker,
+.format_mc .optionO .optionClicker,.format_ebsr .EBSR_mc.optionO .optionClicker, .format_si .optionO .optionClicker,
+.format_mc .optionP .optionClicker,.format_ebsr .EBSR_mc.optionP .optionClicker, .format_si .optionP .optionClicker,
+.format_mc .optionQ .optionClicker,.format_ebsr .EBSR_mc.optionQ .optionClicker, .format_si .optionQ .optionClicker,
+.format_mc .optionR .optionClicker,.format_ebsr .EBSR_mc.optionR .optionClicker, .format_si .optionR .optionClicker,
+.format_mc .optionS .optionClicker,.format_ebsr .EBSR_mc.optionS .optionClicker, .format_si .optionT .optionClicker,
+.format_mc .optionT .optionClicker,.format_ebsr .EBSR_mc.optionT .optionClicker, .format_si .optionU .optionClicker,
+.format_mc .optionU .optionClicker,.format_ebsr .EBSR_mc.optionU .optionClicker, .format_si .optionV .optionClicker,
+.format_mc .optionV .optionClicker,.format_ebsr .EBSR_mc.optionV .optionClicker, .format_si .optionW .optionClicker,
+.format_mc .optionW .optionClicker,.format_ebsr .EBSR_mc.optionW .optionClicker, .format_si .optionW .optionClicker,
+.format_mc .optionX .optionClicker,.format_ebsr .EBSR_mc.optionX .optionClicker, .format_si .optionX .optionClicker,
+.format_mc .optionY .optionClicker,.format_ebsr .EBSR_mc.optionY .optionClicker, .format_si .optionY .optionClicker,
+.format_mc .optionZ .optionClicker,.format_ebsr .EBSR_mc.optionZ .optionClicker, .format_si .optionZ .optionClicker,
+.format_mc .optionAL .optionClicker,.format_ebsr .EBSR_mc.optionAL .optionClicker, .format_si .optionAL .optionClicker,
+.format_mc .optionNR .optionClicker,.format_ebsr .EBSR_mc.optionNR .optionClicker, .format_si .optionNR .optionClicker,
+.HAW .format_mc .optionA .optionClicker, .HAW .format_ebsr .EBSR_mc.optionA .optionClicker, .HAW .format_si .optionA .optionClicker,
+.HAW .format_mc .optionB .optionClicker, .HAW .format_ebsr .EBSR_mc.optionB .optionClicker, .HAW .format_si .optionB .optionClicker,
+.HAW .format_mc .optionC .optionClicker, .HAW .format_ebsr .EBSR_mc.optionC .optionClicker, .HAW .format_si .optionC .optionClicker,
+.HAW .format_mc .optionD .optionClicker, .HAW .format_ebsr .EBSR_mc.optionD .optionClicker, .HAW .format_si .optionD .optionClicker,
+.format_mc .option0 .optionClicker,.format_ebsr .option0 .EBSR_mc.optionClicker, .format_si .option0 .optionClicker,
+.format_mc .option1 .optionClicker,.format_ebsr .option1 .EBSR_mc.optionClicker, .format_si .option1 .optionClicker,
+.format_mc .option2 .optionClicker,.format_ebsr .option2 .EBSR_mc.optionClicker, .format_si .option3 .optionClicker,
+.format_mc .option3 .optionClicker,.format_ebsr .option3 .EBSR_mc.optionClicker, .format_si .option4 .optionClicker,
+.format_mc .option4 .optionClicker,.format_ebsr .option4 .EBSR_mc.optionClicker, .format_si .option4 .optionClicker,
+.format_mc .option5 .optionClicker,.format_ebsr .option5 .EBSR_mc.optionClicker, .format_si .option5 .optionClicker,
+.format_mc .option6 .optionClicker,.format_ebsr .option6 .EBSR_mc.optionClicker, .format_si .option6 .optionClicker,
+.format_mc .option7 .optionClicker,.format_ebsr .option7 .EBSR_mc.optionClicker, .format_si .option7 .optionClicker,
+.format_mc .option8 .optionClicker,.format_ebsr .option8 .EBSR_mc.optionClicker, .format_si .option8 .optionClicker,
+.format_mc .option9 .optionClicker,.format_ebsr .option9 .EBSR_mc.optionClicker, .format_si .option9 .optionClicker
+{
+	background-image: none;
+}
+
+.format_mc .optionClicker,
+.format_ebsr .EBSR_mc .optionClicker,
+.format_si .optionClicker{
+	display: block;
+	height: 15px;
+	width: 15px;
+	border: 1px solid #aaa;
+	box-shadow: 1px 1px 1px inset;
+	border-radius: 50%;
+	position: relative;
+	float: left;
+	/*until we can get inline styles removed*/
+	text-indent: 0 !important;
+}
+.format_mc .optionClicker::before,
+.format_ebsr .EBSR_mc .optionClicker::before,
+.format_si .optionClicker::before{
+	position: absolute;
+	font-size: 11px;
+	font-weight: 600;
+	left: 0;
+	top: 0;
+	width: 16px;
+	line-height: 17px;
+	text-align: center;
+	vertical-align: middle;
+	font-family: Arial, Helvetica, sans-serif;
+}
+/*Linux letters slightly off center at zoom level 0*/
+.platform_linux .format_mc .optionClicker::before,
+.platform_linux .format_ebsr .EBSR_mc .optionClicker::before,
+.platform_linux .format_si .optionClicker::before{
+	width: 17px;
+}
+.format_mc .optionContainer:hover .optionClicker,
+.format_ebsr .EBSR_mc.optionContainer:hover .optionClicker,
+.format_si .optionContainer:hover .optionClicker{
+	border-color: #00aa55;
+	background-color: #e2ffe2;
+}
+
+.format_mc .optionSelected .optionClicker, .format_mc .optionSelected:hover .optionClicker,
+.format_ebsr .EBSR_mc.optionSelected .optionClicker, .format_ebsr .EBSR_mc.optionSelected:hover .optionClicker,
+.format_si .optionSelected .optionClicker, .format_si .optionSelected:hover .optionClicker{
+	background-color: #555;
+    background-image: none;
+    box-shadow: 1px 1px 1px #000 inset;
+    color: #555;
+}
+
+.format_mc .optionA .optionClicker::before, .format_ebsr .EBSR_mc.optionA .optionClicker::before, .format_si .optionA .optionClicker::before{content: 'A';}
+.format_mc .optionB .optionClicker::before, .format_ebsr .EBSR_mc.optionB .optionClicker::before, .format_si .optionB .optionClicker::before{content: 'B';}
+.format_mc .optionC .optionClicker::before, .format_ebsr .EBSR_mc.optionC .optionClicker::before, .format_si .optionC .optionClicker::before{content: 'C';}
+.format_mc .optionD .optionClicker::before, .format_ebsr .EBSR_mc.optionD .optionClicker::before, .format_si .optionD .optionClicker::before{content: 'D';}
+.format_mc .optionE .optionClicker::before, .format_ebsr .EBSR_mc.optionE .optionClicker::before, .format_si .optionE .optionClicker::before{content: 'E';}
+.format_mc .optionF .optionClicker::before, .format_ebsr .EBSR_mc.optionF .optionClicker::before, .format_si .optionF .optionClicker::before{content: 'F';}
+.format_mc .optionG .optionClicker::before, .format_ebsr .EBSR_mc.optionG .optionClicker::before, .format_si .optionG .optionClicker::before{content: 'G';}
+.format_mc .optionH .optionClicker::before, .format_ebsr .EBSR_mc.optionH .optionClicker::before, .format_si .optionH .optionClicker::before{content: 'H';}
+.format_mc .optionI .optionClicker::before, .format_ebsr .EBSR_mc.optionI .optionClicker::before, .format_si .optionI .optionClicker::before{content: 'I';}
+.format_mc .optionJ .optionClicker::before, .format_ebsr .EBSR_mc.optionJ .optionClicker::before, .format_si .optionJ .optionClicker::before{content: 'J';}
+.format_mc .optionK .optionClicker::before, .format_ebsr .EBSR_mc.optionK .optionClicker::before, .format_si .optionK .optionClicker::before{content: 'K';}
+.format_mc .optionL .optionClicker::before, .format_ebsr .EBSR_mc.optionL .optionClicker::before, .format_si .optionL .optionClicker::before{content: 'L';}
+.format_mc .optionM .optionClicker::before, .format_ebsr .EBSR_mc.optionM .optionClicker::before, .format_si .optionM .optionClicker::before{content: 'M';}
+.format_mc .optionN .optionClicker::before, .format_ebsr .EBSR_mc.optionN .optionClicker::before, .format_si .optionN .optionClicker::before{content: 'N';}
+.format_mc .optionO .optionClicker::before, .format_ebsr .EBSR_mc.optionO .optionClicker::before, .format_si .optionO .optionClicker::before{content: 'O';}
+.format_mc .optionP .optionClicker::before, .format_ebsr .EBSR_mc.optionP .optionClicker::before, .format_si .optionP .optionClicker::before{content: 'P';}
+.format_mc .optionQ .optionClicker::before, .format_ebsr .EBSR_mc.optionQ .optionClicker::before, .format_si .optionQ .optionClicker::before{content: 'Q';}
+.format_mc .optionR .optionClicker::before, .format_ebsr .EBSR_mc.optionR .optionClicker::before, .format_si .optionR .optionClicker::before{content: 'R';}
+.format_mc .optionS .optionClicker::before, .format_ebsr .EBSR_mc.optionS .optionClicker::before, .format_si .optionS .optionClicker::before{content: 'S';}
+.format_mc .optionT .optionClicker::before, .format_ebsr .EBSR_mc.optionT .optionClicker::before, .format_si .optionT .optionClicker::before{content: 'T';}
+.format_mc .optionU .optionClicker::before, .format_ebsr .EBSR_mc.optionU .optionClicker::before, .format_si .optionU .optionClicker::before{content: 'U';}
+.format_mc .optionV .optionClicker::before, .format_ebsr .EBSR_mc.optionV .optionClicker::before, .format_si .optionV .optionClicker::before{content: 'V';}
+.format_mc .optionW .optionClicker::before, .format_ebsr .EBSR_mc.optionW .optionClicker::before, .format_si .optionW .optionClicker::before{content: 'W';}
+.format_mc .optionX .optionClicker::before, .format_ebsr .EBSR_mc.optionX .optionClicker::before, .format_si .optionX .optionClicker::before{content: 'X';}
+.format_mc .optionY .optionClicker::before, .format_ebsr .EBSR_mc.optionY .optionClicker::before, .format_si .optionY .optionClicker::before{content: 'Y';}
+.format_mc .optionZ .optionClicker::before, .format_ebsr .EBSR_mc.optionZ .optionClicker::before, .format_si .optionZ .optionClicker::before{content: 'Z';}
+.format_mc .optionAL .optionClicker::before, .format_ebsr .EBSR_mc.optionAL .optionClicker::before, .format_si .optionAL .optionClicker::before{content: 'A';}
+.format_mc .optionNR .optionClicker::before, .format_ebsr .EBSR_mc.optionNR .optionClicker::before, .format_si .optionNR .optionClicker::before{content: 'N';}
+.HAW .format_mc .optionA .optionClicker::before, .HAW .format_ebsr .EBSR_mc.optionA .optionClicker::before, .HAW .format_si .optionA .optionClicker::before{content: 'A';}
+.HAW .format_mc .optionB .optionClicker::before, .HAW .format_ebsr .EBSR_mc.optionB .optionClicker::before, .HAW .format_si .optionB .optionClicker::before{content: 'E';}
+.HAW .format_mc .optionC .optionClicker::before, .HAW .format_ebsr .EBSR_mc.optionC .optionClicker::before, .HAW .format_si .optionC .optionClicker::before{content: 'I';}
+.HAW .format_mc .optionD .optionClicker::before, .HAW .format_ebsr .EBSR_mc.optionD .optionClicker::before, .HAW .format_si .optionD .optionClicker::before{content: 'O';}
+.format_mc .option0 .optionClicker::before, .format_ebsr .EBSR_mc.option0 .optionClicker::before, .format_si .option0 .optionClicker::before{content: '0';}
+.format_mc .option1 .optionClicker::before, .format_ebsr .EBSR_mc.option1 .optionClicker::before, .format_si .option1 .optionClicker::before{content: '1';}
+.format_mc .option2 .optionClicker::before, .format_ebsr .EBSR_mc.option2 .optionClicker::before, .format_si .option2 .optionClicker::before{content: '2';}
+.format_mc .option3 .optionClicker::before, .format_ebsr .EBSR_mc.option3 .optionClicker::before, .format_si .option3 .optionClicker::before{content: '3';}
+.format_mc .option4 .optionClicker::before, .format_ebsr .EBSR_mc.option4 .optionClicker::before, .format_si .option4 .optionClicker::before{content: '4';}
+.format_mc .option5 .optionClicker::before, .format_ebsr .EBSR_mc.option5 .optionClicker::before, .format_si .option5 .optionClicker::before{content: '5';}
+.format_mc .option6 .optionClicker::before, .format_ebsr .EBSR_mc.option6 .optionClicker::before, .format_si .option6 .optionClicker::before{content: '6';}
+.format_mc .option7 .optionClicker::before, .format_ebsr .EBSR_mc.option7 .optionClicker::before, .format_si .option7 .optionClicker::before{content: '7';}
+.format_mc .option8 .optionClicker::before, .format_ebsr .EBSR_mc.option8 .optionClicker::before, .format_si .option8 .optionClicker::before{content: '8';}
+.format_mc .option9 .optionClicker::before, .format_ebsr .EBSR_mc.option9 .optionClicker::before, .format_si .option9 .optionClicker::before{content: '9';}
+
+
+.hideOptionLabels .format_mc .optionA .optionClicker::before, 
+.hideOptionLabels .format_mc .optionB .optionClicker::before, 
+.hideOptionLabels .format_mc .optionC .optionClicker::before, 
+.hideOptionLabels .format_mc .optionD .optionClicker::before, 
+.hideOptionLabels .format_mc .optionE .optionClicker::before, 
+.hideOptionLabels .format_mc .optionF .optionClicker::before, 
+.hideOptionLabels .format_mc .optionG .optionClicker::before, 
+.hideOptionLabels .format_mc .optionH .optionClicker::before, 
+.hideOptionLabels .format_mc .optionI .optionClicker::before, 
+.hideOptionLabels .format_mc .optionJ .optionClicker::before, 
+.hideOptionLabels .format_mc .optionK .optionClicker::before, 
+.hideOptionLabels .format_mc .optionL .optionClicker::before, 
+.hideOptionLabels .format_mc .optionM .optionClicker::before, 
+.hideOptionLabels .format_mc .optionN .optionClicker::before, 
+.hideOptionLabels .format_mc .optionO .optionClicker::before, 
+.hideOptionLabels .format_mc .optionP .optionClicker::before, 
+.hideOptionLabels .format_mc .optionQ .optionClicker::before, 
+.hideOptionLabels .format_mc .optionR .optionClicker::before, 
+.hideOptionLabels .format_mc .optionS .optionClicker::before, 
+.hideOptionLabels .format_mc .optionT .optionClicker::before, 
+.hideOptionLabels .format_mc .optionU .optionClicker::before, 
+.hideOptionLabels .format_mc .optionV .optionClicker::before, 
+.hideOptionLabels .format_mc .optionW .optionClicker::before, 
+.hideOptionLabels .format_mc .optionX .optionClicker::before, 
+.hideOptionLabels .format_mc .optionY .optionClicker::before, 
+.hideOptionLabels .format_mc .optionZ .optionClicker::before, 
+.hideOptionLabels .format_mc .optionAL .optionClicker::before, 
+.hideOptionLabels .format_mc .optionNR .optionClicker::before, 
+.HAW .hideOptionLabels .format_mc .optionA .optionClicker::before, 
+.HAW .hideOptionLabels .format_mc .optionB .optionClicker::before, 
+.HAW .hideOptionLabels .format_mc .optionC .optionClicker::before, 
+.HAW .hideOptionLabels .format_mc .optionD .optionClicker::before, 
+.hideOptionLabels .format_si .option0 .optionClicker::before, 
+.hideOptionLabels .format_si .option1 .optionClicker::before, 
+.hideOptionLabels .format_si .option2 .optionClicker::before, 
+.hideOptionLabels .format_si .option3 .optionClicker::before, 
+.hideOptionLabels .format_si .option4 .optionClicker::before, 
+.hideOptionLabels .format_si .option5 .optionClicker::before, 
+.hideOptionLabels .format_si .option6 .optionClicker::before, 
+.hideOptionLabels .format_si .option7 .optionClicker::before, 
+.hideOptionLabels .format_si .option8 .optionClicker::before, 
+.hideOptionLabels .format_si .option9 .optionClicker::before,
+.hideOptionLabels .format_si .optionA .optionClicker::before, 
+.hideOptionLabels .format_si .optionB .optionClicker::before, 
+.hideOptionLabels .format_si .optionC .optionClicker::before, 
+.hideOptionLabels .format_si .optionD .optionClicker::before, 
+.hideOptionLabels .format_si .optionE .optionClicker::before, 
+.hideOptionLabels .format_si .optionF .optionClicker::before, 
+.hideOptionLabels .format_si .optionG .optionClicker::before, 
+.hideOptionLabels .format_si .optionH .optionClicker::before, 
+.hideOptionLabels .format_si .optionI .optionClicker::before, 
+.hideOptionLabels .format_si .optionJ .optionClicker::before, 
+.hideOptionLabels .format_si .optionK .optionClicker::before, 
+.hideOptionLabels .format_si .optionL .optionClicker::before, 
+.hideOptionLabels .format_si .optionM .optionClicker::before, 
+.hideOptionLabels .format_si .optionN .optionClicker::before, 
+.hideOptionLabels .format_si .optionO .optionClicker::before, 
+.hideOptionLabels .format_si .optionP .optionClicker::before, 
+.hideOptionLabels .format_si .optionQ .optionClicker::before, 
+.hideOptionLabels .format_si .optionR .optionClicker::before, 
+.hideOptionLabels .format_si .optionS .optionClicker::before, 
+.hideOptionLabels .format_si .optionT .optionClicker::before, 
+.hideOptionLabels .format_si .optionU .optionClicker::before, 
+.hideOptionLabels .format_si .optionV .optionClicker::before, 
+.hideOptionLabels .format_si .optionW .optionClicker::before, 
+.hideOptionLabels .format_si .optionX .optionClicker::before, 
+.hideOptionLabels .format_si .optionY .optionClicker::before, 
+.hideOptionLabels .format_si .optionZ .optionClicker::before, 
+.hideOptionLabels .format_si .optionAL .optionClicker::before, 
+.hideOptionLabels .format_si .optionNR .optionClicker::before, 
+.HAW .hideOptionLabels .format_si .optionA .optionClicker::before, 
+.HAW .hideOptionLabels .format_si .optionB .optionClicker::before, 
+.HAW .hideOptionLabels .format_si .optionC .optionClicker::before, 
+.HAW .hideOptionLabels .format_si .optionD .optionClicker::before, 
+.hideOptionLabels .format_si .option0 .optionClicker::before, 
+.hideOptionLabels .format_si .option1 .optionClicker::before, 
+.hideOptionLabels .format_si .option2 .optionClicker::before, 
+.hideOptionLabels .format_si .option3 .optionClicker::before, 
+.hideOptionLabels .format_si .option4 .optionClicker::before, 
+.hideOptionLabels .format_si .option5 .optionClicker::before, 
+.hideOptionLabels .format_si .option6 .optionClicker::before, 
+.hideOptionLabels .format_si .option7 .optionClicker::before, 
+.hideOptionLabels .format_si .option8 .optionClicker::before, 
+.hideOptionLabels .format_si .option9 .optionClicker::before 
+{
+	content: ' ';
+}
+
+
+/*Color Corrections*/
+.TDS_CCInvert .format_mc .optionClicker,.TDS_CCWhiteN .format_mc .optionClicker,.TDS_CCYellowB .format_mc .optionClicker,
+.TDS_CCInvert .format_ebsr .EBSR_mc .optionClicker,.TDS_CCWhiteN .format_ebsr .EBSR_mc .optionClicker,.TDS_CCYellowB .format_ebsr .EBSR_mc .optionClicker,
+.TDS_CCInvert .format_si .optionClicker,.TDS_CCWhiteN .format_si .optionClicker,.TDS_CCYellowB .format_si .optionClicker{
+	box-shadow: 1px 1px 1px #333 inset;
+}
+.TDS_CCYellowB .format_mc .optionSelected .optionClicker, .TDS_CCYellowB .format_mc .optionSelected:hover .optionClicker,
+.TDS_CCYellowB .format_ebsr .EBSR_mc.optionSelected .optionClicker, .TDS_CCYellowB .format_ebsr .EBSR_mc.optionSelected:hover .optionClicker,
+.TDS_CCYellowB .format_si .optionSelected .optionClicker, .TDS_CCYellowB .format_si .optionSelected:hover .optionClicker{
+	background-color: #fc0 !important;
+	color: #fc0 !important;
+}
+.TDS_CCInvert .format_mc .optionSelected .optionClicker,.TDS_CCInvert .format_mc .optionSelected:hover .optionClicker,
+.TDS_CCWhiteN .format_mc .optionSelected .optionClicker,.TDS_CCWhiteN .format_mc .optionSelected:hover .optionClicker,
+
+.TDS_CCInvert .format_ebsr .EBSR_mc.optionSelected .optionClicker,.TDS_CCInvert .format_ebsr .EBSR_mc.optionSelected:hover .optionClicker,
+.TDS_CCWhiteN .format_ebsr .EBSR_mc.optionSelected .optionClicker,.TDS_CCWhiteN .format_ebsr .EBSR_mc.optionSelected:hover .optionClicker,
+
+.TDS_CCInvert .format_si .optionSelected .optionClicker,.TDS_CCInvert .format_mc .optionSelected:hover .optionClicker,
+.TDS_CCWhiteN .format_si .optionSelected .optionClicker,.TDS_CCWhiteN .format_mc .optionSelected:hover .optionClicker,{
+	background-color: #fff !important;
+	color: #fff !important;	
+}
+
+.TDS_CCInvert .format_mc .optionContainer:hover .optionClicker,
+.TDS_CCWhiteN .format_mc .optionContainer:hover .optionClicker,
+.TDS_CCYellowB .format_mc .optionContainer:hover .optionClicker,
+.TDS_CCInvert .format_ebsr .EBSR_mc.optionContainer:hover .optionClicker,
+.TDS_CCWhiteN .format_ebsr .EBSR_mc.optionContainer:hover .optionClicker,
+.TDS_CCYellowB .format_ebsr .EBSR_mc.optionContainer:hover .optionClicker,
+.TDS_CCInvert .format_si .optionContainer:hover .optionClicker,
+.TDS_CCWhiteN .format_si .optionContainer:hover .optionClicker,
+.TDS_CCYellowB .format_si .optionContainer:hover .optionClicker{
+	background-color: #2687ac;
+	border-color: #fff;
+}
+
+/*Zoom Corrections*/
+.TDS_PS_L1 .format_mc .optionClicker,
+.TDS_PS_L1 .format_ebsr .EBSR_mc .optionClicker,
+.TDS_PS_L1 .format_si .optionClicker{
+	height: 26px;
+	width: 26px;
+	border-width: 2px;
+	margin-top: 4px;
+}
+.TDS_PS_L1 .format_mc .optionClicker::before,
+.TDS_PS_L1 .format_ebsr .EBSR_mc .optionClicker::before,
+.TDS_PS_L1 .format_si .optionClicker::before{
+	font-size: 22px;
+	line-height: 28px;
+	width: 28px;
+}
+.TDS_PS_L2 .format_mc .optionClicker,
+.TDS_PS_L2 .format_ebsr .EBSR_mc .optionClicker,
+.TDS_PS_L2 .format_si .optionClicker{
+	height: 33px;
+	width: 33px;
+	border-width: 2px;
+	margin-top: 4px;
+}
+.TDS_PS_L2 .format_mc .optionClicker::before,
+.TDS_PS_L2 .format_ebsr .EBSR_mc .optionClicker::before,
+.TDS_PS_L2 .format_si .optionClicker::before{
+	line-height: 35px;
+	width: 35px;
+	font-size: 32px;
+}
+.TDS_PS_L3 .format_mc .optionClicker,
+.TDS_PS_L3 .format_ebsr .EBSR_mc .optionClicker,
+.TDS_PS_L3 .format_si .optionClicker{
+	height: 55px;
+	width: 55px;
+	border-width: 2px;
+	margin-top: 4px;
+}
+.TDS_PS_L3 .format_mc .optionClicker::before,
+.TDS_PS_L3 .format_ebsr .EBSR_mc .optionClicker::before,
+.TDS_PS_L3 .format_si .optionClicker::before{
+	line-height: 57px;
+	width: 57px;
+	font-size: 45px;
+}
+.TDS_PS_L4 .format_mc .optionClicker,
+.TDS_PS_L4 .format_ebsr .EBSR_mc .optionClicker,
+.TDS_PS_L4 .format_si .optionClicker{
+	height: 65px;
+	width: 65px;
+	border-width: 2px;
+	margin-top: 4px;
+}
+.TDS_PS_L4 .format_mc .optionClicker::before,
+.TDS_PS_L4 .format_ebsr .EBSR_mc .optionClicker::before,
+.TDS_PS_L4 .format_si .optionClicker::before{
+	line-height: 67px;
+	width: 67px;
+	font-size: 60px;
+}
+
 
 /* @end */
 
@@ -2489,79 +2740,26 @@ BUG: This code prevents svgweb from loading.
 	height: 31px;
 	overflow: hidden;
 	text-indent: -9999px;
-	background: url(../Images/controls/exapnd_collapse_passages.png) no-repeat center 0px;
 	position: absolute;
 	top: 10px;
 	right: 10px;
 	z-index: 2;
 }
-.expand-collapse-passage:hover {
-	background-position: center -30px;
-}
-.passage-collapsed .expand-collapse-passage:active, .passage-collapsed .expand-collapse-passage:focus {
-	background-position: center -60px !important;
-}
-.passage-expanded .expand-collapse-passage {
-	background-position: center -90px;
-}
-.passage-expanded .expand-collapse-passage:hover {
-	background-position: center -120px;
-}
-.passage-expanded .expand-collapse-passage:active, .expand-collapse-passage:focus {
-	background-position: center -150px;
-}
 
 .TDS_PS_L1 .expand-collapse-passage {
 	width: 53px;
 	height: 37px;
-	background-position: center -185px;
-}
-.TDS_PS_L1 .expand-collapse-passage:hover {
-	background-position: center -225px;
-}
-.TDS_PS_L1 .expand-collapse-passage:active, .TDS_PS_L1 .expand-collapse-passage:focus {
-	background-position: center -265px !important;
-}
-.TDS_PS_L1.passage-expanded .expand-collapse-passage {
-	background-position: center -305px;
-}
-.TDS_PS_L1.passage-expanded a.expand-collapse-passage:hover {
-	background-position: center -345px;
-}
-.TDS_PS_L1.passage-expanded .expand-collapse-passage:active, .TDS_PS_L1.passage-expanded .expand-collapse-passage:focus {
-	background-position: center -385px !important;
 }
 
 .TDS_PS_L2 .expand-collapse-passage, .TDS_PS_L3 .expand-collapse-passage, .TDS_PS_L4 .expand-collapse-passage {
 	width: 63px;
 	height: 43px;
-	background-position: center -435px;
-}
-.TDS_PS_L2 .expand-collapse-passage:hover, .TDS_PS_L3 .expand-collapse-passage:hover, .TDS_PS_L4 .expand-collapse-passage:hover {
-	background-position: center -485px;
-}
-.TDS_PS_L2 .expand-collapse-passage:active, .TDS_PS_L2 .expand-collapse-passage:focus, 
-.TDS_PS_L3 .expand-collapse-passage:active, .TDS_PS_L3 .expand-collapse-passage:focus, 
-.TDS_PS_L4 .expand-collapse-passage:active, .TDS_PS_L4 .expand-collapse-passage:focus {
-	background-position: center -535px !important;
-}
-.TDS_PS_L2.passage-expanded .expand-collapse-passage, .TDS_PS_L3.passage-expanded .expand-collapse-passage, .TDS_PS_L4.passage-expanded .expand-collapse-passage {
-	background-position: center -585px;
-}
-.TDS_PS_L2.passage-expanded a.expand-collapse-passage:hover, .TDS_PS_L3.passage-expanded a.expand-collapse-passage:hover, .TDS_PS_L4.passage-expanded a.expand-collapse-passage:hover {
-	background-position: center -635px;
-}
-.TDS_PS_L2.passage-expanded .expand-collapse-passage:active, .TDS_PS_L2.passage-expanded .expand-collapse-passage:focus, 
-.TDS_PS_L3.passage-expanded .expand-collapse-passage:active, .TDS_PS_L3.passage-expanded .expand-collapse-passage:focus, 
-.TDS_PS_L4.passage-expanded .expand-collapse-passage:active, .TDS_PS_L4.passage-expanded .expand-collapse-passage:focus {
-	background-position: center -685px !important;
 }
 
 /* layout 23 */
 .layout_23 .expand-collapse-passage {
 	width: 31px;
 	height: 43px;
-	background-image: url(../Images/controls/exapnd_collapse_passages_vert.png);
 }
 .browser_firefox.browserVer_2.platform_osx.passage-expanded .layout_23 .thePassage, 
 .browser_airsecurebrowser.browserVer_3_5.platform_osx.passage-expanded .layout_23 .thePassage, 
@@ -2569,71 +2767,15 @@ BUG: This code prevents svgweb from loading.
 	border-bottom: 10px solid #8e8f8f;
 	border-right: inherit;
 }
-.layout_23 .expand-collapse-passage:hover {
-	background-position: center -45px;
-}
-.layout_23 a.expand-collapse-passage:active, .layout_23 a.expand-collapse-passage:focus {
-	background-position: center -95px;
-}
-.passage-expanded .layout_23 .expand-collapse-passage {
-	background-position: center -145px;
-}
-.passage-expanded .layout_23 .expand-collapse-passage:hover {
-	background-position: center -195px;
-}
-.passage-expanded .layout_23 .expand-collapse-passage:active, .layout_23 .expand-collapse-passage:focus {
-	background-position: center -245px;
-}
 
 .TDS_PS_L1 .layout_23 .expand-collapse-passage {
 	width: 37px;
 	height: 53px;
-	background-position: center -295px;
 }
-.TDS_PS_L1 .layout_23 a.expand-collapse-passage:hover {
-	background-position: center -350px;
-}
-.TDS_PS_L1 .layout_23 a.expand-collapse-passage:active, .TDS_PS_L1 .layout_23 a.expand-collapse-passage:focus {
-	background-position: center -405px !important;
-}
-.TDS_PS_L1.passage-expanded .layout_23 .expand-collapse-passage {
-	background-position: center -460px;
-}
-.TDS_PS_L1.passage-expanded .layout_23 a.expand-collapse-passage:hover {
-	background-position: center -515px;
-}
-.TDS_PS_L1.passage-expanded .layout_23 a.expand-collapse-passage:active, .TDS_PS_L1.passage-expanded .layout_23 a.expand-collapse-passage:focus {
-	background-position: center -570px !important;
-}
-
 .TDS_PS_L2 .layout_23 .expand-collapse-passage, .TDS_PS_L3 .layout_23 .expand-collapse-passage, .TDS_PS_L4 .layout_23 .expand-collapse-passage {
 	width: 43px;
 	height: 63px;
-	background-position: center -625px;
 }
-.TDS_PS_L2 .layout_23 .expand-collapse-passage:hover, .TDS_PS_L3 .layout_23 .expand-collapse-passage:hover, .TDS_PS_L4 .layout_23 .expand-collapse-passage:hover {
-	background-position: center -695px;
-}
-.TDS_PS_L2 .layout_23 .expand-collapse-passage:active, .TDS_PS_L2 .layout_23 .expand-collapse-passage:focus, 
-.TDS_PS_L3 .layout_23 .expand-collapse-passage:active, .TDS_PS_L3 .layout_23 .expand-collapse-passage:focus, 
-.TDS_PS_L4 .layout_23 .expand-collapse-passage:active, .TDS_PS_L4 .layout_23 .expand-collapse-passage:focus {
-	background-position: center -765px !important;
-}
-.TDS_PS_L2.passage-expanded .layout_23 .expand-collapse-passage, .TDS_PS_L3.passage-expanded .layout_23 .expand-collapse-passage, .TDS_PS_L4.passage-expanded .layout_23 .expand-collapse-passage {
-	background-position: center -835px;
-}
-.TDS_PS_L2.passage-expanded .layout_23 a.expand-collapse-passage:hover, .TDS_PS_L3.passage-expanded .layout_23 a.expand-collapse-passage:hover, .TDS_PS_L4.passage-expanded .layout_23 a.expand-collapse-passage:hover {
-	background-position: center -905px;
-}
-.TDS_PS_L2.passage-expanded .layout_23 .expand-collapse-passage:active, .TDS_PS_L2.passage-expanded .layout_23 .expand-collapse-passage:focus, 
-.TDS_PS_L3.passage-expanded .layout_23 .expand-collapse-passage:active, .TDS_PS_L3.passage-expanded .layout_23 .expand-collapse-passage:focus, 
-.TDS_PS_L4.passage-expanded .layout_23 .expand-collapse-passage:active, .TDS_PS_L4.passage-expanded .layout_23 .expand-collapse-passage:focus {
-	background-position: center -975px !important;
-}
-/* temporarily disable expandable passages for SIM items
-.layoutSingleMulti .layoutColumnLeft .expand-collapse-passage {
-	display: none !important;
-}*/
 /* @end */
 
 /* @group Word List */

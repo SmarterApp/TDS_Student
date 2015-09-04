@@ -27,9 +27,9 @@ body {
 	overflow:hidden;
 }
 /* prevent tablets from getting copy/paste options*/
-.touch #topBar, 
-.touch #dialogs, 
-.touch #content {
+.mobile #topBar, 
+.mobile #dialogs, 
+.mobile #content{
 	-webkit-touch-callout:none;
 	-webkit-user-select:none;
 	-khtml-user-select:none;
@@ -255,7 +255,7 @@ div.pageWrapper div.thePassage.hiding.contentEmpty {
 	border-bottom: solid 1px #c2c2c2;
 	font-size: 11px;
 	line-height: 21px;
-	padding: 0px 10px;
+	padding: 0px 121px 0px 10px;
 	position: relative;
 	overflow:auto;
 }
@@ -276,6 +276,34 @@ div.pageWrapper div.thePassage.hiding.contentEmpty {
 	margin-top: 0px;
 	font-size: 9px;
 	height: 20px;
+}
+.platform_linux.TDS_PS_L1 #jumpQuestions #ddlNavigation, 
+.platform_unix.TDS_PS_L1 #jumpQuestions #ddlNavigation, 
+.platform_linux.TDS_PS_L2 #jumpQuestions #ddlNavigation, 
+.platform_unix.TDS_PS_L2 #jumpQuestions #ddlNavigation {
+	font-size: 12px;
+	height: 24px;
+}
+.platform_linux.TDS_PS_L3 #jumpQuestions #ddlNavigation, 
+.platform_unix.TDS_PS_L3 #jumpQuestions #ddlNavigation, 
+.platform_linux.TDS_PS_L4 #jumpQuestions #ddlNavigation, 
+.platform_unix.TDS_PS_L4 #jumpQuestions #ddlNavigation {
+	font-size: 16px;
+	height: 28px;
+}
+.platform_ios.TDS_PS_L1 #jumpQuestions #ddlNavigation, 
+.platform_ios.TDS_PS_L2 #jumpQuestions #ddlNavigation, 
+.platform_android.TDS_PS_L1 #jumpQuestions #ddlNavigation, 
+.platform_android.TDS_PS_L2 #jumpQuestions #ddlNavigation {
+	font-size: 12px;
+	height: 22px;
+}
+.platform_ios.TDS_PS_L3 #jumpQuestions #ddlNavigation, 
+.platform_ios.TDS_PS_L4 #jumpQuestions #ddlNavigation, 
+.platform_android.TDS_PS_L3 #jumpQuestions #ddlNavigation, 
+.platform_android.TDS_PS_L4 #jumpQuestions #ddlNavigation {
+	font-size: 16px;
+	height: 26px;
 }
 #jumpGo {
 	height: 17px;
@@ -313,7 +341,7 @@ div.pageWrapper div.thePassage.hiding.contentEmpty {
 #smallButtons {
 	position: fixed;
 	top: 0px;
-	right: 10px;
+	right: 20px;
 }
 #smallButtons a {
 	overflow: hidden;
@@ -329,7 +357,6 @@ div.pageWrapper div.thePassage.hiding.contentEmpty {
     border-radius: 50%;
     margin-top: 2px;
     position: relative;
-    background: transparent url(../../Images/universal/universal_shell.png) no-repeat center -7px;
 }
 #smallButtons a:active,
 #smallButtons a:focus, 
@@ -339,30 +366,6 @@ div.pageWrapper div.thePassage.hiding.contentEmpty {
 	-webkit-box-shadow: 0px 0px 2px #b4b4b4;
 	-moz-box-shadow: 0px 0px 2px #b4b4b4;
 	box-shadow: 0px 0px 2px #b4b4b4;
-}
-#smallButtons #btnHelp {
-	background-position: center -748px;
-}
-#smallButtons #btnHelp:active, 
-#smallButtons #btnHelp:focus, 
-#smallButtons #btnHelp:hover {
-	background-position: center -777px;
-}
-#smallButtons #btnSettings {
-	background-position: center -3832px;
-}
-#smallButtons #btnSettings:active, 
-#smallButtons #btnSettings:focus, 
-#smallButtons #btnSettings:hover {
-	background-position: center -3856px;
-}
-#smallButtons #proctorLogout {
-	background-position: center -3884px;
-}
-#smallButtons #proctorLogout:active, 
-#smallButtons #proctorLogout:focus, 
-#smallButtons #proctorLogout:hover {
-	background-position: center -3905px;
 }
 #infoBar h1, 
 #infoBar h2 {
@@ -399,10 +402,6 @@ div.pageWrapper div.thePassage.hiding.contentEmpty {
 }
 ul#studentTools {
 	float: right;
-	/* for better experience in ItemPreview 
-	max-width: 550px;
-	height: 53px;
-	overflow: auto;*/
 }
 #navigation li {
 	display: inline-block;
@@ -456,87 +455,6 @@ ul#studentTools {
  	-ms-transition: background-color .2s ease-in;
     transition: background-color .2s ease-in;
     text-align: center;
-	background: transparent url(../../Images/universal/universal_shell.png) no-repeat;
-}
-#btnNext .icon {
-	background-position: center -1016px;
-}
-#btnNext:active .icon, 
-#btnNext:focus .icon, 
-#btnNext:hover .icon {
-	background-position: center -1066px;
-}
-#btnBack .icon {
-	background-position: center -1116px;
-}
-#btnBack:active .icon, 
-#btnBack:focus .icon, 
-#btnBack:hover .icon {
-	background-position: center -1166px;
-}
-#navigation .inactive a#btnBack .icon, 
-#navigation .inactive a#btnBack:active .icon,
-#navigation .inactive a#btnBack:focus .icon,
-#navigation .inactive a#btnBack:hover .icon {
-	background-position: center -1116px;
-}
-#btnPause .icon {
-	background-position: center -1217px;
-}
-#btnPause:active .icon, 
-#btnPause:focus .icon, 
-#btnPause:hover .icon {
-	background-position: center -1267px;
-}
-#btnEnd .icon, 
-#btnResults .icon {
-	background-position: center -1317px;
-}
-#btnEnd:active .icon, 
-#btnEnd:focus .icon, 
-#btnEnd:hover .icon, 
-#btnResults:active .icon, 
-#btnResults:focus .icon, 
-#btnResults:hover .icon {
-	background-position: center -1367px;
-}
-#btnSave .icon {
-	background-position: center -1418px;
-}
-#btnSave:active .icon, 
-#btnSave:focus .icon, 
-#btnSave:hover .icon {
-	background-position: center -1468px;
-}
-
-
-#btnZoomIn .icon {
-	background-position: center -818px;
-}
-#btnZoomIn:active .icon, 
-#btnZoomIn:focus .icon, 
-#btnZoomIn:hover .icon {
-	background-position: center -868px;
-}
-#btnZoomOut .icon {
-	background-position: center -918px;
-}
-#btnZoomOut:active .icon, 
-#btnZoomOut:focus .icon, 
-#btnZoomOut:hover .icon {
-	background-position: center -968px;
-}
-#btnPrint .icon, 
-#btnPagePrint .icon {
-	background-position: center -3943px;
-}
-#btnPrint:active .icon, 
-#btnPrint:focus .icon, 
-#btnPrint:hover .icon, 
-#btnPagePrint:active .icon, 
-#btnPagePrint:focus .icon, 
-#btnPagePrint:hover .icon {
-	background-position: center -3993px;
 }
 /* hide Print Page unless bith Item and Passage printing are enabled */
 #studentTools #btnPagePrint {
@@ -545,7 +463,6 @@ ul#studentTools {
 .TDS_PoD_Item.TDS_PoD_Stim #studentTools #btnPagePrint {
 	display: block;
 }
-
 #studentTools .printer, 
 #studentTools .printerPractice {
 	display:none;
@@ -555,125 +472,15 @@ ul#studentTools {
 	display: none !important;
 }
 
-#btnCalculator .icon {
-	background-position: center -1817px;
-}
-#btnCalculator:active .icon, 
-#btnCalculator:focus .icon, 
-#btnCalculator:hover .icon {
-	background-position: center -1867px;
-}
-#btnFormula .icon {
-	background-position: center -1615px;
-}
-#btnFormula:active .icon, 
-#btnFormula:focus .icon, 
-#btnFormula:hover .icon {
-	background-position: center -1665px;
-}
-#btnPeriodic .icon {
-	background-position: center -1715px;
-}
-#btnPeriodic:active .icon, 
-#btnPeriodic:focus .icon, 
-#btnPeriodic:hover .icon {
-	background-position: center -1765px;
-}
-#btnItemScore .icon {
-	background-position: center -1918px;
-}
-#btnItemScore:active .icon, 
-#btnItemScore:focus .icon, 
-#btnItemScore:hover .icon {
-	background-position: center -1968px;
-}
-#btnCompass .icon {
-	background-position: center -2020px;
-}
-#btnCompass:active .icon, 
-#btnCompass:focus .icon, 
-#btnCompass:hover .icon {
-	background-position: center -2070px;
-}
-#btnProtractor .icon {
-	background-position: center -2117px;
-}
-#btnProtractor:active .icon, 
-#btnProtractor:focus .icon, 
-#btnProtractor:hover .icon {
-	background-position: center -2167px;
-}
-#btnRuler .icon {
-	background-position: center -2217px;
-}
-#btnRuler:active .icon, 
-#btnRuler:focus .icon, 
-#btnRuler:hover .icon {
-	background-position: center -2267px;
-}
-#btnGlobalNotes .icon {
-	background-position: center -2624px;
-}
-#btnGlobalNotes:active .icon, 
-#btnGlobalNotes:focus .icon, 
-#btnGlobalNotes:hover .icon {
-	background-position: center -2675px;
-}
-#btnLineReader .icon {
-	background-position: center -2923px;
-}
-#btnLineReader:active .icon, 
-#btnLineReader:focus .icon, 
-#btnLineReader:hover .icon {
-	background-position: center -2973px;
-}
-
-#btnMask .icon, 
-#btnMasking .icon {
-	background-position: center -3442px;
-}
-#btnMask:active .icon, 
-#btnMask:focus .icon, 
-#btnMask:hover .icon, 
-#btnMasking:active .icon, 
-#btnMasking:focus .icon, 
-#btnMasking:hover .icon {
-	background-position: center -3492px;
-}
-#btnRubric .icon {
-	background-position: center -3545px;
-}
-#btnRubric:active .icon, 
-#btnRubric:focus .icon, 
-#btnRubric:hover .icon {
-	background-position: center -3595px;
-}
-#btnDictionary .icon {
-	background-position: center -3650px;
-}
-#btnDictionary:active .icon, 
-#btnDictionary:focus .icon, 
-#btnDictionary:hover .icon {
-	background-position: center -3700px;
-}
 #topBar a#btnContext {
 	display: none;
 }
 /* still need to show menu button in nav bar for tablets when we use the inidividial item tool buttons */
-.touch #topBar a#btnContext {
+.mobile #topBar a#btnContext {
 	display: block;
 }
-.touch.TDS_ITM1 #topBar a#btnContext {
+.mobile.TDS_ITM1 #topBar a#btnContext {
 	display: none;
-}
-
-#btnContext .icon {
-	background-position: center -2319px;
-}
-#btnContext:active .icon, 
-#btnContext:focus .icon, 
-#btnContext:hover .icon {
-	background-position: center -2369px;
 }
 
 #navigation .math, 
@@ -896,7 +703,6 @@ ul#studentTools {
 .yui-skin-sam .yuimenu li a {
     border-bottom: solid 1px #ccc;
 	padding: 5px 10px 5px 40px;
-	background: transparent url(../../Images/universal/universal_context.png) no-repeat -9999px 0px;
 }
 .yui-skin-sam .yuimenu li:nth-child(1) a {
    	-moz-border-radius: 5px 5px 0 0;
@@ -934,382 +740,11 @@ ul#studentTools {
 	background-color: transparent;
 	border: none !important;
 }
-.touch .yuimenu li {
+.mobile .yuimenu li {
 	position: static !important;
 }
-.touch .yuimenu li a:focus {
+.mobile .yuimenu li a:focus {
 	outline: none;
-}
-/*.TDS_SLM1 .yuimenu.visible {
-	left: 100% !important;
-	margin-left: -180px;
-}*/
-
-
-/* @group icons */
-.yui-skin-sam .yuimenu .speaksection a, 
-.yui-skin-sam .yuimenu .speaktext a {
-	background-position: left -4px;
-}
-.yui-skin-sam .yuimenu .speaksection a.yuimenuitemlabel-disabled, 
-.yui-skin-sam .yuimenu .speaktext a.yuimenuitemlabel-disabled {
-	background-position: left -4px !important;
-}
-
-.yui-skin-sam .yuimenu .speaksection a:hover, 
-.yui-skin-sam .yuimenu .speaktext a:hover, 
-.yui-skin-sam .yuimenu .speaksection a:focus, 
-.yui-skin-sam .yuimenu .speaktext a:focus, 
-.yui-skin-sam .yuimenu .speaksection a:active, 
-.yui-skin-sam .yuimenu .speaktext a:active {
-	background-position: left -2004px;
-}
-.yui-skin-sam .yuimenu .playquestion a, 
-.yui-skin-sam .yuimenu .playrecording a, 
-.yui-skin-sam .yuimenu .sound_instructions a, 
-.yui-skin-sam .yuimenu .resumespeaking a {
-	background-position: left -1605px;
-}
-.yui-skin-sam .yuimenu .playquestion a.yuimenuitemlabel-disabled, 
-.yui-skin-sam .yuimenu .playrecording a.yuimenuitemlabel-disabled, 
-.yui-skin-sam .yuimenu .sound_instructions a.yuimenuitemlabel-disabled, 
-.yui-skin-sam .yuimenu .resumespeaking a.yuimenuitemlabel-disabled {
-	background-position: left -1605px !important;
-}
-.yui-skin-sam .yuimenu .playquestion a:hover, 
-.yui-skin-sam .yuimenu .playrecording a:hover, 
-.yui-skin-sam .yuimenu .sound_instructions a:hover, 
-.yui-skin-sam .yuimenu .resumespeaking a:hover, 
-.yui-skin-sam .yuimenu .playquestion a:focus, 
-.yui-skin-sam .yuimenu .playrecording a:focus, 
-.yui-skin-sam .yuimenu .sound_instructions a:focus, 
-.yui-skin-sam .yuimenu .resumespeaking a:focus, 
-.yui-skin-sam .yuimenu .playquestion a:active, 
-.yui-skin-sam .yuimenu .playrecording a:active, 
-.yui-skin-sam .yuimenu .sound_instructions a:active, 
-.yui-skin-sam .yuimenu .resumespeaking a:active {
-	background-position: left -3605px;
-}
-.yui-skin-sam .yuimenu .speakstop a, 
-.yui-skin-sam .yuimenu .stopspeaking a, 
-.yui-skin-sam .yuimenu .stoprecording a, 
-.yui-skin-sam .yuimenu .stopquestion a {
-	background-position: left -85px;
-}
-.yui-skin-sam .yuimenu .speakstop a.yuimenuitemlabel-disabled, 
-.yui-skin-sam .yuimenu .stopspeaking a.yuimenuitemlabel-disabled, 
-.yui-skin-sam .yuimenu .stoprecording a.yuimenuitemlabel-disabled, 
-.yui-skin-sam .yuimenu .stopquestion a.yuimenuitemlabel-disabled {
-	background-position: left -85px !important;
-}
-.yui-skin-sam .yuimenu .speakstop a:hover, 
-.yui-skin-sam .yuimenu .stopspeaking a:hover, 
-.yui-skin-sam .yuimenu .stoprecording a:hover, 
-.yui-skin-sam .yuimenu .stopquestion a:hover, 
-.yui-skin-sam .yuimenu .speakstop a:focus, 
-.yui-skin-sam .yuimenu .stopspeaking a:focus, 
-.yui-skin-sam .yuimenu .stoprecording a:focus, 
-.yui-skin-sam .yuimenu .stopquestion a:focus, 
-.yui-skin-sam .yuimenu .speakstop a:active, 
-.yui-skin-sam .yuimenu .stopspeaking a:active, 
-.yui-skin-sam .yuimenu .stoprecording a:active, 
-.yui-skin-sam .yuimenu .stopquestion a:active {
-	background-position: left -2085px;
-}
-.yui-skin-sam .yuimenu .highlight a, 
-.yui-skin-sam .yuimenu .highlighttext a {
-	background-position:left -163px;
-}
-.yui-skin-sam .yuimenu .highlight a.yuimenuitemlabel-disabled, 
-.yui-skin-sam .yuimenu .highlighttext a.yuimenuitemlabel-disabled {
-	background-position: left -163px !important;
-}
-.yui-skin-sam .yuimenu .highlight a:hover, 
-.yui-skin-sam .yuimenu .highlighttext a:hover, 
-.yui-skin-sam .yuimenu .highlight a:focus, 
-.yui-skin-sam .yuimenu .highlighttext a:focus, 
-.yui-skin-sam .yuimenu .highlight a:active, 
-.yui-skin-sam .yuimenu .highlighttext a:active {
-	background-position:left -2163px;
-}
-.yui-skin-sam .yuimenu .removehighlight a, 
-.yui-skin-sam .yuimenu .highlightclear a, 
-.yui-skin-sam .yuimenu .removehighlighttext a, 
-.yui-skin-sam .yuimenu .highlighttextclear a {
-	background-position: left -245px;
-}
-.yui-skin-sam .yuimenu .removehighlight a.yuimenuitemlabel-disabled, 
-.yui-skin-sam .yuimenu .highlightclear a.yuimenuitemlabel-disabled, 
-.yui-skin-sam .yuimenu .removehighlighttext a.yuimenuitemlabel-disabled, 
-.yui-skin-sam .yuimenu .highlighttextclear a.yuimenuitemlabel-disabled {
-	background-position: left -245px !important;
-}
-.yui-skin-sam .yuimenu .removehighlight a:hover, 
-.yui-skin-sam .yuimenu .highlightclear a:hover, 
-.yui-skin-sam .yuimenu .removehighlight a:hover, 
-.yui-skin-sam .yuimenu .highlightclear a:hover, 
-.yui-skin-sam .yuimenu .removehighlight a:focus, 
-.yui-skin-sam .yuimenu .highlightclear a:focus, 
-.yui-skin-sam .yuimenu .removehighlight a:focus, 
-.yui-skin-sam .yuimenu .highlightclear a:focus, 
-.yui-skin-sam .yuimenu .removehighlight a:active, 
-.yui-skin-sam .yuimenu .highlightclear a:active, 
-.yui-skin-sam .yuimenu .removehighlight a:active, 
-.yui-skin-sam .yuimenu .highlightclear a:active {
-	background-position: left -2245px;
-}
-.yui-skin-sam .yuimenu .strikethrough a {
-	background-position: left -321px;
-}
-.yui-skin-sam .yuimenu .strikethrough a.yuimenuitemlabel-disabled {
-	background-position: left -321px !important;
-}
-.yui-skin-sam .yuimenu .strikethrough a:hover, 
-.yui-skin-sam .yuimenu .strikethrough a:focus, 
-.yui-skin-sam .yuimenu .strikethrough a:active {
-	background-position: left -2321px;
-}
-.yui-skin-sam .yuimenu .pause a, 
-.yui-skin-sam .yuimenu .pausespeaking a {
-	background-position: left -645px;
-}
-.yui-skin-sam .yuimenu .pause a.yuimenuitemlabel-disabled, 
-.yui-skin-sam .yuimenu .pausespeaking a.yuimenuitemlabel-disabled {
-	background-position: left -645px !important;
-}
-.yui-skin-sam .yuimenu .pause a:hover, 
-.yui-skin-sam .yuimenu .pausespeaking a:hover, 
-.yui-skin-sam .yuimenu .pause a:focus, 
-.yui-skin-sam .yuimenu .pausespeaking a:focus, 
-.yui-skin-sam .yuimenu .pause a:active, 
-.yui-skin-sam .yuimenu .pausespeaking a:active {
-	background-position: left -2645px;
-}
-.yui-skin-sam .yuimenu .next a {
-	background-position: left -725px;
-}
-.yui-skin-sam .yuimenu .next a.yuimenuitemlabel-disabled {
-	background-position: left -725px !important;
-}
-.yui-skin-sam .yuimenu .next a:hover, 
-.yui-skin-sam .yuimenu .next a:focus, 
-.yui-skin-sam .yuimenu .next a:active {
-	background-position: left -2725px;
-}
-.yui-skin-sam .yuimenu .back a {
-	background-position: left -805px;
-}
-.yui-skin-sam .yuimenu .back a.yuimenuitemlabel-disabled {
-	background-position: left -805px !important;
-}
-.yui-skin-sam .yuimenu .back a:hover, 
-.yui-skin-sam .yuimenu .back a:focus, 
-.yui-skin-sam .yuimenu .back a:active {
-	background-position: left -2805px;
-}
-.yui-skin-sam .yuimenu .zoomIn a {
-	background-position: left -885px;
-}
-.yui-skin-sam .yuimenu .zoomIn a.yuimenuitemlabel-disabled {
-	background-position: left -885px !important;
-}
-.yui-skin-sam .yuimenu .zoomIn a:hover, 
-.yui-skin-sam .yuimenu .zoomIn a:focus, 
-.yui-skin-sam .yuimenu .zoomIn a:active {
-	background-position: left -2885px;
-}
-.yui-skin-sam .yuimenu .zoomOut a {
-	background-position: left -965px;
-}
-.yui-skin-sam .yuimenu .zoomOut a.yuimenuitemlabel-disabled {
-	background-position: left -965px !important;
-}
-.yui-skin-sam .yuimenu .zoomOut a:hover, 
-.yui-skin-sam .yuimenu .zoomOut a:focus, 
-.yui-skin-sam .yuimenu .zoomOut a:active {
-	background-position: left -2965px;
-}
-.yui-skin-sam .yuimenu .calculator a {
-	background-position: left -1045px;
-}
-.yui-skin-sam .yuimenu .calculator a.yuimenuitemlabel-disabled {
-	background-position: left -1045px !important;
-}
-.yui-skin-sam .yuimenu .calculator a:hover, 
-.yui-skin-sam .yuimenu .calculator a:focus, 
-.yui-skin-sam .yuimenu .calculator a:active {
-	background-position: left -3045px;
-}
-.yui-skin-sam .yuimenu .math a {
-	background-position: left -1284px;
-}
-.yui-skin-sam .yuimenu .math a.yuimenuitemlabel-disabled {
-	background-position: left -1284px !important;
-}
-.yui-skin-sam .yuimenu .math a:hover, 
-.yui-skin-sam .yuimenu .math a:focus, 
-.yui-skin-sam .yuimenu .math a:active {
-	background-position: left -3284px;
-}
-.yui-skin-sam .yuimenu .periodic a {
-	background-position: left -1202px;
-}
-.yui-skin-sam .yuimenu .periodic a.yuimenuitemlabel-disabled {
-	background-position: left -1202px !important;
-}
-.yui-skin-sam .yuimenu .periodic a:hover, 
-.yui-skin-sam .yuimenu .periodic a:focus, 
-.yui-skin-sam .yuimenu .periodic a:active {
-	background-position: left -3202px;
-}
-.yui-skin-sam .yuimenu .printerPractice a, 
-.yui-skin-sam .yuimenu .printer a, 
-.yui-skin-sam .yuimenu .printItem a, 
-.yui-skin-sam .yuimenu .printPassage a, 
-.yui-skin-sam .yuimenu .printPage a, 
-.yui-skin-sam .yuimenu .printerPage a {
-	background-position: left -405px;
-}
-.yui-skin-sam .yuimenu .printerPractice a.yuimenuitemlabel-disabled, 
-.yui-skin-sam .yuimenu .printer a.yuimenuitemlabel-disabled, 
-.yui-skin-sam .yuimenu .printItem a.yuimenuitemlabel-disabled, 
-.yui-skin-sam .yuimenu .printPassage a.yuimenuitemlabel-disabled, 
-.yui-skin-sam .yuimenu .printPage a.yuimenuitemlabel-disabled, 
-.yui-skin-sam .yuimenu .printerPage a.yuimenuitemlabel-disabled {
-	background-position: left -405px !important;
-}
-.yui-skin-sam .yuimenu .printerPractice a:hover, 
-.yui-skin-sam .yuimenu .printer a:hover, 
-.yui-skin-sam .yuimenu .printItem a:hover, 
-.yui-skin-sam .yuimenu .printPassage a:hover, 
-.yui-skin-sam .yuimenu .printPage a:hover, 
-.yui-skin-sam .yuimenu .printerPractice a:focus, 
-.yui-skin-sam .yuimenu .printer a:focus, 
-.yui-skin-sam .yuimenu .printItem a:focus, 
-.yui-skin-sam .yuimenu .printPassage a:focus, 
-.yui-skin-sam .yuimenu .printPage a:focus, 
-.yui-skin-sam .yuimenu .printerPractice a:active, 
-.yui-skin-sam .yuimenu .printer a:active, 
-.yui-skin-sam .yuimenu .printItem a:active, 
-.yui-skin-sam .yuimenu .printPassage a:active, 
-.yui-skin-sam .yuimenu .printPage a:active , 
-.yui-skin-sam .yuimenu .prinertPage a:active {
-	background-position: left -2405px;
-}
-.yui-skin-sam .yuimenu .tutorial a, 
-.yui-skin-sam .yuimenu .helpItem a {
-	background-position: left -1125px;
-}
-.yui-skin-sam .yuimenu .tutorial a.yuimenuitemlabel-disabled, 
-.yui-skin-sam .yuimenu .helpItem a.yuimenuitemlabel-disabled {
-	background-position: left -1125px !important;
-}
-.yui-skin-sam .yuimenu .tutorial a:hover, 
-.yui-skin-sam .yuimenu .helpItem a:hover,
-.yui-skin-sam .yuimenu .tutorial a:focus, 
-.yui-skin-sam .yuimenu .helpItem a:focus, 
-.yui-skin-sam .yuimenu .tutorial a:active, 
-.yui-skin-sam .yuimenu .helpItem a:active {
-	background-position: left -3125px;
-}
-.yui-skin-sam .yuimenu .help a {
-	background-position: left -5396px;
-}
-.yui-skin-sam .yuimenu .help a.yuimenuitemlabel-disabled {
-	background-position: left -5396px !important;
-}
-.yui-skin-sam .yuimenu .help a:hover,  
-.yui-skin-sam .yuimenu .help a:focus, 
-.yui-skin-sam .yuimenu .help a:active {
-	background-position: left -5454px;
-}
-.yui-skin-sam .yuimenu .markReview a {
-	background-position: left -564px;
-}
-.yui-skin-sam .yuimenu .markReview a.yuimenuitemlabel-disabled {
-	background-position: left -564px !important;
-}
-.yui-skin-sam .yuimenu .markReview a:hover, 
-.yui-skin-sam .yuimenu .markReview a:focus, 
-.yui-skin-sam .yuimenu .markReview a:active {
-	background-position: left -2564px;
-}
-.yui-skin-sam .yuimenu .comment a {
-	background-position: left -485px;
-}
-.yui-skin-sam .yuimenu .comment a.yuimenuitemlabel-disabled {
-	background-position: left -485px !important;
-}
-.yui-skin-sam .yuimenu .comment a:hover, 
-.yui-skin-sam .yuimenu .comment a:focus, 
-.yui-skin-sam .yuimenu .comment a:active {
-	background-position: left -2485px;
-}
-.yui-skin-sam .yuimenu .save a {
-	background-position: left -1445px;
-}
-.yui-skin-sam .yuimenu .save a.yuimenuitemlabel-disabled {
-	background-position: left -1445px !important;
-}
-.yui-skin-sam .yuimenu .save a:hover, 
-.yui-skin-sam .yuimenu .save a:focus, 
-.yui-skin-sam .yuimenu .save a:active {
-	background-position: left -3445px;
-}
-.yui-skin-sam .yuimenu .endTest a {
-	background-position: left -1365px;
-}
-.yui-skin-sam .yuimenu .endTest a.yuimenuitemlabel-disabled {
-	background-position: left -1365px !important;
-}
-.yui-skin-sam .yuimenu .endTest a:hover, 
-.yui-skin-sam .yuimenu .endTest a:focus, 
-.yui-skin-sam .yuimenu .endTest a:active {
-	background-position: left -3365px;
-}
-.yui-skin-sam .yuimenu .caretMode a {
-	background-position: left -1524px;
-}
-.yui-skin-sam .yuimenu .caretMode a.yuimenuitemlabel-disabled {
-	background-position: left -1524px !important;
-}
-.yui-skin-sam .yuimenu .caretMode a:hover, 
-.yui-skin-sam .yuimenu .caretMode a:focus, 
-.yui-skin-sam .yuimenu .caretMode a:active {
-	background-position: left -3524px;
-}
-.yui-skin-sam .yuimenu .startrecording a {
-	background-position: left -1685px;
-}
-.yui-skin-sam .yuimenu .startrecording a.yuimenuitemlabel-disabled {
-	background-position: left -1685px !important;
-}
-.yui-skin-sam .yuimenu .startrecording a:hover, 
-.yui-skin-sam .yuimenu .startrecording a:focus, 
-.yui-skin-sam .yuimenu .startrecording a:active {
-	background-position: left -3685px;
-}
-.yui-skin-sam .yuimenu .gtrItem a {
-	background-position: left -1765px;
-}
-.yui-skin-sam .yuimenu .gtrItem a.yuimenuitemlabel-disabled {
-	background-position: left -1765px !important;
-}
-.yui-skin-sam .yuimenu .gtrItem a:hover, 
-.yui-skin-sam .yuimenu .gtrItem a:focus, 
-.yui-skin-sam .yuimenu .gtrItem a:active {
-	background-position: left -3765px;
-}
-.yui-skin-sam .yuimenu .changePrompt a {
-	background-position: left -1845px;
-}
-.yui-skin-sam .yuimenu .changePrompt a.yuimenuitemlabel-disabled {
-	background-position: left -1845px !important;
-}
-.yui-skin-sam .yuimenu .changePrompt a:hover, 
-.yui-skin-sam .yuimenu .changePrompt a:focus, 
-.yui-skin-sam .yuimenu .changePrompt a:active {
-	background-position: left -3845px;
 }
 .yuimenu .changePrompt, 
 .TDS_PS_L1 .yuimenu .changePrompt, 
@@ -1320,142 +755,6 @@ ul#studentTools {
 	height: inherit;
 	font-family: "Lucida Grande", "Lucida Sans", Arial, Helvetica, sans-serif;
 }
-.yui-skin-sam .yuimenu .lineReader a {
-	background-position: left -3993px;
-}
-.yui-skin-sam .yuimenu .lineReader a.yuimenuitemlabel-disabled {
-	background-position: left -3993px !important;
-}
-.yui-skin-sam .yuimenu .lineReader a:hover, 
-.yui-skin-sam .yuimenu .lineReader a:focus, 
-.yui-skin-sam .yuimenu .lineReader a:active {
-	background-position: left -3928px;
-}
-.yui-skin-sam .yuimenu .globalNotes a {
-	background-position: left -4049px;
-}
-.yui-skin-sam .yuimenu .globalNotes a.yuimenuitemlabel-disabled {
-	background-position: left -4049px !important;
-}
-.yui-skin-sam .yuimenu .globalNotes a:hover, 
-.yui-skin-sam .yuimenu .globalNotes a:focus, 
-.yui-skin-sam .yuimenu .globalNotes a:active {
-	background-position: left -4119px;
-}
-.yui-skin-sam .yuimenu .ASL a {
-	background-position: left -4182px;
-}
-.yui-skin-sam .yuimenu .ASL a.yuimenuitemlabel-disabled {
-	background-position: left -4182px !important;
-}
-.yui-skin-sam .yuimenu .ASL a:hover, 
-.yui-skin-sam .yuimenu .ASL a:focus, 
-.yui-skin-sam .yuimenu .ASL a:active {
-	background-position: left -4242px;
-}
-.yui-skin-sam .yuimenu .maskingtool a {
-	background-position: left -4304px;
-}
-.yui-skin-sam .yuimenu .maskingtool a.yuimenuitemlabel-disabled {
-	background-position: left -4304px !important;
-}
-.yui-skin-sam .yuimenu .maskingtool a:hover, 
-.yui-skin-sam .yuimenu .maskingtool a:focus, 
-.yui-skin-sam .yuimenu .maskingtool a:active {
-	background-position: left -4364px;
-}
-.yui-skin-sam .yuimenu .rubric a {
-	background-position: left -4663px;
-}
-.yui-skin-sam .yuimenu .rubric a.yuimenuitemlabel-disabled {
-	background-position: left -4663px !important;
-}
-.yui-skin-sam .yuimenu .rubric a:hover, 
-.yui-skin-sam .yuimenu .rubric a:focus, 
-.yui-skin-sam .yuimenu .rubric a:active {
-	background-position: left -4723px;
-}
-.yui-skin-sam .yuimenu .fullscreen a {
-	background-position: left -4543px;
-}
-.yui-skin-sam .yuimenu .fullscreen a.yuimenuitemlabel-disabled {
-	background-position: left -4543px !important;
-}
-.yui-skin-sam .yuimenu .fullscreen a:hover, 
-.yui-skin-sam .yuimenu .fullscreen a:focus, 
-.yui-skin-sam .yuimenu .fullscreen a:active {
-	background-position: left -4603px;
-}
-.yui-skin-sam .yuimenu .dictionary a {
-	background-position: left -4787px;
-}
-.yui-skin-sam .yuimenu .dictionary a.yuimenuitemlabel-disabled {
-	background-position: left -4787px !important;
-}
-.yui-skin-sam .yuimenu .dictionary a:hover, 
-.yui-skin-sam .yuimenu .dictionary a:focus, 
-.yui-skin-sam .yuimenu .dictionary a:active {
-	background-position: left -4847px;
-}
-.yui-skin-sam .yuimenu .systemdialog a {
-	background-position: left -4908px;
-}
-.yui-skin-sam .yuimenu .systemdialog a.yuimenuitemlabel-disabled {
-	background-position: left -4908px !important;
-}
-.yui-skin-sam .yuimenu .systemdialog a:hover, 
-.yui-skin-sam .yuimenu .systemdialog a:focus, 
-.yui-skin-sam .yuimenu .systemdialog a:active {
-	background-position: left -4968px;
-}
-.yui-skin-sam .yuimenu .mt_ruler a {
-	background-position: left -5274px;
-}
-.yui-skin-sam .yuimenu .mt_ruler a.yuimenuitemlabel-disabled {
-	background-position: left -5274px !important;
-}
-.yui-skin-sam .yuimenu .mt_ruler a:hover, 
-.yui-skin-sam .yuimenu .mt_ruler a:focus, 
-.yui-skin-sam .yuimenu .mt_ruler a:active {
-	background-position: left -5334px;
-}
-.yui-skin-sam .yuimenu .mt_compass a {
-	background-position: left -5028px;
-}
-.yui-skin-sam .yuimenu .mt_compass a.yuimenuitemlabel-disabled {
-	background-position: left -5028px !important;
-}
-.yui-skin-sam .yuimenu .mt_compass a:hover, 
-.yui-skin-sam .yuimenu .mt_compass a:focus, 
-.yui-skin-sam .yuimenu .mt_compass a:active {
-	background-position: left -5087px;
-}
-.yui-skin-sam .yuimenu .mt_protractor a {
-	background-position: left -5150px;
-}
-.yui-skin-sam .yuimenu .mt_protractor a.yuimenuitemlabel-disabled {
-	background-position: left -5150px !important;
-}
-.yui-skin-sam .yuimenu .mt_protractor a:hover, 
-.yui-skin-sam .yuimenu .mt_protractor a:focus, 
-.yui-skin-sam .yuimenu .mt_protractor a:active {
-	background-position: left -5210px;
-}
-.yui-skin-sam .yuimenu .mt_protractor a.yuimenuitemlabel-disabled {
-	background-position: left -5150px !important;
-}
-.yui-skin-sam .yuimenu .resetItem a {
-	background-position: left -5513px;
-}
-.yui-skin-sam .yuimenu .resetItem a.yuimenuitemlabel-disabled {
-	background-position: left -5513px !important;
-}
-.yui-skin-sam .yuimenu .resetItem a:hover, 
-.yui-skin-sam .yuimenu .resetItem a:focus, 
-.yui-skin-sam .yuimenu .resetItem a:active {
-	background-position: left -5573px;
-}
-/* @end */
 
 /* @end */
 
@@ -1505,7 +804,7 @@ ul#studentTools {
 }
 #yuiSimpleDialog_mask {
 	z-index: 2000 !important;
-	background: url(../../Images/universal/mask.png) repeat;
+	background: url(../../Images/universal/mask_zigzag.png) repeat;
 	opacity: 1;
 }
 
@@ -1597,8 +896,7 @@ ul#studentTools {
     overflow: hidden;
     text-indent: -9999px;
     line-height: 25px;
-    /* SB-622: commenting following line for tutorial close button
-    margin-top: -25px; */
+    margin-top: -25px;
     text-decoration: none;
 	background: url(../../Images/modern/sprites_mobile_0.png) center -2730px no-repeat;
 }
@@ -1676,7 +974,7 @@ a.yui-panel-bottom:active
 /* @group formulas */
 
 .tool-formula, 
-.touch .tool-rubric {
+.mobile .tool-rubric {
 	height: 510px !important;
 	width: 630px !important;
 }
@@ -2282,6 +1580,52 @@ a.yui-panel-bottom:active
 }
 /* @end */
 
+/* @group review old */
+
+#markedWarning, 
+#unansweredWarning {
+	background: rgba(0, 0, 0, 0) url("../../Images/Universal/marked.png") no-repeat scroll 0 center;
+    border: 1px solid #ccc;
+    font-size: 1.3em;
+    margin-bottom: 1em;
+    padding: 0.5em 0.5em 0.5em 35px;
+    width: 147px;
+}
+#markedWarning {
+	margin-top: 1em;
+}
+#unansweredWarning {
+	background-image: url(../../Images/Universal/unanswered.png);
+}
+
+.review .pages a.marked {
+	background: url(../../Images/Universal/marked.png) no-repeat right center;
+	-moz-box-shadow: 0 0 5px 2px rgba(0,174,239,.1);
+   	-webkit-box-shadow: 0 0 5px 2px rgba(0,174,239,.1);
+	box-shadow: 0 0 5px 2px rgba(0,174,239,.4);
+}
+.review .pages a.marked:hover, 
+.review .pages a.marked:focus, 
+.review .pages a.marked:active, 
+.review .pages a.unanswered:hover, 
+.review .pages a.unanswered:focus, 
+.review .pages a.unanswered:active {
+	background-color: #00aeef;
+	color: #fff;
+	font-style: normal;
+	text-decoration: none;
+	border-color: #fff;
+}
+.review .pages a.unanswered {
+	background: url(../../Images/Universal/unanswered.png) no-repeat right center;
+}
+.review .pages a.marked.unanswered {
+	background-image: url(../../Images/Universal/marked_unanswered.png);
+}
+
+/* @end */
+
+
 /* @group Review New List View */
 .TDS_RSL_ListView #markedWarning, 
 .TDS_RSL_ListView #unansweredWarning {
@@ -2293,6 +1637,7 @@ a.yui-panel-bottom:active
 	padding-bottom: 1em;
 	padding-top: 1em;
 	margin-bottom: 1em;
+	width: auto;
 }
 .TDS_RSL_ListView #markedWarning {
 	margin-top: 1em;
@@ -2503,14 +1848,19 @@ a.yui-panel-bottom:active
 .TDS_CCGray2.yui-skin-sam .yui-panel.comment .bd textarea {
 	border: solid 1px #fff;
 }
+
 /*sets default height of comments container for desktops*/
-.TDS_SCNotepad .yui-panel.comment, 
+.TDS_SCNotepad .yui-panel.comment#comment_note, 
 #global.comment, 
 #Global.comment {
 	height: 430px !important;
 }
 .yui-panel.comment {
 	min-height: 165px;
+}
+/*notepad mobile height*/
+.mobile.TDS_SCNotepad .yui-panel.comment#comment_note{
+	height: 240px !important;
 }
 
 /* set dimensions of textarea */
@@ -2520,15 +1870,19 @@ a.yui-panel-bottom:active
 #yuiSimpleDialog_c textarea {
 	height: 310px;
 }
-.TDS_SCTextArea .yui-panel.comment {
+
+.TDS_SCTextArea .yui-panel.comment#comment_textarea {
 	height: 210px !important;
 }
-.TDS_SCTextArea .yui-panel.comment textarea {
+
+.TDS_SCTextArea .yui-panel.comment#comment_textarea textarea {
 	height: 110px;
 }
-.TDS_SCDropDown .yui-panel.comment {
+
+.TDS_SCDropDown .yui-panel.comment#comment_dropdown {
 	height: 120px !important;
 }
+
 .TDS_PS_L1 #comments textarea, 
 .TDS_PS_L1 .notes_dialog_container textarea, 
 .TDS_PS_L1 #comments select {
@@ -2742,6 +2096,9 @@ a.yui-panel-bottom:active
 .TDS_CCYellow2 .multi-page a {
 	background-color: rgba(252,252,226,0.9);
 }
+.TDS_CCCream .multi-page a {
+	background-color: rgba(237,224,206,0.9);
+}
 .TDS_CCGreen .multi-page a {
 	background-color: rgba(207,247,153,0.9);
 }
@@ -2783,7 +2140,7 @@ a.yui-panel-bottom:active
 	background-color: #00aeef;
 	outline: none;
 }
-.multi-page li:after {
+/*.multi-page li:after {
 	content: "";  
 	display:block !important;
 	height: 12px;
@@ -2797,7 +2154,7 @@ a.yui-panel-bottom:active
 }
 .multi-page li.page-answered:after {
 	background-position: center -200px;
-}
+}*/
 li.page-active {
 	border-color: #0085ad;
 	-webkit-box-shadow: 0px 0px 3px #b4b4b4;
@@ -2831,6 +2188,9 @@ li.page-active a {
 }
 .TDS_CCYellow2 #topBar {
 	background-color: #fcfce2;
+}
+.TDS_CCCream #topBar {
+	background-color: #ede0ce;
 }
 .TDS_CCGreen #topBar {
 	background-color: #cff799;
@@ -2881,7 +2241,10 @@ li.page-active a {
 .TDS_CCYellow #jumpGo:hover, 
 .TDS_CCYellow2 #jumpGo:active, 
 .TDS_CCYellow2 #jumpGo:focus, 
-.TDS_CCYellow2 #jumpGo:hover, 
+.TDS_CCYellow2 #jumpGo:hover,
+.TDS_CCCream #jumpGo:active, 
+.TDS_CCCream #jumpGo:focus, 
+.TDS_CCCream #jumpGo:hover, 
 .TDS_CCGreen #jumpGo:active, 
 .TDS_CCGreen #jumpGo:focus, 
 .TDS_CCGreen #jumpGo:hover, 
@@ -2947,9 +2310,10 @@ li.page-active a {
 	max-width: 3000px !important;
 }
 /* shrinks comment dialog to fit on screen while keyboard is visible */
-.touch.TDS_SCNotepad .yui-panel.comment, 
-.touch.TDS_SCTextArea .yui-panel.comment,  
-.touch #global.comment {
+.mobile.TDS_SCNotepad .yui-panel.comment#comment_note, 
+.mobile.TDS_SCTextArea .yui-panel.comment,  
+.mobile.TDS_SCDropDown .yui-panel.comment#comment_dropdown,
+.mobile #global.comment{
 	height: 240px !important;
 	margin-top: 0px !important;
 	top: 20px;
@@ -2957,15 +2321,15 @@ li.page-active a {
 	margin-left: -200px;
 }
 
-.touch #yuiSimpleDialog_c {
+.mobile #yuiSimpleDialog_c{
 	top: 20px !important;
 	position: fixed !important;
 }
-.touch .comment {
+.mobile .comment{
 	top: 20px !important;
 	position: fixed !important;
 }
-.touch .TDS_SCDropDown #1_notes_c {
+.mobile .TDS_SCDropDown #1_notes_c{
 	top: 20px !important;
 	position: fixed !important;
 }
@@ -2982,14 +2346,14 @@ li.page-active a {
 .platform_android .yui-panel.comment {
 	left: 33%;
 }
-.touch.TDS_SCNotepad .yui-panel.comment textarea, 
-.touch.TDS_SCTextArea .yui-panel.comment textarea, 
-.touch #global.comment textarea {
+.mobile.TDS_SCNotepad .yui-panel.comment textarea, 
+.mobile.TDS_SCTextArea .yui-panel.comment textarea, 
+.mobile #global.comment textarea{
 	height: 120px;
 }
-.touch #yuiSimpleDialog_mask, 
-.touch #comment_mask, 
-.touch #global_mask {
+.mobile #yuiSimpleDialog_mask, 
+.mobile #comment_mask, 
+.mobile #global_mask{
 	min-width: 100.05% !important;
 	min-height: 150% !important;
 	position: fixed;
@@ -3004,7 +2368,7 @@ li.page-active a {
 .touch.platform_android input, .touch.platform_android select {
 	font-family: "Lucida Grande", Lucida, Verdana, sans-serif !important;
 }
-.showingDialog.touch #contents {
+.showingDialog.mobile #contents {
 	overflow: hidden;
 	position: fixed;
 }
@@ -3014,8 +2378,13 @@ li.page-active a {
 	-webkit-user-modify: read-write-plaintext-only;
 }
 
-.touch .yui-module.yui-overlay.yuimenu.visible {
+/*This needs to no longer apply to ALL touch devices - we have touch laptops, like the Acer Chromebook, to worry about */
+.mobile .yui-module.yui-overlay.yuimenu.visible{
 	position: fixed !important;
+}
+/*Above position fixed is breaking menus on streamlined mode for all touch devices.  Disabling*/
+.TDS_SLM1.touch .yui-module.yui-overlay.yuimenu.visible{
+	position: absolute !important;
 }
 
 #landscapePlease {
@@ -3077,9 +2446,6 @@ body.platform_chrome.browser_chrome #contents,
 body.platform_chrome.browser_airsecurebrowser #contents
  {
     position: fixed;
-}
-body.platform_chrome #contents {
-	top: 76px;
 }
 /* helps keep calculator from shifting above the top of the window in android */
 body.platform_android.showingTools #tools .TDS_CalcSci, 
@@ -3156,3 +2522,961 @@ body.browser_safari.platform_osx.showingLoading {
 .platform_ios.browser_airmobilesecurebrowser.tds-contentRedraw #contents {
 	border-bottom: solid 1px transparent;
 }
+
+/* @group Fonts */
+
+@font-face {
+	font-family: 'icomoon';
+	src:url('../../Fonts/icomoon.eot?6tk58v');
+	src:url('../../Fonts/icomoon.eot?#iefix6tk58v') format('embedded-opentype'),
+		url('../../Fonts/icomoon.ttf?6tk58v') format('truetype'),
+		url('../../Fonts/icomoon.woff?6tk58v') format('woff'),
+		url('../../Fonts/icomoon.svg?6tk58v#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+#topBar .icon, 
+#smallButtons a, 
+.yuimenu li a:before, 
+.multi-page li.page-answered a:after {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+#navigation a:hover .icon:before, 
+#topBar #smallButtons a:hover:before, 
+#navigation a:active .icon:before, 
+#topBar #smallButtons a:active:before, 
+#navigation a:focus .icon:before, 
+#topBar #smallButtons a:focus:before {
+	color: #fff;
+}
+#smallButtons a:before {
+	position: absolute;
+	height: 10px;
+	width: 10px;
+	top: 50%;
+	left: 50%;
+	margin-top: -6px;
+	margin-left: -6px;
+	text-indent: 0px;
+	color: #7b7b7b;
+	font-size: 12px;
+}
+.TDS_CCInvert #smallButtons a:before, 
+.TDS_CCWhiteN #smallButtons a:before {
+	color: #fff;
+}
+.TDS_CCYellowB #smallButtons a:before {
+	color: #ffcc00;
+}
+#btnHelp:before {
+	content: "\e600";
+}
+#btnSettings:before {
+	content: "\e618";
+}
+a#proctorLogout:before {
+	content: "\e61f";
+	margin-left: -5px;
+}
+
+/* @group navigation */
+
+#topBar .icon:before {
+	font-size: 18px;
+    line-height: 28px;
+    text-align: center;
+    color: #00a651;
+}
+.TDS_CCInvert #topBar .icon:before, 
+.TDS_CCWhiteN #topBar .icon:before {
+	color: #fff;
+}
+.TDS_CCYellowB #topBar .icon:before {
+	color: #ffcc00;
+}
+#topBar li.inactive a .icon:before {
+	color: #00a651;
+}
+#btnPause .icon:before {
+	content: "\e601";
+	color: #f7941d;
+}
+#btnSave .icon:before {
+	content: "\e602";
+}
+#btnNext .icon:before {
+	content: "\e603";
+}
+#btnBack .icon:before {
+	content: "\e604";
+}
+#btnZoomOut .icon:before {
+	content: "\e606";
+}
+#btnZoomIn .icon:before {
+	content: "\e607";
+}
+#btnFullScreen .icon:before {
+	content: "\e615";
+}
+.fs-enabled a#btnFullScreen .icon {
+	text-indent: 0px;
+}
+.fs-enabled a#btnFullScreen .icon:before {
+	content: "\e616";
+	color: #ccc;
+	font-size: 40px;
+	line-height: 60px;
+	opacity: .3;
+}
+.fs-enabled a#btnFullScreen .icon:hover:before, 
+.fs-enabled a#btnFullScreen .icon:active:before, 
+.fs-enabled a#btnFullScreen .icon:focus:before {
+	color: #fff;
+	opacity: 1;
+}
+#htmlBody.fs-enabled #studentControls::after {
+    display: none;
+}
+#btnEnd .icon:before {
+	content: "\e60c";
+	color: #9e0b0f;
+}
+#btnFormula .icon:before {
+	content: "\e621";
+	font-size: 24px;
+  	line-height: 30px;
+}
+.TDS_PS_L1 #topBar #btnFormula .icon:before, 
+.TDS_PS_L2 #topBar #btnFormula .icon:before {
+	font-size: 31px;
+  	line-height: 39px;
+}
+.TDS_PS_L3 #topBar #btnFormula .icon:before, 
+.TDS_PS_L4 #topBar #btnFormula .icon:before {
+	font-size: 44px;
+  	line-height: 55px;
+}
+#btnPeriodic .icon:before {
+	content: "\e61d";
+	font-size: 26px;
+  	line-height: 32px;
+}
+.TDS_PS_L1 #topBar #btnPeriodic .icon:before, 
+.TDS_PS_L2 #topBar #btnPeriodic .icon:before {
+	font-size: 33px;
+  	line-height: 42px;
+}
+.TDS_PS_L3 #topBar #btnPeriodic .icon:before, 
+.TDS_PS_L4 #topBar #btnPeriodic .icon:before {
+	font-size: 49px;
+  	line-height: 57px;
+}
+#btnItemScore .icon:before {
+	content: "\e617";
+}
+#btnCompass .icon:before {
+	content: "\e624";
+	font-size: 26px;
+  	line-height: 30px;
+}
+.TDS_PS_L1 #topBar #btnCompass .icon:before, 
+.TDS_PS_L2 #topBar #btnCompass .icon:before {
+	font-size: 33px;
+  	line-height: 42px;
+}
+.TDS_PS_L3 #topBar #btnCompass .icon:before, 
+.TDS_PS_L4 #topBar #btnCompass .icon:before {
+	font-size: 44px;
+  	line-height: 55px;
+}
+#btnProtractor .icon:before {
+	content: "\e619";
+	font-size: 24px;
+  	line-height: 28px;
+}
+.TDS_PS_L1 #topBar #btnProtractor .icon:before, 
+.TDS_PS_L2 #topBar #btnProtractor .icon:before {
+	font-size: 33px;
+  	line-height: 38px;
+}
+.TDS_PS_L3 #topBar #btnProtractor .icon:before, 
+.TDS_PS_L4 #topBar #btnProtractor .icon:before {
+	font-size: 49px;
+  	line-height: 52px;
+}
+#btnRuler .icon:before {
+	content: "\e61b";
+	font-size: 24px;
+  	line-height: 30px;
+}
+.TDS_PS_L1 #topBar #btnRuler .icon:before, 
+.TDS_PS_L2 #topBar #btnRuler .icon:before {
+	font-size: 33px;
+  	line-height: 42px;
+}
+.TDS_PS_L3 #topBar #btnRuler .icon:before, 
+.TDS_PS_L4 #topBar #btnRuler .icon:before {
+	font-size: 49px;
+  	line-height: 57px;
+}
+#btnGlobalNotes .icon:before {
+	content: "\e620";
+}
+#btnLineReader .icon:before {
+	content: "\e614";
+	font-size: 26px;
+  	line-height: 30px;
+}
+.TDS_PS_L1 #topBar #btnLineReader .icon:before, 
+.TDS_PS_L2 #topBar #btnLineReader .icon:before {
+	font-size: 33px;
+  	line-height: 42px;
+}
+.TDS_PS_L3 #topBar #btnLineReader .icon:before, 
+.TDS_PS_L4 #topBar #btnLineReader .icon:before {
+	font-size: 49px;
+  	line-height: 57px;
+}
+#btnMask .icon:before {
+	content: "\e62b";
+	font-size: 22px;
+}
+.TDS_PS_L1 #topBar #btnMask .icon:before, 
+.TDS_PS_L2 #topBar #btnMask .icon:before {
+	font-size: 29px;
+  	line-height: 40px;
+}
+.TDS_PS_L3 #topBar #btnMask .icon:before, 
+.TDS_PS_L4 #topBar #btnMask .icon:before {
+	font-size: 42px;
+  	line-height: 57px;
+}
+.lr-enabled #btnLineReader .icon:before, 
+.TDS_Masking1.msk-enabled #btnMasking .icon:before, 
+.TDS_Masking1.msk-enabled #btnMask .icon:before {
+	color: #fff;
+}
+#btnRubric .icon:before {
+	content: "\e61a";
+}
+#btnDictionary .icon:before {
+	content: "\e623";
+}
+#btnCalculator .icon:before {
+	content: "\e626";
+}
+#btnContext .icon:before {
+	content: "\e61e";
+}
+#btnPagePrint .icon:before, 
+#btnPrint .icon:before {
+	content: "\e61c";
+}
+
+/* @end */
+
+
+
+
+
+
+/* @group menus */
+.yui-skin-sam .yuimenu li a {
+    background-image: none;
+    position: relative;
+}
+.yuimenu li a:before {
+    position: absolute;
+  	height: 20px;
+  	width: 30px;
+  	top: 2px;
+  	left: 2px;
+  	text-indent: 0px;
+  	color: #525252;
+  	content: " ";
+  	font-size: 16px;
+  	line-height: 20px;
+  	text-align: center;
+}
+.yuimenu .bd ul li a:active:before, 
+.yuimenu .bd ul li a:hover:before, 
+.yuimenu .bd ul li a:focus:before {
+    color: #fff;
+}
+.TDS_CCYellowB .yuimenu li a:before {
+    color: #ffcc00;
+}
+.TDS_CCInvert .yuimenu li a:before, 
+.TDS_CCWhiteN .yuimenu li a:before {
+    color: #fff;
+}
+.TDS_CCInvert .yuimenu .bd ul li a:hover:before, 
+.TDS_CCWhiteN .yuimenu .bd ul li a:hover:before, 
+.TDS_CCInvert .yuimenu .bd ul li a:active:before, 
+.TDS_CCWhiteN .yuimenu .bd ul li a:active:before, 
+.TDS_CCInvert .yuimenu .bd ul li a:focus:before, 
+.TDS_CCWhiteN .yuimenu .bd ul li a:focus:before {
+    color: #000;
+}
+.yuimenu .bd ul li a.yuimenuitemlabel-disabled:before, 
+.yuimenu .bd ul li a.yuimenuitemlabel-disabled:hover:before, 
+.yuimenu .bd ul li a.yuimenuitemlabel-disabled:active:before, 
+.yuimenu .bd ul li a.yuimenuitemlabel-disabled:focus:before {
+	color: #b1b0b2;
+}
+.yuimenu .bd ul li a.yuimenuitemlabel-disabled, 
+.yuimenu .bd ul li a.yuimenuitemlabel-disabled:hover, 
+.yuimenu .bd ul li a.yuimenuitemlabel-disabled:active, 
+.yuimenu .bd ul li a.yuimenuitemlabel-disabled:focus {
+	color: #313131 !important;
+	opacity: .5;
+}
+.yuimenu .speaksection a:before, 
+.yuimenu .speaktext a:before {
+	content: "\e62f";
+}
+.yuimenu .playquestion a:before, 
+.yuimenu .playrecording a:before, 
+.yuimenu .sound_instructions a:before, 
+.yuimenu .resumespeaking a:before {
+	content: "\e629";
+}
+.yuimenu .speakstop a:before, 
+.yuimenu .stopspeaking a:before, 
+.yuimenu .stoprecording a:before, 
+.yuimenu .stopquestion a:before, 
+.yuimenu .endTest a:before {
+	content: "\e60c";
+}
+.yuimenu .highlight a:before, 
+.yuimenu .highlighttext a:before {
+	content: "\e60f";
+	font-size: 14px;
+}
+.yuimenu .removehighlight a:before, 
+.yuimenu .highlightclear a:before, 
+.yuimenu .removehighlighttext a:before, 
+.yuimenu .highlighttextclear a:before, 
+.yuimenu .highlightremove a:before {
+	content: "\e60e";
+}
+.yuimenu .strikethrough a:before {
+	content: "\e611";
+	font-size: 12px;
+}
+.yuimenu .pause a:before, 
+.yuimenu .pausespeaking a:before {
+	content: "\e601";
+}
+.yuimenu .next a:before {
+	content: "\e603";
+}
+.yuimenu .back a:before {
+	content: "\e604";
+}
+.yuimenu .zoomIn a:before {
+	content: "\e607";
+}
+.yuimenu .zoomOut a:before {
+	content: "\e606";
+}
+.yuimenu .calculator a:before {
+	content: "\e626";
+}
+.yuimenu .math a:before {
+	content: "\e621";
+	font-size: 20px;
+}
+.yuimenu .periodic a:before {
+	content: "\e61d";
+	font-size: 26px;
+}
+.yuimenu .printerPractice a:before, 
+.yuimenu .printer a:before, 
+.yuimenu .printItem a:before, 
+.yuimenu .printPassage a:before, 
+.yuimenu .printPage a:before, 
+.yuimenu .printerPage a:before {
+	content: "\e61c";
+}
+.yuimenu .tutorial a:before, 
+.yuimenu .helpItem a:before {
+	content: "\e631";
+}
+.yuimenu .help a:before {
+	content: "\e627";
+}
+.yuimenu .markReview a:before {
+	content: "\e62a";
+	font-size: 20px;
+}
+.yuimenu .comment a:before {
+	content: "\e62e";
+	font-size: 20px;
+}
+.yuimenu .comment.Notepad a:before
+{
+    content: "\e633";
+    font-size: 16px;
+}
+.yuimenu .save a:before {
+	content: "\e602";
+}
+.yuimenu .caretMode a:before {
+	content: "\e60d";
+}
+.yuimenu .startrecording a:before {
+	content: "\e62d";
+}
+.yuimenu .gtrItem a:before {
+	content: "\e62c";
+}
+.yuimenu .changePrompt a:before {
+	content: "\e630";
+}
+.yuimenu .lineReader a:before {
+	content: "\e614";
+	font-size: 20px;
+}
+.yuimenu .globalNotes a:before {
+	content: "\e620";
+}
+.yuimenu .ASL a:before {
+	content: "\e608";
+	font-size: 28px;
+}
+.yuimenu .maskingtool a:before {
+	content: "\e62b";
+	font-size: 20px;
+}
+.yuimenu .rubric a:before {
+	content: "\e61a";
+}
+.yuimenu .fullscreen a:before {
+	content: "\e616";
+}
+.yuimenu .dictionary a:before {
+	content: "\e623";
+}
+.yuimenu .systemdialog a:before {
+	content: "\e618";
+}
+.yuimenu .mt_ruler a:before {
+	content: "\e61b";
+}
+.yuimenu .mt_compass a:before {
+	content: "\e624";
+	font-size: 20px;
+}
+.yuimenu .mt_protractor a:before {
+	content: "\e619";
+}
+.yuimenu .resetItem a:before {
+	content: "\e609";
+}
+.yuimenu .response-recovery a:before {
+	content: "\e632";
+}
+.TDS_PS_L1 .yuimenuitem .yuimenuitemlabel, 
+.TDS_PS_L2 .yuimenuitem .yuimenuitemlabel {
+	font-size: 18px;
+	padding: 10px 10px 10px 50px;
+}
+.TDS_PS_L1 .yuimenuitem .yuimenuitemlabel:before, 
+.TDS_PS_L2 .yuimenuitem .yuimenuitemlabel:before {
+	height: 30px;
+  	width: 40px;
+   	font-size: 20px;
+  	line-height: 30px;
+}
+.TDS_PS_L1 .yuimenu .ASL a.yuimenuitemlabel:before, 
+.TDS_PS_L2 .yuimenu .ASL a.yuimenuitemlabel:before {
+	font-size: 34px;
+}
+.TDS_PS_L1 .yuimenu .strikethrough a.yuimenuitemlabel:before, 
+.TDS_PS_L2 .yuimenu .strikethrough a.yuimenuitemlabel:before {
+	font-size: 16px;
+}
+.TDS_PS_L1 .yuimenu .markReview a.yuimenuitemlabel:before, 
+.TDS_PS_L2 .yuimenu .markReview a.yuimenuitemlabel:before, 
+.TDS_PS_L1 .yuimenu .math a.yuimenuitemlabel:before, 
+.TDS_PS_L2 .yuimenu .math a.yuimenuitemlabel:before, 
+.TDS_PS_L1 .yuimenu .comment a.yuimenuitemlabel:before, 
+.TDS_PS_L2 .yuimenu .comment a.yuimenuitemlabel:before, 
+.TDS_PS_L1 .yuimenu .lineReader a.yuimenuitemlabel:before, 
+.TDS_PS_L2 .yuimenu .lineReader a.yuimenuitemlabel:before {
+	font-size: 24px;
+}
+.TDS_PS_L1 .yuimenu .periodic a.yuimenuitemlabel:before, 
+.TDS_PS_L2 .yuimenu .periodic a.yuimenuitemlabel:before {
+	font-size: 30px;
+}
+
+
+.TDS_PS_L3 .yuimenuitem .yuimenuitemlabel, 
+.TDS_PS_L4 .yuimenuitem .yuimenuitemlabel {
+	font-size: 24px;
+	padding: 13px 13px 13px 55px;
+}
+.TDS_PS_L3 .yuimenuitem .yuimenuitemlabel:before, 
+.TDS_PS_L4 .yuimenuitem .yuimenuitemlabel:before {
+	height: 36px;
+  	width: 50px;
+   	font-size: 24px;
+  	line-height: 36px;
+}
+
+.TDS_PS_L3 .yuimenu .ASL a.yuimenuitemlabel:before, 
+.TDS_PS_L4 .yuimenu .ASL a.yuimenuitemlabel:before {
+	font-size: 40px;
+}
+.TDS_PS_L3 .yuimenu .strikethrough a.yuimenuitemlabel:before, 
+.TDS_PS_L4 .yuimenu .strikethrough a.yuimenuitemlabel:before {
+	font-size: 20px;
+}
+.TDS_PS_L3 .yuimenu .markReview a.yuimenuitemlabel:before, 
+.TDS_PS_L4 .yuimenu .markReview a.yuimenuitemlabel:before, 
+.TDS_PS_L3 .yuimenu .math a.yuimenuitemlabel:before, 
+.TDS_PS_L4 .yuimenu .math a.yuimenuitemlabel:before, 
+.TDS_PS_L3 .yuimenu .comment a.yuimenuitemlabel:before, 
+.TDS_PS_L4 .yuimenu .comment a.yuimenuitemlabel:before, 
+.TDS_PS_L3 .yuimenu .lineReader a.yuimenuitemlabel:before, 
+.TDS_PS_L4 .yuimenu .lineReader a.yuimenuitemlabel:before {
+	font-size: 30px;
+}
+.TDS_PS_L3 .yuimenu .periodic a.yuimenuitemlabel:before, 
+.TDS_PS_L4 .yuimenu .periodic a.yuimenuitemlabel:before {
+	font-size: 34px;
+}
+/* @end */
+
+body.platform_chrome.TDS_PS_L0 #contents {
+	top: 76px;
+}
+/* keeps passage and questions from running into each other */
+.touch.platform_android .theQuestions, 
+.touch.platform_android .thePassage {
+	position: fixed;
+	top: 76px;
+}
+.TDS_SLM1.touch.platform_android #contents {
+	overflow: auto;
+}
+/* @group Level 1-2 */
+
+.TDS_PS_L1 #topBar .icon:before, 
+.TDS_PS_L2 #topBar .icon:before {
+	font-size: 26px;
+    line-height: 39px;
+}
+.TDS_PS_L1 #smallButtons a:before, 
+.TDS_PS_L2 #smallButtons a:before {
+	font-size: 16px;
+    height: 16px;
+    margin-left: -8px;
+    margin-top: -8px;
+    width: 16px;
+}
+.TDS_PS_L1 #infoBar, 
+.TDS_PS_L2 #infoBar {
+	font-size: 20px;
+	line-height: 25px;
+	height: 25px;
+	overflow: auto;
+	padding-right: 128px;
+} 
+.TDS_PS_L1 #jumpQuestions label, 
+.TDS_PS_L2 #jumpQuestions label {
+    line-height: 20px;
+} 
+.TDS_PS_L1 #jumpQuestions .ddlNavigation, 
+.TDS_PS_L2 #jumpQuestions .ddlNavigation {
+    margin-top: 0px;
+} 
+.TDS_PS_L1 #smallButtons a, 
+.TDS_PS_L2 #smallButtons a {
+	height: 20px;
+	width: 20px; 
+	margin-top: 0px;
+}
+.TDS_PS_L1 #topBar, 
+.TDS_PS_L2 #topBar {
+	height: 95px;
+} 
+.TDS_PS_L1 #navigation, 
+.TDS_PS_L2 #navigation {
+    font-size: 16px;
+    height: 68px;
+} 
+.TDS_PS_L1 #studentControls:after, 
+.TDS_PS_L2 #studentControls:after {
+	font-size: 0;
+	content: " ";
+	display: block;
+	height: 0px;
+	width: 100%;
+	border-bottom: solid 1px #c2c2c2;
+	position: absolute;
+	top: 94px;
+	left: 0px;
+}
+.TDS_PS_L1 #navigation ul,  
+.TDS_PS_L1 #navigation li, 
+.TDS_PS_L2 #navigation ul,  
+.TDS_PS_L2 #navigation li {
+    height: 68px;
+} 
+.TDS_PS_L1 #navigation a, 
+.TDS_PS_L2 #navigation a {
+    min-width: 50px;
+    padding: 46px 6px 0;
+} 
+.TDS_PS_L1 #navigation .icon, 
+.TDS_PS_L2 #navigation .icon {
+    height: 40px;
+    margin-left: -21px;
+    top: 3px;
+    width: 40px;
+}
+.TDS_PS_L1 #contents, 
+.TDS_PS_L2 #contents, 
+.TDS_PS_L1.touch.platform_android .theQuestions, 
+.TDS_PS_L1.touch.platform_android .thePassage, 
+.TDS_PS_L2.touch.platform_android .theQuestions, 
+.TDS_PS_L2.touch.platform_android .thePassage {
+	top: 96px;
+}
+.TDS_PS_L1 .passageTools.toolsContainer, 
+.TDS_PS_L2 .passageTools.toolsContainer {
+    top: 115px;
+}
+/*.TDS_PS_L1 .multi-page, 
+.TDS_PS_L2 .multi-page {
+    top: 95px;
+}*/
+
+/* @end */
+
+/* @group Level 3-4 */
+
+.TDS_PS_L3 #topBar .icon:before, 
+.TDS_PS_L4 #topBar .icon:before {
+	font-size: 32px;
+    line-height: 53px;
+}
+.TDS_PS_L3 #smallButtons a:before, 
+.TDS_PS_L4 #smallButtons a:before {
+	font-size: 18px;
+	height: 20px;
+	width: 20px;
+	margin-top: -10px;
+	margin-left: -10px;
+}
+.TDS_PS_L3 #infoBar, 
+.TDS_PS_L4 #infoBar {
+	font-size: 24px;
+	line-height: 30px;
+	height: 30px;
+	overflow: auto;
+	padding-right: 153px;
+} 
+.TDS_PS_L3 #jumpQuestions label, 
+.TDS_PS_L4 #jumpQuestions label {
+    line-height: 23px;
+} 
+.TDS_PS_L3 #jumpQuestions .ddlNavigation, 
+.TDS_PS_L4 #jumpQuestions .ddlNavigation {
+    margin-top: 0px;
+} 
+.TDS_PS_L3 #smallButtons a, 
+.TDS_PS_L4 #smallButtons a {
+	height: 25px;
+	width: 25px; 
+	margin-top: 0px;
+}
+.TDS_PS_L3 #topBar, 
+.TDS_PS_L4 #topBar {
+	height: 119px;
+} 
+.TDS_PS_L3 #navigation, 
+.TDS_PS_L4 #navigation {
+    font-size: 22px;
+    height: 88px;
+} 
+.TDS_PS_L3 #studentControls:after, 
+.TDS_PS_L4 #studentControls:after {
+	font-size: 0;
+	content: " ";
+	display: block;
+	height: 0px;
+	width: 100%;
+	border-bottom: solid 1px #c2c2c2;
+	position: absolute;
+	top: 119px;
+	left: 0px;
+}
+.TDS_PS_L3 #navigation ul,  
+.TDS_PS_L3 #navigation li, 
+.TDS_PS_L4 #navigation ul,  
+.TDS_PS_L4 #navigation li {
+    height: 88px;
+} 
+.TDS_PS_L3 #navigation a, 
+.TDS_PS_L4 #navigation a {
+    min-width: 60px;
+    padding: 60px 6px 0;
+} 
+.TDS_PS_L3 #navigation .icon, 
+.TDS_PS_L4 #navigation .icon {
+    height: 56px;
+    margin-left: -29px;
+    top: 2px;
+    width: 56px;
+}
+.TDS_PS_L3 #contents, 
+.TDS_PS_L4 #contents, 
+.TDS_PS_L3.touch.platform_android .theQuestions, 
+.TDS_PS_L3.touch.platform_android .thePassage, 
+.TDS_PS_L4.touch.platform_android .theQuestions, 
+.TDS_PS_L4.touch.platform_android .thePassage {
+	top: 120px;
+}
+.TDS_PS_L3 .passageTools.toolsContainer, 
+.TDS_PS_L4 .passageTools.toolsContainer {
+    top: 130px;
+}
+/*.TDS_PS_L3 .multi-page, 
+.TDS_PS_L4 .multi-page {
+    top: 120px;
+}*/
+
+/* @end */
+
+/* @group pagination widget */
+.multi-page {
+	position: absolute;
+	top: 0px;
+}
+.multi-page li.page-answered a::after {
+    content: "\e628";
+    background-image: none;
+    display: block !important;
+    height: 12px;
+    left: 50%;
+    margin-left: -6px;
+    position: absolute;
+    top: 2px;
+    width: 12px;
+    z-index: 1;
+    color: #00a651;
+    font-size: 10px;
+    text-align: center;
+}
+.multi-page li.page-answered a:hover::after, 
+.multi-page li.page-answered a:active::after, 
+.multi-page li.page-answered a:focus::after {
+    color: #fff;
+}
+.TDS_PS_L1 .multi-page a, 
+.TDS_PS_L2 .multi-page a {
+	font-size: 16px;
+  	min-width: 12px;
+  	padding: 10px 7px 2px;
+}
+.TDS_PS_L1 .multi-page li.page-answered a::after, 
+.TDS_PS_L2 .multi-page li.page-answered a::after {
+    top: 1px;
+    font-size: 12px;
+}
+.TDS_PS_L3 .multi-page a, 
+.TDS_PS_L4 .multi-page a {
+	font-size: 20px;
+  	line-height: 30px;
+  	min-width: 12px;
+  	padding: 12px 10px 2px;
+}
+.TDS_PS_L3 .multi-page li.page-answered a::after, 
+.TDS_PS_L4 .multi-page li.page-answered a::after {
+    top: 0;
+    font-size: 14px;
+}
+/* @end */
+/* @end */
+
+
+
+/* @group bacon */
+	.bacon {
+        display: block;
+    	float: right;
+	    height: 3px;
+    	line-height: 0;
+    	margin-bottom: -3px;
+    }
+	.bacon span {
+        display: block;
+        width: 5px;
+        height: 3px;
+        float: left;
+    }
+    .baconItem span {
+        width: 3px;
+        height: 3px;
+        margin-left: 2px;
+    }
+    .bacon span.reference {
+        background-color: orange;
+    }
+    .bacon span.A {
+        background-color: red;
+    }
+    .bacon span.B {
+        background-color: blue;
+    }
+
+	.bacon.baconPage {
+	position: fixed;
+	top: 73px;
+	z-index: 99;
+	left: 0px;
+	width: 100%;
+	height: 3px;
+	display: block;
+	background-color: #c2c2c2;
+	overflow: hidden; 
+}
+.baconPage span {
+	display: block;
+	height: 3px;
+	width: 3px;
+	margin-left: 3px;
+	float: left;
+}
+
+.baconStripes .bacon.baconPage {
+	top: 72px;
+	height: 4px;
+	background-color: #fff;
+}
+.baconStripes .bacon span {
+	height: 4px;
+	width: 5px;
+	margin-left: 0px;
+	border-right: solid 2px #fff;
+}
+.baconStripes .bacon span.A {
+	background-color: #38c3de;
+}
+.baconStripes .bacon span.B {
+	background-color: #026282;
+}
+.baconStripes .bacon.baconItem {
+	max-width: 100%;
+	overflow: visible;
+}
+.baconStripes .bacon.baconItem span {
+	margin-bottom: 1px;
+	
+}
+.baconStripes .bacon span.reference {
+        background-color: #fff;
+        border: solid 1px orange;
+        height: 2px;
+        width: 10px;
+        margin-right: 3px !important;
+    }
+
+/* @end */
+	
+/* @group segment hard stop */	
+	
+.endSegment div {
+	display: none;
+	border: 1px solid #676767;
+	padding: 1em 1em;
+	margin: 1em 0;
+}
+
+/* show the pause segment button */
+body.segmentHardStopPauseEnabled .endSegment .pauseSegment {
+	display: block;
+}
+
+/* show the exit segment button */
+body.segmentHardStopExitEnabled .endSegment .submitSegment {
+	display: block;
+}
+
+/* hide the next button */
+body.segmentHardStopPauseEnabled a#btnNext,
+body.segmentHardStopExitEnabled a#btnNext {
+	display: none;
+	visibility: hidden;
+}
+
+.endSegment div span {
+	display: inline-block;
+	margin-left: 2%;
+	font-size: 1.4em;
+	width: 72%;
+	vertical-align: middle;
+}
+
+.endSegment div span strong {
+	color: #f00;
+	font-weight: bold;
+}
+
+.endSegment em {
+	font-style: italic;
+}
+
+.endSegment button {
+	background-color: transparent;
+	border: 1px solid #034577;
+	color: #034577;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 1.4em;
+	margin: 0;
+	min-height: 2em;
+	padding: 0 1em;
+	transition: background-color 0.2s ease-in 0s, color 0.2s ease-in 0s;
+	border-radius: 5px;
+	width: 25%;
+	vertical-align: middle;
+}
+
+.TDS_PS_L3 .endSegment button {
+	width: 30%;
+}
+.TDS_PS_L3 .endSegment div span {
+	width: 67%;
+	margin-left: 2%;
+}
+.TDS_PS_L4 .endSegment button {
+	width: 35%;
+}
+.TDS_PS_L4 .endSegment div span {
+	width: 60%;
+	margin-left: 2%;
+}
+
+.endSegment button:hover, 
+.endSegment button:active {
+	background-color: #034577;
+	color: #fff;
+}
+
+/* @end */

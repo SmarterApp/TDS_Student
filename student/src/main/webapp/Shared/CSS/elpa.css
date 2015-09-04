@@ -3,35 +3,18 @@
 
 /* @group Contextual Help */
 a.contexthelp {
-	/*display: block;*/
-	background-image: url(../images/controls/help.gif);
-	background-repeat: no-repeat;
-	background-position: -1px 0px;
 	text-indent: -9999px;
 	height: 17px;
 	width: 17px;
 	font-size: 1px;
 }
-a.contexthelp:hover {
-	background-position: -27px -49px;
-}
 .TDS_PS_L1 a.contexthelp {
-	background-image: url(../images/controls/help.gif);
-	background-position: 0px -19px;
 	height: 21px;
 	width: 21px;
 }
-.TDS_PS_L1 a.contexthelp:hover {
-	background-position: -24px -26px;
-}
 .TDS_PS_L2 a.contexthelp, .TDS_PS_L3 a.contexthelp, .TDS_PS_L4 a.contexthelp {
-	background-image: url(../images/controls/help.gif);
-	background-position: 0px -42px;
 	height: 25px;
 	width: 25px;
-}
-.TDS_PS_L2 a.contexthelp:hover, .TDS_PS_L3 a.contexthelp:hover, .TDS_PS_L4 a.contexthelp:hover {
-	background-position: -19px -1px;
 }
 /* @end */
 
@@ -39,22 +22,6 @@ a.contexthelp:hover {
 
 .TDS_GfR1 .guideToRevision {
 	display: block;
-	background-position: 0px -4149px;
-}
-.TDS_GfR1 .guideToRevision:hover {
-	background-position: -30px -4149px;
-}
-.TDS_PS_L1 a.guideToRevision {
-	background-position: 0px -4180px;
-}
-.TDS_PS_L1 a.guideToRevision:hover {
-	background-position: -30px -4180px;
-}
-.TDS_PS_L2 a.guideToRevision, .TDS_PS_L3 a.guideToRevision, .TDS_PS_L4 a.guideToRevision {
-	background-position: 0px -4220px;
-}
-.TDS_PS_L2 a.guideToRevision:hover, .TDS_PS_L3 a.guideToRevision:hover, .TDS_PS_L4 a.guideToRevision:hover {
-	background-position: -30px -4220px;
 }
 
 /* @end */
@@ -62,9 +29,6 @@ a.contexthelp:hover {
 /* @group Item Print */
 .TDS_PoD_Item a.printItem {
 	display: block;
-	background-image: url(../images/controls/sprites_student.png);
-	background-repeat: no-repeat;
-	background-position: 50% -400px;
 	text-indent: -9999px;
 	height: 16px;
 	width: 16px;
@@ -78,31 +42,20 @@ a.contexthelp:hover {
 }
  a.printItem:hover {
 	opacity: 1;
-	background-position: 50% -400px;
 }
 .TDS_PS_L1 a.printItem {
-	background-image: url(../images/controls/sprites_student.png);
-	background-position: 50% -1200px;
 	height: 20px;
 	width: 20px;
 }
 .TDS_PS_L1 a.printItem:hover {
 	opacity: 1;
-	background-position: 50% -1200px;
 }
 .TDS_PS_L2 a.printItem, .TDS_PS_L3 a.printItem, .TDS_PS_L4 a.printItem {
-	background-image: url(../images/controls/sprites_student.png);
-	background-position: 50% -2700px;
 	height: 27px;
 	width: 25px;
 }
 .TDS_PS_L2 a.printItem:hover, .TDS_PS_L3 a.printItem:hover, .TDS_PS_L4 a.printItem:hover {
 	opacity: 1;
-	background-position: 50% -2700px;
-}
-.browser_firefox.browserVer_2.platform_mac a.printItem:hover, .browser_firefox.browserVer_2.platform_mac.TDS_PS_L1 a.printItem:hover, .browser_firefox.browserVer_2.platform_mac.TDS_PS_L2 a.printItem:hover, .browser_firefox.browserVer_2.platform_mac.TDS_PS_L3 a.printItem:hover, .browser_firefox.browserVer_2.platform_mac.TDS_PS_L4 a.printItem:hover {
-	opacity: 0.5;
-	background-color: #004a80;
 }
 /* @end */
 
@@ -1090,6 +1043,17 @@ a.contexthelp:hover {
 
 .layout_22 .noColumns .theQuestions {
 	top:0px;
+}
+.platform_android .layout_22 .noColumns .theQuestions {
+	top:76px;
+}
+.TDS_PS_L1.platform_android .layout_22 .noColumns .theQuestions, 
+.TDS_PS_L2.platform_android .layout_22 .noColumns .theQuestions {
+	top:96px;
+}
+.TDS_PS_L3.platform_android .layout_22 .noColumns .theQuestions, 
+.TDS_PS_L4.platform_android .layout_22 .noColumns .theQuestions {
+	top:120px;
 }
 .structure.layout22 {
 	max-width:inherit;
@@ -2431,6 +2395,17 @@ a.contexthelp:hover {
 	bottom: inherit;
 	left: inherit;
 	right: inherit;
+}
+.layoutSingleMulti .layoutColumnLeft .passageTools .passageMenu {
+	display: none;
+}
+.layoutSingleMulti .layoutColumnLeft .passageTools .expand-collapse-passage {
+	background-color: #fff;
+	/*margin-right: -22px;*/
+	margin-right: -5px;
+}
+.platform_ios .layoutSingleMulti .layoutColumnLeft .passageTools .expand-collapse-passage {
+	margin-right: 11px;
 }
 
 .layoutSingleMulti .markComment, .layoutSingleSim1 .markComment {

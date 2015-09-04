@@ -12,8 +12,7 @@
         <input>../Scripts/Libraries/yahoo/yui2/build/menu/assets/skins/sam/menu.css</input>
         <input>../Scripts/Libraries/yahoo/yui2/build/button/assets/skins/sam/button.css</input>
         <input>../Scripts/Libraries/yahoo/yui2/build/container/assets/skins/sam/container.css</input>
-         
-	<input>../Scripts/Simulator2/Renderer/CSS/simulator.css</input>
+        <input>../Scripts/Simulator2/Renderer/CSS/simulator.css</input>
         <input>../Scripts/Simulator2/Renderer/CSS/slider.css</input>
 
         <!-- General -->
@@ -62,7 +61,7 @@
         <input>../Scripts/Libraries/yahoo/yui2/build/menu/assets/skins/sam/menu.css</input>
         <input>../Scripts/Libraries/yahoo/yui2/build/button/assets/skins/sam/button.css</input>
         <input>../Scripts/Libraries/yahoo/yui2/build/container/assets/skins/sam/container.css</input>
-        
+
         <!-- Shell -->
         <input>CSS/modernFrame.css</input>
         <input>CSS/normalize.css</input>
@@ -74,6 +73,7 @@
         <input>CSS/items.css</input>
         <input>CSS/elpa.css</input>
         <input>CSS/Universal/items.css</input>
+		<input>CSS/Universal/iat.css</input>
         <input>../Projects/{0}/css/items.css</input>
         <input>../Projects/{0}/css/elpa.css</input>
 
@@ -98,7 +98,7 @@
         <input>../Scripts/Libraries/yahoo/yui2/build/menu/assets/skins/sam/menu.css</input>
         <input>../Scripts/Libraries/yahoo/yui2/build/button/assets/skins/sam/button.css</input>
         <input>../Scripts/Libraries/yahoo/yui2/build/container/assets/skins/sam/container.css</input>
-        
+
         <!-- Shell -->
         <input>CSS/Modern/frame.css</input>
         <input>CSS/normalize.css</input>

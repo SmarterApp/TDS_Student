@@ -260,6 +260,42 @@ body.TDS_CCYellow2 .mc_stacked tr {
 body.TDS_CCYellow2.touch {
 	border-bottom: solid 50px #fcfce2;
 }
+body.TDS_CCCream, 
+body.TDS_CCCream .inputCloze, 
+body.TDS_CCCream .plaintext textarea, 
+.TDS_CCCream .yui-panel, 
+.TDS_CCCream .yui-panel .bd, 
+.TDS_CCCream .yui-panel .ft, 
+.TDS_CCCream .yui-panel .hd, 
+.TDS_CCCream input, 
+.TDS_CCCream select, 
+.TDS_CCCream select:hover, 
+.TDS_CCCream textarea, 
+.TDS_CCCream .thePassage, 
+.TDS_CCCream .theQuestions, 
+.TDS_CCCream.passage-expanded .layoutColumnLeft, 
+.TDS_CCCream .passage-expanded .layoutColumnLeft, 
+.TDS_CCCream div.mathjax_editor_selected_tab, 
+.TDS_CCCream div.mathjax_editor_selected_tab:hover, 
+.TDS_CCCream .mathjax_editor_nav button:hover, 
+.TDS_CCCream #helpContent,
+.TDS_CCCream .ot-innerShadow, 
+.TDS_CCCream .cke_editable.cke_wysiwyg_div, 
+.TDS_CCCream .passage-expanded .maskQuestions,
+.TDS_CCCream .yuimenu {
+	background-color: #ede0ce !important;
+}
+body.TDS_CCCream .multipleChoiceItem {
+	border-top-color: #ede0ce;
+	border-right-color: #ede0ce;
+	border-left-color: #ede0ce;
+}
+body.TDS_CCCream .mc_stacked tr {
+	border-right-color: #ede0ce;	
+}
+body.TDS_CCCream.touch {
+	border-bottom: solid 50px #ede0ce;
+}
 body.TDS_CCBlue, 
 body.TDS_CCBlue .inputCloze, 
 body.TDS_CCBlue .plaintext textarea,  
@@ -527,7 +563,7 @@ body.TDS_CCGray2 .mc_stacked tr, body.TDS_CCMedGrayLtGray .mc_stacked tr {
 	border-right-color: #e5e5e5;	
 }
 
-.TDS_CCGray .itemTools a, 
+/*.TDS_CCGray .itemTools a, 
 .TDS_CCGray.TDS_PS_L1 .itemTools a, 
 .TDS_CCGray.TDS_PS_L2 .itemTools a, 
 .TDS_CCGray.TDS_PS_L3 .itemTools a, 
@@ -560,7 +596,7 @@ body.TDS_CCGray2 .mc_stacked tr, body.TDS_CCMedGrayLtGray .mc_stacked tr {
 .TDS_CCMedGrayLtGray.TDS_PS_L3 .itemTools a.itemMenu, 
 .TDS_CCMedGrayLtGray.TDS_PS_L4 .itemTools a.itemMenu {
 	background-image: url(../Images/universal/universal_content.png) !important;
-}
+}*/
 
 
 body.TDS_CCGreen, 
@@ -648,6 +684,7 @@ body.TDS_CCGreen2.touch {
 .TDS_CCYellowB select:hover, 
 .TDS_CCYellowB select option, 
 .TDS_CCYellowB .cke_dialog_contents, 
+.TDS_CCYellowB .cke_dialog_contents *, 
 .TDS_CCYellowB .cke_dialog_body label, 
 .TDS_CCYellowB textarea, 
 .TDS_CCYellowB .thePassage, 
@@ -678,8 +715,10 @@ body.TDS_CCGreen2.touch {
 .TDS_CCYellowB .yuimenu .yuimenuitemlabel{
 	color:#FC0 !important;
 }
-.TDS_CCYellowB .ft .button-group button:hover, .TDS_CCYellowB .mathjax_editor_button:hover, .TDS_CCYellowB .mathjax_editor_button:active, .TDS_CCYellowB .editor_controls_tabs_el:hover {
-	background-color: #2c47cf !important;
+.TDS_CCYellowB .ft .button-group button:hover, .TDS_CCYellowB .mathjax_editor_button:hover, .TDS_CCYellowB .mathjax_editor_button:active, .TDS_CCYellowB .editor_controls_tabs_el:hover,
+.TDS_CCYellowB .yui-button.yui-push-button-focus button {
+	background-color: #FC0 !important;
+	color: #039 !important;
 }
 .TDS_CCYellowB .ft .button-group .yui-button {
 	border-color: #FC0;
@@ -746,6 +785,7 @@ body.TDS_CCYellowB.touch {
 .TDS_CCInvert select:hover, 
 .TDS_CCInvert select option, 
 .TDS_CCInvert .cke_dialog_contents, 
+.TDS_CCInvert .cke_dialog_contents *, 
 .TDS_CCInvert .cke_dialog_body label, 
 .TDS_CCInvert textarea, 
 .TDS_CCInvert .thePassage, 
@@ -777,15 +817,15 @@ body.TDS_CCYellowB.touch {
 .TDS_CCInvert .yuimenu .yuimenuitemlabel {
 	color:#FFF !important;
 }
-.TDS_CCInvert .ft .button-group button:hover, .TDS_CCInvert .mathjax_editor_button:hover, .TDS_CCInvert .mathjax_editor_button:active, .TDS_CCInvert .editor_controls_tabs_el:hover {
-	background-color: #858686 !important;
+.TDS_CCInvert .ft .button-group button:hover, .TDS_CCInvert .mathjax_editor_button:hover, .TDS_CCInvert .mathjax_editor_button:active, .TDS_CCInvert .editor_controls_tabs_el:hover,
+.TDS_CCInvert .yui-button.yui-push-button-focus button, .TDS_CCInvert .ft .button-group .yui-button button:focus, .TDS_CCInvert .ft .button-group .yui-button.default button:focus{
+	background-color: #fff!important;
+	color: #000 !important;
 }
 .TDS_CCInvert .ft .button-group .yui-button, .TDS_CCInvert .ft .button-group .yui-button.default {
 	border-color: #fff;
 }
-.TDS_CCInvert .ft .button-group .yui-button button:focus, .TDS_CCInvert .ft .button-group .yui-button.default button:focus {
-	background-color: #858686 !important;
-}
+
 .TDS_CCInvert .multipleChoiceItem {
 	border-top-color: #000;
 	border-right-color: #000;
@@ -869,6 +909,7 @@ body.TDS_CCWhiteN .pageWrapper img {
 .TDS_CCWhiteN select:hover, 
 .TDS_CCWhiteN select option, 
 .TDS_CCWhiteN .cke_dialog_contents, 
+.TDS_CCWhiteN .cke_dialog_contents *, 
 .TDS_CCWhiteN .cke_dialog_body label, 
 .TDS_CCWhiteN textarea, 
 .TDS_CCWhiteN .thePassage, 
@@ -898,8 +939,9 @@ body.TDS_CCWhiteN .pageWrapper img {
 .TDS_CCWhiteN .yuimenu .yuimenuitemlabel{
 	color:#FFF !important;
 }
-.TDS_CCWhiteN .ft .button-group button:hover, .TDS_CCWhiteN .mathjax_editor_button:hover, .TDS_CCWhiteN .mathjax_editor_button:active {
-	background-color: #2459aa !important;
+.TDS_CCWhiteN .ft .button-group button:hover, .TDS_CCWhiteN .mathjax_editor_button:hover, .TDS_CCWhiteN .mathjax_editor_button:active, .TDS_CCWhiteN .yui-button.yui-push-button-focus button  {
+	background-color: #fff !important;
+	color: #036 !important;
 }
 .TDS_CCWhiteN .ft .button-group .yui-button {
 	border-color: #fff;
@@ -982,15 +1024,15 @@ body.TDS_CCGray .TDS_WORD_LIST {
 /* @group colors- login */
 
 
-.TDS_CCYellow .blurb, .TDS_CCYellow2 .blurb, .TDS_CCBlue .blurb, .TDS_CCBlue2 .blurb, .TDS_CCMagenta .blurb, .TDS_CCMagenta2 .blurb, .TDS_CCGray .blurb, .TDS_CCGray2 .blurb, .TDS_CCGreen .blurb, .TDS_CCGreen2 .blurb, .TDS_CCYellowB .blurb, .TDS_CCInvert .blurb, .TDS_CCWhiteN .blurb, 
+.TDS_CCYellow .blurb, .TDS_CCYellow2 .blurb, .TDS_CCCream .blurb, .TDS_CCBlue .blurb, .TDS_CCBlue2 .blurb, .TDS_CCMagenta .blurb, .TDS_CCMagenta2 .blurb, .TDS_CCGray .blurb, .TDS_CCGray2 .blurb, .TDS_CCGreen .blurb, .TDS_CCGreen2 .blurb, .TDS_CCYellowB .blurb, .TDS_CCInvert .blurb, .TDS_CCWhiteN .blurb, 
 
-.TDS_CCYellow #sectionTestApproval .ot-innerShadow, .TDS_CCYellow2 #sectionTestApproval .ot-innerShadow, .TDS_CCBlue #sectionTestApproval .ot-innerShadow, .TDS_CCBlue2 #sectionTestApproval .ot-innerShadow, .TDS_CCMagenta #sectionTestApproval .ot-innerShadow, .TDS_CCMagenta2 #sectionTestApproval .ot-innerShadow, .TDS_CCGray #sectionTestApproval .ot-innerShadow, .TDS_CCGray2 #sectionTestApproval .ot-innerShadow, .TDS_CCGreen #sectionTestApproval .ot-innerShadow, .TDS_CCGreen2 #sectionTestApproval .ot-innerShadow, .TDS_CCYellowB #sectionTestApproval .ot-innerShadow, .TDS_CCInvert #sectionTestApproval .ot-innerShadow, .TDS_CCWhiteN #sectionTestApproval .ot-innerShadow {
+.TDS_CCYellow #sectionTestApproval .ot-innerShadow, .TDS_CCYellow2 #sectionTestApproval .ot-innerShadow, .TDS_CCCream #sectionTestApproval .ot-innerShadow, .TDS_CCBlue #sectionTestApproval .ot-innerShadow, .TDS_CCBlue2 #sectionTestApproval .ot-innerShadow, .TDS_CCMagenta #sectionTestApproval .ot-innerShadow, .TDS_CCMagenta2 #sectionTestApproval .ot-innerShadow, .TDS_CCGray #sectionTestApproval .ot-innerShadow, .TDS_CCGray2 #sectionTestApproval .ot-innerShadow, .TDS_CCGreen #sectionTestApproval .ot-innerShadow, .TDS_CCGreen2 #sectionTestApproval .ot-innerShadow, .TDS_CCYellowB #sectionTestApproval .ot-innerShadow, .TDS_CCInvert #sectionTestApproval .ot-innerShadow, .TDS_CCWhiteN #sectionTestApproval .ot-innerShadow {
 	background-color: inherit !important;
 	background-image: none !important;
 }
 
-.practiceTest.TDS_CCYellow .checkHolder, .practiceTest.TDS_CCYellow2 .checkHolder, .practiceTest.TDS_CCBlue .checkHolder, .practiceTest.TDS_CCBlue2 .checkHolder, .practiceTest.TDS_CCMagenta .checkHolder, .practiceTest.TDS_CCMagenta2 .checkHolder, .practiceTest.TDS_CCGray .checkHolder, .practiceTest.TDS_CCGray2 .checkHolder, .practiceTest.TDS_CCGreen .checkHolder, .practiceTest.TDS_CCGreen2 .checkHolder, .practiceTest.TDS_CCYellowB .checkHolder, .practiceTest.TDS_CCInvert .checkHolder, .practiceTest.TDS_CCWhiteN .checkHolder, 
-.TDS_CCYellow .linkbox, .TDS_CCYellow2 .linkbox, .TDS_CCBlue .linkbox, .TDS_CCBlue2 .linkbox, .TDS_CCMagenta .linkbox, .TDS_CCMagenta2 .linkbox, .TDS_CCGray .linkbox, .TDS_CCGray2 .linkbox, .TDS_CCGreen .linkbox, .TDS_CCGreen2 .linkbox, .TDS_CCYellowB .linkbox, .TDS_CCInvert .linkbox, .TDS_CCWhiteN .linkbox {
+.practiceTest.TDS_CCYellow .checkHolder, .practiceTest.TDS_CCYellow2 .checkHolder, .practiceTest.TDS_CCCream .checkHolder, .practiceTest.TDS_CCBlue .checkHolder, .practiceTest.TDS_CCBlue2 .checkHolder, .practiceTest.TDS_CCMagenta .checkHolder, .practiceTest.TDS_CCMagenta2 .checkHolder, .practiceTest.TDS_CCGray .checkHolder, .practiceTest.TDS_CCGray2 .checkHolder, .practiceTest.TDS_CCGreen .checkHolder, .practiceTest.TDS_CCGreen2 .checkHolder, .practiceTest.TDS_CCYellowB .checkHolder, .practiceTest.TDS_CCInvert .checkHolder, .practiceTest.TDS_CCWhiteN .checkHolder, 
+.TDS_CCYellow .linkbox, .TDS_CCYellow2 .linkbox, .TDS_CCCream .linkbox, .TDS_CCBlue .linkbox, .TDS_CCBlue2 .linkbox, .TDS_CCMagenta .linkbox, .TDS_CCMagenta2 .linkbox, .TDS_CCGray .linkbox, .TDS_CCGray2 .linkbox, .TDS_CCGreen .linkbox, .TDS_CCGreen2 .linkbox, .TDS_CCYellowB .linkbox, .TDS_CCInvert .linkbox, .TDS_CCWhiteN .linkbox {
 	background-color: inherit;
 	background-image: url(../Images/mediumGrey.png);
 	color: #000;
@@ -1006,9 +1048,7 @@ body.TDS_CCGray .TDS_WORD_LIST {
 .TDS_CCYellowB .dependency .control {
 	color: #fdf968;
 }
-.TDS_CCYellowB .actions button:hover {
-	background-color: #002069 !important;
-}
+
 
 .practiceTest.TDS_CCWhiteN .checkHolder, .TDS_CCWhiteN .linkbox, .practiceTest.TDS_CCInvert .checkHolder, .TDS_CCInvert .linkbox, .TDS_CCInvert .actions button, .TDS_CCInvert .actions input, .TDS_CCWhiteN .actions button, .TDS_CCWhiteN .actions input, .TDS_CCWhiteN .loginForm legend, .TDS_CCInvert .loginForm legend {
 	color:#FFF;
@@ -1029,31 +1069,31 @@ body.TDS_CCGray .TDS_WORD_LIST {
 .TDS_CCInvert .control {
 	color: #d2f7fd;
 }
-.TDS_CCYellow.practiceTest #verifyGradeSelector, .TDS_CCYellow2.practiceTest #verifyGradeSelector, .TDS_CCBlue.practiceTest #verifyGradeSelector, .TDS_CCBlue2.practiceTest #verifyGradeSelector, .TDS_CCMagenta.practiceTest #verifyGradeSelector, .TDS_CCMagenta2.practiceTest #verifyGradeSelector, .TDS_CCGray.practiceTest #verifyGradeSelector, .TDS_CCGray2.practiceTest #verifyGradeSelector, .TDS_CCGreen.practiceTest #verifyGradeSelector, .TDS_CCGreen2.practiceTest #verifyGradeSelector, .TDS_CCYellowB.practiceTest #verifyGradeSelector, .TDS_CCInvert.practiceTest #verifyGradeSelector, .TDS_CCWhiteN.practiceTest #verifyGradeSelector, 
+.TDS_CCYellow.practiceTest #verifyGradeSelector, .TDS_CCYellow2.practiceTest #verifyGradeSelector, .TDS_CCCream.practiceTest #verifyGradeSelector, .TDS_CCBlue.practiceTest #verifyGradeSelector, .TDS_CCBlue2.practiceTest #verifyGradeSelector, .TDS_CCMagenta.practiceTest #verifyGradeSelector, .TDS_CCMagenta2.practiceTest #verifyGradeSelector, .TDS_CCGray.practiceTest #verifyGradeSelector, .TDS_CCGray2.practiceTest #verifyGradeSelector, .TDS_CCGreen.practiceTest #verifyGradeSelector, .TDS_CCGreen2.practiceTest #verifyGradeSelector, .TDS_CCYellowB.practiceTest #verifyGradeSelector, .TDS_CCInvert.practiceTest #verifyGradeSelector, .TDS_CCWhiteN.practiceTest #verifyGradeSelector, 
 
-.TDS_CCYellow #sectionTestSelection th, .TDS_CCYellow2 #sectionTestSelection th, .TDS_CCBlue #sectionTestSelection th, .TDS_CCBlue2 #sectionTestSelection th, .TDS_CCMagenta #sectionTestSelection th, .TDS_CCMagenta2 #sectionTestSelection th, .TDS_CCGray #sectionTestSelection th, .TDS_CCGray2 #sectionTestSelection th, .TDS_CCGreen #sectionTestSelection th, .TDS_CCGreen2 #sectionTestSelection th, .TDS_CCYellowB #sectionTestSelection th, .TDS_CCInvert #sectionTestSelection th, .TDS_CCWhiteN #sectionTestSelection th
+.TDS_CCYellow #sectionTestSelection th, .TDS_CCYellow2 #sectionTestSelection th, .TDS_CCCream #sectionTestSelection th, .TDS_CCBlue #sectionTestSelection th, .TDS_CCBlue2 #sectionTestSelection th, .TDS_CCMagenta #sectionTestSelection th, .TDS_CCMagenta2 #sectionTestSelection th, .TDS_CCGray #sectionTestSelection th, .TDS_CCGray2 #sectionTestSelection th, .TDS_CCGreen #sectionTestSelection th, .TDS_CCGreen2 #sectionTestSelection th, .TDS_CCYellowB #sectionTestSelection th, .TDS_CCInvert #sectionTestSelection th, .TDS_CCWhiteN #sectionTestSelection th
 
  {
 	background-color: inherit;
 	background-image: url(../Images/mediumGrey.png);
 }
 
-.TDS_CCYellow .actions span, .TDS_CCYellow2 .actions span, .TDS_CCBlue .actions span, .TDS_CCBlue2 .actions span, .TDS_CCMagenta .actions span, .TDS_CCMagenta2 .actions span, .TDS_CCGray .actions span, .TDS_CCGray2 .actions span, .TDS_CCGreen .actions span, .TDS_CCGreen2 .actions span, .TDS_CCYellowB .actions span, .TDS_CCInvert .actions span, .TDS_CCWhiteN .actions span {
+.TDS_CCYellow .actions span, .TDS_CCYellow2 .actions span, .TDS_CCCream .actions span, .TDS_CCBlue .actions span, .TDS_CCBlue2 .actions span, .TDS_CCMagenta .actions span, .TDS_CCMagenta2 .actions span, .TDS_CCGray .actions span, .TDS_CCGray2 .actions span, .TDS_CCGreen .actions span, .TDS_CCGreen2 .actions span, .TDS_CCYellowB .actions span, .TDS_CCInvert .actions span, .TDS_CCWhiteN .actions span {
 	background-color: transparent !important;
 	background-image: url(../Images/lightGrey.png) !important;
 }
 
-.TDS_CCYellow .resumeTest, .TDS_CCYellow2 .resumeTest, .TDS_CCBlue .resumeTest, .TDS_CCBlue2 .resumeTest, .TDS_CCMagenta .resumeTest, .TDS_CCMagenta2 .resumeTest, .TDS_CCGray .resumeTest, .TDS_CCGray2 .resumeTest, .TDS_CCGreen .resumeTest, .TDS_CCGreen2 .resumeTest, .TDS_CCYellowB .resumeTest, .TDS_CCInvert .resumeTest, .TDS_CCWhiteN .resumeTest, 
-.TDS_CCYellow .newTest, .TDS_CCYellow2 .newTest, .TDS_CCBlue .newTest, .TDS_CCBlue2 .newTest, .TDS_CCMagenta .newTest, .TDS_CCMagenta2 .newTest, .TDS_CCGray .newTest, .TDS_CCGray2 .newTest, .TDS_CCGreen .newTest, .TDS_CCGreen2 .newTest, .TDS_CCYellowB .newTest, .TDS_CCInvert .newTest, .TDS_CCWhiteN .newTest {
+.TDS_CCYellow .resumeTest, .TDS_CCYellow2 .resumeTest, .TDS_CCCream .resumeTest, .TDS_CCBlue .resumeTest, .TDS_CCBlue2 .resumeTest, .TDS_CCMagenta .resumeTest, .TDS_CCMagenta2 .resumeTest, .TDS_CCGray .resumeTest, .TDS_CCGray2 .resumeTest, .TDS_CCGreen .resumeTest, .TDS_CCGreen2 .resumeTest, .TDS_CCYellowB .resumeTest, .TDS_CCInvert .resumeTest, .TDS_CCWhiteN .resumeTest, 
+.TDS_CCYellow .newTest, .TDS_CCYellow2 .newTest, .TDS_CCCream .newTest, .TDS_CCBlue .newTest, .TDS_CCBlue2 .newTest, .TDS_CCMagenta .newTest, .TDS_CCMagenta2 .newTest, .TDS_CCGray .newTest, .TDS_CCGray2 .newTest, .TDS_CCGreen .newTest, .TDS_CCGreen2 .newTest, .TDS_CCYellowB .newTest, .TDS_CCInvert .newTest, .TDS_CCWhiteN .newTest {
 	background-color: transparent !important;
 }
 
 
-.TDS_CCYellow .resumeTest:hover, .TDS_CCYellow2 .resumeTest:hover, .TDS_CCBlue .resumeTest:hover, .TDS_CCBlue2 .resumeTest:hover, .TDS_CCMagenta .resumeTest:hover, .TDS_CCMagenta2 .resumeTest:hover, .TDS_CCGray .resumeTest:hover, .TDS_CCGray2 .resumeTest:hover, .TDS_CCGreen .resumeTest:hover, .TDS_CCGreen2 .resumeTest:hover, .TDS_CCYellowB .resumeTest:hover, .TDS_CCInvert .resumeTest:hover, .TDS_CCWhiteN .resumeTest:hover, 
-.TDS_CCYellow .newTest:hover, .TDS_CCYellow2 .newTest:hover, .TDS_CCBlue .newTest:hover, .TDS_CCBlue2 .newTest:hover, .TDS_CCMagenta .newTest:hover, .TDS_CCMagenta2 .newTest:hover, .TDS_CCGray .newTest:hover, .TDS_CCGray2 .newTest:hover, .TDS_CCGreen .newTest:hover, .TDS_CCGreen2 .newTest:hover, .TDS_CCYellowB .newTest:hover, .TDS_CCInvert .newTest:hover, .TDS_CCWhiteN .newTest:hover, 
+.TDS_CCYellow .resumeTest:hover, .TDS_CCYellow2 .resumeTest:hover, .TDS_CCCream .resumeTest:hover, .TDS_CCBlue .resumeTest:hover, .TDS_CCBlue2 .resumeTest:hover, .TDS_CCMagenta .resumeTest:hover, .TDS_CCMagenta2 .resumeTest:hover, .TDS_CCGray .resumeTest:hover, .TDS_CCGray2 .resumeTest:hover, .TDS_CCGreen .resumeTest:hover, .TDS_CCGreen2 .resumeTest:hover, .TDS_CCYellowB .resumeTest:hover, .TDS_CCInvert .resumeTest:hover, .TDS_CCWhiteN .resumeTest:hover, 
+.TDS_CCYellow .newTest:hover, .TDS_CCYellow2 .newTest:hover, .TDS_CCCream .newTest:hover, .TDS_CCBlue .newTest:hover, .TDS_CCBlue2 .newTest:hover, .TDS_CCMagenta .newTest:hover, .TDS_CCMagenta2 .newTest:hover, .TDS_CCGray .newTest:hover, .TDS_CCGray2 .newTest:hover, .TDS_CCGreen .newTest:hover, .TDS_CCGreen2 .newTest:hover, .TDS_CCYellowB .newTest:hover, .TDS_CCInvert .newTest:hover, .TDS_CCWhiteN .newTest:hover, 
 
-.TDS_CCYellow .resumeTest:focus, .TDS_CCYellow2 .resumeTest:focus, .TDS_CCBlue .resumeTest:focus, .TDS_CCBlue2 .resumeTest:focus, .TDS_CCMagenta .resumeTest:focus, .TDS_CCMagenta2 .resumeTest:focus, .TDS_CCGray .resumeTest:focus, .TDS_CCGray2 .resumeTest:focus, .TDS_CCGreen .resumeTest:focus, .TDS_CCGreen2 .resumeTest:focus, .TDS_CCYellowB .resumeTest:focus, .TDS_CCInvert .resumeTest:hover, .TDS_CCWhiteN .resumeTest:focus, 
-.TDS_CCYellow .newTest:focus, .TDS_CCYellow2 .newTest:focus, .TDS_CCBlue .newTest:focus, .TDS_CCBlue2 .newTest:focus, .TDS_CCMagenta .newTest:focus, .TDS_CCMagenta2 .newTest:focus, .TDS_CCGray .newTest:focus, .TDS_CCGray2 .newTest:focus, .TDS_CCGreen .newTest:hover, .TDS_CCGreen2 .newTest:focus, .TDS_CCYellowB .newTest:focus, .TDS_CCInvert .newTest:focus, .TDS_CCWhiteN .newTest:focus {
+.TDS_CCYellow .resumeTest:focus, .TDS_CCYellow2 .resumeTest:focus, .TDS_CCCream .resumeTest:focus, .TDS_CCBlue .resumeTest:focus, .TDS_CCBlue2 .resumeTest:focus, .TDS_CCMagenta .resumeTest:focus, .TDS_CCMagenta2 .resumeTest:focus, .TDS_CCGray .resumeTest:focus, .TDS_CCGray2 .resumeTest:focus, .TDS_CCGreen .resumeTest:focus, .TDS_CCGreen2 .resumeTest:focus, .TDS_CCYellowB .resumeTest:focus, .TDS_CCInvert .resumeTest:hover, .TDS_CCWhiteN .resumeTest:focus, 
+.TDS_CCYellow .newTest:focus, .TDS_CCYellow2 .newTest:focus, .TDS_CCCream .newTest:focus, .TDS_CCBlue .newTest:focus, .TDS_CCBlue2 .newTest:focus, .TDS_CCMagenta .newTest:focus, .TDS_CCMagenta2 .newTest:focus, .TDS_CCGray .newTest:focus, .TDS_CCGray2 .newTest:focus, .TDS_CCGreen .newTest:hover, .TDS_CCGreen2 .newTest:focus, .TDS_CCYellowB .newTest:focus, .TDS_CCInvert .newTest:focus, .TDS_CCWhiteN .newTest:focus {
 	color: #000 !important;
 	text-decoration: underline;
 }
@@ -1061,6 +1101,120 @@ body.TDS_CCGray .TDS_WORD_LIST {
 	color: #FC0 !important;
 }
 .TDS_CCInvert .newTest, .TDS_CCInvert .newTest:hover, .TDS_CCWhiteN .newTest, .TDS_CCWhiteN .newTest:hover, .TDS_CCInvert .resumeTest, .TDS_CCInvert .resumeTest:hover, .TDS_CCWhiteN .resumeTest, .TDS_CCWhiteN .resumeTest:hover, .TDS_CCWhiteN #sectionTestResults table a, .TDS_CCInvert #sectionTestResults table a {
+	color: #fff !important;
+}
+
+.TDS_CCWhiteN .actions .tds-button.positive{
+	border-color: #fff;
+}
+
+/* Buttons color correction */
+.TDS_CCWhiteN .actions .tds-button.positive,
+.TDS_CCWhiteN #sectionLogin .actions .tds-button.positive,
+.TDS_CCInvert .actions .tds-button.positive,
+.TDS_CCInvert #sectionLogin .actions .tds-button.positive,
+.TDS_CCInvert .endSegment button,
+.TDS_CCWhiteN .endSegment button{
+	border-color: #fff;
+}
+.TDS_CCWhiteN .actions .tds-button.positive span,
+.TDS_CCWhiteN #sectionLogin .actions .tds-button.positive button,
+.TDS_CCInvert .actions .tds-button.positive span,
+.TDS_CCInvert #sectionLogin .actions .tds-button.positive button,
+.TDS_CCInvert .endSegment button,
+.TDS_CCWhiteN .endSegment button{
+  color: #fff;
+}
+.TDS_CCInvert #sectionLogin .actions .positive:hover span button, 
+.TDS_CCInvert .actions .positive button:hover, 
+.TDS_CCInvert .actions .positive input:hover, 
+.TDS_CCInvert .actions .positive button:active, 
+.TDS_CCInvert .actions .positive input:active, 
+.TDS_CCInvert .actions .positive button:focus, 
+.TDS_CCInvert .actions .positive input:focus,
+.TDS_CCInvert .actions .positive:hover,
+.TDS_CCInvert #sectionLogin .actions a:hover,
+.TDS_CCInvert .endSegment button:hover,
+.TDS_CCInvert .endSegment button:focus
+{
+	background-color: #fff !important;
+	color: #000 !important;
+}
+.TDS_CCWhiteN #sectionLogin .actions .positive:hover span button, 
+.TDS_CCWhiteN .actions .positive button:hover, 
+.TDS_CCWhiteN .actions .positive input:hover, 
+.TDS_CCWhiteN .actions .positive button:active, 
+.TDS_CCWhiteN .actions .positive input:active, 
+.TDS_CCWhiteN .actions .positive button:focus, 
+.TDS_CCWhiteN .actions .positive input:focus,
+.TDS_CCWhiteN .endSegment button:focus,
+.TDS_CCWhiteN .endSegment button:hover{
+	background-color: #fff !important;
+	color: #036 !important;
+}
+.TDS_CCInvert .actions .positive:hover, 
+.TDS_CCInvert #sectionLogin .actions a:hover,
+.TDS_CCWhiteN .actions .positive:hover, 
+.TDS_CCWhiteN #sectionLogin .actions a:hover,
+.TDS_CCInvert .endSegment button:hover,
+.TDS_CCWhiteN .endSegment button:hover{
+  background-color: #fff !important;
+}
+.TDS_CCYellowB .actions .tds-button.positive,
+.TDS_CCYellowB #sectionLogin .actions .tds-button.positive,
+.TDS_CCYellowB .endSegment button{
+	border-color: #fc0;
+}
+.TDS_CCYellowB .actions .tds-button.positive span,
+.TDS_CCYellowB #sectionLogin .actions .tds-button.positive button,
+.TDS_CCYellowB .endSegment button{
+  color: #fc0;
+}
+.TDS_CCYellowB #sectionLogin .actions .positive:hover span button, 
+.TDS_CCYellowB .actions .positive button:hover, 
+.TDS_CCYellowB .actions .positive input:hover, 
+.TDS_CCYellowB .actions .positive button:active, 
+.TDS_CCYellowB .actions .positive input:active, 
+.TDS_CCYellowB .actions .positive button:focus, 
+.TDS_CCYellowB .actions .positive input:focus,
+.TDS_CCYellowB .endSegment button:hover,
+.TDS_CCYellowB .endSegment button:focus{
+	background-color: #fc0 !important;
+	color: #036 !important;
+}
+
+.TDS_CCYellowB #sectionLogin .actions .negative:hover span button, 
+.TDS_CCYellowB .actions .negative button:hover, 
+.TDS_CCYellowB .actions .negative input:hover, 
+.TDS_CCYellowB .actions .negative button:active, 
+.TDS_CCYellowB .actions .negative input:active, 
+.TDS_CCYellowB .actions .negative button:focus, 
+.TDS_CCYellowB .actions .negative input:focus,
+
+.TDS_CCYellowB #sectionLogin .actions .negative:hover span button, 
+.TDS_CCYellowB .actions .negative button:hover, 
+.TDS_CCYellowB .actions .negative input:hover, 
+.TDS_CCYellowB .actions .negative button:active, 
+.TDS_CCYellowB .actions .negative input:active, 
+.TDS_CCYellowB .actions .negative button:focus, 
+.TDS_CCYellowB .actions .negative input:focus
+.TDS_CCWhiteN #sectionLogin .negative .positive:hover span button, 
+.TDS_CCWhiteN .actions .negative button:hover, 
+.TDS_CCWhiteN .actions .negative input:hover, 
+.TDS_CCWhiteN .actions .negative button:active, 
+.TDS_CCWhiteN .actions .negative input:active, 
+.TDS_CCWhiteN .actions .negative button:focus, 
+.TDS_CCWhiteN .actions .negative input:focus
+
+	
+.TDS_CCInvert #sectionLogin .actions .negative:hover span button, 
+.TDS_CCInvert .actions .negative button:hover, 
+.TDS_CCInvert .actions .negative input:hover, 
+.TDS_CCInvert .actions .negative button:active, 
+.TDS_CCInvert .actions .negative input:active, 
+.TDS_CCInvert .actions .negative button:focus, 
+.TDS_CCInvert .actions .negative input:focus{
+	background-color: #900 !important;
 	color: #fff !important;
 }
 
@@ -1241,6 +1395,7 @@ src:url("../Fonts/9908cdad-7524-4206-819e-4f345a666324.woff") format("woff"),url
 .platform_linux.TDS_CCGray .ot-innerShadow select, 
 .platform_linux.TDS_CCYellow .ot-innerShadow select, 
 .platform_linux.TDS_CCYellow2 .ot-innerShadow select, 
+.platform_linux.TDS_CCCream .ot-innerShadow select, 
 .platform_linux.TDS_CCYellowB .ot-innerShadow select, 
 .platform_linux.TDS_CCWhiteN .ot-innerShadow select, 
 .platform_linux.TDS_CCGreen2 .ot-innerShadow select, 
@@ -1292,6 +1447,12 @@ src:url("../Fonts/9908cdad-7524-4206-819e-4f345a666324.woff") format("woff"),url
 .TDS_CCYellow2 #sectionLoginProctor .ot-innerShadow, 
 .TDS_CCYellow2 .blurb{ 
 	background-color: #fcfce2 !important;
+	background-image: none !important;
+}
+.TDS_CCCream #sectionLogin .ot-innerShadow, 
+.TDS_CCCream #sectionLoginProctor .ot-innerShadow, 
+.TDS_CCCream .blurb{ 
+	background-color: #ede0ce !important;
 	background-image: none !important;
 }
 .TDS_CCYellowB #sectionLogin .ot-innerShadow, 
@@ -1409,4 +1570,75 @@ src:url("../Fonts/9908cdad-7524-4206-819e-4f345a666324.woff") format("woff"),url
 .TDS_CCYellowB.yui-skin-sam .yuimenu li a:active{
    color: #039 !important;
    background-color: #fc0;
+}
+
+.TDS_CCYellowB .activeItem .questionContainer h2, 
+.TDS_CCYellowB .activeItem .questionCell h2 {
+    background-color: #d9ae03;
+}
+.TDS_CCYellowB .activeItem .questionContainer .stemContainer {
+    border-color: #d9ae03;
+}
+.TDS_CCInvert .bigTable .questionCell h2, 
+.TDS_CCInvert .bigTable .questionContainer h2 {
+	background-color: #666;
+    color: #fff;
+}
+.TDS_CCInvert .questionContainer .stemContainer {
+    border-color: #666;
+}
+.TDS_CCInvert .activeItem .questionContainer h2, 
+.TDS_CCInvert .activeItem .questionCell h2 {
+    background-color: #fff;
+    color: #000;
+}
+.TDS_CCInvert .activeItem .questionContainer .stemContainer {
+    border-color: #fff;
+}
+.TDS_CCWhiteN .activeItem .questionContainer h2, 
+.TDS_CCYellowB .activeItem .questionCell h2 {
+    background-color: #1e8bb4;
+}
+.TDS_CCWhiteN .activeItem .questionContainer .stemContainer {
+    border-color: #1e8bb4;
+}
+
+/* Color corrections for new MS styles*/
+.TDS_CCInvert .format_ms .optionClicker,
+.TDS_CCInvert .EBSR_ms .optionClicker
+{
+    box-shadow: 1px 1px 1px 1px #333 inset;
+}
+.TDS_CCInvert .format_ms .optionSelected .optionClicker,
+.TDS_CCInvert .EBSR_ms.optionSelected .optionClicker
+{
+    background: #aaa;
+}
+.TDS_CCInvert .format_ms .optionSelected .optionClicker::before,
+.TDS_CCInvert .EBSR_ms.optionSelected .optionClicker::before
+{
+    color: #000;
+}
+.TDS_CCWhiteN .format_ms .optionClicker,
+.TDS_CCYellowB .format_ms .optionClicker,
+.TDS_CCWhiteN .EBSR_ms .optionClicker,
+.TDS_CCYellowB .EBSR_ms .optionClicker
+{
+    box-shadow: 1px 1px 1px 1px #003 inset;
+}
+.TDS_CCBlue .format_ms .answerContainer .optionContainer:hover .optionClicker::before, 
+.TDS_CCBlue .format_ms .answerCell .optionContainer:hover .optionClicker::before,
+.TDS_CCBlue2 .format_ms .answerContainer .optionContainer:hover .optionClicker::before, 
+.TDS_CCBlue2 .format_ms .answerCell .optionContainer:hover .optionClicker::before,
+.TDS_CCGreen .format_ms .answerContainer .optionContainer:hover .optionClicker::before, 
+.TDS_CCGreen .format_ms .answerCell .optionContainer:hover .optionClicker::before,
+.TDS_CCGreen2 .format_ms .answerContainer .optionContainer:hover .optionClicker::before, 
+.TDS_CCGreen2 .format_ms .answerCell .optionContainer:hover .optionClicker::before,
+
+.TDS_CCBlue .EBSR_ms:hover .optionClicker::before, 
+.TDS_CCBlue2 .EBSR_ms:hover .optionClicker::before, 
+.TDS_CCGreen .EBSR_ms:hover .optionClicker::before, 
+.TDS_CCGreen2 .EBSR_ms:hover .optionClicker::before
+{
+    color: #aaa;
 }

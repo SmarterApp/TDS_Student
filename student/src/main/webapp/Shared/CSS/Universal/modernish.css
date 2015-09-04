@@ -1,4 +1,4 @@
-#topBar {
+/*#topBar {
 	height: 100px;
 	background: transparent url(../../Images/universal/topShadows.png) repeat-x left top !important;
 	color: #fff;
@@ -115,8 +115,6 @@
 	display: block;
 	border: none;
 	color: #FFFFFF;
-	/*margin-left: 0.4em;
-	margin-right: 0.7em;*/
 	text-decoration: none;
 	text-transform: uppercase;
 	white-space: nowrap;
@@ -144,7 +142,6 @@
 #navigation a:active {
 	background-position: center -145px !important;
 }
-/*prevent focus style from carrying over for some tools on tablets */
 .touch #navigation a:focus, 
 .touch #navigation a:active, 
 .touch #navigation a:hover {
@@ -252,7 +249,6 @@
 	background-position: center -2311px !important;
 }
 
-/* @group Next shortcut */
 .TDS_SLM1 a#btnNextBottom:focus, 
 .TDS_SLM1 a#btnNextBottom:active {
 	width: 65px;
@@ -276,10 +272,6 @@
 	-moz-box-shadow: inherit;
 	box-shadow: inherit;
 }
-/* @end */
-
-
-
 #btnFullScreen .icon, 
 #btnFullScreen:active .icon, 
 #btnFullScreen:focus .icon, 
@@ -339,7 +331,6 @@ body.platform_chrome #contents {
 .multi-page {
     top: 96px;
 }
-/* keeps passage and questions from running into each other */
 .touch.platform_android .theQuestions, 
 .touch.platform_android .thePassage {
 	top: 96px;
@@ -353,9 +344,6 @@ body.platform_chrome #contents {
 .fs-enabled .toolsContainer.passageTools {
 	top: 15px;
 }
-
-/* @group sound cues */
-
 #soundCues {
 	height: 69px;
 	max-width: 46px;
@@ -401,8 +389,6 @@ body.platform_chrome #contents {
 	background-position: center 22px !important;
 	background-color: #fff !important;
 }
-/* @end */
-
 .TDS_Masking1.msk-enabled #navigation #studentTools #btnMasking .icon, 
 .TDS_Masking1.msk-enabled #navigation #studentTools #btnMask .icon {
     background-color: transparent !important;
@@ -411,12 +397,10 @@ body.platform_chrome #contents {
 	-moz-box-shadow: inherit !important;
 	box-shadow: inherit !important;
 }
-/* add orange square to line reader too */
 .lr-enabled #btnLineReader.lineReader,
 .TDS_Masking1.msk-enabled #navigation #studentTools #btnMask {
     background-position: center -295px !important;
 }
-/* add old foucs styles back to modern theme */
 .answerCell .contextAreaFocus.optionContainer, 
 .theQuestions .answerContainer .contextAreaFocus.optionContainer, 
 .compound .questionContainer .contextAreaFocus.optionContainer {
@@ -425,13 +409,10 @@ body.platform_chrome #contents {
 	-moz-box-shadow: inherit !important;
 	box-shadow: inherit !important;
 }
-/* less opaque mask, similar to 2013 */
 #yuiSimpleDialog_mask {
 	background-image: url(../../Images/universal/mask_lighter.png);
 	opacity: .9;
 }
-
-/*Hide universal's line reader highlight in Modern Shell Mode*/
 .lr-enabled #btnLineReader .icon,
 .lr-enabled #btnLineReader:active .icon,
 .lr-enabled #btnLineReader:focus .icon,
@@ -439,4 +420,4 @@ body.platform_chrome #contents {
     background-color: transparent !important;
 	border-color: none !important;
 	box-shadow: none !Important;
-}
+}*/

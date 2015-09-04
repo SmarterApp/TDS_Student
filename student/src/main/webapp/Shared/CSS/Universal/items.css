@@ -16,67 +16,26 @@ a.passageMenu {
 	text-indent: -9999px;
 	float: right;
 	margin-top: -35px;
-	background: url(../../Images/universal/universal_content.png) no-repeat center 6px;
 }
 .TDS_ITM1 .toolsContainer a.itemMenu, 
 .TDS_ITM1 .toolsContainer a.passageMenu {
 	display: block;
 }
 div.toolsContainer a.itemMenu {
-	background: url(../../Images/universal/universal_content.png) no-repeat center 6px;
 	margin-top: 0px;
-}
-div.toolsContainer a.itemMenu:active, 
-div.toolsContainer a.itemMenu:focus, 
-div.toolsContainer a.itemMenu:hover, 
-.TDS_PS_L1 div.toolsContainer a.itemMenu:active, 
-.TDS_PS_L1 div.toolsContainer a.itemMenu:focus, 
-.TDS_PS_L1 div.toolsContainer a.itemMenu:hover, 
-div.toolsContainer a.passageMenu:active, 
-div.toolsContainer a.passageMenu:focus, 
-div.toolsContainer a.passageMenu:hover, 
-.TDS_PS_L1 div.toolsContainer a.passageMenu:active, 
-.TDS_PS_L1 div.toolsContainer a.passageMenu:focus, 
-.TDS_PS_L1 div.toolsContainer a.passageMenu:hover {
-	background-position: center -44px;
 }
 .TDS_PS_L2 div.toolsContainer a.itemMenu, 
 .TDS_PS_L3 div.toolsContainer a.itemMenu, 
 .TDS_PS_L2 div.toolsContainer a.passageMenu, 
 .TDS_PS_L3 div.toolsContainer a.passageMenu {
-	background-position: center -542px;
-    height: 34px;
+	height: 34px;
     width: 45px;
-}
-.TDS_PS_L2 div.toolsContainer a.itemMenu:active, 
-.TDS_PS_L3 div.toolsContainer a.itemMenu:active, 
-.TDS_PS_L2 div.toolsContainer a.itemMenu:focus, 
-.TDS_PS_L3 div.toolsContainer a.itemMenu:focus, 
-.TDS_PS_L2 div.toolsContainer a.itemMenu:hover, 
-.TDS_PS_L3 div.toolsContainer a.itemMenu:hover, 
-.TDS_PS_L2 div.toolsContainer a.passageMenu:active, 
-.TDS_PS_L3 div.toolsContainer a.passageMenu:active, 
-.TDS_PS_L2 div.toolsContainer a.passageMenu:focus, 
-.TDS_PS_L3 div.toolsContainer a.passageMenu:focus, 
-.TDS_PS_L2 div.toolsContainer a.passageMenu:hover, 
-.TDS_PS_L3 div.toolsContainer a.passageMenu:hover {
-	background-position: center -592px;
 }
 .TDS_PS_L4 div.toolsContainer a.itemMenu,  
 .TDS_PS_L4 div.toolsContainer.passageTools a.passageMenu {
-	background-position: center -741px;
-    height: 45px;
+	height: 45px;
     width: 60px;
 }
-.TDS_PS_L4 div.toolsContainer a.itemMenu:active, 
-.TDS_PS_L4 div.toolsContainer a.itemMenu:focus, 
-.TDS_PS_L4 div.toolsContainer a.itemMenu:hover, 
-.TDS_PS_L4 div.toolsContainer a.passageMenu:active, 
-.TDS_PS_L4 div.toolsContainer a.passageMenu:focus, 
-.TDS_PS_L4 div.toolsContainer a.passageMenu:hover {
-	background-position: center -791px;
-}
-
 .layout11 .theQuestions, 
 .layout17 .theQuestions, 
 .layout21 .theQuestions, 
@@ -214,6 +173,11 @@ div.toolsContainer a.passageMenu:hover,
 	opacity: 0.2;
 	pointer-events: none;
 }
+.modeEnabled .mode-strikethrough .toolsContainer > a::before, 
+.modeEnabled .mode-strikethrough .toolsContainer > a:hover::before {
+	color: #c4c3c5;
+	cursor: default;
+}
 .modeEnabled #contents .activeItem {
 	opacity: inherit;
 	pointer-events: auto;
@@ -241,7 +205,7 @@ div.toolsContainer a.passageMenu:hover,
 .modeEnabled #contents .activeItem.mode-strikethrough .optionContainer.strikethrough:hover .striked {
     opacity: 0.8;
 }
-.modeEnabled #contents .activeItem.mode-strikethrough .answerContainer div.optionContainer:hover span, 
+/*.modeEnabled #contents .activeItem.mode-strikethrough .answerContainer div.optionContainer:hover span, 
 .modeEnabled #contents .activeItem.mode-strikethrough .answerCell .optionContainer:hover span {
 	background-position: 0px 0px;
 }
@@ -260,7 +224,7 @@ div.toolsContainer a.passageMenu:hover,
 .TDS_PS_L4.modeEnabled #contents .activeItem.mode-strikethrough .answerContainer div.optionContainer:hover span, 
 .TDS_PS_L4.modeEnabled #contents .activeItem.mode-strikethrough .answerCell .optionContainer:hover span {
     background-position: -70px 0px;
-}
+}*/
 .modeEnabled #contents .theQuestions {
 	background-color: rgba(238,238,238,0.2);
 }
@@ -284,6 +248,10 @@ div.toolsContainer a.passageMenu:hover,
 .TDS_CCYellow2.modeEnabled #contents .activeItem .answerCell, 
 .TDS_CCYellow2.modeEnabled #contents .activeItem .answerContainer {
 	background-color: #fcfce2;
+}
+.TDS_CCCream.modeEnabled #contents .activeItem .answerCell, 
+.TDS_CCCream.modeEnabled #contents .activeItem .answerContainer {
+	background-color: #ede0ce;
 }
 .TDS_CCGreen.modeEnabled #contents .activeItem .answerCell, 
 .TDS_CCGreen.modeEnabled #contents .activeItem .answerContainer {
@@ -331,7 +299,18 @@ div.toolsContainer a.passageMenu:hover,
 .TDS_CCYellowB.modeEnabled #contents .activeItem .answerContainer {
 	background-color: #003399;
 }
-
+.TDS_CCYellowB.modeEnabled .mode-strikethrough .toolsContainer > a, 
+.TDS_CCYellowB.modeEnabled .mode-strikethrough .toolsContainer > a:hover {
+	background-color: transparent !important;
+}
+.TDS_CCYellowB.modeEnabled .mode-strikethrough .toolsContainer > a::before, 
+.TDS_CCYellowB.modeEnabled .mode-strikethrough .toolsContainer > a:hover::before, 
+.TDS_CCInvert.modeEnabled .mode-strikethrough .toolsContainer > a::before, 
+.TDS_CCInvert.modeEnabled .mode-strikethrough .toolsContainer > a:hover::before, 
+.TDS_CCWhiteN.modeEnabled .mode-strikethrough .toolsContainer > a::before, 
+.TDS_CCWhiteN.modeEnabled .mode-strikethrough .toolsContainer > a:hover::before {
+	opacity: .3;
+}
 /* @end */
 
 /* @group item tools */
@@ -341,7 +320,6 @@ div.toolsContainer a.passageMenu:hover,
 	width: 30px;
 	overflow: hidden;
 	text-indent: -9999px;
-	background: url(../../Images/universal/universal_itemsprites.png) no-repeat 100px 100px;
 	height: 35px;
 	font-size: 1em;
 	-webkit-touch-callout: none;
@@ -351,17 +329,6 @@ div.toolsContainer a.passageMenu:hover,
 .TDS_PS_L2 .toolsContainer a {
 	width: 30px;
 	height: 35px;
-}
-.toolsContainer a.markReview:hover, 
-.toolsContainer a.markReview:focus, 
-.toolsContainer a.markReviewMarked:hover, 
-.toolsContainer a.markReviewMarked:focus, 
-.toolsContainer a.markReview:active {
-	background: url(../../Images/universal/universal_itemsprites.png) no-repeat -515px -75px !important;
-}
-.toolsContainer a.markReviewMarked {
-	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
-	background-position: -530px -75px !important;
 }
 .toolsContainer {
 	height: 35px;
@@ -383,19 +350,7 @@ div.toolsContainer a.passageMenu:hover,
 .TDS_PS_L2 .toolsContainer {
 	margin-top: -1.5em;
 }
-.toolsContainer a.commentItem {
-	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
-	background-position: -280px -125px !important;
-}
-.toolsContainer .commentItem:hover, 
-.toolsContainer .commentItem:focus, 
-.toolsContainer .commentItem:active {
-	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
-	background-position: -315px -125px !important;
-}
 .toolsContainer a.markReview.toolButton {
-	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
-	background-position: 0px -125px !important;
 	width: 35px;
 	margin-right: 0px;
 }
@@ -403,25 +358,13 @@ div.toolsContainer a.passageMenu:hover,
 .toolsContainer a.markReview.toolButton:focus, 
 .toolsContainer a.markReview.toolButton:active
 {
-	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
-	background-position: -35px -125px !important;
 	width: 35px;
 	height: 35px;
 	margin-right: 0px;
 }
-.itemMarked .toolsContainer a.markReview.toolButton, 
-.itemMarked .toolsContainer a.markReview.toolButton:active, 
-.itemMarked .toolsContainer a.markReview.toolButton:focus, 
-.itemMarked .toolsContainer a.markReview.toolButton:hover
- {
-	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
-	background-position: -70px -125px !important;
-}
 .toolsContainer a.printItem, 
 .toolsContainer a.printPassage {
 	display:block;
-	background-image: url(../../Images/universal/universal_itemsprites.png);
-	background-position: -105px -125px !important;
 	opacity: 1;
 	font-size: 1em;
 	width: 30px !important;
@@ -433,7 +376,6 @@ div.toolsContainer a.passageMenu:hover,
     margin-left: -10px;
     width: 35px !important;
     background-color: #fff;
-    background-position: -105px -128px !important;
 }
 .layout_wai .passageTools.toolsContainer a.printPassage {
 	-moz-box-shadow: inherit;
@@ -441,146 +383,24 @@ div.toolsContainer a.passageMenu:hover,
 	box-shadow: inherit;
     margin-left: 0px;
 }
-.toolsContainer a.printItem:hover, 
-.toolsContainer a.printItem:focus
-.toolsContainer a.printItem:active
-.toolsContainer a.printPassage:active {
-	background-position: -140px -125px !important;
-}
-.toolsContainer a.printPassage:hover, 
-.toolsContainer a.printPassage:focus
-.toolsContainer a.printPassage:active {
-	background-position: -140px -128px !important;
-}
-.toolsContainer a.contexthelp, 
-.TDS_PS_L1 .toolsContainer a.contexthelp, 
-.TDS_PS_L2 .toolsContainer a.contexthelp {
-	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
-	background-position: -210px -125px;
-}
-.toolsContainer a.contexthelp:hover, 
-.toolsContainer a.contexthelp:focus, 
-.toolsContainer a.contexthelp:active, 
-.TDS_PS_L1 .toolsContainer a.contexthelp:hover, 
-.TDS_PS_L1 .toolsContainer a.contexthelp:focus, 
-.TDS_PS_L1 .toolsContainer a.contexthelp:active, 
-.TDS_PS_L2 .toolsContainer a.contexthelp:hover, 
-.TDS_PS_L2 .toolsContainer a.contexthelp:focus, 
-.TDS_PS_L2 .toolsContainer a.contexthelp:active {
-	background-position: -245px -125px !important;
-}
-.toolsContainer a.guideToRevision {
-	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
-	background-position: -750px -125px !important;
-}
-.toolsContainer a.guideToRevision:hover, 
-.toolsContainer a.guideToRevision:focus, 
-.toolsContainer a.guideToRevision:active {
-	background-position: -785px -126px !important;
-}
 .TDS_PoD_Item .toolsContainer a.printItem {
-	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
-	background-position: -105px -126px !important;
 	opacity: 1;
 }
-.TDS_PoD_Item .toolsContainer a.printItem:hover, 
-.TDS_PoD_Item .toolsContainer a.printItem:active, 
-.TDS_PoD_Item .toolsContainer a.printItem:focus {
-	background-position: -140px -126px !important;
-}
-
 .TDS_PS_L2 .toolsContainer a.printPassage {
-	background-position: -150px -84px !important;
-    height: 34px !important;
+	height: 34px !important;
     margin-left: -27px;
     width: 47px !important;
 }
-.TDS_PS_L2 .toolsContainer a.printPassage:hover, 
-.TDS_PS_L2 .toolsContainer a.printPassage:active, 
-.TDS_PS_L2 .toolsContainer a.printPassage:focus {
-	background-position: -201px -84px !important;
-}
-.TDS_PS_L3.TDS_PoD_Item .toolsContainer a.printItem, 
-.TDS_PS_L4.TDS_PoD_Item .toolsContainer a.printItem {
-	background-position: -150px -75px !important;
-}
 .TDS_PS_L3 .toolsContainer a.printPassage {
-	background-position: -150px -84px !important;
 	height: 34px !important;
     margin-left: -27px;
     width: 47px !important;
 }
 .TDS_PS_L4 .toolsContainer a.printPassage {
-    background-position: -148px -78px !important;
     height: 45px !important;
     margin-left: -49px;
     width: 54px !important;
 }
-.TDS_PS_L3 .toolsContainer a.printPassage:hover, 
-.TDS_PS_L3 .toolsContainer a.printPassage:active, 
-.TDS_PS_L3 .toolsContainer a.printPassage:focus {
-	background-position: -201px -84px !important;
-}
-.TDS_PS_L4 .toolsContainer a.printPassage:hover, 
-.TDS_PS_L4 .toolsContainer a.printPassage:active, 
-.TDS_PS_L4 .toolsContainer a.printPassage:focus {
-	background-position: -198px -78px !important;
-}
-.TDS_PS_L3.TDS_PoD_Item .toolsContainer a.printItem:hover, 
-.TDS_PS_L3.TDS_PoD_Item .toolsContainer a.printItem:active, 
-.TDS_PS_L3.TDS_PoD_Item .toolsContainer a.printItem:focus, 
-.TDS_PS_L4.TDS_PoD_Item .toolsContainer a.printItem:hover, 
-.TDS_PS_L4.TDS_PoD_Item .toolsContainer a.printItem:active, 
-.TDS_PS_L4.TDS_PoD_Item .toolsContainer a.printItem:focus {
-	background-position: -201px -75px !important;
-}
-.TDS_PoD_Item .toolsContainer a.printItem.printSubmitted, 
-.TDS_PS_L1.TDS_PoD_Item .toolsContainer a.printItem.printSubmitted, 
-.TDS_PS_L2.TDS_PoD_Item .toolsContainer a.printItem.printSubmitted, 
-.TDS_Emboss_Item .toolsContainer .printItem.printSubmitted, 
-.TDS_PS_L1.TDS_Emboss_Item .toolsContainer .printItem.printSubmitted, 
-.TDS_PS_L2.TDS_Emboss_Item .toolsContainer .printItem.printSubmitted {
-	background-position: -175px -126px !important;
-}
-.toolsContainer a.printPassage.printSubmitted, 
-.TDS_PS_L1 .toolsContainer a.printPassage.printSubmitted {
-	background-position: -173px -128px !important;
-}
-.TDS_PS_L2 .toolsContainer a.printPassage.printSubmitted, 
-.TDS_PS_L3 .toolsContainer a.printPassage.printSubmitted {
-	background-position: -250px -83px !important;
-}
-.TDS_PS_L4 .toolsContainer a.printPassage.printSubmitted {
-	background-position: -247px -78px !important;
-}
-.TDS_PS_L3.TDS_PoD_Item .toolsContainer a.printItem.printSubmitted, 
-.TDS_PS_L4.TDS_PoD_Item .toolsContainer a.printItem.printSubmitted, 
-.TDS_PS_L3.TDS_Emboss_Item .toolsContainer .printItem.printSubmitted, 
-.TDS_PS_L4.TDS_Emboss_Item .toolsContainer .printItem.printSubmitted  {
-	background-position: -250px -75px !important;
-}
-.TDS_PoD_Item.TDS_CCYellowB .toolsContainer a.printItem.printSubmitted, 
-.TDS_PS_L3.TDS_PoD_Item.TDS_CCYellowB .toolsContainer a.printItem.printSubmitted, 
-.TDS_PS_L4.TDS_PoD_Item.TDS_CCYellowB .toolsContainer a.printItem.printSubmitted, 
-.TDS_PoD_Item.TDS_CCInvert .toolsContainer a.printItem.printSubmitted, 
-.TDS_PS_L3.TDS_PoD_Item.TDS_CCInvert .toolsContainer a.printItem.printSubmitted, 
-.TDS_PS_L4.TDS_PoD_Item.TDS_CCInvert .toolsContainer a.printItem.printSubmitted, 
-.TDS_PoD_Item.TDS_CCWhiteN .toolsContainer a.printItem.printSubmitted, 
-.TDS_PS_L3.TDS_PoD_Item.TDS_CCWhiteN .toolsContainer a.printItem.printSubmitted, 
-.TDS_PS_L4.TDS_PoD_Item.TDS_CCWhiteN .toolsContainer a.printItem.printSubmitted, 
-
-.TDS_CCYellowB .toolsContainer a.printPassage.printSubmitted, 
-.TDS_PS_L3.TDS_CCYellowB .toolsContainer a.printPassage.printSubmitted, 
-.TDS_PS_L4.TDS_CCYellowB .toolsContainer a.printPassage.printSubmitted, 
-.TDS_CCInvert .toolsContainer a.printPassage.printSubmitted, 
-.TDS_PS_L3.TDS_CCInvert .toolsContainer a.printPassage.printSubmitted, 
-.TDS_PS_L4.TDS_CCInvert .toolsContainer a.printPassage.printSubmitted, 
-.TDS_CCWhiteN .toolsContainer a.printPassage.printSubmitted, 
-.TDS_PS_L3.TDS_CCWhiteN .toolsContainer a.printPassage.printSubmitted, 
-.TDS_PS_L4.TDS_CCWhiteN .toolsContainer a.printPassage.printSubmitted {
-	background-image: url("../../Images/universal/universal_itemsprites_colorchoices.png") !important;
-}
-
 .TDS_PS_L2 .toolsContainer {
 	height: 40px;
 	margin-top: -1.4em;
@@ -621,33 +441,12 @@ div.toolsContainer a.passageMenu:hover,
 	width: inherit !important;
 	height: inherit !important;
 }
-.TDS_PS_L3 .toolsContainer a.commentItem, 
-.TDS_PS_L4 .toolsContainer a.commentItem {
-	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
-	background-position: -400px -75px !important;
-}
-.TDS_PS_L3 .toolsContainer .commentItem:hover, 
-.TDS_PS_L3 .toolsContainer .commentItem:focus, 
-.TDS_PS_L3 .toolsContainer .commentItem:active,  
-.TDS_PS_L4 .toolsContainer .commentItem:hover, 
-.TDS_PS_L4 .toolsContainer .commentItem:focus, 
-.TDS_PS_L4 .toolsContainer .commentItem:active {
-	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
-	background-position: -450px -75px !important;
-}
-.TDS_PS_L3 .toolsContainer a.markReview, 
-.TDS_PS_L4 .toolsContainer a.markReview {
-	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
-	background-position: 0px -75px !important;
-}
 .TDS_PS_L3 .toolsContainer a.markReview:hover, 
 .TDS_PS_L3 .toolsContainer a.markReview:focus, 
 .TDS_PS_L3 .toolsContainer a.markReview:active, 
 .TDS_PS_L4 .toolsContainer a.markReview:hover, 
 .TDS_PS_L4 .toolsContainer a.markReview:focus, 
 .TDS_PS_L4 .toolsContainer a.markReview:active {
-	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
-	background-position: -50px -75px !important;
 	width: 40px;
 	height: 50px;
 }
@@ -660,156 +459,10 @@ div.toolsContainer a.passageMenu:hover,
 	width: 40px !important;
 	height: 50px !important;
 }
-.TDS_PS_L3 .itemMarked .toolsContainer a.markReview.toolButton, 
-.TDS_PS_L3 .itemMarked .toolsContainer a.markReview.toolButton:active, 
-.TDS_PS_L3 .itemMarked .toolsContainer a.markReview.toolButton:focus, 
-.TDS_PS_L3 .itemMarked .toolsContainer a.markReview.toolButton:hover, 
-.TDS_PS_L4 .itemMarked .toolsContainer a.markReview.toolButton, 
-.TDS_PS_L4 .itemMarked .toolsContainer a.markReview.toolButton:active, 
-.TDS_PS_L4 .itemMarked .toolsContainer a.markReview.toolButton:focus, 
-.TDS_PS_L4 .itemMarked .toolsContainer a.markReview.toolButton:hover {
-	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
-	background-position: -100px -75px !important;
-}
 .TDS_PS_L3 .toolsContainer a.printItem, 
 .TDS_PS_L4 .toolsContainer a.printItem {
-	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
-	background-position: -150px -75px !important;
 	width: 40px !important;
 	height: 50px !important;
-}
-.TDS_PS_L3 .layout_wai .toolsContainer a.printItem:hover, 
-.TDS_PS_L3 .layout_wai .toolsContainer a.printItem:focus, 
-.TDS_PS_L3 .layout_wai .toolsContainer a.printItem:active, 
-.TDS_PS_L4 .layout_wai .toolsContainer a.printItem:hover, 
-.TDS_PS_L4 .layout_wai .toolsContainer a.printItem:focus, 
-.TDS_PS_L4 .layout_wai .toolsContainer a.printItem:active {
-	background-position: -200px -75px !important;
-}
-.TDS_PS_L3 .toolsContainer a.contexthelp, 
-.TDS_PS_L4 .toolsContainer a.contexthelp {
-	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
-	background-position: -300px -75px;
-}
-.TDS_PS_L3 .toolsContainer a.contexthelp:hover, 
-.TDS_PS_L3 .toolsContainer a.contexthelp:focus, 
-.TDS_PS_L3 .toolsContainer a.contexthelp:active, 
-.TDS_PS_L4 .toolsContainer a.contexthelp:hover, 
-.TDS_PS_L4 .toolsContainer a.contexthelp:focus, 
-.TDS_PS_L4 .toolsContainer a.contexthelp:active {
-	background-position: -350px -75px !important;
-}
-.TDS_PS_L3.TDS_GfR1 .toolsContainer a.guideToRevision, 
-.TDS_PS_L4.TDS_GfR1 .toolsContainer a.guideToRevision {
-	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
-	background-position: -750px -75px !important;
-}
-.TDS_PS_L3 .toolsContainer a.guideToRevision:hover, 
-.TDS_PS_L3 .toolsContainer a.guideToRevision:focus, 
-.TDS_PS_L3 .toolsContainer a.guideToRevision:active, 
-.TDS_PS_L4 .toolsContainer a.guideToRevision:hover, 
-.TDS_PS_L4 .toolsContainer a.guideToRevision:focus, 
-.TDS_PS_L4 .toolsContainer a.guideToRevision:active {
-	background-position: -799px -75px !important;
-}
-
-/* @group Reset-Remove answer */
-
-.toolsContainer .removeResponse, 
-.TDS_PS_L1 .toolsContainer .removeResponse, 
-.TDS_PS_L2 .toolsContainer .removeResponse {
-	background-image: url(../../Images/universal/universal_itemsprites.png) !important;
-	background-position: -254px -160px;
-}
-.toolsContainer .removeResponse:hover, 
-.toolsContainer .removeResponse:active, 
-.toolsContainer .removeResponse:focus, 
-.TDS_PS_L1 .toolsContainer .removeResponse:hover, 
-.TDS_PS_L1 .toolsContainer .removeResponse:active, 
-.TDS_PS_L1 .toolsContainer .removeResponse:focus, 
-.TDS_PS_L2 .toolsContainer .removeResponse:hover, 
-.TDS_PS_L2 .toolsContainer .removeResponse:active, 
-.TDS_PS_L2 .toolsContainer .removeResponse:focus {
-	background-position: -289px -160px;
-}
-.TDS_PS_L3 .toolsContainer .removeResponse, 
-.TDS_PS_L4 .toolsContainer .removeResponse {
-	background-position: -156px -160px;
-}
-.TDS_PS_L3 .toolsContainer .removeResponse:hover, 
-.TDS_PS_L3 .toolsContainer .removeResponse:active, 
-.TDS_PS_L3 .toolsContainer .removeResponse:focus, 
-.TDS_PS_L4 .toolsContainer .removeResponse:hover, 
-.TDS_PS_L4 .toolsContainer .removeResponse:active, 
-.TDS_PS_L4 .toolsContainer .removeResponse:focus {
-	background-position: -206px -160px;
-}
-
-/* @end */
-.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton, 
-.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton, 
-.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton,
-.TDS_PS_L0.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton, 
-.TDS_PS_L0.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton, 
-.TDS_PS_L0.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton,
-.TDS_PS_L1.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton, 
-.TDS_PS_L1.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton, 
-.TDS_PS_L1.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton, 
-.TDS_PS_L2.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton, 
-.TDS_PS_L2.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton, 
-.TDS_PS_L2.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton, 
-.TDS_PS_L3.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton, 
-.TDS_PS_L3.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton, 
-.TDS_PS_L3.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton, 
-.TDS_PS_L4.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton, 
-.TDS_PS_L4.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton, 
-.TDS_PS_L4.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton, 
-.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton:focus, 
-.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton:focus, 
-.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton:focus, 
-.TDS_PS_L1.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton:focus, 
-.TDS_PS_L1.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton:focus, 
-.TDS_PS_L1.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton:focus, 
-.TDS_PS_L2.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton:focus, 
-.TDS_PS_L2.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton:focus, 
-.TDS_PS_L2.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton:focus, 
-.TDS_PS_L3.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton:focus, 
-.TDS_PS_L3.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton:focus, 
-.TDS_PS_L3.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton:focus, 
-.TDS_PS_L4.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton:focus, 
-.TDS_PS_L4.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton:focus, 
-.TDS_PS_L4.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton:focus, 
-.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton:active, 
-.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton:active, 
-.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton:active, 
-.TDS_PS_L1.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton:active, 
-.TDS_PS_L1.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton:active, 
-.TDS_PS_L1.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton:active, 
-.TDS_PS_L2.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton:active, 
-.TDS_PS_L2.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton:active, 
-.TDS_PS_L2.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton:active, 
-.TDS_PS_L3.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton:active, 
-.TDS_PS_L3.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton:active, 
-.TDS_PS_L3.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton:active, 
-.TDS_PS_L4.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton:active, 
-.TDS_PS_L4.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton:active, 
-.TDS_PS_L4.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton:active, 
-.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton:hover, 
-.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton:hover, 
-.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton:hover, 
-.TDS_PS_L1.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton:hover, 
-.TDS_PS_L1.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton:hover, 
-.TDS_PS_L1.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton:hover, 
-.TDS_PS_L2.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton:hover, 
-.TDS_PS_L2.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton:hover, 
-.TDS_PS_L2.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton:hover, 
-.TDS_PS_L3.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton:hover, 
-.TDS_PS_L3.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton:hover, 
-.TDS_PS_L3.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton:hover, 
-.TDS_PS_L4.TDS_CCWhiteN .itemMarked .toolsContainer a.markReview.toolButton:hover, 
-.TDS_PS_L4.TDS_CCYellowB .itemMarked .toolsContainer a.markReview.toolButton:hover, 
-.TDS_PS_L4.TDS_CCInvert .itemMarked .toolsContainer a.markReview.toolButton:hover {
-	background-image: url(../../Images/universal/universal_itemsprites_colorchoices.png) !important;
 }
 
 /* remove extra pargraph tags */
@@ -818,14 +471,6 @@ div.toolsContainer a.passageMenu:hover,
 }
 .TDS_PS_L0 .layout_22 .itemTools {
 	margin-top: -35px;
-}
-.TDS_PS_L3 .layout_22 .itemTools a.itemMenu {
-    background-position: center -534px;
-}
-.TDS_PS_L3 .layout_22 .itemTools a.itemMenu:active, 
-.TDS_PS_L3 .layout_22 .itemTools a.itemMenu:hover, 
-.TDS_PS_L3 .layout_22 .itemTools a.itemMenu:focus {
-    background-position: center -584px;
 }
 .TDS_ITM1 .layout_30 .itemTools a.itemMenu {
     float: right;
@@ -1104,7 +749,7 @@ div.toolsContainer a.passageMenu:hover,
 	width:100% !important;
 }
 /* keeps passage scrollable no matter where you touch */
-.touch .passage-expanded .theQuestions {
+.mobile .passage-expanded .theQuestions{
 	pointer-events:none;
 	overflow: hidden;
 }
@@ -1165,6 +810,9 @@ div.toolsContainer a.passageMenu:hover,
 
 #WordListTool {
 	z-index: 6;
+}
+#WordListTool .audioControls {
+	margin: 0 5px;
 }
 /* fb-85854 Chome and YUI do not play nice together, z-index gets set wrong in javavscript*/
 #wordListPanel_c {
@@ -1386,76 +1034,11 @@ a.ASL:hover {
 .browser_airsecurebrowser.browserVer_3_5.platform_osx .passage-expanded .layoutColumnLeft {
 	border-right: 10px solid #8e8f8f;
 }
-.TDS_PS_L1 .passage-expanded .expand-collapse-passage {
-	background-position: center -305px;
-}
-.TDS_PS_L1 .passage-expanded a.expand-collapse-passage:hover {
-	background-position: center -345px;
-}
-.TDS_PS_L1 .passage-expanded .expand-collapse-passage:active, .TDS_PS_L1 .passage-expanded .expand-collapse-passage:focus {
-	background-position: center -385px !important;
-}
-.TDS_PS_L2 .passage-expanded .expand-collapse-passage, .TDS_PS_L3 .passage-expanded .expand-collapse-passage, .TDS_PS_L4 .passage-expanded .expand-collapse-passage {
-	background-position: center -585px;
-}
-.TDS_PS_L2 .passage-expanded a.expand-collapse-passage:hover, .TDS_PS_L3 .passage-expanded a.expand-collapse-passage:hover, .TDS_PS_L4 .passage-expanded a.expand-collapse-passage:hover {
-	background-position: center -635px;
-}
-.TDS_PS_L2 .passage-expanded .expand-collapse-passage:active, 
-.TDS_PS_L2 .passage-expanded .expand-collapse-passage:focus, 
-.TDS_PS_L3 .passage-expanded .expand-collapse-passage:active, 
-.TDS_PS_L3 .passage-expanded .expand-collapse-passage:focus, 
-.TDS_PS_L4 .passage-expanded .expand-collapse-passage:active, 
-.TDS_PS_L4 .passage-expanded .expand-collapse-passage:focus {
-	background-position: center -685px !important;
-}
 /* layout 23 */
 .browser_airsecurebrowser.browserVer_3_5.platform_osx .passage-expanded .layout_23 .thePassage, 
 .browser_airsecurebrowser.browserVer_3_5.platform_osx .passage-expanded .layout_23 .thePassage {
 	border-bottom: 10px solid #8e8f8f;
 	border-right: inherit;
-}
-.TDS_PS_L1 .passage-expanded .layout_23 .expand-collapse-passage, .TDS_PS_L1 .passage-expanded.layout_23 .expand-collapse-passage {
-	background-position: center -460px;
-}
-.TDS_PS_L1 .passage-expanded .layout_23 a.expand-collapse-passage:hover, .TDS_PS_L1 .passage-expanded.layout_23 a.expand-collapse-passage:hover {
-	background-position: center -515px;
-}
-.TDS_PS_L1 .passage-expanded .layout_23 a.expand-collapse-passage:active, 
-.TDS_PS_L1 .passage-expanded .layout_23 a.expand-collapse-passage:focus, 
-.TDS_PS_L1 .passage-expanded.layout_23 a.expand-collapse-passage:active, 
-.TDS_PS_L1 .passage-expanded.layout_23 a.expand-collapse-passage:focus {
-	background-position: center -570px !important;
-}
-.TDS_PS_L2 .passage-expanded .layout_23 .expand-collapse-passage, 
-.TDS_PS_L3 .passage-expanded .layout_23 .expand-collapse-passage, 
-.TDS_PS_L4 .passage-expanded .layout_23 .expand-collapse-passage, 
-.TDS_PS_L2 .passage-expanded.layout_23 .expand-collapse-passage, 
-.TDS_PS_L3 .passage-expanded.layout_23 .expand-collapse-passage, 
-.TDS_PS_L4 .passage-expanded.layout_23 .expand-collapse-passage {
-	background-position: center -835px;
-}
-.TDS_PS_L2 .passage-expanded .layout_23 a.expand-collapse-passage:hover, 
-.TDS_PS_L3 .passage-expanded .layout_23 a.expand-collapse-passage:hover, 
-.TDS_PS_L4 .passage-expanded .layout_23 a.expand-collapse-passage:hover, 
-.TDS_PS_L2 .passage-expanded.layout_23 a.expand-collapse-passage:hover, 
-.TDS_PS_L3 .passage-expanded.layout_23 a.expand-collapse-passage:hover, 
-.TDS_PS_L4 .passage-expanded.layout_23 a.expand-collapse-passage:hover {
-	background-position: center -905px;
-}
-.TDS_PS_L2 .passage-expanded .layout_23 .expand-collapse-passage:active, 
-.TDS_PS_L2 .passage-expanded .layout_23 .expand-collapse-passage:focus, 
-.TDS_PS_L3 .passage-expanded .layout_23 .expand-collapse-passage:active, 
-.TDS_PS_L3 .passage-expanded .layout_23 .expand-collapse-passage:focus, 
-.TDS_PS_L4 .passage-expanded .layout_23 .expand-collapse-passage:active, 
-.TDS_PS_L4 .passage-expanded .layout_23 .expand-collapse-passage:focus, 
-.TDS_PS_L2 .passage-expanded.layout_23 .expand-collapse-passage:active, 
-.TDS_PS_L2 .passage-expanded.layout_23 .expand-collapse-passage:focus, 
-.TDS_PS_L3 .passage-expanded.layout_23 .expand-collapse-passage:active, 
-.TDS_PS_L3 .passage-expanded.layout_23 .expand-collapse-passage:focus, 
-.TDS_PS_L4 .passage-expanded.layout_23 .expand-collapse-passage:active, 
-.TDS_PS_L4 .passage-expanded.layout_23 .expand-collapse-passage:focus{
-	background-position: center -975px !important;
 }
 .passage-expanded.layout_23 .thePassage {
 	z-index: 6 !important;
@@ -1474,29 +1057,21 @@ a.ASL:hover {
 	z-index: 0;
 	overflow: hidden;
 }
-.passage-expanded.layout_23 .expand-collapse-passage {
-	background-position: center -145px;
-}
-.passage-expanded.layout_23 .expand-collapse-passage:hover {
-	background-position: center -195px;
-}
-.passage-expanded.layout_23 .expand-collapse-passage:active, .layout_23.expand-collapse-passage:focus {
-	background-position: center -245px;
-}
 
 /* @end */
 /* @group hacks */
 /*hack for the secure browser -- Add SB specific classes when they become available. Important! */
-.touch .thePassage, 
-.touch .theQuestions, 
-.touch .layoutColumnLeft, 
-.touch .layoutColumnRight {
+/*8/27/15 - hacking touch laptops out of these changes */
+.mobile .thePassage, 
+.mobile .theQuestions, 
+.mobile .layoutColumnLeft, 
+.mobile .layoutColumnRight{
 	padding-bottom: 300px !important;
 }
-.touch .layoutSingleMulti .layoutColumnLeft .thePassage {
+.mobile .layoutSingleMulti .layoutColumnLeft .thePassage {
     padding-bottom: 0px !important;
 }
-.touch .layout_12 .thePassage.instructionsResponse {
+.mobile .layout_12 .thePassage.instructionsResponse {
 	padding-bottom: 5px !important;
 }
 /* hack for android to keep from scrolling beyond the page, overides iOS SB hack */
@@ -1535,12 +1110,6 @@ a.ASL:hover {
 	overflow: hidden;
 	position: relative;*/
 }
-/* keeps passage and questions from running into each other */
-.touch.platform_android .theQuestions, 
-.touch.platform_android .thePassage {
-	position: fixed;
-	top: 76px;
-}
 .touch.platform_android .layout_12 .theQuestions, 
 .touch.platform_android .layout_12 .thePassage, 
 .touch.platform_android .layout_wai .theQuestions, 
@@ -1578,11 +1147,12 @@ a.ASL:hover {
     position: absolute;
     top: 0px;
 }*/
-.touch.TDS_SLM1 .pageWrapper.showing .layout_wai {
+/*Removing this style from touch laptops to fix bug 175393*/
+.mobile.touch.TDS_SLM1 .pageWrapper.showing .layout_wai{
 	position: static;
 	padding-bottom: 20px;
 }
-.touch.TDS_SLM1 .pageWrapper.hiding {
+.mobile.TDS_SLM1 .pageWrapper.hiding{
 	overflow: hidden;
 }
 /* End Bug #170183*/
@@ -1604,10 +1174,10 @@ a.ASL:hover {
 /* @end */
 
 /*lets iOS scroll text areas*/
-.touch .answerCell textarea, 
-.touch .answerContainer textarea, 
-.touch .questionCell input, 
-.touch .stemContainer input {
+.mobile .answerCell textarea, 
+.mobile .answerContainer textarea, 
+.mobile .questionCell input, 
+.mobile .stemContainer input {
 	-webkit-overflow-scrolling: touch;
 	overflow: auto !important;
 }
@@ -1639,6 +1209,15 @@ math annotation{
 .stemContainer math, 
 .optionContainer math {
 	text-align: left !important;
+}
+
+/*Fix - to override Firefox's default rendering of the mi tag.*/
+/*See Bug 175490 for more information */
+math mi::before { 
+	content: "\00FEFF";
+}
+math mi{
+	font-style: italic;
 }
 
 /* temp style to make the pi symbol more legible
@@ -2493,6 +2072,9 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 .TDS_CCYellow2 #contents .passageTools a {
 	background-color: #fcfce2;
 }
+.TDS_CCCream #contents .passageTools a {
+	background-color: #ede0ce;
+}
 .TDS_CCYellow .alertBar.alertActive, 
 .TDS_CCYellow2 .alertBar.alertActive {
 	background-color: rgba(255,188,86,0.51);
@@ -2550,6 +2132,11 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 .TDS_CCInvert .multi-page a:hover {
 	color: #fff;
 	background-color: #00aeef;
+}
+.TDS_CCInvert .theQuestions .contextAreaFocus {
+	-moz-box-shadow: 0 0 5px 2px rgba(205,247,235,.3);
+   	-webkit-box-shadow: 0 0 5px 2px rgba(205,247,235,.3);
+	box-shadow: 0 0 5px 2px rgba(205,247,235,.3);
 }
 .TDS_CCWhiteN #contents .passageTools a {
 	background-color: #003366;
@@ -2618,15 +2205,19 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 }
 .TDS_PS_L1 .layout_wai{
 	font-size: 1.8em;
+	top: 96px;
 }
 .TDS_PS_L2 .layout_wai{
 	font-size: 2.25em;
+	top: 96px;
 }
 .TDS_PS_L3 .layout_wai{
 	font-size: 2.95em;
+	top: 120px;
 }
 .TDS_PS_L4 .layout_wai{
 	font-size: 3.75em;
+	top: 120px;
 }
 
 .layout_wai .thePassage p, 
@@ -3458,11 +3049,185 @@ math .symbol .highlight {
 	box-shadow:inset 0 0 5px 2px rgba(0,174,239,.3);
 }
 
-/* hide letters for some QTI options */
+/* hide letters for some QTI options 
 .hideOptionLabels .format_mc .optionClicker {
 	background-image: url("../../Images/controls/options/optionBlank.png") !important;
+}*/
+
+/* @group Icon Fonts for content tools */
+
+.pageWrapper .toolsContainer > a {
+	text-decoration: none;
+	text-indent: 0px;
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+.pageWrapper .toolsContainer > a:before {
+	height: 29px;
+	width: 99%;
+	text-align: center;
+	text-indent: 0px;
+	color: #7b7b7b;
+	font-size: 24px;
+	line-height: 29px;
+	content: " ";
+	display: block;
+}
+.TDS_CCInvert .pageWrapper .toolsContainer a:before, 
+.TDS_CCWhiteN .pageWrapper .toolsContainer a:before {
+	color: #fff;
+}
+.TDS_CCYellowB .pageWrapper .toolsContainer a:before {
+	color: #ffcc00;
+}
+.TDS_CCYellowB .pageWrapper .toolsContainer a:hover, 
+.TDS_CCYellowB .pageWrapper .toolsContainer a:active, 
+.TDS_CCYellowB .pageWrapper .toolsContainer a:focus {
+	background-color: #00aeef !important;
+}
+.TDS_CCYellowB .pageWrapper .toolsContainer a:hover:before, 
+.TDS_CCYellowB .pageWrapper .toolsContainer a:active:before, 
+.TDS_CCYellowB .pageWrapper .toolsContainer a:focus:before {
+	color: #fff;
+}
+.pageWrapper .toolsContainer a:hover:before, 
+.pageWrapper .toolsContainer a:active:before, 
+.pageWrapper .toolsContainer a:focus:before {
+	color: #00aeef;
+}
+.TDS_CCWhiteN .pageWrapper .toolsContainer a:hover:before, 
+.TDS_CCWhiteN .pageWrapper .toolsContainer a:active:before, 
+.TDS_CCWhiteN .pageWrapper .toolsContainer a:focus:before {
+	color: #ffcc00;
+}
+.pageWrapper .toolsContainer a.passageMenu:before, 
+.pageWrapper .toolsContainer a.itemMenu:before {
+	content: "\e61e";
+}
+.pageWrapper .toolsContainer a.contexthelp:before {
+	content: "\e631";
+}
+.pageWrapper .toolsContainer a.commentItem:before {
+	content: "\e62e";
+	font-size: 29px;
+}
+.pageWrapper .toolsContainer a.markReview.toolButton {
+	background-image: none !important;
+}
+.pageWrapper .toolsContainer a.markReview:before {
+	content: "\e62a";
+	font-size: 27px;
+}
+.pageWrapper .toolsContainer a.guideToRevision:before {
+	content: "\e62c";
+}
+.TDS_GfR1 .pageWrapper .toolsContainer a.guideToRevision {
+	background-image: none !important;
+}
+a.toolButton.response-recovery-item {
+	display: block;
+}
+.pageWrapper .toolsContainer a.response-recovery-item:before {
+	content: "\e609";
+}
+.pageWrapper .toolsContainer a.markReview.markReviewMarked, 
+.pageWrapper .toolsContainer a.markReview.markReviewMarked:hover, 
+.pageWrapper .toolsContainer a.markReview.markReviewMarked:active, 
+.pageWrapper .toolsContainer a.markReview.markReviewMarked:focus, 
+.TDS_PS_L1 .pageWrapper .toolsContainer a.markReview.markReviewMarked, 
+.TDS_PS_L1 .pageWrapper .toolsContainer a.markReview.markReviewMarked:hover, 
+.TDS_PS_L1 .pageWrapper .toolsContainer a.markReview.markReviewMarked:active, 
+.TDS_PS_L1 .pageWrapper .toolsContainer a.markReview.markReviewMarked:focus, 
+.TDS_PS_L2 .pageWrapper .toolsContainer a.markReview.markReviewMarked, 
+.TDS_PS_L2 .pageWrapper .toolsContainer a.markReview.markReviewMarked:hover, 
+.TDS_PS_L2 .pageWrapper .toolsContainer a.markReview.markReviewMarked:active, 
+.TDS_PS_L2 .pageWrapper .toolsContainer a.markReview.markReviewMarked:focus, 
+.TDS_PS_L3 .pageWrapper .toolsContainer a.markReview.markReviewMarked, 
+.TDS_PS_L3 .pageWrapper .toolsContainer a.markReview.markReviewMarked:hover, 
+.TDS_PS_L3 .pageWrapper .toolsContainer a.markReview.markReviewMarked:active, 
+.TDS_PS_L3 .pageWrapper .toolsContainer a.markReview.markReviewMarked:focus, 
+.TDS_PS_L4 .pageWrapper .toolsContainer a.markReview.markReviewMarked, 
+.TDS_PS_L4 .pageWrapper .toolsContainer a.markReview.markReviewMarked:hover, 
+.TDS_PS_L4 .pageWrapper .toolsContainer a.markReview.markReviewMarked:active, 
+.TDS_PS_L4 .pageWrapper .toolsContainer a.markReview.markReviewMarked:focus {
+	position: relative;
+}
+.pageWrapper .toolsContainer a.markReview.markReviewMarked:after {
+	content: "\e628";
+	color: #00a651;
+	display: block;
+    font-size: 11px;
+    height: 13px;
+    left: 13px;
+    line-height: 13px;
+    position: absolute;
+    top: 17px;
+    width: 12px;
+}
+.pageWrapper .toolsContainer a.expand-collapse-passage:before {
+	content: "\e60a";
+	font-size: 20px;
+}
+.pageWrapper .passage-expanded .toolsContainer a.expand-collapse-passage:before {
+	content: "\e60b";
+}
+.TDS_PS_L2 .pageWrapper .toolsContainer > a:before, 
+.TDS_PS_L3 .pageWrapper .toolsContainer > a:before {
+	height: 35px;
+  	font-size: 30px;
+  	line-height: 32px;
+}
+.TDS_PS_L2 .pageWrapper .toolsContainer a.expand-collapse-passage:before, 
+.TDS_PS_L3 .pageWrapper .toolsContainer a.expand-collapse-passage:before {
+	font-size: 26px;
+} 
+.TDS_PS_L4 .pageWrapper .toolsContainer > a:before {
+	height: 40px;
+  	font-size: 39px;
+  	line-height: 41px;
+}
+.TDS_PS_L4 .pageWrapper .toolsContainer a.expand-collapse-passage:before {
+	font-size: 31px;
 }
 
+.TDS_PS_L1 .pageWrapper .toolsContainer a.commentItem:before, 
+.TDS_PS_L2 .pageWrapper .toolsContainer a.commentItem:before {
+	font-size: 33px;
+  	line-height: 35px;
+}
+.TDS_PS_L1 .pageWrapper .toolsContainer a.markReview:before, 
+.TDS_PS_L2 .pageWrapper .toolsContainer a.markReview:before {
+	font-size: 33px;
+  	line-height: 35px;
+}
+.TDS_PS_L1 .pageWrapper .toolsContainer a.markReview.markReviewMarked:after, 
+.TDS_PS_L2 .pageWrapper .toolsContainer a.markReview.markReviewMarked:after {
+	top: 21px;
+}
+
+.TDS_PS_L3 .pageWrapper .toolsContainer a.commentItem:before, 
+.TDS_PS_L4 .pageWrapper .toolsContainer a.commentItem:before {
+	font-size: 46px;
+    line-height: 40px;
+}
+.TDS_PS_L3 .pageWrapper .toolsContainer a.markReview:before, 
+.TDS_PS_L4 .pageWrapper .toolsContainer a.markReview:before {
+	font-size: 42px;
+    line-height: 39px;
+}
+.TDS_PS_L3 .pageWrapper .toolsContainer a.markReview.markReviewMarked:after, 
+.TDS_PS_L4 .pageWrapper .toolsContainer a.markReview.markReviewMarked:after {
+	top: 27px;
+}
+/* @end */
 
 /* @group fixed expand/collapse button */
 
@@ -3516,37 +3281,18 @@ math .symbol .highlight {
 .passageTools.toolsContainer a.passageMenu {
 	background-color: #fff;
 	display: block;
-	background: url(../../Images/universal/universal_content.png) no-repeat center 6px;
 	width: 45px;
 	height: 29px;
 }
 .passageTools.toolsContainer .expand-collapse-passage, 
 .TDS_PS_L1 .passageTools.toolsContainer .expand-collapse-passage {
-	background: #fff url(../../Images/universal/universal_content.png) no-repeat center -95px;
 	height: 29px !important;
 	width: 40px !important;
 }
-.passageTools.toolsContainer .expand-collapse-passage:active, 
-.passageTools.toolsContainer .expand-collapse-passage:focus, 
-.passageTools.toolsContainer .expand-collapse-passage:hover, 
-.TDS_PS_L1 .passageTools.toolsContainer .expand-collapse-passage:active, 
-.TDS_PS_L1 .passageTools.toolsContainer .expand-collapse-passage:focus, 
-.TDS_PS_L1 .passageTools.toolsContainer .expand-collapse-passage:hover {
-	background-position: center -145px !important;
-}
 .TDS_PS_L2 .passageTools.toolsContainer .expand-collapse-passage, 
 .TDS_PS_L3 .passageTools.toolsContainer .expand-collapse-passage {
-	background-position: center -644px !important;
-    height: 34px !important;
+	height: 34px !important;
     width: 45px !important;
-}
-.TDS_PS_L2 .passageTools.toolsContainer .expand-collapse-passage:active, 
-.TDS_PS_L2 .passageTools.toolsContainer .expand-collapse-passage:focus, 
-.TDS_PS_L2 .passageTools.toolsContainer .expand-collapse-passage:hover, 
-.TDS_PS_L3 .passageTools.toolsContainer .expand-collapse-passage:active, 
-.TDS_PS_L3 .passageTools.toolsContainer .expand-collapse-passage:focus, 
-.TDS_PS_L3 .passageTools.toolsContainer .expand-collapse-passage:hover {
-	background-position: center -695px !important;
 }
 .TDS_PS_L2 .passageTools.toolsContainer .passageMenu, 
 .TDS_PS_L3 .passageTools.toolsContainer .passageMenu {
@@ -3554,19 +3300,14 @@ math .symbol .highlight {
     width: 52px !important;
 }
 .TDS_PS_L4 .passageTools.toolsContainer .expand-collapse-passage {
-	background-position: center -843px !important;
-    height: 45px !important;
+	height: 45px !important;
     width: 60px !important;
-}
-.TDS_PS_L4 .passageTools.toolsContainer .expand-collapse-passage:active, 
-.TDS_PS_L4 .passageTools.toolsContainer .expand-collapse-passage:focus, 
-.TDS_PS_L4 .passageTools.toolsContainer .expand-collapse-passage:hover {
-	background-position: center -893px !important;
 }
 .TDS_PS_L4 .passageTools.toolsContainer .passageMenu {
 	height: 45px !important;
     width: 70px !important;
 }
+
 .passage-expanded .passageTools.toolsContainer {
 	left: 90% !important;
 }
@@ -3616,12 +3357,13 @@ math .symbol .highlight {
 	left: 85%;
 }
 
-.platform_linux .optionClicker {
-	border-right: 1px solid rgba(255,255,255,0.01) !important;
-}
-
 .platform_ios .pageWrapper img {
 	pointer-events:none !important;
+}
+
+.passageTools.toolsContainer a.yuimenuitemlabel{
+	position: relative !important;
+	float: none;
 }
 
 /* Safari 6 hack - Safari calculates the viewport differently than in iOS 7, so this style shifts the button down */

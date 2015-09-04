@@ -169,7 +169,7 @@ public class GlobalJavascriptWriter
     BrowserParser browser = new BrowserParser ();
     addClass ("browser_" + browser.getName ().toLowerCase (), styles);
     addClass ("browserVer_" + Double.toString (browser.getVersion ()).replace ('.', '_'), styles);
-    addClass ("platform_" + String.valueOf (browser.getOsName ()), styles);
+    addClass ("platform_" + String.valueOf (browser.getOsName ()).toLowerCase (), styles);
 
     // add class for PT
     if (_studentSettings.getInPTMode ())
@@ -549,20 +549,20 @@ public class GlobalJavascriptWriter
   {
     return _writer.toString ();
   }
-  
-  /// <summary>
-  /// Write out client side app settings.
-  /// </summary>
-  public void WriteAppSettings() throws IOException, ReturnStatusException
+
+  // / <summary>
+  // / Write out client side app settings.
+  // / </summary>
+  public void WriteAppSettings () throws IOException, ReturnStatusException
   {
-      // get all the app settings
-      IConfigRepository configRepo = SpringApplicationContext.getBean(ConfigRepository.class);
-      Map<String, Object> appSettings = configRepo.getClientAppSettings();
-      
-      // write out json
-      String serializedSettings = JsonHelper.serialize(appSettings);
-      _writer.write("TDS.Config.appSettings = " + serializedSettings);
-      _writer.write ("\n\r");
+    // get all the app settings
+    IConfigRepository configRepo = SpringApplicationContext.getBean (ConfigRepository.class);
+    Map<String, Object> appSettings = configRepo.getClientAppSettings ();
+
+    // write out json
+    String serializedSettings = JsonHelper.serialize (appSettings);
+    _writer.write ("TDS.Config.appSettings = " + serializedSettings);
+    _writer.write ("\n\r");
 
   }
 
