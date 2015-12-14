@@ -1,0 +1,552 @@
+html {
+	font-size:76%;
+	font-family: Times New Roman, Times, serif;
+}
+body {
+	overflow: hidden;
+}
+.element-invisible {
+  position: absolute !important;
+  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px);
+}
+#topBar {
+	font-family: "Lucida Grande", "Lucida Sans", Arial, Helvetica, sans-serif;
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	color: #000;
+	font-size: .9em;
+	line-height: 1.9em;
+	border-bottom: solid 1px #666;
+	background: #f0f2f2 url(../Images/gradient_grey.png) repeat-x 0 100%;
+	min-height: 40px;
+	height: auto;
+}
+#brand1 {
+	display: block;
+	width: 240px;
+	height: 3.9em;
+	background: #5f90b9 url(../Images/air_online.png) no-repeat 100% 50%;
+	float: right;
+	border-left: solid 1px #fff;
+}
+#banner {
+	background-color: #333f58;
+	height: 1.9em;
+	border-bottom: solid 1px #fff;
+	color: #fff;
+}
+#banner h1, #banner h2 {
+	padding: .0em .5em;
+	float: left;
+}
+#jumpTo {
+	clear: left;
+	float: left;
+	padding: .0em .5em;
+}
+#btnHelp {
+	background-color: #DBEDFB;
+    color: #000000;
+    display: block;
+    float: left;
+    line-height: 1em;
+    padding: 1px 5px;
+    text-decoration: none;
+    text-transform: uppercase;
+    border: solid 1px #77aadf;
+    -moz-border-radius: 3px;
+	border-radius: 3px; 
+	margin-top: .2em;
+	background-image: none;
+    height: auto;
+    overflow: inherit;
+    text-indent: inherit;
+    width: auto;
+}
+#btnHelp:hover {
+	background-color: #04A033;
+    color: #fff; 
+}
+#contents {
+	position: absolute;
+	top: 3.8em;
+	bottom: 4em;
+}
+.TDS_PS_L1 #contents {
+	bottom: 5em;
+}
+.TDS_PS_L2 #contents, .TDS_PS_L3 #contents, .TDS_PS_L4 #contents {
+	bottom: 7em;
+}
+
+/*
+OLD WAI STYLES REMOVED BY MIKE:
+.pageWrapper {
+	display: none;
+}
+.pageWrapper.showing {
+	display: block;
+}
+*/
+
+/* NEWER STYLES are loaded from the MODERN SHELL instead: */
+
+#contents div.pageWrapper {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    bottom: 0px;
+    overflow: auto;
+}
+
+
+/* footer */
+
+#foot {
+	font-family: "Lucida Grande", "Lucida Sans", Arial, Helvetica, sans-serif;
+	position: fixed;
+	bottom:0;
+	left:0;
+	width:100%;
+	z-index:5;
+	color:#FFFFFF;
+	background-color: #333f58;
+	vertical-align:top;
+	height: 4em;
+	margin:0;
+}
+#foot li {
+	display: block;
+	float: right;
+	text-align: center;
+	margin-right: 10px;
+	min-width:44px;
+}
+#foot a {
+	display: block;
+	background-repeat: no-repeat;
+	background-position: 50% -1px;
+	font-size: 0.8em;
+	color: #FFFFFF;
+	text-decoration: none;
+	background-image: url(../Images/controls/buttons_base.png);
+	text-transform: uppercase;
+	white-space: nowrap;
+	-moz-user-select:none;
+	margin-top: 1px;
+}
+#foot a span {
+	display: block;
+	background: url(../Images/controls/sprites_student.png) no-repeat 50% 0;
+	padding-top:34px;
+	position: relative;
+	width: 100%;
+}
+.stripe {
+	display: block;
+	height: 30px;
+	background-color: #dfe2e4;
+	margin-top: 1px;
+}
+#studentControls {
+	display: block;
+	margin-top: -31px;
+	padding-left: 5px;
+	position: static;
+}
+#studentControls li {
+	float: left;
+}
+#studentControls li.studentTools {
+	float: right;
+	display: none;
+}
+#studentControls li#listZoomIn, #studentControls li#listZoomOut {
+	display: block;
+}
+/* @group buttons */
+
+#foot .tds-button {
+	display: block;
+	background-repeat: no-repeat;
+	background-position: 50% -1px;
+	color: #FFFFFF;
+	text-decoration: none;
+	background-image: url(../Images/controls/buttons_base.png);
+	text-transform: uppercase;
+	white-space: nowrap;
+	-moz-user-select:none;
+	margin-top: 1px;
+}
+#foot .tds-button button {
+	display: block;
+	background: transparent url(../Images/controls/sprites_student.png) no-repeat 50% 0;
+	padding-top:32px;
+	position: relative;
+	width: 100%;
+	border: none;
+	color: #fff;
+	font-size: 0.8em;
+}
+#studentControls li.inactive {
+	display: none;
+}
+#foot li.inactive#listBack {
+	display: block;
+}
+#foot .inactive .tds-button, #foot .inactive .tds-button:hover {
+	background-position: 50% -187px;
+	cursor: default !important;
+}
+#foot .tds-button-focus, #foot #btnPause.tds-button-focus, #foot #btnEnd.tds-button-focus {
+	background-position: 50% -94px;
+}
+#foot #btnBack span button {
+	background-position: 50% 6px;
+}
+#foot #btnSave span button {
+	background-position: 50% -444px;
+}
+#foot #btnNext span button {
+	background-position: 50% -44px;
+}
+#foot #btnEnd span button {
+	background-position: 50% -94px;
+}
+#foot #btnPause span button {
+	background-position: 50% -294px;
+}
+
+#foot a:hover, #foot #btnPause:hover, #foot #btnEnd:hover, #foot a:focus, #foot #btnPause:focus, #foot #btnEnd:focus {
+	background-position: 50% -94px;
+}
+#foot .inactive .tds-button, #foot .inactive .tds-button:hover {
+	background-position: 50% -187px;
+	cursor: default !important;
+}
+#foot #btnFormula span {
+	background-position: 50% -243px;
+}
+#foot #btnPrint span {
+	background-position: 50% -394px;
+}
+#foot #listPeriodic span {
+	background-position: 50% -344px;
+}
+#foot #listCalculator span {
+	background-position: 50% -3858px;
+}
+#foot #listPrintPractice span {
+	background-position: 50% -394px;
+}
+#foot #listZoomIn span {
+	background-position: 50% -494px;
+}
+#foot #listZoomOut span {
+	background-position: 50% -544px;
+}
+#foot #btnPause {
+	background-position: 50% -280px;
+}
+#foot #btnPause span {
+	background-position: 50% -294px;
+}
+#foot .inactive #btnPause {
+	display: none !important;
+}
+#foot #btnBack span {
+	background-position: 50% 6px;
+}
+#foot #btnSave span {
+	background-position: 50% -444px;
+}
+#foot #btnSave {
+	display:none;
+}
+#foot #btnSave.enable {
+	display:block;
+}
+#foot #btnNext span {
+	background-position: 50% -44px;
+}
+#foot #btnEnd {
+	background-position: 50% -373px;
+}
+#foot #btnEnd span {
+	background-position: 50% -94px;
+}
+#foot .inactive #btnEnd {
+	display: none !important;
+}
+#foot #btnSetHighlight span {
+	background-position: 50% -143px;
+}
+#foot #btnClearHighlight span {
+	background-position: 50% -194px;
+}
+/* level 1 */
+.TDS_PS_L1 #foot {
+	font-size: 1.25em;
+}
+.TDS_PS_L1 .stripe {
+	height: 38px;
+}
+.TDS_PS_L1 #studentControls {
+	margin-top: -38px;
+}
+.TDS_PS_L1 #foot button, .TDS_PS_L1 #foot a span {
+	padding-top: 38px;
+}
+.TDS_PS_L1 #foot a, .TDS_PS_L1 #foot .tds-button {
+	background-position: 50% -499px;
+	min-width: 60px;
+}
+.TDS_PS_L1 #foot a:hover, .TDS_PS_L1 #foot .tds-button:hover, 
+.TDS_PS_L1 #foot a:focus, .TDS_PS_L1 #foot .tds-button:focus, 
+.TDS_PS_L1 #foot .tds-button-focus {
+	background-position: 50% -615px !important;
+}
+.TDS_PS_L1 #foot .inactive .tds-button, .TDS_PS_L1 #foot .inactive tds-button:hover {
+	background-position: 50% -731px !important;
+}
+.TDS_PS_L1 #foot #btnFormula span {
+	background-position: 50% -243px;
+}
+.TDS_PS_L1 #foot #btnPrint span {
+	background-position: 50% -1191px;
+}
+.TDS_PS_L1 #foot #listPeriodic span {
+	background-position: 50% -1116px;
+}
+.TDS_PS_L1 #foot #listCalculator span {
+	background-position: 50% -3906px;
+}
+.TDS_PS_L1 #foot #listPrintPractice span {
+	background-position: 50% -394px;
+}
+.TDS_PS_L1 #foot #listZoomIn span {
+	background-position: 50% -1341px;
+}
+.TDS_PS_L1 #foot #listZoomOut span {
+	background-position: 50% -1416px;
+}
+.TDS_PS_L1 #foot #btnPause {
+	background-position: 50% -847px;
+}
+.TDS_PS_L1 #foot #btnPause span button {
+	background-position: 50% -1041px;
+}
+.TDS_PS_L1 #foot #btnBack span button {
+	background-position: 50% -591px;
+}
+.TDS_PS_L1 #foot #btnSave span button {
+	background-position: 50% -1266px;
+}
+.TDS_PS_L1 #foot #btnNext span button {
+	background-position: 50% -666px;
+}
+.TDS_PS_L1 #foot #btnEnd {
+	background-position: 50% -964px;
+}
+.TDS_PS_L1 #foot #btnEnd span button {
+	background-position: 50% -741px;
+}
+.TDS_PS_L1 #foot #btnSetHighlight span {
+	background-position: 50% -816px;
+}
+.TDS_PS_L1 #foot #btnClearHighlight span {
+	background-position: 50% -892px;
+}
+/*level 2 - 4 */
+.TDS_PS_L2 #foot, .TDS_PS_L3 #foot, .TDS_PS_L4 #foot {
+	font-size: 1.75em;
+}
+.TDS_PS_L2 .stripe, .TDS_PS_L3 .stripe, .TDS_PS_L4 .stripe {
+	height: 47px;
+}
+.TDS_PS_L2 #studentControls, .TDS_PS_L3 #studentControls, .TDS_PS_L4 #studentControls {
+	margin-top: -47px;
+}
+.TDS_PS_L2 #foot button, .TDS_PS_L2 #foot a span, 
+.TDS_PS_L3 #foot button, .TDS_PS_L3 #foot a span, 
+.TDS_PS_L4 #foot button, .TDS_PS_L4 #foot a span {
+	padding-top: 47px;
+}
+.TDS_PS_L2 #foot a, .TDS_PS_L2 #foot .tds-button, 
+.TDS_PS_L3 #foot a, .TDS_PS_L3 #foot .tds-button, 
+.TDS_PS_L4 #foot a, .TDS_PS_L4 #foot .tds-button {
+	background-position: 50% -1117px;
+	min-width: 71px;
+}
+.TDS_PS_L2 #foot a:hover, 
+.TDS_PS_L2 #foot .tds-button:hover, 
+.TDS_PS_L3 #foot a:hover, 
+.TDS_PS_L3 #foot .tds-button:hover, 
+.TDS_PS_L4 #foot a:hover, 
+.TDS_PS_L4 #foot .tds-button:hover, 
+
+.TDS_PS_L2 #foot a:focus, 
+.TDS_PS_L2 #foot .tds-button:focus, 
+.TDS_PS_L3 #foot a:focus, 
+.TDS_PS_L3 #foot .tds-button:focus, 
+.TDS_PS_L4 #foot a:focus, 
+.TDS_PS_L4 #foot .tds-button:focus,
+
+.TDS_PS_L2 #foot .tds-button-focus, 
+.TDS_PS_L3 #foot .tds-button-focus,  
+.TDS_PS_L4 #foot .tds-button-focus {
+	background-position: 50% -1262px !important;
+}
+.TDS_PS_L2 #foot .inactive .tds-button, .TDS_PS_L2 #foot .inactive tds-button:hover, 
+.TDS_PS_L3 #foot .inactive .tds-button, .TDS_PS_L3 #foot .inactive tds-button:hover, 
+.TDS_PS_L4 #foot .inactive .tds-button, .TDS_PS_L4 #foot .inactive tds-button:hover {
+	background-position: 50% -1407px !important;
+}
+.TDS_PS_L2 #foot #btnFormula span, .TDS_PS_L3 #foot #btnFormula span, .TDS_PS_L4 #foot #btnFormula span {
+	background-position: 50% -2239px;
+}
+.TDS_PS_L2 #foot #btnPrint span, .TDS_PS_L3 #foot #btnPrint span, .TDS_PS_L4 #foot #btnPrint span {
+	background-position: 50% -2690px;
+}
+.TDS_PS_L2 #foot #listPeriodic span, .TDS_PS_L3 #foot #listPeriodic span, .TDS_PS_L4 #foot #listPeriodic span {
+	background-position: 50% -2540px;
+}
+.TDS_PS_L2 #foot #listCalculator span, .TDS_PS_L3 #foot #listCalculator span, .TDS_PS_L4 #foot #listCalculator span {
+	background-position: 50% -3978px;
+}
+.TDS_PS_L2 #foot #listPrintPractice span, .TDS_PS_L3 #foot #listPrintPractice span, .TDS_PS_L4 #foot #listPrintPractice span {
+	background-position: 50% -394px;
+}
+.TDS_PS_L2 #foot #listZoomIn span, .TDS_PS_L3 #foot #listZoomIn span, .TDS_PS_L4 #foot #listZoomIn span {
+	background-position: 50% -2992px;
+}
+.TDS_PS_L2 #foot #listZoomOut span, .TDS_PS_L3 #foot #listZoomOut span, .TDS_PS_L4 #foot #listZoomOut span {
+	background-position: 50% -3142px;
+}
+.TDS_PS_L2 #foot #btnPause, .TDS_PS_L3 #foot #btnPause, .TDS_PS_L4 #foot #btnPause {
+	background-position: 50% -1553px;
+}
+.TDS_PS_L2 #foot #btnPause span button, .TDS_PS_L3 #foot #btnPause span button, .TDS_PS_L4 #foot #btnPause span button {
+	background-position: 50% -2390px;
+}
+.TDS_PS_L2 #foot #btnBack span button, .TDS_PS_L3 #foot #btnBack span button, .TDS_PS_L4 #foot #btnBack span button {
+	background-position: 50% -1490px;
+}
+.TDS_PS_L2 #foot #btnSave span button, .TDS_PS_L3 #foot #btnSave span button, .TDS_PS_L4 #foot #btnSave span button {
+	background-position: 50% -2840px;
+}
+.TDS_PS_L2 #foot #btnNext span button, .TDS_PS_L3 #foot #btnNext span button, .TDS_PS_L4 #foot #btnNext span button {
+	background-position: 50% -1640px;
+}
+.TDS_PS_L2 #foot #btnEnd, .TDS_PS_L3 #foot #btnEnd, .TDS_PS_L4 #foot #btnEnd {
+	background-position: 50% -1698px;
+}
+.TDS_PS_L2 #foot #btnEnd span button, .TDS_PS_L3 #foot #btnEnd span button, .TDS_PS_L4 #foot #btnEnd span button {
+	background-position: 50% -1790px;
+}
+.TDS_PS_L2 #foot #btnSetHighlight span, .TDS_PS_L3 #foot #btnSetHighlight span, .TDS_PS_L4 #foot #btnSetHighlight span {
+	background-position: 50% -1944px;
+}
+.TDS_PS_L2 #foot #btnClearHighlight span, .TDS_PS_L3 #foot #btnClearHighlight span, .TDS_PS_L4 #foot #btnClearHighlight span {
+	background-position: 50% -2092px;
+}
+
+/* @end */
+
+
+
+/* @group pop-ups */
+#help, #keyNav, #writingInstructions {
+	position: absolute;
+	height: 510px;
+	width: 700px;
+	z-index: 100;
+	border: 2px solid #f6c501;
+	right: 20px;
+	background-color: #FFFFFF;
+	top: 30px;
+	-moz-box-shadow: 0em 0em 1em #000;
+	-webkit-box-shadow: 0em 0em 1em #000;
+	box-shadow: 0em 0em 1em #000;
+}
+#keyNav {
+	right: 50px;
+	top: 45px;
+	border: 2px solid #d2b338;
+}
+#writingInstructions {
+	right: 60px;
+	top: 30px;
+	border: 2px solid #d2b338;
+}
+.TDS_PS_Larger #help {
+	width: 800px;
+}
+.TDS_PS_Largest #help {
+	width: 900px;
+}
+#help iframe {
+	width: 100%;
+	height: 465px;
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
+	border-bottom-color: #f6c501;
+}
+#help {
+	background-color: #fdfac2;;
+}
+.popupHeader {
+	background-color: #fdfac2;
+	display: block;
+	font-weight: bold;
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
+	border-bottom-color: #f6c501;
+	line-height: 18px;
+	height: 18px;
+	font-family: "Lucida Grande", "Lucida Sans", Arial, Helvetica, sans-serif;
+}
+.popupTitle {
+	display: block;
+	float: left;
+	height: 18px;
+	line-height: 18px;
+	padding-left: 10px;
+}
+.popupClose a {
+	background-color: #faf5a2;
+	display: block;
+	float: right;
+	height: 18px;
+	background-image: url(../Images/icons/xmark.gif);
+	background-repeat: no-repeat;
+	background-position: 5px 3px;
+	padding-right: 10px;
+	padding-left: 20px;
+	line-height: 18px;
+	color: #000000;
+	text-decoration: none;
+	border-left-width: 2px;
+	border-left-style: solid;
+	border-left-color: #f6c501;
+}
+.popupClose a:hover {
+	background-color: #990000;
+	text-decoration:underline;
+	color: #FFFFFF;
+}
+/* @end */
+
+/* make sure global notes is the correct size */
+.TDS_SCNotepad .yui-panel.comment, #global.comment {
+	height: 430px !important;
+}
+.TDS_SCNotepad .yui-panel.comment textarea, #global.comment textarea {
+	width: 100%;
+	height: 310px;
+	overflow: auto;
+}

@@ -1,0 +1,1644 @@
+/* @group login zooming */
+
+.TDS_PS_L1 #sections {
+	font-size: 1.3em;
+}
+.TDS_PS_L1 .ot-shadowBox {
+	width: inherit;
+	margin-left: 2em;
+	margin-right: 2em;
+}
+.TDS_PS_L2 #sections {
+	font-size: 1.6em;
+}
+.TDS_PS_L2 .ot-shadowBox {
+	width: inherit;
+	margin-left: 1em;
+	margin-right: 1em;
+}
+
+/* @end */
+
+
+.TDS_IF_S14 .thePassage {
+	font-size: 1.3em;
+}
+.TDS_SC0 .commentItem, 
+.TDS_T0 .contexthelp, 
+.TDS_MfR0 .markReview, 
+.TDS_MfR0 .markReviewMarked, 
+.TDS_ItmNum0 .questionContainer h2, 
+.TDS_ItmNum0 .questionCell h2, 
+.TDS_ItmNum0 .bigTable .questionCell h2, 
+.TDS_ItmNum0 .bigTable .questionContainer h2, 
+.TDS_Nav0 #jumpQuestions  {
+	display: none;
+}
+.TDS_SC1 a.commentItem, 
+.TDS_SCTextArea a.commentItem, 
+.TDS_SCDropDown a.commentItem, 
+.TDS_SCNotepad a.commentItem, 
+.TDS_T1 a.contexthelp, 
+.TDS_MfR1 a.markReview, 
+.TDS_MfR1 a.markReviewMarked, 
+.TDS_PoD_Item a.printItem, 
+.TDS_GfR1 a.guideToRevision  {
+	display: block !important;
+}
+.TDS_FT_San-Serif, .TDS_FT_San-Serif math, .TDS_FT_San-Serif #contents input, .TDS_FT_San-Serif #contents textarea {
+	font-family: Arial, Helvetica, sans-serif !important;
+}
+.TDS_FT_Serif, .TDS_FT_Serif math, .TDS_FT_Serif #contents input, .TDS_FT_Serif #contents textarea {
+	font-family: Times New Roman, Times, serif !important;
+}
+.TDS_FT_Verdana, .TDS_FT_Verdana math, .TDS_FT_Verdana #contents input, .TDS_FT_Verdana #contents textarea {
+	font-family: Verdana, Arial, Helvetica, sans-serif !important;
+}
+/* no longer making mathml larger
+math {
+	font-size: 1.2em;
+}*/
+.TDS_PS_L1 .popuptool {
+	font-size: 1.3em;
+}
+.TDS_PS_L2 .popuptool, .TDS_PS_L3 .popuptool, .TDS_PS_L4 .popuptool {
+	font-size: 1.6em;
+}
+
+.TDS_ExpandablePassages1 .expand-collapse-passage, 
+.TDS_ExpandablePassages1 .layoutSingleMulti .thePassage, 
+.app_ScoreEntry .removeResponse, 
+.app_ResponseEntry .removeResponse, 
+.app_scoreentry .removeResponse, 
+.app_responseentry .removeResponse, 
+
+
+
+.TDS_F_OR3_5 #navigation a.math, 
+.TDS_FOR6_8Math #navigation a.math, 
+.TDS_F_ORCIM_Math #navigation a.math, 
+.TDS_F_DE_6_8Math #navigation a.math, 
+.TDS_F_DE_9_10Math #navigation a.math, 
+.TDS_F_HI_4Math #navigation a.math, 
+.TDS_F_HI_5Math #navigation a.math, 
+.TDS_F_HI_6Math #navigation a.math, 
+.TDS_F_HI_7Math #navigation a.math, 
+.TDS_F_HI_8Math #navigation a.math, 
+.TDS_F_HI_10Math #navigation a.math, 
+.TDS_F_HI_11Sci #navigation a.math, 
+.TDS_F_HI_AlgII #navigation a.math, 
+.TDS_F_DE_2Math #navigation a.math, 
+.TDS_F_DE_EOC2Math #navigation a.math, 
+.TDS_F_MN_5Math #navigation a.math, 
+.TDS_F_MN_6Math #navigation a.math, 
+.TDS_F_MN_7Math #navigation a.math, 
+.TDS_F_MN_8Math #navigation a.math, 
+.TDS_F_MN_11Math #navigation a.math, 
+.TDS_F_MN_GRADMath #navigation a.math, 
+.TDS_F_AR_9_10Math #navigation a.math, 
+.TDS_F_AR_6_8Math #navigation a.math, 
+.TDS_F_OH_HS_Physics #navigation a.math, 
+.TDS_F_OH_HS_ESN_Physics #navigation a.math, 
+.TDS_F_UT_HS_Physics #navigation a.math, 
+.TDS_F_UT_HS_Science #navigation a.math, 
+.TDS_F_UT_HS_PT #navigation a.math, 
+.TDS_F_FL_Math_4 #navigation a.math, 
+.TDS_F_FL_Math_5 #navigation a.math, 
+.TDS_F_FL_Math_6 #navigation a.math, 
+.TDS_F_FL_Math_5-6 #navigation a.math, 
+.TDS_F_FL_Math_7 #navigation a.math, 
+.TDS_F_FL_Math_8 #navigation a.math, 
+.TDS_F_FL_Math_7-8 #navigation a.math, 
+.TDS_F_FL_EOC_Algebra1 #navigation a.math, 
+.TDS_F_FL_EOC_Algebra2 #navigation a.math, 
+.TDS_F_FL_EOC_Geometry #navigation a.math, 
+.TDS_F_FL_EOC_All #navigation a.math, 
+.TDS_F_FL_OP_Math_4 #navigation a.math, 
+.TDS_F_FL_OP_Math_5 #navigation a.math, 
+.TDS_F_FL_OP_Math_6 #navigation a.math, 
+.TDS_F_FL_OP_Math_7 #navigation a.math, 
+.TDS_F_FL_OP_Math_8 #navigation a.math, 
+.TDS_F_FL_OP_Math_EOC_Algebra1 a#btnFormula, 
+.TDS_F_FL_OP_Math_EOC_Algebra2 a#btnFormula, 
+.TDS_F_FL_OP_Math_EOC_Geometry a#btnFormula, 
+.TDS_F_MO_alg1 #navigation a.math, 
+.TDS_F_MO_alg2 #navigation a.math, 
+.TDS_F_MO_geo #navigation a.math, 
+.TDS_F_MO_math_eoc #navigation a.math, 
+.TDS_F_WV_7_9_science #navigation a.math, 
+
+.TDS_R_G35Argue #navigation a#btnRubric, 
+.TDS_R_G35Inform #navigation a#btnRubric, 
+.TDS_R_G68Argue #navigation a#btnRubric, 
+.TDS_R_G68Inform #navigation a#btnRubric, 
+.TDS_R_G911Argue #navigation a#btnRubric, 
+.TDS_R_G911Inform #navigation a#btnRubric, 
+.TDS_R_AZ_G35Argue #navigation a#btnRubric, 
+.TDS_R_AZ_G35Inform #navigation a#btnRubric, 
+.TDS_R_AZ_G6Argue #navigation a#btnRubric, 
+.TDS_R_AZ_G78Argue #navigation a#btnRubric, 
+.TDS_R_AZ_G68Inform #navigation a#btnRubric, 
+.TDS_R_AZ_G911Inform #navigation a#btnRubric, 
+.TDS_R_AZ_G911Argue #navigation a#btnRubric, 
+.TDS_R_AZ_G911Argue #navigation a#btnRubric, 
+
+.TDS_PT_HTML #navigation a.periodic, 
+.TDS_PT_HTMLv2 #navigation a.periodic, 
+.TDS_PT_Basic #navigation a.periodic, 
+a.TDS_PT_Expanded #navigation a.periodic, 
+
+.TDS_Masking1 #navigation a#btnMask, 
+.TDS_Masking1 #navigation button#btnMask, 
+.TDS_PoD_Stim #navigation a.printer, 
+.TDS_GN1 #navigation #btnGlobalNotes, 
+.TDS_LR1 #btnLineReader, 
+
+.TDS_CalcBasic #navigation a.calculator, 
+.TDS_CalcStd #navigation a.calculator, 
+.TDS_CalcSci #navigation a.calculator, 
+.TDS_CalcGraphing #navigation a.calculator, 
+.TDS_CalcRegress #navigation a.calculator, 
+.TDS_CalcMatrices #navigation a.calculator, 
+.TDS_CalcStdMem #navigation a.calculator, 
+.TDS_CalcGraphingInv #btnCalculator, 
+.TDS_CalcSciInv #btnCalculator, 
+.TDS_CalcBasicInv #btnCalculator, 
+.TDS_CalcStdInv #btnCalculator {
+	display: block !important;
+}
+.TDS_PoD_Stim #navigation.Passage_No a.printer {
+	display: none !important;
+}
+
+/* for accesibility shell 
+.TDS_Highlight1 #foot #listSetHighlight, .TDS_Highlight1 #foot #listClearHighlight, */
+.TDS_CalcBasic #foot #listCalculator, .TDS_CalcStd #foot #listCalculator, .TDS_CalcSci #foot #listCalculator, .TDS_CalcGraphing #foot #listCalculator, .TDS_CalcStdMem #foot #listCalculator, 
+.TDS_F_OR3_5 #foot #listFormula, .TDS_FOR6_8Math #foot #listFormula, .TDS_F_ORCIM_Math #foot #listFormula, .TDS_F_DE_6_8Math #foot #listFormula, .TDS_F_DE_9_10Math #foot #listFormula, .TDS_F_HI_4Math #foot #listFormula, .TDS_F_HI_5Math #foot #listFormula, .TDS_F_HI_6Math #foot #listFormula, .TDS_F_HI_7Math #foot #listFormula, .TDS_F_HI_8Math #foot #listFormula, .TDS_F_HI_10Math #foot #listFormula, .TDS_F_HI_11Sci #foot #listFormula, .TDS_F_DE_2Math #foot #listFormula, 
+.TDS_F_AR_6_8Math #foot #listFormula, .TDS_F_AR_9_10Math #foot #listFormula, 
+.TDS_PT_HTML #foot #listPeriodic, .TDS_PT_HTMLv2 #foot #listPeriodic, .TDS_PT_Basic #foot #listPeriodic, a.TDS_PT_Expanded #foot #listPeriodic, 
+.TDS_PoD_Stim #foot #listPrint, .TDS_ERT_OR.TDS_Emboss_Item .printItem, .TDS_ERT_OR.TDS_Emboss_Stim #foot.passage_Yes #listPrint {
+	display: block !important;
+}
+
+
+
+
+/* @group colors */
+.TDS_CC0.touch .theQuestions, .TDS_CC0 .layoutColumnRight {
+	background-color: #fff;
+}
+
+body.TDS_CCYellow, 
+body.TDS_CCYellow .inputCloze, 
+body.TDS_CCYellow .plaintext textarea, 
+.TDS_CCYellow .yui-panel, 
+.TDS_CCYellow .yui-panel .bd, 
+.TDS_CCYellow .yui-panel .ft, 
+.TDS_CCYellow .yui-panel .hd, 
+.TDS_CCYellow input, 
+.TDS_CCYellow select, 
+.TDS_CCYellow select:hover, 
+.TDS_CCYellow textarea, 
+.TDS_CCYellow .thePassage, 
+.TDS_CCYellow .theQuestions, 
+.TDS_CCYellow .layoutColumnLeft, 
+.TDS_CCYellow .layoutColumnRight, 
+.TDS_CCYellow div.mathjax_editor_selected_tab, 
+.TDS_CCYellow div.mathjax_editor_selected_tab:hover, 
+.TDS_CCYellow .mathjax_editor_nav button:hover, 
+.TDS_CCYellow #helpContent,
+.TDS_CCYellow .ot-innerShadow, 
+.TDS_CCYellow .cke_editable.cke_wysiwyg_div, 
+.TDS_CCYellow .passage-expanded .maskQuestions,
+.TDS_CCYellow .yuimenu {
+	background-color: #ffffce !important;
+}
+body.TDS_CCYellow .multipleChoiceItem {
+	border-top-color: #ffffce;
+	border-right-color: #ffffce;
+	border-left-color: #ffffce;
+}
+body.TDS_CCYellow .mc_stacked tr {
+	border-right-color: #ffffce;	
+}
+body.TDS_CCYellow.touch {
+	border-bottom: solid 50px #ffffce;
+}
+body.TDS_CCYellow2, 
+body.TDS_CCYellow2 .inputCloze, 
+body.TDS_CCYellow2 .plaintext textarea, 
+.TDS_CCYellow2 .yui-panel, 
+.TDS_CCYellow2 .yui-panel .bd, 
+.TDS_CCYellow2 .yui-panel .ft, 
+.TDS_CCYellow2 .yui-panel .hd, 
+.TDS_CCYellow2 input, 
+.TDS_CCYellow2 select, 
+.TDS_CCYellow2 select:hover, 
+.TDS_CCYellow2 textarea, 
+.TDS_CCYellow2 .thePassage, 
+.TDS_CCYellow2 .theQuestions, 
+.TDS_CCYellow2.passage-expanded .layoutColumnLeft, 
+.TDS_CCYellow2 .passage-expanded .layoutColumnLeft, 
+.TDS_CCYellow2 div.mathjax_editor_selected_tab, 
+.TDS_CCYellow2 div.mathjax_editor_selected_tab:hover, 
+.TDS_CCYellow2 .mathjax_editor_nav button:hover, 
+.TDS_CCYellow2 #helpContent,
+.TDS_CCYellow2 .ot-innerShadow, 
+.TDS_CCYellow2 .cke_editable.cke_wysiwyg_div, 
+.TDS_CCYellow2 .passage-expanded .maskQuestions,
+.TDS_CCYellow2 .yuimenu {
+	background-color: #fcfce2 !important;
+}
+body.TDS_CCYellow2 .multipleChoiceItem {
+	border-top-color: #fcfce2;
+	border-right-color: #fcfce2;
+	border-left-color: #fcfce2;
+}
+body.TDS_CCYellow2 .mc_stacked tr {
+	border-right-color: #fcfce2;	
+}
+body.TDS_CCYellow2.touch {
+	border-bottom: solid 50px #fcfce2;
+}
+body.TDS_CCCream, 
+body.TDS_CCCream .inputCloze, 
+body.TDS_CCCream .plaintext textarea, 
+.TDS_CCCream .yui-panel, 
+.TDS_CCCream .yui-panel .bd, 
+.TDS_CCCream .yui-panel .ft, 
+.TDS_CCCream .yui-panel .hd, 
+.TDS_CCCream input, 
+.TDS_CCCream select, 
+.TDS_CCCream select:hover, 
+.TDS_CCCream textarea, 
+.TDS_CCCream .thePassage, 
+.TDS_CCCream .theQuestions, 
+.TDS_CCCream.passage-expanded .layoutColumnLeft, 
+.TDS_CCCream .passage-expanded .layoutColumnLeft, 
+.TDS_CCCream div.mathjax_editor_selected_tab, 
+.TDS_CCCream div.mathjax_editor_selected_tab:hover, 
+.TDS_CCCream .mathjax_editor_nav button:hover, 
+.TDS_CCCream #helpContent,
+.TDS_CCCream .ot-innerShadow, 
+.TDS_CCCream .cke_editable.cke_wysiwyg_div, 
+.TDS_CCCream .passage-expanded .maskQuestions,
+.TDS_CCCream .yuimenu {
+	background-color: #ede0ce !important;
+}
+body.TDS_CCCream .multipleChoiceItem {
+	border-top-color: #ede0ce;
+	border-right-color: #ede0ce;
+	border-left-color: #ede0ce;
+}
+body.TDS_CCCream .mc_stacked tr {
+	border-right-color: #ede0ce;	
+}
+body.TDS_CCCream.touch {
+	border-bottom: solid 50px #ede0ce;
+}
+body.TDS_CCBlue, 
+body.TDS_CCBlue .inputCloze, 
+body.TDS_CCBlue .plaintext textarea,  
+.TDS_CCBlue .yui-panel, 
+.TDS_CCBlue .yui-panel .bd, 
+.TDS_CCBlue .yui-panel .ft, 
+.TDS_CCBlue .yui-panel .hd, 
+.TDS_CCBlue input, 
+.TDS_CCBlue select, 
+.TDS_CCBlue select:hover, 
+.TDS_CCBlue textarea, 
+.TDS_CCBlue .thePassage, 
+.TDS_CCBlue .theQuestions, 
+.TDS_CCBlue .layoutColumnLeft, 
+.TDS_CCBlue .layoutColumnRight, 
+.TDS_CCBlue div.mathjax_editor_selected_tab, 
+.TDS_CCBlue div.mathjax_editor_selected_tab:hover, 
+.TDS_CCBlue .mathjax_editor_nav button:hover, 
+.TDS_CCBlue #helpContent,
+.TDS_CCBlue .ot-innerShadow, 
+.TDS_CCBlue .cke_editable.cke_wysiwyg_div, 
+.TDS_CCBlue .passage-expanded .maskQuestions,
+.TDS_CCBlue .yuimenu {
+	background-color: #99ffff !important;
+}
+body.TDS_CCBlue .multipleChoiceItem {
+	border-top-color: #99ffff;
+	border-right-color: #99ffff;
+	border-left-color: #99ffff;
+}
+body.TDS_CCBlue .mc_stacked tr {
+	border-right-color: #99ffff;	
+}
+body.TDS_CCBlue.touch {
+	border-bottom: solid 50px #99ffff;
+}
+body.TDS_CCBlue2, 
+body.TDS_CCBlue2 .inputCloze, 
+body.TDS_CCBlue2 .plaintext textarea, 
+.TDS_CCBlue2 .yui-panel, 
+.TDS_CCBlue2 .yui-panel .bd, 
+.TDS_CCBlue2 .yui-panel .ft, 
+.TDS_CCBlue2 .yui-panel .hd, 
+.TDS_CCBlue2 input, 
+.TDS_CCBlue2 select, 
+.TDS_CCBlue2 select:hover, 
+.TDS_CCBlue2 textarea, 
+.TDS_CCBlue2 .thePassage, 
+.TDS_CCBlue2 .theQuestions, 
+.TDS_CCBlue2 .layoutColumnLeft, 
+.TDS_CCBlue2 .layoutColumnRight, 
+.TDS_CCBlue2 div.mathjax_editor_selected_tab, 
+.TDS_CCBlue2 div.mathjax_editor_selected_tab:hover, 
+.TDS_CCBlue2 .mathjax_editor_nav button:hover, 
+.TDS_CCBlue2 #helpContent,
+.TDS_CCBlue2 .ot-innerShadow, 
+.TDS_CCBlue2 .cke_editable.cke_wysiwyg_div, 
+.TDS_CCBlue2 .passage-expanded .maskQuestions,
+.TDS_CCBlue2 .yuimenu {
+	background-color: #cfffff !important;
+}
+body.TDS_CCBlue2 .multipleChoiceItem {
+	border-top-color: #cfffff;
+	border-right-color: #cfffff;
+	border-left-color: #cfffff;
+}
+body.TDS_CCBlue2 .mc_stacked tr {
+	border-right-color: #cfffff;	
+}
+body.TDS_CCBlue2.touch {
+	border-bottom: solid 50px #cfffff;
+}
+body.TDS_CCMagenta, 
+body.TDS_CCMagenta .inputCloze, 
+body.TDS_CCMagenta .plaintext textarea, 
+.TDS_CCMagenta .yui-panel, 
+.TDS_CCMagenta .yui-panel .bd, 
+.TDS_CCMagenta .yui-panel .ft, 
+.TDS_CCMagenta .yui-panel .hd, 
+.TDS_CCMagenta input, 
+.TDS_CCMagenta select, 
+.TDS_CCMagenta select:hover, 
+.TDS_CCMagenta textarea, 
+.TDS_CCMagenta.passage-expanded .thePassage, 
+.TDS_CCMagenta .thePassage, 
+.TDS_CCMagenta .theQuestions, 
+.TDS_CCMagenta .layoutColumnLeft, 
+.TDS_CCMagenta .layoutColumnRight, 
+.TDS_CCMagenta div.mathjax_editor_selected_tab, 
+.TDS_CCMagenta div.mathjax_editor_selected_tab:hover, 
+.TDS_CCMagenta .mathjax_editor_nav button:hover, 
+.TDS_CCMagenta #helpContent,
+.TDS_CCMagenta .ot-innerShadow, 
+.TDS_CCMagenta .cke_editable.cke_wysiwyg_div, 
+.TDS_CCMagenta .passage-expanded .maskQuestions,
+.TDS_CCMagenta .yuimenu {
+	background-color: #ffd0ff !important;
+}
+body.TDS_CCMagenta .multipleChoiceItem {
+	border-top-color: #ffd0ff;
+	border-right-color: #ffd0ff;
+	border-left-color: #ffd0ff;
+}
+body.TDS_CCMagenta .mc_stacked tr {
+	border-right-color: #ffd0ff;	
+}
+body.TDS_CCMagenta.touch {
+	border-bottom: solid 50px #ffd0ff;
+}
+body.TDS_CCMagenta2, 
+body.TDS_CCMagenta2 .inputCloze, 
+body.TDS_CCMagenta2 .plaintext textarea, 
+.TDS_CCMagenta2 .yui-panel, 
+.TDS_CCMagenta2 .yui-panel .bd, 
+.TDS_CCMagenta2 .yui-panel .ft, 
+.TDS_CCMagenta2 .yui-panel .hd, 
+.TDS_CCMagenta2 input, 
+.TDS_CCMagenta2 select, 
+.TDS_CCMagenta2 select:hover, 
+.TDS_CCMagenta2 textarea, 
+.TDS_CCMagenta2 .thePassage, 
+.TDS_CCMagenta2 .theQuestions, 
+.TDS_CCMagenta2 .layoutColumnLeft, 
+.TDS_CCMagenta2 .layoutColumnRight, 
+.TDS_CCMagenta2 div.mathjax_editor_selected_tab, 
+.TDS_CCMagenta2 div.mathjax_editor_selected_tab:hover, 
+.TDS_CCMagenta2 .mathjax_editor_nav button:hover, 
+.TDS_CCMagenta2 #helpContent,
+.TDS_CCMagenta2 .ot-innerShadow, 
+.TDS_CCMagenta2 .cke_editable.cke_wysiwyg_div, 
+.TDS_CCMagenta2 .passage-expanded .maskQuestions,
+.TDS_CCMagenta2 .yuimenu {
+	background-color: #fde3fd !important;
+}
+body.TDS_CCMagenta2 .multipleChoiceItem {
+	border-top-color: #fde3fd;
+	border-right-color: #fde3fd;
+	border-left-color: #fde3fd;
+}
+body.TDS_CCMagenta2 .mc_stacked tr {
+	border-right-color: #fde3fd;	
+}
+body.TDS_CCMagenta2.touch {
+	border-bottom: solid 50px #fde3fd;
+}
+body.TDS_CCGray, 
+body.TDS_CCGray .inputCloze, 
+body.TDS_CCGray .plaintext textarea, 
+.TDS_CCGray .yui-panel, 
+.TDS_CCGray .yui-panel .bd, 
+.TDS_CCGray .yui-panel .ft, 
+.TDS_CCGray .yui-panel .hd, 
+.TDS_CCGray input, 
+.TDS_CCGray select, 
+.TDS_CCGray select:hover, 
+.TDS_CCGray textarea, 
+.TDS_CCGray .thePassage, 
+.TDS_CCGray .theQuestions, 
+.TDS_CCGray .layoutColumnLeft, 
+.TDS_CCGray .layoutColumnRight, 
+.TDS_CCGray div.mathjax_editor_selected_tab, 
+.TDS_CCGray div.mathjax_editor_selected_tab:hover, 
+.TDS_CCGray .mathjax_editor_nav button:hover, 
+.TDS_CCGray #helpContent,
+.TDS_CCGray .ot-innerShadow, 
+.TDS_CCGray .cke_editable.cke_wysiwyg_div, 
+.TDS_CCGray .passage-expanded .maskQuestions,
+.TDS_CCGray .yuimenu {
+	background-color: #cecfce !important;
+}
+body.TDS_CCGray .multipleChoiceItem {
+	border-top-color: #cecfce;
+	border-right-color: #cecfce;
+	border-left-color: #cecfce;
+}
+body.TDS_CCGray .mc_stacked tr {
+	border-right-color: #cecfce;	
+}
+body.TDS_CCGray .matchItemDemoAccesible-Ideal th, body.TDS_CCGray .matchItemDemoAccesible-Ideal td  {
+	border-color: #fff;
+}
+body.TDS_CCGray.touch {
+	border-bottom: solid 50px #cecfce;
+}
+
+body.TDS_CCGray2, 
+body.TDS_CCGray2 .inputCloze, 
+body.TDS_CCGray2 .plaintext textarea, 
+.TDS_CCGray2 .yui-panel, 
+.TDS_CCGray2 .yui-panel .bd, 
+.TDS_CCGray2 .yui-panel .ft, 
+.TDS_CCGray2 .yui-panel .hd, 
+.TDS_CCGray2 input, 
+.TDS_CCGray2 select, 
+.TDS_CCGray2 select:hover, 
+.TDS_CCGray2 textarea, 
+.TDS_CCGray2 .thePassage, 
+.TDS_CCGray2 .theQuestions, 
+.TDS_CCGray2 .layoutColumnLeft, 
+.TDS_CCGray2 .layoutColumnRight, 
+.TDS_CCGray2 div.mathjax_editor_selected_tab, 
+.TDS_CCGray2 div.mathjax_editor_selected_tab:hover, 
+.TDS_CCGray2 .mathjax_editor_nav button:hover, 
+.TDS_CCGray2 #helpContent,
+.TDS_CCGray2 .ot-innerShadow, 
+.TDS_CCGray2 .cke_editable.cke_wysiwyg_div, 
+.TDS_CCGray2 .passage-expanded .maskQuestions,
+.TDS_CCGray2 .yuimenu {
+	background-color: #e5e5e5 !important;
+}
+body.TDS_CCMedGrayLtGray, 
+body.TDS_CCMedGrayLtGray .inputCloze, 
+body.TDS_CCMedGrayLtGray .plaintext textarea, 
+.TDS_CCMedGrayLtGray .yui-panel, 
+.TDS_CCMedGrayLtGray .yui-panel .bd, 
+.TDS_CCMedGrayLtGray .yui-panel .ft, 
+.TDS_CCMedGrayLtGray .yui-panel .hd, 
+.TDS_CCMedGrayLtGray input, 
+.TDS_CCMedGrayLtGray select, 
+.TDS_CCMedGrayLtGray select:hover, 
+.TDS_CCMedGrayLtGray textarea, 
+.TDS_CCMedGrayLtGray .thePassage, 
+.TDS_CCMedGrayLtGray .theQuestions, 
+.TDS_CCMedGrayLtGray .layoutColumnLeft, 
+.TDS_CCMedGrayLtGray .layoutColumnRight, 
+.TDS_CCMedGrayLtGray div.mathjax_editor_selected_tab, 
+.TDS_CCMedGrayLtGray div.mathjax_editor_selected_tab:hover, 
+.TDS_CCMedGrayLtGray .mathjax_editor_nav button:hover, 
+.TDS_CCMedGrayLtGray #helpContent,
+.TDS_CCMedGrayLtGray .ot-innerShadow, 
+.TDS_CCMedGrayLtGray .cke_editable.cke_wysiwyg_div, 
+.TDS_CCMedGrayLtGray .passage-expanded .maskQuestions,
+.TDS_CCMedGrayLtGray .yuimenu{
+	background-color: #e5e5e5 !important;
+	color: #666;
+}
+.TDS_CCMedGrayLtGray.yui-skin-sam .yui-dialog .ft button:focus {
+	background-color: #999 !important;
+	color: #000 !important;
+}
+.TDS_CCMedGrayLtGray.yui-skin-sam .yui-dialog .ft button:hover, 
+.TDS_CCMedGrayLtGray.yui-skin-sam .yui-dialog .ft button:active {
+	background-color: #0E4878 !important;
+	color: #fff !important;
+}
+
+body.TDS_CCGray2 .matchColumn a, body.TDS_CCMedGrayLtGray .matchColumn a {
+	background-color: #fff;
+}
+body.TDS_CCGray2.touch, body.TDS_CCMedGrayLtGray.touch {
+	border-bottom: solid 50px #e5e5e5;
+}
+.TDS_CCMedGrayLtGray .ft .button-group button, .TDS_CCMedGrayLtGray .bigTable .thePassage h2, .TDS_CCMedGrayLtGray .yui-panel .hd, body.TDS_CCMedGrayLtGray .matchColumn a  {
+	color:#666 !important;
+}
+.TDS_CCMedGrayLtGray .ft .button-group button:hover {
+	color: #fff !important;
+}
+body.TDS_CCGray2 .multipleChoiceItem, body.TDS_CCMedGrayLtGray .multipleChoiceItem {
+	border-top-color: #e5e5e5;
+	border-right-color: #e5e5e5;
+	border-left-color: #e5e5e5;
+}
+body.TDS_CCGray2 .mc_stacked tr, body.TDS_CCMedGrayLtGray .mc_stacked tr {
+	border-right-color: #e5e5e5;	
+}
+
+/*.TDS_CCGray .itemTools a, 
+.TDS_CCGray.TDS_PS_L1 .itemTools a, 
+.TDS_CCGray.TDS_PS_L2 .itemTools a, 
+.TDS_CCGray.TDS_PS_L3 .itemTools a, 
+.TDS_CCGray.TDS_PS_L4 .itemTools a, 
+.TDS_CCGray2 .itemTools a, 
+.TDS_CCGray2.TDS_PS_L1 .itemTools a, 
+.TDS_CCGray2.TDS_PS_L2 .itemTools a, 
+.TDS_CCGray2.TDS_PS_L3 .itemTools a, 
+.TDS_CCGray2.TDS_PS_L4 .itemTools a, 
+.TDS_CCMedGrayLtGray .itemTools a, 
+.TDS_CCMedGrayLtGray.TDS_PS_L1 .itemTools a, 
+.TDS_CCMedGrayLtGray.TDS_PS_L2 .itemTools a, 
+.TDS_CCMedGrayLtGray.TDS_PS_L3 .itemTools a, 
+.TDS_CCMedGrayLtGray.TDS_PS_L4 .itemTools a {
+	background-image: url(../Images/universal/universal_itemsprites_grey.png) !important;
+}
+.TDS_CCGray .itemTools a.itemMenu, 
+.TDS_CCGray.TDS_PS_L1 .itemTools a.itemMenu, 
+.TDS_CCGray.TDS_PS_L2 .itemTools a.itemMenu, 
+.TDS_CCGray.TDS_PS_L3 .itemTools a.itemMenu, 
+.TDS_CCGray.TDS_PS_L4 .itemTools a.itemMenu, 
+.TDS_CCGray2 .itemTools a.itemMenu, 
+.TDS_CCGray2.TDS_PS_L1 .itemTools a.itemMenu, 
+.TDS_CCGray2.TDS_PS_L2 .itemTools a.itemMenu, 
+.TDS_CCGray2.TDS_PS_L3 .itemTools a.itemMenu, 
+.TDS_CCGray2.TDS_PS_L4 .itemTools a.itemMenu, 
+.TDS_CCMedGrayLtGray .itemTools a.itemMenu, 
+.TDS_CCMedGrayLtGray.TDS_PS_L1 .itemTools a.itemMenu, 
+.TDS_CCMedGrayLtGray.TDS_PS_L2 .itemTools a.itemMenu, 
+.TDS_CCMedGrayLtGray.TDS_PS_L3 .itemTools a.itemMenu, 
+.TDS_CCMedGrayLtGray.TDS_PS_L4 .itemTools a.itemMenu {
+	background-image: url(../Images/universal/universal_content.png) !important;
+}*/
+
+
+body.TDS_CCGreen, 
+body.TDS_CCGreen .inputCloze, 
+body.TDS_CCGreen .plaintext textarea, 
+.TDS_CCGreen .yui-panel, 
+.TDS_CCGreen .yui-panel .bd, 
+.TDS_CCGreen .yui-panel .ft, 
+.TDS_CCGreen .yui-panel .hd, 
+.TDS_CCGreen input, 
+.TDS_CCGreen select, 
+.TDS_CCGreen select:hover, 
+.TDS_CCGreen textarea, 
+.TDS_CCGreen .thePassage, 
+.TDS_CCGreen .theQuestions, 
+.TDS_CCGreen .layoutColumnLeft, 
+.TDS_CCGreen .layoutColumnRight, 
+.TDS_CCGreen div.mathjax_editor_selected_tab, 
+.TDS_CCGreen div.mathjax_editor_selected_tab:hover, 
+.TDS_CCGreen .mathjax_editor_nav button:hover, 
+.TDS_CCGreen #helpContent,
+.TDS_CCGreen .ot-innerShadow, 
+.TDS_CCGreen .cke_editable.cke_wysiwyg_div, 
+.TDS_CCGreen .passage-expanded .maskQuestions,
+.TDS_CCGreen .yuimenu {
+	background-color: #cff799 !important;
+}
+body.TDS_CCGreen .multipleChoiceItem {
+	border-top-color: #cff799;
+	border-right-color: #cff799;
+	border-left-color: #cff799;
+}
+body.TDS_CCGreen .mc_stacked tr {
+	border-right-color: #cff799;	
+}
+body.TDS_CCGreen.touch {
+	border-bottom: solid 50px #cff799;
+}
+
+body.TDS_CCGreen2, 
+body.TDS_CCGreen2 .inputCloze, 
+body.TDS_CCGreen2 .plaintext textarea, 
+.TDS_CCGreen2 .yui-panel, 
+.TDS_CCGreen2 .yui-panel .bd, 
+.TDS_CCGreen2 .yui-panel .ft, 
+.TDS_CCGreen2 .yui-panel .hd, 
+.TDS_CCGreen2 input, 
+.TDS_CCGreen2 select, 
+.TDS_CCGreen2 select:hover, 
+.TDS_CCGreen2 textarea, 
+.TDS_CCGreen2 .thePassage, 
+.TDS_CCGreen2 .theQuestions, 
+.TDS_CCGreen2 .layoutColumnLeft, 
+.TDS_CCGreen2 .layoutColumnRight, 
+.TDS_CCGreen2 div.mathjax_editor_selected_tab, 
+.TDS_CCGreen2 div.mathjax_editor_selected_tab:hover, 
+.TDS_CCGreen2 .mathjax_editor_nav button:hover, 
+.TDS_CCGreen2 #helpContent,
+.TDS_CCGreen2 .ot-innerShadow, 
+.TDS_CCGreen2 .cke_editable.cke_wysiwyg_div, 
+.TDS_CCGreen2 .passage-expanded .maskQuestions,
+.TDS_CCGreen2 .yuimenu {
+	background-color: #e0f6c1 !important;
+}
+body.TDS_CCGreen2 .multipleChoiceItem {
+	border-top-color: #e0f6c1;
+	border-right-color: #e0f6c1;
+	border-left-color: #e0f6c1;
+}
+body.TDS_CCGreen2 .mc_stacked tr {
+	border-right-color: #e0f6c1;	
+}
+body.TDS_CCGreen2.touch {
+	border-bottom: solid 50px #e0f6c1;
+}
+.TDS_CCYellowB, 
+.TDS_CCYellowB .inputCloze, 
+.TDS_CCYellowB .plaintext textarea, 
+.TDS_CCYellowB .yui-panel, 
+.TDS_CCYellowB .yui-panel .bd, 
+.TDS_CCYellowB .yui-panel .ft, 
+.TDS_CCYellowB .yui-panel .hd, 
+.TDS_CCYellowB input, 
+.TDS_CCYellowB select, 
+.TDS_CCYellowB select:hover, 
+.TDS_CCYellowB select option, 
+.TDS_CCYellowB .cke_dialog_contents, 
+.TDS_CCYellowB .cke_dialog_contents *, 
+.TDS_CCYellowB .cke_dialog_body label, 
+.TDS_CCYellowB textarea, 
+.TDS_CCYellowB .thePassage, 
+.TDS_CCYellowB .theQuestions, 
+.TDS_CCYellowB .layoutColumnLeft, 
+.TDS_CCYellowB .layoutColumnRight, 
+.TDS_CCYellowB div.mathjax_editor_selected_tab, 
+.TDS_CCYellowB div.mathjax_editor_selected_tab:hover, 
+.TDS_CCYellowB .mathjax_editor_nav button:hover, 
+.TDS_CCYellowB #helpContent,
+.TDS_CCYellowB .ot-innerShadow, 
+.TDS_CCYellowB .cke_editable.cke_wysiwyg_div, 
+.TDS_CCYellowB .passage-expanded .maskQuestions,
+.TDS_CCYellowB .yuimenu {
+	background-color: #039 !important;
+	color:#FC0;
+}
+.TDS_CCYellowB .theTable td, .TDS_CCYellowB .theTable .smblk, .TDS_CCYellowB .theTable .lgblk, .TDS_CCYellowB .theTable .medblk {
+	border-color: #FC0;
+	color: #FC0;
+}
+.TDS_CCYellowB .ft .button-group button, 
+.TDS_CCYellowB .addMark, 
+.TDS_CCYellowB .guide_revision li, 
+.TDS_CCYellowB .mathjax_editor_button, 
+.TDS_CCYellowB .mathjax_editor_nav button, 
+.TDS_CCYellowB #helpContent a,
+.TDS_CCYellowB .yuimenu .yuimenuitemlabel{
+	color:#FC0 !important;
+}
+.TDS_CCYellowB .ft .button-group button:hover, .TDS_CCYellowB .mathjax_editor_button:hover, .TDS_CCYellowB .mathjax_editor_button:active, .TDS_CCYellowB .editor_controls_tabs_el:hover,
+.TDS_CCYellowB .yui-button.yui-push-button-focus button {
+	background-color: #FC0 !important;
+	color: #039 !important;
+}
+.TDS_CCYellowB .ft .button-group .yui-button {
+	border-color: #FC0;
+}
+.TDS_CCYellowB .multipleChoiceItem {
+	border-top-color: #039;
+	border-right-color: #039;
+	border-left-color: #039;
+}
+.TDS_CCYellowB .mc_stacked tr {
+	border-right-color: #039;	
+}
+.TDS_CCYellowB .bigTable .thePassage h2, .TDS_CCYellowB .yui-panel .hd, .TDS_CCYellowB .specialCharacters .menu a, 
+.TDS_CCYellowB .simulator select {
+	color:#FC0;
+}
+.TDS_CCYellowB .specialCharacters .menu a {
+	background-color: #00154e;
+}
+.TDS_CCYellowB .specialCharacters .menu a.active {
+	background-color: transparent;
+}
+.TDS_CCYellowB .highlight {
+	background-color: rgba(137,130,0,0.5) !important;
+}
+.TDS_CCYellowB.contextAreaMode .contextArea {
+	background-color: rgba(255, 204, 0, .1);
+	border: solid 1px #FC0;
+}
+.TDS_CCYellowB .MathJax .mathjax_editor_insert_select {
+	color: #fff;
+}
+.TDS_CCYellowB .matchColumn a {
+	color:#FC0;
+	background-color: #1546a8;
+}
+.TDS_CCYellowB .matchColumn li a:hover {
+	border-color:#FC0;
+}
+.TDS_CCYellowB .matchMade a {
+	border-right-color: #FC0;
+}
+.TDS_CCYellowB .matchSecondColumn .matchMade a {
+	border-left-color: #FC0;
+	border-right-color: transparent;
+}
+.TDS_CCYellowB .matchConnections a, .TDS_CCYellowB .matchConnections .ieline {
+    border-color: #FC0 !important;
+    border-color: rgba(255, 205, 0, .6) !important;
+}
+body.TDS_CCYellowB.touch {
+	border-bottom: solid 50px #039;
+}
+
+.TDS_CCInvert, 
+.TDS_CCInvert .inputCloze, 
+.TDS_CCInvert .plaintext textarea, 
+.TDS_CCInvert .yui-panel, 
+.TDS_CCInvert .yui-panel .bd, 
+.TDS_CCInvert .yui-panel .ft, 
+.TDS_CCInvert .yui-panel .hd, 
+.TDS_CCInvert input, 
+.TDS_CCInvert select, 
+.TDS_CCInvert select:hover, 
+.TDS_CCInvert select option, 
+.TDS_CCInvert .cke_dialog_contents, 
+.TDS_CCInvert .cke_dialog_contents *, 
+.TDS_CCInvert .cke_dialog_body label, 
+.TDS_CCInvert textarea, 
+.TDS_CCInvert .thePassage, 
+.TDS_CCInvert .theQuestions, 
+.TDS_CCInvert .layoutColumnLeft, 
+.TDS_CCInvert .layoutColumnRight, 
+.TDS_CCInvert div.mathjax_editor_selected_tab, 
+.TDS_CCInvert div.mathjax_editor_selected_tab:hover, 
+.TDS_CCInvert .mathjax_editor_nav button:hover, 
+.TDS_CCInvert #helpContent,
+.TDS_CCInvert .ot-innerShadow, 
+.TDS_CCInvert .cke_editable.cke_wysiwyg_div,
+.TDS_CCInvert .yuimenu{
+	background-color: #000 !important;
+	color:#FFF;
+}
+.TDS_CCInvert .passage-expanded .maskQuestions {
+	background-color: #292929;
+}
+.TDS_CCInvert.platform_linux select option{
+	border-left: 1px solid #fff;
+	border-right: 1px solid #fff;
+}
+.TDS_CCInvert .ft .button-group button, 
+.TDS_CCInvert .mathjax_editor_button, 
+.TDS_CCInvert .mathjax_editor_nav button, 
+.TDS_CCInvert .simulator select, 
+.TDS_CCInvert #helpContent a,
+.TDS_CCInvert .yuimenu .yuimenuitemlabel {
+	color:#FFF !important;
+}
+.TDS_CCInvert .ft .button-group button:hover, .TDS_CCInvert .mathjax_editor_button:hover, .TDS_CCInvert .mathjax_editor_button:active, .TDS_CCInvert .editor_controls_tabs_el:hover,
+.TDS_CCInvert .yui-button.yui-push-button-focus button, .TDS_CCInvert .ft .button-group .yui-button button:focus, .TDS_CCInvert .ft .button-group .yui-button.default button:focus{
+	background-color: #fff!important;
+	color: #000 !important;
+}
+.TDS_CCInvert .ft .button-group .yui-button, .TDS_CCInvert .ft .button-group .yui-button.default {
+	border-color: #fff;
+}
+
+.TDS_CCInvert .multipleChoiceItem {
+	border-top-color: #000;
+	border-right-color: #000;
+	border-left-color: #000;
+}
+.TDS_CCInvert .mc_stacked tr {
+	border-right-color: #000;	
+}
+.TDS_CCInvert .bigTable .thePassage h2, .TDS_CCInvert .yui-panel .hd, .TDS_CCInvert .addMark, .TDS_CCInvert .specialCharacters .menu a, .TDS_CCInvert .guide_revision li {
+	color:#FFF;
+}
+
+.TDS_CCInvert .theTable td, .TDS_CCInvert .theTable .smblk, .TDS_CCInvert .theTable .lgblk, .TDS_CCInvert .theTable .medblk
+.TDS_CCWhiteN .theTable td, .TDS_CCWhiteN .theTable .smblk, .TDS_CCWhiteN .theTable .lgblk, .TDS_CCInvert .theTable .medblk {
+	border-color: #fff;
+	color: #fff;
+}
+
+.TDS_CCInvert .specialCharacters .menu a {
+	background-color: #737374;
+}
+.TDS_CCInvert .specialCharacters .menu a.active {
+	background-color: transparent;
+}
+
+.TDS_CCInvert .highlight, .TDS_CCWhiteN .highlgiht {
+	background-color: rgba(158,157,0,0.51) !important;
+}
+
+.TDS_CCInvert .strikethrough .striked, .TDS_CCWhiteN .strikethrough .striked, .TDS_CCYellowB .strikethrough .striked {
+	background-color: #eeedef !important;
+}
+.TDS_CCInvert.contextAreaMode .contextArea, .TDS_CCWhiteN.contextAreaMode .contextArea {
+	background-color: rgba(255, 255, 255, .2);
+	border: solid 1px #FFF;
+}
+
+.TDS_CCInvert .mathjax_editor_insert_select, .TDS_CCWhiteN .mathjax_editor_insert_select {
+	color: #FC0;
+}
+
+.TDS_CCInvert .matchColumn a {
+	color:#fff;
+	background-color: #2a2a2a;
+}
+.TDS_CCInvert .matchColumn li a:hover {
+	border-color:#fff;
+}
+.TDS_CCInvert .matchMade a {
+	border-right-color: #fff;
+}
+.TDS_CCInvert .matchSecondColumn .matchMade a {
+	border-left-color: #fff;
+	border-right-color: transparent;
+}
+.TDS_CCInvert .matchConnections a, .TDS_CCInvert .matchConnections .ieline {
+    border-color: #fff !important;
+    border-color: rgba(255, 255, 255, .6) !important;
+}
+body.TDS_CCInvert.touch {
+	border-bottom: solid 50px #000;
+}
+/* keeps images visible, especially math images, when dealing with reverse contrast*/
+body.TDS_CCInvert .pageWrapper img, 
+body.TDS_CCYellowB .pageWrapper img, 
+body.TDS_CCWhiteN .pageWrapper img {
+	background-color: #fff;
+}
+
+
+
+.TDS_CCWhiteN, 
+.TDS_CCWhiteN .inputCloze, 
+.TDS_CCWhiteN .plaintext textarea, 
+.TDS_CCWhiteN .yui-panel, 
+.TDS_CCWhiteN .yui-panel .bd, 
+.TDS_CCWhiteN .yui-panel .ft, 
+.TDS_CCWhiteN .yui-panel .hd, 
+.TDS_CCWhiteN input, 
+.TDS_CCWhiteN select, 
+.TDS_CCWhiteN select:hover, 
+.TDS_CCWhiteN select option, 
+.TDS_CCWhiteN .cke_dialog_contents, 
+.TDS_CCWhiteN .cke_dialog_contents *, 
+.TDS_CCWhiteN .cke_dialog_body label, 
+.TDS_CCWhiteN textarea, 
+.TDS_CCWhiteN .thePassage, 
+.TDS_CCWhiteN .theQuestions, 
+.TDS_CCWhiteN .layoutColumnLeft, 
+.TDS_CCWhiteN .layoutColumnRight, 
+.TDS_CCWhiteN div.mathjax_editor_selected_tab, 
+.TDS_CCWhiteN div.mathjax_editor_selected_tab:hover, 
+.TDS_CCWhiteN .editor_controls_tabs_el:hover, 
+.TDS_CCWhiteN .mathjax_editor_nav button:hover, 
+.TDS_CCWhiteN #helpContent,
+.TDS_CCWhiteN .ot-innerShadow, 
+.TDS_CCWhiteN .cke_editable.cke_wysiwyg_div, 
+.TDS_CCWhiteN .passage-expanded .maskQuestions,
+.TDS_CCWhiteN .yuimenu {
+	background-color: #003366 !important;
+	color:#FFF;
+}
+.TDS_CCWhiteN .ft .button-group button, 
+.TDS_CCWhiteN .addMark, 
+.TDS_CCWhiteN .specialCharacters .menu a, 
+.TDS_CCWhiteN .guide_revision li, 
+.TDS_CCWhiteN .mathjax_editor_button, 
+.TDS_CCWhiteN .mathjax_editor_nav button, 
+.TDS_CCWhiteN .simulator select, 
+.TDS_CCWhiteN #helpContent a,
+.TDS_CCWhiteN .yuimenu .yuimenuitemlabel{
+	color:#FFF !important;
+}
+.TDS_CCWhiteN .ft .button-group button:hover, .TDS_CCWhiteN .mathjax_editor_button:hover, .TDS_CCWhiteN .mathjax_editor_button:active, .TDS_CCWhiteN .yui-button.yui-push-button-focus button  {
+	background-color: #fff !important;
+	color: #036 !important;
+}
+.TDS_CCWhiteN .ft .button-group .yui-button {
+	border-color: #fff;
+}
+.TDS_CCWhiteN .multipleChoiceItem {
+	border-top-color: #003366;
+	border-right-color: #003366;
+	border-left-color: #003366;
+}
+.TDS_CCWhiteN .bigTable .thePassage h2, .TDS_CCWhiteN .yui-panel .hd {
+	color:#FFF;
+}
+.TDS_CCWhiteN .mc_stacked tr {
+	border-right-color: #003366;	
+}
+.TDS_CCWhiteN .specialCharacters .menu a {
+	background-color: #24718d;
+}
+.TDS_CCWhiteN .specialCharacters .menu a.active {
+	background-color: transparent;
+}
+.TDS_CCWhiteN .matchColumn a {
+	color:#fff;
+	background-color: #07437f;
+}
+.TDS_CCWhiteN .matchColumn li a:hover {
+	border-color:#fff;
+}
+.TDS_CCWhiteN .matchMade a {
+	border-right-color: #fff;
+}
+.TDS_CCWhiteN .matchSecondColumn .matchMade a {
+	border-left-color: #fff;
+	border-right-color: transparent;
+}
+.TDS_CCWhiteN .matchConnections a, .TDS_CCWhiteN .matchConnections .ieline {
+    border-color: #fff !important;
+    border-color: rgba(255, 255, 255, .6) !important;
+}
+body.TDS_CCWhiteN.touch {
+	border-bottom: solid 50px #003366;
+}
+
+/* for word list */
+body.TDS_CCYellow .TDS_WORD_LIST, body.TDS_CCBlue .TDS_WORD_LIST, body.TDS_CCGreen .TDS_WORD_LIST, body.TDS_CCMagenta .TDS_WORD_LIST, body.TDS_CCGray2 .TDS_WORD_LIST {
+	border-color: #999;
+}
+body.TDS_CCGray .TDS_WORD_LIST {
+	border-color: #fff;
+}
+
+
+.TDS_CCWhiteN a.markReviewMarked, .TDS_CCYellowB a.markReviewMarked, .TDS_CCInvert a.markReviewMarked, 
+.TDS_PS_L1.TDS_CCWhiteN a.markReviewMarked, .TDS_PS_L1.TDS_CCYellowB a.markReviewMarked, .TDS_PS_L1.TDS_CCInvert a.markReviewMarked, .TDS_PS_L2.TDS_CCWhiteN a.markReviewMarked, .TDS_PS_L2.TDS_CCYellowB a.markReviewMarked, .TDS_PS_L2.TDS_CCInvert a.markReviewMarked, .TDS_PS_L3.TDS_CCWhiteN a.markReviewMarked, .TDS_PS_L3.TDS_CCYellowB a.markReviewMarked, .TDS_PS_L3.TDS_CCInvert a.markReviewMarked, .TDS_PS_L4.TDS_CCWhiteN a.markReviewMarked, .TDS_PS_L4.TDS_CCYellowB a.markReviewMarked, .TDS_PS_L4.TDS_CCInvert a.markReviewMarked, 
+.TDS_CCWhiteN a.markReviewMarked:focus, .TDS_CCYellowB a.markReviewMarked:focus, .TDS_CCInvert a.markReviewMarked:focus, 
+.TDS_PS_L1.TDS_CCWhiteN a.markReviewMarked:focus, .TDS_PS_L1.TDS_CCYellowB a.markReviewMarked:focus, .TDS_PS_L1.TDS_CCInvert a.markReviewMarked:focus, .TDS_PS_L2.TDS_CCWhiteN a.markReviewMarked:focus, .TDS_PS_L2.TDS_CCYellowB a.markReviewMarked:focus, .TDS_PS_L2.TDS_CCInvert a.markReviewMarked:focus, .TDS_PS_L3.TDS_CCWhiteN a.markReviewMarked:focus, .TDS_PS_L3.TDS_CCYellowB a.markReviewMarked:focus, .TDS_PS_L3.TDS_CCInvert a.markReviewMarked:focus, .TDS_PS_L4.TDS_CCWhiteN a.markReviewMarked:focus, .TDS_PS_L4.TDS_CCYellowB a.markReviewMarked:focus, .TDS_PS_L4.TDS_CCInvert a.markReviewMarked:focus, 
+.TDS_CCWhiteN a.markReviewMarked:active, .TDS_CCYellowB a.markReviewMarked:active, .TDS_CCInvert a.markReviewMarked:active, 
+.TDS_PS_L1.TDS_CCWhiteN a.markReviewMarked:active, .TDS_PS_L1.TDS_CCYellowB a.markReviewMarked:active, .TDS_PS_L1.TDS_CCInvert a.markReviewMarked:active, .TDS_PS_L2.TDS_CCWhiteN a.markReviewMarked:active, .TDS_PS_L2.TDS_CCYellowB a.markReviewMarked:active, .TDS_PS_L2.TDS_CCInvert a.markReviewMarked:active, .TDS_PS_L3.TDS_CCWhiteN a.markReviewMarked:active, .TDS_PS_L3.TDS_CCYellowB a.markReviewMarked:active, .TDS_PS_L3.TDS_CCInvert a.markReviewMarked:active, .TDS_PS_L4.TDS_CCWhiteN a.markReviewMarked:active, .TDS_PS_L4.TDS_CCYellowB a.markReviewMarked:active, .TDS_PS_L4.TDS_CCInvert a.markReviewMarked:active, 
+.TDS_CCWhiteN a.markReviewMarked:hover, .TDS_CCYellowB a.markReviewMarked:hover, .TDS_CCInvert a.markReviewMarked:hover, 
+.TDS_PS_L1.TDS_CCWhiteN a.markReviewMarked:hover, .TDS_PS_L1.TDS_CCYellowB a.markReviewMarked:hover, .TDS_PS_L1.TDS_CCInvert a.markReviewMarked:hover, .TDS_PS_L2.TDS_CCWhiteN a.markReviewMarked:hover, .TDS_PS_L2.TDS_CCYellowB a.markReviewMarked:hover, .TDS_PS_L2.TDS_CCInvert a.markReviewMarked:hover, .TDS_PS_L3.TDS_CCWhiteN a.markReviewMarked:hover, .TDS_PS_L3.TDS_CCYellowB a.markReviewMarked:hover, .TDS_PS_L3.TDS_CCInvert a.markReviewMarked:hover, .TDS_PS_L4.TDS_CCWhiteN a.markReviewMarked:hover, .TDS_PS_L4.TDS_CCYellowB a.markReviewMarked:hover, .TDS_PS_L4.TDS_CCInvert a.markReviewMarked:hover {
+	background-image: url(../Images/controls/item_sprites_colorChoice.png) !important;
+}
+
+/*temporarily disable color choices in formula pages*/
+.TDS_CCInvert .formula, 
+.TDS_CCYellowB .formula, 
+.TDS_CCWhiteN .formula,
+.TDS_CCInvert .formula img, 
+.TDS_CCYellowB .formula img, 
+.TDS_CCWhiteN .formula img, 
+.TDS_CCInvert .popuptool img, 
+.TDS_CCYellowB .popuptool img, 
+.TDS_CCWhiteN .popuptool img {
+	background-color: #fff;
+}
+
+
+/* @end */
+
+/* @group colors- login */
+
+
+.TDS_CCYellow .blurb, .TDS_CCYellow2 .blurb, .TDS_CCCream .blurb, .TDS_CCBlue .blurb, .TDS_CCBlue2 .blurb, .TDS_CCMagenta .blurb, .TDS_CCMagenta2 .blurb, .TDS_CCGray .blurb, .TDS_CCGray2 .blurb, .TDS_CCGreen .blurb, .TDS_CCGreen2 .blurb, .TDS_CCYellowB .blurb, .TDS_CCInvert .blurb, .TDS_CCWhiteN .blurb, 
+
+.TDS_CCYellow #sectionTestApproval .ot-innerShadow, .TDS_CCYellow2 #sectionTestApproval .ot-innerShadow, .TDS_CCCream #sectionTestApproval .ot-innerShadow, .TDS_CCBlue #sectionTestApproval .ot-innerShadow, .TDS_CCBlue2 #sectionTestApproval .ot-innerShadow, .TDS_CCMagenta #sectionTestApproval .ot-innerShadow, .TDS_CCMagenta2 #sectionTestApproval .ot-innerShadow, .TDS_CCGray #sectionTestApproval .ot-innerShadow, .TDS_CCGray2 #sectionTestApproval .ot-innerShadow, .TDS_CCGreen #sectionTestApproval .ot-innerShadow, .TDS_CCGreen2 #sectionTestApproval .ot-innerShadow, .TDS_CCYellowB #sectionTestApproval .ot-innerShadow, .TDS_CCInvert #sectionTestApproval .ot-innerShadow, .TDS_CCWhiteN #sectionTestApproval .ot-innerShadow {
+	background-color: inherit !important;
+	background-image: none !important;
+}
+
+.practiceTest.TDS_CCYellow .checkHolder, .practiceTest.TDS_CCYellow2 .checkHolder, .practiceTest.TDS_CCCream .checkHolder, .practiceTest.TDS_CCBlue .checkHolder, .practiceTest.TDS_CCBlue2 .checkHolder, .practiceTest.TDS_CCMagenta .checkHolder, .practiceTest.TDS_CCMagenta2 .checkHolder, .practiceTest.TDS_CCGray .checkHolder, .practiceTest.TDS_CCGray2 .checkHolder, .practiceTest.TDS_CCGreen .checkHolder, .practiceTest.TDS_CCGreen2 .checkHolder, .practiceTest.TDS_CCYellowB .checkHolder, .practiceTest.TDS_CCInvert .checkHolder, .practiceTest.TDS_CCWhiteN .checkHolder, 
+.TDS_CCYellow .linkbox, .TDS_CCYellow2 .linkbox, .TDS_CCCream .linkbox, .TDS_CCBlue .linkbox, .TDS_CCBlue2 .linkbox, .TDS_CCMagenta .linkbox, .TDS_CCMagenta2 .linkbox, .TDS_CCGray .linkbox, .TDS_CCGray2 .linkbox, .TDS_CCGreen .linkbox, .TDS_CCGreen2 .linkbox, .TDS_CCYellowB .linkbox, .TDS_CCInvert .linkbox, .TDS_CCWhiteN .linkbox {
+	background-color: inherit;
+	background-image: url(../Images/mediumGrey.png);
+	color: #000;
+}
+.practiceTest.TDS_CCYellowB .checkHolder, 
+.TDS_CCYellowB .linkbox, 
+.TDS_CCYellowB .actions input, 
+.TDS_CCYellowB .actions button, 
+.TDS_CCYellowB .loginForm legend {
+	color:#FC0;
+}
+.TDS_CCYellowB .summary-segment-type-values, 
+.TDS_CCYellowB .dependency .control {
+	color: #fdf968;
+}
+
+
+.practiceTest.TDS_CCWhiteN .checkHolder, .TDS_CCWhiteN .linkbox, .practiceTest.TDS_CCInvert .checkHolder, .TDS_CCInvert .linkbox, .TDS_CCInvert .actions button, .TDS_CCInvert .actions input, .TDS_CCWhiteN .actions button, .TDS_CCWhiteN .actions input, .TDS_CCWhiteN .loginForm legend, .TDS_CCInvert .loginForm legend {
+	color:#FFF;
+}
+
+.TDS_CCInvert #sectionLoginVerify .instructions, .TDS_CCInvert #sectionTestSelection .instructions, .TDS_CCInvert #sectionTestVerify .instructions {
+	color: #eee;
+}
+.TDS_CCYellowB #sectionLoginVerify .instructions, .TDS_CCYellowB #sectionTestSelection .instructions, .TDS_CCYellowB #sectionTestVerify .instructions {
+	color: #FC0;
+}
+.TDS_CCWhiteN #sectionLoginVerify .instructions, .TDS_CCWhiteN #sectionTestSelection .instructions, .TDS_CCWhiteN #sectionTestVerify .instructions {
+	color: #fff;
+}
+.TDS_CCWhiteN .summary-segment-type-values, 
+.TDS_CCInvert .summary-segment-type-values, 
+.TDS_CCWhiteN .control, 
+.TDS_CCInvert .control {
+	color: #d2f7fd;
+}
+.TDS_CCYellow.practiceTest #verifyGradeSelector, .TDS_CCYellow2.practiceTest #verifyGradeSelector, .TDS_CCCream.practiceTest #verifyGradeSelector, .TDS_CCBlue.practiceTest #verifyGradeSelector, .TDS_CCBlue2.practiceTest #verifyGradeSelector, .TDS_CCMagenta.practiceTest #verifyGradeSelector, .TDS_CCMagenta2.practiceTest #verifyGradeSelector, .TDS_CCGray.practiceTest #verifyGradeSelector, .TDS_CCGray2.practiceTest #verifyGradeSelector, .TDS_CCGreen.practiceTest #verifyGradeSelector, .TDS_CCGreen2.practiceTest #verifyGradeSelector, .TDS_CCYellowB.practiceTest #verifyGradeSelector, .TDS_CCInvert.practiceTest #verifyGradeSelector, .TDS_CCWhiteN.practiceTest #verifyGradeSelector, 
+
+.TDS_CCYellow #sectionTestSelection th, .TDS_CCYellow2 #sectionTestSelection th, .TDS_CCCream #sectionTestSelection th, .TDS_CCBlue #sectionTestSelection th, .TDS_CCBlue2 #sectionTestSelection th, .TDS_CCMagenta #sectionTestSelection th, .TDS_CCMagenta2 #sectionTestSelection th, .TDS_CCGray #sectionTestSelection th, .TDS_CCGray2 #sectionTestSelection th, .TDS_CCGreen #sectionTestSelection th, .TDS_CCGreen2 #sectionTestSelection th, .TDS_CCYellowB #sectionTestSelection th, .TDS_CCInvert #sectionTestSelection th, .TDS_CCWhiteN #sectionTestSelection th
+
+ {
+	background-color: inherit;
+	background-image: url(../Images/mediumGrey.png);
+}
+
+.TDS_CCYellow .actions span, .TDS_CCYellow2 .actions span, .TDS_CCCream .actions span, .TDS_CCBlue .actions span, .TDS_CCBlue2 .actions span, .TDS_CCMagenta .actions span, .TDS_CCMagenta2 .actions span, .TDS_CCGray .actions span, .TDS_CCGray2 .actions span, .TDS_CCGreen .actions span, .TDS_CCGreen2 .actions span, .TDS_CCYellowB .actions span, .TDS_CCInvert .actions span, .TDS_CCWhiteN .actions span {
+	background-color: transparent !important;
+	background-image: url(../Images/lightGrey.png) !important;
+}
+
+.TDS_CCYellow .resumeTest, .TDS_CCYellow2 .resumeTest, .TDS_CCCream .resumeTest, .TDS_CCBlue .resumeTest, .TDS_CCBlue2 .resumeTest, .TDS_CCMagenta .resumeTest, .TDS_CCMagenta2 .resumeTest, .TDS_CCGray .resumeTest, .TDS_CCGray2 .resumeTest, .TDS_CCGreen .resumeTest, .TDS_CCGreen2 .resumeTest, .TDS_CCYellowB .resumeTest, .TDS_CCInvert .resumeTest, .TDS_CCWhiteN .resumeTest, 
+.TDS_CCYellow .newTest, .TDS_CCYellow2 .newTest, .TDS_CCCream .newTest, .TDS_CCBlue .newTest, .TDS_CCBlue2 .newTest, .TDS_CCMagenta .newTest, .TDS_CCMagenta2 .newTest, .TDS_CCGray .newTest, .TDS_CCGray2 .newTest, .TDS_CCGreen .newTest, .TDS_CCGreen2 .newTest, .TDS_CCYellowB .newTest, .TDS_CCInvert .newTest, .TDS_CCWhiteN .newTest {
+	background-color: transparent !important;
+}
+
+
+.TDS_CCYellow .resumeTest:hover, .TDS_CCYellow2 .resumeTest:hover, .TDS_CCCream .resumeTest:hover, .TDS_CCBlue .resumeTest:hover, .TDS_CCBlue2 .resumeTest:hover, .TDS_CCMagenta .resumeTest:hover, .TDS_CCMagenta2 .resumeTest:hover, .TDS_CCGray .resumeTest:hover, .TDS_CCGray2 .resumeTest:hover, .TDS_CCGreen .resumeTest:hover, .TDS_CCGreen2 .resumeTest:hover, .TDS_CCYellowB .resumeTest:hover, .TDS_CCInvert .resumeTest:hover, .TDS_CCWhiteN .resumeTest:hover, 
+.TDS_CCYellow .newTest:hover, .TDS_CCYellow2 .newTest:hover, .TDS_CCCream .newTest:hover, .TDS_CCBlue .newTest:hover, .TDS_CCBlue2 .newTest:hover, .TDS_CCMagenta .newTest:hover, .TDS_CCMagenta2 .newTest:hover, .TDS_CCGray .newTest:hover, .TDS_CCGray2 .newTest:hover, .TDS_CCGreen .newTest:hover, .TDS_CCGreen2 .newTest:hover, .TDS_CCYellowB .newTest:hover, .TDS_CCInvert .newTest:hover, .TDS_CCWhiteN .newTest:hover, 
+
+.TDS_CCYellow .resumeTest:focus, .TDS_CCYellow2 .resumeTest:focus, .TDS_CCCream .resumeTest:focus, .TDS_CCBlue .resumeTest:focus, .TDS_CCBlue2 .resumeTest:focus, .TDS_CCMagenta .resumeTest:focus, .TDS_CCMagenta2 .resumeTest:focus, .TDS_CCGray .resumeTest:focus, .TDS_CCGray2 .resumeTest:focus, .TDS_CCGreen .resumeTest:focus, .TDS_CCGreen2 .resumeTest:focus, .TDS_CCYellowB .resumeTest:focus, .TDS_CCInvert .resumeTest:hover, .TDS_CCWhiteN .resumeTest:focus, 
+.TDS_CCYellow .newTest:focus, .TDS_CCYellow2 .newTest:focus, .TDS_CCCream .newTest:focus, .TDS_CCBlue .newTest:focus, .TDS_CCBlue2 .newTest:focus, .TDS_CCMagenta .newTest:focus, .TDS_CCMagenta2 .newTest:focus, .TDS_CCGray .newTest:focus, .TDS_CCGray2 .newTest:focus, .TDS_CCGreen .newTest:hover, .TDS_CCGreen2 .newTest:focus, .TDS_CCYellowB .newTest:focus, .TDS_CCInvert .newTest:focus, .TDS_CCWhiteN .newTest:focus {
+	color: #000 !important;
+	text-decoration: underline;
+}
+.TDS_CCYellowB .newTest, .TDS_CCYellowB .newTest:hover, .TDS_CCYellowB .resumeTest, .TDS_CCYellowB .resumeTest:hover, .TDS_CCYellowB #sectionTestResults table a {
+	color: #FC0 !important;
+}
+.TDS_CCInvert .newTest, .TDS_CCInvert .newTest:hover, .TDS_CCWhiteN .newTest, .TDS_CCWhiteN .newTest:hover, .TDS_CCInvert .resumeTest, .TDS_CCInvert .resumeTest:hover, .TDS_CCWhiteN .resumeTest, .TDS_CCWhiteN .resumeTest:hover, .TDS_CCWhiteN #sectionTestResults table a, .TDS_CCInvert #sectionTestResults table a {
+	color: #fff !important;
+}
+
+.TDS_CCWhiteN .actions .tds-button.positive{
+	border-color: #fff;
+}
+
+/* Buttons color correction */
+.TDS_CCWhiteN .actions .tds-button.positive,
+.TDS_CCWhiteN #sectionLogin .actions .tds-button.positive,
+.TDS_CCInvert .actions .tds-button.positive,
+.TDS_CCInvert #sectionLogin .actions .tds-button.positive,
+.TDS_CCInvert .endSegment button,
+.TDS_CCWhiteN .endSegment button{
+	border-color: #fff;
+}
+.TDS_CCWhiteN .actions .tds-button.positive span,
+.TDS_CCWhiteN #sectionLogin .actions .tds-button.positive button,
+.TDS_CCInvert .actions .tds-button.positive span,
+.TDS_CCInvert #sectionLogin .actions .tds-button.positive button,
+.TDS_CCInvert .endSegment button,
+.TDS_CCWhiteN .endSegment button{
+  color: #fff;
+}
+.TDS_CCInvert #sectionLogin .actions .positive:hover span button, 
+.TDS_CCInvert .actions .positive button:hover, 
+.TDS_CCInvert .actions .positive input:hover, 
+.TDS_CCInvert .actions .positive button:active, 
+.TDS_CCInvert .actions .positive input:active, 
+.TDS_CCInvert .actions .positive button:focus, 
+.TDS_CCInvert .actions .positive input:focus,
+.TDS_CCInvert .actions .positive:hover,
+.TDS_CCInvert #sectionLogin .actions a:hover,
+.TDS_CCInvert .endSegment button:hover,
+.TDS_CCInvert .endSegment button:focus
+{
+	background-color: #fff !important;
+	color: #000 !important;
+}
+.TDS_CCWhiteN #sectionLogin .actions .positive:hover span button, 
+.TDS_CCWhiteN .actions .positive button:hover, 
+.TDS_CCWhiteN .actions .positive input:hover, 
+.TDS_CCWhiteN .actions .positive button:active, 
+.TDS_CCWhiteN .actions .positive input:active, 
+.TDS_CCWhiteN .actions .positive button:focus, 
+.TDS_CCWhiteN .actions .positive input:focus,
+.TDS_CCWhiteN .endSegment button:focus,
+.TDS_CCWhiteN .endSegment button:hover{
+	background-color: #fff !important;
+	color: #036 !important;
+}
+.TDS_CCInvert .actions .positive:hover, 
+.TDS_CCInvert #sectionLogin .actions a:hover,
+.TDS_CCWhiteN .actions .positive:hover, 
+.TDS_CCWhiteN #sectionLogin .actions a:hover,
+.TDS_CCInvert .endSegment button:hover,
+.TDS_CCWhiteN .endSegment button:hover{
+  background-color: #fff !important;
+}
+.TDS_CCYellowB .actions .tds-button.positive,
+.TDS_CCYellowB #sectionLogin .actions .tds-button.positive,
+.TDS_CCYellowB .endSegment button{
+	border-color: #fc0;
+}
+.TDS_CCYellowB .actions .tds-button.positive span,
+.TDS_CCYellowB #sectionLogin .actions .tds-button.positive button,
+.TDS_CCYellowB .endSegment button{
+  color: #fc0;
+}
+.TDS_CCYellowB #sectionLogin .actions .positive:hover span button, 
+.TDS_CCYellowB .actions .positive button:hover, 
+.TDS_CCYellowB .actions .positive input:hover, 
+.TDS_CCYellowB .actions .positive button:active, 
+.TDS_CCYellowB .actions .positive input:active, 
+.TDS_CCYellowB .actions .positive button:focus, 
+.TDS_CCYellowB .actions .positive input:focus,
+.TDS_CCYellowB .endSegment button:hover,
+.TDS_CCYellowB .endSegment button:focus{
+	background-color: #fc0 !important;
+	color: #036 !important;
+}
+
+.TDS_CCYellowB #sectionLogin .actions .negative:hover span button, 
+.TDS_CCYellowB .actions .negative button:hover, 
+.TDS_CCYellowB .actions .negative input:hover, 
+.TDS_CCYellowB .actions .negative button:active, 
+.TDS_CCYellowB .actions .negative input:active, 
+.TDS_CCYellowB .actions .negative button:focus, 
+.TDS_CCYellowB .actions .negative input:focus,
+
+.TDS_CCYellowB #sectionLogin .actions .negative:hover span button, 
+.TDS_CCYellowB .actions .negative button:hover, 
+.TDS_CCYellowB .actions .negative input:hover, 
+.TDS_CCYellowB .actions .negative button:active, 
+.TDS_CCYellowB .actions .negative input:active, 
+.TDS_CCYellowB .actions .negative button:focus, 
+.TDS_CCYellowB .actions .negative input:focus
+.TDS_CCWhiteN #sectionLogin .negative .positive:hover span button, 
+.TDS_CCWhiteN .actions .negative button:hover, 
+.TDS_CCWhiteN .actions .negative input:hover, 
+.TDS_CCWhiteN .actions .negative button:active, 
+.TDS_CCWhiteN .actions .negative input:active, 
+.TDS_CCWhiteN .actions .negative button:focus, 
+.TDS_CCWhiteN .actions .negative input:focus
+
+	
+.TDS_CCInvert #sectionLogin .actions .negative:hover span button, 
+.TDS_CCInvert .actions .negative button:hover, 
+.TDS_CCInvert .actions .negative input:hover, 
+.TDS_CCInvert .actions .negative button:active, 
+.TDS_CCInvert .actions .negative input:active, 
+.TDS_CCInvert .actions .negative button:focus, 
+.TDS_CCInvert .actions .negative input:focus{
+	background-color: #900 !important;
+	color: #fff !important;
+}
+
+/* @end */
+
+
+/* @group Century Gothic */
+
+@font-face{
+font-family:"Century Gothic W01 Bold";
+src:url("../Fonts/b247e158-e647-4a3d-9637-944de5124043.eot?iefix") format("eot");}
+@font-face{
+font-family:"Century Gothic W01 Bold";
+src:url("../Fonts/b247e158-e647-4a3d-9637-944de5124043.eot?iefix");
+src:url("../Fonts/2ef5ecda-1772-45e2-843f-a13f5d76ed3a.woff") format("woff"),url("../Fonts/33cf10ca-a6bb-4888-a320-d38720c9847b.ttf") format("truetype"),url("Fonts/3428a0e6-cb4d-408a-8331-cc78554ab49c.svg#3428a0e6-cb4d-408a-8331-cc78554ab49c") format("svg");
+}
+@font-face{
+font-family:"CenturyGothicW01-BoldIt";
+src:url("../Fonts/620781dc-b993-429f-ace1-722c9b2ba789.eot?iefix") format("eot");}
+@font-face{
+font-family:"CenturyGothicW01-BoldIt";
+src:url("../Fonts/620781dc-b993-429f-ace1-722c9b2ba789.eot?iefix");
+src:url("../Fonts/3bd69eb9-2110-4d97-989e-99a659576659.woff") format("woff"),url("Fonts/8edaed62-069c-4a3b-87f5-fc14b5cdaec3.ttf") format("truetype"),url("Fonts/d5c40f0a-3098-4a2b-8cbb-84524c2a29bc.svg#d5c40f0a-3098-4a2b-8cbb-84524c2a29bc") format("svg");
+}
+@font-face{
+font-family:"CenturyGothicW01-Italic";
+src:url("../Fonts/38471ac0-7849-4a39-9f97-f89d78f42142.eot?iefix") format("eot");}
+@font-face{
+font-family:"CenturyGothicW01-Italic";
+src:url("../Fonts/38471ac0-7849-4a39-9f97-f89d78f42142.eot?iefix");
+src:url("../Fonts/483a662e-88d8-4865-8dd3-1515c67fe28b.woff") format("woff"),url("Fonts/d29e72e3-fcd5-4fa6-8cfb-986a2e33e105.ttf") format("truetype"),url("../Fonts/1e08e1b1-b459-4819-95bc-54667cb4d9b5.svg#1e08e1b1-b459-4819-95bc-54667cb4d9b5") format("svg");
+}
+@font-face{
+font-family:"Century Gothic W01";
+src:url("../Fonts/bd45538f-4200-4946-b177-02de8337032d.eot?iefix") format("eot");}
+@font-face{
+font-family:"Century Gothic W01";
+src:url("../Fonts/bd45538f-4200-4946-b177-02de8337032d.eot?iefix");
+src:url("../Fonts/9908cdad-7524-4206-819e-4f345a666324.woff") format("woff"),url("../Fonts/b710c26a-f1ae-4fb8-a9fe-570fd829cbf1.ttf") format("truetype"),url("Fonts/c9e387df-c0d3-42e1-8de6-78c41f68594c.svg#c9e387df-c0d3-42e1-8de6-78c41f68594c") format("svg");
+}
+
+.TDS_FT_CenturyGothic, 
+.TDS_FT_CenturyGothic math, 
+.TDS_FT_CenturyGothic #contents input, 
+.TDS_FT_CenturyGothic #contents textarea {
+	font-family:'Century Gothic W01';
+}
+.TDS_FT_CenturyGothic em, .TDS_FT_CenturyGothic i {
+	font-family:'CenturyGothicW01-Italic';
+	font-style: normal;
+}
+.TDS_FT_CenturyGothic strong, .TDS_FT_CenturyGothic b, .TDS_FT_CenturyGothic h1, .TDS_FT_CenturyGothic h2, .TDS_FT_CenturyGothic h3, .TDS_FT_CenturyGothic h4 {
+	font-family:'Century Gothic W01 Bold';
+	font-weight: normal;
+}
+.TDS_FT_CenturyGothic strong > em,
+.TDS_FT_CenturyGothic strong > i, 
+.TDS_FT_CenturyGothic b > i, 
+.TDS_FT_CenturyGothic b > em, 
+.TDS_FT_CenturyGothic em > strong, 
+.TDS_FT_CenturyGothic em > b, 
+.TDS_FT_CenturyGothic i > b, 
+.TDS_FT_CenturyGothic i > strong {
+	font-family:'CenturyGothicW01-BoldIt';
+	font-weight: normal;
+	font-style: normal;
+}
+/* @end */
+
+
+.readonly .markComment,/* .readonly #foot #studentTools a,*/ .readonly #foot li a#btnSave {
+	display: none !important;	
+}
+/*
+.readonly #studentTools a#btnZoomOut, .readonly #studentTools a#btnZoomIn {
+	display: block !important;
+}*/
+
+
+
+/* @end */
+.TDS_CP_Z0 .bigTable .coverpage {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 16em;
+}
+/* keeps font size fixed to level 4 for Cover Pages*/
+.TDS_CP_Z0 .layout_coverpage_1 .bigTable, .TDS_CP_Z0.TDS_PS_L0 .layout_coverpage_1 .bigTable, .TDS_CP_Z0.TDS_PS_L1 .layout_coverpage_1 .bigTable, .TDS_CP_Z0.TDS_PS_L2 .layout_coverpage_1 .bigTable, .TDS_CP_Z0.TDS_PS_L3 .layout_coverpage_1 .bigTable, .TDS_CP_Z0.TDS_PS_L4 .layout_coverpage_1 .bigTable, 
+.TDS_CP_Z0 .layout_coverpage_2 .bigTable, .TDS_CP_Z0.TDS_PS_L0 .layout_coverpage_2 .bigTable, .TDS_CP_Z0.TDS_PS_L1 .layout_coverpage_2 .bigTable, .TDS_CP_Z0.TDS_PS_L2 .layout_coverpage_2 .bigTable, .TDS_CP_Z0.TDS_PS_L3 .layout_coverpage_2 .bigTable, .TDS_CP_Z0.TDS_PS_L4 .layout_coverpage_2 .bigTable, 
+.TDS_CP_Z0 .layout_coverpage_3 .bigTable, .TDS_CP_Z0.TDS_PS_L0 .layout_coverpage_3 .bigTable, .TDS_CP_Z0.TDS_PS_L1 .layout_coverpage_3 .bigTable, .TDS_CP_Z0.TDS_PS_L2 .layout_coverpage_3 .bigTable, .TDS_CP_Z0.TDS_PS_L3 .layout_coverpage_3 .bigTable, .TDS_CP_Z0.TDS_PS_L4 .layout_coverpage_3 .bigTable, 
+.TDS_CP_Z0 .layout_coverpage_4 .bigTable, .TDS_CP_Z0.TDS_PS_L0 .layout_coverpage_4 .bigTable, .TDS_CP_Z0.TDS_PS_L1 .layout_coverpage_4 .bigTable, .TDS_CP_Z0.TDS_PS_L2 .layout_coverpage_4 .bigTable, .TDS_CP_Z0.TDS_PS_L3 .layout_coverpage_4 .bigTable, .TDS_CP_Z0.TDS_PS_L4 .layout_coverpage_4 .bigTable, 
+.TDS_CP_Z0 .layout_coverpage_5 .bigTable, .TDS_CP_Z0.TDS_PS_L0 .layout_coverpage_5 .bigTable, .TDS_CP_Z0.TDS_PS_L1 .layout_coverpage_5 .bigTable, .TDS_CP_Z0.TDS_PS_L2 .layout_coverpage_5 .bigTable, .TDS_CP_Z0.TDS_PS_L3 .layout_coverpage_5 .bigTable, .TDS_CP_Z0.TDS_PS_L4 .layout_coverpage_5 .bigTable, 
+.TDS_CP_Z0.layout_coverpage_6 .bigTable, .TDS_CP_Z0.TDS_PS_L0 .layout_coverpage_6 .bigTable, .TDS_CP_Z0.TDS_PS_L1 .layout_coverpage_6 .bigTable, .TDS_CP_Z0.TDS_PS_L2 .layout_coverpage_6 .bigTable, .TDS_CP_Z0.TDS_PS_L3 .TDS_CP_Z0.layout_coverpage_6 .bigTable, .TDS_CP_Z0.TDS_PS_L4 .layout_coverpage_6 .bigTable  {
+	font-size: 4.2em;
+}
+
+
+/* @group 14pt for all items */
+/* Always used in conjunction with 14pt passages*/
+
+/* sets larger font size*/
+.TDS_IF_S14 .thePassage, 
+.TDS_IF_S14 .theQuestions, 
+.TDS_IF_S14.TDS_PS_L0 .thePassage, 
+.TDS_IF_S14.TDS_PS_L0 .theQuestions, 
+.TDS_IF_S14 .compound .stemContainer, 
+.TDS_IF_S14.TDS_PS_L0 .compound .stemContainer {
+	font-size: 1.17em;
+}
+.TDS_IF_S14.TDS_PS_L1 .thePassage, 
+.TDS_IF_S14.TDS_PS_L1 .theQuestions, 
+.TDS_IF_S14.TDS_PS_L1 .compound .stemContainer {
+	font-size: 1.04em;
+}
+.TDS_IF_S14.TDS_PS_L2 .thePassage, 
+.TDS_IF_S14.TDS_PS_L2 .theQuestions, 
+.TDS_IF_S14.TDS_PS_L2 .compound .stemContainer {
+	font-size: 1em;
+}
+.TDS_IF_S14.TDS_PS_L3 .thePassage, 
+.TDS_IF_S14.TDS_PS_L3 .theQuestions, 
+.TDS_IF_S14.TDS_PS_L3 .compound .stemContainer {
+	font-size: 0.86em;
+}
+.TDS_IF_S14.TDS_PS_L4 .thePassage, 
+.TDS_IF_S14.TDS_PS_L4 .theQuestions, 
+.TDS_IF_S14.TDS_PS_L4 .compound .stemContainer {
+	font-size: 0.8em;
+}
+/* font sizes are set differentlyt on single item layouts and writing, first declaration brings font up to 14pt, second keeps it there*/
+/*.TDS_TS_Classic.TDS_IF_S14.TDS_PS_L0 .theQuestions, */
+.TDS_IF_S14 .layout12, 
+.TDS_IF_S14.TDS_PS_L0 .layout12 {
+	font-size: 1.64em;
+}
+/*.TDS_TS_Classic.TDS_IF_S14.TDS_PS_L0 .theQuestions, */
+.TDS_IF_S14 .layout12 .thePassage, 
+.TDS_IF_S14.TDS_PS_L0 .layout12 .thePassage, 
+.TDS_IF_S14.TDS_PS_L1 .layout12 .thePassage, 
+.TDS_IF_S14.TDS_PS_L2 .layout12 .thePassage, 
+.TDS_IF_S14.TDS_PS_L3 .layout12 .thePassage, 
+.TDS_IF_S14.TDS_PS_L4 .layout12 .thePassage {
+	font-size: 1em;
+}
+.TDS_IF_S14.TDS_PS_L1 .layout12 {
+	font-size: 2em;
+}
+.TDS_IF_S14.TDS_PS_L2 .layout12 {
+	font-size: 2.5em;
+}
+.TDS_IF_S14.TDS_PS_L3 .layout12 {
+	font-size: 2.84em;
+}
+.TDS_IF_S14.TDS_PS_L4 .layout12 {
+	font-size: 3.36em;
+}
+
+
+
+
+/* adjust answer circles */
+.TDS_IF_S14.TDS_PS_L1 .optionClicker {
+    margin-top: 2px;
+}
+.TDS_IF_S14.TDS_PS_L2 .optionClicker {
+    margin-top: 1px;
+}
+.TDS_TS_Modern.TDS_PS_L3.TDS_IF_S14 .markComment {
+    margin-top: -1.8em;
+}
+.TDS_TS_Modern.TDS_PS_L4.TDS_IF_S14 .markComment {
+    margin-top: -1.5em;
+}
+
+/* @end */
+
+/* fix for bug 94051 */
+.platform_linux.TDS_CCGray .ot-innerShadow select, 
+.platform_linux.TDS_CCYellow .ot-innerShadow select, 
+.platform_linux.TDS_CCYellow2 .ot-innerShadow select, 
+.platform_linux.TDS_CCCream .ot-innerShadow select, 
+.platform_linux.TDS_CCYellowB .ot-innerShadow select, 
+.platform_linux.TDS_CCWhiteN .ot-innerShadow select, 
+.platform_linux.TDS_CCGreen2 .ot-innerShadow select, 
+.platform_linux.TDS_CCGreen .ot-innerShadow select, 
+.platform_linux.TDS_CCMagenta .ot-innerShadow select,
+.platform_linux.TDS_CCMagenta2 .ot-innerShadow select, 
+.platform_linux.TDS_CCInvert .ot-innerShadow select, 
+.platform_linux.TDS_CCBlue .ot-innerShadow select, 
+.platform_linux.TDS_CCBlue2 .ot-innerShadow select {
+	background-color: transparent !important;
+	-moz-appearance: button !important;
+}
+
+/*Fix for Bug 121253 - Dictionary Accomodations */
+.TDS_CCInvert #tool-dictionary .headword{
+	background-color: #323232;
+}
+.TDS_CCWhiteN #tool-dictionary .headword,
+.TDS_CCYellowB #tool-dictionary .headword{
+	background-color: #000033;
+}
+
+/*Login window color accomodation force.  Cannot be transparent because of bicycle/tricycle*/
+.TDS_CCWhiteN #sectionLogin .ot-innerShadow, 
+.TDS_CCWhiteN #sectionLoginProctor .ot-innerShadow, 
+.TDS_CCWhiteN .blurb{ 
+	background-color: #003366 !important;
+	background-image: none !important;
+}
+.TDS_CCBlue #sectionLogin .ot-innerShadow, 
+.TDS_CCBlue #sectionLoginProctor .ot-innerShadow, 
+.TDS_CCBlue .blurb{ 
+	background-color: #99ffff !important;
+	background-image: none !important;
+}
+.TDS_CCBlue2 #sectionLogin .ot-innerShadow, 
+.TDS_CCBlue2 #sectionLoginProctor .ot-innerShadow, 
+.TDS_CCBlue2 .blurb{ 
+	background-color: #cfffff !important;
+	background-image: none !important;
+}
+.TDS_CCYellow #sectionLogin .ot-innerShadow, 
+.TDS_CCYellow #sectionLoginProctor .ot-innerShadow, 
+.TDS_CCYellow .blurb{ 
+	background-color: #ffffce !important;
+	background-image: none !important;
+}
+.TDS_CCYellow2 #sectionLogin .ot-innerShadow, 
+.TDS_CCYellow2 #sectionLoginProctor .ot-innerShadow, 
+.TDS_CCYellow2 .blurb{ 
+	background-color: #fcfce2 !important;
+	background-image: none !important;
+}
+.TDS_CCCream #sectionLogin .ot-innerShadow, 
+.TDS_CCCream #sectionLoginProctor .ot-innerShadow, 
+.TDS_CCCream .blurb{ 
+	background-color: #ede0ce !important;
+	background-image: none !important;
+}
+.TDS_CCYellowB #sectionLogin .ot-innerShadow, 
+.TDS_CCYellowB #sectionLoginProctor .ot-innerShadow, 
+.TDS_CCYellowB .blurb{ 
+	background-color: #039 !important;
+	background-image: none !important;
+} 
+.TDS_CCGray #sectionLogin .ot-innerShadow, 
+.TDS_CCGray #sectionLoginProctor .ot-innerShadow, 
+.TDS_CCGray .blurb{ 
+	background-color: #cecfce !important;
+	background-image: none !important;
+}
+.TDS_CCGray2 #sectionLogin .ot-innerShadow, 
+.TDS_CCGray2 #sectionLoginProctor .ot-innerShadow, 
+.TDS_CCGray2 .blurb{ 
+	background-color: #e5e5e5 !important;
+	background-image: none !important;
+}
+.TDS_CCMedGrayLtGray #sectionLogin .ot-innerShadow, 
+.TDS_CCMedGrayLtGray #sectionLoginProctor .ot-innerShadow, 
+.TDS_CCMedGrayLtGray .blurb{ 
+	background-color: #e5e5e5 !important;
+	background-image: none !important;
+}
+.TDS_CCMedGrayLtGray .loginForm legend {
+	color: #666;
+}
+.TDS_CCMagenta #sectionLogin .ot-innerShadow, 
+.TDS_CCMagenta #sectionLoginProctor .ot-innerShadow, 
+.TDS_CCMagenta .blurb{ 
+	background-color: #ffd0ff !important;
+	background-image: none !important;
+}
+.TDS_CCMagenta2 #sectionLogin .ot-innerShadow, 
+.TDS_CCMagenta2 #sectionLoginProctor .ot-innerShadow, 
+.TDS_CCMagenta2 .blurb{ 
+	background-color: #fde3fd !important;
+	background-image: none !important;
+}
+.TDS_CCGreen #sectionLogin .ot-innerShadow, 
+.TDS_CCGreen #sectionLoginProctor .ot-innerShadow, 
+.TDS_CCGreen .blurb{ 
+	background-color: #cff799 !important;
+	background-image: none !important;
+}
+.TDS_CCGreen2 #sectionLogin .ot-innerShadow, 
+.TDS_CCGreen2 #sectionLoginProctor .ot-innerShadow, 
+.TDS_CCGreen2 .blurb{ 
+	background-color: #e0f6c1 !important;
+	background-image: none !important;
+}
+.TDS_CCInvert #sectionLogin .ot-innerShadow, 
+.TDS_CCInvert #sectionLoginProctor .ot-innerShadow, 
+.TDS_CCInvert .blurb{ 
+	background-color: #000 !important;
+	background-image: none !important;
+}
+.embedded .closeInstructions {
+	display:none;	
+}
+
+
+/* consideration for disabled fonts on White Text */
+.TDS_CCInvert select:disabled, .TDS_CCInvert option:disabled, .TDS_CCInvert input:disabled,
+.TDS_CCWhiteN select:disabled, .TDS_CCWhiteN option:disabled, .TDS_CCWhiteN input:disabled{
+	color: #aaa;
+}
+
+
+/*Context menu updates for invert*/
+.TDS_CCInvert.yui-skin-sam .yuimenu .tutorial a, 
+.TDS_CCInvert.yui-skin-sam .yuimenu .helpItem a,
+.TDS_CCYellowB.yui-skin-sam .yuimenu .tutorial a, 
+.TDS_CCYellowB.yui-skin-sam .yuimenu .helpItem a,
+.TDS_CCWhiteN.yui-skin-sam .yuimenu .tutorial a, 
+.TDS_CCWhiteN.yui-skin-sam .yuimenu .helpItem a
+{
+    background-position: left -3125px;
+}
+.TDS_CCInvert.yui-skin-sam .yuimenu .comment a,
+.TDS_CCYellowB.yui-skin-sam .yuimenu .comment a,
+.TDS_CCWhiteN.yui-skin-sam .yuimenu .comment a
+{
+    background-position: left -2485px;
+}
+.TDS_CCInvert.yui-skin-sam .yuimenu .markReview a,
+.TDS_CCYellowB.yui-skin-sam .yuimenu .markReview a,
+.TDS_CCWhiteN.yui-skin-sam .yuimenu .markReview a
+{
+    background-position: left -2564px;
+}
+.TDS_CCInvert.yui-skin-sam .yuimenu .strikethrough a,
+.TDS_CCYellowB.yui-skin-sam .yuimenu .strikethrough a,
+.TDS_CCWhiteN.yui-skin-sam .yuimenu .strikethrough a
+{
+    background-position: left -2321px;
+}
+.TDS_CCInvert.yui-skin-sam .yuimenu li a:hover,
+.TDS_CCInvert.yui-skin-sam .yuimenu li a:focus,
+.TDS_CCInvert.yui-skin-sam .yuimenu li a:active
+{
+    color: #000 !important;
+    background-color: #ccc;
+}
+.TDS_CCWhiteN.yui-skin-sam .yuimenu li a:hover,
+.TDS_CCWhiteN.yui-skin-sam .yuimenu li a:focus,
+.TDS_CCWhiteN.yui-skin-sam .yuimenu li a:active{
+    color: #000 !important;
+    background-color: #a9e3f9;
+}
+.TDS_CCYellowB.yui-skin-sam .yuimenu li a:hover,
+.TDS_CCYellowB.yui-skin-sam .yuimenu li a:focus,
+.TDS_CCYellowB.yui-skin-sam .yuimenu li a:active{
+   color: #039 !important;
+   background-color: #fc0;
+}
+
+.TDS_CCYellowB .activeItem .questionContainer h2, 
+.TDS_CCYellowB .activeItem .questionCell h2 {
+    background-color: #d9ae03;
+}
+.TDS_CCYellowB .activeItem .questionContainer .stemContainer {
+    border-color: #d9ae03;
+}
+.TDS_CCInvert .bigTable .questionCell h2, 
+.TDS_CCInvert .bigTable .questionContainer h2 {
+	background-color: #666;
+    color: #fff;
+}
+.TDS_CCInvert .questionContainer .stemContainer {
+    border-color: #666;
+}
+.TDS_CCInvert .activeItem .questionContainer h2, 
+.TDS_CCInvert .activeItem .questionCell h2 {
+    background-color: #fff;
+    color: #000;
+}
+.TDS_CCInvert .activeItem .questionContainer .stemContainer {
+    border-color: #fff;
+}
+.TDS_CCWhiteN .activeItem .questionContainer h2, 
+.TDS_CCYellowB .activeItem .questionCell h2 {
+    background-color: #1e8bb4;
+}
+.TDS_CCWhiteN .activeItem .questionContainer .stemContainer {
+    border-color: #1e8bb4;
+}
+
+/* Color corrections for new MS styles*/
+.TDS_CCInvert .format_ms .optionClicker,
+.TDS_CCInvert .EBSR_ms .optionClicker
+{
+    box-shadow: 1px 1px 1px 1px #333 inset;
+}
+.TDS_CCInvert .format_ms .optionSelected .optionClicker,
+.TDS_CCInvert .EBSR_ms.optionSelected .optionClicker
+{
+    background: #aaa;
+}
+.TDS_CCInvert .format_ms .optionSelected .optionClicker::before,
+.TDS_CCInvert .EBSR_ms.optionSelected .optionClicker::before
+{
+    color: #000;
+}
+.TDS_CCWhiteN .format_ms .optionClicker,
+.TDS_CCYellowB .format_ms .optionClicker,
+.TDS_CCWhiteN .EBSR_ms .optionClicker,
+.TDS_CCYellowB .EBSR_ms .optionClicker
+{
+    box-shadow: 1px 1px 1px 1px #003 inset;
+}
+.TDS_CCBlue .format_ms .answerContainer .optionContainer:hover .optionClicker::before, 
+.TDS_CCBlue .format_ms .answerCell .optionContainer:hover .optionClicker::before,
+.TDS_CCBlue2 .format_ms .answerContainer .optionContainer:hover .optionClicker::before, 
+.TDS_CCBlue2 .format_ms .answerCell .optionContainer:hover .optionClicker::before,
+.TDS_CCGreen .format_ms .answerContainer .optionContainer:hover .optionClicker::before, 
+.TDS_CCGreen .format_ms .answerCell .optionContainer:hover .optionClicker::before,
+.TDS_CCGreen2 .format_ms .answerContainer .optionContainer:hover .optionClicker::before, 
+.TDS_CCGreen2 .format_ms .answerCell .optionContainer:hover .optionClicker::before,
+
+.TDS_CCBlue .EBSR_ms:hover .optionClicker::before, 
+.TDS_CCBlue2 .EBSR_ms:hover .optionClicker::before, 
+.TDS_CCGreen .EBSR_ms:hover .optionClicker::before, 
+.TDS_CCGreen2 .EBSR_ms:hover .optionClicker::before
+{
+    color: #aaa;
+}

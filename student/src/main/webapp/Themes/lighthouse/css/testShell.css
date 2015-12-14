@@ -1,0 +1,61 @@
+@charset "UTF-8";
+/* Lighthouse Theme */
+
+.topBar {
+	background-image: url(../images/logo_default_shell.gif);
+	padding-right: 263px;
+	background-color: #a7c9e2;
+}
+.sessionID {
+	border:none;
+}
+.smallButtons a:hover {
+	background-color: #ffa20c;
+}
+.studentInfo {
+	background-color: #a7c9e2;
+	color: #000;
+}
+.bottomBar {
+	background-color: #ddecf6;
+	border-top-color: #5c697e;
+	border-bottom-color: #5c697e;
+}
+.testName {
+	background-color: #bad8ee;
+	border-right-color: #5c697e;
+}
+#foot {
+	background-color: #164c7e;
+	background-image: url(../images/studentFooter.gif);
+}
+#studentTools {
+	background-image: url(../images/studentFooterTools.gif);
+	border-right-color: #164c7e;
+}
+.printRequest {
+	display: block;
+	background-image: url(../images/studentControls/printRequest.gif);
+	background-repeat: no-repeat;
+	height: 25px;
+	width: 30px;
+	text-indent: -9999px;
+	float: left;
+	margin-top: -0.5em;
+	margin-right: .5em;
+}
+.yourChoices .greenBtn {
+	border-color: #164c7e;
+	color:#164c7e;
+}
+.yourChoices .greenBtn:hover {
+	background-color:#164c7e;
+}
+.sound_cue, .sound_cue.load_incomplete, .sound_cue.disabled  {
+	background: url(../images/controls/speaker_noclick.gif) no-repeat center center;
+}
+
+/* preloads images so they don't appear 'missing' */
+.preloader {
+	background-color: #A7C9E2;
+}
