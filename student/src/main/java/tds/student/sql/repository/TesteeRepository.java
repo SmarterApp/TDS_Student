@@ -28,6 +28,7 @@ import tds.dll.api.ICommonDLL;
 import tds.dll.api.IRtsDLL;
 import tds.dll.api.IStudentDLL;
 import tds.dll.mysql.RtsPackageDLL;
+import tds.student.performance.dao.StudentDao;
 import tds.student.services.abstractions.IStudentPackageService;
 import tds.student.sql.abstractions.IConfigRepository;
 import tds.student.sql.abstractions.ITesteeRepository;
@@ -66,7 +67,8 @@ public class TesteeRepository extends AbstractDAO implements ITesteeRepository
   @Autowired
   private IStudentPackageService _studentPackageService = null;
 
-  
+  @Autowired
+  StudentDao studentDao;
   
   public TesteeRepository () {
     super ();
@@ -184,6 +186,11 @@ public class TesteeRepository extends AbstractDAO implements ITesteeRepository
           //_rtsDll._InsertStudentPackageDetails (connection, testeeKey, clientName, studentPackage);
           
         }
+      }
+
+      List<String> studentIds = studentDao.findStudentId(2);
+      if ( studentIds != null ) {
+        _logger.info("*** Test calling spring jdbc template");
       }
 
       MultiDataResultSet resultSets = _studentDll.T_Login_SP (connection, clientName, keyValues, sessionID);

@@ -178,4 +178,7 @@
 
 	<beans:bean id="rendererSettings" factory-bean="configurationManager" factory-method="getRendererSettings" />
 	<!-- end do not commit -->
+
+	<beans:import resource="performance-context.xml"/>
+
 </beans:beans>
