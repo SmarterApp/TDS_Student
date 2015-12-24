@@ -1,0 +1,73 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+}
+body {
+	line-height: 1;
+	color: black;
+	background-color:#FFFFFF;
+}
+table {
+	border-collapse: separate;
+	border-spacing: 0;
+}
+caption, th {
+	text-align: left;
+	font-weight: normal;
+}
+td {
+	font-weight: normal;
+}
+p {
+	padding-bottom: .5em;
+}
+
+.rubric {
+	padding: 20px;
+	font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+}
+
+.rubric h1 {
+	font-size: 1.5em;
+	padding: 0px;
+	font-weight: bold;
+	margin: 0px 0px .5em;
+}
+.rubric table {
+	border-top: solid 1px #666;
+	border-right: solid 1px #666;
+}
+.rubric th, .rubric td {
+	vertical-align: top;
+	border-bottom: solid 1px #666;
+	border-left: solid 1px #666;
+	padding: .5em;
+}
+.rubric th {
+	font-weight: bold;
+}
+.rubric ol, .rubric ul {
+	margin: .5em 2em;
+}
+
+.rubric .rubricFoot{
+	font-size: .8em;
+	color: #666;
+	margin-top: 1em;
+}
+.rubric .rubricFoot h4{
+	font-weight: bold;
+}

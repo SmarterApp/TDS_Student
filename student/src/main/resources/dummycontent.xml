@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<contents>
+	<content groupID="{0}" segmentID="{3}" layout="8" language="ENU">
+		<items>
+			<item bankKey="{1}" itemKey="{2}" subject="ELA" grade="" format="MC" disabled="false" printable="false" printed="false" responseType="Vertical" position="{2}" positionOnPage="1">
+				<options>
+					<option key="A" />
+					<option key="B" />
+				</options>
+				<rubric type="Text"><![CDATA[B]]></rubric>
+			</item>
+		</items>
+		<html><![CDATA[
+<div id="Page_{0}" class="subject_ELA itemcount_1 layout_8 browser_firefox browserVer_24 platform_windows">
+<div id="Item_{2}" class="multipleChoiceItem itemContainer format_mc response_vertical">
+
+<table cellspacing="0" cellpadding="0" width="100%" class="bigTable noColumns">
+  <tr>
+  	<td valign="top" align="center"><div class="theQuestions"><span class="padding"> <!-- wraps layouts -->
+    
+    	<table cellspacing="0" cellpadding="0" class="structure layout8vertical">
+          <tr>
+            <td class="questionCell">
+            <span class="markComment">
+                
+                <a href="#" id="Item_CommentLink_{2}" class="commentItem">Submit a comment for this item</a>
+                <a href="#" id="Item_MarkLink_{2}" class="markReview ">Mark Item for Review</a>
+                <input style="display:none;" type="checkbox" id="Item_Mark_{2}" name="Item_Mark_{2}"   />
+            </span>
+            
+
+<h2>9705</h2>
+
+<div id="Stem_{2}" class="stemContainer" title="Question">
+    <p style="">The other kids in the class laughed when _______ and ________ were sent out of the room. </p>
+</div>
+
+            </td>
+          </tr>
+          <tr>
+            <td class="answerCell">
+        <div id="Item_OptionContainer_Response_MC_{2}_A" title="Option A"
+             class="optionContainer contextArea optionA  ">
+		<span class="striked"></span>
+    	<span class="optionClicker"></span>
+    
+        <input type="radio" id="Item_Response_MC_{2}_A" class="option"
+               name="Item_Response_MC_{2}"  
+               value="A" 
+                
+               
+        />
+
+        <div class="optionContent"><p style="">him, me</p></div>
+    </div>
+
+        <div id="Item_OptionContainer_Response_MC_{2}_B" title="Option B"
+             class="optionContainer contextArea optionB  ">
+		<span class="striked"></span>
+    	<span class="optionClicker"></span>
+    
+        <input type="radio" id="Item_Response_MC_{2}_B" class="option"
+               name="Item_Response_MC_{2}"  
+               value="B" 
+                
+               
+        />
+
+        <div class="optionContent"><p style="">he, I </p></div>
+    </div>
+</td>
+          </tr>
+          <tr><td> 
+            <div id="Item_CommentBox_{2}" class="commentBox" style="display:none">
+                <textarea cols="" rows="4" id="Item_Comment_{2}" name="Item_Comment_{2}"></textarea>
+                 <a href="#" id="Item_CommentCloseLink_{2}" class="greenBtn"><span>Close Comment</span></a>
+            	 <span class="clear"></span>
+            </div>
+            </td>
+          </tr>
+		</table>
+   
+	</span></div></td>   
+  </tr>
+</table>
+
+
+</div>
+</div>]]></html>
+	</content>
+</contents>
+
