@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
-import tds.student.performance.TestOpportunityAuditDao;
 
 /**
  * Tests for {@code TestOpportunityAuditDao} implementations.
