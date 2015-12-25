@@ -8,7 +8,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
-Map a database row from {@code session.testopportunity} to a {@code TestOpportunity}.
+Map a database row from {@code session.testopportunity} to a {@code TestOpportunity} object.
+ <p>
+ <strong>NOTE:</strong> this is by no means an exhaustive list of fields for the {@code session.testopportunity}.  This
+ mapper only contains enough fields to facilitate the {@code startTestOpportunity} method.
+ </p>
  */
 public class TestOpportunityMapper implements RowMapper {
     @Override
@@ -21,6 +25,7 @@ public class TestOpportunityMapper implements RowMapper {
         testOpportunity.setTestee(resultSet.getDouble("testee"));
         testOpportunity.setTestId(resultSet.getString("testId"));
         testOpportunity.setAdminSubject(resultSet.getString("test"));
+        testOpportunity.setOpportunity(resultSet.getInt("opportunity"));
         testOpportunity.setStatus(resultSet.getString("status"));
         testOpportunity.setDateStarted(resultSet.getDate("dateStarted"));
         testOpportunity.setDateChanged(resultSet.getDate("dateChanged"));

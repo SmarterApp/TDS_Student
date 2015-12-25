@@ -12,7 +12,7 @@ import java.util.UUID;
 
 
 /**
- * Created by jjohnson on 12/23/15.
+ * Tests for {@code UuidAdapter} methods.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("/performance-integration-context.xml")
