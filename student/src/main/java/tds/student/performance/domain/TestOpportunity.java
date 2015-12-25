@@ -1,5 +1,7 @@
 package tds.student.performance.domain;
 
+import tds.student.sql.data.OpportunityInstance;
+
 import java.util.Date;
 import java.util.UUID;
 
@@ -14,6 +16,7 @@ public class TestOpportunity {
     private Double testee;
     private String testId;
     private String adminSubject;
+    private Integer opportunity;
     private String status;
     private Date dateStarted;
     private Date dateChanged;
@@ -79,6 +82,14 @@ public class TestOpportunity {
         this.adminSubject = adminSubject;
     }
 
+    public Integer getOpportunity() {
+        return opportunity;
+    }
+
+    public void setOpportunity(Integer opportunity) {
+        this.opportunity = opportunity;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -141,5 +152,9 @@ public class TestOpportunity {
 
     public void setClientName(String clientName) {
         this.clientName = clientName;
+    }
+
+    public Boolean hasValidBrowserKey(OpportunityInstance opportunityInstance) {
+        return this.browserKey == opportunityInstance.getBrowserKey();
     }
 }
