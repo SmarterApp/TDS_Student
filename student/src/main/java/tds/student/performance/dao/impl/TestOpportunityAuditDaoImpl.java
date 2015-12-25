@@ -5,12 +5,11 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import tds.student.performance.TestOpportunityAuditDao;
+import tds.student.performance.dao.TestOpportunityAuditDao;
 import tds.student.performance.dao.utils.UuidAdapter;
 import tds.student.performance.domain.TestOpportunityAudit;
 
 import javax.sql.DataSource;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 

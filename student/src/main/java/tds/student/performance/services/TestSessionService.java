@@ -1,7 +1,7 @@
 package tds.student.performance.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import tds.student.performance.TestOpportunityAuditDao;
+import tds.student.performance.dao.TestOpportunityAuditDao;
 import tds.student.performance.dao.SessionAuditDao;
 import tds.student.performance.dao.TestSessionDao;
 import tds.student.performance.dao.utils.HostNameHelper;
