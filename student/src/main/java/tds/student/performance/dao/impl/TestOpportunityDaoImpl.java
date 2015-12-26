@@ -1,6 +1,8 @@
 package tds.student.performance.dao.impl;
 
 import TDS.Shared.Exceptions.ReturnStatusException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -8,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import tds.student.performance.dao.TestOpportunityDao;
 import tds.student.performance.dao.mappers.TestOpportunityMapper;
-import tds.student.performance.dao.utils.UuidAdapter;
+import tds.student.performance.utils.UuidAdapter;
 import tds.student.performance.domain.TestOpportunity;
 
 import javax.sql.DataSource;
@@ -21,6 +23,7 @@ Data access object for accessing records in the {@code session.testopportunity} 
  */
 @Repository
 public class TestOpportunityDaoImpl implements TestOpportunityDao {
+    private static final Logger logger = LoggerFactory.getLogger(TestOpportunityDaoImpl.class);
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Autowired
@@ -69,6 +72,7 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
                     parameters,
                     new TestOpportunityMapper());
         } catch (EmptyResultDataAccessException e) {
+            logger.warn(String.format("%s did not return results for key = %s", SQL, key), e);
             return null;
         }
     }

@@ -153,8 +153,4 @@ public class TestOpportunity {
     public void setClientName(String clientName) {
         this.clientName = clientName;
     }
-
-    public Boolean hasValidBrowserKey(OpportunityInstance opportunityInstance) {
-        return this.browserKey == opportunityInstance.getBrowserKey();
-    }
 }

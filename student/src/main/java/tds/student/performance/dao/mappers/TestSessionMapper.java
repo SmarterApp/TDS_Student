@@ -1,7 +1,7 @@
 package tds.student.performance.dao.mappers;
 
 import org.springframework.jdbc.core.RowMapper;
-import tds.student.performance.dao.utils.UuidAdapter;
+import tds.student.performance.utils.UuidAdapter;
 import tds.student.performance.domain.TestSession;
 
 import java.sql.ResultSet;
@@ -16,6 +16,7 @@ public class TestSessionMapper implements RowMapper {
     public Object mapRow(ResultSet resultSet, int i) throws SQLException {
         TestSession testSession = new TestSession();
         testSession.setKey(UuidAdapter.getUUIDFromBytes(resultSet.getBytes("key")));
+        testSession.setSessionType(resultSet.getInt("sessionType"));
         testSession.setStatus(resultSet.getString("status"));
         testSession.setDateBegin(resultSet.getDate("dateBegin"));
         testSession.setDateEnd(resultSet.getDate("dateEnd"));

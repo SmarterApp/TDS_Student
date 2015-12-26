@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
+import sun.tools.tree.AssignShiftLeftExpression;
 import tds.student.performance.domain.TestSession;
 
 import java.util.Date;
@@ -37,6 +38,7 @@ public class TestSessionDaoTest {
 
         Assert.assertNotNull(result);
         Assert.assertEquals(key, result.getKey());
+        Assert.assertEquals((Integer)0, result.getSessionType());
         Assert.assertEquals("open", result.getStatus());
         Assert.assertEquals("SBAC_PT", result.getClientName());
         Assert.assertEquals(93d, result.getProctorId());
@@ -72,5 +74,14 @@ public class TestSessionDaoTest {
 
         Assert.assertNotNull(result);
         Assert.assertEquals((Integer)20, result);
+    }
+
+    @Test
+    public void should_Return_Null_When_Getting_a_CheckIn_Value_For_a_Client_Name_That_Does_Not_Exist() {
+        String clientName = "FOO";
+
+        Integer result = testSessionDao.getCheckIn(clientName);
+
+        Assert.assertNull(result);
     }
 }
