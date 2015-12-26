@@ -21,6 +21,7 @@ import java.util.UUID;
  */
 public class TestSession {
     private UUID key;
+    private Integer sessionType;
     private String status;
     private Date dateBegin;
     private Date dateEnd;
@@ -35,6 +36,14 @@ public class TestSession {
 
     public void setKey(UUID key) {
         this.key = key;
+    }
+
+    public Integer getSessionType() {
+        return sessionType;
+    }
+
+    public void setSessionType(Integer sessionType) {
+        this.sessionType = sessionType;
     }
 
     public String getStatus() {

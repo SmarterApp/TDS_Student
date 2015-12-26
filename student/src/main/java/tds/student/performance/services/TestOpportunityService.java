@@ -3,13 +3,9 @@ package tds.student.performance.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import tds.student.performance.dao.TestOpportunityDao;
-import tds.student.performance.dao.SessionAuditDao;
-import tds.student.performance.dao.TestSessionDao;
-import tds.student.performance.dao.utils.HostNameHelper;
-import tds.student.performance.domain.SessionAudit;
-import tds.student.performance.domain.TestOpportunity;
-import tds.student.performance.domain.TestSession;
+import tds.student.performance.dao.*;
+import tds.student.performance.domain.*;
+import tds.student.performance.utils.HostNameHelper;
 import tds.student.sql.data.OpportunityInstance;
 
 import java.util.Date;
@@ -30,6 +26,12 @@ public class TestOpportunityService {
     @Autowired
     SessionAuditDao sessionAuditDao;
 
+    @Autowired
+    ConfigurationDao configurationDao;
+
+    @Autowired
+    ItemBankDao itemBankDao;
+
     public void startTestOpportunity(OpportunityInstance opportunityInstance, String testKey, List<String> formKeys) {
         try {
             TestOpportunity testOpportunity = testOpportunityDao.get(opportunityInstance.getKey());
@@ -38,7 +40,14 @@ public class TestOpportunityService {
             }
 
             verifyTesteeAccess(testOpportunity, opportunityInstance);
-        } catch(IllegalArgumentException e) {
+
+            ClientTestProperty clientTestProperty = configurationDao.getClientTestProperty(
+                    testOpportunity.getClientName(),
+                    testOpportunity.getTestId());
+
+            SetOfAdminSubject setOfAdminSubject = itemBankDao.get(testOpportunity.getAdminSubject());
+
+        } catch(IllegalStateException e) {
             logger.error(e.getMessage(), e);
         }
     }
@@ -48,19 +57,19 @@ public class TestOpportunityService {
      * @param testOpportunity the {@code TestOpportunity} attempting to start.
      * @param opportunityInstance the {@code OpportunityInstance} attempting to start the {@code TestOpportunity}.
      */
-    private void verifyTesteeAccess(TestOpportunity testOpportunity, OpportunityInstance opportunityInstance) throws IllegalArgumentException {
+    private void verifyTesteeAccess(TestOpportunity testOpportunity, OpportunityInstance opportunityInstance) throws IllegalStateException {
         Date now = new Date();
 
         // Emulate logic on line 492 of _ValidateTesteeAccessProc_SP in StudentDLL.class
         // RULE:  The test opportunity's browser key must match the opportunity instance's browser key.
         if (!testOpportunity.getBrowserKey().equals(opportunityInstance.getBrowserKey())) {
-            throw new IllegalArgumentException(String.format("testOpportunity.getBrowserKey() %s does not match opportunityInstance.getBrowserKey() %s", testOpportunity.getBrowserKey(), opportunityInstance.getBrowserKey()));
+            throw new IllegalStateException(String.format("testOpportunity.getBrowserKey() %s does not match opportunityInstance.getBrowserKey() %s", testOpportunity.getBrowserKey(), opportunityInstance.getBrowserKey()));
         }
 
         // Emulate logic on line 555 of _ValidateTesteeAccessProc_SP in StudentDLL.class
         // RULE:  The test opportunity's session key must match the opportunity instance's session key.
         if (!testOpportunity.getSessionKey().equals(opportunityInstance.getSessionKey())) {
-            throw new IllegalArgumentException(String.format("testOpportunity.getSessionKey() %s does not match opportunityInstance.getSessionKey() %s", testOpportunity.getSessionKey(), opportunityInstance.getSessionKey()));
+            throw new IllegalStateException(String.format("testOpportunity.getSessionKey() %s does not match opportunityInstance.getSessionKey() %s", testOpportunity.getSessionKey(), opportunityInstance.getSessionKey()));
         }
 
         TestSession testSession = testSessionDao.get(opportunityInstance.getSessionKey());
@@ -72,7 +81,7 @@ public class TestOpportunityService {
         // Emulate logic on line 523 of _ValidateTesteeAccessProc_SP in StudentDLL.class
         // RULE:  The test session must be open in order for the student to start the test.
         if (!testSession.isOpen(now)) {
-            throw new IllegalArgumentException(String.format("TestSession.isOpen for session key %s and date %s is false.", testSession.getKey(), now));
+            throw new IllegalStateException(String.format("TestSession.isOpen for session key %s and date %s is false.", testSession.getKey(), now));
         }
 
         // Emulate logic on line 529 of _ValidateTesteeAccessProc_SP in StudentDLL.class.  Apparently, having a NULL
@@ -87,11 +96,13 @@ public class TestOpportunityService {
         // Emulate logic on line 533 of _ValidateTesteeAccessProc_SP in StudentDLL.class.
         Integer checkIn = testSessionDao.getCheckIn(testSession.getClientName());
         if (checkIn == null || checkIn == 0) {
-            throw new IllegalArgumentException(String.format("Check in value for TestSession with client name '%s' %s", testSession.getClientName(), checkIn == null ? "is null" : "is 0"));
+            throw new IllegalStateException(String.format("Check in value for TestSession with client name '%s' %s", testSession.getClientName(), checkIn == null ? "is null" : "is 0"));
         }
 
         // Emulate logic on line 533 of _ValidateTesteeAccessProc_SP in StudentDLL.class.
         // RULE:  Student should not be able to start a test if the timeout window has expired.
+        // NOTE:  Unlike CommonDLL.P_PauseSession_SP, the StudentDLL._ValidateTesteeAccessProc_SP does not check the
+        // configs.client_systemflags table to determine if the client is configured to log session audit records.
         Date dateVisitedPlusCheckIn = new Date(testSession.getDateVisited().getTime() + checkIn);
         if (now.after(dateVisitedPlusCheckIn)) {
             sessionAuditDao.create(new SessionAudit(
@@ -105,7 +116,7 @@ public class TestOpportunityService {
 
             new TestSessionService().pause(testOpportunity, testSession, "closed");
 
-            throw new IllegalArgumentException(String.format("TestSession for session key %s is not available for testing.", testSession.getKey()));
+            throw new IllegalStateException(String.format("TestSession for session key %s is not available for testing.", testSession.getKey()));
         }
     }
 }

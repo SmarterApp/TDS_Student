@@ -1,16 +1,18 @@
 package tds.student.performance.dao.impl;
 
-import org.apache.commons.collections.functors.ExceptionClosure;
-import org.apache.commons.collections.map.HashedMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import tds.student.performance.dao.TestSessionDao;
 import tds.student.performance.dao.mappers.TestSessionMapper;
-import tds.student.performance.dao.utils.UuidAdapter;
+import tds.student.performance.utils.UuidAdapter;
 import tds.student.performance.domain.TestSession;
+import tds.student.sql.data.Data;
 
 import javax.sql.DataSource;
 import java.util.Date;
@@ -19,9 +21,11 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
+ * Data Access Object for interacting with  {@code TestSession} records.
  */
 @Repository
 public class TestSessionDaoImpl implements TestSessionDao {
+    private static final Logger logger = LoggerFactory.getLogger(TestSessionDaoImpl.class);
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Autowired
@@ -29,6 +33,11 @@ public class TestSessionDaoImpl implements TestSessionDao {
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
+    /**
+     * Get a {@code TestSession} for the specified session key.
+     * @param key The session key of the {@code TestSession} to be fetched.
+     * @return A (@code TestSession} for the specified session key.
+     */
     @Override
     @Transactional
     public TestSession get(UUID key) {
@@ -38,6 +47,7 @@ public class TestSessionDaoImpl implements TestSessionDao {
         final String SQL =
                 "SELECT\n" +
                     "_key AS `key`,\n" +
+                    "sessiontype AS sessionType,\n" +
                     "status AS status,\n" +
                     "datebegin AS dateBegin,\n" +
                     "dateend AS dateEnd,\n" +
@@ -56,6 +66,7 @@ public class TestSessionDaoImpl implements TestSessionDao {
                     parameters,
                     new TestSessionMapper());
         } catch(EmptyResultDataAccessException e) {
+            logger.warn(String.format("%s did not return any results for key = %s", SQL, key), e);
             return null;
         }
     }
@@ -68,7 +79,7 @@ public class TestSessionDaoImpl implements TestSessionDao {
 
         final String SQL =
                 "SELECT\n" +
-                    "TACheckInTime AS checkin\n" +
+                    "tacheckintime AS checkin\n" +
                 "FROM\n" +
                     "session.timelimits\n" +
                 "WHERE clientname = :clientName\n" +
@@ -77,10 +88,16 @@ public class TestSessionDaoImpl implements TestSessionDao {
         try {
             return namedParameterJdbcTemplate.queryForInt(SQL, parameters);
         } catch (EmptyResultDataAccessException e) {
+            logger.warn(String.format("%s did not return any results fro clientName = %s", SQL, clientName), e);
             return null;
         }
     }
 
+    /**
+     * Pause an existing {@code TestSession}, citing the specified reason.
+     * @param session The {@code TestSession} to pause.
+     * @param reason A {@code String} describing why the {@code TestSession} was paused.
+     */
     @Override
     @Transactional
     public void pause(TestSession session, String reason) {
@@ -103,6 +120,11 @@ public class TestSessionDaoImpl implements TestSessionDao {
                 "WHERE\n" +
                     "_key = :key";
 
-        namedParameterJdbcTemplate.update(SQL, parameters);
+        try {
+            namedParameterJdbcTemplate.update(SQL, parameters);
+        } catch (DataAccessException e) {
+            logger.error(String.format("%s UPDATE threw exception", SQL), e);
+            throw e;
+        }
     }
 }

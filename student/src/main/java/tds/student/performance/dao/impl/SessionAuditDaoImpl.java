@@ -1,12 +1,15 @@
 package tds.student.performance.dao.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import tds.student.performance.dao.SessionAuditDao;
-import tds.student.performance.dao.utils.UuidAdapter;
+import tds.student.performance.utils.UuidAdapter;
 import tds.student.performance.domain.SessionAudit;
 
 import javax.sql.DataSource;
@@ -18,6 +21,7 @@ import java.util.Map;
  */
 @Repository
 public class SessionAuditDaoImpl implements SessionAuditDao {
+    private static final Logger logger = LoggerFactory.getLogger(SessionAuditDaoImpl.class);
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Autowired
@@ -53,6 +57,11 @@ public class SessionAuditDaoImpl implements SessionAuditDao {
                         ":browserKey," +
                         ":databaseName)";
 
-        namedParameterJdbcTemplate.update(SQL, parameters);
+        try {
+            namedParameterJdbcTemplate.update(SQL, parameters);
+        } catch (DataAccessException e) {
+            logger.error(String.format("%s UPDATE threw exception", SQL), e);
+            throw e;
+        }
     }
 }
