@@ -10,10 +10,10 @@ import java.sql.SQLException;
 /**
  * Map a record from the {@code session.session} table to a {@code TestSession} object.
  */
-public class TestSessionMapper implements RowMapper {
+public class TestSessionMapper implements RowMapper<TestSession> {
 
     @Override
-    public Object mapRow(ResultSet resultSet, int i) throws SQLException {
+    public TestSession mapRow(ResultSet resultSet, int i) throws SQLException {
         TestSession testSession = new TestSession();
         testSession.setKey(UuidAdapter.getUUIDFromBytes(resultSet.getBytes("key")));
         testSession.setSessionType(resultSet.getInt("sessionType"));

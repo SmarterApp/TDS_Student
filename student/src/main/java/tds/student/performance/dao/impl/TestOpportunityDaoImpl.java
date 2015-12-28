@@ -67,7 +67,7 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
                     "_key = :key";
 
         try {
-            return (TestOpportunity) namedParameterJdbcTemplate.queryForObject(
+            return namedParameterJdbcTemplate.queryForObject(
                     SQL,
                     parameters,
                     new TestOpportunityMapper());
