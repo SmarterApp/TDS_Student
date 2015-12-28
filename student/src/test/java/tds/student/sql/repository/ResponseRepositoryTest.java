@@ -164,10 +164,10 @@ public class ResponseRepositoryTest   extends AbstractTest  {
 //			// TODO delete System.out.println() !!!
 //			System.out.println(String.format("groupID: %s", itemGr.groupID));
 //			System.out.println(String.format("itemsRequired: %s", itemGr.getNumRequired()));
-//			System.out.println(String.format("maxReqItems: %s", itemGr.getMaxItems()));
+//			System.out.println(String.format("maxReqItems: %s", itemGr.getTestLength()));
 //			_logger.info(String.format("groupID: %s", itemGr.groupID));
 //			_logger.info(String.format("itemsRequired: %s", itemGr.getNumRequired()));
-//			_logger.info(String.format("maxReqItems: %s", itemGr.getMaxItems()));
+//			_logger.info(String.format("maxReqItems: %s", itemGr.getTestLength()));
 
 //			List<TestItem> items = itemGr.getItems();
 //			int itemsNumber = items.size();

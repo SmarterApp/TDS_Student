@@ -243,7 +243,7 @@ public class ResponseRepository extends AbstractDAO implements IResponseReposito
     // SqlParametersMaps parametersQuery = new SqlParametersMaps ();
     // parametersQuery.put ("oppkey", oppInstance.getKey ());
     // parametersQuery.put ("session", oppInstance.getSessionKey ());
-    // parametersQuery.put ("browserID", oppInstance.getBrowserKey ());
+    // parametersQuery.put ("browserID", oppInstance.getSessionBrowser ());
     // parametersQuery.put ("itemID", responseUpdate.getItemID ());
     // parametersQuery.put ("page", responseUpdate.getPage ());
     // parametersQuery.put ("position", responseUpdate.getPosition ());

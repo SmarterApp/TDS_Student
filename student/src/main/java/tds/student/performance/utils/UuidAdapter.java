@@ -1,4 +1,4 @@
-package tds.student.performance.dao.utils;
+package tds.student.performance.utils;
 
 import java.nio.ByteBuffer;
 import java.util.UUID;
