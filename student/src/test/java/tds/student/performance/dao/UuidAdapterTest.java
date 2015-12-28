@@ -6,13 +6,13 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
-import tds.student.performance.dao.utils.UuidAdapter;
+import tds.student.performance.utils.UuidAdapter;
 
 import java.util.UUID;
 
 
 /**
- * Created by jjohnson on 12/23/15.
+ * Tests for {@code UuidAdapter} methods.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("/performance-integration-context.xml")
