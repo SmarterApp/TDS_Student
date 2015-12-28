@@ -155,6 +155,7 @@ public class TestSessionServiceImpl implements TestSessionService {
     private Boolean clientSystemFlagIsOn(List<ClientSystemFlag> systemFlags, String auditObject, String clientName) {
         if (systemFlags == null || systemFlags.size() == 0) {
             return false;
+            // TODO:  throw exception instead.
         }
 
         ClientSystemFlag flagToFind = new ClientSystemFlag(auditObject, clientName);
