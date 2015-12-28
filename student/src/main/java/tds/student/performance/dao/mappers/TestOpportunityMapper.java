@@ -14,9 +14,9 @@ Map a database row from {@code session.testopportunity} to a {@code TestOpportun
  mapper only contains enough fields to facilitate the {@code startTestOpportunity} method.
  </p>
  */
-public class TestOpportunityMapper implements RowMapper {
+public class TestOpportunityMapper implements RowMapper<TestOpportunity> {
     @Override
-    public Object mapRow(ResultSet resultSet, int i) throws SQLException {
+    public TestOpportunity mapRow(ResultSet resultSet, int i) throws SQLException {
         TestOpportunity testOpportunity = new TestOpportunity();
         testOpportunity.setKey(UuidAdapter.getUUIDFromBytes(resultSet.getBytes("key")));
         testOpportunity.setSessionKey(UuidAdapter.getUUIDFromBytes(resultSet.getBytes("sessionKey")));

@@ -5,20 +5,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import tds.student.performance.dao.TestSessionDao;
 import tds.student.performance.dao.mappers.TestSessionMapper;
+import tds.student.performance.domain.TestSessionTimeLimitConfiguration;
 import tds.student.performance.utils.UuidAdapter;
 import tds.student.performance.domain.TestSession;
-import tds.student.sql.data.Data;
 
 import javax.sql.DataSource;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Data Access Object for interacting with  {@code TestSession} records.
@@ -61,7 +59,7 @@ public class TestSessionDaoImpl implements TestSessionDao {
                     "_key = :key";
 
         try {
-            return (TestSession)namedParameterJdbcTemplate.queryForObject(
+            return namedParameterJdbcTemplate.queryForObject(
                     SQL,
                     parameters,
                     new TestSessionMapper());
@@ -71,24 +69,80 @@ public class TestSessionDaoImpl implements TestSessionDao {
         }
     }
 
+    /**
+     * Get a collection of {@code TestSessionTimeLimitConfiguration} records from the {@code session.timelimits} table.
+     * <p>
+     *     The logic in {@code StudentDLL.T_StartTestOpportunity_SP} fetches records from {@code session.timelimits} twice:
+     *     Once for the clientName and testId.  If no record is returned, the same query is issued against
+     *     {@code session.timelimits} again, this time for clientName and NULL testId.  The assumption is the code is
+     *     trying to find time limit values associated to the test and falling back to use time limit values associated
+     *     to the client.  When the database is seeded, all records have a NULL value for testId.
+     * </p>
+     * @param clientName The name of the client for which the {@code TestSessionTimeLimitConfiguration} records should be fetched.
+     * @param testId The name of the test for which {@code TestSessionTimeLimitConfiguration} records.  Can be {@code null}.
+     * @return A {@code List<TestSessionTimeLimitConfiguration>} containing the record(s) for the specified client name and test id.
+     */
     @Override
     @Transactional
-    public Integer getCheckIn(String clientName) {
+    public List<TestSessionTimeLimitConfiguration> getTimeLimitConfigurations(String clientName, String testId) {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("clientName", clientName);
+        parameters.put("testId", testId);
 
         final String SQL =
                 "SELECT\n" +
-                    "tacheckintime AS checkin\n" +
+                    "_efk_testid AS testId,\n" +
+                    "oppexpire AS opportunityExpiration,\n" +
+                    "opprestart AS opportunityRestart,\n" +
+                    "oppdelay AS opportunityDelay,\n" +
+                    "interfacetimeout AS interfaceTimeout,\n" +
+                    "requestinterfacetimeout AS requestInterfaceTimeout,\n" +
+                    "clientname AS clientName,\n" +
+                    "environment AS environment,\n" +
+                    "ispracticetest AS isPracticeTest,\n" +
+                    "refreshvalue AS refreshValue,\n" +
+                    "tainterfacetimeout AS taInterfaceTimeout,\n" +
+                    "tacheckintime AS taCheckinTime,\n" +
+                    "datechanged AS dateChanged,\n" +
+                    "datepublished AS datePublished,\n" +
+                    "sessionexpire AS sessionExpiration,\n" +
+                    "refreshvaluemultiplier AS refreshValueMultiplier\n" +
                 "FROM\n" +
                     "session.timelimits\n" +
-                "WHERE clientname = :clientName\n" +
-                    "AND _efk_TestID IS NULL";
+                "WHERE\n" +
+                    "_efk_testid = :testId\n" +
+                    "AND clientname = :clientName\n" +
+                "UNION\n" +
+                "SELECT\n" +
+                    "_efk_testid AS testId,\n" +
+                    "oppexpire AS opportunityExpiration,\n" +
+                    "opprestart AS opportunityRestart,\n" +
+                    "oppdelay AS opportunityDelay,\n" +
+                    "interfacetimeout AS interfaceTimeout,\n" +
+                    "requestinterfacetimeout AS requestInterfaceTimeout,\n" +
+                    "clientname AS clientName,\n" +
+                    "environment AS environment,\n" +
+                    "ispracticetest AS isPracticeTest,\n" +
+                    "refreshvalue AS refreshValue,\n" +
+                    "tainterfacetimeout AS taInterfaceTimeout,\n" +
+                    "tacheckintime AS taCheckinTime,\n" +
+                    "datechanged AS dateChanged,\n" +
+                    "datepublished AS datePublished,\n" +
+                    "sessionexpire AS sessionExpiration,\n" +
+                    "refreshvaluemultiplier AS refreshValueMultiplier\n" +
+                "FROM\n" +
+                    "session.timelimits\n" +
+                "WHERE\n" +
+                    "_efk_testid IS NULL\n" +
+                    "AND clientname = :clientName";
 
         try {
-            return namedParameterJdbcTemplate.queryForInt(SQL, parameters);
+            return namedParameterJdbcTemplate.query(
+                    SQL,
+                    parameters,
+                    new BeanPropertyRowMapper<>(TestSessionTimeLimitConfiguration.class));
         } catch (EmptyResultDataAccessException e) {
-            logger.warn(String.format("%s did not return any results fro clientName = %s", SQL, clientName), e);
+            logger.warn(String.format("%s did not return any results for testId = %s, clientName = %s", SQL, testId, clientName), e);
             return null;
         }
     }

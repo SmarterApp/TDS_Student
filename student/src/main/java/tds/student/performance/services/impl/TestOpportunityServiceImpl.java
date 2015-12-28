@@ -25,9 +25,6 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
     TestOpportunityDao testOpportunityDao;
 
     @Autowired
-    TestSessionDao testSessionDao;
-
-    @Autowired
     SessionAuditDao sessionAuditDao;
 
     @Autowired
@@ -54,7 +51,20 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
 
             SetOfAdminSubject setOfAdminSubject = itemBankDao.get(testOpportunity.getAdminSubject());
 
-        } catch(IllegalStateException e) {
+            TestSessionTimeLimitConfiguration timelimitConfiguration = testSessionService.getTimelimitConfiguration(
+                    testOpportunity.getClientName(),
+                    testOpportunity.getTestId());
+
+            if (!testOpportunity.getStatus().toLowerCase().equals("approved")) {
+                logger.error(String.format("Test %s for opportunity %s start/restart not approved by test administrator", testOpportunity.getTestId(), testOpportunity.getKey()));
+                throw new IllegalStateException("Test start/restart not approved by test administrator");
+            }
+
+            // TODO:  Call equivalent of StudentDLL._GetInitialAbility_SP (@ line 3697)
+
+            // TODO:  Call equivalent of StudentDLL._InitializeOpportunity_SP (if datestarted == null) @ line 3705
+
+        } catch (IllegalStateException e) {
             logger.error(e.getMessage(), e);
         }
     }
@@ -79,7 +89,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             throw new IllegalStateException(String.format("testOpportunity.getSessionKey() %s does not match opportunityInstance.getSessionKey() %s", testOpportunity.getSessionKey(), opportunityInstance.getSessionKey()));
         }
 
-        TestSession testSession = testSessionDao.get(opportunityInstance.getSessionKey());
+        TestSession testSession = testSessionService.get(opportunityInstance.getSessionKey());
         if (testSession == null) {
             logger.error(String.format("Could not find TestSession record in session.session for key %s", opportunityInstance.getSessionKey()));
             // TODO: Handle when testSession is null
@@ -101,7 +111,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
         }
 
         // Emulate logic on line 533 of _ValidateTesteeAccessProc_SP in StudentDLL.class.
-        Integer checkIn = testSessionDao.getCheckIn(testSession.getClientName());
+        Integer checkIn = testSessionService.getCheckInTimeLimit(testSession.getClientName());
         if (checkIn == null || checkIn == 0) {
             throw new IllegalStateException(String.format("Check in value for TestSession with client name '%s' %s", testSession.getClientName(), checkIn == null ? "is null" : "is 0"));
         }
