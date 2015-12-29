@@ -4,11 +4,13 @@ import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import tds.student.performance.caching.CacheType;
 import tds.student.performance.dao.ConfigurationDao;
 import tds.student.performance.domain.ClientSystemFlag;
 import tds.student.performance.domain.ClientTestProperty;
@@ -51,6 +53,7 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
      */
     @Override
     @Transactional
+    @Cacheable(CacheType.LongTerm)
     public List<ClientSystemFlag> getSystemFlags(String clientName) {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("clientName", clientName);
