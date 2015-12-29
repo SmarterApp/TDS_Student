@@ -2,20 +2,14 @@ package tds.student.performance.dao;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
+import tds.student.performance.IntegrationTest;
 import tds.student.performance.domain.SetOfAdminSubject;
 
 /**
  * Created by jjohnson on 12/25/15.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:performance-integration-context.xml")
-@TransactionConfiguration
-public class ItemBankDaoTest {
+public class ItemBankDaoTest extends IntegrationTest {
     @Autowired
     ItemBankDao itemBankDao;
 

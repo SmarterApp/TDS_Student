@@ -2,11 +2,8 @@ package tds.student.performance.dao;
 
 import org.junit.Assert;;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
+import tds.student.performance.IntegrationTest;
 import tds.student.performance.domain.ClientSystemFlag;
 import tds.student.performance.domain.ClientTestProperty;
 
@@ -15,10 +12,7 @@ import java.util.List;
 /**
  * Created by jjohnson on 12/25/15.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:performance-integration-context.xml")
-@TransactionConfiguration
-public class ConfigurationDaoTest {
+public class ConfigurationDaoTest extends IntegrationTest {
     @Autowired
     ConfigurationDao configurationDao;
 

@@ -1,12 +1,9 @@
 package tds.student.performance.dao;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
+import tds.student.performance.IntegrationTest;
 import tds.student.performance.domain.TestSession;
 import tds.student.performance.domain.TestSessionTimeLimitConfiguration;
 
@@ -18,10 +15,7 @@ import java.util.UUID;
 /**
  * Tests for {@code TestSessionDao} implementations.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:performance-integration-context.xml")
-@TransactionConfiguration
-public class TestSessionDaoTest {
+public class TestSessionDaoTest extends IntegrationTest {
     @Autowired
     TestSessionDao testSessionDao;
 
@@ -42,7 +36,7 @@ public class TestSessionDaoTest {
         Assert.assertEquals((Integer)0, result.getSessionType());
         Assert.assertEquals("open", result.getStatus());
         Assert.assertEquals("SBAC_PT", result.getClientName());
-        Assert.assertEquals(93d, result.getProctorId());
+        Assert.assertEquals(Double.valueOf(93), result.getProctorId());
         Assert.assertEquals(expectedSessionBrowserKey, result.getSessionBrowser());
     }
 

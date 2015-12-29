@@ -2,17 +2,10 @@ package tds.student.performance.dao;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.support.rowset.SqlRowSet;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
+import tds.student.performance.IntegrationTest;
 import tds.student.performance.utils.UuidAdapter;
 import tds.student.performance.domain.SessionAudit;
-
-import javax.sql.DataSource;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
@@ -22,17 +15,8 @@ import java.util.UUID;
 /**
  * Tests for {@code SessionAuditDao} implementations.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:performance-integration-context.xml")
-@TransactionConfiguration
-public class SessionAuditDaoTest {
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    @Autowired
-    public void setDataSource(DataSource dataSource) {
-        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-    }
-
+public class SessionAuditDaoTest extends IntegrationTest {
     @Autowired
     private SessionAuditDao sessionAuditDao;
 
@@ -59,7 +43,6 @@ public class SessionAuditDaoTest {
         final String SQL = "SELECT COUNT(*) AS count FROM archive.sessionaudit WHERE _fk_session = :key AND browserkey = :browserKey AND dateaccessed = :date";
         final Integer result = namedParameterJdbcTemplate.queryForInt(SQL, parameters);
 
-        Assert.assertNotNull(result);
         Assert.assertEquals((Integer)1, result);
     }
 }

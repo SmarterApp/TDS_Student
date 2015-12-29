@@ -2,11 +2,8 @@ package tds.student.performance.dao;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
+import tds.student.performance.IntegrationTest;
 import tds.student.performance.domain.TestOpportunity;
 
 import java.util.UUID;
@@ -14,10 +11,7 @@ import java.util.UUID;
 /**
  * Tests for {@code TestOpportunityDao} implementations.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:performance-integration-context.xml")
-@TransactionConfiguration
-public class TestOpportunityDaoTest {
+public class TestOpportunityDaoTest extends IntegrationTest {
     @Autowired
     TestOpportunityDao testOpportunityDao;
 

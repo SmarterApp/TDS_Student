@@ -2,33 +2,16 @@ package tds.student.performance.services;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import tds.student.performance.dao.DbLatencyDao;
+import tds.student.performance.IntegrationTest;
 import tds.student.performance.domain.TestOpportunity;
 import tds.student.performance.domain.TestSession;
 import tds.student.performance.utils.SqlHelper;
 import tds.student.performance.utils.UuidAdapter;
-
-import javax.sql.DataSource;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:performance-integration-context.xml")
-@TransactionConfiguration
-public class DbLatencyServiceTest {
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-
-    @Autowired
-    public void setDataSource(DataSource dataSource) {
-        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-    }
-
+public class DbLatencyServiceTest extends IntegrationTest {
     @Autowired
     DbLatencyService dbLatencyService;
 

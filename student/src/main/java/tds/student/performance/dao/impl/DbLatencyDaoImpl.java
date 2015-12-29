@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import tds.student.performance.dao.DbLatencyDao;
 import tds.student.performance.utils.HostNameHelper;
 import tds.student.performance.utils.UuidAdapter;
@@ -21,6 +22,7 @@ import java.util.*;
  * </p>
  */
 @Repository
+//@Transactional
 public class DbLatencyDaoImpl implements DbLatencyDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private static final Logger logger = LoggerFactory.getLogger(DbLatencyDaoImpl.class);
