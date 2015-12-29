@@ -16,7 +16,7 @@ import java.util.concurrent.Callable;
  * Created by jtreuting on 12/28/15.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("/performance-integration-context.xml")
+@ContextConfiguration("classpath:performance-integration-context.xml")
 @TransactionConfiguration
 public class CachingServiceTest {
     @Autowired
