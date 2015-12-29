@@ -1,5 +1,6 @@
 package tds.student.performance.domain;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -18,8 +19,8 @@ public class TestSessionTimeLimitConfiguration {
     private Integer refreshValue;
     private Integer taInterfaceTimeout;
     private Integer taCheckinTime;
-    private Date dateChanged;
-    private Date datePublished;
+    private Timestamp dateChanged;
+    private Timestamp datePublished;
     private Integer sessionExpiration;
     private Integer refreshValueMultiplier;
 
@@ -139,19 +140,19 @@ public class TestSessionTimeLimitConfiguration {
         this.taCheckinTime = taCheckinTime;
     }
 
-    public Date getDateChanged() {
+    public Timestamp getDateChanged() {
         return dateChanged;
     }
 
-    public void setDateChanged(Date dateChanged) {
+    public void setDateChanged(Timestamp dateChanged) {
         this.dateChanged = dateChanged;
     }
 
-    public Date getDatePublished() {
+    public Timestamp getDatePublished() {
         return datePublished;
     }
 
-    public void setDatePublished(Date datePublished) {
+    public void setDatePublished(Timestamp datePublished) {
         this.datePublished = datePublished;
     }
 

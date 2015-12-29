@@ -19,7 +19,7 @@ import java.util.UUID;
  * Tests for {@code TestSessionDao} implementations.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("/performance-integration-context.xml")
+@ContextConfiguration("classpath:performance-integration-context.xml")
 @TransactionConfiguration
 public class TestSessionDaoTest {
     @Autowired

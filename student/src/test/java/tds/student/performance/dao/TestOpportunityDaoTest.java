@@ -48,6 +48,8 @@ public class TestOpportunityDaoTest {
         Assert.assertEquals("SBAC_PT", result.getClientName());
         Assert.assertEquals(false, result.getIsSegmented());
         Assert.assertEquals("fixedform", result.getAlgorithm());
+        Assert.assertEquals("dev", result.getEnvironment());
+        Assert.assertEquals((Integer)0, result.getSimulationSegmentCount());
     }
 
     @Test

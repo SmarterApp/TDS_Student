@@ -1,5 +1,6 @@
 package tds.student.performance.domain;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.UUID;
 
@@ -8,7 +9,7 @@ import java.util.UUID;
  */
 public class TestOpportunityAudit {
     private UUID testOpportunityKey;
-    private Date dateAccessed;
+    private Timestamp dateAccessed;
     private String accessType;
     private UUID sessionKey;
     private Boolean isAbnormal;
@@ -21,7 +22,7 @@ public class TestOpportunityAudit {
 
     public TestOpportunityAudit() {}
 
-    public TestOpportunityAudit(UUID testOpportunityKey, Date dateAccessed, String accessType, UUID sessionKey, String hostName, String databaseName) {
+    public TestOpportunityAudit(UUID testOpportunityKey, Timestamp dateAccessed, String accessType, UUID sessionKey, String hostName, String databaseName) {
         this.setTestOpportunityKey(testOpportunityKey);
         this.setDateAccessed(dateAccessed);
         this.setAccessType(accessType);
@@ -39,11 +40,11 @@ public class TestOpportunityAudit {
         this.testOpportunityKey = testOpportunityKey;
     }
 
-    public Date getDateAccessed() {
+    public Timestamp getDateAccessed() {
         return dateAccessed;
     }
 
-    public void setDateAccessed(Date dateAccessed) {
+    public void setDateAccessed(Timestamp dateAccessed) {
         this.dateAccessed = dateAccessed;
     }
 

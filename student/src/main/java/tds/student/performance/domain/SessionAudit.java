@@ -1,5 +1,6 @@
 package tds.student.performance.domain;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.UUID;
 
@@ -8,7 +9,7 @@ import java.util.UUID;
  */
 public class SessionAudit {
     private UUID sessionKey;
-    private Date dateAccessed;
+    private Timestamp dateAccessed;
     private String accessType;
     private String hostName;
     private UUID browserKey;
@@ -16,7 +17,7 @@ public class SessionAudit {
 
     public SessionAudit() {}
 
-    public SessionAudit(UUID sessionKey, Date dateAccessed, String accessType, String hostName, UUID browserKey, String databaseName) {
+    public SessionAudit(UUID sessionKey, Timestamp dateAccessed, String accessType, String hostName, UUID browserKey, String databaseName) {
         this.setSessionKey(sessionKey);
         this.setDateAccessed(dateAccessed);
         this.setAccessType(accessType);
@@ -33,11 +34,11 @@ public class SessionAudit {
         this.sessionKey = sessionKey;
     }
 
-    public Date getDateAccessed() {
+    public Timestamp getDateAccessed() {
         return dateAccessed;
     }
 
-    public void setDateAccessed(Date dateAccessed) {
+    public void setDateAccessed(Timestamp dateAccessed) {
         this.dateAccessed = dateAccessed;
     }
 

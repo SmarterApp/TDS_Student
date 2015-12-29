@@ -11,6 +11,7 @@ import tds.student.performance.services.TestSessionService;
 import tds.student.performance.utils.HostNameHelper;
 import tds.student.sql.data.OpportunityInstance;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -78,7 +79,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
      * @param opportunityInstance the {@code OpportunityInstance} attempting to start the {@code TestOpportunity}.
      */
     private void verifyTesteeAccess(TestOpportunity testOpportunity, OpportunityInstance opportunityInstance) throws IllegalStateException {
-        Date now = new Date();
+        Timestamp now = new Timestamp(new Date().getTime());
 
         // Emulate logic on line 492 of _ValidateTesteeAccessProc_SP in StudentDLL.class
         // RULE:  The test opportunity's browser key must match the opportunity instance's browser key.
