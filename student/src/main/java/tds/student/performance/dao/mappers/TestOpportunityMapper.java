@@ -27,8 +27,8 @@ public class TestOpportunityMapper implements RowMapper<TestOpportunity> {
         testOpportunity.setAdminSubject(resultSet.getString("test"));
         testOpportunity.setOpportunity(resultSet.getInt("opportunity"));
         testOpportunity.setStatus(resultSet.getString("status"));
-        testOpportunity.setDateStarted(resultSet.getDate("dateStarted"));
-        testOpportunity.setDateChanged(resultSet.getDate("dateChanged"));
+        testOpportunity.setDateStarted(resultSet.getTimestamp("dateStarted"));
+        testOpportunity.setDateChanged(resultSet.getTimestamp("dateChanged"));
         testOpportunity.setRestartCount(resultSet.getInt("rcnt"));
         testOpportunity.setGracePeriodRestarts(resultSet.getInt("gpRestarts"));
         testOpportunity.setMaxItems(resultSet.getInt("testLength"));
@@ -36,6 +36,8 @@ public class TestOpportunityMapper implements RowMapper<TestOpportunity> {
         testOpportunity.setClientName(resultSet.getString("clientName"));
         testOpportunity.setIsSegmented(resultSet.getBoolean("issegmented"));
         testOpportunity.setAlgorithm(resultSet.getString("algorithm"));
+        testOpportunity.setEnvironment(resultSet.getString("environment"));
+        testOpportunity.setSimulationSegmentCount(resultSet.getInt("simulationSegmentCount"));
 
         return testOpportunity;
     }

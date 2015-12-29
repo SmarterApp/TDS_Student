@@ -1,5 +1,6 @@
 package tds.student.performance.domain;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -23,9 +24,9 @@ public class TestSession {
     private UUID key;
     private Integer sessionType;
     private String status;
-    private Date dateBegin;
-    private Date dateEnd;
-    private Date dateVisited;
+    private Timestamp dateBegin;
+    private Timestamp dateEnd;
+    private Timestamp dateVisited;
     private String clientName;
     private Double proctorId;
     private UUID sessionBrowser;
@@ -54,27 +55,27 @@ public class TestSession {
         this.status = status;
     }
 
-    public Date getDateBegin() {
+    public Timestamp getDateBegin() {
         return dateBegin;
     }
 
-    public void setDateBegin(Date dateBegin) {
+    public void setDateBegin(Timestamp dateBegin) {
         this.dateBegin = dateBegin;
     }
 
-    public Date getDateEnd() {
+    public Timestamp getDateEnd() {
         return dateEnd;
     }
 
-    public void setDateEnd(Date dateEnd) {
+    public void setDateEnd(Timestamp dateEnd) {
         this.dateEnd = dateEnd;
     }
 
-    public Date getDateVisited() {
+    public Timestamp getDateVisited() {
         return dateVisited;
     }
 
-    public void setDateVisited(Date dateVisited) {
+    public void setDateVisited(Timestamp dateVisited) {
         this.dateVisited = dateVisited;
     }
 
