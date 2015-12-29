@@ -1,0 +1,73 @@
+@charset "UTF-8";
+/* Flower Theme */
+
+.topBar {
+	background-image: url(../images/logo_default_shell.gif);
+	padding-right: 273px;
+	background-color: #cd6f0a;
+}
+.sessionID {
+	border:none;
+}
+.smallButtons a:hover {
+	background-color: #ffa20c;
+}
+.studentInfo {
+	background-color: #cd6f0a;
+}
+.bottomBar {
+	background-color: #fff0d8;
+	border-top-color: #5c697e;
+	border-bottom-color: #5c697e;
+}
+.testName {
+	background-color: #ffe3ab;
+	border-right-color: #5c697e;
+}
+#foot {
+	background-color: #cd6f0a;
+	background-image: url(../images/studentFooter.gif);
+}
+#studentTools {
+	background-image: url(../images/studentFooterTools.gif);
+	border-right-color: #cd6f0a;
+}
+.printRequest {
+	display: block;
+	background-image: url(../images/studentControls/printRequest.gif);
+	background-repeat: no-repeat;
+	height: 25px;
+	width: 30px;
+	text-indent: -9999px;
+	float: left;
+	margin-top: -0.5em;
+	margin-right: .5em;
+}
+.yourChoices .greenBtn {
+	border-color: #164c7e;
+	color:#164c7e;
+}
+.yourChoices .greenBtn:hover {
+	background-color:#164c7e;
+}
+.sound_cue, .sound_cue.load_incomplete, .sound_cue.disabled  {
+	background: url(../images/controls/speaker_noclick.gif) no-repeat center center;
+}
+.sound_cue.playing_start {
+	background: url(../images/controls/animatedSpeaker.gif) no-repeat center center;
+}
+.sound_cue.load_start, .sound_cue.load_complete, .sound_cue.decode_start, .sound_cue.decode_complete,
+.sound_cue.load_start:hover, .sound_cue.load_complete:hover, .sound_cue.decode_start:hover, .sound_cue.decode_complete:hover {
+	background: url(../images/controls/testshell_loader13.gif) no-repeat center center;
+}
+
+/* preloads images so they don't appear 'missing' */
+.preloader {
+	background-color: #164C7E;
+}
+.preloader .endTest {
+	background-image: url(../images/controls/end.gif);
+}
+.preloader .saveAnswer {
+	background-image: url(../images/controls/save.gif);
+}
