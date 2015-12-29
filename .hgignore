@@ -34,6 +34,8 @@ CVS/
 # Ignore all log files
 logs/*
 
+lib/*.jar
+
 # Ignore backup files
 *~
 .*~

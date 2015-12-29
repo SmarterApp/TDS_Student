@@ -1,8 +1,11 @@
 package tds.student.performance.services.impl;
 
+import AIR.Common.Helpers._Ref;
+import TDS.Shared.Exceptions.ReturnStatusException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import tds.student.performance.dao.*;
 import tds.student.performance.domain.*;
@@ -15,6 +18,7 @@ import tds.student.sql.data.OpportunityInstance;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * A service for interacting with a {@code TestOpportunity}.
@@ -31,6 +35,9 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
 
     @Autowired
     SessionAuditDao sessionAuditDao;
+
+    @Autowired
+    TestAbilityDao testAbilityDao;
 
     @Autowired
     ConfigurationDao configurationDao;
@@ -56,7 +63,9 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                     testOpportunity.getClientName(),
                     testOpportunity.getTestId());
 
-            SetOfAdminSubject setOfAdminSubject = itemBankDao.get(testOpportunity.getAdminSubject());
+            // This does not seem to be used - original code queries this DB for "operationalLength"
+            // Which doesn't appear to be used in the old codebase...
+//            SetOfAdminSubject setOfAdminSubject = itemBankDao.get(testOpportunity.getAdminSubject());
 
             TestSessionTimeLimitConfiguration timelimitConfiguration = testSessionService.getTimelimitConfiguration(
                     testOpportunity.getClientName(),
@@ -67,7 +76,8 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                 throw new IllegalStateException("Test start/restart not approved by test administrator");
             }
 
-            // TODO:  Call equivalent of StudentDLL._GetInitialAbility_SP (@ line 3697)
+            //TODO: Is this necessary here? Remove if not... old code doesn't seem to use the ability that is set here
+            Float ability = getInitialAbility(testOpportunity, clientTestProperty);
 
             if (testOpportunity.getDateStarted() == null) {
                 // TODO:  Call equivalent of StudentDLL._InitializeOpportunity_SP (if datestarted == null) @ line 3705
@@ -79,6 +89,89 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
         } catch (IllegalStateException e) {
             logger.error(e.getMessage(), e);
         }
+    }
+
+    /**
+     * This method emulates the functionality and logic contained in {@code StudentDLL._GetInitialAbility_SP}.
+     * @param opportunity the opportunity key to check the ability for
+     */
+    @Override
+    public Float getInitialAbility(TestOpportunity opportunity, ClientTestProperty property) {
+        Float ability = null;
+        Boolean bySubject = false;
+        Double slope = null;
+        Double intercept = null;
+
+        if (property != null) {
+            bySubject = property.getInitialAbilityBySubject();
+            slope = property.getAbilitySlope();
+            intercept = property.getAbilityIntercept();
+        }
+
+        List<TestAbility> testAbilities = testAbilityDao.getTestAbilities(opportunity.getKey(), opportunity.getClientName(),
+                opportunity.getSubject(), opportunity.getTestee().longValue());
+        TestAbility initialAbility = getMostRecentTestAbility(testAbilities, opportunity.getAdminSubject(), false);
+
+        //First, try to get the ability for current subject/test
+        if (initialAbility != null) {
+            ability = initialAbility.getScore();
+        } else if (bySubject) { // If that didn't retrieve anything, get the ability from the same subject, any test
+            initialAbility = getMostRecentTestAbility(testAbilities, opportunity.getAdminSubject(), true);
+            if (initialAbility != null) {
+                ability = initialAbility.getScore();
+            } else { // and if that didn't work, get the initial ability from the previous year.
+                Float initAbilityFromHistory = testAbilityDao.getMostRecentTestAbilityFromHistory(opportunity.getClientName(),
+                        opportunity.getSubject(), opportunity.getTestee().longValue());
+
+                if (initAbilityFromHistory != null && slope != null && intercept != null) {
+                    ability = initAbilityFromHistory * slope.floatValue() + intercept.floatValue();
+                } else if (initAbilityFromHistory != null){
+                    ability = initAbilityFromHistory;
+                }
+            }
+        }
+
+        //If the ability was not retrieved/set from the above logic, grab it from the item bank DB
+        if (ability == null) {
+            SetOfAdminSubject subject = itemBankDao.get(opportunity.getAdminSubject());
+            if (subject != null) {
+                ability = subject.getStartAbility().floatValue();
+            } else {
+                logger.warn("Could not set the ability for oppKey " + opportunity.getKey());
+            }
+        }
+
+        return ability;
+    }
+
+    /**
+     * Gets the most recent {@link TestAbility} based on the dateScored value
+     *
+     * @param testAbilityList the list of {@link TestAbility}s to iterate through
+     * @param test  The test key
+     * @param inverse Specifies whether to search for matches or non-matches of the test key
+     * @return
+     */
+    private TestAbility getMostRecentTestAbility(List<TestAbility> testAbilityList, String test, boolean inverse) {
+        TestAbility mostRecentAbility = null;
+
+        for (TestAbility ability : testAbilityList) {
+            if (inverse) {
+                if (!test.equals(ability.getTest())) {
+                    if (mostRecentAbility == null || mostRecentAbility.getDateScored().before(ability.getDateScored())) {
+                        mostRecentAbility = ability;
+                    }
+                }
+            } else {
+                if (test.equals(ability.getTest())) {
+                    if (mostRecentAbility == null || mostRecentAbility.getDateScored().before(ability.getDateScored())) {
+                        mostRecentAbility = ability;
+                    }
+                }
+            }
+        }
+
+        return mostRecentAbility;
     }
 
     /**
