@@ -26,15 +26,8 @@
 
     <bean id="cacheKeyGenerator" class="tds.student.performance.caching.CacheKeyGenerator" />
 
-    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
-        <property name="cacheManager">
-            <bean class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-                <property name="configLocation" value="ehcache.xml"/>
-            </bean>
-        </property>
-    </bean>
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" p:cacheManager-ref="ehcache" />
 
-
-    <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:configLocation="ehcache-integration.xml" p:shared="true" />
+    <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:configLocation="classpath:ehcache-integration.xml" p:shared="true" />
 
 </beans>
