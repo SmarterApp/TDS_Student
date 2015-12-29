@@ -18,9 +18,9 @@ public class TestSessionMapper implements RowMapper<TestSession> {
         testSession.setKey(UuidAdapter.getUUIDFromBytes(resultSet.getBytes("key")));
         testSession.setSessionType(resultSet.getInt("sessionType"));
         testSession.setStatus(resultSet.getString("status"));
-        testSession.setDateBegin(resultSet.getDate("dateBegin"));
-        testSession.setDateEnd(resultSet.getDate("dateEnd"));
-        testSession.setDateVisited(resultSet.getDate("dateVisited"));
+        testSession.setDateBegin(resultSet.getTimestamp("dateBegin"));
+        testSession.setDateEnd(resultSet.getTimestamp("dateEnd"));
+        testSession.setDateVisited(resultSet.getTimestamp("dateVisited"));
         testSession.setClientName(resultSet.getString("clientName"));
         testSession.setProctorId(resultSet.getDouble("proctor"));
         testSession.setSessionBrowser(UuidAdapter.getUUIDFromBytes(resultSet.getBytes("sessionBrowser")));

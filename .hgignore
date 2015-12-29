@@ -48,3 +48,6 @@ logs/*
 #Item preview content
 student/src/main/webapp/ItemPreviewContent/**
 iris/src/main/webapp/ItemPreviewContent/**
+
+# Student overlay content
+student/overlays/
