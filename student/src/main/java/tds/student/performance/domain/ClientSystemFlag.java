@@ -1,5 +1,6 @@
 package tds.student.performance.domain;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -11,8 +12,8 @@ public class ClientSystemFlag {
     private Boolean isPracticeTest;
     private Boolean isOn;
     private String description;
-    private Date dateChanged;
-    private Date datePublished;
+    private Timestamp dateChanged;
+    private Timestamp datePublished;
 
     public ClientSystemFlag() { }
 
@@ -61,19 +62,19 @@ public class ClientSystemFlag {
         this.description = description;
     }
 
-    public Date getDateChanged() {
+    public Timestamp getDateChanged() {
         return dateChanged;
     }
 
-    public void setDateChanged(Date dateChanged) {
+    public void setDateChanged(Timestamp dateChanged) {
         this.dateChanged = dateChanged;
     }
 
-    public Date getDatePublished() {
+    public Timestamp getDatePublished() {
         return datePublished;
     }
 
-    public void setDatePublished(Date datePublished) {
+    public void setDatePublished(Timestamp datePublished) {
         this.datePublished = datePublished;
     }
 

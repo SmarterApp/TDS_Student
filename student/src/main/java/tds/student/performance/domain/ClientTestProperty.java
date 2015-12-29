@@ -1,5 +1,6 @@
 package tds.student.performance.domain;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -11,7 +12,7 @@ public class ClientTestProperty {
     private Integer maxOpportunities;
     private Integer handScoredProject;
     private Integer prefetch;
-    private Date dateChanged;
+    private Timestamp dateChanged;
     private Boolean isPrintable;
     private Boolean isSelectable;
     private String label;
@@ -23,10 +24,10 @@ public class ClientTestProperty {
     private String source;
     private Boolean maskItemsBySubject;
     private Boolean initialAbilityBySubject;
-    private Date startDate;
-    private Date endDate;
-    private Date ftStartDate;
-    private Date ftEndDate;
+    private Timestamp startDate;
+    private Timestamp endDate;
+    private Timestamp ftStartDate;
+    private Timestamp ftEndDate;
     private String accommodationFamily;
     private Integer sortOrder;
     private String rtsFormField;
@@ -89,11 +90,11 @@ public class ClientTestProperty {
         this.prefetch = prefetch;
     }
 
-    public Date getDateChanged() {
+    public Timestamp getDateChanged() {
         return dateChanged;
     }
 
-    public void setDateChanged(Date dateChanged) {
+    public void setDateChanged(Timestamp dateChanged) {
         this.dateChanged = dateChanged;
     }
 
@@ -185,35 +186,35 @@ public class ClientTestProperty {
         this.initialAbilityBySubject = initialAbilityBySubject;
     }
 
-    public Date getStartDate() {
+    public Timestamp getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(Timestamp startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public Timestamp getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(Timestamp endDate) {
         this.endDate = endDate;
     }
 
-    public Date getFtStartDate() {
+    public Timestamp getFtStartDate() {
         return ftStartDate;
     }
 
-    public void setFtStartDate(Date ftStartDate) {
+    public void setFtStartDate(Timestamp ftStartDate) {
         this.ftStartDate = ftStartDate;
     }
 
-    public Date getFtEndDate() {
+    public Timestamp getFtEndDate() {
         return ftEndDate;
     }
 
-    public void setFtEndDate(Date ftEndDate) {
+    public void setFtEndDate(Timestamp ftEndDate) {
         this.ftEndDate = ftEndDate;
     }
 

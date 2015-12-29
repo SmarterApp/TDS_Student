@@ -11,6 +11,7 @@ import tds.student.performance.services.TestSessionService;
 import tds.student.performance.utils.HostNameHelper;
 import tds.student.performance.domain.*;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -110,7 +111,7 @@ public class TestSessionServiceImpl implements TestSessionService {
      */
     @Override
     public void pause(TestOpportunity testOpportunity, TestSession testSession, String reason) {
-        final Date now = new Date();
+        final Timestamp now = new Timestamp(new Date().getTime());
 
         // TODO:  Get these values from cache.
         List<ClientSystemFlag> systemFlags = configurationDao.getSystemFlags(testOpportunity.getClientName());

@@ -45,26 +45,35 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
 
         final String SQL =
                 "SELECT\n" +
-                    "_key AS `key`,\n" +
-                    "_fk_Session AS sessionKey,\n" +
-                    "_fk_browser AS browserKey,\n" +
-                    "_efk_AdminSubject AS testKey,\n" +
-                    "_efk_Testee AS testee,\n" +
-                    "_efk_TestID AS testId,\n" +
-                    "_efk_AdminSubject AS test,\n" +
-                    "opportunity AS opportunity,\n" +
-                    "status AS status,\n" +
-                    "DateStarted AS dateStarted,\n" +
-                    "DateChanged AS dateChanged,\n" +
-                    "Restart AS rcnt,\n" +
-                    "GracePeriodRestarts AS gpRestarts,\n" +
-                    "maxitems AS testLength,\n" +
-                    "Subject AS subject,\n" +
-                    "clientname AS clientName,\n" +
-                    "issegmented AS isSegmented,\n" +
-                    "algorithm AS algorithm\n" +
+                    "o._key AS `key`,\n" +
+                    "o._fk_session AS sessionKey,\n" +
+                    "o._fk_browser AS browserKey,\n" +
+                    "o._efk_adminsubject AS testKey,\n" +
+                    "o._efk_testee AS testee,\n" +
+                    "o._efk_testid AS testId,\n" +
+                    "o._efk_adminsubject AS test,\n" +
+                    "o.opportunity AS opportunity,\n" +
+                    "o.status AS status,\n" +
+                    "o.datestarted AS dateStarted,\n" +
+                    "o.datechanged AS dateChanged,\n" +
+                    "o.restart AS rcnt,\n" +
+                    "o.graceperiodrestarts AS gpRestarts,\n" +
+                    "o.maxitems AS testLength,\n" +
+                    "o.subject AS subject,\n" +
+                    "o.clientname AS clientName,\n" +
+                    "o.issegmented AS isSegmented,\n" +
+                    "o.algorithm AS algorithm,\n" +
+                    "e.environment AS environment,\n" +
+                    "COUNT(s._fk_session) AS simulationSegmentCount\n" +
                 "FROM\n" +
-                    "session.testopportunity\n" +
+                    "session.testopportunity o\n" +
+                "LEFT JOIN\n" +
+                        "session._externs e\n" +
+                        "ON (e.clientname = o.clientname)\n" +
+                "LEFT JOIN\n" +
+                        "session.sim_segment s\n" +
+                        "ON (o._fk_session = s._fk_session\n" +
+                        "AND o._efk_adminsubject = o._efk_adminsubject)\n" +
                 "WHERE\n" +
                     "_key = :key";
 

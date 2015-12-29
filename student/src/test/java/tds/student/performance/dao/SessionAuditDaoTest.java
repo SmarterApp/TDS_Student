@@ -13,6 +13,7 @@ import tds.student.performance.utils.UuidAdapter;
 import tds.student.performance.domain.SessionAudit;
 
 import javax.sql.DataSource;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +40,7 @@ public class SessionAuditDaoTest {
     public void should_Create_a_New_SessionAudit_Record() {
         UUID mockSessionKey = UUID.randomUUID();
         UUID mockBrowserKey = UUID.randomUUID();
-        Date mockDate = new Date();
+        Timestamp mockDate = new Timestamp(new Date().getTime());
 
         sessionAuditDao.create(new SessionAudit(
                 mockSessionKey,
@@ -56,11 +57,9 @@ public class SessionAuditDaoTest {
         parameters.put("date", mockDate);
 
         final String SQL = "SELECT COUNT(*) AS count FROM archive.sessionaudit WHERE _fk_session = :key AND browserkey = :browserKey AND dateaccessed = :date";
-        final SqlRowSet result = namedParameterJdbcTemplate.queryForRowSet(SQL, parameters);
+        final Integer result = namedParameterJdbcTemplate.queryForInt(SQL, parameters);
 
         Assert.assertNotNull(result);
-        while (result.next()) {
-            Assert.assertEquals(1, result.getInt("count"));
-        }
+        Assert.assertEquals((Integer)1, result);
     }
 }

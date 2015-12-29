@@ -2,6 +2,7 @@ package tds.student.performance.domain;
 
 import tds.student.sql.data.OpportunityInstance;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.UUID;
 
@@ -18,8 +19,8 @@ public class TestOpportunity {
     private String adminSubject;
     private Integer opportunity;
     private String status;
-    private Date dateStarted;
-    private Date dateChanged;
+    private Timestamp dateStarted;
+    private Timestamp dateChanged;
     private Integer restartCount;
     private Integer gracePeriodRestarts;
     private Integer maxItems;
@@ -27,6 +28,8 @@ public class TestOpportunity {
     private String clientName;
     private Boolean isSegmented;
     private String algorithm;
+    private String environment;
+    private Integer simulationSegmentCount;
 
     public UUID getKey() {
         return key;
@@ -108,19 +111,19 @@ public class TestOpportunity {
         this.status = status;
     }
 
-    public Date getDateStarted() {
+    public Timestamp getDateStarted() {
         return dateStarted;
     }
 
-    public void setDateStarted(Date dateStarted) {
+    public void setDateStarted(Timestamp dateStarted) {
         this.dateStarted = dateStarted;
     }
 
-    public Date getDateChanged() {
+    public Timestamp getDateChanged() {
         return dateChanged;
     }
 
-    public void setDateChanged(Date dateChanged) {
+    public void setDateChanged(Timestamp dateChanged) {
         this.dateChanged = dateChanged;
     }
 
@@ -198,5 +201,77 @@ public class TestOpportunity {
 
     public void setAlgorithm(String algorithm) {
         this.algorithm = algorithm;
+    }
+
+    /**
+     * This value comes from joining the {@code session.testopportunity} table to the {@code session._externs} table.
+     * <p>
+     *     If the {@code TestOpportunity}'s environment is set to "SIMULATION", then this {@code TestOpportunity}
+     *     <em>might</em> be a simulation.  Refer to the {@code IsSimulation} method below.
+     * </p>
+     * @return A {@code String} describing the environment to which this {@code TestOpportunity}'s client belongs.
+     */
+    public String getEnvironment() {
+        return environment;
+    }
+
+    /**
+     * This value comes from joining the {@code session.testopportunity} table to the {@code session._externs} table.
+     * <p>
+     *     If the {@code TestOpportunity}'s environment is set to "SIMULATION", then this {@code TestOpportunity}
+     *     <em>might</em> be a simulation.  Refer to the {@code IsSimulation} method below.
+     * </p>
+     * @param environment  A {@code String} describing the environment to which this {@code TestOpportunity}'s client
+     *                     belongs.
+     */
+    public void setEnvironment(String environment) {
+        this.environment = environment;
+    }
+
+    /**
+     * The number of records this {@code TestOpportunity} has in the {@code session.sim_segment} table.
+     * <p>
+     *     If this number is greater than 0, then this {@code TestOpportunity} <em>might</em> be a simulation.  See the
+     *     {@code isSimulation} method below for how to determine if a {@code TestOpportunity} is a simulation.  This
+     *     rule was found in {@code StudentDLL.IsSimulation_FN} on line 3000.
+     * </p>
+     * @return {@code Integer} that is a count of the rows in {@code session.sim_segment} for this {@code TestOpportunity}
+     */
+    public Integer getSimulationSegmentCount() {
+        return simulationSegmentCount;
+    }
+
+    /**
+     * The number of records this {@code TestOpportunity} has in the {@code session.sim_segment} table.
+     * <p>
+     *     If this number is greater than 0, then this {@code TestOpportunity} <em>might</em> be a simulation.  See the
+     *     {@code isSimulation} method below for how to determine if a {@code TestOpportunity} is a simulation.  This
+     *     rule was found in {@code StudentDLL.IsSimulation_FN} on line 3000.
+     * </p>
+     * @param simulationSegmentCount  {@code Integer} that is a count of the rows in {@code session.sim_segment} for
+     *                                this {@code TestOpportunity}
+     */
+    public void setSimulationSegmentCount(Integer simulationSegmentCount) {
+        this.simulationSegmentCount = simulationSegmentCount;
+    }
+
+    /**
+     * Determine if this {@code TestOpportunity} is a simulation.
+     * <p>
+     *     This method emulates the logic stored in {@code StudentDLL.IsSimulation_FN}.  The rule in
+     *     {@code StudentDLL.IsSimulation_FN} states:
+     *
+     *     * The {@code TestOpportunity}'s environment must be set to "SIMULATION"
+     *     * There must be records in the {@code session.sim_segment} table for the {@code TestOpportunity}'s session key
+     *       AND the {@code TestOpportunity}'s admin subject.
+     *
+     *     The second bullet point is handled by the query in {@code TestOpportunityDaoImpl} that fetches the
+     *     {@code TestOpportunity} record.
+     * </p>
+     * @return {@code True} if the {@code TestOpportunity} is a simulation (that is, all of the conditions above are
+     * satisifed); otherwise {@code False}.
+     */
+    public Boolean isSimulation() {
+        return this.getClientName().toLowerCase().equals("simulation") && this.getSimulationSegmentCount() > 0;
     }
 }
