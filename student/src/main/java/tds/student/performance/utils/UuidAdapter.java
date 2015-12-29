@@ -8,6 +8,10 @@ import java.util.UUID;
  */
 public class UuidAdapter {
     public static byte[] getBytesFromUUID(UUID uuid) {
+        if (uuid == null) {
+            return null;
+        }
+
         ByteBuffer bb = ByteBuffer.wrap(new byte[16]);
         bb.putLong(uuid.getMostSignificantBits());
         bb.putLong(uuid.getLeastSignificantBits());
@@ -16,6 +20,10 @@ public class UuidAdapter {
     }
 
     public static UUID getUUIDFromBytes(byte[] bytes) {
+        if (bytes == null) {
+            return null;
+        }
+
         ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
         Long high = byteBuffer.getLong();
         Long low = byteBuffer.getLong();

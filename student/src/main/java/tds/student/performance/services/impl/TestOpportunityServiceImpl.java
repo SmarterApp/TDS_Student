@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tds.student.performance.dao.*;
 import tds.student.performance.domain.*;
+import tds.student.performance.services.DbLatencyService;
 import tds.student.performance.services.TestOpportunityService;
 import tds.student.performance.services.TestSessionService;
 import tds.student.performance.utils.HostNameHelper;
@@ -20,6 +21,9 @@ import java.util.List;
 @Service
 public class TestOpportunityServiceImpl implements TestOpportunityService {
     private static final Logger logger = LoggerFactory.getLogger(TestOpportunityServiceImpl.class);
+
+    @Autowired
+    DbLatencyService dbLatencyService;
 
     @Autowired
     TestOpportunityDao testOpportunityDao;
@@ -37,6 +41,8 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
     TestSessionService testSessionService;
 
     public void startTestOpportunity(OpportunityInstance opportunityInstance, String testKey, List<String> formKeys) {
+        Date start = new Date();
+
         try {
             TestOpportunity testOpportunity = testOpportunityDao.get(opportunityInstance.getKey());
             if (testOpportunity == null) {
@@ -67,6 +73,8 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             } else {
                 // TODO:  Restart the most recent test opportunity, starting @ line 3736
             }
+
+            dbLatencyService.logLatency("T_StartTestOpportunity", start, null, testOpportunity);
         } catch (IllegalStateException e) {
             logger.error(e.getMessage(), e);
         }
