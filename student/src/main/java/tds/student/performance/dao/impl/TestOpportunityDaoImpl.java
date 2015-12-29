@@ -60,20 +60,17 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
                     "GracePeriodRestarts AS gpRestarts,\n" +
                     "maxitems AS testLength,\n" +
                     "Subject AS subject,\n" +
-                    "clientname AS clientName\n" +
+                    "clientname AS clientName,\n" +
+                    "issegmented AS isSegmented,\n" +
+                    "algorithm AS algorithm\n" +
                 "FROM\n" +
                     "session.testopportunity\n" +
                 "WHERE\n" +
                     "_key = :key";
 
-        try {
-            return namedParameterJdbcTemplate.queryForObject(
-                    SQL,
-                    parameters,
-                    new TestOpportunityMapper());
-        } catch (EmptyResultDataAccessException e) {
-            logger.warn(String.format("%s did not return results for key = %s", SQL, key), e);
-            return null;
-        }
+        return namedParameterJdbcTemplate.queryForObject(
+                SQL,
+                parameters,
+                new TestOpportunityMapper());
     }
 }

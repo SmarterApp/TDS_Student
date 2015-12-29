@@ -1,6 +1,6 @@
 package tds.student.performance.services;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import java.util.UUID;
  * Created by jjohnson on 12/27/15.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("/performance-integration-context.xml")
+@ContextConfiguration("classpath:performance-integration-context.xml")
 @TransactionConfiguration
 public class TestSessionServiceTest {
     @Autowired
@@ -34,7 +34,7 @@ public class TestSessionServiceTest {
         Assert.assertEquals((Integer)0, result.getSessionType());
         Assert.assertEquals("open", result.getStatus());
         Assert.assertEquals("SBAC_PT", result.getClientName());
-        Assert.assertEquals(93d, result.getProctorId());
+        Assert.assertEquals((Double)93d, result.getProctorId());
         Assert.assertEquals(expectedSessionBrowserKey, result.getSessionBrowser());
     }
 
@@ -63,7 +63,7 @@ public class TestSessionServiceTest {
         Assert.assertEquals((Integer)15, result.getRequestInterfaceTimeout());
         Assert.assertEquals(clientName, result.getClientName());
         Assert.assertEquals("dev", result.getEnvironment());
-        Assert.assertEquals((Boolean)true, result.getIsPracticeTest());
+        Assert.assertEquals(true, result.getIsPracticeTest());
         Assert.assertEquals((Integer)30, result.getRefreshValue());
         Assert.assertEquals((Integer)20, result.getTaInterfaceTimeout());
         Assert.assertEquals((Integer)20, result.getTaCheckinTime());
@@ -87,7 +87,7 @@ public class TestSessionServiceTest {
         Assert.assertEquals((Integer)15, result.getRequestInterfaceTimeout());
         Assert.assertEquals(clientName, result.getClientName());
         Assert.assertEquals("dev", result.getEnvironment());
-        Assert.assertEquals((Boolean)true, result.getIsPracticeTest());
+        Assert.assertEquals(true, result.getIsPracticeTest());
         Assert.assertEquals((Integer)30, result.getRefreshValue());
         Assert.assertEquals((Integer)20, result.getTaInterfaceTimeout());
         Assert.assertEquals((Integer)20, result.getTaCheckinTime());

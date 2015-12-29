@@ -62,8 +62,11 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
 
             // TODO:  Call equivalent of StudentDLL._GetInitialAbility_SP (@ line 3697)
 
-            // TODO:  Call equivalent of StudentDLL._InitializeOpportunity_SP (if datestarted == null) @ line 3705
-
+            if (testOpportunity.getDateStarted() == null) {
+                // TODO:  Call equivalent of StudentDLL._InitializeOpportunity_SP (if datestarted == null) @ line 3705
+            } else {
+                // TODO:  Restart the most recent test opportunity, starting @ line 3736
+            }
         } catch (IllegalStateException e) {
             logger.error(e.getMessage(), e);
         }

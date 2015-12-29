@@ -25,6 +25,8 @@ public class TestOpportunity {
     private Integer maxItems;
     private String subject;
     private String clientName;
+    private Boolean isSegmented;
+    private String algorithm;
 
     public UUID getKey() {
         return key;
@@ -74,10 +76,18 @@ public class TestOpportunity {
         this.testId = testId;
     }
 
+    /**
+     * Referred to as {@code testkey} in {@code StudentDLL.T_StartTestOpportunity_SP}.
+     * @return {@code String } representing the test subject key of the {@code TestOpportunity}.
+     */
     public String getAdminSubject() {
         return adminSubject;
     }
 
+    /**
+     * Referred to as {@code testkey} in {@code StudentDLL.T_StartTestOpportunity_SP}.
+     * @param adminSubject  {@code String } representing the test subject key of the {@code TestOpportunity}.
+     */
     public void setAdminSubject(String adminSubject) {
         this.adminSubject = adminSubject;
     }
@@ -114,14 +124,26 @@ public class TestOpportunity {
         this.dateChanged = dateChanged;
     }
 
+    /**
+     * Referred to as {@code rcnt} in {@code StudentDLL.T_StartTestOpportunity_SP}.
+     * @return {@code Integer } representing the restart count of the {@code TestOpportunity}.
+     */
     public Integer getRestartCount() {
         return restartCount;
     }
 
+    /**
+     * Referred to as {@code rcnt} in {@code StudentDLL.T_StartTestOpportunity_SP}.
+     * @param restartCount {@code Integer } representing the restart count of the {@code TestOpportunity}.
+     */
     public void setRestartCount(Integer restartCount) {
         this.restartCount = restartCount;
     }
 
+    /**
+     * Referred to as {@code gpRestarts} in {@code StudentDLL.T_StartTestOpportunity_SP}.
+     * @return {@code Integer } representing the restart count of the {@code TestOpportunity}.
+     */
     public Integer getGracePeriodRestarts() {
         return gracePeriodRestarts;
     }
@@ -130,10 +152,18 @@ public class TestOpportunity {
         this.gracePeriodRestarts = gracePeriodRestarts;
     }
 
+    /**
+     * Referred to as {@code testlength} in {@code StudentDLL.T_StartTestOpportunity_SP}.
+     * @return {@code Integer } representing the maximum number of items in the {@code TestOpportunity}.
+     */
     public Integer getMaxItems() {
         return maxItems;
     }
 
+    /**
+     * Referred to as {@code testlength} in {@code StudentDLL.T_StartTestOpportunity_SP}.
+     * @param maxItems  {@code Integer } representing the maximum number of items in the {@code TestOpportunity}.
+     */
     public void setMaxItems(Integer maxItems) {
         this.maxItems = maxItems;
     }
@@ -152,5 +182,21 @@ public class TestOpportunity {
 
     public void setClientName(String clientName) {
         this.clientName = clientName;
+    }
+
+    public Boolean getIsSegmented() {
+        return isSegmented;
+    }
+
+    public void setIsSegmented(Boolean isSegmented) {
+        this.isSegmented = isSegmented;
+    }
+
+    public String getAlgorithm() {
+        return algorithm;
+    }
+
+    public void setAlgorithm(String algorithm) {
+        this.algorithm = algorithm;
     }
 }

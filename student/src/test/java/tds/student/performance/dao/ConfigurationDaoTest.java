@@ -1,14 +1,12 @@
 package tds.student.performance.dao;
 
-import junit.framework.Assert;;
-import org.apache.xpath.operations.Bool;
+import org.junit.Assert;;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.test.util.AssertionErrors;
 import tds.student.performance.domain.ClientSystemFlag;
 import tds.student.performance.domain.ClientTestProperty;
 
@@ -18,7 +16,7 @@ import java.util.List;
  * Created by jjohnson on 12/25/15.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("/performance-integration-context.xml")
+@ContextConfiguration("classpath:performance-integration-context.xml")
 @TransactionConfiguration
 public class ConfigurationDaoTest {
     @Autowired
@@ -44,7 +42,6 @@ public class ConfigurationDaoTest {
         Assert.assertNotNull(systemFlags);
         Assert.assertEquals(16, systemFlags.size());
         assertClientSystemFlags(systemFlags, clientName);
-
     }
 
     @Test
@@ -73,27 +70,27 @@ public class ConfigurationDaoTest {
         Assert.assertEquals("SBAC Math 3-MATH-3", result.getTestId());
         Assert.assertEquals((Integer)9999, result.getMaxOpportunities());
         Assert.assertEquals((Integer)2, result.getPrefetch());
-        Assert.assertEquals((Boolean)false, result.getIsPrintable());
-        Assert.assertEquals((Boolean)true, result.getIsSelectable());
+        Assert.assertEquals(false, result.getIsPrintable());
+        Assert.assertEquals(true, result.getIsSelectable());
         Assert.assertEquals("Grades 3 - 5 MATH", result.getLabel());
-        Assert.assertEquals((Boolean)true, result.getScoreByTds());
-        Assert.assertEquals((Boolean)false, result.getBatchModeReport());
+        Assert.assertEquals(true, result.getScoreByTds());
+        Assert.assertEquals(false, result.getBatchModeReport());
         Assert.assertEquals("MATH", result.getSubjectName());
-        Assert.assertEquals((Boolean)true, result.getMaskItemsBySubject());
+        Assert.assertEquals(true, result.getMaskItemsBySubject());
         Assert.assertEquals("MATH", result.getAccommodationFamily());
         Assert.assertEquals("tds-testform", result.getRtsFormField());
         Assert.assertEquals("tds-testwindow", result.getRtsWindowField());
-        Assert.assertEquals((Boolean)false, result.getWindowTideSelectable());
-        Assert.assertEquals((Boolean)false, result.getRequireRtsWindow());
-        Assert.assertEquals((Boolean)true, result.getForceComplete());
+        Assert.assertEquals(false, result.getWindowTideSelectable());
+        Assert.assertEquals(false, result.getRequireRtsWindow());
+        Assert.assertEquals(true, result.getForceComplete());
         Assert.assertEquals("tds-testmode", result.getRtsModeField());
-        Assert.assertEquals((Boolean)false, result.getModeTideSelectable());
-        Assert.assertEquals((Boolean)false, result.getRequireRtsMode());
-        Assert.assertEquals((Boolean)false, result.getRequireRtsModeWindow());
-        Assert.assertEquals((Boolean)false, result.getDeleteUnansweredItems());
-        Assert.assertEquals(1d, result.getAbilitySlope());
-        Assert.assertEquals(0d, result.getAbilityIntercept());
-        Assert.assertEquals((Boolean)false, result.getValidateCompleteness());
+        Assert.assertEquals(false, result.getModeTideSelectable());
+        Assert.assertEquals(false, result.getRequireRtsMode());
+        Assert.assertEquals(false, result.getRequireRtsModeWindow());
+        Assert.assertEquals(false, result.getDeleteUnansweredItems());
+        Assert.assertEquals((Double)1d, result.getAbilitySlope());
+        Assert.assertEquals((Double)0d, result.getAbilityIntercept());
+        Assert.assertEquals(false, result.getValidateCompleteness());
         Assert.assertEquals("Grades 3 - 5", result.getGradeText());
         Assert.assertEquals((Integer)0, result.getProctorEligibility());
     }

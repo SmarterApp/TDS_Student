@@ -34,6 +34,8 @@ public class TestOpportunityMapper implements RowMapper<TestOpportunity> {
         testOpportunity.setMaxItems(resultSet.getInt("testLength"));
         testOpportunity.setSubject(resultSet.getString("subject"));
         testOpportunity.setClientName(resultSet.getString("clientName"));
+        testOpportunity.setIsSegmented(resultSet.getBoolean("issegmented"));
+        testOpportunity.setAlgorithm(resultSet.getString("algorithm"));
 
         return testOpportunity;
     }

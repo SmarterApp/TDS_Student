@@ -1,6 +1,7 @@
 package tds.student.performance.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import tds.student.performance.dao.ConfigurationDao;
 import tds.student.performance.dao.TestOpportunityAuditDao;
@@ -49,6 +50,9 @@ public class TestSessionServiceImpl implements TestSessionService {
      *     TA Check-In time is always configured at the client level.  Furthermore, the TA Check-In time setting at the
      *     client level supercedes any setting at the test level.  This is the only value in {@code session.timelimits}
      *     that exhibits this behavior.
+     * </p>
+     * <p>
+     *     Needs manual caching if this method is called internally (that is somewhere else within this class).
      * </p>
      * @param clientName The name of the client for which the TA Check-In Time should be fetched.
      * @return An {@code Integer} representing the length of the TA Check-In timeout window.

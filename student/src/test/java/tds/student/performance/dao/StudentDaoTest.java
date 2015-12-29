@@ -14,7 +14,7 @@ import static org.junit.Assert.assertNotNull;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("/performance-integration-context.xml")
+@ContextConfiguration("classpath:performance-integration-context.xml")
 @TransactionConfiguration
 public class StudentDaoTest {
 

@@ -9,7 +9,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
  * Created by jjohnson on 12/27/15.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("/performance-integration-context.xml")
+@ContextConfiguration("classpath:performance-integration-context.xml")
 @TransactionConfiguration
 public class TestOpportunityServiceTest {
 }

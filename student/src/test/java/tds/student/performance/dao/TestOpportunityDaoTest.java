@@ -1,6 +1,6 @@
 package tds.student.performance.dao;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import java.util.UUID;
  * Tests for {@code TestOpportunityDao} implementations.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("/performance-integration-context.xml")
+@ContextConfiguration("classpath:performance-integration-context.xml")
 @TransactionConfiguration
 public class TestOpportunityDaoTest {
     @Autowired
@@ -29,8 +29,8 @@ public class TestOpportunityDaoTest {
     @Test
     public void should_Get_a_TestOpportunity() {
         UUID key = UUID.fromString("9f881758-0b4a-4eaa-b59f-b6dea0934223");
-        UUID expectedSessionKey = UUID.fromString("2B20031D-4BD8-42A8-9963-F6FFA44A9271");
-        UUID expectedBrowserKey = UUID.fromString("A27DAB06-8916-48B3-AB99-6E95EC7AE3BF");
+        UUID expectedSessionKey = UUID.fromString("50FB18AD-602D-44F6-897C-68AC90037FA5");
+        UUID expectedBrowserKey = UUID.fromString("0FBB9BCF-80C2-4D95-B425-17AF9A8A4B1E");
 
         TestOpportunity result = testOpportunityDao.get(key);
 
@@ -39,13 +39,15 @@ public class TestOpportunityDaoTest {
         Assert.assertEquals(expectedSessionKey, result.getSessionKey());
         Assert.assertEquals(expectedBrowserKey, result.getBrowserKey());
         Assert.assertEquals("(SBAC_PT)SBAC-IRP-Perf-MATH-3-Summer-2015-2016", result.getTestKey());
-        Assert.assertEquals(168d, result.getTestee());
+        Assert.assertEquals((Double)168d, result.getTestee());
         Assert.assertEquals("SBAC-IRP-Perf-MATH-3", result.getTestId());
         Assert.assertEquals("(SBAC_PT)SBAC-IRP-Perf-MATH-3-Summer-2015-2016", result.getAdminSubject());
         Assert.assertEquals((Integer)1, result.getOpportunity());
-        Assert.assertEquals("started", result.getStatus());
+        Assert.assertEquals("paused", result.getStatus());
         Assert.assertEquals("MATH", result.getSubject());
         Assert.assertEquals("SBAC_PT", result.getClientName());
+        Assert.assertEquals(false, result.getIsSegmented());
+        Assert.assertEquals("fixedform", result.getAlgorithm());
     }
 
     @Test

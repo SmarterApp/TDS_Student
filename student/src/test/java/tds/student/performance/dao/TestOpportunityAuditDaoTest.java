@@ -11,7 +11,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
  * Tests for {@code TestOpportunityAuditDao} implementations.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("/performance-integration-context.xml")
+@ContextConfiguration("classpath:performance-integration-context.xml")
 @TransactionConfiguration
 public class TestOpportunityAuditDaoTest {
     @Autowired
