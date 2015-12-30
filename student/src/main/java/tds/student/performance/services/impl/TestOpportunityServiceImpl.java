@@ -16,6 +16,7 @@ import tds.student.performance.services.TestOpportunityService;
 import tds.student.performance.services.TestSessionService;
 import tds.student.performance.utils.HostNameHelper;
 import tds.student.performance.utils.LegacySqlConnection;
+import tds.student.performance.utils.DateUtils;
 import tds.student.sql.data.OpportunityInstance;
 
 import java.sql.SQLException;
@@ -93,7 +94,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             }
 
             //TODO: Is this necessary here? Remove if not... old code doesn't seem to use the ability that is set here
-            Float ability = getInitialAbility(testOpportunity, clientTestProperty);
+            Float initialAbility = getInitialAbility(testOpportunity, clientTestProperty);
 
             if (testOpportunity.getDateStarted() == null) {
                 // Emulate logic to call legacy method (StudentDLL._InitializeOpportunity_SP) on line 5326
@@ -105,8 +106,49 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                         testLength);
 
 
-            } else {
-                // TODO:  Restart the most recent test opportunity, starting @ line 3736
+            } else {         // Restart the most recent test opportunity, starting @ line 5373 - StudentDLL
+                Date lastActivity = testOpportunityDao.getLastActivity(opportunityInstance.getKey());
+                Integer gracePeriodRestarts = testOpportunity.getGracePeriodRestarts();
+                Integer restartCount = testOpportunity.getRestartCount();
+                TestSession session = testSessionService.get(opportunityInstance.getKey());
+                //TODO: Replace below with db time
+                Timestamp now = new Timestamp(System.currentTimeMillis());
+                boolean isTimeDiffLessThanDelay =
+                        (DateUtils.minutesDiff(lastActivity, start) < timelimitConfiguration.getOpportunityDelay());
+
+                if(isTimeDiffLessThanDelay) {
+                    gracePeriodRestarts++;
+                }
+
+                testOpportunity.setRestartCount(restartCount + 1);
+                testOpportunity.setStatus("started");
+                testOpportunity.setGracePeriodRestarts(gracePeriodRestarts);
+                testOpportunity.setDateChanged(now);
+                testOpportunity.setDateStarted(now);
+                testOpportunityDao.update(testOpportunity);
+
+                TestOpportunityAudit oppAudit = new TestOpportunityAudit();
+                oppAudit.setTestOpportunityKey(opportunityInstance.getKey());
+                oppAudit.setSessionKey(opportunityInstance.getSessionKey());
+                oppAudit.setHostName(legacyCommonDll.getLocalhostName());
+                oppAudit.setBrowserKey(opportunityInstance.getBrowserKey());
+                oppAudit.setDatabaseName("session");
+                oppAudit.setDateAccessed(new Timestamp(System.currentTimeMillis()));
+                oppAudit.setAccessType("restart " + (restartCount + 1));
+                testOpportunityAuditDao.create(oppAudit);
+
+                if (session.getSessionType() == 1) {
+                    //TODO: UPDATE testeeresponse - line 5393
+                } else if (isTimeDiffLessThanDelay) {
+                    //TODO: UPDATE testeeresponse - line 5398
+                } else if (clientTestProperty.getDeleteUnansweredItems()) {
+                    //TODO: Call replacement for _RemoveUnanswered_SP
+                }
+
+                restartCount++;
+
+                //TODO: Call _UnfinishedResponsePages_SP (connection, oppKey, rcnt, true) equivalent
+
             }
 
             dbLatencyService.logLatency("T_StartTestOpportunity", start, null, testOpportunity);
@@ -122,6 +164,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
      */
     @Override
     public Float getInitialAbility(TestOpportunity opportunity, ClientTestProperty property) {
+        Date start = new Date();
         Float ability = null;
         Boolean bySubject = false;
         Double slope = null;
@@ -135,13 +178,13 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
 
         List<TestAbility> testAbilities = testAbilityDao.getTestAbilities(opportunity.getKey(), opportunity.getClientName(),
                 opportunity.getSubject(), opportunity.getTestee().longValue());
-        TestAbility initialAbility = getMostRecentTestAbility(testAbilities, opportunity.getAdminSubject(), false);
+        TestAbility initialAbility = getMostRecentTestAbility(testAbilities, opportunity.getTestKey(), false);
 
         //First, try to get the ability for current subject/test
         if (initialAbility != null) {
             ability = initialAbility.getScore();
         } else if (bySubject) { // If that didn't retrieve anything, get the ability from the same subject, any test
-            initialAbility = getMostRecentTestAbility(testAbilities, opportunity.getAdminSubject(), true);
+            initialAbility = getMostRecentTestAbility(testAbilities, opportunity.getTestKey(), true);
             if (initialAbility != null) {
                 ability = initialAbility.getScore();
             } else { // and if that didn't work, get the initial ability from the previous year.
@@ -158,7 +201,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
 
         //If the ability was not retrieved/set from the above logic, grab it from the item bank DB
         if (ability == null) {
-            SetOfAdminSubject subject = itemBankDao.get(opportunity.getAdminSubject());
+            SetOfAdminSubject subject = itemBankDao.get(opportunity.getTestKey());
             if (subject != null) {
                 ability = subject.getStartAbility().floatValue();
             } else {
@@ -166,6 +209,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             }
         }
 
+        dbLatencyService.logLatency("GetInitialAbility", start, null, opportunity);
         return ability;
     }
 
@@ -314,4 +358,5 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             throw new IllegalStateException(String.format("TestSession for session key %s is not available for testing.", testSession.getKey()));
         }
     }
+
 }
