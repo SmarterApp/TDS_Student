@@ -7,14 +7,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import tds.dll.api.ICommonDLL;
 import tds.student.performance.dao.*;
 import tds.student.performance.domain.*;
 import tds.student.performance.services.DbLatencyService;
 import tds.student.performance.services.TestOpportunityService;
 import tds.student.performance.services.TestSessionService;
 import tds.student.performance.utils.HostNameHelper;
+import tds.student.performance.utils.LegacySqlConnection;
 import tds.student.sql.data.OpportunityInstance;
 
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -236,7 +240,12 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                     "session"
             ));
 
-            testSessionService.pause(testOpportunity, testSession, "closed");
+            try {
+                testSessionService.pause(testOpportunity, testSession);
+            } catch (Exception e) {
+                logger.error(String.format("Error while closing session %s", testSession.getKey()), e);
+                // TODO: should we throw something from here
+            }
 
             throw new IllegalStateException(String.format("TestSession for session key %s is not available for testing.", testSession.getKey()));
         }
