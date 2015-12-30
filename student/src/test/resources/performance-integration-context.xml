@@ -17,11 +17,11 @@
            http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 
 
-    <context:component-scan base-package="tds.student.performance"/>
-    <context:property-placeholder location="performance-integration-student.properties"/>
+    <context:component-scan base-package="tds.student.performance">
+        <context:exclude-filter type="regex" expression="tds.student.performance.services.impl.StudentLoginServiceImpl" />
+    </context:component-scan>
 
-    <import resource="test-context.xml"/>
-    <bean id="tdsSettings" class="TDS.Shared.Configuration.TDSSettings" scope="prototype"/>
+    <context:property-placeholder location="performance-integration-student.properties"/>
 
 
 
