@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tds.student.performance.dao.*;
 import tds.student.performance.services.DbLatencyService;
+import tds.student.performance.services.LegacyTestOpportunityService;
 import tds.student.performance.services.TestSessionService;
 import tds.student.performance.utils.HostNameHelper;
 import tds.student.performance.domain.*;
@@ -36,6 +37,9 @@ public class TestSessionServiceImpl implements TestSessionService {
 
     @Autowired
     ConfigurationDao configurationDao;
+
+    @Autowired
+    LegacyTestOpportunityService legacyTestOpportunityService;
 
     @Autowired
     DbLatencyService dbLatencyService;
@@ -171,7 +175,7 @@ public class TestSessionServiceImpl implements TestSessionService {
         List<TestOpportunity> opportunities = testOpportunityDao.getTestOpportunitiesBySessionAndStatus(testSession.getKey(), "Opportunity", "inuse");
 
         for (TestOpportunity opportunity : opportunities) {
-            testOpportunityDao.legacySetOpportunityStatus(opportunity, "paused");
+            legacyTestOpportunityService.setOpportunityStatus(opportunity, "paused");
         }
 
         dbLatencyService.logLatency("P_PauseSession_SP", date, null, testSession);
