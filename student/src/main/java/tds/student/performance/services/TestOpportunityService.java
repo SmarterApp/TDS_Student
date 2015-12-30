@@ -6,6 +6,7 @@ import tds.student.performance.domain.ClientTestProperty;
 import tds.student.performance.domain.TestOpportunity;
 import tds.student.sql.data.OpportunityInstance;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 

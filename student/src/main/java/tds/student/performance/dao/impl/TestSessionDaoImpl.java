@@ -16,6 +16,8 @@ import tds.student.performance.utils.UuidAdapter;
 import tds.student.performance.domain.TestSession;
 
 import javax.sql.DataSource;
+import java.sql.Timestamp;
+import java.time.Clock;
 import java.util.*;
 
 /**
@@ -147,6 +149,43 @@ public class TestSessionDaoImpl implements TestSessionDao {
         }
     }
 
+    public String validateProctorSession(TestSession testSession) {
+        return validateProctorSession(testSession, testSession.getProctorId(), testSession.getSessionBrowser());
+    }
+
+    /**
+     * Makes sure a session is valid
+     * Checks
+     *  1) Is the session open?
+     *  2) Is the session owned by the proctor?
+     *  3) Is it being accessed by a proper browser?
+     * It returns NULL if everything checks out, or an error message if there is a problem.
+     */
+    @Override
+    public String validateProctorSession(TestSession testSession, Long proctorKey, UUID browserKey) {
+        // Emulate logic from CommonDLL.ValidateProctorSession_FN
+        //  However, since the TestSession is already loaded we don't need to access the DB again to do this, which saves 3 DB calls
+
+        // Emulate line 1726: SQL_QUERY1
+        //  Note: We are not using testSession.isOpen() since the logic here is different than there for some reason
+        // TODO: validate that this java Date will compare correctly with the date coming from the DB
+        Date now = new Date();
+
+        if (now.before(testSession.getDateBegin()) || now.after(testSession.getDateEnd())) {
+            return "The session is closed.";
+        }
+
+        if (testSession.getProctorId() != proctorKey) {
+            return "The session is not owned by this proctor";
+        }
+
+        if (testSession.getSessionBrowser() != browserKey) {
+            return "Unauthorized session access";
+        }
+
+        return null;
+    }
+
     /**
      * Pause an existing {@code TestSession}, citing the specified reason.
      * @param session The {@code TestSession} to pause.
@@ -155,8 +194,6 @@ public class TestSessionDaoImpl implements TestSessionDao {
     @Override
     @Transactional
     public void pause(TestSession session, String reason) {
-        // TODO:  Need to investigate CommonDLL.ValidateProctorSession_FN (line 1684)
-
         final Date closedDate = new Date();
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("key", UuidAdapter.getBytesFromUUID(session.getKey()));

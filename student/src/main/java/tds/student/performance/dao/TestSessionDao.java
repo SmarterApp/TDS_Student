@@ -13,4 +13,7 @@ public interface TestSessionDao {
     TestSession get(UUID key);
     void pause(TestSession session, String reason);
     List<TestSessionTimeLimitConfiguration> getTimeLimitConfigurations(String clientName, String testId);
+    String validateProctorSession(TestSession testSession);
+    String validateProctorSession(TestSession testSession, Long proctorKey, UUID browserKey);
+
 }
