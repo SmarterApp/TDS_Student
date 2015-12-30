@@ -44,6 +44,9 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
     TestOpportunityAuditDao testOpportunityAuditDao;
 
     @Autowired
+    TesteeResponseDao testeeResponseDao;
+
+    @Autowired
     TestAbilityDao testAbilityDao;
 
     @Autowired
@@ -138,9 +141,9 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                 testOpportunityAuditDao.create(oppAudit);
 
                 if (session.getSessionType() == 1) {
-                    //TODO: UPDATE testeeresponse - line 5393
+                    testeeResponseDao.updateRestartCount(opportunityInstance.getKey(), restartCount, false);
                 } else if (isTimeDiffLessThanDelay) {
-                    //TODO: UPDATE testeeresponse - line 5398
+                    testeeResponseDao.updateRestartCount(opportunityInstance.getKey(), restartCount, true);
                 } else if (clientTestProperty.getDeleteUnansweredItems()) {
                     //TODO: Call replacement for _RemoveUnanswered_SP
                 }
