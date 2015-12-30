@@ -13,5 +13,4 @@ import java.util.UUID;
 public interface TestOpportunityDao {
     TestOpportunity get(UUID key);
     List<TestOpportunity> getTestOpportunitiesBySessionAndStatus(UUID sessionKey, String statusUsage, String statusStage);
-    void legacySetOpportunityStatus(TestOpportunity opportunity, String status) throws SQLException, ReturnStatusException;
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import tds.student.performance.IntegrationTest;
 import tds.student.performance.domain.TestOpportunity;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -53,5 +54,12 @@ public class TestOpportunityDaoTest extends IntegrationTest {
         TestOpportunity result = testOpportunityDao.get(key);
 
         Assert.assertNull(result);
+    }
+
+    @Test
+    public void should_Return_Empty_List_When_Invalid_Data() {
+        List<TestOpportunity> results = testOpportunityDao.getTestOpportunitiesBySessionAndStatus(UUID.randomUUID(), "Opportunity", "inuse");
+
+        Assert.assertEquals(0, results.size());
     }
 }

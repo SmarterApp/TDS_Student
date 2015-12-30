@@ -143,10 +143,4 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
             return null;
         }
     }
-
-    @Override
-    @Transactional
-    public void legacySetOpportunityStatus(TestOpportunity opportunity, String status) throws SQLException, ReturnStatusException {
-        commonDLL.SetOpportunityStatus_SP(legacySqlConnection.get(), opportunity.getKey(), status, true, opportunity.getSessionKey().toString());
-    }
 }
