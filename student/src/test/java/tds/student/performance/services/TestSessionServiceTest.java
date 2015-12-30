@@ -2,23 +2,14 @@ package tds.student.performance.services;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
+import tds.student.performance.IntegrationTest;
 import tds.student.performance.domain.TestSession;
 import tds.student.performance.domain.TestSessionTimeLimitConfiguration;
 
 import java.util.UUID;
 
-/**
- * Created by jjohnson on 12/27/15.
- */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:performance-integration-context.xml")
-@TransactionConfiguration
-public class TestSessionServiceTest {
+public class TestSessionServiceTest extends IntegrationTest {
     @Autowired
     TestSessionService testSessionService;
 
