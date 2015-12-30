@@ -64,17 +64,17 @@
 	<!--Start: c3p0 Datasource Configuration -->
 	<beans:bean id="applicationDataSource" destroy-method="close"
 		  class="com.mchange.v2.c3p0.ComboPooledDataSource" >
-		    <beans:property name="driverClass" value="${datasource.driverClassName:com.mysql.jdbc.Driver}"/>
-		    <beans:property name="jdbcUrl" value="jdbc:mysql://dev-loadtest-rds-001.c6cqetfcrpzd.us-east-1.rds.amazonaws.com:3306/session?useServerPrepStmts=false&amp;rewriteBatchedStatements=true"/>
-		    <beans:property name="user" value="dbsbac"/>
-		    <beans:property name="password" value="osTyMhRM1C"/>
-		    <beans:property name="minPoolSize" value="${datasource.minPoolSize:1200}"/>
-		<beans:property name="acquireIncrement" value="${datasource.acquireIncrement:500}" />
-		<beans:property name="maxPoolSize" value="${datasource.maxPoolSize:1200}" />
-		<beans:property name="checkoutTimeout" value="${datasource.checkoutTimeout:60000}" />
+		    <beans:property name="driverClass" value="com.mysql.jdbc.Driver"/>
+		    <beans:property name="jdbcUrl" value="jdbc:mysql://52.33.126.67:3306/session"/>
+		    <beans:property name="user" value="remoteuser"/>
+		    <beans:property name="password" value="change*me"/>
+		    <beans:property name="minPoolSize" value="1200"/>
+		<beans:property name="acquireIncrement" value="500" />
+		<beans:property name="maxPoolSize" value="1200" />
+		<beans:property name="checkoutTimeout" value="60000" />
 		<beans:property name="preferredTestQuery" value="SELECT 1" />
-		<beans:property name="maxConnectionAge" value="${datasource.maxConnectionAge:0}"/>
-		<beans:property name="acquireRetryAttempts" value="${datasource.acquireRetryAttempts:30}"/>
+		<beans:property name="maxConnectionAge" value="0"/>
+		<beans:property name="acquireRetryAttempts" value="30"/>
 	</beans:bean>
 	
 	
