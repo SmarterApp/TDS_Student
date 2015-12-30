@@ -20,7 +20,7 @@ public class DbLatencyServiceTest extends IntegrationTest {
     public void should_Insert_Latency_Record_For_TestOpportunity() {
         UUID testOppKey = UUID.randomUUID();
         UUID sessionKey = UUID.randomUUID();
-        Date startDate = getDateSecondsAgo(11);
+        Date startDate = getDateAddSeconds(-11);
         String procName = "should_Insert_Latency_Record_For_TestOpportunity";
         Integer n = ThreadLocalRandom.current().nextInt(1, 100);
 
@@ -37,7 +37,7 @@ public class DbLatencyServiceTest extends IntegrationTest {
     @Test
     public void should_Insert_Latency_Record_For_TestSession() {
         UUID sessionKey = UUID.randomUUID();
-        Date startDate = getDateSecondsAgo(11);
+        Date startDate = getDateAddSeconds(-11);
         String procName = "should_Insert_Latency_Record_For_TestSession";
         Integer n = ThreadLocalRandom.current().nextInt(1, 100);
 
@@ -52,7 +52,7 @@ public class DbLatencyServiceTest extends IntegrationTest {
 
     @Test
     public void should_Insert_Latency_Record_For_Generic() {
-        Date startDate = getDateSecondsAgo(11);
+        Date startDate = getDateAddSeconds(-11);
         String procName = "should_Insert_Latency_Record_For_Generic";
         Integer n = ThreadLocalRandom.current().nextInt(1, 100);
         String clientName = "SBAC_TEST";
@@ -64,7 +64,7 @@ public class DbLatencyServiceTest extends IntegrationTest {
 
     @Test
     public void should_Not_Insert_Latency_Record_When_Disabled() {
-        Date startDate = getDateSecondsAgo(11);
+        Date startDate = getDateAddSeconds(-11);
         String procName = "should_Not_Insert_Latency_Record_When_Disabled";
         Integer n = ThreadLocalRandom.current().nextInt(1, 100);
         String clientName = "SBAC_TEST";
@@ -107,11 +107,5 @@ public class DbLatencyServiceTest extends IntegrationTest {
         parameters.put("n", n);
 
         return namedParameterJdbcTemplate.queryForInt(SQL, parameters);
-    }
-
-    private Date getDateSecondsAgo(Integer seconds) {
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.SECOND, seconds * -1);
-        return cal.getTime();
     }
 }

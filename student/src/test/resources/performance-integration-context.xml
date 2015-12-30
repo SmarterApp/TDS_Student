@@ -20,11 +20,6 @@
     <context:component-scan base-package="tds.student.performance"/>
     <context:property-placeholder location="performance-integration-student.properties"/>
 
-    <import resource="test-context.xml"/>
-    <bean id="tdsSettings" class="TDS.Shared.Configuration.TDSSettings" scope="prototype"/>
-
-
-
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 

@@ -28,7 +28,7 @@ public class TestSession {
     private Timestamp dateEnd;
     private Timestamp dateVisited;
     private String clientName;
-    private Double proctorId;
+    private Long proctorId;
     private UUID sessionBrowser;
 
     public UUID getKey() {
@@ -87,11 +87,11 @@ public class TestSession {
         this.clientName = clientName;
     }
 
-    public Double getProctorId() {
+    public Long getProctorId() {
         return proctorId;
     }
 
-    public void setProctorId(Double proctorId) {
+    public void setProctorId(Long proctorId) {
         this.proctorId = proctorId;
     }
 
