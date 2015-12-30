@@ -13,7 +13,7 @@ import java.util.UUID;
  * Created by jjohnson on 12/26/15.
  */
 public interface TestOpportunityService {
-    void startTestOpportunity(OpportunityInstance opportunityInstance, String testKey, List<String> formKeys);
+    void startTestOpportunity(OpportunityInstance opportunityInstance, String testKey, String formKeyList);
 
     Float getInitialAbility(TestOpportunity opportunity, ClientTestProperty property);
 }
