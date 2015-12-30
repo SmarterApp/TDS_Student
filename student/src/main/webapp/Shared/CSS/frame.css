@@ -1,0 +1,57 @@
+﻿/* @group Misc frame styles that were hard coded */
+
+.highlight {
+    background-color: #F6FF00 !important;
+}
+
+/* This prevents the text of the element and sub-elements to be selected. 
+   Selection can be enabled on sub-elements using "-moz-user-select:text". */
+body * {
+    -moz-user-select: -moz-none; 
+}
+
+/* The text can be selected by the user on the passage and stem  */
+.thePassage.contextAreaFocus *, .stemContainer.contextAreaFocus *, .illustrationContainer.contextAreaFocus * {
+    -moz-user-select: text !important;
+}
+
+.itemContainer {
+    -moz-user-select: text !important;
+}
+
+/* We need to allow input fields to be selectable */
+input, textarea {
+    -moz-user-select: text !important;
+}
+
+/*********************************/
+
+/* fixed selectable image and tables! */
+img, .thePassage table  {
+    -moz-user-select: none; 
+	cursor: default;
+}
+
+.thePassage {
+	-moz-user-input: enabled !important; 
+	-moz-user-focus: ignore !important;
+}
+
+.forceRedraw {
+    padding-bottom:1px;
+}
+
+/* @end */
+
+/* Misc IE frame styles that were hard coded  */
+
+.StudentGridStatus {
+    display: none !important;
+}
+
+/* If visibility is set to hidden on Flash it does not load */
+.GridContainer applet, .GridContainer iframe, .GridContainer object {
+    visibility: visible !important;
+}
+
+/* @end */
