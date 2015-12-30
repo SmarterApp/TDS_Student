@@ -186,7 +186,7 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
                 "FROM\n" +
                 "    configs.client_testeeattribute cta\n" +
                 "WHERE\n" +
-                "    cta.clientname = 'SBAC_PT'\n" +
+                "    cta.clientname = :clientName\n" +
                 "        AND atLogin is not null\n" +
                 "ORDER BY SortOrder";
 
