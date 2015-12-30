@@ -9,8 +9,6 @@ public class StudentLoginFields {
     private String atLogin;
     private String label;
     private String sortOrder;
-    private String inVal;
-    private String outVal;
 
     public StudentLoginFields() {
     }
@@ -61,22 +59,6 @@ public class StudentLoginFields {
 
     public void setSortOrder(String sortOrder) {
         this.sortOrder = sortOrder;
-    }
-
-    public String getInVal() {
-        return inVal;
-    }
-
-    public void setInVal(String inVal) {
-        this.inVal = inVal;
-    }
-
-    public String getOutVal() {
-        return outVal;
-    }
-
-    public void setOutVal(String outVal) {
-        this.outVal = outVal;
     }
 
     @Override

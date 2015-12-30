@@ -180,9 +180,7 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
                 "    cta.type as fieldType,\n" +
                 "    cta.atLogin as atLogin,\n" +
                 "    cta.Label as label,\n" +
-                "    cta.SortOrder as sortOrder,\n" +
-                "    null AS inVal,\n" +
-                "    null AS outVal\n" +
+                "    cta.SortOrder as sortOrder\n" +
                 "FROM\n" +
                 "    configs.client_testeeattribute cta\n" +
                 "WHERE\n" +
