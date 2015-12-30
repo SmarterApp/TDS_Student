@@ -181,7 +181,6 @@ public class TestSessionDaoImpl implements TestSessionDao {
 
         if (testSession.getSessionBrowser() != browserKey) {
             return "Unauthorized session access";
-
         }
 
         return null;
