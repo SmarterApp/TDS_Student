@@ -14,6 +14,7 @@ import tds.student.performance.caching.CacheType;
 import tds.student.performance.dao.ConfigurationDao;
 import tds.student.performance.domain.ClientSystemFlag;
 import tds.student.performance.domain.ClientTestProperty;
+import tds.student.performance.domain.StudentLoginFields;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -165,4 +166,37 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
         }
 
     }
+
+    @Override
+    @Transactional
+    @Cacheable(CacheType.LongTerm)
+    public List<StudentLoginFields> getStudentLoginFields(String clientName) {
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("clientName", clientName);
+
+        final String SQL = "SELECT \n" +
+                "    cta.TDS_ID as tdsId,\n" +
+                "    cta.RTSName as rtsName,\n" +
+                "    cta.type as fieldType,\n" +
+                "    cta.atLogin as atLogin,\n" +
+                "    cta.Label as label,\n" +
+                "    cta.SortOrder as sortOrder,\n" +
+                "    null AS inVal,\n" +
+                "    null AS outVal\n" +
+                "FROM\n" +
+                "    configs.client_testeeattribute cta\n" +
+                "WHERE\n" +
+                "    cta.clientname = 'SBAC_PT'\n" +
+                "        AND atLogin is not null\n" +
+                "ORDER BY SortOrder";
+
+
+        return namedParameterJdbcTemplate.query(
+                SQL,
+                parameters,
+                new BeanPropertyRowMapper<>(StudentLoginFields.class));
+
+    }
+
+
 }
