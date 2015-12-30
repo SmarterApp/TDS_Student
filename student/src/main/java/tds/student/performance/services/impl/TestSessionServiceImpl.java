@@ -6,6 +6,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tds.student.performance.dao.*;
+import tds.student.performance.exceptions.ReturnErrorException;
 import tds.student.performance.services.DbLatencyService;
 import tds.student.performance.services.LegacyTestOpportunityService;
 import tds.student.performance.services.TestSessionService;
@@ -40,6 +41,9 @@ public class TestSessionServiceImpl implements TestSessionService {
 
     @Autowired
     LegacyTestOpportunityService legacyTestOpportunityService;
+
+    @Autowired
+    LegacyErrorHandlerServiceImpl legacyErrorHandlerService;
 
     @Autowired
     DbLatencyService dbLatencyService;
@@ -108,7 +112,7 @@ public class TestSessionServiceImpl implements TestSessionService {
     }
 
     @Override
-    public void pause(TestOpportunity testOpportunity, TestSession testSession) throws SQLException, ReturnStatusException {
+    public void pause(TestOpportunity testOpportunity, TestSession testSession) throws SQLException, ReturnStatusException, ReturnErrorException {
         pause(testOpportunity, testSession, "closed");
     }
 
@@ -127,7 +131,7 @@ public class TestSessionServiceImpl implements TestSessionService {
      */
     @Override
     @Transactional
-    public void pause(TestOpportunity testOpportunity, TestSession testSession, String reason) throws SQLException, ReturnStatusException {
+    public void pause(TestOpportunity testOpportunity, TestSession testSession, String reason) throws SQLException, ReturnStatusException, ReturnErrorException {
         Date date = new Date();
         final Timestamp now = new Timestamp(date.getTime());
 
@@ -135,9 +139,9 @@ public class TestSessionServiceImpl implements TestSessionService {
         String accessDeniedMessage = testSessionDao.validateProctorSession(testSession);
 
         if (accessDeniedMessage != null) {
+            legacyErrorHandlerService.logDbError("P_PauseSession", accessDeniedMessage, testSession.getProctorId(), null, null, testSession.getKey());
             dbLatencyService.logLatency("P_PauseSession", date, testSession.getProctorId(), testSession);
-
-            // TODO: call our error handling method which will LogDbError and ReturnError equivalents
+            legacyErrorHandlerService.throwReturnErrorException(testOpportunity.getClientName(), "P_PauseSession", accessDeniedMessage, null, null, "ValidateProctorSession", "failed");
 
             return;
         }
