@@ -24,7 +24,6 @@ public class TestOpportunityMapper implements RowMapper<TestOpportunity> {
         testOpportunity.setTestKey(resultSet.getString("testKey"));
         testOpportunity.setTestee(resultSet.getDouble("testee"));
         testOpportunity.setTestId(resultSet.getString("testId"));
-        testOpportunity.setAdminSubject(resultSet.getString("test"));
         testOpportunity.setOpportunity(resultSet.getInt("opportunity"));
         testOpportunity.setStatus(resultSet.getString("status"));
         testOpportunity.setDateStarted(resultSet.getTimestamp("dateStarted"));

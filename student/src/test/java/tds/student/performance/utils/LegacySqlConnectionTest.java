@@ -25,7 +25,7 @@ public class LegacySqlConnectionTest {
     @Test
     public void should_Get_an_AIR_SqlConnection() {
         try {
-            SQLConnection result = sqlConnectionHelper.getSqlConnection();
+            SQLConnection result = sqlConnectionHelper.get();
 
             Assert.assertNotNull(result);
         } catch (SQLException e) {

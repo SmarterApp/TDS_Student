@@ -35,7 +35,6 @@ public class TestOpportunityDaoTest extends IntegrationTest {
         Assert.assertEquals("(SBAC_PT)SBAC-IRP-Perf-MATH-3-Summer-2015-2016", result.getTestKey());
         Assert.assertEquals((Double)168d, result.getTestee());
         Assert.assertEquals("SBAC-IRP-Perf-MATH-3", result.getTestId());
-        Assert.assertEquals("(SBAC_PT)SBAC-IRP-Perf-MATH-3-Summer-2015-2016", result.getAdminSubject());
         Assert.assertEquals((Integer)1, result.getOpportunity());
         Assert.assertEquals("paused", result.getStatus());
         Assert.assertEquals("MATH", result.getSubject());
