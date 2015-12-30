@@ -9,8 +9,6 @@ import tds.student.performance.dao.DbLatencyDao;
 import tds.student.performance.domain.TestOpportunity;
 import tds.student.performance.domain.TestSession;
 import tds.student.performance.services.DbLatencyService;
-
-import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
