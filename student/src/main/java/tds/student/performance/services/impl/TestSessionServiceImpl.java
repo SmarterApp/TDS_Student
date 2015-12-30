@@ -2,7 +2,6 @@ package tds.student.performance.services.impl;
 
 import TDS.Shared.Exceptions.ReturnStatusException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tds.student.performance.dao.*;
@@ -176,7 +175,7 @@ public class TestSessionServiceImpl implements TestSessionService {
             ));
         }
 
-        List<TestOpportunity> opportunities = testOpportunityDao.getTestOpportunitiesBySessionAndStatus(testSession.getKey(), "Opportunity", "inuse");
+        List<TestOpportunity> opportunities = testOpportunityDao.getBySessionAndStatus(testSession.getKey(), "Opportunity", "inuse");
 
         for (TestOpportunity opportunity : opportunities) {
             legacyTestOpportunityService.setOpportunityStatus(opportunity, "paused");

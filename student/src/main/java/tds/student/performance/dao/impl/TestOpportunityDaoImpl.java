@@ -37,12 +37,6 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
-    @Autowired
-    ICommonDLL commonDLL;
-
-    @Autowired
-    LegacySqlConnection legacySqlConnection;
-
     /**
      * Get a single {@code TestOpportunity} from the {@code session.testopportunity} table for a specified key.
      * @param key The key for the desired {@code TestOpportunity}.
@@ -87,16 +81,43 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
                         "ON (o._fk_session = s._fk_session\n" +
                         "AND o._efk_adminsubject = o._efk_adminsubject)\n" +
                 "WHERE\n" +
-                    "_key = :key";
+                    "_key = :key\n" +
+                "GROUP BY \n" +
+                    "o._key,\n" +
+                    "o._fk_session,\n" +
+                    "o._fk_browser,\n" +
+                    "o._efk_adminsubject,\n" +
+                    "o._efk_testee ,\n" +
+                    "o._efk_testid ,\n" +
+                    "o._efk_adminsubject,\n" +
+                    "o.opportunity,\n" +
+                    "o.status,\n" +
+                    "o.datestarted,\n" +
+                    "o.datechanged,\n" +
+                    "o.restart,\n" +
+                    "o.graceperiodrestarts ,\n" +
+                    "o.maxitems,\n" +
+                    "o.subject ,\n" +
+                    "o.clientname ,\n" +
+                    "o.issegmented ,\n" +
+                    "o.algorithm ,\n" +
+                    "e.environment \n" +
+                "HAVING COUNT(s._fk_session) != 0";
 
-        return namedParameterJdbcTemplate.queryForObject(
-                SQL,
-                parameters,
-                new TestOpportunityMapper());
+        try {
+            return namedParameterJdbcTemplate.queryForObject(
+                    SQL,
+                    parameters,
+                    new TestOpportunityMapper());
+        } catch (EmptyResultDataAccessException e) {
+            logger.warn(String.format("%s did not return results for ky = %s", SQL, key));
+            return null;
+        }
+
     }
 
     @Override
-    public List<TestOpportunity> getTestOpportunitiesBySessionAndStatus(UUID sessionKey, String statusUsage, String statusStage) {
+    public List<TestOpportunity> getBySessionAndStatus(UUID sessionKey, String statusUsage, String statusStage) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("sessionKey", UuidAdapter.getBytesFromUUID(sessionKey));
         parameters.put("usage", statusUsage);
@@ -123,24 +144,22 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
                     "o.issegmented AS isSegmented,\n" +
                     "o.algorithm AS algorithm,\n" +
                     "e.environment AS environment,\n" +
-                    "COUNT(s._fk_session) AS simulationSegmentCount\n" +
+                    "0 AS simulationSegmentCount\n" + // TODO: this is not used right now so not adding the extra LEFT JOIN at this point
                 "FROM\n" +
-                    "session.testopportunity t\n" +
+                    "session.testopportunity o\n" +
                 "JOIN\n" +
-                    "configs.statuscodes s\n" + // This join should alleviate the need to call CommonDLL.GetStatusCodes_FN
-                "ON (sc.status = t.status\n" +
+                    "configs.statuscodes sc\n" + // This join should alleviate the need to call CommonDLL.GetStatusCodes_FN
+                "ON (sc.status = o.status\n" +
                     "AND sc.`usage` = :usage\n" +
                     "AND sc.stage = :stage)\n" +
-                "WHERE t._fk_session = :sessionKey";
+                "LEFT JOIN\n" +
+                    "session._externs e\n" +
+                    "ON (e.clientname = o.clientname)\n" +
+                "WHERE o._fk_session = :sessionKey";
 
-        try {
-            return namedParameterJdbcTemplate.query(
-                    SQL,
-                    parameters,
-                    new TestOpportunityMapper());
-        } catch(EmptyResultDataAccessException e) {
-            logger.warn(String.format("%s did not return results for session = %s, usage = %s, stage = %s", SQL, sessionKey, statusUsage, statusStage));
-            return null;
-        }
+        return namedParameterJdbcTemplate.query(
+                SQL,
+                parameters,
+                new TestOpportunityMapper());
     }
 }

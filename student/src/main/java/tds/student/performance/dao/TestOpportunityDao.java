@@ -12,5 +12,5 @@ import java.util.UUID;
  */
 public interface TestOpportunityDao {
     TestOpportunity get(UUID key);
-    List<TestOpportunity> getTestOpportunitiesBySessionAndStatus(UUID sessionKey, String statusUsage, String statusStage);
+    List<TestOpportunity> getBySessionAndStatus(UUID sessionKey, String statusUsage, String statusStage);
 }
