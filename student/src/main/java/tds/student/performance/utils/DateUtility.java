@@ -32,7 +32,7 @@ public class DateUtility {
 
 
     public Date getCurrentDbDate() {
-        return Calendar.getInstance(databaseTimezone).getTime();
+        return new Date(Calendar.getInstance(databaseTimezone).getTimeInMillis());
     }
 
     public Timestamp getCurrentDbTimestamp() {
