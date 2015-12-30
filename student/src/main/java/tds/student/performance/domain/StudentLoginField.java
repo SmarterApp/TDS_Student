@@ -1,7 +1,7 @@
 package tds.student.performance.domain;
 
 
-public class StudentLoginFields {
+public class StudentLoginField {
 
     private String tdsId;
     private String rtsName;
@@ -10,7 +10,7 @@ public class StudentLoginFields {
     private String label;
     private String sortOrder;
 
-    public StudentLoginFields() {
+    public StudentLoginField() {
     }
 
     public String getTdsId() {
