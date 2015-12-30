@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:tds="http://airast.org/jsfcustom"
+	xmlns:p="http://java.sun.com/jsf/passthrough">
+<h:head>
+	<!-- set character encoding -->
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<title>IRiS</title>
+	<!-- Forces IE into standards mode -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+	<!-- Prevents scaling -->
+	<meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=no" />
+
+	<!-- Blackbox Config -->
+	<script type="text/javascript">
+		var blackboxConfig = {
+			container : 'testShell',
+			preventShowOnLoad : true
+		};
+	</script>
+	<!-- Blackbox Seed -->
+	<script type="text/javascript" src="#{itempreviewDefaultBacking.blackboxHandler}"></script>
+	<!-- Required by CTB -->
+
+	<tds:CSSLink href="~/IrisStyles/iris.css" media="screen" type="text/css" rel="stylesheet" />
+	<tds:ScriptLink source="~/Scripts/iris.js" type="text/javascript"></tds:ScriptLink>
+</h:head>
+<h:body>
+	<div id="testShell"></div>
+</h:body>
+</html>

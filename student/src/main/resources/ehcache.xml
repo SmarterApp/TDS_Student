@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+         maxBytesLocalHeap="100M"
+         eternal="false"
+         memoryStoreEvictionPolicy="LFU"
+         transactionalMode="off"
+         diskExpiryThreadIntervalSeconds="0"
+>
+    <diskStore path="java.io.tmpdir" />
+
+    <cache name="shortTerm" timeToLiveSeconds="20">
+        <persistence strategy="localTempSwap" />
+    </cache>
+
+    <cache name="mediumTerm" timeToLiveSeconds="300">
+        <persistence strategy="localTempSwap" />
+    </cache>
+
+    <cache name="longTerm" timeToLiveSeconds="7200">
+        <persistence strategy="localTempSwap" />
+    </cache>
+</ehcache>
