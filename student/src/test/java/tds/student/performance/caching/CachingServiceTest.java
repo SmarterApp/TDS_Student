@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import tds.student.performance.caching.impl.CachingServiceImpl;
 
+import java.time.Clock;
 import java.util.Date;
 import java.util.concurrent.Callable;
 

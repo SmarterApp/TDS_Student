@@ -7,6 +7,7 @@ import tds.student.performance.IntegrationTest;
 import tds.student.performance.domain.TestSession;
 import tds.student.performance.domain.TestSessionTimeLimitConfiguration;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -36,7 +37,7 @@ public class TestSessionDaoTest extends IntegrationTest {
         Assert.assertEquals((Integer)0, result.getSessionType());
         Assert.assertEquals("open", result.getStatus());
         Assert.assertEquals("SBAC_PT", result.getClientName());
-        Assert.assertEquals(Double.valueOf(93), result.getProctorId());
+        Assert.assertEquals(Long.valueOf(93), result.getProctorId());
         Assert.assertEquals(expectedSessionBrowserKey, result.getSessionBrowser());
     }
 
@@ -84,7 +85,7 @@ public class TestSessionDaoTest extends IntegrationTest {
         Assert.assertEquals((Integer)15, config.getRequestInterfaceTimeout());
         Assert.assertEquals(clientName, config.getClientName());
         Assert.assertEquals("dev", config.getEnvironment());
-        Assert.assertEquals((Boolean)true, config.getIsPracticeTest());
+        Assert.assertEquals(true, config.getIsPracticeTest());
         Assert.assertEquals((Integer)30, config.getRefreshValue());
         Assert.assertEquals((Integer)20, config.getTaInterfaceTimeout());
         Assert.assertEquals((Integer)20, config.getTaCheckinTime());
@@ -116,7 +117,7 @@ public class TestSessionDaoTest extends IntegrationTest {
         Assert.assertEquals((Integer)15, config.getRequestInterfaceTimeout());
         Assert.assertEquals(clientName, config.getClientName());
         Assert.assertEquals("dev", config.getEnvironment());
-        Assert.assertEquals((Boolean)true, config.getIsPracticeTest());
+        Assert.assertEquals(true, config.getIsPracticeTest());
         Assert.assertEquals((Integer)30, config.getRefreshValue());
         Assert.assertEquals((Integer)20, config.getTaInterfaceTimeout());
         Assert.assertEquals((Integer)20, config.getTaCheckinTime());
@@ -127,5 +128,93 @@ public class TestSessionDaoTest extends IntegrationTest {
     @Test
     public void should_Pause_an_Open_TestSession() {
         // TODO:  create test.
+    }
+
+    @Test
+    public void should_Return_Null_Validate_Proctor_Is_Valid() {
+        UUID sessionKey = UUID.randomUUID();
+        UUID browserKey = UUID.randomUUID();
+
+        Timestamp begin = new Timestamp(getDateAddSeconds(-120).getTime());
+        Timestamp end = new Timestamp(getDateAddSeconds(120).getTime());
+
+        TestSession testSession = new TestSession();
+        testSession.setKey(sessionKey);
+        testSession.setSessionBrowser(browserKey);
+        testSession.setProctorId(99L);
+        testSession.setDateBegin(begin);
+        testSession.setDateEnd(end);
+
+        String msg = testSessionDao.validateProctorSession(testSession);
+        Assert.assertNull(msg);
+
+        msg = testSessionDao.validateProctorSession(testSession, testSession.getProctorId(), testSession.getSessionBrowser());
+        Assert.assertNull(msg);
+    }
+
+    @Test
+    public void should_Return_Closed_Message_From_Validate_Proctor_When_Invalid_Date() {
+        UUID sessionKey = UUID.randomUUID();
+        UUID browserKey = UUID.randomUUID();
+
+        Timestamp begin = new Timestamp(getDateAddSeconds(60).getTime());
+        Timestamp end = new Timestamp(getDateAddSeconds(120).getTime());
+
+        TestSession testSession = new TestSession();
+        testSession.setKey(sessionKey);
+        testSession.setSessionBrowser(browserKey);
+        testSession.setProctorId(99L);
+        testSession.setDateBegin(begin);
+        testSession.setDateEnd(end);
+
+        String msg = testSessionDao.validateProctorSession(testSession);
+        Assert.assertEquals("The session is closed.", msg);
+
+        begin = new Timestamp(getDateAddSeconds(-120).getTime());
+        end = new Timestamp(getDateAddSeconds(-60).getTime());
+
+        testSession.setDateBegin(begin);
+        testSession.setDateEnd(end);
+
+        msg = testSessionDao.validateProctorSession(testSession);
+        Assert.assertEquals("The session is closed.", msg);
+    }
+
+    @Test
+    public void should_Return_Invalid_Proctor_Message_From_Validate_Proctor() {
+        UUID sessionKey = UUID.randomUUID();
+        UUID browserKey = UUID.randomUUID();
+
+        Timestamp begin = new Timestamp(getDateAddSeconds(-60).getTime());
+        Timestamp end = new Timestamp(getDateAddSeconds(120).getTime());
+
+        TestSession testSession = new TestSession();
+        testSession.setKey(sessionKey);
+        testSession.setSessionBrowser(browserKey);
+        testSession.setProctorId(99L);
+        testSession.setDateBegin(begin);
+        testSession.setDateEnd(end);
+
+        String msg = testSessionDao.validateProctorSession(testSession, 1L, browserKey);
+        Assert.assertEquals("The session is not owned by this proctor", msg);
+    }
+
+    @Test
+    public void should_Return_Unauthorized_Access_Message_From_Validate_Proctor() {
+        UUID sessionKey = UUID.randomUUID();
+        UUID browserKey = UUID.randomUUID();
+
+        Timestamp begin = new Timestamp(getDateAddSeconds(-60).getTime());
+        Timestamp end = new Timestamp(getDateAddSeconds(120).getTime());
+
+        TestSession testSession = new TestSession();
+        testSession.setKey(sessionKey);
+        testSession.setSessionBrowser(browserKey);
+        testSession.setProctorId(99L);
+        testSession.setDateBegin(begin);
+        testSession.setDateEnd(end);
+
+        String msg = testSessionDao.validateProctorSession(testSession, testSession.getProctorId(), UUID.randomUUID());
+        Assert.assertEquals("Unauthorized session access", msg);
     }
 }

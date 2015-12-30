@@ -1,16 +1,17 @@
 package tds.student.performance.services.impl;
 
+import TDS.Shared.Exceptions.ReturnStatusException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import tds.student.performance.dao.ConfigurationDao;
-import tds.student.performance.dao.TestOpportunityAuditDao;
-import tds.student.performance.dao.SessionAuditDao;
-import tds.student.performance.dao.TestSessionDao;
+import org.springframework.transaction.annotation.Transactional;
+import tds.student.performance.dao.*;
+import tds.student.performance.services.DbLatencyService;
 import tds.student.performance.services.TestSessionService;
 import tds.student.performance.utils.HostNameHelper;
 import tds.student.performance.domain.*;
 
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -28,10 +29,16 @@ public class TestSessionServiceImpl implements TestSessionService {
     SessionAuditDao sessionAuditDao;
 
     @Autowired
+    TestOpportunityDao testOpportunityDao;
+
+    @Autowired
     TestOpportunityAuditDao testOpportunityAuditDao;
 
     @Autowired
     ConfigurationDao configurationDao;
+
+    @Autowired
+    DbLatencyService dbLatencyService;
 
     /**
      * Get a {@code TestSession} for the specified key.
@@ -96,6 +103,11 @@ public class TestSessionServiceImpl implements TestSessionService {
                 : timelimits.get(0);
     }
 
+    @Override
+    public void pause(TestOpportunity testOpportunity, TestSession testSession) throws SQLException, ReturnStatusException {
+        pause(testOpportunity, testSession, "closed");
+    }
+
     /**
      * Pause a {@code TestSession} for a {@code TestOpportunity}.
      * <p>
@@ -110,14 +122,29 @@ public class TestSessionServiceImpl implements TestSessionService {
      * @param reason A description of why the {@code TestSession} was put in a paused state.
      */
     @Override
-    public void pause(TestOpportunity testOpportunity, TestSession testSession, String reason) {
-        final Timestamp now = new Timestamp(new Date().getTime());
-
-        // TODO:  Get these values from cache.
-        List<ClientSystemFlag> systemFlags = configurationDao.getSystemFlags(testOpportunity.getClientName());
+    @Transactional
+    public void pause(TestOpportunity testOpportunity, TestSession testSession, String reason) throws SQLException, ReturnStatusException {
+        Date date = new Date();
+        final Timestamp now = new Timestamp(date.getTime());
 
         // TODO:  Implement this to make sure the proctor session is valid: CommonDLL.ValidateProctorSession_FN
+        String accessDeniedMessage = testSessionDao.validateProctorSession(testSession);
+
+        if (accessDeniedMessage != null) {
+            dbLatencyService.logLatency("P_PauseSession", date, testSession.getProctorId(), testSession);
+
+            // TODO: call our error handling method which will LogDbError and ReturnError equivalents
+
+            return;
+        }
+
+        // Lines 1778-1784 calls the DB to make sure the session key exists, but since we are passing in a TestSession, we are skipping that logic here
+
+        // Lines 1785: Call to update the session in the DB
+        // TODO: in the legacy code, the reason is hard-coded to "closed" even though a reason can be passed in.  The audit log insert uses the actual variable.  We are fixing that bug here by using the actual reason passed in.
         testSessionDao.pause(testSession, reason); // TODO: enumerate reasons?  Add reason getter/setter to TestSession?
+
+        List<ClientSystemFlag> systemFlags = configurationDao.getSystemFlags(testOpportunity.getClientName());
 
         if (clientSystemFlagIsOn(systemFlags, "sessions", testOpportunity.getClientName())) {
             sessionAuditDao.create(new SessionAudit(
@@ -141,7 +168,13 @@ public class TestSessionServiceImpl implements TestSessionService {
             ));
         }
 
-        // TODO:  Update other appropriate opportunities (Starting @ line 1750 in CommonDLL.P_PauseSession_SP.  The code starting @ line 1750 has a number of complexities for setting the correct status.
+        List<TestOpportunity> opportunities = testOpportunityDao.getTestOpportunitiesBySessionAndStatus(testSession.getKey(), "Opportunity", "inuse");
+
+        for (TestOpportunity opportunity : opportunities) {
+            testOpportunityDao.legacySetOpportunityStatus(opportunity, "paused");
+        }
+
+        dbLatencyService.logLatency("P_PauseSession_SP", date, null, testSession);
     }
 
     /**
