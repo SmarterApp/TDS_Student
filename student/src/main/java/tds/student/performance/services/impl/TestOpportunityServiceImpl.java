@@ -99,14 +99,6 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                 // Emulate logic to call legacy method (StudentDLL._InitializeOpportunity_SP) on line 5326
                 Integer testLength = initializeStudentOpportunity(testOpportunity, formKeyList);
 
-                testOpportunityAuditDao.create(new TestOpportunityAudit(
-                        testOpportunity.getKey(),
-                        new Timestamp(start.getTime()),
-                        "started",
-                        testOpportunity.getSessionKey(),
-                        HostNameHelper.getHostName(),
-                        "session"));
-
                 TestConfiguration configuration = TestConfigurationFactory.getNew(
                         clientTestProperty,
                         timelimitConfiguration,
@@ -229,17 +221,29 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             if (reason.get() != null) {
                 legacyCommonDll._LogDBError_SP (legacyConnection, "T_StartTestOpportunity", reason.get (), null, null, null, testOpportunity.getKey(), testOpportunity.getClientName(), null);
 
-                // TODO:  Throw exception instead?
-                return legacyCommonDll._ReturnError_SP (legacyConnection, testOpportunity.getClientName(), "T_StartTestOpportunity", reason.get (), null, testOpportunity.getKey(), "T_StartTestOpportunity", "failed");
+                // TODO:  Use the legacy exception wrapper when it's available.
+                // return legacyCommonDll._ReturnError_SP (legacyConnection, testOpportunity.getClientName(), "T_StartTestOpportunity", reason.get (), null, testOpportunity.getKey(), "T_StartTestOpportunity", "failed");
             }
 
-            return testLength.get();
-        } catch (SQLException e) {
+            testOpportunityAuditDao.create(new TestOpportunityAudit(
+                    testOpportunity.getKey(),
+                    new Timestamp(new Date().getTime()),
+                    "started",
+                    testOpportunity.getSessionKey(),
+                    HostNameHelper.getHostName(),
+                    "session"));
 
+
+            return testLength.get();
+            // TODO:  Something meaningful w/execptions
+        } catch (SQLException e) {
+            logger.error(e.getMessage(), e);
         }
         catch (ReturnStatusException e) {
-
+            logger.error(e.getMessage(), e);
         }
+
+        return 0;
     }
 
     /**
