@@ -104,6 +104,7 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
         parameters.put("clientName", clientName);
         parameters.put("testId", testId);
 
+
         final String SQL =
                 "SELECT\n" +
                     "clientname AS clientName,\n" +

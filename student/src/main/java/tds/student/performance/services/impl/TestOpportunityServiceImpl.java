@@ -1,24 +1,27 @@
 package tds.student.performance.services.impl;
 
+import AIR.Common.DB.SQLConnection;
 import AIR.Common.Helpers._Ref;
 import TDS.Shared.Exceptions.ReturnStatusException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import tds.dll.api.ICommonDLL;
+import tds.dll.api.IStudentDLL;
 import tds.student.performance.dao.*;
 import tds.student.performance.domain.*;
 import tds.student.performance.services.DbLatencyService;
 import tds.student.performance.services.TestOpportunityService;
 import tds.student.performance.services.TestSessionService;
 import tds.student.performance.utils.HostNameHelper;
+import tds.student.performance.utils.LegacySqlConnection;
 import tds.student.sql.data.OpportunityInstance;
 
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * A service for interacting with a {@code TestOpportunity}.
@@ -37,6 +40,9 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
     SessionAuditDao sessionAuditDao;
 
     @Autowired
+    TestOpportunityAuditDao testOpportunityAuditDao;
+
+    @Autowired
     TestAbilityDao testAbilityDao;
 
     @Autowired
@@ -48,7 +54,17 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
     @Autowired
     TestSessionService testSessionService;
 
-    public void startTestOpportunity(OpportunityInstance opportunityInstance, String testKey, List<String> formKeys) {
+    @Autowired
+    IStudentDLL legacyStudentDll;
+
+    @Autowired
+    ICommonDLL legacyCommonDll;
+
+    @Autowired
+    LegacySqlConnection legacySqlConnection;
+
+    @Override
+    public void startTestOpportunity(OpportunityInstance opportunityInstance, String testKey, String formKeyList) {
         Date start = new Date();
 
         try {
@@ -80,7 +96,23 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             Float ability = getInitialAbility(testOpportunity, clientTestProperty);
 
             if (testOpportunity.getDateStarted() == null) {
-                // TODO:  Call equivalent of StudentDLL._InitializeOpportunity_SP (if datestarted == null) @ line 3705
+                // Emulate logic to call legacy method (StudentDLL._InitializeOpportunity_SP) on line 5326
+                Integer testLength = initializeStudentOpportunity(testOpportunity, formKeyList);
+
+                testOpportunityAuditDao.create(new TestOpportunityAudit(
+                        testOpportunity.getKey(),
+                        new Timestamp(start.getTime()),
+                        "started",
+                        testOpportunity.getSessionKey(),
+                        HostNameHelper.getHostName(),
+                        "session"));
+
+                TestConfiguration configuration = TestConfigurationFactory.getNew(
+                        clientTestProperty,
+                        timelimitConfiguration,
+                        testLength);
+
+
             } else {
                 // TODO:  Restart the most recent test opportunity, starting @ line 3736
             }
@@ -93,6 +125,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
 
     /**
      * This method emulates the functionality and logic contained in {@code StudentDLL._GetInitialAbility_SP}.
+     *
      * @param opportunity the opportunity key to check the ability for
      */
     @Override
@@ -175,7 +208,43 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
     }
 
     /**
+     *
+     * @param testOpportunity
+     * @param formKeyList
+     * @return
+     */
+    private Integer initializeStudentOpportunity(TestOpportunity testOpportunity, String formKeyList) {
+        try {
+            SQLConnection legacyConnection = legacySqlConnection.get();
+            _Ref<Integer> testLength = new _Ref<>();
+            _Ref<String> reason = new _Ref<>();
+
+            legacyStudentDll._InitializeOpportunity_SP(
+                    legacyConnection,
+                    testOpportunity.getKey(),
+                    testLength,
+                    reason,
+                    formKeyList);
+
+            if (reason.get() != null) {
+                legacyCommonDll._LogDBError_SP (legacyConnection, "T_StartTestOpportunity", reason.get (), null, null, null, testOpportunity.getKey(), testOpportunity.getClientName(), null);
+
+                // TODO:  Throw exception instead?
+                return legacyCommonDll._ReturnError_SP (legacyConnection, testOpportunity.getClientName(), "T_StartTestOpportunity", reason.get (), null, testOpportunity.getKey(), "T_StartTestOpportunity", "failed");
+            }
+
+            return testLength.get();
+        } catch (SQLException e) {
+
+        }
+        catch (ReturnStatusException e) {
+
+        }
+    }
+
+    /**
      * This method emulates the functionality and logic contained in {@code StudentDLL._ValidateTesteeAccessProc_SP}.
+     *
      * @param testOpportunity the {@code TestOpportunity} attempting to start.
      * @param opportunityInstance the {@code OpportunityInstance} attempting to start the {@code TestOpportunity}.
      */

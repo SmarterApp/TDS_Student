@@ -271,6 +271,8 @@ public class OpportunityService implements IOpportunityService
         formKeyList = formKeys.toString ();
         // formKeyList = formKeys.Join(";");
       }
+      // TODO:  Call testOpporunityService.startTestOpportunity from performance package here.
+
       sqlResult = _oppRepository.startTestOpportunity (oppInstance, testKey, formKeyList);
       // Check if the opportunity has been started successfully.
       // NOTE: Make sure to check ReturnStatus because TestConfig is null when
