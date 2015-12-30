@@ -1,6 +1,5 @@
 package tds.student.performance.dao.impl;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,7 @@ import tds.student.performance.caching.CacheType;
 import tds.student.performance.dao.ConfigurationDao;
 import tds.student.performance.domain.ClientSystemFlag;
 import tds.student.performance.domain.ClientTestProperty;
-import tds.student.performance.domain.StudentLoginFields;
+import tds.student.performance.domain.StudentLoginField;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -170,7 +169,7 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
     @Override
     @Transactional
     @Cacheable(CacheType.LongTerm)
-    public List<StudentLoginFields> getStudentLoginFields(String clientName) {
+    public List<StudentLoginField> getStudentLoginFields(String clientName) {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("clientName", clientName);
 
@@ -192,7 +191,7 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
         return namedParameterJdbcTemplate.query(
                 SQL,
                 parameters,
-                new BeanPropertyRowMapper<>(StudentLoginFields.class));
+                new BeanPropertyRowMapper<>(StudentLoginField.class));
 
     }
 
