@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.opentestsystem.shared</groupId>
+		<artifactId>shared-master</artifactId>
+		<version>1.0.1</version>
+	</parent>
+	<groupId>org.opentestsystem.delivery</groupId>
+	<artifactId>student</artifactId>
+	<name>student</name>
+	<packaging>war</packaging>
+        <version>R01.00.67</version>
+
+	<licenses>
+		<license>
+			<name>AIR-License-1.0</name>
+			<url>http://www.smarterapp.org/documents/American_Institutes_for_Research_Open_Source_Software_License.pdf</url>
+			<distribution>repo</distribution>
+			<comments>Educational Online Test Delivery System Copyright (c) 2013 American Institutes for Research</comments>
+		</license>
+	</licenses>
+
+
+	<properties>
+
+		<item-selection.version>0.0.1</item-selection.version>
+		<testscoring.version>0.0.1</testscoring.version>
+		<spellcheck.version>0.0.1</spellcheck.version>
+		<progman-client.version>0.0.4</progman-client.version>
+		<sb11-mna-client.version>0.0.4</sb11-mna-client.version>
+		<sb11-shared-code.version>0.0.6</sb11-shared-code.version>
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>tds-dll-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>tds-dll-mssql</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>tds-dll-mysql</artifactId>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>tds-itemselection-common</artifactId>
+			<version>${item-selection.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>testscoring</artifactId>
+			<version>${testscoring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>AIR.SpellCheck</groupId>
+			<artifactId>spellcheck</artifactId>
+			<version>${spellcheck.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore</artifactId>
+		</dependency>
+		<!-- Start: Program management integration dependency -->
+		<dependency>
+			<groupId>org.opentestsystem.shared</groupId>
+			<artifactId>prog-mgmnt-client</artifactId>
+			<version>${progman-client.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.opentestsystem.shared</groupId>
+			<artifactId>prog-mgmnt-client-null-impl</artifactId>
+			<version>${progman-client.version}</version>
+		</dependency>
+		<!-- End: Program management integration dependency -->
+		<!-- Start: Monitoring and Alerting integration dependency -->
+		<dependency>
+			<groupId>org.opentestsystem.shared</groupId>
+			<artifactId>monitoring-alerting.client-null-impl</artifactId>
+			<version>${sb11-mna-client.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.opentestsystem.shared</groupId>
+			<artifactId>monitoring-alerting.client</artifactId>
+			<version> ${sb11-mna-client.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.opentestsystem.shared</groupId>
+			<artifactId>sb11-shared-code</artifactId>
+			<version>${sb11-shared-code.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+			<version>2.10.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<!-- Test -->
+		<dependency>
+			<groupId>com.mchange</groupId>
+			<artifactId>c3p0</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<version>1.1.4.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>student.library</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.opentestsystem.blackbox</groupId>
+			<artifactId>shared-blackbox</artifactId>
+			<version>1.0.1</version>
+			<type>war</type>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.26</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+	</dependencies>
+</project>

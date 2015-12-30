@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<!-- This file is ignored in an application server e.g. tomcat. These settings 
+	are only useful for standalone programs. -->
+<properties>
+	<!-- There is a more modern format given here http://www.javadocexamples.com/org/apache/commons/configuration/org.apache.commons.configuration.XMLConfiguration.html -->
+	<!-- <entry key="jdbc.url">jdbc:sqlserver://38.118.82.146;DatabaseName=TDSCore_Test_Session_2012</entry> -->
+      
+	<!-- <entry key="jdbc.url">jdbc:sqlserver://38.118.82.146;DatabaseName=TDSCore_Dev_Session2012_Sandbox</entry>
+	<entry key="jdbc.userName">dbtds</entry>
+	<entry key="jdbc.password">KOJ89238876234rUHJ</entry>
+	<entry key="jdbc.driver">com.microsoft.sqlserver.jdbc.SQLServerDriver</entry> -->
+      	
+    <entry key="jdbc.url">jdbc:mysql://db-dev.opentestsystem.org:3306/tdscore_dev_session2012_sandbox?useServerPrepStmts=false&amp;rewriteBatchedStatements=true</entry>
+       <entry key="jdbc.userName">dbsbac</entry>
+       <entry key="jdbc.password">osTyMhRM1C</entry>
+       <entry key="jdbc.driver">com.mysql.jdbc.Driver</entry>
+      	
+<!--   	
+	<entry key="jdbc.url">jdbc:mysql://sbacdevdb.astprojects.org:3306/StandardsRepository_Dev</entry>
+	<entry key="jdbc.userName">dbsbac</entry>
+	<entry key="jdbc.password">osTyMhRM1C</entry>
+	<entry key="jdbc.driver">com.mysql.jdbc.Driver</entry>
+-->	
+    <!-- 
+	<entry key="jdbc.url">jdbc:mysql://db-dev.opentestsystem.org:3306/tdscore_dev_session2012_sandbox?useServerPrepStmts=false&amp;rewriteBatchedStatements=true</entry>
+	<entry key="jdbc.userName">dbsbac</entry>
+	<entry key="jdbc.password">osTyMhRM1C</entry>
+	<entry key="jdbc.driver">com.mysql.jdbc.Driver</entry>
+	 -->
+<!--  
+	<entry key="jdbc.url">jdbc:mysql://ec2-54-237-18-215.compute-1.amazonaws.com:3306/test</entry>
+	<entry key="jdbc.userName">admin</entry>
+	<entry key="jdbc.password">H5QeaLqnge4x</entry>
+	<entry key="jdbc.driver">com.mysql.jdbc.Driver</entry>
+-->  
+</properties>
