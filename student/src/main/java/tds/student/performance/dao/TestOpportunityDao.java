@@ -5,6 +5,8 @@ import org.springframework.transaction.annotation.Transactional;
 import tds.student.performance.domain.TestOpportunity;
 
 import java.sql.Timestamp;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -12,7 +14,7 @@ import java.util.UUID;
  */
 public interface TestOpportunityDao {
     TestOpportunity get(UUID key);
-
+    List<TestOpportunity> getBySessionAndStatus(UUID sessionKey, String statusUsage, String statusStage);
     void update(TestOpportunity opportunity);
 
     Timestamp getLastActivity(UUID key);

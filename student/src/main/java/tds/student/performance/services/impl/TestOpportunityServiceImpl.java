@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tds.dll.api.ICommonDLL;
 import tds.dll.api.IStudentDLL;
+import org.springframework.transaction.annotation.Transactional;
+import tds.dll.api.ICommonDLL;
 import tds.student.performance.dao.*;
 import tds.student.performance.domain.*;
 import tds.student.performance.services.DbLatencyService;
@@ -356,7 +358,12 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                     "session"
             ));
 
-            testSessionService.pause(testOpportunity, testSession, "closed");
+            try {
+                testSessionService.pause(testOpportunity, testSession);
+            } catch (Exception e) {
+                logger.error(String.format("Error while closing session %s", testSession.getKey()), e);
+                // TODO: should we throw something from here
+            }
 
             throw new IllegalStateException(String.format("TestSession for session key %s is not available for testing.", testSession.getKey()));
         }

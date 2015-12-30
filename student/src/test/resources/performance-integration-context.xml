@@ -17,16 +17,14 @@
            http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 
 
-    <context:component-scan base-package="tds.student.performance"/>
+    <context:component-scan base-package="tds.student.performance">
+        <context:exclude-filter type="regex" expression="tds.student.performance.services.impl.*" />
+    </context:component-scan>
+
     <context:property-placeholder location="performance-integration-student.properties"/>
 
-    <import resource="test-context.xml"/>
-    <bean id="tdsSettings" class="TDS.Shared.Configuration.TDSSettings" scope="prototype"/>
 
-
-
-    <bean id="dataSource"
-          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 
         <property name="driverClassName" value="${datasource.driverClassName}"/>
         <property name="url" value="${datasource.jdbcUrl}"/>
