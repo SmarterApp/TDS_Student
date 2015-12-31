@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import tds.student.performance.IntegrationTest;
 import tds.student.performance.domain.ClientSystemFlag;
 import tds.student.performance.domain.ClientTestProperty;
-import tds.student.performance.domain.StudentLoginFields;
+import tds.student.performance.domain.StudentLoginField;
 
 import java.util.List;
 
@@ -107,7 +107,7 @@ public class ConfigurationDaoTest extends IntegrationTest {
     public void should_Get_All_StudentLoginFields_For_SBAC_PT_Client_Name() {
         String clientName = "SBAC_PT";
 
-        List<StudentLoginFields> studentLoginFields = configurationDao.getStudentLoginFields(clientName);
+        List<StudentLoginField> studentLoginFields = configurationDao.getStudentLoginFields(clientName);
 
         Assert.assertNotNull(studentLoginFields);
     }
