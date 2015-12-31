@@ -39,10 +39,10 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
     }
 
     /**
-     * Get a single {@code TestOpportunity} from the {@code session.testopportunity} table for a specified key.
-     * @param key The key for the desired {@code TestOpportunity}.
-     * @return (@code TestOpportunity} that corresponds to the specified key.
-     * @throws ReturnStatusException
+     * Get a single {@link TestOpportunity} from the {@code session.testopportunity} table for a specified key.
+     *
+     * @param key The key for the desired {@link TestOpportunity}.
+     * @return {@link TestOpportunity} that corresponds to the specified key.
      */
     @Override
     @Transactional
@@ -84,7 +84,7 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
                         "AND o._efk_adminsubject = o._efk_adminsubject)\n" +
                 "WHERE\n" +
                     "_key = :key\n" +
-                "GROUP BY \n" +
+                "GROUP BY\n" +
                     "o._key,\n" +
                     "o._fk_session,\n" +
                     "o._fk_browser,\n" +
@@ -103,8 +103,7 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
                     "o.clientname ,\n" +
                     "o.issegmented ,\n" +
                     "o.algorithm ,\n" +
-                    "e.environment \n" +
-                "HAVING COUNT(s._fk_session) != 0";
+                    "e.environment \n";
 
         try {
             return namedParameterJdbcTemplate.queryForObject(
@@ -229,32 +228,31 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
 
         final String SQL =
                 "SELECT\n" +
-                        "MAX(activityDate)\n" +
-                        "FROM\n" +
-                        "(\n" +
-                        "SELECT\n" +
-                        "datePaused as activityDate\n" +
-                        "FROM\n" +
+                    "MAX(activityDate)\n" +
+                "FROM (\n" +
+                    "SELECT\n" +
+                        "datePaused AS activityDate\n" +
+                    "FROM\n" +
                         "session.testopportunity\n" +
-                        "WHERE\n" +
+                    "WHERE\n" +
                         "_key = :key\n" +
-                        "UNION ALL\n" +
-                        "SELECT\n" +
-                        "MAX(dateSubmitted) as activityDate\n" +
-                        "FROM\n" +
+                    "UNION ALL\n" +
+                    "SELECT\n" +
+                        "MAX(dateSubmitted) AS activityDate\n" +
+                    "FROM\n" +
                         "session.testeeresponse\n" +
-                        "WHERE\n" +
-                        "_fk_TestOpportunity = :key AND\n" +
-                        "dateSubmitted is not null\n" +
-                        "UNION ALL\n" +
-                        "SELECT\n" +
-                        "MAX(dateGenerated) as activityDate\n" +
-                        "FROM\n" +
+                    "WHERE\n" +
+                        "_fk_TestOpportunity = :key\n" +
+                        "AND dateSubmitted IS NOT NULL\n" +
+                    "UNION ALL\n" +
+                    "SELECT\n" +
+                        "MAX(dateGenerated) AS activityDate\n" +
+                    "FROM\n" +
                         "session.testeeresponse\n" +
-                        "WHERE\n" +
-                        "_fk_TestOpportunity = :key AND\n" +
-                        "dateGenerated is not null\n" +
-                        ") as subQuery";
+                    "WHERE\n" +
+                        "_fk_TestOpportunity = :key\n" +
+                        "AND dateGenerated is not null\n" +
+                ") as subQuery";
 
         return namedParameterJdbcTemplate.queryForObject(SQL, parameters, Timestamp.class);
     }
