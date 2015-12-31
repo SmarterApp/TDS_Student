@@ -15,7 +15,10 @@ import org.springframework.stereotype.Service;
 import tds.dll.api.ICommonDLL;
 import tds.dll.api.IRtsDLL;
 import tds.student.performance.dao.ConfigurationDao;
+import tds.student.performance.domain.ConfigTestToolType;
 import tds.student.performance.domain.StudentLoginField;
+import tds.student.performance.services.ConfigurationService;
+import tds.student.performance.services.DbLatencyService;
 import tds.student.performance.services.StudentLoginService;
 
 import java.util.*;
@@ -54,8 +57,12 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
         Long studentKey;
         String inval = null, type = null, field = null;
 
-        // Note: Removed _maxtestopps logic. Inserts only if there are existing rows to select from.
-        // See: START: Accounting: how many open test opportunities are there currently for this client?
+
+        List<StudentLoginField> studentLoginFields = configurationDao.getStudentLoginFields(clientname);
+
+        // todo: Remove this for now
+        // Note _maxtestopps inserts only if there is existing rows to select from, or so it seems.
+        // START: Accounting: how many open test opportunities are there currently for this client?
 
         // START: Retrieve a list of fields that this client expects at login
         DataBaseTable valsTbl = getDataBaseTable("valsTable").addColumn("_key", SQL_TYPE_To_JAVA_TYPE.VARCHAR, 50).
