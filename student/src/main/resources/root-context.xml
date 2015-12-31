@@ -27,6 +27,10 @@
 	<!-- TODO Shiva: Is this Spring complaining here because it cannot find the definition for appSettings locally even though it has been defined at another location? This does seem to work currently when 
 		run. -->
 
+	<!-- Jeff Johnson, 30dec15 Added to support performance enhancements. -->
+	<context:property-placeholder location="performance-integration-student.properties" ignore-unresolvable="true" ignore-resource-not-found="true" order="11" local-override="true"/>
+	<beans:import resource="performance-context.xml"/>
+
 	<!-- ANSWER (Dan): The error marker here is due to incomplete functionality of the Eclipse parser for Spring configuration files. There is no actual error. This is Eclipse complaining because it's Spring 
 		XML parser doesn't understand imports. This same incantation is being used to set all of the properties in appSettings, so if something isn't working here, it is because either the "beans:import" or "context:property-placeholder" 
 		elements aren't structured right. -->

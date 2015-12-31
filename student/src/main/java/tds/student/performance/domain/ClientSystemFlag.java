@@ -7,8 +7,8 @@ import java.util.Date;
 Represents a record in the {@code configs.client_systemflags} table.
  */
 public class ClientSystemFlag {
-    private String auditObject;
-    private String clientName;
+    private String auditObject = "";
+    private String clientName = "";
     private Boolean isPracticeTest;
     private Boolean isOn;
     private String description;
@@ -26,16 +26,28 @@ public class ClientSystemFlag {
         return auditObject;
     }
 
+    /**
+     * Protect against a {@link NullPointerException} in the event {@code equals} is called.  Possible code smell; look
+     * into refactoring {@code equals} method..
+     */
     public void setAuditObject(String auditObject) {
-        this.auditObject = auditObject;
+        this.auditObject = auditObject == null
+                ? ""
+                : auditObject;
     }
 
     public String getClientName() {
         return clientName;
     }
 
+    /**
+     * Protect against a {@link NullPointerException} in the event {@code equals} is called.  Possible code smell; look
+     * into refactoring {@code equals} method..
+     */
     public void setClientName(String clientName) {
-        this.clientName = clientName;
+        this.clientName = clientName == null
+                ? ""
+                : clientName;
     }
 
     public Boolean getIsPracticeTest() {
