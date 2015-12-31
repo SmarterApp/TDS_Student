@@ -15,8 +15,12 @@ import org.springframework.stereotype.Service;
 import tds.dll.api.ICommonDLL;
 import tds.dll.api.IRtsDLL;
 import tds.student.performance.dao.ConfigurationDao;
-import tds.student.performance.domain.StudentLoginFields;
+import tds.student.performance.domain.ConfigTestToolType;
+import tds.student.performance.domain.StudentLoginField;
+import tds.student.performance.services.ConfigurationService;
+import tds.student.performance.services.DbLatencyService;
 import tds.student.performance.services.StudentLoginService;
+import tds.student.performance.utils.DateUtility;
 
 import java.util.*;
 
@@ -41,6 +45,16 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
     @Autowired
     private ConfigurationDao configurationDao;
 
+    // TODO: access if both the DAO and Service are needed.  The service holds the convenience method to determine if a flag is on
+    @Autowired
+    private ConfigurationService configurationService;
+
+    @Autowired
+    private DateUtility dateUtility;
+
+    @Autowired
+    private DbLatencyService dbLatencyService;
+
     @Override
     public MultiDataResultSet login(SQLConnection connection, String clientname, Map<String, String> keyValues, String sessionId)
             throws ReturnStatusException {
@@ -52,7 +66,7 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
         String inval = null, type = null, field = null;
 
 
-        List<StudentLoginFields> studentLoginFields = configurationDao.getStudentLoginFields(clientname);
+        List<StudentLoginField> studentLoginFields = configurationDao.getStudentLoginFields(clientname);
 
         // todo: Remove this for now
         // Note _maxtestopps inserts only if there is existing rows to select from, or so it seems.
@@ -219,9 +233,10 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
 
     private void _T_ValidateTesteeLogin_SP(SQLConnection connection, String clientname, String testeeId, String sessionId,
                                           _Ref<String> reasonRef, _Ref<Long> testeeKeyRef) throws ReturnStatusException {
-        Date starttime = _dateUtil.getDateWRetStatus(connection);
+        Date startTime = dateUtility.getLocalDate();
 
         // START: Get internal key for student with official ID testeeId
+        // TODO: update this SP method
         _rtsDll._GetRTSEntity_SP(connection, clientname, testeeId, "STUDENT", testeeKeyRef);
         if (testeeKeyRef.get() == null) {
             reasonRef.set("No match for student ID");
@@ -230,43 +245,33 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
         // END: Get internal key for student with official ID testeId
 
         // START: Block login if "parent exempt"
-        final String SQL_QUERY1 = "select RTSFieldName from ${ConfigDB}.client_testtooltype "
-                + " where Clientname = ${clientname} and ContextType = 'TEST' and Context = '*' and ToolName = 'Parent Exempt'";
-        SqlParametersMaps parms1 = (new SqlParametersMaps()).put("clientname", clientname);
-        SingleDataResultSet result = executeStatement(connection, fixDataBaseNames(SQL_QUERY1), parms1, false).getResultSets().next();
-        String rtsField = null;
-        DbResultRecord record = (result.getCount() > 0 ? result.getRecords().next() : null);
-        if (record != null) {
-            rtsField = record.<String>get("rtsFieldname");
-        }
+        ConfigTestToolType parentExemptToolType = configurationDao.getTestToolType(clientname, "Parent Exempt", "TEST", "*");
+
         // -- check for parent exemption from all tests (no point in logging in)
         _Ref<String> rtsValueRef = new _Ref<>();
-        if (rtsField != null) {
+        if (parentExemptToolType != null && parentExemptToolType.getRtsFieldName() != null) {
 
-            _rtsDll._GetRTSAttribute_SP(connection, clientname, testeeKeyRef.get(), rtsField, rtsValueRef);
+            _rtsDll._GetRTSAttribute_SP(connection, clientname, testeeKeyRef.get(), parentExemptToolType.getRtsFieldName(), rtsValueRef);
             if (DbComparator.isEqual(rtsValueRef.get(), "TDS_ParentExempt1")) {
                 reasonRef.set("parent exempt");
 
-                _commonDll._LogDBLatency_SP(connection, "_T_ValidateTesteeLogin", starttime, testeeKeyRef.get(), true,
+                _commonDll._LogDBLatency_SP(connection, "_T_ValidateTesteeLogin", startTime, testeeKeyRef.get(), true,
                         null, null, null, clientname, null);
                 return;
             }
         }
         // END: Block login if "parent exempt"
-        Integer schoolmatch = null;
-        final String SQL_QUERY2 = "select IsOn from ${ConfigDB}.client_systemflags where ClientName=${clientname} and AuditObject = 'MatchTesteeProctorSchool'";
-        SqlParametersMaps parms2 = (new SqlParametersMaps()).put("clientname", clientname);
-        result = executeStatement(connection, fixDataBaseNames(SQL_QUERY2), parms2, false).getResultSets().next();
-        record = (result.getCount() > 0 ? result.getRecords().next() : null);
-        if (record != null) {
-            schoolmatch = record.<Integer>get("IsOn");
-        }
-        if (DbComparator.isEqual(schoolmatch, 1)) {
+
+
+        SingleDataResultSet result;
+        DbResultRecord record;
+
+        if (configurationService.isFlagOn(clientname, "MatchTesteeProctorSchool")) {
             if (sessionId == null) {
                 // -- this is an internal system error
                 _commonDll._RecordSystemError_SP(connection, "T_GetRTSTestee", "Missing session ID");
                 reasonRef.set("Session ID required");
-                _commonDll._LogDBLatency_SP(connection, "_T_ValidateTesteeLogin", starttime, testeeKeyRef.get(), true,
+                _commonDll._LogDBLatency_SP(connection, "_T_ValidateTesteeLogin", startTime, testeeKeyRef.get(), true,
                         null, null, null, clientname, null);
                 return;
             }
@@ -274,7 +279,7 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
             Long proctorKey = null;
             final String SQL_QUERY3 = "select _efk_Proctor from session where clientname = ${clientname} and sessionID = ${sessionID} "
                     + " and status = 'open' and ${now} between DateBegin and DateEnd";
-            SqlParametersMaps parms3 = (new SqlParametersMaps()).put("clientname", clientname).put("sessionID", sessionId).put("now", starttime);
+            SqlParametersMaps parms3 = (new SqlParametersMaps()).put("clientname", clientname).put("sessionID", sessionId).put("now", startTime);
             result = executeStatement(connection, SQL_QUERY3, parms3, false).getResultSets().next();
             record = (result.getCount() > 0 ? result.getRecords().next() : null);
             if (record != null) {
@@ -282,7 +287,7 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
             }
             if (proctorKey == null) {
                 reasonRef.set("The session is not available for testing");
-                _commonDll._LogDBLatency_SP(connection, "_T_ValidateTesteeLogin", starttime, testeeKeyRef.get(), true,
+                _commonDll._LogDBLatency_SP(connection, "_T_ValidateTesteeLogin", startTime, testeeKeyRef.get(), true,
                         null, null, null, clientname, null);
                 return;
             }
@@ -291,12 +296,13 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
             _rtsDll._ValidateInstitutionMatch_SP(connection, clientname, testeeKeyRef.get(), proctorKey, schoolKeyRef);
             if (schoolKeyRef.get() == null) {
                 reasonRef.set("You must test in a session in your own school");
-                _commonDll._LogDBLatency_SP(connection, "_T_ValidateTesteeLogin", starttime, testeeKeyRef.get(), true,
+                _commonDll._LogDBLatency_SP(connection, "_T_ValidateTesteeLogin", startTime, testeeKeyRef.get(), true,
                         null, null, null, clientname, null);
                 return;
             }
         }
-        _commonDll._LogDBLatency_SP(connection, "_T_ValidateTesteeLogin", starttime, testeeKeyRef.get(), true, null, null, null, clientname, null);
+
+        dbLatencyService.logLatency("_T_ValidateTesteeLogin", startTime, testeeKeyRef.get(), clientname);
     }
 
 
