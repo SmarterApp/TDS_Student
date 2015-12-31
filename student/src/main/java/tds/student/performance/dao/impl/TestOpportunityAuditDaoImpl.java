@@ -44,7 +44,7 @@ public class TestOpportunityAuditDaoImpl implements TestOpportunityAuditDao {
      * @param testOpportunityAudit The {@code TestOpportunityAudit} that needs to be recorded in the database.
      */
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional
     public void create(TestOpportunityAudit testOpportunityAudit) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("key", UuidAdapter.getBytesFromUUID(testOpportunityAudit.getTestOpportunityKey()));
@@ -58,7 +58,7 @@ public class TestOpportunityAuditDaoImpl implements TestOpportunityAuditDao {
                 "INSERT INTO\n" +
                     "archive.opportunityaudit (\n" +
                         "_fk_testopportunity,\n" +
-                        "dataaccessed,\n" +
+                        "dateaccessed,\n" +
                         "accesstype,\n" +
                         "_fk_session,\n" +
                         "hostname,\n" +
@@ -76,9 +76,9 @@ public class TestOpportunityAuditDaoImpl implements TestOpportunityAuditDao {
                     "session.testopportunity t\n" +
                 "JOIN\n" +
                     "configs.statuscodes s\n" + // This join should alleviate the need to call CommonDLL.GetStatusCodes_FN
-                    "ON (sc.status = t.status\n" +
-                    "AND sc.`usage` = 'Opportunity'\n" +
-                    "AND sc.stage = 'inuse')\n" +
+                    "ON (s.status = t.status\n" +
+                    "AND s.`usage` = 'Opportunity'\n" +
+                    "AND s.stage = 'inuse')\n" +
                 "WHERE t._fk_session = :sessionKey";
 
         try {

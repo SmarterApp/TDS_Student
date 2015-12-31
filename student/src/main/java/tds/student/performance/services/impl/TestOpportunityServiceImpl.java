@@ -383,7 +383,8 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
         // RULE:  Student should not be able to start a test if the timeout window has expired.
         // NOTE:  Unlike CommonDLL.P_PauseSession_SP, the StudentDLL._ValidateTesteeAccessProc_SP does not check the
         // configs.client_systemflags table to determine if the client is configured to log session audit records.
-        Date dateVisitedPlusCheckIn = new Date(testSession.getDateVisited().getTime() + checkIn);
+        // NOTE:  checkIn time is in MINUTES, so need to multiply checkIn by 60,000 milliseconds so the math works out.
+        Date dateVisitedPlusCheckIn = new Date(testSession.getDateVisited().getTime() + (checkIn * 60000L));
         if (now.after(dateVisitedPlusCheckIn)) {
             sessionAuditDao.create(new SessionAudit(
                     testSession.getKey(),

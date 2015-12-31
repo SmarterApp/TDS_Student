@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import tds.dll.api.ICommonDLL;
 import tds.dll.api.IRtsDLL;
 import tds.student.performance.dao.ConfigurationDao;
-import tds.student.performance.domain.StudentLoginFields;
+import tds.student.performance.domain.StudentLoginField;
 import tds.student.performance.services.StudentLoginService;
 
 import java.util.*;
@@ -52,7 +52,7 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
         String inval = null, type = null, field = null;
 
 
-        List<StudentLoginFields> studentLoginFields = configurationDao.getStudentLoginFields(clientname);
+        List<StudentLoginField> studentLoginFields = configurationDao.getStudentLoginFields(clientname);
 
         // todo: Remove this for now
         // Note _maxtestopps inserts only if there is existing rows to select from, or so it seems.
