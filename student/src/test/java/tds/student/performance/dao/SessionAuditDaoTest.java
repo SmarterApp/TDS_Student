@@ -30,7 +30,7 @@ public class SessionAuditDaoTest extends IntegrationTest {
                 mockSessionKey,
                 mockDate,
                 "unittest",
-                "unittest host", // Wouldn't we want the IP address of the user who tried to start a timed-out session?
+                "unittest host",
                 mockBrowserKey,
                 "unittest_db"
         ));
