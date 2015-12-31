@@ -10,12 +10,13 @@ public class TestConfiguration {
     private Integer testLength;
     private String reason;
     private Integer interfaceTimeout;
-    private Integer opportunityRestart;
+    private Integer opportunityRestartDelay;
     private String excludeItemTypes;
     private Integer contentLoadTimeout = 120;
     private Integer requestInterfaceTimeout;
     private Integer prefetch;
     private Boolean validateCompleteness;
+    private Boolean scoreByTds;
 
     public Integer getStartPosition() {
         return startPosition;
@@ -65,12 +66,12 @@ public class TestConfiguration {
         this.interfaceTimeout = interfaceTimeout;
     }
 
-    public Integer getOpportunityRestart() {
-        return opportunityRestart;
+    public Integer getOpportunityRestartDelay() {
+        return opportunityRestartDelay;
     }
 
-    public void setOpportunityRestart(Integer opportunityRestart) {
-        this.opportunityRestart = opportunityRestart;
+    public void setOpportunityRestartDelay(Integer opportunityRestartDelay) {
+        this.opportunityRestartDelay = opportunityRestartDelay;
     }
 
     public String getExcludeItemTypes() {
@@ -111,5 +112,13 @@ public class TestConfiguration {
 
     public void setValidateCompleteness(Boolean validateCompleteness) {
         this.validateCompleteness = validateCompleteness;
+    }
+
+    public Boolean getScoreByTds() {
+        return scoreByTds;
+    }
+
+    public void setScoreByTds(Boolean scoreByTds) {
+        this.scoreByTds = scoreByTds;
     }
 }
