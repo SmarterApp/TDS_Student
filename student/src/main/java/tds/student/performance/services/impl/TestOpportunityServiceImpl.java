@@ -145,7 +145,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                 } else if (isTimeDiffLessThanDelay) {
                     testeeResponseDao.updateRestartCount(opportunityInstance.getKey(), restartCount, true);
                 } else if (clientTestProperty.getDeleteUnansweredItems()) {
-                    //TODO: Call replacement for _RemoveUnanswered_SP
+                    removeUnanswered(testOpportunity);
                 }
 
                 restartCount++;
@@ -257,14 +257,17 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
 
     /**
      * Set up a {@link TestOpportunity} to start for the first time.
+     * <p>
+     *     This method currently wraps a call to the {@code StudentDLL._InitializeOpportunity_SP} in the legacy
+     *     codebase.
+     * </p>
      *
      * @param testOpportunity The {@link TestOpportunity} to initialize.
      * @param formKeyList A {@link String} list of form keys passed in from the caller.
      * @return An {@link Integer} representing the total number of items in the test.
      */
     private Integer initializeStudentOpportunity(TestOpportunity testOpportunity, String formKeyList) {
-        try {
-            SQLConnection legacyConnection = legacySqlConnection.get();
+        try (SQLConnection legacyConnection = legacySqlConnection.get()) {
             _Ref<Integer> testLength = new _Ref<>();
             _Ref<String> reason = new _Ref<>();
 
@@ -290,17 +293,38 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                     HostNameHelper.getHostName(),
                     "session"));
 
-
             return testLength.get();
             // TODO:  Something meaningful w/execptions
         } catch (SQLException e) {
             logger.error(e.getMessage(), e);
-        }
-        catch (ReturnStatusException e) {
+        } catch (ReturnStatusException e) {
             logger.error(e.getMessage(), e);
         }
 
         return 0;
+    }
+
+    /**
+     * Remove unanswered test items from the {@link TestOpportunity}.
+     * <p>
+     *     This method currently wraps a call to the {@code StudentDLL._RemoveUnanswered_SP} in the legacy codebase.
+     * </p>
+     * <p>
+     *     <strong>NOTE:</strong> The legacy method returns a value (a {@code MultiDataResultSet}), but the return value
+     *     is never used by the caller ({@code StudentDLL.T_StartTestOpportunity_SP} in this case).  Therefore the
+     *     return value is ignored.
+     * </p>
+     *
+     * @param testOpportunity The {@code TestOpportunity} for which unanswered test items should be removed.
+     */
+    private void removeUnanswered(TestOpportunity testOpportunity) {
+        try (SQLConnection legacyConnection = legacySqlConnection.get()) {
+            legacyStudentDll._RemoveUnanswered_SP(legacyConnection, testOpportunity.getKey());
+        } catch (SQLException e) {
+            logger.error(e.getMessage(), e);
+        } catch (ReturnStatusException e) {
+            logger.error(e.getMessage(), e);
+        }
     }
 
     /**
