@@ -6,9 +6,7 @@ import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 
 @Component
 public class DateUtility {
@@ -17,29 +15,17 @@ public class DateUtility {
     @Autowired
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
-
-        try {
-            String timezoneId = jdbcTemplate.queryForObject("SELECT @@system_time_zone", String.class);
-            databaseTimezone = TimeZone.getTimeZone(timezoneId);
-        } catch (Exception e) {
-            databaseTimezone = TimeZone.getTimeZone(defaultTimezoneId);
-        }
     }
 
-    // default to UTC
-    private static final String defaultTimezoneId = "UTC";
-    private static TimeZone databaseTimezone = null;
-
-
-    public Date getCurrentDbDate() {
-        return new Date(Calendar.getInstance(databaseTimezone).getTimeInMillis());
+    public Date getDbDate() {
+        return jdbcTemplate.queryForObject("SELECT now(3)", Date.class);
     }
 
-    public Timestamp getCurrentDbTimestamp() {
-        return new Timestamp(getCurrentDbDate().getTime());
+    public Date getLocalDate() {
+        return new Date();
     }
 
-    public String getDbTimeZone() {
-        return databaseTimezone.getID();
+    public Timestamp getTimestamp() {
+        return new Timestamp(getLocalDate().getTime());
     }
 }

@@ -2,14 +2,10 @@ package tds.student.performance.utils;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import tds.student.performance.IntegrationTest;
-
-import java.sql.Timestamp;
 import java.util.*;
 
 public class DateUtilityTest extends IntegrationTest {
@@ -18,9 +14,9 @@ public class DateUtilityTest extends IntegrationTest {
 
     @Test
     public void should_Return_Db_Timezone() {
-        String timezone = dateUtility.getDbTimeZone();
+        Date now = dateUtility.getDbDate();
 
-        Assert.assertEquals("UTC", timezone);
+        System.out.println(now);
     }
 
     @Test
