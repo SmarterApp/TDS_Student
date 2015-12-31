@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tds.dll.api.ICommonDLL;
 import tds.dll.api.IStudentDLL;
-import org.springframework.transaction.annotation.Transactional;
-import tds.dll.api.ICommonDLL;
 import tds.student.performance.dao.*;
 import tds.student.performance.domain.*;
 import tds.student.performance.services.DbLatencyService;
@@ -20,6 +18,7 @@ import tds.student.performance.utils.HostNameHelper;
 import tds.student.performance.utils.LegacySqlConnection;
 import tds.student.performance.utils.DateUtils;
 import tds.student.sql.data.OpportunityInstance;
+import tds.student.sql.data.TestConfig;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -70,8 +69,9 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
     LegacySqlConnection legacySqlConnection;
 
     @Override
-    public void startTestOpportunity(OpportunityInstance opportunityInstance, String testKey, String formKeyList) {
+    public TestConfig startTestOpportunity(OpportunityInstance opportunityInstance, String testKey, String formKeyList) {
         Date start = new Date();
+        TestConfig config = new TestConfig();
 
         try {
             TestOpportunity testOpportunity = testOpportunityDao.get(opportunityInstance.getKey());
@@ -100,17 +100,15 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
 
             //TODO: Is this necessary here? Remove if not... old code doesn't seem to use the ability that is set here
             Float initialAbility = getInitialAbility(testOpportunity, clientTestProperty);
+            Boolean scoreByTds = configurationDao.isSetForScoreByTDS(
+                    testOpportunity.getClientName(),
+                    testOpportunity.getTestId());
 
             if (testOpportunity.getDateStarted() == null) {
                 // Emulate logic to call legacy method (StudentDLL._InitializeOpportunity_SP) on line 5326
                 Integer testLength = initializeStudentOpportunity(testOpportunity, formKeyList);
 
-                TestConfiguration configuration = TestConfigurationFactory.getNew(
-                        clientTestProperty,
-                        timelimitConfiguration,
-                        testLength);
-
-
+                config = TestConfigHelper.getNew(clientTestProperty, timelimitConfiguration, testLength, scoreByTds);
             } else {         // Restart the most recent test opportunity, starting @ line 5373 - StudentDLL
                 Date lastActivity = testOpportunityDao.getLastActivity(opportunityInstance.getKey());
                 Integer gracePeriodRestarts = testOpportunity.getGracePeriodRestarts();
@@ -154,12 +152,21 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
 
                 //TODO: Call _UnfinishedResponsePages_SP (connection, oppKey, rcnt, true) equivalent
 
+                config = TestConfigHelper.getRestart(
+                        clientTestProperty,
+                        timelimitConfiguration,
+                        testOpportunity.getMaxItems(),
+                        restartCount,
+                        0, // TODO:  Need to set restartPosition properly.
+                        scoreByTds);
             }
 
             dbLatencyService.logLatency("T_StartTestOpportunity", start, null, testOpportunity);
         } catch (IllegalStateException e) {
             logger.error(e.getMessage(), e);
         }
+
+        return config;
     }
 
     /**
@@ -249,10 +256,11 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
     }
 
     /**
+     * Set up a {@link TestOpportunity} to start for the first time.
      *
-     * @param testOpportunity
-     * @param formKeyList
-     * @return
+     * @param testOpportunity The {@link TestOpportunity} to initialize.
+     * @param formKeyList A {@link String} list of form keys passed in from the caller.
+     * @return An {@link Integer} representing the total number of items in the test.
      */
     private Integer initializeStudentOpportunity(TestOpportunity testOpportunity, String formKeyList) {
         try {
