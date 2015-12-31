@@ -63,46 +63,14 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
             throws ReturnStatusException {
 
         List<SingleDataResultSet> resultsSets = new ArrayList<SingleDataResultSet>();
-        Date starttime = _dateUtil.getDateWRetStatus(connection);
-        String ssid;
+        Date startTime = _dateUtil.getDateWRetStatus(connection);
+        String ssId;
         Long studentKey;
-        String inval = null, type = null, field = null;
 
-
-        List<StudentLoginField> studentLoginFields = configurationDao.getStudentLoginFields(clientname);
-
-        // todo: Remove this for now
-        // Note _maxtestopps inserts only if there is existing rows to select from, or so it seems.
+        // todo: Remove this for now Note _maxtestopps inserts only if there is existing rows to select from, or so it seems.
         // START: Accounting: how many open test opportunities are there currently for this client?
 
-        // START: Retrieve a list of fields that this client expects at login
-        DataBaseTable valsTbl = getDataBaseTable("valsTable").addColumn("_key", SQL_TYPE_To_JAVA_TYPE.VARCHAR, 50).
-                addColumn("inval", SQL_TYPE_To_JAVA_TYPE.VARCHAR, 200).addColumn("outval", SQL_TYPE_To_JAVA_TYPE.VARCHAR, 200).addColumn("field", SQL_TYPE_To_JAVA_TYPE.VARCHAR, 100).
-                addColumn("atttype", SQL_TYPE_To_JAVA_TYPE.VARCHAR, 50).addColumn("action", SQL_TYPE_To_JAVA_TYPE.VARCHAR, 50);
-        connection.createTemporaryTable(valsTbl);
-
-        final String SQL_QUERY3 = "insert into ${valsTblName} (_key, field, atttype, action) "
-                + " select TDS_ID, RTSName, type, atLogin from ${ConfigDB}.client_testeeattribute "
-                + " where clientname = ${clientname} and atLogin is not null";
-        SqlParametersMaps parms3 = (new SqlParametersMaps()).put("clientname", clientname);
-        Map<String, String> unquotedParms3 = new HashMap<>();
-        unquotedParms3.put("valsTblName", valsTbl.getTableName());
-        final String query3 = fixDataBaseNames(SQL_QUERY3);
-        executeStatement(connection, fixDataBaseNames(query3, unquotedParms3), parms3, false).getUpdateCount();
-        // END: Retrieve a list of fields that this client expects at login
-
-        // START: Update list of fields with the values supplied from the login form
-        // (form values were passed into fn as argument)
-        for (Map.Entry<String, String> pair : keyValues.entrySet()) {
-            final String SQL_QUERY4 = "update ${valsTblName} set inval = ${theRight} where _key = ${theLeft}";
-            Map<String, String> unquotedParms4 = unquotedParms3;
-            SqlParametersMaps parms4 = (new SqlParametersMaps()).put("theRight", pair.getValue()).put("theLeft", pair.getKey());
-            executeStatement(connection, fixDataBaseNames(SQL_QUERY4, unquotedParms4), parms4, false).getUpdateCount();
-        }
-        // END: Update list of fields with the values supplied from the login form
-        // (form values were passed into fn as argument)
-
-        // *new* list of fields
+        // Get list of fields from config
         Map<String, StudentFieldValue> fieldValueMap = createFieldMap(configurationDao.getStudentLoginFields(clientname));
 
         // *new* Copy inputs to map.
@@ -114,92 +82,35 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
         }
         // *new* Look for ID
         if (fieldValueMap.containsKey(ID_FIELD_NAME)) {
-            ssid = fieldValueMap.get(ID_FIELD_NAME).inValue;
-        }
-
-        // START: Retrieve the student ID
-        // -- ID is ALWAYS REQUIRED
-        final String SQL_QUERY5 = "select  inval, atttype  as type from ${valsTblName} where _key = 'ID'";
-        Map<String, String> unquotedParms5 = unquotedParms3;
-        SingleDataResultSet result = executeStatement(connection, fixDataBaseNames(SQL_QUERY5, unquotedParms5), parms3, false).getResultSets().next();
-        DbResultRecord record = (result.getCount() > 0 ? result.getRecords().next() : null);
-        if (record != null) {
-            inval = record.<String>get("inval");
-        }
-        if (inval == null) {
+            ssId = fieldValueMap.get(ID_FIELD_NAME).inValue;
+        }   else {
             resultsSets.add(_commonDll._ReturnError_SP(connection, clientname, "T_Login", "No match for student ID"));
-            connection.dropTemporaryTable(valsTbl);
             return (new MultiDataResultSet(resultsSets));
         }
-
-        // The value of the student ID provided on the login form.
-        ssid = inval;
-        // END: Retrieve the student ID
-
-
         // todo: remove guest session logic for now
         // START: Open guest session, if requested and permitted by client configuration
         // START: Handle request for anonymous login for practice test (assumes GUEST session?)
-
 
         // START: Handle request for validated login.
         // -- This 'may' be a real student. Attempt to validate that
         _Ref<String> errorRef = new _Ref<>();
         _Ref<Long> entityRef = new _Ref<>();
-        _T_ValidateTesteeLogin_SP(connection, clientname, ssid, sessionId, errorRef, entityRef);
+        _T_ValidateTesteeLogin_SP(connection, clientname, ssId, sessionId, errorRef, entityRef);
         studentKey = entityRef.get();
         if (errorRef.get() != null) {
             resultsSets.add(_commonDll._ReturnError_SP(connection, clientname, "T_Login", errorRef.get()));
-            connection.dropTemporaryTable(valsTbl);
+            //connection.dropTemporaryTable(valsTbl);
             return (new MultiDataResultSet(resultsSets));
         }
 
-        // -- Student has been validated against the proctor and a valid RTS Key
-        // returned. Now check required attributes
-        final String SQL_QUERY12 = "update ${valsTblName} set outval = inval where _Key = 'ID'";
-        Map<String, String> unquotedParms12 = unquotedParms3;
-        executeStatement(connection, fixDataBaseNames(SQL_QUERY12, unquotedParms12), null, false).getUpdateCount();
-        // *new*
+        // *new* -- Student has been validated against the proctor and a valid RTS Key returned. Now check required attributes
         if (fieldValueMap.containsKey(ID_FIELD_NAME)) {
             fieldValueMap.get(ID_FIELD_NAME).outValue = fieldValueMap.get(ID_FIELD_NAME).inValue;
         }
-        // ======================
 
-        final String SQL_QUERY13 = "select  action from ${valsTblName} where outval is null and action = 'REQUIRE' limit 1";
-        final String SQL_QUERY14 = " select  field,  atttype as type from ${valsTblName} where outval is null and action = 'REQUIRE' limit 1";
-        final String SQL_QUERY15 = "update ${valsTblName} set outval = ${value}  where field = ${field}";
-
-        LoginHelper loginHelper = new LoginHelper();
-        loginHelper.setClientname(clientname);
-        loginHelper.setEntity(studentKey);
-        loginHelper.setTbl(valsTbl);
-        loginHelper.setQueryExists(SQL_QUERY13);
-        loginHelper.setQueryExec(SQL_QUERY14);
-        loginHelper.setQueryUpdate(SQL_QUERY15);
-
-        loginHelper.doIt(connection);
-
-        // *new* replace first do it
+        // *new* Replace temp tables
+        // todo -- check for login failure due to bad required input data
         collectAndVerifyFields(connection, studentKey, clientname, fieldValueMap);
-
-        // -- check for login failure due to bad required input data
-        final String SQL_QUERY16 = "select  _key from ${valsTblName} where _key <> 'ID' and action = 'REQUIRE' and (outval is null or inval is null or inval <> outval ) limit 1";
-        Map<String, String> unquotedParms16 = unquotedParms3;
-        if (exists(executeStatement(connection, fixDataBaseNames(SQL_QUERY16, unquotedParms16), null, false))) {
-            resultsSets.add(_commonDll._ReturnError_SP(connection, clientname, "T_Login", "No match"));
-            connection.dropTemporaryTable(valsTbl);
-            return (new MultiDataResultSet(resultsSets));
-        }
-
-        // -- get the remaining verify data and data required by student app for
-        // practice tests
-        final String SQL_QUERY17 = "select  _key from ${valsTblName} where outval is null  limit 1";
-        final String SQL_QUERY18 = " select  field,  atttype as type from ${valsTblName} where outval is null  limit 1";
-        loginHelper.setQueryExists(SQL_QUERY17);
-        loginHelper.setQueryExec(SQL_QUERY18);
-        loginHelper.setQueryUpdate(SQL_QUERY15); // this one stays the same
-        loginHelper.doIt(connection);
-
 
         SingleDataResultSet resultSetEntity = createResultEntity(studentKey);
         resultsSets.add(resultSetEntity);
@@ -207,19 +118,7 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
         SingleDataResultSet resultSetInputs = createResultFields(fieldValueMap);
         resultsSets.add(resultSetInputs);
 
-        final String SQL_QUERY19 = "select TDS_ID, outval as Value, Label, SortOrder, atLogin from ${valsTblName}, ${ConfigDB}.client_testeeattribute "
-                + " where clientname = ${clientname} and _Key = TDS_ID and atLogin in ('REQUIRE', 'VERIFY') order by SortOrder";
-
-        Map<String, String> unquotedParms19 = unquotedParms3;
-        SqlParametersMaps parms19 = (new SqlParametersMaps()).put("clientname", clientname);
-        final String query19 = fixDataBaseNames(SQL_QUERY19);
-        SingleDataResultSet rs2 = executeStatement(connection, fixDataBaseNames(query19, unquotedParms19), parms19, false).getResultSets().next();
-
-        //resultsSets.add(rs2);
-
-        _commonDll._LogDBLatency_SP(connection, "T_Login", starttime, studentKey, true, null, null, null, clientname, null);
-        connection.dropTemporaryTable(valsTbl);
-
+        _commonDll._LogDBLatency_SP(connection, "T_Login", startTime, studentKey, true, null, null, null, clientname, null);
         return (new MultiDataResultSet(resultsSets));
     }
 
@@ -296,75 +195,6 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
 
         dbLatencyService.logLatency("_T_ValidateTesteeLogin", startTime, testeeKeyRef.get(), clientname);
     }
-
-
-    // This class is used only to run three specific queries having one unquoted parameter - temp table name
-    class LoginHelper {
-        private DataBaseTable tbl;
-        private String queryExists;
-        private String queryExec;
-        private String queryUpdate;
-        private String clientname;
-        private Long entity;
-
-        public void setTbl(DataBaseTable tbl) {
-            this.tbl = tbl;
-        }
-
-        public void setQueryExists(String queryExists) {
-            this.queryExists = queryExists;
-        }
-
-        public void setQueryExec(String queryExec) {
-            this.queryExec = queryExec;
-        }
-
-        public void setQueryUpdate(String queryUpdate) {
-            this.queryUpdate = queryUpdate;
-        }
-
-        public void setClientname(String clientname) {
-            this.clientname = clientname;
-        }
-
-        public void setEntity(Long entity) {
-            this.entity = entity;
-        }
-
-        public void doIt(SQLConnection connection) throws ReturnStatusException {
-
-            Map<String, String> unquotedParms = new HashMap<>();
-            unquotedParms.put("valsTblName", this.tbl.getTableName());
-
-            _Ref<String> valueRef = new _Ref<>();
-            _Ref<Long> relatedEntityRef = new _Ref<>();
-            _Ref<String> relatedIdRef = new _Ref<>();
-
-            while (exists(executeStatement(connection, fixDataBaseNames(this.queryExists, unquotedParms), null, false))) {
-                String type = null;
-                String field = null;
-                SingleDataResultSet result = executeStatement(connection, fixDataBaseNames(this.queryExec, unquotedParms), null, false).getResultSets().next();
-                DbResultRecord record = (result.getCount() > 0 ? result.getRecords().next() : null);
-                if (record != null) {
-                    field = record.<String>get("field");
-                    type = record.<String>get("type");
-                }
-
-                valueRef.set(null);
-                relatedEntityRef.set(null);
-                relatedIdRef.set(null);
-                if (DbComparator.isEqual(type, "attribute"))
-                    _rtsDll._GetRTSAttribute_SP(connection, clientname, entity, field, valueRef);
-                else if (DbComparator.isEqual(type, "relationship"))
-                    _rtsDll._GetRTSRelationship_SP(connection, clientname, entity, field, relatedEntityRef, relatedIdRef, valueRef);
-
-                String value = (valueRef.get() == null ? UNKNOWN_ATTRIBUTE_VALUE : valueRef.get());
-                SqlParametersMaps parms = (new SqlParametersMaps()).put("value", value).put("field", field);
-                executeStatement(connection, fixDataBaseNames(queryUpdate, unquotedParms), parms, false).getUpdateCount();
-            }
-        }
-    }
-
 
     private SingleDataResultSet createResultEntity(Long studentKey)
             throws ReturnStatusException {
