@@ -236,7 +236,6 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
         Date startTime = dateUtility.getLocalDate();
 
         // START: Get internal key for student with official ID testeeId
-        // TODO: update this SP method
         _rtsDll._GetRTSEntity_SP(connection, clientname, testeeId, "STUDENT", testeeKeyRef);
         if (testeeKeyRef.get() == null) {
             reasonRef.set("No match for student ID");
