@@ -3,23 +3,19 @@ package tds.student.performance.dao.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import tds.student.performance.caching.CacheType;
 import tds.student.performance.dao.TestSessionDao;
 import tds.student.performance.dao.mappers.TestSessionMapper;
 import tds.student.performance.domain.TestSessionTimeLimitConfiguration;
-import tds.student.performance.utils.DateUtility;
 import tds.student.performance.utils.UuidAdapter;
 import tds.student.performance.domain.TestSession;
 
 import javax.sql.DataSource;
-//import java.time.Clock;
 import java.util.*;
 
 /**
@@ -34,9 +30,6 @@ public class TestSessionDaoImpl implements TestSessionDao {
     public void setDataSource(DataSource dataSource) {
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
-
-    @Autowired
-    DateUtility dateUtility;
 
     /**
      * Get a {@code TestSession} for the specified session key.
@@ -91,7 +84,6 @@ public class TestSessionDaoImpl implements TestSessionDao {
      */
     @Override
     @Transactional
-    //@Cacheable(CacheType.MediumTerm)
     public List<TestSessionTimeLimitConfiguration> getTimeLimitConfigurations(String clientName, String testId) {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("clientName", clientName);
@@ -174,8 +166,8 @@ public class TestSessionDaoImpl implements TestSessionDao {
 
         // Emulate line 1726: SQL_QUERY1
         //  Note: We are not using testSession.isOpen() since the logic here is different than there for some reason
-        // Get the current time based on the databases timezone
-        Date now = dateUtility.getDbDate();
+        // TODO: validate that this java Date will compare correctly with the date coming from the DB
+        Date now = new Date();
 
         if (now.before(testSession.getDateBegin()) || now.after(testSession.getDateEnd())) {
             return "The session is closed.";
