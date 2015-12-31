@@ -14,11 +14,11 @@ import tds.student.performance.caching.CacheType;
 import tds.student.performance.dao.TestSessionDao;
 import tds.student.performance.dao.mappers.TestSessionMapper;
 import tds.student.performance.domain.TestSessionTimeLimitConfiguration;
+import tds.student.performance.utils.DateUtility;
 import tds.student.performance.utils.UuidAdapter;
 import tds.student.performance.domain.TestSession;
 
 import javax.sql.DataSource;
-import java.sql.Timestamp;
 //import java.time.Clock;
 import java.util.*;
 
@@ -34,6 +34,9 @@ public class TestSessionDaoImpl implements TestSessionDao {
     public void setDataSource(DataSource dataSource) {
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
+
+    @Autowired
+    DateUtility dateUtility;
 
     /**
      * Get a {@code TestSession} for the specified session key.
@@ -171,8 +174,8 @@ public class TestSessionDaoImpl implements TestSessionDao {
 
         // Emulate line 1726: SQL_QUERY1
         //  Note: We are not using testSession.isOpen() since the logic here is different than there for some reason
-        // TODO: validate that this java Date will compare correctly with the date coming from the DB
-        Date now = new Date();
+        // Get the current time based on the databases timezone
+        Date now = dateUtility.getDbDate();
 
         if (now.before(testSession.getDateBegin()) || now.after(testSession.getDateEnd())) {
             return "The session is closed.";

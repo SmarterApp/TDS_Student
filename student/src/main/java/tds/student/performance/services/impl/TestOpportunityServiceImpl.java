@@ -14,6 +14,7 @@ import tds.student.performance.domain.*;
 import tds.student.performance.services.DbLatencyService;
 import tds.student.performance.services.TestOpportunityService;
 import tds.student.performance.services.TestSessionService;
+import tds.student.performance.utils.DateUtility;
 import tds.student.performance.utils.HostNameHelper;
 import tds.student.performance.utils.LegacySqlConnection;
 import tds.student.performance.utils.DateUtils;
@@ -59,6 +60,9 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
     @Autowired
     TestSessionService testSessionService;
 
+    @Autowired
+    DateUtility dateUtility;
+    
     @Autowired
     IStudentDLL legacyStudentDll;
 
@@ -334,7 +338,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
      * @param opportunityInstance the {@code OpportunityInstance} attempting to start the {@code TestOpportunity}.
      */
     private void verifyTesteeAccess(TestOpportunity testOpportunity, OpportunityInstance opportunityInstance) throws IllegalStateException {
-        Timestamp now = new Timestamp(new Date().getTime());
+        Date now = dateUtility.getDbDate(); // since this is used to check if the test is open, it needs to match the DB server timezone
 
         // Emulate logic on line 492 of _ValidateTesteeAccessProc_SP in StudentDLL.class
         // RULE:  The test opportunity's browser key must match the opportunity instance's browser key.
@@ -383,7 +387,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
         if (now.after(dateVisitedPlusCheckIn)) {
             sessionAuditDao.create(new SessionAudit(
                     testSession.getKey(),
-                    now,
+                    new Timestamp(now.getTime()),
                     "TACheckin TIMEOUT",
                     HostNameHelper.getHostName(),
                     testSession.getSessionBrowser(),
