@@ -21,14 +21,13 @@ public class DbLatencyDaoTest extends IntegrationTest {
     DateUtility dateUtility;
 
     @Test
-    @Rollback(false)
     public void should_Create_a_New_DbLatency_Record() {
         UUID mockTestOppKey = UUID.randomUUID();
         UUID mockTestSessionKey = UUID.randomUUID();
         Integer n = ThreadLocalRandom.current().nextInt(1, 100);
         String procName = "should_Create_a_New_DbLatency_Record";
 
-        Date endDate = dateUtility.getCurrentDbDate();
+        Date endDate = dateUtility.getLocalDate();
 
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.SECOND, -10);

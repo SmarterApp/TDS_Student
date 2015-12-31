@@ -171,7 +171,7 @@ public class TestSessionDaoImpl implements TestSessionDao {
         // Emulate line 1726: SQL_QUERY1
         //  Note: We are not using testSession.isOpen() since the logic here is different than there for some reason
         // Get the current time based on the databases timezone
-        Date now = dateUtility.getCurrentDbDate();
+        Date now = dateUtility.getDbDate();
 
         if (now.before(testSession.getDateBegin()) || now.after(testSession.getDateEnd())) {
             return "The session is closed.";
