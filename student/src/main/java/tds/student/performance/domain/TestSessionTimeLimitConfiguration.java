@@ -7,14 +7,14 @@ import java.util.Date;
  * Represents a record from the {@code session.timelimits} view.
  */
 public class TestSessionTimeLimitConfiguration {
-    private String testId;
+    private String testId = "";
     private Integer opportunityExpiration;
     private Integer opportunityRestart;
     private Integer opportunityDelay;
     private Integer interfaceTimeout;
     private Integer requestInterfaceTimeout;
-    private String clientName;
-    private String environment;
+    private String clientName = "";
+    private String environment = "";
     private Boolean isPracticeTest;
     private Integer refreshValue;
     private Integer taInterfaceTimeout;
@@ -35,8 +35,14 @@ public class TestSessionTimeLimitConfiguration {
         return testId;
     }
 
+    /**
+     * Protect against a {@link NullPointerException} in the event {@code equals} is called.  Possible code smell; look
+     * into refactoring {@code equals} method..
+     */
     public void setTestId(String testId) {
-        this.testId = testId;
+        this.testId = testId == null
+                ? ""
+                : testId;
     }
 
     public Integer getOpportunityExpiration() {
@@ -60,6 +66,7 @@ public class TestSessionTimeLimitConfiguration {
      *     Logic @ line 3689 in {@code StudentDLL.T_StartTestOpportunity_SP} states that if
      *     {@code session.timeouts.opprestart} is null, it should be set to 1.
      * </p>
+     *
      * @param opportunityRestart the value that {@code opportunityRestart} should be set to.
      */
     public void setOpportunityRestart(Integer opportunityRestart) {
@@ -96,16 +103,28 @@ public class TestSessionTimeLimitConfiguration {
         return clientName;
     }
 
+    /**
+     * Protect against a {@link NullPointerException} in the event {@code equals} is called.  Possible code smell; look
+     * into refactoring {@code equals} method.
+     */
     public void setClientName(String clientName) {
-        this.clientName = clientName;
+        this.clientName = clientName == null
+                ? ""
+                : clientName;
     }
 
     public String getEnvironment() {
         return environment;
     }
 
+    /**
+     * Protect against a {@link NullPointerException} in the event {@code equals} is called.  Possible code smell; look
+     * into refactoring {@code equals} method..
+     */
     public void setEnvironment(String environment) {
-        this.environment = environment;
+        this.environment = environment == null
+                ? ""
+                : environment;
     }
 
     public Boolean getIsPracticeTest() {
@@ -188,8 +207,8 @@ public class TestSessionTimeLimitConfiguration {
 
         TestSessionTimeLimitConfiguration that = (TestSessionTimeLimitConfiguration)other;
 
-        return this.testId.equals(that.testId)
-                && this.clientName.equals(that.clientName)
-                && this.environment.equals(that.environment);
+        return this.getTestId().equals(that.getTestId())
+                && this.getClientName().equals(that.getClientName())
+                && this.getEnvironment().equals(that.getEnvironment());
     }
 }

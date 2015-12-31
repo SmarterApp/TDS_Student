@@ -3,12 +3,14 @@ package tds.student.performance.dao.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import tds.student.performance.caching.CacheType;
 import tds.student.performance.dao.TestSessionDao;
 import tds.student.performance.dao.mappers.TestSessionMapper;
 import tds.student.performance.domain.TestSessionTimeLimitConfiguration;
@@ -17,6 +19,7 @@ import tds.student.performance.utils.UuidAdapter;
 import tds.student.performance.domain.TestSession;
 
 import javax.sql.DataSource;
+//import java.time.Clock;
 import java.util.*;
 
 /**
@@ -88,6 +91,7 @@ public class TestSessionDaoImpl implements TestSessionDao {
      */
     @Override
     @Transactional
+    //@Cacheable(CacheType.MediumTerm)
     public List<TestSessionTimeLimitConfiguration> getTimeLimitConfigurations(String clientName, String testId) {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("clientName", clientName);

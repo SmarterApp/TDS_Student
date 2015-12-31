@@ -13,5 +13,5 @@ public interface ConfigurationDao {
     List<ClientSystemFlag> getSystemFlags(String clientName);
     ClientTestProperty getClientTestProperty(String clientName, String testId);
     List<StudentLoginField> getStudentLoginFields(String clientName);
-
-    }
+    Boolean isSetForScoreByTDS(String clientName, String testId);
+}

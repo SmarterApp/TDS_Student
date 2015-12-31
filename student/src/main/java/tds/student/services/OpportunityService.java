@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import tds.student.performance.services.TestOpportunityService;
 import tds.student.services.abstractions.IOpportunityService;
 import tds.student.services.data.ApprovalInfo;
 import tds.student.services.data.ApprovalInfo.OpportunityApprovalStatus;
@@ -59,6 +60,9 @@ public class OpportunityService implements IOpportunityService
   private IConfigRepository		 _configRepository;
   @Autowired
   private ITDSLogger			 _tdsLogger;
+
+  @Autowired
+  TestOpportunityService testOpportunityService;
   
   private static final Logger    _logger = LoggerFactory.getLogger (OpportunityService.class);
 
@@ -271,7 +275,10 @@ public class OpportunityService implements IOpportunityService
         formKeyList = formKeys.toString ();
         // formKeyList = formKeys.Join(";");
       }
-      sqlResult = _oppRepository.startTestOpportunity (oppInstance, testKey, formKeyList);
+      // TODO:  Call testOpporunityService.startTestOpportunity from performance package here.
+      sqlResult = testOpportunityService.startTestOpportunity(oppInstance, testKey, formKeyList);
+
+      // sqlResult = _oppRepository.startTestOpportunity (oppInstance, testKey, formKeyList);
       // Check if the opportunity has been started successfully.
       // NOTE: Make sure to check ReturnStatus because TestConfig is null when
       // not

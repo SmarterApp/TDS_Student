@@ -126,6 +126,25 @@ public class TestSessionDaoTest extends IntegrationTest {
     }
 
     @Test
+    public void should_Return_a_CheckInTimeLimit_of_20_For_ClientName_SBAC_PT() {
+        String clientName = "SBAC_PT";
+        String testId = null;
+
+        List<TestSessionTimeLimitConfiguration> result = testSessionDao.getTimeLimitConfigurations(clientName, testId);
+
+        TestSessionTimeLimitConfiguration timelimitToFind = new TestSessionTimeLimitConfiguration(clientName, testId);
+
+        TestSessionTimeLimitConfiguration item = result.contains(timelimitToFind)
+                ? result.get(result.indexOf(timelimitToFind))
+                : result.get(0);
+
+        Integer checkin = item.getTaCheckinTime();
+
+        Assert.assertNotNull(checkin);
+        Assert.assertEquals((Integer)20, checkin);
+    }
+
+    @Test
     public void should_Pause_an_Open_TestSession() {
         // TODO:  create test.
     }

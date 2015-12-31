@@ -1,14 +1,14 @@
 package tds.student.performance.services.impl;
 
+import AIR.Common.DB.SQLConnection;
 import AIR.Common.Helpers._Ref;
 import TDS.Shared.Exceptions.ReturnStatusException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import tds.dll.api.ICommonDLL;
+import tds.dll.api.IStudentDLL;
 import tds.student.performance.dao.*;
 import tds.student.performance.domain.*;
 import tds.student.performance.services.DbLatencyService;
@@ -17,13 +17,14 @@ import tds.student.performance.services.TestSessionService;
 import tds.student.performance.utils.DateUtility;
 import tds.student.performance.utils.HostNameHelper;
 import tds.student.performance.utils.LegacySqlConnection;
+import tds.student.performance.utils.DateUtils;
 import tds.student.sql.data.OpportunityInstance;
+import tds.student.sql.data.TestConfig;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * A service for interacting with a {@code TestOpportunity}.
@@ -42,6 +43,12 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
     SessionAuditDao sessionAuditDao;
 
     @Autowired
+    TestOpportunityAuditDao testOpportunityAuditDao;
+
+    @Autowired
+    TesteeResponseDao testeeResponseDao;
+
+    @Autowired
     TestAbilityDao testAbilityDao;
 
     @Autowired
@@ -55,9 +62,20 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
 
     @Autowired
     DateUtility dateUtility;
+    
+    @Autowired
+    IStudentDLL legacyStudentDll;
 
-    public void startTestOpportunity(OpportunityInstance opportunityInstance, String testKey, List<String> formKeys) {
+    @Autowired
+    ICommonDLL legacyCommonDll;
+
+    @Autowired
+    LegacySqlConnection legacySqlConnection;
+
+    @Override
+    public TestConfig startTestOpportunity(OpportunityInstance opportunityInstance, String testKey, String formKeyList) {
         Date start = new Date();
+        TestConfig config = new TestConfig();
 
         try {
             TestOpportunity testOpportunity = testOpportunityDao.get(opportunityInstance.getKey());
@@ -85,26 +103,84 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             }
 
             //TODO: Is this necessary here? Remove if not... old code doesn't seem to use the ability that is set here
-            Float ability = getInitialAbility(testOpportunity, clientTestProperty);
+            Float initialAbility = getInitialAbility(testOpportunity, clientTestProperty);
+            Boolean scoreByTds = configurationDao.isSetForScoreByTDS(
+                    testOpportunity.getClientName(),
+                    testOpportunity.getTestId());
 
             if (testOpportunity.getDateStarted() == null) {
-                // TODO:  Call equivalent of StudentDLL._InitializeOpportunity_SP (if datestarted == null) @ line 3705
-            } else {
-                // TODO:  Restart the most recent test opportunity, starting @ line 3736
+                // Emulate logic to call legacy method (StudentDLL._InitializeOpportunity_SP) on line 5326
+                Integer testLength = initializeStudentOpportunity(testOpportunity, formKeyList);
+
+                config = TestConfigHelper.getNew(clientTestProperty, timelimitConfiguration, testLength, scoreByTds);
+            } else {         // Restart the most recent test opportunity, starting @ line 5373 - StudentDLL
+                Date lastActivity = testOpportunityDao.getLastActivity(opportunityInstance.getKey());
+                Integer gracePeriodRestarts = testOpportunity.getGracePeriodRestarts();
+                Integer restartCount = testOpportunity.getRestartCount();
+                TestSession session = testSessionService.get(opportunityInstance.getKey());
+                //TODO: Replace below with db time
+                Timestamp now = new Timestamp(System.currentTimeMillis());
+                boolean isTimeDiffLessThanDelay =
+                        (DateUtils.minutesDiff(lastActivity, start) < timelimitConfiguration.getOpportunityDelay());
+
+                if(isTimeDiffLessThanDelay) {
+                    gracePeriodRestarts++;
+                }
+
+                testOpportunity.setRestartCount(restartCount + 1);
+                testOpportunity.setStatus("started");
+                testOpportunity.setGracePeriodRestarts(gracePeriodRestarts);
+                testOpportunity.setDateChanged(now);
+                testOpportunity.setDateStarted(now);
+                testOpportunityDao.update(testOpportunity);
+
+                TestOpportunityAudit oppAudit = new TestOpportunityAudit();
+                oppAudit.setTestOpportunityKey(opportunityInstance.getKey());
+                oppAudit.setSessionKey(opportunityInstance.getSessionKey());
+                oppAudit.setHostName(legacyCommonDll.getLocalhostName());
+                oppAudit.setBrowserKey(opportunityInstance.getBrowserKey());
+                oppAudit.setDatabaseName("session");
+                oppAudit.setDateAccessed(new Timestamp(System.currentTimeMillis()));
+                oppAudit.setAccessType("restart " + (restartCount + 1));
+                testOpportunityAuditDao.create(oppAudit);
+
+                if (session.getSessionType() == 1) {
+                    testeeResponseDao.updateRestartCount(opportunityInstance.getKey(), restartCount, false);
+                } else if (isTimeDiffLessThanDelay) {
+                    testeeResponseDao.updateRestartCount(opportunityInstance.getKey(), restartCount, true);
+                } else if (clientTestProperty.getDeleteUnansweredItems()) {
+                    removeUnanswered(testOpportunity);
+                }
+
+                restartCount++;
+
+                //TODO: Call _UnfinishedResponsePages_SP (connection, oppKey, rcnt, true) equivalent
+
+                config = TestConfigHelper.getRestart(
+                        clientTestProperty,
+                        timelimitConfiguration,
+                        testOpportunity.getMaxItems(),
+                        restartCount,
+                        0, // TODO:  Need to set restartPosition properly.
+                        scoreByTds);
             }
 
             dbLatencyService.logLatency("T_StartTestOpportunity", start, null, testOpportunity);
         } catch (IllegalStateException e) {
             logger.error(e.getMessage(), e);
         }
+
+        return config;
     }
 
     /**
      * This method emulates the functionality and logic contained in {@code StudentDLL._GetInitialAbility_SP}.
+     *
      * @param opportunity the opportunity key to check the ability for
      */
     @Override
     public Float getInitialAbility(TestOpportunity opportunity, ClientTestProperty property) {
+        Date start = new Date();
         Float ability = null;
         Boolean bySubject = false;
         Double slope = null;
@@ -118,13 +194,13 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
 
         List<TestAbility> testAbilities = testAbilityDao.getTestAbilities(opportunity.getKey(), opportunity.getClientName(),
                 opportunity.getSubject(), opportunity.getTestee().longValue());
-        TestAbility initialAbility = getMostRecentTestAbility(testAbilities, opportunity.getAdminSubject(), false);
+        TestAbility initialAbility = getMostRecentTestAbility(testAbilities, opportunity.getTestKey(), false);
 
         //First, try to get the ability for current subject/test
         if (initialAbility != null) {
             ability = initialAbility.getScore();
         } else if (bySubject) { // If that didn't retrieve anything, get the ability from the same subject, any test
-            initialAbility = getMostRecentTestAbility(testAbilities, opportunity.getAdminSubject(), true);
+            initialAbility = getMostRecentTestAbility(testAbilities, opportunity.getTestKey(), true);
             if (initialAbility != null) {
                 ability = initialAbility.getScore();
             } else { // and if that didn't work, get the initial ability from the previous year.
@@ -141,7 +217,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
 
         //If the ability was not retrieved/set from the above logic, grab it from the item bank DB
         if (ability == null) {
-            SetOfAdminSubject subject = itemBankDao.get(opportunity.getAdminSubject());
+            SetOfAdminSubject subject = itemBankDao.get(opportunity.getTestKey());
             if (subject != null) {
                 ability = subject.getStartAbility().floatValue();
             } else {
@@ -149,6 +225,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             }
         }
 
+        dbLatencyService.logLatency("GetInitialAbility", start, null, opportunity);
         return ability;
     }
 
@@ -183,7 +260,80 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
     }
 
     /**
+     * Set up a {@link TestOpportunity} to start for the first time.
+     * <p>
+     *     This method currently wraps a call to the {@code StudentDLL._InitializeOpportunity_SP} in the legacy
+     *     codebase.
+     * </p>
+     *
+     * @param testOpportunity The {@link TestOpportunity} to initialize.
+     * @param formKeyList A {@link String} list of form keys passed in from the caller.
+     * @return An {@link Integer} representing the total number of items in the test.
+     */
+    private Integer initializeStudentOpportunity(TestOpportunity testOpportunity, String formKeyList) {
+        try (SQLConnection legacyConnection = legacySqlConnection.get()) {
+            _Ref<Integer> testLength = new _Ref<>();
+            _Ref<String> reason = new _Ref<>();
+
+            legacyStudentDll._InitializeOpportunity_SP(
+                    legacyConnection,
+                    testOpportunity.getKey(),
+                    testLength,
+                    reason,
+                    formKeyList);
+
+            if (reason.get() != null) {
+                legacyCommonDll._LogDBError_SP (legacyConnection, "T_StartTestOpportunity", reason.get (), null, null, null, testOpportunity.getKey(), testOpportunity.getClientName(), null);
+
+                // TODO:  Use the legacy exception wrapper when it's available.
+                // return legacyCommonDll._ReturnError_SP (legacyConnection, testOpportunity.getClientName(), "T_StartTestOpportunity", reason.get (), null, testOpportunity.getKey(), "T_StartTestOpportunity", "failed");
+            }
+
+            testOpportunityAuditDao.create(new TestOpportunityAudit(
+                    testOpportunity.getKey(),
+                    new Timestamp(new Date().getTime()),
+                    "started",
+                    testOpportunity.getSessionKey(),
+                    HostNameHelper.getHostName(),
+                    "session"));
+
+            return testLength.get();
+            // TODO:  Something meaningful w/execptions
+        } catch (SQLException e) {
+            logger.error(e.getMessage(), e);
+        } catch (ReturnStatusException e) {
+            logger.error(e.getMessage(), e);
+        }
+
+        return 0;
+    }
+
+    /**
+     * Remove unanswered test items from the {@link TestOpportunity}.
+     * <p>
+     *     This method currently wraps a call to the {@code StudentDLL._RemoveUnanswered_SP} in the legacy codebase.
+     * </p>
+     * <p>
+     *     <strong>NOTE:</strong> The legacy method returns a value (a {@code MultiDataResultSet}), but the return value
+     *     is never used by the caller ({@code StudentDLL.T_StartTestOpportunity_SP} in this case).  Therefore the
+     *     return value is ignored.
+     * </p>
+     *
+     * @param testOpportunity The {@code TestOpportunity} for which unanswered test items should be removed.
+     */
+    private void removeUnanswered(TestOpportunity testOpportunity) {
+        try (SQLConnection legacyConnection = legacySqlConnection.get()) {
+            legacyStudentDll._RemoveUnanswered_SP(legacyConnection, testOpportunity.getKey());
+        } catch (SQLException e) {
+            logger.error(e.getMessage(), e);
+        } catch (ReturnStatusException e) {
+            logger.error(e.getMessage(), e);
+        }
+    }
+
+    /**
      * This method emulates the functionality and logic contained in {@code StudentDLL._ValidateTesteeAccessProc_SP}.
+     *
      * @param testOpportunity the {@code TestOpportunity} attempting to start.
      * @param opportunityInstance the {@code OpportunityInstance} attempting to start the {@code TestOpportunity}.
      */
@@ -254,4 +404,5 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             throw new IllegalStateException(String.format("TestSession for session key %s is not available for testing.", testSession.getKey()));
         }
     }
+
 }
