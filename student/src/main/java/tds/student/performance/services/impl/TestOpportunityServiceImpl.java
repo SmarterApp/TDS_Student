@@ -25,6 +25,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * A service for interacting with a {@code TestOpportunity}.
@@ -154,7 +155,8 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
 
                 restartCount++;
 
-                //TODO: Call _UnfinishedResponsePages_SP (connection, oppKey, rcnt, true) equivalent
+                //Call _UnfinishedResponsePages_SP (connection, oppKey, rcnt, true) equivalent
+                updateUnfinishedResponsePages(opportunityInstance.getKey(), restartCount);
 
                 config = TestConfigHelper.getRestart(
                         clientTestProperty,
@@ -171,6 +173,34 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
         }
 
         return config;
+    }
+
+    /**
+     * This method emulated the functionality and logic contained in {@code StudentDll._UnfinishedResponsePages_SP}.
+     *
+     * NOTE: The legacy _UnfinishedResponsePages_SP call has a return value that never appears to be read,
+     * at least not by student or the tdsdll project. The original method also has a doUpdate flag that
+     * seems to be only set to "true" in every instance that the legacy method is called in production code.
+     * Because of this, the flag and option select branch has been removed and the method has a void return value.
+     *
+     * @param oppKey
+     * @param newRestartCount
+     */
+    public void updateUnfinishedResponsePages(UUID oppKey, Integer newRestartCount){
+        List<UnfinishedResponsePage> pages = testeeResponseDao.getUnfinishedPages(oppKey);
+
+        for (UnfinishedResponsePage page : pages) {
+            if (page.getGroupRequired() == -1) {
+                page.setGroupRequired(page.getNumItems());
+            }
+
+            if (page.getRequiredResponses() < page.getRequiredItems() ||
+                    page.getValidCount() < page.getGroupRequired()) {
+                page.setVisible(true);
+                testeeResponseDao.updateRestartCount(oppKey, newRestartCount, false);
+            }
+        }
+
     }
 
     /**
