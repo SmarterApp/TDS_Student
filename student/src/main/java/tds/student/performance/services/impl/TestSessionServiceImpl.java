@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tds.student.performance.dao.*;
 import tds.student.performance.exceptions.ReturnErrorException;
+import tds.student.performance.services.ConfigurationService;
 import tds.student.performance.services.DbLatencyService;
 import tds.student.performance.services.LegacyTestOpportunityService;
 import tds.student.performance.services.TestSessionService;
@@ -36,7 +37,7 @@ public class TestSessionServiceImpl implements TestSessionService {
     TestOpportunityAuditDao testOpportunityAuditDao;
 
     @Autowired
-    ConfigurationDao configurationDao;
+    ConfigurationService configurationService;
 
     @Autowired
     LegacyTestOpportunityService legacyTestOpportunityService;
@@ -143,7 +144,6 @@ public class TestSessionServiceImpl implements TestSessionService {
 
         if (accessDeniedMessage != null) {
             legacyErrorHandlerService.logDbError("P_PauseSession", accessDeniedMessage, testSession.getProctorId(), null, null, testSession.getKey());
-            dbLatencyService.logLatency("P_PauseSession", date, testSession.getProctorId(), testSession);
             legacyErrorHandlerService.throwReturnErrorException(testOpportunity.getClientName(), "P_PauseSession", accessDeniedMessage, null, null, "ValidateProctorSession", "failed");
 
             return;
@@ -155,9 +155,7 @@ public class TestSessionServiceImpl implements TestSessionService {
         // TODO: in the legacy code, the reason is hard-coded to "closed" even though a reason can be passed in.  The audit log insert uses the actual variable.  We are fixing that bug here by using the actual reason passed in.
         testSessionDao.pause(testSession, reason); // TODO: enumerate reasons?  Add reason getter/setter to TestSession?
 
-        List<ClientSystemFlag> systemFlags = configurationDao.getSystemFlags(testOpportunity.getClientName());
-
-        if (clientSystemFlagIsOn(systemFlags, "sessions", testOpportunity.getClientName())) {
+        if (configurationService.isFlagOn(testOpportunity.getClientName(), "sessions")) {
             sessionAuditDao.create(new SessionAudit(
                     testSession.getKey(),
                     now,
@@ -168,7 +166,7 @@ public class TestSessionServiceImpl implements TestSessionService {
             ));
         }
 
-        if (clientSystemFlagIsOn(systemFlags, "opportunities", testOpportunity.getClientName())) {
+        if (configurationService.isFlagOn(testOpportunity.getClientName(), "opportunities")) {
             testOpportunityAuditDao.create(new TestOpportunityAudit(
                     testOpportunity.getKey(),
                     now,
@@ -188,29 +186,5 @@ public class TestSessionServiceImpl implements TestSessionService {
         dbLatencyService.logLatency("P_PauseSession_SP", date, null, testSession);
     }
 
-    /**
-     * Determine if a {@code ClientSystemFlag} is enabled for the specified audit object (i.e. the name of the flag in
-     * question) and client name combination.
-     * <p>
-     *     !!!! CODE SMELL !!!!
-     *     This should be moved into some sort of helper and/or service for dealing with configuration settings.  It can
-     *     live here for now, but this should definitely be refactored.
-     * </p>
-     * @param systemFlags The collection of {@code ClientSystemFlag} records to inspect.
-     * @param auditObject The name of the audit object to look for.
-     * @param clientName The name of the client.
-     * @return {@code True} if the specified audit object is set to "On" for the client; otherwise {@code False}.
-     */
-    private Boolean clientSystemFlagIsOn(List<ClientSystemFlag> systemFlags, String auditObject, String clientName) {
-        if (systemFlags == null || systemFlags.size() == 0) {
-            return false;
-            // TODO:  throw exception instead.
-        }
 
-        ClientSystemFlag flagToFind = new ClientSystemFlag(auditObject, clientName);
-
-        return systemFlags.contains(flagToFind)
-                ? systemFlags.get(systemFlags.indexOf(flagToFind)).getIsOn()
-                : false;
-    }
 }

@@ -14,6 +14,7 @@ import tds.student.performance.caching.CacheType;
 import tds.student.performance.dao.ConfigurationDao;
 import tds.student.performance.domain.ClientSystemFlag;
 import tds.student.performance.domain.ClientTestProperty;
+import tds.student.performance.domain.ConfigTestToolType;
 import tds.student.performance.domain.StudentLoginField;
 
 import javax.sql.DataSource;
@@ -198,6 +199,43 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
                 parameters,
                 new BeanPropertyRowMapper<>(StudentLoginField.class));
 
+    }
+
+    @Override
+    @Transactional
+    @Cacheable(CacheType.LongTerm)
+    public ConfigTestToolType getTestToolType(String clientName, String toolName, String context, String contextType) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("clientName", clientName);
+        parameters.put("contextType", contextType);
+        parameters.put("context", context);
+        parameters.put("toolName", toolName);
+
+        final String SQL =
+            "SELECT\n" +
+                "clientname AS clientName,\n" +
+                "toolname AS toolName,\n" +
+                "rtsfieldname AS rtsFieldName,\n" +
+                "source,\n" +
+                "contexttype AS contextType,\n" +
+                "context,\n" +
+                "testmode AS testMode\n" +
+            "FROM\n" +
+                "configs.client_testtooltype\n" +
+            "WHERE\n" +
+                "clientname = :clientName\n" +
+                "AND contexttype = :contextType\n" +
+                "AND context = :context\n" +
+                "AND toolname = :toolName";
+
+        try {
+            return namedParameterJdbcTemplate.queryForObject(
+                    SQL,
+                    parameters,
+                    new BeanPropertyRowMapper<>(ConfigTestToolType.class));
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     /**

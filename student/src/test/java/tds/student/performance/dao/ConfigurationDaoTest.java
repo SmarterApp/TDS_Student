@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import tds.student.performance.IntegrationTest;
 import tds.student.performance.domain.ClientSystemFlag;
 import tds.student.performance.domain.ClientTestProperty;
+import tds.student.performance.domain.ConfigTestToolType;
 import tds.student.performance.domain.StudentLoginField;
 
 import java.util.List;
@@ -110,6 +111,25 @@ public class ConfigurationDaoTest extends IntegrationTest {
         List<StudentLoginField> studentLoginFields = configurationDao.getStudentLoginFields(clientName);
 
         Assert.assertNotNull(studentLoginFields);
+    }
+
+    @Test
+    public void should_Return_Null_When_No_Record_Exists() {
+        Assert.assertNull(configurationDao.getTestToolType("none", "none", "none", "none"));
+    }
+
+    @Test
+    public void should_Return_Record_For_Valid_Query() {
+        ConfigTestToolType toolType = configurationDao.getTestToolType("SBAC_PT", "Other", "*", "TEST");
+
+        Assert.assertNotNull(toolType);
+        Assert.assertEquals("SBAC_PT", toolType.getClientName());
+        Assert.assertEquals("Other", toolType.getToolName());
+        Assert.assertEquals("*", toolType.getContext());
+        Assert.assertEquals("TEST", toolType.getContextType());
+        Assert.assertEquals("TDSAcc-Other", toolType.getRtsFieldName());
+        Assert.assertEquals("OSS", toolType.getSource());
+        Assert.assertEquals("ALL", toolType.getTestMode());
     }
 
     @Test
