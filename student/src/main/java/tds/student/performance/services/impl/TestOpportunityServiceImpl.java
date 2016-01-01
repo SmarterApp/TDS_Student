@@ -373,7 +373,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             logger.error(e.getMessage(), e);
             legacyErrorHandlerService.logDbError("T_StartTestOpportunity", e.getMessage(), testOpportunity.getTestee(), testOpportunity.getTestId(), null, testOpportunity.getKey());
 
-            throw new ReturnErrorException("failed", e.getMessage(), "_InitializeOpportunity", e.getMessage());
+            throw new ReturnErrorException(e.getReturnStatus().getStatus(), e.getReturnStatus().getReason(), "_InitializeOpportunity", e.getReturnStatus().getAppKey());
         }
     }
 
