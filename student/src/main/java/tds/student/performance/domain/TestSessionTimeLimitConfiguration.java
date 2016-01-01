@@ -48,17 +48,23 @@ public class TestSessionTimeLimitConfiguration {
     }
 
     /**
-     * Referred to as "delay" in {@code StudentDLL.T_StartTestOpportunity_SP} @ line 3668.
+     * Referred to as "delay" in {@code StudentDLL.T_StartTestOpportunity_SP} @ line 5310.
+     * <p>
+     *     This value is in minutes.
+     * </p>
      */
     public Integer getOpportunityRestart() {
         return opportunityRestart;
     }
 
     /**
-     * Referred to as "delay" in {@code StudentDLL.T_StartTestOpportunity_SP} @ line 3668.
+     * Referred to as "delay" in {@code StudentDLL.T_StartTestOpportunity_SP} @ line 5310.
      * <p>
      *     Logic @ line 3689 in {@code StudentDLL.T_StartTestOpportunity_SP} states that if
      *     {@code session.timeouts.opprestart} is null, it should be set to 1.
+     * </p>
+     * <p>
+     *     This value is in minutes.
      * </p>
      *
      * @param opportunityRestart the value that {@code opportunityRestart} should be set to.

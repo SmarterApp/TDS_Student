@@ -47,7 +47,7 @@ public class TestConfigHelper {
         configuration.setStatus("started");
         configuration.setTestLength(testLength);
         configuration.setInterfaceTimeout(timelimitConfiguration.getInterfaceTimeout());
-        configuration.setOpportunityRestartDelay(timelimitConfiguration.getOpportunityDelay());
+        configuration.setOpportunityRestartDelay(timelimitConfiguration.getOpportunityRestart());
         configuration.setRequestInterfaceTimeout(timelimitConfiguration.getRequestInterfaceTimeout());
         configuration.setPrefetch(clientTestProperty.getPrefetch());
         configuration.setValidateCompleteness(clientTestProperty.getValidateCompleteness());
@@ -79,7 +79,7 @@ public class TestConfigHelper {
         configuration.setRestart(restartCount);
         configuration.setTestLength(testLength);
         configuration.setInterfaceTimeout(timeLimitConfiguration.getInterfaceTimeout());
-        configuration.setOpportunityRestartDelay(timeLimitConfiguration.getOpportunityDelay());
+        configuration.setOpportunityRestartDelay(timeLimitConfiguration.getOpportunityRestart());
         configuration.setRequestInterfaceTimeout(timeLimitConfiguration.getRequestInterfaceTimeout());
         configuration.setPrefetch(clientTestProperty.getPrefetch());
         configuration.setValidateCompleteness(clientTestProperty.getValidateCompleteness());
