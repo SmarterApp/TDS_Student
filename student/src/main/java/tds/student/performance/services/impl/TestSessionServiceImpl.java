@@ -75,7 +75,11 @@ public class TestSessionServiceImpl implements TestSessionService {
      */
     @Override
     public Integer getCheckInTimeLimit(String clientName) {
-        return this.getTimelimitConfiguration(clientName, null).getTaCheckinTime();
+        TestSessionTimeLimitConfiguration timeLimitConfiguration = testSessionDao.getTimeLimitConfiguration(clientName);
+
+        return timeLimitConfiguration == null
+                ? 0
+                : timeLimitConfiguration.getTaCheckinTime();
     }
 
     /**
@@ -102,13 +106,13 @@ public class TestSessionServiceImpl implements TestSessionService {
      */
     @Override
     public TestSessionTimeLimitConfiguration getTimelimitConfiguration(String clientName, String testId) {
-        List<TestSessionTimeLimitConfiguration> timelimits = testSessionDao.getTimeLimitConfigurations(clientName, testId);
+        TestSessionTimeLimitConfiguration timeLimitConfiguration = testSessionDao.getTimeLimitConfiguration(clientName, testId);
 
-        TestSessionTimeLimitConfiguration timelimitToFind = new TestSessionTimeLimitConfiguration(clientName, testId);
+        if (timeLimitConfiguration == null) {
+            return testSessionDao.getTimeLimitConfiguration(clientName);
+        }
 
-        return timelimits.contains(timelimitToFind)
-                ? timelimits.get(timelimits.indexOf(timelimitToFind))
-                : timelimits.get(0);
+        return timeLimitConfiguration;
     }
 
     @Override

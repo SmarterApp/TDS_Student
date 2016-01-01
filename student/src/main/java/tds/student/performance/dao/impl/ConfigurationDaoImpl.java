@@ -1,5 +1,6 @@
 package tds.student.performance.dao.impl;
 
+import org.apache.commons.lang3.tuple.MutablePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,7 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
      *     The {@code JOIN} to the {@code session.externs} view came from looking at the SQL contained in the
      *     {@code CommonDLL.selectIsOnByAuditObject} method.
      * </p>
+     *
      * @param clientName The client name for which the {@code ClientSystemFlag} records should be fetched.
      * @return A collection of {@code ClientSystemFlag} records for the specified client name.
      */
@@ -94,16 +96,19 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
      * <p>
      *     <strong>NOTE:</strong> Candidate for caching.
      * </p>
+     *
      * @param clientName The client name for which the {@code ClientTestProperty} records should be fetched.
      * @param testId The ID (which is the name) of the test for which the {@code ClientTestProperty} records should be fetched.
      * @return A {@code ClientTestProperty} for the specified client name and test id.
      */
     @Override
     @Transactional
+    @Cacheable(CacheType.LongTerm)
     public ClientTestProperty getClientTestProperty(String clientName, String testId) {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("clientName", clientName);
         parameters.put("testId", testId);
+
 
         final String SQL =
                 "SELECT\n" +
@@ -233,5 +238,43 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
         }
     }
 
+    /**
+     * Determine if a {@link tds.student.performance.domain.TestConfiguration} should have its {@code scoreByTds}
+     * property set.
+     * <p>
+     *     This method emulates the logic contained within {@code CommonDLL.ScoreByTDS_FN}.  The
+     *     {@code CommonDLL.ScoreByTDS_FN} is called within {@code StudentDLL.T_StartTestOpportunity_SP} and ultimately
+     *     passed onto the {@link tds.student.sql.data.TestConfig}.
+     * </p>
+     *
+     * @param clientName The client name.
+     * @param testId The test ID (i.e. the name of the test).
+     * @return {@code true} if the {@code scoreByTDS} should be set; otherwise {@code false}.
+     */
+    @Override
+    @Transactional
+    @Cacheable(CacheType.LongTerm)
+    public Boolean isSetForScoreByTDS(String clientName, String testId) {
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("clientName", clientName);
+        parameters.put("testId", testId);
 
+        final String SQL =
+                "SELECT\n" +
+                    "COUNT(clientname)\n" +
+                "FROM\n" +
+                    "configs.client_testscorefeatures\n " +
+                "WHERE\n" +
+                    "clientname = :clientName\n" +
+                    "AND TestID = :testId\n" +
+                    "AND (ReportToStudent = 1\n" +
+                        "OR ReportToProctor = 1\n" +
+                        "OR ReportToParticipation = 1\n" +
+                        "OR UseForAbility = 1)\n" +
+                "LIMIT 1";
+
+        Integer recordCount = namedParameterJdbcTemplate.queryForInt(SQL, parameters);
+
+        return recordCount > 0;
+    }
 }

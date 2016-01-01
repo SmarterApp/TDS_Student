@@ -22,9 +22,8 @@ public class TestOpportunityMapper implements RowMapper<TestOpportunity> {
         testOpportunity.setSessionKey(UuidAdapter.getUUIDFromBytes(resultSet.getBytes("sessionKey")));
         testOpportunity.setBrowserKey(UuidAdapter.getUUIDFromBytes(resultSet.getBytes("browserKey")));
         testOpportunity.setTestKey(resultSet.getString("testKey"));
-        testOpportunity.setTestee(resultSet.getDouble("testee"));
+        testOpportunity.setTestee(resultSet.getLong("testee"));
         testOpportunity.setTestId(resultSet.getString("testId"));
-        testOpportunity.setAdminSubject(resultSet.getString("test"));
         testOpportunity.setOpportunity(resultSet.getInt("opportunity"));
         testOpportunity.setStatus(resultSet.getString("status"));
         testOpportunity.setDateStarted(resultSet.getTimestamp("dateStarted"));

@@ -14,12 +14,12 @@ public class TestOpportunity {
     private UUID sessionKey;
     private UUID browserKey;
     private String testKey;
-    private Double testee;
+    private Long testee;
     private String testId;
-    private String adminSubject;
     private Integer opportunity;
     private String status;
     private Timestamp dateStarted;
+    private Timestamp dateRestarted;
     private Timestamp dateChanged;
     private Integer restartCount;
     private Integer gracePeriodRestarts;
@@ -30,6 +30,7 @@ public class TestOpportunity {
     private String algorithm;
     private String environment;
     private Integer simulationSegmentCount;
+    private Integer waitingForSegment;
 
     public UUID getKey() {
         return key;
@@ -63,11 +64,11 @@ public class TestOpportunity {
         this.testKey = testKey;
     }
 
-    public Double getTestee() {
+    public Long getTestee() {
         return testee;
     }
 
-    public void setTestee(Double testee) {
+    public void setTestee(Long testee) {
         this.testee = testee;
     }
 
@@ -77,22 +78,6 @@ public class TestOpportunity {
 
     public void setTestId(String testId) {
         this.testId = testId;
-    }
-
-    /**
-     * Referred to as {@code testkey} in {@code StudentDLL.T_StartTestOpportunity_SP}.
-     * @return {@code String } representing the test subject key of the {@code TestOpportunity}.
-     */
-    public String getAdminSubject() {
-        return adminSubject;
-    }
-
-    /**
-     * Referred to as {@code testkey} in {@code StudentDLL.T_StartTestOpportunity_SP}.
-     * @param adminSubject  {@code String } representing the test subject key of the {@code TestOpportunity}.
-     */
-    public void setAdminSubject(String adminSubject) {
-        this.adminSubject = adminSubject;
     }
 
     public Integer getOpportunity() {
@@ -273,5 +258,21 @@ public class TestOpportunity {
      */
     public Boolean isSimulation() {
         return this.getClientName().toLowerCase().equals("simulation") && this.getSimulationSegmentCount() > 0;
+    }
+
+    public Timestamp getDateRestarted() {
+        return dateRestarted;
+    }
+
+    public void setDateRestarted(Timestamp dateRestarted) {
+        this.dateRestarted = dateRestarted;
+    }
+
+    public Integer getWaitingForSegment() {
+        return waitingForSegment;
+    }
+
+    public void setWaitingForSegment(Integer waitingForSegment) {
+        this.waitingForSegment = waitingForSegment;
     }
 }

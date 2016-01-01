@@ -131,4 +131,14 @@ public class ConfigurationDaoTest extends IntegrationTest {
         Assert.assertEquals("OSS", toolType.getSource());
         Assert.assertEquals("ALL", toolType.getTestMode());
     }
+
+    @Test
+    public void should_Return_False_For_IsScoreByTDS_For_SBAC_PT_and_SBAC_Math_3_MATH_3() {
+        String clientName = "SBAC_PT";
+        String testId = "SBAC Math 3-MATH-3";
+
+        Boolean result = configurationDao.isSetForScoreByTDS(clientName, testId);
+
+        Assert.assertFalse(result);
+    }
 }

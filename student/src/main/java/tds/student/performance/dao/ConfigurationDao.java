@@ -15,4 +15,5 @@ public interface ConfigurationDao {
     ClientTestProperty getClientTestProperty(String clientName, String testId);
     List<StudentLoginField> getStudentLoginFields(String clientName);
     ConfigTestToolType getTestToolType(String clientName, String toolName, String contextType, String context);
+    Boolean isSetForScoreByTDS(String clientName, String testId);
 }

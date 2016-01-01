@@ -68,61 +68,39 @@ public class TestSessionDaoTest extends IntegrationTest {
      ?, NULL, '1', '10', '-1', '10', 'SBAC_PT', '1', '30', '20', '20', '2012-12-21 00:02:53.000', '2012-12-21 00:02:53.000', NULL, '8', '15', '2'
      */
     @Test
-    public void should_Return_a_TestSessionTimeLimitConfiguration_for_SBAC_PT_ClientName_and_Null_TestId() {
+    public void should_Return_a_TestSessionTimeLimitConfiguration_With_Null_TestId_For_SBAC_PT_ClientName() {
         String clientName = "SBAC_PT";
 
-        List<TestSessionTimeLimitConfiguration> result = testSessionDao.getTimeLimitConfigurations(clientName, null);
+        TestSessionTimeLimitConfiguration result = testSessionDao.getTimeLimitConfiguration(clientName);
 
         Assert.assertNotNull(result);
-        Assert.assertEquals(1, result.size());
 
-        TestSessionTimeLimitConfiguration config = result.get(0);
-        Assert.assertEquals(null, config.getTestId());
-        Assert.assertEquals((Integer)1, config.getOpportunityExpiration());
-        Assert.assertEquals((Integer)10, config.getOpportunityRestart());
-        Assert.assertEquals(Integer.valueOf(-1), config.getOpportunityDelay());
-        Assert.assertEquals((Integer)10, config.getInterfaceTimeout());
-        Assert.assertEquals((Integer)15, config.getRequestInterfaceTimeout());
-        Assert.assertEquals(clientName, config.getClientName());
-        Assert.assertEquals("dev", config.getEnvironment());
-        Assert.assertEquals(true, config.getIsPracticeTest());
-        Assert.assertEquals((Integer)30, config.getRefreshValue());
-        Assert.assertEquals((Integer)20, config.getTaInterfaceTimeout());
-        Assert.assertEquals((Integer)20, config.getTaCheckinTime());
-        Assert.assertEquals((Integer)8, config.getSessionExpiration());
-        Assert.assertEquals((Integer)2, config.getRefreshValueMultiplier());
+        Assert.assertEquals(null, result.getTestId());
+        Assert.assertEquals((Integer)1, result.getOpportunityExpiration());
+        Assert.assertEquals((Integer)10, result.getOpportunityRestart());
+        Assert.assertEquals(Integer.valueOf(-1), result.getOpportunityDelay());
+        Assert.assertEquals((Integer)10, result.getInterfaceTimeout());
+        Assert.assertEquals((Integer)15, result.getRequestInterfaceTimeout());
+        Assert.assertEquals(clientName, result.getClientName());
+        Assert.assertEquals("dev", result.getEnvironment());
+        Assert.assertEquals(true, result.getIsPracticeTest());
+        Assert.assertEquals((Integer)30, result.getRefreshValue());
+        Assert.assertEquals((Integer)20, result.getTaInterfaceTimeout());
+        Assert.assertEquals((Integer)20, result.getTaCheckinTime());
+        Assert.assertEquals((Integer)8, result.getSessionExpiration());
+        Assert.assertEquals((Integer)2, result.getRefreshValueMultiplier());
     }
 
-    /**
-     * Record used for testing:
-     * # _key, _efk_testid, oppexpire, opprestart, oppdelay, interfacetimeout, clientname, ispracticetest, refreshvalue, tainterfacetimeout, tacheckintime, datechanged, datepublished, environment, sessionexpire, requestinterfacetimeout, refreshvaluemultiplier
-     ?, NULL, '1', '10', '-1', '10', 'SBAC_PT', '1', '30', '20', '20', '2012-12-21 00:02:53.000', '2012-12-21 00:02:53.000', NULL, '8', '15', '2'
-     */
     @Test
-    public void should_Return_a_TestSessionTimeLimitConfiguration_With_Null_TestId_For_SBAC_PT_ClientName_and_SBAC_Math_3_MATH_3_TestId() {
+    public void should_Return_a_CheckInTimeLimit_of_20_For_ClientName_SBAC_PT() {
         String clientName = "SBAC_PT";
-        String testId = "SBAC Math 3-MATH-3";
 
-        List<TestSessionTimeLimitConfiguration> result = testSessionDao.getTimeLimitConfigurations(clientName, testId);
+        TestSessionTimeLimitConfiguration result = testSessionDao.getTimeLimitConfiguration(clientName);
 
-        Assert.assertNotNull(result);
-        Assert.assertEquals(1, result.size());
+        Integer checkin = result.getTaCheckinTime();
 
-        TestSessionTimeLimitConfiguration config = result.get(0);
-        Assert.assertEquals(null, config.getTestId());
-        Assert.assertEquals((Integer)1, config.getOpportunityExpiration());
-        Assert.assertEquals((Integer)10, config.getOpportunityRestart());
-        Assert.assertEquals(Integer.valueOf(-1), config.getOpportunityDelay());
-        Assert.assertEquals((Integer)10, config.getInterfaceTimeout());
-        Assert.assertEquals((Integer)15, config.getRequestInterfaceTimeout());
-        Assert.assertEquals(clientName, config.getClientName());
-        Assert.assertEquals("dev", config.getEnvironment());
-        Assert.assertEquals(true, config.getIsPracticeTest());
-        Assert.assertEquals((Integer)30, config.getRefreshValue());
-        Assert.assertEquals((Integer)20, config.getTaInterfaceTimeout());
-        Assert.assertEquals((Integer)20, config.getTaCheckinTime());
-        Assert.assertEquals((Integer)8, config.getSessionExpiration());
-        Assert.assertEquals((Integer)2, config.getRefreshValueMultiplier());
+        Assert.assertNotNull(checkin);
+        Assert.assertEquals((Integer)20, checkin);
     }
 
     @Test

@@ -60,6 +60,7 @@ public class TestSessionTimeLimitConfiguration {
      *     Logic @ line 3689 in {@code StudentDLL.T_StartTestOpportunity_SP} states that if
      *     {@code session.timeouts.opprestart} is null, it should be set to 1.
      * </p>
+     *
      * @param opportunityRestart the value that {@code opportunityRestart} should be set to.
      */
     public void setOpportunityRestart(Integer opportunityRestart) {
@@ -132,10 +133,20 @@ public class TestSessionTimeLimitConfiguration {
         this.taInterfaceTimeout = taInterfaceTimeout;
     }
 
+    /**
+     * This value is in minutes.
+     *
+     * @return The number of minutes before the TA CheckIn time expires.
+     */
     public Integer getTaCheckinTime() {
         return taCheckinTime;
     }
 
+    /**
+     * This value is in minutes.
+     *
+     * @return The number of minutes before the TA CheckIn time expires.
+     */
     public void setTaCheckinTime(Integer taCheckinTime) {
         this.taCheckinTime = taCheckinTime;
     }
@@ -170,26 +181,5 @@ public class TestSessionTimeLimitConfiguration {
 
     public void setRefreshValueMultiplier(Integer refreshValueMultiplier) {
         this.refreshValueMultiplier = refreshValueMultiplier;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if (other == null) {
-            return false;
-        }
-
-        if (!(other instanceof TestSessionTimeLimitConfiguration)) {
-            return false;
-        }
-
-        if (this == other) {
-            return true;
-        }
-
-        TestSessionTimeLimitConfiguration that = (TestSessionTimeLimitConfiguration)other;
-
-        return this.testId.equals(that.testId)
-                && this.clientName.equals(that.clientName)
-                && this.environment.equals(that.environment);
     }
 }
