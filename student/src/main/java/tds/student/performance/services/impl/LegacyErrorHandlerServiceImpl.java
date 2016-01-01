@@ -35,6 +35,22 @@ public class LegacyErrorHandlerServiceImpl implements LegacyErrorHandlerService 
         }
     }
 
+    /**
+     * Wrap a call to the {@code CommonDLL._ReturnError_SP} legacy method to get back the error message information the
+     * legacy code expects.  The results of {@code CommonDLL._ReturnError_SP} are contained in a
+     * {@link ReturnErrorException} which is thrown to the caller.
+     *
+     * @param client The client name.
+     * @param procName The name of the method that failed/should throw a {@link ReturnErrorException}.
+     * @param appkey The details (e.g. error or exception message) on why the method call failed.
+     * @param argstring The arguments that were part of the method.
+     * @param oppkey The key (opportunity key, session key) of the item was being operated on.
+     * @param context The method within the procName method that failed.
+     * @param status The status/state of the method (e.g. "denied" or "failed").
+     * @throws ReturnErrorException
+     * @throws SQLException
+     * @throws ReturnStatusException
+     */
     @Override
     public void throwReturnErrorException(String client, String procName, String appkey, String argstring, UUID oppkey, String context, String status) throws ReturnErrorException, SQLException, ReturnStatusException {
         SingleDataResultSet resultSet = commonDll._ReturnError_SP(legacySqlConnection.get(), client, procName, appkey, argstring, oppkey, context, status);
@@ -48,7 +64,7 @@ public class LegacyErrorHandlerServiceImpl implements LegacyErrorHandlerService 
                     record.<String>get("status"),
                     record.<String>get("reason"),
                     record.<String>get("context"),
-                    record.<UUID>get("appkey")
+                    record.<String>get("appkey")
             );
         }
         else {

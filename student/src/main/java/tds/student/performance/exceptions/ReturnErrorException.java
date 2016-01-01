@@ -1,21 +1,18 @@
 package tds.student.performance.exceptions;
 
-import java.util.UUID;
-
-
 public class ReturnErrorException extends Exception {
 
 
     private String status;
     private String reason;
     private String context;
-    private UUID appKey;
+    private String appKey;
 
     public ReturnErrorException(String message) {
         super(message);
     }
 
-    public ReturnErrorException(String status, String reason, String context, UUID appKey) {
+    public ReturnErrorException(String status, String reason, String context, String appKey) {
         super(String.format("Error status: %s, reason: %s, context: %s, appKey: %s", status, reason, context, appKey));
 
         this.status = status;
@@ -36,7 +33,7 @@ public class ReturnErrorException extends Exception {
         return context;
     }
 
-    public UUID getAppKey() {
+    public String getAppKey() {
         return appKey;
     }
 }
