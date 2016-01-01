@@ -98,6 +98,10 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                 legacyErrorHandlerService.throwReturnErrorException(testOpportunity.getClientName(), "T_StartTestOpportunity", msg, null, testOpportunity.getKey(), null, "failed");
             }
 
+            TestSessionTimeLimitConfiguration timelimitConfiguration = testSessionService.getTimelimitConfiguration(
+                    testOpportunity.getClientName(),
+                    testOpportunity.getTestId());
+
             verifyTesteeAccess(testOpportunity, testSession, opportunityInstance);
 
             ClientTestProperty clientTestProperty = configurationDao.getClientTestProperty(
@@ -107,10 +111,6 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             // This does not seem to be used - original code queries this DB for "operationalLength"
             // Which doesn't appear to be used in the old codebase...
 //            SetOfAdminSubject setOfAdminSubject = itemBankDao.get(testOpportunity.getAdminSubject());
-
-            TestSessionTimeLimitConfiguration timelimitConfiguration = testSessionService.getTimelimitConfiguration(
-                    testOpportunity.getClientName(),
-                    testOpportunity.getTestId());
 
             if (!testOpportunity.getStatus().toLowerCase().equals("approved")) {
                 logger.error(String.format("Test %s for opportunity %s start/restart not approved by test administrator", testOpportunity.getTestId(), testOpportunity.getKey()));

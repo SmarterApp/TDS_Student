@@ -209,8 +209,8 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
      *     passed onto the {@link tds.student.sql.data.TestConfig}.
      * </p>
      *
-     * @param clientName A {@link String} representing the client name.
-     * @param testId A {@link String} representing the test ID.
+     * @param clientName The client name.
+     * @param testId The test ID (i.e. the name of the test).
      * @return {@code true} if the {@code scoreByTDS} should be set; otherwise {@code false}.
      */
     @Override
