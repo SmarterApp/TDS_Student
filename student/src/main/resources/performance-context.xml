@@ -11,14 +11,26 @@
     <context:component-scan base-package="tds.student.performance"/>
     <context:property-placeholder location="classpath*:performance-student.properties"/>
 
-    <bean id="dataSource"
-          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <!--<bean id="dataSource"-->
+          <!--class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
 
-        <property name="driverClassName" value="${datasource.driverClassName}"/>
-        <property name="url" value="${datasource.jdbcUrl}"/>
-        <property name="username" value="${datasource.username}"/>
-        <property name="password" value="${datasource.password}"/>
+        <!--<property name="driverClassName" value="${datasource.driverClassName}"/>-->
+        <!--<property name="url" value="${datasource.jdbcUrl}"/>-->
+        <!--<property name="username" value="${datasource.username}"/>-->
+        <!--<property name="password" value="${datasource.password}"/>-->
 
+    <!--</bean>-->
+    <!-- Employee DB data source. -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+          destroy-method="close">
+        <property name="driverClass" value="${datasource.driverClassName}" />
+        <property name="jdbcUrl" value="${datasource.jdbcUrl}" />
+        <property name="user" value="${datasource.username}" />
+        <property name="password" value="${datasource.password}" />
+        <property name="maxPoolSize" value="${datasource.maxPoolSize}" />
+        <property name="minPoolSize" value="${datasource.minPoolSize}" />
+        <property name="maxStatements" value="${datasource.maxStatements}" />
+        <property name="testConnectionOnCheckout" value="${datasource.testConnectionCheckout}" />
     </bean>
 
     <!-- To disable all caching, comment out the cache:annotation-driven line below AND change the enabled property to false for the cacher bean -->
