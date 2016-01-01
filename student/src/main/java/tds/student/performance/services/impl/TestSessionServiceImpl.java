@@ -74,7 +74,11 @@ public class TestSessionServiceImpl implements TestSessionService {
      */
     @Override
     public Integer getCheckInTimeLimit(String clientName) {
-        return testSessionDao.getTimeLimitConfiguration(clientName).getTaCheckinTime();
+        TestSessionTimeLimitConfiguration timeLimitConfiguration = testSessionDao.getTimeLimitConfiguration(clientName);
+
+        return timeLimitConfiguration == null
+                ? 0
+                : timeLimitConfiguration.getTaCheckinTime();
     }
 
     /**
