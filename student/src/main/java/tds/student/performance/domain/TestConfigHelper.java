@@ -1,5 +1,6 @@
 package tds.student.performance.domain;
 
+import TDS.Shared.Data.ReturnStatus;
 import tds.student.sql.data.OpportunityStatusType;
 import tds.student.sql.data.TestConfig;
 
@@ -108,6 +109,11 @@ public class TestConfigHelper {
         config.setStatus(OpportunityStatusType.parse(testConfiguration.getStatus()));
         config.setTestLength(testConfiguration.getTestLength());
         config.setValidateCompleteness(testConfiguration.getValidateCompleteness());
+
+        // The legacy OpportunityService.startTest
+        ReturnStatus startStatus = new ReturnStatus();
+        startStatus.setStatus(testConfiguration.getStatus());
+        config.setReturnStatus(startStatus);
 
         return config;
     }

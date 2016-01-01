@@ -14,7 +14,7 @@ public class TestOpportunity {
     private UUID sessionKey;
     private UUID browserKey;
     private String testKey;
-    private Double testee;
+    private Long testee;
     private String testId;
     private Integer opportunity;
     private String status;
@@ -64,11 +64,11 @@ public class TestOpportunity {
         this.testKey = testKey;
     }
 
-    public Double getTestee() {
+    public Long getTestee() {
         return testee;
     }
 
-    public void setTestee(Double testee) {
+    public void setTestee(Long testee) {
         this.testee = testee;
     }
 

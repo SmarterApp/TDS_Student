@@ -118,6 +118,7 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
     }
 
     @Override
+    @Transactional
     public List<TestOpportunity> getBySessionAndStatus(UUID sessionKey, String statusUsage, String statusStage) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("sessionKey", UuidAdapter.getBytesFromUUID(sessionKey));
@@ -169,7 +170,7 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
     public void update(TestOpportunity opportunity) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("algorithm", opportunity.getAlgorithm());
-        parameters.put("browserKey", opportunity.getBrowserKey());
+        parameters.put("browserKey", UuidAdapter.getBytesFromUUID(opportunity.getBrowserKey()));
         parameters.put("clientName", opportunity.getClientName());
         parameters.put("dateChanged", opportunity.getDateChanged());
         parameters.put("dateStarted", opportunity.getDateStarted());
@@ -177,11 +178,11 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
         parameters.put("environment", opportunity.getEnvironment());
         parameters.put("gracePeriodRestarts", opportunity.getGracePeriodRestarts());
         parameters.put("isSegmented", opportunity.getIsSegmented());
-        parameters.put("key", opportunity.getKey());
+        parameters.put("key", UuidAdapter.getBytesFromUUID(opportunity.getKey()));
         parameters.put("maxItems", opportunity.getMaxItems());
         parameters.put("opportunity", opportunity.getOpportunity());
         parameters.put("restartCount", opportunity.getRestartCount());
-        parameters.put("sessionKey", opportunity.getSessionKey());
+        parameters.put("sessionKey", UuidAdapter.getBytesFromUUID(opportunity.getSessionKey()));
         //parameters.put("simulationSegmentCount", opportunity.getSimulationSegmentCount());
         parameters.put("status", opportunity.getStatus());
         parameters.put("subject", opportunity.getSubject());
@@ -205,7 +206,7 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
                     "dateChanged = :dateChanged,\n" +
                     "dateStarted = :dateStarted,\n" +
                     "dateRestarted = :dateRestarted,\n" +
-                    "gracePeriodRestarts = :gradePeriodRestarts,\n" +
+                    "gracePeriodRestarts = :gracePeriodRestarts,\n" +
                     "maxItems = :maxItems,\n" +
                     "opportunity = :opportunity,\n" +
                     "subject = :subject,\n" +
@@ -215,7 +216,7 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
                     "environment = :environment,\n" +
                     "waitingForSegment = :waitingForSegment\n" +
                 "WHERE\n" +
-                    "key = :key";
+                    "_key = :key";
 
         namedParameterJdbcTemplate.update(SQL, parameters);
     }

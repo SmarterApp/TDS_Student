@@ -151,10 +151,20 @@ public class TestSessionTimeLimitConfiguration {
         this.taInterfaceTimeout = taInterfaceTimeout;
     }
 
+    /**
+     * This value is in minutes.
+     *
+     * @return An {@link Integer} representing the number of minutes before the TA CheckIn time expires.
+     */
     public Integer getTaCheckinTime() {
         return taCheckinTime;
     }
 
+    /**
+     * This value is in minutes.
+     *
+     * @return An {@link Integer} representing the number of minutes before the TA CheckIn time expires.
+     */
     public void setTaCheckinTime(Integer taCheckinTime) {
         this.taCheckinTime = taCheckinTime;
     }
