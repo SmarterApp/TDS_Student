@@ -7,14 +7,14 @@ import java.util.Date;
  * Represents a record from the {@code session.timelimits} view.
  */
 public class TestSessionTimeLimitConfiguration {
-    private String testId = "";
+    private String testId;
     private Integer opportunityExpiration;
     private Integer opportunityRestart;
     private Integer opportunityDelay;
     private Integer interfaceTimeout;
     private Integer requestInterfaceTimeout;
-    private String clientName = "";
-    private String environment = "";
+    private String clientName;
+    private String environment;
     private Boolean isPracticeTest;
     private Integer refreshValue;
     private Integer taInterfaceTimeout;
@@ -35,14 +35,8 @@ public class TestSessionTimeLimitConfiguration {
         return testId;
     }
 
-    /**
-     * Protect against a {@link NullPointerException} in the event {@code equals} is called.  Possible code smell; look
-     * into refactoring {@code equals} method..
-     */
     public void setTestId(String testId) {
-        this.testId = testId == null
-                ? ""
-                : testId;
+        this.testId = testId;
     }
 
     public Integer getOpportunityExpiration() {
@@ -103,28 +97,16 @@ public class TestSessionTimeLimitConfiguration {
         return clientName;
     }
 
-    /**
-     * Protect against a {@link NullPointerException} in the event {@code equals} is called.  Possible code smell; look
-     * into refactoring {@code equals} method.
-     */
     public void setClientName(String clientName) {
-        this.clientName = clientName == null
-                ? ""
-                : clientName;
+        this.clientName = clientName;
     }
 
     public String getEnvironment() {
         return environment;
     }
 
-    /**
-     * Protect against a {@link NullPointerException} in the event {@code equals} is called.  Possible code smell; look
-     * into refactoring {@code equals} method..
-     */
     public void setEnvironment(String environment) {
-        this.environment = environment == null
-                ? ""
-                : environment;
+        this.environment = environment;
     }
 
     public Boolean getIsPracticeTest() {
@@ -154,7 +136,7 @@ public class TestSessionTimeLimitConfiguration {
     /**
      * This value is in minutes.
      *
-     * @return An {@link Integer} representing the number of minutes before the TA CheckIn time expires.
+     * @return The number of minutes before the TA CheckIn time expires.
      */
     public Integer getTaCheckinTime() {
         return taCheckinTime;
@@ -163,7 +145,7 @@ public class TestSessionTimeLimitConfiguration {
     /**
      * This value is in minutes.
      *
-     * @return An {@link Integer} representing the number of minutes before the TA CheckIn time expires.
+     * @return The number of minutes before the TA CheckIn time expires.
      */
     public void setTaCheckinTime(Integer taCheckinTime) {
         this.taCheckinTime = taCheckinTime;
@@ -199,26 +181,5 @@ public class TestSessionTimeLimitConfiguration {
 
     public void setRefreshValueMultiplier(Integer refreshValueMultiplier) {
         this.refreshValueMultiplier = refreshValueMultiplier;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if (other == null) {
-            return false;
-        }
-
-        if (!(other instanceof TestSessionTimeLimitConfiguration)) {
-            return false;
-        }
-
-        if (this == other) {
-            return true;
-        }
-
-        TestSessionTimeLimitConfiguration that = (TestSessionTimeLimitConfiguration)other;
-
-        return this.getTestId().equals(that.getTestId())
-                && this.getClientName().equals(that.getClientName())
-                && this.getEnvironment().equals(that.getEnvironment());
     }
 }
