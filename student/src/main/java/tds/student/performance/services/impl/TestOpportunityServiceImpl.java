@@ -98,27 +98,29 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                 legacyErrorHandlerService.throwReturnErrorException(testOpportunity.getClientName(), "T_StartTestOpportunity", msg, null, testOpportunity.getKey(), null, "failed");
             }
 
+            verifyTesteeAccess(testOpportunity, testSession, opportunityInstance);
+
             TestSessionTimeLimitConfiguration timelimitConfiguration = testSessionService.getTimelimitConfiguration(
                     testOpportunity.getClientName(),
                     testOpportunity.getTestId());
-
-            verifyTesteeAccess(testOpportunity, testSession, opportunityInstance);
+            if (testSession == null) {
+                String msg = String.format("Could not find record in session.timelimits for clientname %s, testId %s", testOpportunity.getClientName(), testOpportunity.getTestId());
+                legacyErrorHandlerService.throwReturnErrorException(testOpportunity.getClientName(), "T_StartTestOpportunity", msg, null, testOpportunity.getKey(), null, "failed");
+            }
 
             ClientTestProperty clientTestProperty = configurationDao.getClientTestProperty(
                     testOpportunity.getClientName(),
                     testOpportunity.getTestId());
-
-            // This does not seem to be used - original code queries this DB for "operationalLength"
-            // Which doesn't appear to be used in the old codebase...
-//            SetOfAdminSubject setOfAdminSubject = itemBankDao.get(testOpportunity.getAdminSubject());
+            if (clientTestProperty == null) {
+                String msg = String.format("Could not find record in configs.client_testproperties for clientname %s, testId %s", testOpportunity.getClientName(), testOpportunity.getTestId());
+                legacyErrorHandlerService.throwReturnErrorException(testOpportunity.getClientName(), "T_StartTestOpportunity", msg, null, testOpportunity.getKey(), null, "failed");
+            }
 
             if (!testOpportunity.getStatus().toLowerCase().equals("approved")) {
                 logger.error(String.format("Test %s for opportunity %s start/restart not approved by test administrator", testOpportunity.getTestId(), testOpportunity.getKey()));
-                throw new IllegalStateException("Test start/restart not approved by test administrator");
+                legacyErrorHandlerService.throwReturnErrorException(testOpportunity.getClientName(), "T_StartTestOpportunity", "Test start/restart not approved by test administrator", null, testOpportunity.getKey(), "T_StartTestOpportunity", "denied");
             }
 
-            //TODO: Is this necessary here? Remove if not... old code doesn't seem to use the ability that is set here
-            // Float initialAbility = getInitialAbility(testOpportunity, clientTestProperty);
             Boolean scoreByTds = configurationDao.isSetForScoreByTDS(
                     testOpportunity.getClientName(),
                     testOpportunity.getTestId());
@@ -185,6 +187,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             dbLatencyService.logLatency("T_StartTestOpportunity", start, null, testOpportunity);
         } catch (ReturnErrorException e) {
             logger.error(e.getMessage(), e);
+            legacyErrorHandlerService.logDbError("T_StartTestOpportunity", e.getMessage(), null, testKey, null, opportunityInstance.getKey());
 
             // The legacy OpportunityStatus.startTest method looks for the TestConfig.getReturnStatus to determine
             // if the call was successful or not.
@@ -192,22 +195,30 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             failureStatus.setStatus(e.getStatus());
             failureStatus.setReason(e.getReason());
             failureStatus.setContext(e.getContext());
-            failureStatus.setAppKey(opportunityInstance.getKey().toString());
+            failureStatus.setAppKey(e.getAppKey());
 
             config.setReturnStatus(failureStatus);
-        } catch (SQLException e) { // Can be thrown as a result of calling the legacyErrorHandlerService
+        } catch (SQLException e) {
             logger.error(e.getMessage(), e);
+            legacyErrorHandlerService.logDbError("T_StartTestOpportunity", e.getMessage(), null, testKey, null, opportunityInstance.getKey());
 
             // The legacy OpportunityStatus.startTest method looks for the TestConfig.getReturnStatus to determine
             // if the call was successful or not.
-            config.setReturnStatus(this.getFailureStatus(e, opportunityInstance));
+            ReturnStatus failureStatus = new ReturnStatus();
+            failureStatus.setStatus("failed");
+            failureStatus.setReason(e.getMessage());
+            failureStatus.setAppKey(opportunityInstance.getKey().toString());
 
-        } catch (ReturnStatusException e) { // Can be thrown as a result of calling legacyErrorHandlerService
+        } catch (ReturnStatusException e) {
             logger.error(e.getMessage(), e);
+            legacyErrorHandlerService.logDbError("T_StartTestOpportunity", e.getMessage(), null, testKey, null, opportunityInstance.getKey());
 
             // The legacy OpportunityStatus.startTest method looks for the TestConfig.getReturnStatus to determine
             // if the call was successful or not.
-            config.setReturnStatus(this.getFailureStatus(e, opportunityInstance));
+            ReturnStatus failureStatus = new ReturnStatus();
+            failureStatus.setStatus(e.getReturnStatus().getStatus());
+            failureStatus.setReason(e.getMessage());
+            failureStatus.setAppKey(e.getReturnStatus().getAppKey());
         }
 
         return config;
@@ -338,43 +349,32 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
      * @param formKeyList A list of form keys passed in from the caller.
      * @return The total number of items in the test.
      */
-    private Integer initializeStudentOpportunity(TestOpportunity testOpportunity, String formKeyList) throws ReturnErrorException {
-        try (SQLConnection legacyConnection = legacySqlConnection.get()) {
-            _Ref<Integer> testLength = new _Ref<>();
-            _Ref<String> reason = new _Ref<>();
+    private Integer initializeStudentOpportunity(TestOpportunity testOpportunity, String formKeyList) throws ReturnErrorException, SQLException, ReturnStatusException {
+        SQLConnection legacyConnection = legacySqlConnection.get();
+        _Ref<Integer> testLength = new _Ref<>();
+        _Ref<String> reason = new _Ref<>();
 
-            legacyStudentDll._InitializeOpportunity_SP(
-                    legacyConnection,
-                    testOpportunity.getKey(),
-                    testLength,
-                    reason,
-                    formKeyList);
+        legacyStudentDll._InitializeOpportunity_SP(
+                legacyConnection,
+                testOpportunity.getKey(),
+                testLength,
+                reason,
+                formKeyList);
 
-            if (reason.get() != null) {
-                legacyErrorHandlerService.logDbError("T_StartTestOpportunity", reason.get(), testOpportunity.getTestee(), testOpportunity.getTestId(), null, testOpportunity.getKey());
-                legacyErrorHandlerService.throwReturnErrorException(testOpportunity.getClientName(), "T_StartTestOpportunity", reason.get(), null, testOpportunity.getKey(), "_InitializeOpportunity", "failed");
-            }
-
-            testOpportunityAuditDao.create(new TestOpportunityAudit(
-                    testOpportunity.getKey(),
-                    new Timestamp(new Date().getTime()),
-                    "started",
-                    testOpportunity.getSessionKey(),
-                    HostNameHelper.getHostName(),
-                    "session"));
-
-            return testLength.get();
-        } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-            legacyErrorHandlerService.logDbError("T_StartTestOpportunity", e.getMessage(), testOpportunity.getTestee(), testOpportunity.getTestId(), null, testOpportunity.getKey());
-
-            throw new ReturnErrorException("failed", e.getMessage(), "_InitializeOpportunity", e.getMessage());
-        } catch (ReturnStatusException e) {
-            logger.error(e.getMessage(), e);
-            legacyErrorHandlerService.logDbError("T_StartTestOpportunity", e.getMessage(), testOpportunity.getTestee(), testOpportunity.getTestId(), null, testOpportunity.getKey());
-
-            throw new ReturnErrorException(e.getReturnStatus().getStatus(), e.getReturnStatus().getReason(), "_InitializeOpportunity", e.getReturnStatus().getAppKey());
+        if (reason.get() != null) {
+            legacyErrorHandlerService.logDbError("T_StartTestOpportunity", reason.get(), testOpportunity.getTestee(), testOpportunity.getTestId(), null, testOpportunity.getKey());
+            legacyErrorHandlerService.throwReturnErrorException(testOpportunity.getClientName(), "T_StartTestOpportunity", reason.get(), null, testOpportunity.getKey(), "_InitializeOpportunity", "failed");
         }
+
+        testOpportunityAuditDao.create(new TestOpportunityAudit(
+                testOpportunity.getKey(),
+                new Timestamp(new Date().getTime()),
+                "started",
+                testOpportunity.getSessionKey(),
+                HostNameHelper.getHostName(),
+                "session"));
+
+        return testLength.get();
     }
 
     /**
@@ -468,39 +468,10 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                     "session"
             ));
 
-//            try {
-                testSessionService.pause(testOpportunity, testSession);
-//            } catch (Exception e) {
-//                logger.error(String.format("Error while closing session %s", testSession.getKey()), e);
-//                // TODO: should we throw something from here
-//            }
+            testSessionService.pause(testOpportunity, testSession);
 
             String msg = String.format("TestSession for session key %s is not available for testing.", testSession.getKey());
             legacyErrorHandlerService.throwReturnErrorException(testOpportunity.getClientName(), "T_StartTestOpportunity", msg, null, testOpportunity.getKey(), "_ValidateTesteeAccess", "denied");
         }
-    }
-
-    /**
-     * Get a legacy {@link ReturnStatus} indicating a failure.
-     * <p>
-     *     The {@code TestConfig.getReturnStatus()} is evaluated by the legacy
-     *     {@code OpportunityRepository.startTestOpportunity()} method.
-     * </p>
-     * <p>
-     *     !!!!!! CODE SMELL !!!!!!
-     *     This could be made more useful.  Maybe add it to the {@link LegacyErrorHandlerService} as a static method?
-     * </p>
-     *
-     * @param e The {@link Exception} that was caught.
-     * @param opportunityInstance The {@link OpportunityInstance} that was trying to start a {@link TestOpportunity}.
-     * @return A legacy {@link ReturnStatus}.
-     */
-    private ReturnStatus getFailureStatus(Exception e, OpportunityInstance opportunityInstance) {
-        ReturnStatus failureStatus = new ReturnStatus();
-        failureStatus.setStatus("failed");
-        failureStatus.setReason(e.getMessage());
-        failureStatus.setAppKey(opportunityInstance.getKey().toString());
-
-        return failureStatus;
     }
 }
