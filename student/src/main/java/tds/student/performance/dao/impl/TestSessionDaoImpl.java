@@ -41,6 +41,7 @@ public class TestSessionDaoImpl implements TestSessionDao {
      */
     @Override
     @Transactional
+    @Cacheable(CacheType.MediumTerm)
     public TestSession get(UUID key) {
         Map<String, byte[]> parameters = new HashMap<>();
         parameters.put("key", UuidAdapter.getBytesFromUUID(key));
