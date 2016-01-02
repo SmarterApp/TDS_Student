@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<annotation-driven />
+	<context:annotation-config />
+
+	<context:property-placeholder ignore-unresolvable="true" order="10" local-override="true" />
+
+	<context:property-placeholder location="classpath:settings-mysql.xml" ignore-unresolvable="true" order="900" local-override="true" />
+
+	<context:property-placeholder ignore-unresolvable="true" ignore-resource-not-found="true" order="110" local-override="true"
+		location="${student-override-properties:file:///${user.home}/student-settings.xml}" />
+
+	<beans:import resource="classpath:opentestsystem.shared.common-context-module.xml" />
+	<beans:import resource="classpath:opentestsystem.shared.security-context-module.xml" />
+	<beans:import resource="classpath:opentestsystem.shared.tr-api-context-module.xml" />
+	<beans:import resource="classpath:opentestsystem.shared.db-context-module.xml" />
+	<beans:import resource="classpath:opentestsystem.itemselection.context-module.xml" />
+	<beans:import resource="classpath:opentestsystem.shared.web-context-module.xml" />
+	<beans:import resource="classpath:opentestsystem.itemrenderer.xml" />
+	<beans:import resource="classpath:opentestsystem.spellcheck-context-module.xml" />
+	<!-- TODO Shiva: Is this Spring complaining here because it cannot find the definition for appSettings locally even though it has been defined at another location? This does seem to work currently when 
+		run. -->
+
+	<!-- Jeff Johnson, 30dec15 Added to support performance enhancements. -->
+	<context:property-placeholder location="performance-integration-student.properties" ignore-unresolvable="true" ignore-resource-not-found="true" order="11" local-override="true"/>
+	<beans:import resource="performance-context.xml"/>
+
+	<!-- ANSWER (Dan): The error marker here is due to incomplete functionality of the Eclipse parser for Spring configuration files. There is no actual error. This is Eclipse complaining because it's Spring 
+		XML parser doesn't understand imports. This same incantation is being used to set all of the properties in appSettings, so if something isn't working here, it is because either the "beans:import" or "context:property-placeholder" 
+		elements aren't structured right. -->
+
+	<beans:bean factory-bean="appSettings" factory-method="updateProperties" lazy-init="false" id="test-reg-url-dependency">
+		<beans:constructor-arg>
+			<util:map map-class="java.util.HashMap">
+				<beans:entry key="ClientCookie" value="${ClientCookie}" />
+				<beans:entry key="TestRegistrationApplicationUrl" value="${TestRegistrationApplicationUrl}" />
+				<beans:entry key="testScoring.logDebug" value="${student.testScoring.logDebug:true}" />
+				<beans:entry key="testScoring.logError" value="${student.testScoring.logError:true}" />
+				<beans:entry key="itemscoring.qti.sympyServiceUrl" value="${itemscoring.qti.sympyServiceUrl}" />
+				<beans:entry key="itemscoring.qti.sympyMaxTries" value="${itemscoring.qti.sympyMaxTries}" />
+				<beans:entry key="itemscoring.qti.sympyTimeoutMillis" value="${itemscoring.qti.sympyTimeoutMillis}" />
+				<beans:entry key="itemScoring.callbackUrl" value="${itemScoring.callbackUrl}" />
+				<beans:entry key="tds.testshell.dictionaryUrl" value="${tds.testshell.dictionaryUrl:}" />
+			</util:map>
+
+		</beans:constructor-arg>
+	</beans:bean>
+
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<!-- TDSSettings bean. This gives access to clientname and any other info such as session type etc. -->
+	<beans:bean id="tdsSettings" class="TDS.Shared.Configuration.TDSSettings" scope="prototype" />
+
+	<context:component-scan base-package="tds.student.sql.repository" />
+	<context:component-scan base-package="tds.student.sql.singletons" />
+	<context:component-scan base-package="tds.student.services" />
+	<context:component-scan base-package="tds.student.web" />
+	<context:component-scan base-package="tds.student.configuration" />
+	<context:component-scan base-package="tds.itemscoringengine" />
+	<context:component-scan base-package="tds.itemscoringengine.web.server" />
+
+	<!-- Start item scoring engine Configuration. TODO Shiva: Please consolidate these in a config in item-scoring-engine project so that we can just do an import. -->
+	<beans:bean id="rubricCache" class="tds.itemscoringengine.complexitemscorers.RubricCache" scope="singleton" />
+
+	<beans:bean id="scoringMaster" class="tds.itemscoringengine.web.server.ScoringMaster" scope="singleton" destroy-method="shutdown">
+		<beans:constructor-arg index="0">
+			<util:map>
+				<beans:entry key="MC">
+					<beans:bean class="tds.itemscoringengine.itemscorers.MCItemScorer" scope="prototype" />
+				</beans:entry>
+				<beans:entry key="MS">
+					<beans:bean class="tds.itemscoringengine.itemscorers.MCItemScorer" scope="prototype" />
+				</beans:entry>
+				<beans:entry key="MI">
+					<beans:bean class="tds.itemscoringengine.itemscorers.QTIItemScorer" scope="prototype" />
+				</beans:entry>
+				<beans:entry key="QTI">
+					<beans:bean class="tds.itemscoringengine.itemscorers.ProxyItemScorer" scope="prototype" />
+				</beans:entry>
+				<beans:entry key="EBSR">
+					<beans:bean class="tds.itemscoringengine.itemscorers.QTIItemScorer" scope="prototype" />
+				</beans:entry>
+				<beans:entry key="HTQ">
+					<beans:bean class="tds.itemscoringengine.itemscorers.QTIItemScorer" scope="prototype" />
+				</beans:entry>
+				<beans:entry key="GI">
+					<beans:bean class="tds.itemscoringengine.itemscorers.ProxyItemScorer" scope="prototype" />
+				</beans:entry>
+				<beans:entry key="EQ">
+					<beans:bean class="tds.itemscoringengine.itemscorers.ProxyItemScorer" scope="prototype" />
+				</beans:entry>
+				<beans:entry key="TI">
+					<beans:bean class="tds.itemscoringengine.itemscorers.QTIItemScorer" scope="prototype" />
+				</beans:entry>
+			</util:map>
+		</beans:constructor-arg>
+		<beans:constructor-arg ref="appStatsRecorder" index="1" />
+		<beans:property name="rubricUrlRewriter" ref="rubric-url-rewriter" />
+	</beans:bean>
+
+
+	<!-- beans:bean id="essay-item-scorer" class="tds.itemscoringengine.complexitemscorers.RubricScorer" scope="prototype"> <beans:constructor-arg> <beans:bean class="tds.itemscoringengine.essayitemscorer.EssayItemScorerFactory" 
+		scope="prototype"/> </beans:constructor-arg> </beans:bean -->
+
+	<beans:bean id="rubric-url-rewriter" class="AIR.Common.Web.PatternUrlRewriter">
+	</beans:bean>
+	<!-- End item scoring engine Configuration. -->
+
+	<beans:bean id="iCommonDLL" class="tds.dll.mysql.CommonDLL" scope="singleton" />
+	<beans:bean id="iProctorDLL" class="tds.dll.mysql.ProctorDLL" scope="singleton" />
+
+	<!-- Default to "old" RTS scheme, override this variable to use new scheme -->
+	<!-- <beans:bean id="iRtsDLL" class="${rtsDllClass:tds.dll.mysql.RtsDLL}" /> -->
+	<beans:bean id="iRtsDLL" class="tds.dll.mysql.RtsPackageDLL" scope="singleton" />
+
+	<beans:bean id="iStudentDLL" class="tds.dll.mysql.StudentDLL" scope="singleton" />
+	<beans:bean id="iItemSelectionDLL" class="tds.dll.mysql.ItemSelectionDLL" scope="singleton" />
+	<beans:bean id="iReportingDLL" class="tds.dll.mysql.ReportingDLL" scope="singleton" />
+
+	<!-- Current timestamp source -->
+	<beans:bean id="abstractDateUtilDll" class="tds.dll.mysql.DateUtilDLL" scope="singleton" />
+
+	<beans:bean id="iTDSLogger" class="tds.student.tdslogger.TDSLogger" scope="singleton" />
+
+	<!-- HTTP web helper -->
+	<beans:bean id="httpWebHelper" class="AIR.Common.Web.HttpWebHelper" />
+
+	<!--Start: c3p0 Datasource Configuration -->
+	<!-- see http://www.mchange.com/projects/c3p0/index.html#configuring_connection_testing -->
+
+	<beans:bean id="applicationDataSource" destroy-method="close" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<beans:property name="driverClass" value="${datasource.driverClassName:com.mysql.jdbc.Driver}" />
+		<beans:property name="jdbcUrl" value="${datasource.url:jdbc:mysql://tds-db.dev.opentestsystem.org:3306/session}" />
+		<beans:property name="user" value="${datasource.username:dbsbac}" />
+		<beans:property name="password" value="${datasource.password:osTyMhRM1C}" />
+		<beans:property name="initialPoolSize" value="${datasource.initialPoolSize:5}" />
+		<beans:property name="minPoolSize" value="${datasource.minPoolSize:5}" />
+		<beans:property name="acquireIncrement" value="${datasource.acquireIncrement:5}" />
+		<beans:property name="maxPoolSize" value="${datasource.maxPoolSize:20}" />
+		<beans:property name="checkoutTimeout" value="${datasource.checkoutTimeout:60000}" />
+		<!-- <beans:property name="preferredTestQuery" value="SELECT 1" /> -->
+		<beans:property name="maxConnectionAge" value="${datasource.maxConnectionAge:0}" />
+		<beans:property name="maxIdleTime" value="${datasource.maxIdleTime:0}" />
+		<beans:property name="acquireRetryAttempts" value="${datasource.acquireRetryAttempts:5}" />
+		<beans:property name="idleConnectionTestPeriod" value="${datasource.idleConnectionTestPeriod:300}" />
+		<beans:property name="testConnectionOnCheckout" value="${datasource.testConnectionOnCheckout:false}" />
+		<beans:property name="testConnectionOnCheckin" value="${datasource.testConnectionOnCheckin:false}" />
+		<beans:property name="numHelperThreads" value="${datasource.numHelperThreads:6}" />
+		<beans:property name="maxStatements" value="${datasource.maxStatements:20000}" />
+		<beans:property name="maxStatementsPerConnection" value="${datasource.maxStatementsPerConnection:200}" />
+	</beans:bean>
+
+	<!--End: c3p0 Datasource Configuration -->
+	<!-- <jee:jndi-lookup id="applicationDataSource" jndi-name="${student-sessiondb-jndi:java:/comp/env/jdbc/sessiondb}" expected-type="javax.sql.DataSource" /> -->
+
+	<!-- <beans:beans profile="rts"> <beans:bean id="iMessageRepository" class="tds.student.sql.repositorysp.MessageRepository" scope="prototype"/> <beans:bean id="iConfigLoader" class="tds.student.sql.repositorysp.ConfigLoader" 
+		scope="prototype"/> <beans:bean id="iConfigRepository" class="tds.student.sql.repositorysp.ConfigRepository" scope="prototype"/> <beans:bean id="iItemBankRepository" class="tds.student.sql.repositorysp.ItemBankRepository" 
+		scope="prototype"/> <beans:bean id="iOpportunityRepository" class="tds.student.sql.repositorysp.OpportunityRepository" scope="prototype"/> <beans:bean id="iResponseRepository" class="tds.student.sql.repositorysp.ResponseRepository" 
+		scope="prototype"/> <beans:bean id="iScoringRepository" class="tds.student.sql.repositorysp.ScoringRepository" scope="prototype"/> <beans:bean id="iSessionRepository" class="tds.student.sql.repositorysp.SessionRepository" 
+		scope="prototype"/> <beans:bean id="iTesteeRepository" class="tds.student.sql.repositorysp.TesteeRepository" scope="prototype"/> </beans:beans> <beans:beans profile="!rts"> <beans:bean id="iMessageRepository" 
+		class="tds.student.sql.repository.MessageRepository" scope="prototype"/> <beans:bean id="iConfigLoader" class="tds.student.sql.repository.ConfigLoader" scope="prototype"/> <beans:bean id="iConfigRepository" 
+		class="tds.student.sql.repository.ConfigRepository" scope="prototype"/> <beans:bean id="iItemBankRepository" class="tds.student.sql.repository.ItemBankRepository" scope="prototype"/> <beans:bean id="iOpportunityRepository" 
+		class="tds.student.sql.repository.OpportunityRepository" scope="prototype"/> <beans:bean id="iResponseRepository" class="tds.student.sql.repository.ResponseRepository" scope="prototype"/> <beans:bean id="iScoringRepository" 
+		class="tds.student.sql.repository.ScoringRepository" scope="prototype"/> <beans:bean id="iSessionRepository" class="tds.student.sql.repository.SessionRepository" scope="prototype"/> <beans:bean id="iTesteeRepository" 
+		class="tds.student.sql.repository.TesteeRepository" scope="prototype"/> </beans:beans> -->
+
+
+	<!--start do not commit -->
+	<beans:bean factory-bean="rendererSettings" factory-method="updateProperties" lazy-init="false">
+		<beans:constructor-arg>
+			<util:map map-class="java.util.HashMap">
+				<beans:entry key="renderer.replacement.match" value="\usr\" />
+				<beans:entry key="renderer.replacement.replacement" value="" />
+			</util:map>
+		</beans:constructor-arg>
+	</beans:bean>
+
+	<beans:bean id="rendererSettings" factory-bean="configurationManager" factory-method="getRendererSettings" />
+	<!-- end do not commit -->
+
+	<beans:import resource="performance-context.xml"/>
+
+</beans:beans>
