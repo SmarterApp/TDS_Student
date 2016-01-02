@@ -239,12 +239,11 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
     }
 
     /**
-     * Determine if a {@link tds.student.performance.domain.TestConfiguration} should have its {@code scoreByTds}
-     * property set.
+     * Determine if a {@code TestConfig} should have its {@code scoreByTds} property set.
      * <p>
      *     This method emulates the logic contained within {@code CommonDLL.ScoreByTDS_FN}.  The
      *     {@code CommonDLL.ScoreByTDS_FN} is called within {@code StudentDLL.T_StartTestOpportunity_SP} and ultimately
-     *     passed onto the {@link tds.student.sql.data.TestConfig}.
+     *     passed onto the {@code TestConfig}.
      * </p>
      *
      * @param clientName The client name.
