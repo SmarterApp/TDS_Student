@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+    <!-- Root Context: defines shared resources visible to all other web components -->
+	<context:component-scan base-package="tds.student.dll.test, tds.dll.mysql"/>
+	
+	<context:property-placeholder location="classpath:test-settings.xml" ignore-unresolvable="true" order="900" local-override="true"/>
+	
+	<beans:import resource="classpath:opentestsystem.shared.test-db-context-module.xml"/>
+	<beans:import resource="classpath:opentestsystem.shared.tr-api-context-module.xml" />
+
+	
+	<!-- TDSSettings bean. This gives access to clientname and any other info such as session type etc. -->
+	<beans:bean id="tdsSettings" class="TDS.Shared.Configuration.TDSSettings" scope="prototype"/>
+
+	<!-- DLL -->	
+	<beans:bean id="iCommonDLL" class="tds.dll.mysql.CommonDLL"  scope="singleton"/>
+	<beans:bean id="iProctorDLL" class="tds.dll.mysql.ProctorDLL" scope="singleton"/>
+	
+	<!-- Default to "old" RTS scheme, override this variable to use new scheme -->
+	<!--  <beans:bean id="iRtsDLL" class="${rtsDllClass:tds.dll.mysql.RtsDLL}" /> -->
+	<beans:bean id="iRtsDLL" class="tds.dll.mysql.RtsPackageDLL" scope="singleton"/>
+	
+	<beans:bean id="iStudentDLL" class="tds.dll.mysql.StudentDLL" scope="singleton"/> 
+	<beans:bean id="iItemSelectionDLL" class="tds.dll.mysql.ItemSelectionDLL" scope="singleton"/> 
+	<beans:bean id="iReportingDLL" class="tds.dll.mysql.ReportingDLL" scope="singleton"/> 
+	<beans:bean id="dllHelper" class="tds.student.dll.test.DLLHelper" scope="singleton"/> 
+ 	
+	<!-- Current timestamp source -->
+	<beans:bean id="abstractDateUtilDll" class="tds.dll.mysql.DateUtilDLL" />
+	
+    <beans:bean id="iTDSLogger" class="tds.student.tdslogger.TDSLogger" scope="singleton" lazy-init="true"/>
+	<beans:bean id="iTrClient" class="org.opentestsystem.shared.trapi.TrClient"  lazy-init="true"/>
+	
+	<!-- Beans for tests -->
+	<!-- <beans:bean id="httpWebHelper" class="tds.itemscoringengine.web.server.ItemScoringEngineHttpWebHelper"/> -->
+	<beans:bean id="iEncryption" class="TDS.Shared.Web.Encryption"/>
+	<!-- For ResponseRepositoryTest -->	
+	<beans:bean id="iResponseRepository" class="tds.student.sql.repository.ResponseRepository"/>
+	<!-- For PrintServiceTest -->
+	<beans:bean id="printService" class="tds.student.services.PrintService"/>
+	<beans:bean id="iContentService" class="tds.student.services.ContentService"/>
+	<beans:bean id="ibRepository" class="tds.student.sql.repository.ItemBankRepository"/>
+	<beans:bean id="iOppRepository" class="tds.student.sql.repository.OpportunityRepository"/>
+	<!-- For TestScoringServiceTest -->
+	<!-- <beans:bean id="iScoringRepository" class="tds.student.sql.repository.ScoringRepository"/>
+	<beans:bean id="iTestScoringService" class="tds.student.services.TestScoringService"/> -->
+	<beans:bean id="iClientManager" class="tds.student.sql.singletons.ClientManager"/>
+
+
+	
+	<!-- 
+	<beans:bean id="iTestScoringService" class="tds.student.services.TestScoringService"/>	
+	<beans:bean id="applicationContextAware" class="tds.student.sql.singletons.ClientManager"/>
+	 -->
+		
+	<!--Start: c3p0 Datasource Configuration -->
+	<beans:bean id="applicationDataSource" destroy-method="close"
+		  class="com.mchange.v2.c3p0.ComboPooledDataSource" >
+		    <beans:property name="driverClass" value="com.mysql.jdbc.Driver"/>
+		    <beans:property name="jdbcUrl" value="jdbc:mysql://52.33.126.67:3306/session"/>
+		    <beans:property name="user" value="remoteuser"/>
+		    <beans:property name="password" value="change*me"/>
+		    <beans:property name="minPoolSize" value="1200"/>
+		<beans:property name="acquireIncrement" value="500" />
+		<beans:property name="maxPoolSize" value="1200" />
+		<beans:property name="checkoutTimeout" value="60000" />
+		<beans:property name="preferredTestQuery" value="SELECT 1" />
+		<beans:property name="maxConnectionAge" value="0"/>
+		<beans:property name="acquireRetryAttempts" value="30"/>
+	</beans:bean>
+	
+	
+</beans:beans>
