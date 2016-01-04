@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
 import tds.dll.api.ICommonDLL;
 import tds.dll.api.IStudentDLL;
 import tds.student.performance.caching.CacheType;
@@ -23,7 +24,7 @@ import tds.student.sql.data.*;
 import java.sql.SQLException;
 import java.util.*;
 
-
+@Service
 public class ItemBankServiceImpl extends AbstractDLL implements ItemBankService {
     private static Logger _logger     = LoggerFactory.getLogger (ItemBankServiceImpl.class);
     @Autowired
