@@ -63,7 +63,7 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
             throws ReturnStatusException {
 
         List<SingleDataResultSet> resultsSets = new ArrayList<SingleDataResultSet>();
-        Date startTime = _dateUtil.getDateWRetStatus(connection);
+        Date startTime = dateUtility.getLocalDate();
         String ssId;
         Long studentKey;
 
@@ -118,7 +118,7 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
         SingleDataResultSet resultSetInputs = createResultFields(fieldValueMap);
         resultsSets.add(resultSetInputs);
 
-        _commonDll._LogDBLatency_SP(connection, "T_Login", startTime, studentKey, true, null, null, null, clientname, null);
+        dbLatencyService.logLatency("T_Login", startTime, studentKey, clientname);
         return (new MultiDataResultSet(resultsSets));
     }
 
