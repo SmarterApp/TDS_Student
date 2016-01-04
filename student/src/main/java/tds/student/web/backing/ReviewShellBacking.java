@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import AIR.Common.Json.JsonHelper;
 import AIR.Common.Utilities.TDSStringUtils;
 import AIR.Common.Web.taglib.ClientScript;
+import tds.student.performance.services.ItemBankService;
 import tds.student.web.backing.dummy.StudentPage;
 import tds.student.services.abstractions.ITestScoringService;
 import tds.student.services.data.ItemResponse;
@@ -44,7 +45,7 @@ public/* partial */class ReviewShellBacking extends StudentPage
 {
   private static final Logger _logger = LoggerFactory.getLogger (ReviewShellBacking.class);
 
-  IItemBankRepository         _ibRepository;
+  ItemBankService             itemBankService;
   StudentSettings             _studentSettings;
   ITestScoringService         _scoringService;
 
@@ -55,7 +56,7 @@ public/* partial */class ReviewShellBacking extends StudentPage
 
   @PostConstruct
   public void onInit () {
-    _ibRepository = getBean ("itemBankRepository", IItemBankRepository.class);
+    itemBankService = getBean ("itemBankService", ItemBankService.class);
     _studentSettings = getBean ("studentSettings", StudentSettings.class);
     _scoringService = getBean ("testScoringService", ITestScoringService.class);
 
@@ -70,7 +71,7 @@ public/* partial */class ReviewShellBacking extends StudentPage
 
     TestProperties testProps = null;
     try {
-      testProps = _ibRepository.getTestProperties (testOpp.getTestKey ());
+      testProps = itemBankService.getTestProperties (testOpp.getTestKey ());
     } catch (Exception e) {
       _logger.error (e.getMessage ());
     }

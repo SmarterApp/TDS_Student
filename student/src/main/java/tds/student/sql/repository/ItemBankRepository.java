@@ -42,6 +42,7 @@ import TDS.Shared.Exceptions.ReturnStatusException;
 
 @Component
 @Scope ("prototype")
+@Deprecated
 public class ItemBankRepository extends AbstractDAO implements IItemBankRepository
 {
   private static Logger      _logger     = LoggerFactory.getLogger (ItemBankRepository.class);

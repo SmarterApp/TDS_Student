@@ -1,6 +1,6 @@
 package tds.student.performance.services.impl;
 
-import AIR.Common.DB.AbstractDLL;
+import AIR.Common.DB.AbstractDAO;
 import AIR.Common.DB.SQLConnection;
 import AIR.Common.DB.results.DbResultRecord;
 import AIR.Common.DB.results.MultiDataResultSet;
@@ -18,14 +18,13 @@ import tds.dll.api.IStudentDLL;
 import tds.student.performance.caching.CacheType;
 import tds.student.performance.dao.ItemBankDao;
 import tds.student.performance.services.ItemBankService;
-import tds.student.performance.utils.LegacySqlConnection;
 import tds.student.sql.data.*;
 
 import java.sql.SQLException;
 import java.util.*;
 
 @Service
-public class ItemBankServiceImpl extends AbstractDLL implements ItemBankService {
+public class ItemBankServiceImpl extends AbstractDAO implements ItemBankService {
     private static Logger _logger     = LoggerFactory.getLogger (ItemBankServiceImpl.class);
     @Autowired
 
@@ -35,16 +34,13 @@ public class ItemBankServiceImpl extends AbstractDLL implements ItemBankService 
     private IStudentDLL _studentDll = null;
 
     @Autowired
-    private LegacySqlConnection legacySqlConnection;
-
-    @Autowired
     private ItemBankDao itemBankDao;
 
     public List<String> listTests () throws ReturnStatusException {
 
         List<String> testKeys = new ArrayList<String>();
 
-        try (SQLConnection connection = legacySqlConnection.get()) {
+        try (SQLConnection connection = getSQLConnection()) {
             SingleDataResultSet result = _studentDll.IB_ListTests_SP (connection, getTdsSettings().getClientName (), getTdsSettings().getSessionType ());
             ReturnStatusException.getInstanceIfAvailable (result);
 
@@ -69,7 +65,7 @@ public class ItemBankServiceImpl extends AbstractDLL implements ItemBankService 
     public TestProperties getTestProperties (String testKey) throws ReturnStatusException {
         TestProperties testProps = null;
 
-        try (SQLConnection connection = legacySqlConnection.get()) {
+        try (SQLConnection connection = getSQLConnection()) {
             MultiDataResultSet resultSets = _studentDll.IB_GetTestProperties_SP (connection, testKey);
 
             Iterator<SingleDataResultSet> results = resultSets.getResultSets ();
@@ -142,7 +138,7 @@ public class ItemBankServiceImpl extends AbstractDLL implements ItemBankService 
     @Cacheable(CacheType.MediumTerm)
     public AccList getTestAccommodations (String testKey) throws ReturnStatusException {
         AccList accList = new AccList ();
-        try (SQLConnection connection = legacySqlConnection.get()) {
+        try (SQLConnection connection = getSQLConnection()) {
 
             // TODO: look into this "stored proc" - the optimization attempt adds complexity and that appears to be it
             Iterator<SingleDataResultSet> results = _commonDll.IB_GetTestAccommodations_SP (connection, testKey).getResultSets ();
@@ -213,7 +209,7 @@ public class ItemBankServiceImpl extends AbstractDLL implements ItemBankService 
     public List<TestForm> getTestForms (String testID) throws ReturnStatusException {
 
         List<TestForm> testforms = new ArrayList<TestForm> ();
-        try (SQLConnection connection = legacySqlConnection.get()) {
+        try (SQLConnection connection = getSQLConnection()) {
 
             SingleDataResultSet results = _studentDll.P_GetTestForms_SP (connection, getTdsSettings().getClientName (), testID, getTdsSettings().getSessionType ());
 
@@ -244,7 +240,7 @@ public class ItemBankServiceImpl extends AbstractDLL implements ItemBankService 
     public String getItemPath (long bankKey, long itemKey) throws ReturnStatusException {
         String itemPath = null;
 
-        try (SQLConnection connection = legacySqlConnection.get()) {
+        try (SQLConnection connection = getSQLConnection()) {
 
             SingleDataResultSet results = _studentDll.IB_GetItemPath_SP (connection, getTdsSettings().getClientName (), bankKey, itemKey);
 
@@ -265,7 +261,7 @@ public class ItemBankServiceImpl extends AbstractDLL implements ItemBankService 
     public String getStimulusPath (long bankKey, long stimulusKey) throws ReturnStatusException {
         String stimulusPath = null;
 
-        try (SQLConnection connection = legacySqlConnection.get()) {
+        try (SQLConnection connection = getSQLConnection()) {
 
             SingleDataResultSet results = _studentDll.IB_GetStimulusPath_SP (connection, getTdsSettings().getClientName (), bankKey, stimulusKey);
 

@@ -41,6 +41,7 @@ import tds.itemrenderer.data.AccLookup;
 import tds.itemrenderer.data.AccProperties;
 import tds.student.data.Segment;
 import tds.student.data.TestInfo;
+import tds.student.performance.services.ItemBankService;
 import tds.student.proxy.data.Proctor;
 import tds.student.sbacossmerge.data.GeoComponent;
 import tds.student.sbacossmerge.data.GeoType;
@@ -138,7 +139,7 @@ public class MasterShellHandler extends TDSHandler
   private ITDSLogger             _tdsLogger;
 
   @Autowired
-  private IItemBankRepository    _ibrepository;
+  private ItemBankService         itemBankService;
 
   /***
    * 
@@ -232,7 +233,7 @@ public class MasterShellHandler extends TDSHandler
     // create an instance of the new login info
     tds.student.sbacossmerge.data.LoginInfo _loginInfo = new tds.student.sbacossmerge.data.LoginInfo (loginInfo);
     if (_loginInfo.getTestee ().isGuest ())
-      _loginInfo.setGrades (_ibrepository.getGrades ());
+      _loginInfo.setGrades (itemBankService.getGrades ());
     _loginInfo.setGlobalAccs (null);// = //however we do this in
     // globaljavascriptwriter
     // create the Satellite class as it exists in .NEt
@@ -328,7 +329,6 @@ public class MasterShellHandler extends TDSHandler
    * @param testID
    * @param subject
    * @param grade
-   * @param segment
    * @param oppKey
    * @return
    * @throws ReturnStatusException
@@ -490,7 +490,7 @@ public class MasterShellHandler extends TDSHandler
 
   TestInfo loadTestInfo (OpportunityInstance oppInstance, TestConfig testConfig) throws ReturnStatusException
   {
-    TestProperties testProps = _ibrepository.getTestProperties (StudentContext.getTestKey ()); // getTestProperties(testIdentifiers.TestKey);
+    TestProperties testProps = itemBankService.getTestProperties (StudentContext.getTestKey ()); // getTestProperties(testIdentifiers.TestKey);
 
     TestInfo testInfo = new TestInfo ();
     testInfo.setReviewPage (0);
