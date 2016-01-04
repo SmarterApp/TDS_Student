@@ -56,7 +56,7 @@ public class TesteeResponseDaoImpl implements TesteeResponseDao {
 
         final String SQL =
             "SELECT\n" +
-                "false as isVisible,\n" +
+                "'false' as isVisible,\n" +
                 "page,\n" +
                 "groupItemsRequired as groupRequired,\n" +
                 "count(*) as numItems,\n" +
