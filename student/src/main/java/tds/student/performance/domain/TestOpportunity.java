@@ -21,6 +21,8 @@ public class TestOpportunity {
     private Timestamp dateStarted;
     private Timestamp dateRestarted;
     private Timestamp dateChanged;
+    private Timestamp expireFrom;
+    private String stage;
     private Integer restartCount;
     private Integer gracePeriodRestarts;
     private Integer maxItems;
@@ -178,6 +180,22 @@ public class TestOpportunity {
 
     public void setIsSegmented(Boolean isSegmented) {
         this.isSegmented = isSegmented;
+    }
+
+    public Timestamp getExpireFrom() {
+        return expireFrom;
+    }
+
+    public void setExpireFrom(Timestamp expireFrom) {
+        this.expireFrom = expireFrom;
+    }
+
+    public String getStage() {
+        return stage;
+    }
+
+    public void setStage(String stage) {
+        this.stage = stage;
     }
 
     public String getAlgorithm() {

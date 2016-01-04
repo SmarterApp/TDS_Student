@@ -22,6 +22,7 @@ import tds.student.sql.data.OpportunityInstance;
 import tds.student.sql.data.TestConfig;
 
 import java.sql.SQLException;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -69,6 +70,9 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
     TestSessionService testSessionService;
 
     @Autowired
+    TestOppAbilityEstimateDao testOppAbilityEstimateDao;
+
+    @Autowired
     DateUtility dateUtility;
 
     @Autowired
@@ -85,7 +89,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
 
     @Override
     public TestConfig startTestOpportunity(OpportunityInstance opportunityInstance, String testKey, String formKeyList) {
-        Date start = new Date();
+        Date start = new Timestamp(dateUtility.getDbDate().getTime());
         TestConfig config = new TestConfig();
 
         try {
@@ -131,16 +135,13 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
 
             if (testOpportunity.getDateStarted() == null) {
                 // Emulate logic to call legacy method (StudentDLL._InitializeOpportunity_SP) on line 5326
-                Integer testLength = initializeStudentOpportunity(testOpportunity, formKeyList);
+                Integer testLength = initializeStudentOpportunity(testOpportunity, testSession, clientTestProperty, formKeyList);
 
                 config = TestConfigHelper.getNew(clientTestProperty, timelimitConfiguration, testLength, scoreByTds);
             } else {         // Restart the most recent test opportunity, starting @ line 5373 - StudentDLL
                 Date lastActivity = testOpportunityDao.getLastActivity(opportunityInstance.getKey());
                 Integer gracePeriodRestarts = testOpportunity.getGracePeriodRestarts();
                 Integer restartCount = testOpportunity.getRestartCount();
-
-                //TODO: Replace below with db time
-                // Timestamp now = new Timestamp(System.currentTimeMillis());
                 Timestamp now = new Timestamp(dateUtility.getDbDate().getTime());
                 boolean isTimeDiffLessThanDelay =
                         (DateUtils.minutesDiff(lastActivity, start) < timelimitConfiguration.getOpportunityDelay());
@@ -263,7 +264,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
      */
     @Override
     public Float getInitialAbility(TestOpportunity opportunity, ClientTestProperty property) {
-        Date start = new Date();
+        Timestamp start = new Timestamp(dateUtility.getDbDate().getTime());
         Float ability = null;
         Boolean bySubject = false;
         Double slope = null;
@@ -353,32 +354,87 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
      * @param formKeyList A list of form keys passed in from the caller.
      * @return The total number of items in the test.
      */
-    private Integer initializeStudentOpportunity(TestOpportunity testOpportunity, String formKeyList) throws ReturnErrorException, SQLException, ReturnStatusException {
-        SQLConnection legacyConnection = legacySqlConnection.get();
-        _Ref<Integer> testLength = new _Ref<>();
+    private Integer initializeStudentOpportunity(TestOpportunity testOpportunity, TestSession testSession, ClientTestProperty clientTestProperty,
+                                                 String formKeyList) throws ReturnErrorException, SQLException, ReturnStatusException {
+        //SQLConnection legacyConnection = legacySqlConnection.get();
+        Timestamp now = new Timestamp(dateUtility.getDbDate().getTime());
+        Integer testLength;
+        Float initialAbility;
         _Ref<String> reason = new _Ref<>();
 
-        legacyStudentDll._InitializeOpportunity_SP(
-                legacyConnection,
-                testOpportunity.getKey(),
-                testLength,
-                reason,
-                formKeyList);
+//        legacyStudentDll._InitializeOpportunity_SP(
+//                legacyConnection,
+//                testOpportunity.getKey(),
+//                testLength,
+//                reason,
+//                formKeyList);
+
+        initializeTestSegments(testOpportunity, testSession, formKeyList);
 
         if (reason.get() != null) {
             legacyErrorHandlerService.logDbError("T_StartTestOpportunity", reason.get(), testOpportunity.getTestee(), testOpportunity.getTestId(), null, testOpportunity.getKey());
             legacyErrorHandlerService.throwReturnErrorException(testOpportunity.getClientName(), "T_StartTestOpportunity", reason.get(), null, testOpportunity.getKey(), "_InitializeOpportunity", "failed");
         }
+        initialAbility = getInitialAbility(testOpportunity, clientTestProperty);
+
+        //First session.testoppabilityestimate insert
+        testOppAbilityEstimateDao.create(
+            new TestOppAbilityEstimate(
+                testOpportunity.getKey(),
+                "OVERALL",
+                initialAbility,
+                0,
+                now
+            )
+        );
+
+        //Second session.testoppabilityestimate insert  - gets "strand" from testopportunity and
+        //itembank.tbladminstrand tables
+        testOppAbilityEstimateDao.createFromItemBankAndTestOpp(
+                testOpportunity.getKey(),
+                initialAbility,
+                now
+        );
+
+        testLength = testSegmentDao.getTestLengthForOpportunitySegment(testOpportunity.getKey());
+        createResponseSet(testOpportunity, testLength, 0);
+
+        testOpportunity.setStatus("started");
+        testOpportunity.setDateStarted(now);
+        testOpportunity.setDateChanged(now);
+        testOpportunity.setExpireFrom(now);
+        testOpportunity.setStage("inprogress");
+        testOpportunity.setMaxItems(testLength);
+        testOpportunityDao.update(testOpportunity);
 
         testOpportunityAuditDao.create(new TestOpportunityAudit(
                 testOpportunity.getKey(),
-                new Timestamp(new Date().getTime()),
+                new Timestamp(dateUtility.getDbDate().getTime()),
                 "started",
                 testOpportunity.getSessionKey(),
                 HostNameHelper.getHostName(),
                 "session"));
 
-        return testLength.get();
+
+        dbLatencyService.logLatency("InitializeStudentOpportunity", now, null, testOpportunity);
+
+        return testLength;
+    }
+
+    private void createResponseSet(TestOpportunity opportunity, Integer maxItems, Integer reset) {
+        Date start = dateUtility.getDbDate();
+        Long itemCount = testeeResponseDao.getTesteeResponseItemCount(opportunity.getKey());
+
+        if (itemCount > 0) {
+            if (reset != 0) {
+                testeeResponseDao.delete(opportunity.getKey());
+            }
+        } else {
+            return;
+        }
+
+        testeeResponseDao.insertBatch(opportunity.getKey(), maxItems);
+        dbLatencyService.logLatency("CreateResponseSet", start, null, opportunity);
     }
 
     private void initializeTestSegments(TestOpportunity testOpportunity, TestSession testSession, String formKeyList) throws SQLException, ReturnErrorException, ReturnStatusException {
