@@ -64,6 +64,8 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
                     "o.datechanged AS dateChanged,\n" +
                     "o.daterestarted AS dateRestarted,\n" +
                     "o.restart AS rcnt,\n" +
+                    "o.stage AS stage,\n" +
+                    "o.expireFrom AS expireFrom,\n" +
                     "o.graceperiodrestarts AS gpRestarts,\n" +
                     "o.maxitems AS testLength,\n" +
                     "o.subject AS subject,\n" +
@@ -96,6 +98,9 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
                     "o.status,\n" +
                     "o.datestarted,\n" +
                     "o.datechanged,\n" +
+                    "o.daterestarted,\n" +
+                    "o.expireFrom,\n" +
+                    "o.stage,\n" +
                     "o.restart,\n" +
                     "o.graceperiodrestarts ,\n" +
                     "o.maxitems,\n" +
@@ -178,6 +183,8 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
         parameters.put("environment", opportunity.getEnvironment());
         parameters.put("gracePeriodRestarts", opportunity.getGracePeriodRestarts());
         parameters.put("isSegmented", opportunity.getIsSegmented());
+        parameters.put("expireFrom", opportunity.getExpireFrom());
+        parameters.put("stage", opportunity.getStage());
         parameters.put("key", UuidAdapter.getBytesFromUUID(opportunity.getKey()));
         parameters.put("maxItems", opportunity.getMaxItems());
         parameters.put("opportunity", opportunity.getOpportunity());
@@ -214,6 +221,8 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
                     "isSegmented = :isSegmented,\n" +
                     "algorithm = :algorithm,\n" +
                     "environment = :environment,\n" +
+                    "stage = :stage,\n" +
+                    "expireFrom = :expireFrom,\n" +
                     "waitingForSegment = :waitingForSegment\n" +
                 "WHERE\n" +
                     "_key = :key";

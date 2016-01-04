@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by emunoz on 12/30/15.
@@ -88,5 +89,15 @@ public class TesteeResponseDaoTest extends IntegrationTest {
     public void testUpdateRestartCount() {
         List<UnfinishedResponsePage> pages = testeeResponseDao.getUnfinishedPages(oppKey);
         assertNotNull(pages);
+    }
+
+    @Test
+    public void testBatchInsertAndItemCount() {
+        Integer maxItems = 4;
+        testeeResponseDao.insertBatch(oppKey, maxItems);
+
+        Long itemCount = testeeResponseDao.getTesteeResponseItemCount(oppKey);
+        assertNotNull(itemCount);
+        assertTrue(itemCount == 5); //One additional one for insert in setup() method
     }
 }
