@@ -30,6 +30,7 @@
         <property name="maxPoolSize" value="${datasource.maxPoolSize}" />
         <property name="minPoolSize" value="${datasource.minPoolSize}" />
         <property name="maxStatements" value="${datasource.maxStatements}" />
+        <property name="checkoutTimeout" value="${datasource.checkoutTimeout}" />
         <property name="testConnectionOnCheckout" value="${datasource.testConnectionCheckout}" />
     </bean>
 
