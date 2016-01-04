@@ -13,10 +13,7 @@ import tds.dll.api.IStudentDLL;
 import tds.student.performance.dao.*;
 import tds.student.performance.domain.*;
 import tds.student.performance.exceptions.ReturnErrorException;
-import tds.student.performance.services.DbLatencyService;
-import tds.student.performance.services.LegacyErrorHandlerService;
-import tds.student.performance.services.TestOpportunityService;
-import tds.student.performance.services.TestSessionService;
+import tds.student.performance.services.*;
 import tds.student.performance.utils.DateUtility;
 import tds.student.performance.utils.HostNameHelper;
 import tds.student.performance.utils.LegacySqlConnection;
@@ -55,11 +52,18 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
     @Autowired
     TestAbilityDao testAbilityDao;
 
+    // TODO:  Replace with calls to configurationService; no need to wire up both Dao and Service.
     @Autowired
     ConfigurationDao configurationDao;
 
     @Autowired
+    ConfigurationService configurationService;
+
+    @Autowired
     ItemBankDao itemBankDao;
+
+    @Autowired
+    TestSegmentDao testSegmentDao;
 
     @Autowired
     TestSessionService testSessionService;
@@ -375,6 +379,81 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                 "session"));
 
         return testLength.get();
+    }
+
+    private void initializeTestSegments(TestOpportunity testOpportunity, TestSession testSession, String formKeyList) throws SQLException, ReturnErrorException, ReturnStatusException {
+        List<TestSegmentItem> segmentItems;
+        if (testOpportunity.isSimulation()) { // Get segments for the simulation (StudentDLL._InitializeSegments_SP @ line 4589)
+            segmentItems = testSegmentDao.getForSimulation(testOpportunity);
+            // NOTE: can use testOpportunity.getSessionKey() in place of sessionPoolKey (StudentDLL._InitializeSegments_SP @ line 4611)
+        } else if (testOpportunity.getIsSegmented()) { // Get segments for the segment (StudentDLL._InitializeSegments_SP @ line 4598)
+            segmentItems = testSegmentDao.getSegmented(testOpportunity);
+        } else { // Get segments for un-segmented opportunity (StudentDLL._InitializeSegments_SP @ line 4604)
+            segmentItems = testSegmentDao.get(testOpportunity);
+        }
+
+        // Find the maximum segment position (this should be length of list - 1, but who knows?)
+        // TODO: Is this find even necessary?  Looping through each item in the results should be sufficient.
+
+        // LOOP through each segment fetched during the queries above:
+        for (TestSegmentItem segmentItem : segmentItems) {
+            // IF algorithm == "fixedform":
+            if (segmentItem.getAlgorithm().toLowerCase().equals("fixedform")) {
+                // CALL _SelectTestForm_Driver_SP
+                String testFormDriverResponse = configurationService.selectTestFormDriver(
+                        testOpportunity,
+                        testSession,
+                        formKeyList);
+
+                // IF the formKeyRef value that comes back from _SelectTestForm_Driver_SP == null
+                if (testFormDriverResponse == null ) {
+                    // EXCEPTION: return empty record set and set error reason to "Unable to complete test form selection"
+                    legacyErrorHandlerService.logDbError("T_StartTestOpportunity", "Did not find formKeyRef", testOpportunity.getTestee(), testOpportunity.getTestId(), null, testOpportunity.getKey());
+                    legacyErrorHandlerService.throwReturnErrorException(testOpportunity.getClientName(), "T_StartTestOpportunity", "Did not find formKeyRef", null, testOpportunity.getKey(), "_InitializeOpportunity", "failed");
+                }
+
+
+                // set poolCountRef to whatever formLengthRef value is.
+                // IF formCohort == null:
+                    // get cohort from itembank.testform
+            } else {
+                // CALL StudentDLL._ComputeSegmentPool_SP
+                // CALL FT_IsEligible_FN to get isEligible value
+                // IF isEligible == 1 and newlenRef == opitems
+                    // CALL _FT_SelectItemgroups_SP
+                // ELSE:
+                    // ftcntRef = 0
+            }
+
+            // update current record to new values
+        }
+
+
+
+            // CALL _SelectTestForm_Driver_SP
+            // IF the formKeyRef value that comes back from _SelectTestForm_Driver_SP == null
+              // EXCEPTION: return empty record set and set error reason to "Unable to complete test form selection"
+           // set poolCountRef to whatever formLengthRef value is.
+           // IF formCohort == null:
+             // get cohort from itembank.testform
+          // ELSE algorithm != "fixedform":
+            // CALL StudentDLL._ComputeSegmentPool_SP
+            // CALL FT_IsEligible_FN to get isEligible value
+            // IF isEligible == 1 and newlenRef == opitems:
+              // CALL _FT_SelectItemgroups_SP
+           // ELSE:
+             // ftcntRef = 0
+          // update current record to new values
+        // END LOOP (phew!)
+
+        // IF there are no records in list that have opItemCnt + ftItemCnt > 0:
+          // EXECPTION: "No items in pool for _InitializeTestSegments"
+
+        // INSERT updated list into session.testopportunitysegment table.
+    }
+
+    private void selectTestFormPredetermined(TestOpportunity testOpportunity, String formList) {
+
     }
 
     /**
