@@ -12,10 +12,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import tds.student.performance.caching.CacheType;
 import tds.student.performance.dao.ConfigurationDao;
-import tds.student.performance.domain.ClientSystemFlag;
-import tds.student.performance.domain.ClientTestProperty;
-import tds.student.performance.domain.ConfigTestToolType;
-import tds.student.performance.domain.StudentLoginField;
+import tds.student.performance.dao.mappers.ClientTestModeMapper;
+import tds.student.performance.domain.*;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -263,7 +261,7 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
                 "SELECT\n" +
                     "COUNT(clientname)\n" +
                 "FROM\n" +
-                    "configs.client_testscorefeatures\n " +
+                    "configs.client_testscorefeatures\n" +
                 "WHERE\n" +
                     "clientname = :clientName\n" +
                     "AND TestID = :testId\n" +
@@ -276,5 +274,50 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
         Integer recordCount = namedParameterJdbcTemplate.queryForInt(SQL, parameters);
 
         return recordCount > 0;
+    }
+
+    /**
+     * Get the {@link ClientTestMode} from the {@code configs.client_testmode} table for the specified
+     * {@link TestOpportunity}.
+     *
+     * @param testOpportunity The {@code TestOpportunity}.
+     * @return  A {@code ClientTestMode} for the {@code TestOpportunity}.
+     */
+    @Override
+    @Transactional
+    @Cacheable(CacheType.LongTerm)
+    public ClientTestMode getClientTestMode(TestOpportunity testOpportunity) {
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("parentTest", testOpportunity.getTestKey());
+
+        final String SQL =
+                "SELECT\n" +
+                    "_key AS `key`,\n" +
+                    "clientname AS clientName,\n" +
+                    "testid AS testId,\n" +
+                    "mode AS mode,\n" +
+                    "algorithm AS algorithm,\n" +
+                    "formtideselectable AS formTideSelectable,\n" +
+                    "issegmented AS isSegmented,\n" +
+                    "maxopps AS maxOpps,\n" +
+                    "requirertsform AS requireRtsForm,\n" +
+                    "requirertsformwindow AS requireRtsFormWindow,\n" +
+                    "requirertsformifexists AS requireRtsFormIfExists,\n" +
+                    "sessiontype AS sessionType,\n" +
+                    "testkey AS testKey\n" +
+                "FROM\n" +
+                    "configs.client_testmode\n" +
+                "WHERE\n" +
+                    "testkey = :parentTest";
+
+        try {
+            return namedParameterJdbcTemplate.queryForObject(
+                    SQL,
+                    parameters,
+                    new ClientTestModeMapper());
+        } catch (EmptyResultDataAccessException e) {
+            logger.warn(String.format("%s did not return results for parentTest = %s", SQL, parameters.get("parentTest")));
+            return null;
+        }
     }
 }

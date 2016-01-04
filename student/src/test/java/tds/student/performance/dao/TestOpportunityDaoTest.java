@@ -1,22 +1,10 @@
 package tds.student.performance.dao;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.internal.exceptions.ExceptionIncludingMockitoWarnings;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
-import tds.dll.api.ICommonDLL;
 import tds.student.performance.IntegrationTest;
 import tds.student.performance.domain.TestOpportunity;
-import tds.student.performance.services.LegacyErrorHandlerService;
-import tds.student.performance.services.LegacyTestOpportunityService;
-import tds.student.performance.utils.LegacySqlConnection;
 import tds.student.performance.utils.UuidAdapter;
 
 import java.util.HashMap;
@@ -84,9 +72,9 @@ public class TestOpportunityDaoTest extends IntegrationTest {
         // insert the records we want to test
         UUID sessionKey = UUID.randomUUID();
 
-        final String SQL = "INSERT INTO session.testopportunity " +
-                "(_key, _fk_session, status, _efk_testee, _efk_testid, clientname, _version, _efk_adminsubject, environment, issegmented, algorithm) " +
-            "VALUES (:key, :sessionKey, :status, :testee, 'SBAC-IRP-Perf-MATH-3', 'SBAC_PT', 1234, 'MATH', 'dev', 0, 'fixedform')";
+        final String SQL =
+                "INSERT INTO session.testopportunity(_key, _fk_session, status, _efk_testee, _efk_testid, clientname, _version, _efk_adminsubject, environment, issegmented, algorithm) " +
+                "VALUES (:key, :sessionKey, :status, :testee, 'SBAC-IRP-Perf-MATH-3', 'SBAC_PT', 1234, 'MATH', 'dev', 0, 'fixedform')";
 
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("sessionKey", UuidAdapter.getBytesFromUUID(sessionKey));
