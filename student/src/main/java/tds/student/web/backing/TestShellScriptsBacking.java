@@ -19,6 +19,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 
 import tds.itemrenderer.data.AccProperties;
+import tds.student.performance.services.ItemBankService;
 import tds.student.services.OpportunityService;
 import tds.student.services.abstractions.IOpportunityService;
 import tds.student.services.data.TestOpportunity;
@@ -47,7 +48,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 public class TestShellScriptsBacking extends BasePage
 {
   private ServletRequest      _request;
-  private IItemBankRepository _itemBankRepository;
+  private ItemBankService itemBankService;
   private IOpportunityService _iOpportunityService;
   private StudentSettings     _studentSettings;
   private TestProperties      _testProps;
@@ -65,7 +66,7 @@ public class TestShellScriptsBacking extends BasePage
     // TODO Shajib: Get beans instantiated by @ManagedBean property
     _request = getRequest ();
     _studentSettings = getBean ("studentSettings", StudentSettings.class);
-    _itemBankRepository = getBean ("itemBankRepository", ItemBankRepository.class);
+    itemBankService = getBean ("itemBankService", ItemBankService.class);
     _iOpportunityService = getBean ("opportunityService", OpportunityService.class);
 
     // get test opp
@@ -82,7 +83,8 @@ public class TestShellScriptsBacking extends BasePage
     // get test props
     String testKey = StudentContext.getTestKey ();
     try {
-      _testProps = _itemBankRepository.getTestProperties (testKey);
+      // FW Performance - changed from ItemBankRepository to ItemBankService to utilize the new methods with caching
+      _testProps = itemBankService.getTestProperties (testKey);
     } catch (ReturnStatusException e) {
       // TODO Auto-generated catch block
       e.printStackTrace ();

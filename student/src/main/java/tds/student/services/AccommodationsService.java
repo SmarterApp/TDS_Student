@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import tds.student.performance.services.ItemBankService;
 import tds.student.services.abstractions.IAccommodationsService;
 import tds.student.services.data.OpenTestAcc;
 import tds.student.sql.abstractions.IItemBankRepository;
@@ -61,6 +62,9 @@ public class AccommodationsService implements IAccommodationsService
   @Autowired
   private IOpportunityRepository _oppRepository;
 
+  @Autowired
+  private ItemBankService itemBankService;
+
   private static final Logger    _logger = LoggerFactory.getLogger (AccommodationsService.class);
 
   // / <summary>
@@ -73,8 +77,8 @@ public class AccommodationsService implements IAccommodationsService
   public List<Accommodations> getTestee (String testKey, boolean isGuestSession, long testeeKey) throws ReturnStatusException {
     List<Accommodations> accommodationsList = new ArrayList<Accommodations> ();
     try {
-      // get test properties
-      TestProperties testProps = _ibRepository.getTestProperties (testKey);
+      // FW Performance Changes - switched from _ibRepository to new ItemBankService which utilizes caching and other optimizations
+      TestProperties testProps = itemBankService.getTestProperties (testKey);
 
       // load test/segment accommodations
       List<Accommodations> accSegmentsList = getTestSegments (testProps, isGuestSession);
@@ -109,7 +113,8 @@ public class AccommodationsService implements IAccommodationsService
     // get all the test and segment accommodations
     TestProperties testProps = null;
     try {
-      testProps = _ibRepository.getTestProperties (testKey);
+      // FW Performance Changes - switched from _ibRepository to new ItemBankService which utilizes caching and other optimizations
+      testProps = itemBankService.getTestProperties (testKey);
 
       segmentAccsList = getTestSegments (testProps, isGuestSession); // get the
                                                                      // approved
@@ -181,8 +186,8 @@ public class AccommodationsService implements IAccommodationsService
     // get all the test and segment accommodations
     TestProperties testProps = null;
     try {
-      
-      testProps = _ibRepository.getTestProperties (testKey);
+      // FW Performance Changes - switched from _ibRepository to new ItemBankService which utilizes caching and other optimizations
+      testProps = itemBankService.getTestProperties (testKey);
       segmentAccsList = getTestSegments (testProps, isGuestSession); 
       oppAccs = _oppRepository.getOpportunityAccommodations (oppInstance, testKey);
       Transformer groupTransformer = new Transformer ()
@@ -385,8 +390,8 @@ public class AccommodationsService implements IAccommodationsService
   private List<Accommodations> getTestSegments (TestProperties testProps, boolean isGuestSession) throws ReturnStatusException {
     long startTime = System.currentTimeMillis ();
     List<Accommodations> accommodationsList = new ArrayList<Accommodations> ();
-    // get all the accommodations for this test
-    AccList accList = _ibRepository.getTestAccommodations (testProps.getTestKey ());
+    // FW Performance - changed from _ibRepository to ItemBankService to utilize caching
+    AccList accList = itemBankService.getTestAccommodations (testProps.getTestKey ());
     // if this is PT then remove all acc's that are disabled for guest sessions
     try {
       if (isGuestSession)
