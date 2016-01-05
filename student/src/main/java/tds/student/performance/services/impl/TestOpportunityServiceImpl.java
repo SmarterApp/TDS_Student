@@ -42,12 +42,6 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
     TestOpportunityDao testOpportunityDao;
 
     @Autowired
-    SessionAuditDao sessionAuditDao;
-
-    @Autowired
-    TestOpportunityAuditDao testOpportunityAuditDao;
-
-    @Autowired
     TesteeResponseDao testeeResponseDao;
 
     @Autowired
@@ -165,7 +159,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                 oppAudit.setDatabaseName("session");
                 oppAudit.setDateAccessed(new Timestamp(System.currentTimeMillis()));
                 oppAudit.setAccessType("restart " + (restartCount + 1));
-                testOpportunityAuditDao.create(oppAudit);
+                testOpportunityDao.createAudit(oppAudit);
 
                 if (testSession.getSessionType() == 1) {
                     testeeResponseDao.updateRestartCount(opportunityInstance.getKey(), restartCount, false);
@@ -407,7 +401,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
         testOpportunity.setMaxItems(testLength);
         testOpportunityDao.update(testOpportunity);
 
-        testOpportunityAuditDao.create(new TestOpportunityAudit(
+        testOpportunityDao.createAudit(new TestOpportunityAudit(
                 testOpportunity.getKey(),
                 new Timestamp(dateUtility.getDbDate().getTime()),
                 "started",
@@ -594,7 +588,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
         // NOTE:  checkIn time is in MINUTES, so need to multiply checkIn by 60,000 milliseconds so the math works out.
         Date dateVisitedPlusCheckIn = new Date(testSession.getDateVisited().getTime() + (checkIn * 60000L));
         if (now.after(dateVisitedPlusCheckIn)) {
-            sessionAuditDao.create(new SessionAudit(
+            testSessionService.createAudit(new SessionAudit(
                     testSession.getKey(),
                     new Timestamp(now.getTime()),
                     "TACheckin TIMEOUT",

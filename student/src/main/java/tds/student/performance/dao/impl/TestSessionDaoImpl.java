@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import tds.student.performance.caching.CacheType;
 import tds.student.performance.dao.TestSessionDao;
 import tds.student.performance.dao.mappers.TestSessionMapper;
+import tds.student.performance.domain.SessionAudit;
 import tds.student.performance.domain.TestSessionTimeLimitConfiguration;
 import tds.student.performance.utils.UuidAdapter;
 import tds.student.performance.domain.TestSession;
@@ -220,6 +221,42 @@ public class TestSessionDaoImpl implements TestSessionDao {
         }
 
         return null;
+    }
+
+    @Override
+    @Transactional
+    public void createAudit(SessionAudit sessionAudit) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("sessionKey", UuidAdapter.getBytesFromUUID(sessionAudit.getSessionKey()));
+        parameters.put("dateAccessed", sessionAudit.getDateAccessed());
+        parameters.put("accessType", sessionAudit.getAccessType());
+        parameters.put("hostName", sessionAudit.getHostName());
+        parameters.put("browserKey", UuidAdapter.getBytesFromUUID(sessionAudit.getBrowserKey()));
+        parameters.put("databaseName", sessionAudit.getDatabaseName());
+
+        final String SQL =
+                "INSERT INTO\n" +
+                    "archive.sessionaudit (" +
+                    "_fk_session," +
+                    "dateaccessed," +
+                    "accesstype," +
+                    "hostname," +
+                    "browserkey," +
+                    "dbname)\n" +
+                "VALUES(" +
+                    ":sessionKey," +
+                    ":dateAccessed," +
+                    ":accessType," +
+                    ":hostName," +
+                    ":browserKey," +
+                    ":databaseName)";
+
+        try {
+            namedParameterJdbcTemplate.update(SQL, parameters);
+        } catch (DataAccessException e) {
+            logger.error(String.format("%s UPDATE threw exception", SQL), e);
+            throw e;
+        }
     }
 
     /**

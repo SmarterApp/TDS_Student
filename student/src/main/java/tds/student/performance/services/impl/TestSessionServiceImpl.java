@@ -28,13 +28,7 @@ public class TestSessionServiceImpl implements TestSessionService {
     TestSessionDao testSessionDao;
 
     @Autowired
-    SessionAuditDao sessionAuditDao;
-
-    @Autowired
     TestOpportunityDao testOpportunityDao;
-
-    @Autowired
-    TestOpportunityAuditDao testOpportunityAuditDao;
 
     @Autowired
     ConfigurationService configurationService;
@@ -116,6 +110,11 @@ public class TestSessionServiceImpl implements TestSessionService {
     }
 
     @Override
+    public void createAudit(SessionAudit sessionAudit) {
+        testSessionDao.createAudit(sessionAudit);
+    }
+
+    @Override
     public void pause(TestOpportunity testOpportunity, TestSession testSession) throws SQLException, ReturnStatusException, ReturnErrorException {
         pause(testOpportunity, testSession, "closed");
     }
@@ -156,7 +155,7 @@ public class TestSessionServiceImpl implements TestSessionService {
         testSessionDao.pause(testSession, reason); // TODO: enumerate reasons?  Add reason getter/setter to TestSession?
 
         if (configurationService.isFlagOn(testOpportunity.getClientName(), "sessions")) {
-            sessionAuditDao.create(new SessionAudit(
+            testSessionDao.createAudit(new SessionAudit(
                     testSession.getKey(),
                     now,
                     reason,
@@ -167,7 +166,7 @@ public class TestSessionServiceImpl implements TestSessionService {
         }
 
         if (configurationService.isFlagOn(testOpportunity.getClientName(), "opportunities")) {
-            testOpportunityAuditDao.create(new TestOpportunityAudit(
+            testOpportunityDao.createAudit(new TestOpportunityAudit(
                     testOpportunity.getKey(),
                     now,
                     "paused by session",
