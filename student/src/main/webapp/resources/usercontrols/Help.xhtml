@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:cc="http://java.sun.com/jsf/composite"
+	xmlns:tds="http://airast.org/jsfcustom">
+<cc:interface />
+<cc:implementation>
+<!-- help -->
+<div id="help" style="display: none;">
+    <div class="popupHeader">
+        <span class="popupTitle" i18n-content="TestShell.Label.HelpGuide"></span>
+        <span class="popupClose"><a href="#" i18n-content="TestShell.Link.HelpGuide.Close"></a></span>
+    </div>
+    <div id="ttsHelp">
+        <a href="#" id='startSpeakingButtonTestShell' class="startSpeak disabled">Start Speaking</a>
+		<a href="#" id='stopSpeakingButtonTestShell' class="stopSpeak disabled">Stop Speaking</a>
+        <span class="ttsText">
+            <!--- Help text. We show one of these divs conditionally -->
+		    <div id="ttsHelpMessage" i18n-content="TestInstructions.Label.Help"></div>
+		    <div id="noTTSHelpMessage"  style="display:none;" i18n-content="TestInstructions.Label.NoTTSHelp"></div>
+            <!--- End Help text -->
+        </span>
+    </div>
+        
+    <iframe id="frameHelp" name="helpFrame"></iframe>
+</div>
+</cc:implementation>
+</html>

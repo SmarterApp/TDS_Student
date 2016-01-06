@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/Pages/StudentMaster.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:tds="http://airast.org/jsfcustom"
+	xmlns:section="http://java.sun.com/jsf/composite/sections">
+
+	<ui:define name="title">
+       Student: Review Shell
+	</ui:define>
+
+	<ui:define name="headerHolder">
+		<tds:ResourcesLink file="~/Scripts/scripts_student.xml" name="reviewshell" />
+		<tds:GlobalJavascript contextName="ReviewShell" />
+	</ui:define>
+
+	<ui:define name="contentHolder">
+		<!-- TODO Shajib: Need to verify this is the right location -->
+		<tds:ClientScript binding="#{reviewShellBacking.clientScript}" />
+		<section:TestReview />
+		<section:TestResults />
+	</ui:define>
+
+
+
+</ui:composition>
