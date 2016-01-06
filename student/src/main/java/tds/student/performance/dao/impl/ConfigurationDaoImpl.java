@@ -320,4 +320,145 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
             return null;
         }
     }
+
+    @Override
+    public List<TestFormWindow> getTestFormWindows(TestOpportunity testOpportunity, TestSession testSession) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("clientName", testOpportunity.getClientName());
+        parameters.put("testId", testOpportunity.getTestId());
+        parameters.put("sessionType", testSession.getSessionType());
+
+        final String SQL =
+                "SELECT\n" +
+                    "windowid AS windowId,\n" +
+                    "W.numopps AS windowMax,\n" +
+                    "M.maxopps AS modeMax,\n" +
+                    "CASE\n" +
+                        "WHEN W.startdate IS NULL THEN NOW(3)\n" +
+                        "ELSE (W.startdate + INTERVAL shiftwindowstart DAY)\n" +
+                    "END AS startDate\n," +
+                    "CASE\n" +
+                        "WHEN W.enddate IS NULL THEN NOW(3)\n" +
+                        "ELSE (W.enddate + INTERVAL shiftwindowend DAY)\n" +
+                    "END AS endDate,\n" +
+                    "CASE\n" +
+                        "WHEN F.startDate IS NULL THEN NOW(3)\n" +
+                        "ELSE (F.startdate + INTERVAL shiftformstart DAY)\n" +
+                    "END AS formStart,\n" +
+                    "CASE\n" +
+                        "WHEN F.enddate IS NULL THEN NOW(3)\n" +
+                        "ELSE (F.enddate + INTERVAL shiftformend DAY)\n" +
+                    "END AS formEnd,\n" +
+                    "_efk_TestForm AS formKey,\n" +
+                    "formid AS formId,\n" +
+                    "F.language AS `language`,\n" +
+                    "M.mode AS mode,\n" +
+                    "M.testkey AS testKey,\n" +
+                    "W.sessionType AS windowSession\n," +
+                    "M.sessionType AS modeSession\n" +
+                "FROM\n" +
+                    "configs.client_testwindow W,\n" +
+                    "configs.client_testformproperties F,\n" +
+                    "configs.client_testmode M,\n" +
+                    "itembank.tblsetofadminsubjects BANK,\n" +
+                    "session._externs E\n" +
+                "WHERE\n" +
+                    "F.clientname = :clientName\n" +
+                    "AND F.testID = :testId\n" +
+                    "AND M.testkey = F.testkey\n" +
+                    "AND M.testkey = BANK._key\n" +
+                    "AND M.clientname = :clientName\n" +
+                    "AND M.testID = :testId\n" +
+                    "AND (M.sessionType = -1 OR M.sessionType = :sessionType)\n" +
+                    "AND E.clientname = :clientName\n" +
+                    "AND NOW(3) BETWEEN CASE\n" +
+                            "WHEN F.startDate IS NULL THEN NOW(3)\n" +
+                            "ELSE (F.startdate + INTERVAL shiftformstart DAY)\n" +
+                        "END\n" +
+                    "AND CASE\n" +
+                            "WHEN F.enddate IS NULL THEN NOW(3)\n" +
+                            "ELSE (F.enddate + INTERVAL shiftformend DAY)\n" +
+                        "END\n" +
+                    "AND NOW(3) BETWEEN CASE\n" +
+                            "WHEN W.startDate IS NULL THEN NOW(3)\n" +
+                            "ELSE (W.startDate + INTERVAL shiftwindowstart DAY)\n" +
+                        "END\n" +
+                    "AND CASE\n" +
+                            "WHEN W.endDate IS NULL THEN NOW(3)\n" +
+                            "ELSE (W.endDate + INTERVAL shiftwindowend DAY )\n" +
+                        "END\n" +
+                    "AND W.clientname = :clientName\n" +
+                    "AND W.testID = :testId\n" +
+                    "AND (W.sessionType = -1 OR W.sessiontype = :sessionType)\n" +
+                "UNION\n" +
+                "SELECT\n" +
+                    "windowid AS windowId,\n" +
+                    "W.numopps AS windowMax,\n" +
+                    "M.maxopps AS modeMax,\n" +
+                    "CASE\n" +
+                        "WHEN W.startDate IS NULL THEN NOW(3)\n" +
+                        "ELSE (W.startDate + INTERVAL shiftwindowstart DAY)\n" +
+                    "END AS startDate,\n" +
+                    "CASE\n" +
+                        "WHEN W.endDate IS NULL THEN NOW(3)\n" +
+                        "ELSE (W.endDate + INTERVAL shiftwindowend DAY)\n" +
+                    "END AS endDate,\n" +
+                    "CASE\n" +
+                        "WHEN F.startDate IS NULL THEN NOW(3)\n" +
+                        "ELSE (F.startdate + INTERVAL shiftformstart DAY)\n" +
+                    "END AS formStart,\n" +
+                    "CASE\n" +
+                        "WHEN F.enddate IS NULL THEN NOW(3)\n" +
+                        "ELSE (F.enddate + INTERVAL shiftformend DAY)\n" +
+                    "END AS formEnd,\n" +
+                    "_efk_testform AS formKey,\n" +
+                    "formid AS formId,\n" +
+                    "F.language AS `language`,\n" +
+                    "M.mode AS mode,\n" +
+                    "M.testkey AS testKey,\n" +
+                    "W.sessiontype AS windowSession,\n" +
+                    "M.sessiontype AS modeSession\n" +
+                "FROM\n" +
+                    "configs.client_testwindow W,\n" +
+                    "configs.client_testformproperties F,\n" +
+                    "configs.client_segmentproperties S,\n" +
+                    "configs.client_testmode M,\n" +
+                    "itembank.tblsetofadminsubjects BANK,\n" +
+                    "session._externs E\n" +
+                "WHERE\n" +
+                    "S.clientname = :clientName\n" +
+                    "AND F.clientname = :clientName}\n" +
+                    "AND F.testkey = BANK._key\n" +
+                    "AND S.parenttest = :testId\n" +
+                    "AND M.clientname = :clientName\n" +
+                    "AND M.testid = :testId\n" +
+                    "AND (M.sessiontype = -1 OR M.sessiontype = :sessionType)\n" +
+                    "AND S.modekey = M.testkey\n" +
+                    "AND S.segmentid = BANK.testid\n" +
+                    "AND E.clientname = :clientName\n" +
+                    "AND NOW(3) BETWEEN CASE\n" +
+                        "WHEN F.startdate IS NULL THEN NOW(3)\n" +
+                        "ELSE (F.startdate + INTERVAL shiftformstart DAY)\n" +
+                    "END\n" +
+                    "AND CASE\n" +
+                        "WHEN F.enddate IS NULL THEN NOW(3)\n" +
+                        "ELSE (F.enddate + INTERVAL shiftformend DAY)\n" +
+                    "END\n" +
+                    "AND NOW(3) BETWEEN CASE\n" +
+                        "WHEN W.startdate IS NULL THEN NOW(3)\n" +
+                        "ELSE (W.startdate + INTERVAL shiftwindowstart DAY)\n" +
+                    "END\n" +
+                    "AND CASE\n" +
+                        "WHEN W.enddate IS NULL THEN NOW(3)\n" +
+                        "ELSE (W.enddate + INTERVAL shiftwindowend DAY)\n" +
+                    "END\n" +
+                    "AND W.clientname = ${clientname}\n" +
+                    "AND W.testid = S.parenttest\n" +
+                    "AND (W.sessiontype = -1 OR W.sessiontype = :sessionType)";
+
+        return namedParameterJdbcTemplate.query(
+                SQL,
+                parameters,
+                new BeanPropertyRowMapper<TestFormWindow>());
+    }
 }

@@ -14,4 +14,5 @@ public interface ConfigurationDao {
     ConfigTestToolType getTestToolType(String clientName, String toolName, String contextType, String context);
     Boolean isSetForScoreByTDS(String clientName, String testId);
     ClientTestMode getClientTestMode(TestOpportunity testOpportunity);
+    List<TestFormWindow> getTestFormWindows(TestOpportunity testOpportunity, TestSession testSession);
 }
