@@ -27,6 +27,9 @@ import tds.itemscoringengine.RubricContentSource;
  * import tds.itemrenderer.data.ITSContent; import
  * tds.itemrenderer.data.ITSMachineRubric;
  */
+import tds.student.performance.domain.AccLookupWrapper;
+import tds.student.performance.services.ContentHelperService;
+import tds.student.performance.services.ItemBankService;
 import tds.student.services.abstractions.IContentService;
 import tds.student.services.data.ItemResponse;
 import tds.student.services.data.PageGroup;
@@ -42,21 +45,20 @@ import TDS.Shared.Exceptions.ReturnStatusException;
 public class ContentService implements IContentService
 {
   @Autowired
-  private IItemBankRepository _ibRepository;
+  private ItemBankService itemBankService;
+
+  @Autowired
+  private ContentHelperService contentHelperService;
+
   private static final Logger       _logger = LoggerFactory.getLogger (ContentService.class);
 
   public IITSDocument getContent (String xmlFilePath, AccLookup accommodations) throws ReturnStatusException {
-    if (StringUtils.isEmpty (xmlFilePath))
-      return null;
-
-    IITSDocument itsDocument = ITSDocumentFactory.load (xmlFilePath, accommodations, true);
-    return itsDocument;
-
+    return contentHelperService.getContent(xmlFilePath, new AccLookupWrapper(accommodations));
   }
 
   public IITSDocument getItemContent (long bankKey, long itemKey, AccLookup accommodations) throws ReturnStatusException {
     try {
-      String itemPath = _ibRepository.getItemPath (bankKey, itemKey);
+      String itemPath = itemBankService.getItemPath (bankKey, itemKey);
       if (StringUtils.isEmpty (itemPath))
         return null;
 
@@ -68,7 +70,7 @@ public class ContentService implements IContentService
   }
 
   public IITSDocument getStimulusContent (long bankKey, long stimulusKey, AccLookup accommodations) throws ReturnStatusException {
-    String stimulusPath = _ibRepository.getStimulusPath (bankKey, stimulusKey);
+    String stimulusPath = itemBankService.getStimulusPath (bankKey, stimulusKey);
     if (StringUtils.isEmpty (stimulusPath))
       return null;
 
