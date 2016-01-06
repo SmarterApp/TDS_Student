@@ -1,0 +1,75 @@
+/* hacks for demo */
+
+#topBar {
+	height: 73px;
+	padding-top:18px;
+	background: #1e4c66 url(../Images/navigation.png) repeat-x left top;
+}
+#contents {
+	top: 91px;
+}
+#studentTools {
+	background: url("../images/logo_utah_demo.png") no-repeat scroll 5px 5px transparent;
+    height: 70px;
+    width: 310px;
+}
+#studentTools ul, .notificationsContainer, .studentInfo, .sessionID, .smallButtons, #btnSave, #btnPause, #btnResults, #btnEnd, #infoBar, #btnItemScore { 
+	display: none !important;
+}
+#btnAccessibility .icon {
+	background-position: center -818px;
+}
+#navigation {
+	zoom:1;
+	font-size:10px;
+}
+#navigation button {
+	background: url(../Images/sprites_mobile_0_Utah.png) center -5px;
+}
+#navigation .icon {
+	padding-top: 60px;
+	height: 10px;
+}
+#navigation #btnItemScore {
+	background-position: center -295px;
+}
+#btnNext .icon {
+	background-position: center -1017px;
+}
+#btnBack .icon {
+	background-position: center -1117px;
+}
+#btnItemScore .icon {
+	background-position: center -1914px;
+}
+.testName {
+	border: none;
+}
+/*for score table */
+.yui-panel td {
+	border:solid 1px #ccc;
+	padding:.3em;
+}
+.yui-panel td.incorrect {
+	background-image: url(../images/RedX.png);
+	background-repeat: no-repeat;
+	background-position: center center;	
+}
+.yui-panel td.correct {
+	background-image: url(../images/GreenCheck.png);
+	background-repeat: no-repeat;
+	background-position: center center;	
+}
+.yui-panel td.na {
+	background-image: url(../images/YellowDash.png);
+	background-repeat: no-repeat;
+	background-position: center center;	
+}
+.yui-panel td.correct img, .yui-panel td.incorrect img, .yui-panel td.na img {
+	display:none;
+}
+@media only screen and (max-device-height: 650px) {
+    .yui-panel-container {
+		top:85px !important;
+	}
+}
