@@ -69,9 +69,6 @@ public class TesteeRepository extends AbstractDAO implements ITesteeRepository
   private IStudentPackageService _studentPackageService = null;
 
   @Autowired
-  StudentDao studentDao;
-
-  @Autowired
   StudentLoginService studentLoginService;
   
   public TesteeRepository () {
@@ -192,11 +189,7 @@ public class TesteeRepository extends AbstractDAO implements ITesteeRepository
         }
       }
 
-      List<String> studentIds = studentDao.findStudentId(2);
-      if ( studentIds != null ) {
-        _logger.info("*** Test calling spring jdbc template");
-      }
-
+//
       //MultiDataResultSet resultSets = _studentDll.T_Login_SP (connection, clientName, keyValues, sessionID);
       MultiDataResultSet resultSets = studentLoginService.login(connection, clientName, keyValues, sessionID);
 

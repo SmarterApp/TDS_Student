@@ -30,6 +30,7 @@
         <property name="maxPoolSize" value="${datasource.maxPoolSize}" />
         <property name="minPoolSize" value="${datasource.minPoolSize}" />
         <property name="maxStatements" value="${datasource.maxStatements}" />
+        <property name="checkoutTimeout" value="${datasource.checkoutTimeout}" />
         <property name="testConnectionOnCheckout" value="${datasource.testConnectionCheckout}" />
     </bean>
 
@@ -45,4 +46,6 @@
     <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" p:cacheManager-ref="ehcache" />
 
     <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:configLocation="classpath:ehcache.xml" p:shared="true" />
+
+    <bean id="itemBankService" class="tds.student.performance.services.impl.ItemBankServiceImpl" />
 </beans>

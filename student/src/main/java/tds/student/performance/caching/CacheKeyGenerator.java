@@ -21,7 +21,8 @@ public class CacheKeyGenerator extends DefaultKeyGenerator {
         sb.append(".");
         sb.append(methodName);
         for (Object obj : params) {
-            sb.append(obj.hashCode());
+            if (obj != null)
+                sb.append(obj.hashCode());
             sb.append(":");
         }
         return sb.toString();
