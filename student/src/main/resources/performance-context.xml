@@ -23,15 +23,15 @@
     <!-- Employee DB data source. -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
           destroy-method="close">
-        <property name="driverClass" value="${datasource.driverClassName}" />
-        <property name="jdbcUrl" value="${datasource.jdbcUrl}" />
-        <property name="user" value="${datasource.username}" />
-        <property name="password" value="${datasource.password}" />
-        <property name="maxPoolSize" value="${datasource.maxPoolSize}" />
-        <property name="minPoolSize" value="${datasource.minPoolSize}" />
-        <property name="maxStatements" value="${datasource.maxStatements}" />
-        <property name="checkoutTimeout" value="${datasource.checkoutTimeout}" />
-        <property name="testConnectionOnCheckout" value="${datasource.testConnectionCheckout}" />
+        <property name="driverClass" value="${performance.datasource.driverClassName}" />
+        <property name="jdbcUrl" value="${performance.datasource.jdbcUrl}" />
+        <property name="user" value="${performance.datasource.username}" />
+        <property name="password" value="${performance.datasource.password}" />
+        <property name="maxPoolSize" value="${performance.datasource.maxPoolSize}" />
+        <property name="minPoolSize" value="${performance.datasource.minPoolSize}" />
+        <property name="maxStatements" value="${performance.datasource.maxStatements}" />
+        <property name="checkoutTimeout" value="${performance.datasource.checkoutTimeout}" />
+        <property name="testConnectionOnCheckout" value="${performance.datasource.testConnectionCheckout}" />
     </bean>
 
     <!-- To disable all caching, comment out the cache:annotation-driven line below AND change the enabled property to false for the cacher bean -->
