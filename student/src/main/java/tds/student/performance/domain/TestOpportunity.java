@@ -257,7 +257,7 @@ public class TestOpportunity {
      * satisifed); otherwise {@code False}.
      */
     public Boolean isSimulation() {
-        return this.getClientName().toLowerCase().equals("simulation") && this.getSimulationSegmentCount() > 0;
+        return this.getEnvironment().toLowerCase().equals("simulation") && this.getSimulationSegmentCount() > 0;
     }
 
     public Timestamp getDateRestarted() {
