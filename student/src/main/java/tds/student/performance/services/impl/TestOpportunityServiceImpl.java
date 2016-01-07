@@ -19,7 +19,6 @@ import tds.student.sql.data.OpportunityInstance;
 import tds.student.sql.data.TestConfig;
 
 import java.sql.SQLException;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -300,7 +299,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             }
         }
 
-        dbLatencyService.logLatency("GetInitialAbility", start, null, opportunity);
+        dbLatencyService.logLatency("_GetInitialAbility_SP", start, null, opportunity);
         return ability;
     }
 
@@ -347,20 +346,14 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
      */
     private Integer initializeStudentOpportunity(TestOpportunity testOpportunity, TestSession testSession, ClientTestProperty clientTestProperty,
                                                  String formKeyList) throws ReturnErrorException, SQLException, ReturnStatusException {
-        //SQLConnection legacyConnection = legacySqlConnection.get();
+        SQLConnection legacyConnection = legacySqlConnection.get();
         Timestamp now = new Timestamp(dateUtility.getDbDate().getTime());
         Integer testLength;
         Float initialAbility;
         _Ref<String> reason = new _Ref<>();
 
-//        legacyStudentDll._InitializeOpportunity_SP(
-//                legacyConnection,
-//                testOpportunity.getKey(),
-//                testLength,
-//                reason,
-//                formKeyList);
-
-        initializeTestSegments(testOpportunity, testSession, formKeyList);
+        legacyStudentDll._InitializeTestSegments_SP(legacyConnection, testOpportunity.getKey(), reason, formKeyList);
+        //initializeTestSegments(testOpportunity, testSession, formKeyList);
 
         if (reason.get() != null) {
             legacyErrorHandlerService.logDbError("T_StartTestOpportunity", reason.get(), testOpportunity.getTestee(), testOpportunity.getTestId(), null, testOpportunity.getKey());
@@ -406,8 +399,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                 HostNameHelper.getHostName(),
                 "session"));
 
-
-        dbLatencyService.logLatency("InitializeStudentOpportunity", now, null, testOpportunity);
+        dbLatencyService.logLatency("_InitializeOpportunity_SP", now, null, testOpportunity);
 
         return testLength;
     }
@@ -425,11 +417,12 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
         }
 
         testeeResponseDao.insertBatch(opportunity.getKey(), maxItems);
-        dbLatencyService.logLatency("CreateResponseSet", start, null, opportunity);
+        dbLatencyService.logLatency("_CreateResponseSet_SP", start, null, opportunity);
     }
 
     private void initializeTestSegments(TestOpportunity testOpportunity, TestSession testSession, String formKeyList) throws SQLException, ReturnErrorException, ReturnStatusException {
         List<TestSegmentItem> segmentItems;
+        Integer poolCount; //poolCountRef in legacy
         if (testOpportunity.isSimulation()) { // Get segments for the simulation (StudentDLL._InitializeSegments_SP @ line 4589)
             segmentItems = testSegmentDao.getForSimulation(testOpportunity);
             // NOTE: can use testOpportunity.getSessionKey() in place of sessionPoolKey (StudentDLL._InitializeSegments_SP @ line 4611)
@@ -460,11 +453,22 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                 }
 
 
-                // set poolCountRef to whatever formLengthRef value is.
+                //TODO poolCount = formLengthRef;
+
                 // IF formCohort == null:
                     // get cohort from itembank.testform
-            } else {
-                // CALL StudentDLL._ComputeSegmentPool_SP
+            } else { //Not a fixed form test...
+                //TODO: Update non-fixed form version to use new DB access layer
+                _Ref<Integer> newlenRef = new _Ref<> ();
+                _Ref<Integer> poolcountRef = new _Ref<> ();
+                _Ref<String> itemStringRef = new _Ref<> ();
+                SQLConnection legacyConnection = legacySqlConnection.get();
+                legacyStudentDll._ComputeSegmentPool_SP(legacyConnection, testOpportunity.getKey(),
+                        testOpportunity.getTestKey(), newlenRef, poolcountRef, itemStringRef, testOpportunity.getSessionKey());
+                poolCount = poolcountRef.get();
+
+//                int isElligbile = legacyStudentDll.FT_IsEligible_FN (legacySqlConnection, testOpportunity.getKey(),
+//                        testOpportunity.getTestKey(),  , language);
                 // CALL FT_IsEligible_FN to get isEligible value
                 // IF isEligible == 1 and newlenRef == opitems
                     // CALL _FT_SelectItemgroups_SP
