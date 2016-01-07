@@ -1,0 +1,227 @@
+﻿@charset "UTF-8";
+/*Flower Theme */
+
+/* @group general */
+.ot-innerShadow {
+	border: solid 2px #0d4373;
+}
+.ot-shadowBox .instructions {
+	border-color: #6fc9c7;
+}
+.ot-shadowBox h1 {
+	border-color: #94B6D9;
+}
+/* @end */
+
+/* @group header and footer */
+
+#ot-topBar {
+	background-color: #bfd4d7;
+	color: #000;
+}
+#ot-studentInfo {
+	background-color: #bfd4d7;
+	border-right-color: #fff;
+}
+.sessionID {
+	border-right-color: #fff;
+}
+.ot-smallButtons a {
+	background-color: #DBEDFB;
+    color: #000000;
+    display: block;
+    float: right;
+    line-height: 1em;
+    margin-left: 5px;
+    margin-top: 4px;
+    padding: 1px 5px;
+    text-decoration: none;
+    text-transform: uppercase;
+    /*border: solid 1px #77aadf;
+    -moz-border-radius: 3px;
+	border-radius: 3px;*/ 
+}
+.ot-smallButtons a:hover {
+	background-color: #ffa20c;
+}
+#ot-brand1 {
+	background-image: url(../images/gradient_top.gif);
+	border-bottom-color: #4d83c3;
+	background-repeat: repeat-x;
+	background-position: left bottom;
+}
+#ot-logo_spot1 {
+	background-image: url(../images/logo_default.gif);
+	width: 419px;
+}
+#ot-logo_spot2 {
+	display: block;
+	height: 60px;
+	width: 475px;
+	background: url(../images/flowers.gif) no-repeat left bottom;
+	float: right;
+}
+#ot-brand2 {
+	background-color: #fff0d8;
+	border-bottom-color: #4d83c3;
+}
+#ot-brand2 strong {
+	border-color: #4d83c3;
+	background-color: #fcd597;
+}
+.practiceTest #ot-brand2 strong {
+	/*background-image: url(../images/bike/bikeTop.gif);
+	background-color: #FCD597;
+	border-right-color: #FCD597;*/
+}
+#tds-ot-footer span, #tds-ot-footer a {
+	color: #164c7e;
+}
+/*.header .titleThing {
+	color: #000;
+	background-color: #9ebec4;
+	background-image: url(../images/breadcrumb.gif);
+}*/
+/* @end */
+
+/* @group action buttons */
+.actions .positive {
+	border-color: #0d4373;
+}
+.actions .positive button {
+	color: #0d4373;
+}
+.actions .positive button:hover, #sectionLogin .actions button:hover,
+.actions .positive button:hover, .actions .positive input:hover, .actions .positive button:active, .actions .positive input:active, .actions .positive button:focus, .actions .positive input:focus {
+	background-color: #0d4373 !important;
+}
+/* @end */
+
+/* @group Section Login */
+#sectionLogin .ot-innerShadow,
+#sectionLoginProctor .ot-innerShadow {
+	background: #fff0d8 url(../images/shadowboxes/greenGradient.gif) repeat-x !important;
+}
+.practiceTest #sectionLogin .ot-shadowBox h1 {
+	/*background-image: url(../images/bike/bikeTitle.gif);*/
+}
+.practiceTest #loginForm1, .practiceTest #loginForm2 {
+	border-color: #ffd377;
+}
+.practiceTest .checkHolder {
+	background-color: #ffd377;
+}
+#diagnostics .browserVersion {
+	color: #A04811;
+}
+#diagnostics a {
+    color: #0d4373;
+    display: none;
+    float: left;
+}
+#loginLinks a {
+	color: #ffa20c !important;
+}
+.goPractice {
+	
+}
+.browserWrong {
+	border: 1px solid #ffa20c;
+}
+.browserDenied {
+	border: 1px solid #ffa20c;
+}
+/* @group blurbs */
+.blurb {
+	background-color: #fff8ee;
+}
+.linkbox, .gridlink {
+	border-color: #6fc9c7;
+	background-color: #fff0d8;
+}
+/* @end */
+
+/* @end */
+
+/* @group Section Verify Login */
+.practiceTest #verifyGradeSelector {
+    background-color: #FFF0D8;
+    border: 1px solid #FFA20C;
+}
+/* @end */
+
+/* @group Section Test Selection */
+#sectionTestSelection .tries {
+	text-align: center;
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-right-color: #76A9D6;
+	border-left-color: #76A9D6;
+}
+.resumeTest, .newTest {
+	background-color: #fff0d8;
+	border: 1px solid #164c7e;
+	background-image: url(../images/select.gif);
+}
+#sectionTestSelection .resumeTest:hover, #sectionTestSelection .newTest:hover {
+	background-color: #164c7e;
+}
+/* @end */
+
+
+
+/* @group Section Approval */
+
+#sectionTestApproval .ot-innerShadow {
+	background: #fff0d8 url(../images/shadowboxes/greenGradient.gif) repeat-x !important;
+}
+
+/* @end */
+
+/* @group Not currently used or unkown */
+.proctorMessage {
+	border:1px solid #bfd4d7;
+}
+#scoreMessage {
+	background-color:#fff4e2;
+	border-color:#013663;
+}
+.forgotLink a {
+	color: #0d4373;
+}
+body.practiceTest .proctorMessage {
+	border: 1px solid #ffd377;
+}
+.shortcutlink {
+	color: #164c7e;
+}
+.simpleScore {
+	color:#164c7e;
+}
+.scoreMessage {
+	background-color: #fff0d8;
+}
+.soundcheck .choices {
+	border-top: solid 1px #fff0d8;
+}
+/*.gridtraining {
+	border-color: #ffa20c;
+}
+.gridtraining a {
+	color: #ffd377;
+}*/
+/* @end */
+
+/* Fix for bug 81441 - put here to ONLY target Hawaii*/
+.loginForm label{
+	/*min-width: 9.5em;
+	min-width: 7.5em; moving labels over for the 3 ID input change */
+}
+
+/*Theme specific styles for Bug 153388 */
+.TDS_Glogin_User_Hide.TDS_Glogin_Session_Hide .tds-button.positive
+{
+    border-color: #0d4373;
+}
