@@ -1,12 +1,13 @@
 package tds.student.performance.domain;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 
 /**
 Represents a record in the {@code configs.client_systemflags} table.
  */
-public class ClientSystemFlag {
+public class ClientSystemFlag implements Serializable {
     private String auditObject = "";
     private String clientName = "";
     private Boolean isPracticeTest;

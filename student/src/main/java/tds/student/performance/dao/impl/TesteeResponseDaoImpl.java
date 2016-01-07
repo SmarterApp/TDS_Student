@@ -1,8 +1,13 @@
 package tds.student.performance.dao.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import tds.student.performance.dao.TesteeResponseDao;
@@ -10,10 +15,9 @@ import tds.student.performance.domain.UnfinishedResponsePage;
 import tds.student.performance.utils.UuidAdapter;
 
 import javax.sql.DataSource;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.*;
 
 /**
  * Created by emunoz on 12/30/15.
@@ -50,13 +54,31 @@ public class TesteeResponseDaoImpl implements TesteeResponseDao {
     }
 
     @Override
-    public List<UnfinishedResponsePage> getUnfinishedPages(UUID opportunityKey) {
+    @Transactional
+    public Long getTesteeResponseItemCount(UUID oppKey) {
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("oppKey", UuidAdapter.getBytesFromUUID(opportunityKey));
+        parameters.put("oppKey", UuidAdapter.getBytesFromUUID(oppKey));
 
         final String SQL =
             "SELECT\n" +
-                "false as isVisible,\n" +
+                "COUNT(*) as numItems\n" +
+            "FROM\n" +
+                "session.testeeresponse\n" +
+            "WHERE\n" +
+                "_fk_TestOpportunity = :oppKey";
+
+        return namedParameterJdbcTemplate.queryForLong(SQL, parameters);
+    }
+
+    @Override
+    @Transactional
+    public List<UnfinishedResponsePage> getUnfinishedPages(UUID oppKey) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("oppKey", UuidAdapter.getBytesFromUUID(oppKey));
+
+        final String SQL =
+            "SELECT\n" +
+                "'false' as isVisible,\n" +
                 "page,\n" +
                 "groupItemsRequired as groupRequired,\n" +
                 "count(*) as numItems,\n" +
@@ -75,5 +97,40 @@ public class TesteeResponseDaoImpl implements TesteeResponseDao {
 
         return namedParameterJdbcTemplate.query(SQL, parameters,
                 new BeanPropertyRowMapper<>(UnfinishedResponsePage.class));
+    }
+
+
+    @Override
+    @Transactional
+    public void insertBatch(UUID oppKey, final Integer maxPosition) {
+        List<SqlParameterSource> parameters = new ArrayList<>();
+        for (int pos = 1; pos <= maxPosition; ++pos) {
+            parameters.add(new MapSqlParameterSource()
+                    .addValue("oppKey", UuidAdapter.getBytesFromUUID(oppKey))
+                    .addValue("position", pos));
+        }
+
+        final String SQL =
+                "INSERT INTO\n" +
+                    "session.testeeresponse\n" +
+                "(_fk_TestOpportunity, position)\n" +
+                "VALUES(:oppKey, :position)";
+
+        namedParameterJdbcTemplate.batchUpdate(SQL, parameters.toArray(new SqlParameterSource[0]));
+    }
+
+    @Override
+    @Transactional
+    public void delete(UUID oppKey) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("oppKey", UuidAdapter.getBytesFromUUID(oppKey));
+
+        final String SQL =
+            "DELETE FROM\n" +
+                "session.testeeresponse\n" +
+            "WHERE\n" +
+                "_fk_TestOpportunity = :oppKey";
+
+        namedParameterJdbcTemplate.update(SQL, parameters);
     }
 }

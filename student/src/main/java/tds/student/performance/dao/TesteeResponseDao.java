@@ -25,4 +25,26 @@ public interface TesteeResponseDao {
      * @return
      */
     List<UnfinishedResponsePage> getUnfinishedPages(UUID opportunityKey);
+
+    /**
+     * Gets the total count of testee response items for the specified opportunity key.
+     *
+     * @param oppKey
+     * @return
+     */
+    Long getTesteeResponseItemCount(UUID oppKey);
+
+    /**
+     * Deletes a record from the session.testeeresponse table
+     *
+     * @param oppKey
+     */
+    void delete(UUID oppKey);
+
+    /**
+     * Batch inserts multiple records from 1 to maxPosition into the testeeresponse table.
+     * @param oppKey
+     * @param maxPosition
+     */
+    void insertBatch(UUID oppKey, final Integer maxPosition);
 }

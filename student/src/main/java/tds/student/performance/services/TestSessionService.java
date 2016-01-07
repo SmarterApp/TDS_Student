@@ -1,6 +1,7 @@
 package tds.student.performance.services;
 
 import TDS.Shared.Exceptions.ReturnStatusException;
+import tds.student.performance.domain.SessionAudit;
 import tds.student.performance.domain.TestOpportunity;
 import tds.student.performance.domain.TestSession;
 import tds.student.performance.domain.TestSessionTimeLimitConfiguration;
@@ -18,4 +19,5 @@ public interface TestSessionService {
     void pause(TestOpportunity testOpportunity, TestSession testSession, String reason) throws SQLException, ReturnStatusException, ReturnErrorException;
     Integer getCheckInTimeLimit(String clientName);
     TestSessionTimeLimitConfiguration getTimelimitConfiguration(String clientName, String testId);
+    void createAudit(SessionAudit sessionAudit);
 }
