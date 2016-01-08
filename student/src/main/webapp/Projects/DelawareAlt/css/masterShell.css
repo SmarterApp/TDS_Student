@@ -1,0 +1,123 @@
+@charset "UTF-8";
+@import url(../../../Themes/lighthouse/css/masterShell.css);
+/* Alternate (green) */
+/* Delware's logos */
+
+/* @group Header Stuff */
+
+#ot-logo_spot1 {
+	background-image:url(../images/logo2.png);
+	width: 350px;
+}
+#tds-ot-header {
+	
+}
+#tds-ot-branding {
+    background: url(../images/lightgreenlighthouse.png) #aae095 no-repeat top right;
+}
+#ot-brand1 {
+    /*background: transparent url(../images/lighthouse_top.gif) no-repeat right bottom;*/
+	background: transparent;
+}
+#ot-brand2 {
+    /*background: url("../images/lighthouse_bottom.gif") no-repeat scroll right center transparent;*/
+	background: transparent;
+    border-bottom-color: #4D83C3;
+    height: 28px;
+}
+
+/* @end */
+
+/* @group sectionLogin tweaks */
+
+.loginForm label {
+	min-width: 9em;
+}
+#sectionLogin .actions {
+    padding-right: 14%;
+}  
+
+/* @end */
+
+
+/* @group sectionTestSelection tweaks */
+
+#sectionTestSelection table tr th:first-child {  
+	white-space: inherit;
+}
+.resumeTest, .newTest {
+	width: inherit;
+	padding-right: 35px;
+}
+
+/* @end */
+
+#sectionTestResults .ptShow, #sectionTestResults.scoreUnavailableInPT .ptShow, .practiceTest #sectionTestResults .ptShow {
+	display: none !important;
+}
+
+.preloader .logo_small {
+	background-image: url(../images/logo_medium.gif);
+}
+
+
+
+.practiceTest .singleUser .loginForm1 {
+	border: none;
+}
+.practiceTest .singleUser .ot-shadowBox {
+	float: none !important;
+}
+.practiceTest .singleUser .ot-shadowBox h2 {
+	background-image: none !important;
+}
+.practiceTest #ot-brand2 strong {
+	background-image: none !important;
+	padding-right: 5px;
+}
+
+
+
+
+.actions input {
+	border: none;
+    display: block;
+    margin: 0px;
+    background-color: transparent;
+    cursor: pointer;
+     color: #000000;
+    font-size: 93%;
+    /*line-height: 2;*/
+    min-height: 2em;
+    padding: 0px 1em;
+}
+.actions input:hover {
+	background-color: #0E4878 !important;
+	color: #fff;
+}
+.TDS_PS_L1 .actions input, .TDS_PS_L2 .actions input, .TDS_PS_L3 .actions input{
+	max-width: 250px;
+	line-height: 1em;
+}
+.TDS_PS_L4 .actions input{
+	max-width: 260px;
+}
+.TDS_PS_L3 .actions input{
+	max-width: 240px;
+	line-height: 1em;
+}
+.actions .positive input {
+	color: #0d4373;
+}
+.actions .positive input:hover {
+	background-color: #0d4373 !important;
+	color: #fff;
+}
+
+
+.NotForScoreEntry {
+	display: inline;
+}
+.ForScoreEntry {
+	display: none;
+}

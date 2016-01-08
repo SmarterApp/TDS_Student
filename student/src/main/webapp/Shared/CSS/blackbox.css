@@ -1,0 +1,15 @@
+﻿/*
+These are custom styles for the blackbox test shell.
+*/
+
+/* @group Disable Footer */
+
+body.disableFooter #topHalf {
+    bottom: 0em;
+}
+
+body.disableFooter #foot {
+    display: none;
+}
+
+/* @end */
