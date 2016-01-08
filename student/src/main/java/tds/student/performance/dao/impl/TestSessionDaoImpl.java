@@ -15,6 +15,7 @@ import tds.student.performance.dao.TestSessionDao;
 import tds.student.performance.dao.mappers.TestSessionMapper;
 import tds.student.performance.domain.SessionAudit;
 import tds.student.performance.domain.TestSessionTimeLimitConfiguration;
+import tds.student.performance.utils.DateUtility;
 import tds.student.performance.utils.UuidAdapter;
 import tds.student.performance.domain.TestSession;
 
@@ -28,6 +29,9 @@ import java.util.*;
 public class TestSessionDaoImpl implements TestSessionDao {
     private static final Logger logger = LoggerFactory.getLogger(TestSessionDaoImpl.class);
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    @Autowired
+    DateUtility dateUtility;
 
     @Autowired
     public void setDataSource(DataSource dataSource) {
@@ -206,7 +210,7 @@ public class TestSessionDaoImpl implements TestSessionDao {
         // Emulate line 1726: SQL_QUERY1
         //  Note: We are not using testSession.isOpen() since the logic here is different than there for some reason
         // TODO: validate that this java Date will compare correctly with the date coming from the DB
-        Date now = new Date();
+        Date now = dateUtility.getDbDate();
 
         if (now.before(testSession.getDateBegin()) || now.after(testSession.getDateEnd())) {
             return "The session is closed.";

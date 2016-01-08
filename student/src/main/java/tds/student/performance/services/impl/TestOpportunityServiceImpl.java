@@ -79,7 +79,8 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
 
     @Override
     public TestConfig startTestOpportunity(OpportunityInstance opportunityInstance, String testKey, String formKeyList) {
-        Date start = new Timestamp(dateUtility.getDbDate().getTime());
+        Date latencyStart = dateUtility.getLocalDate();
+
         TestConfig config = new TestConfig();
 
         try {
@@ -93,7 +94,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             TestSession testSession = testSessionService.get(opportunityInstance.getSessionKey());
             if (testSession == null) {
                 String msg = String.format("Could not find TestSession record in session.session for key %s", opportunityInstance.getSessionKey());
-                legacyErrorHandlerService.throwReturnErrorException(testOpportunity.getClientName(), "T_StartTestOpportunity", msg, null, testOpportunity.getKey(), null, "failed");
+                legacyErrorHandlerService.throwReturnErrorException(null, "T_StartTestOpportunity", msg, null, opportunityInstance.getKey(), null, "failed");
             }
 
             verifyTesteeAccess(testOpportunity, testSession, opportunityInstance);
@@ -123,18 +124,21 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                     testOpportunity.getClientName(),
                     testOpportunity.getTestId());
 
-            if (testOpportunity.getDateStarted() == null) {
-                // Emulate logic to call legacy method (StudentDLL._InitializeOpportunity_SP) on line 5326
-                Integer testLength = initializeStudentOpportunity(testOpportunity, testSession, clientTestProperty, formKeyList);
+            if (testOpportunity.getDateStarted() == null) { // Emulate logic to call legacy method (StudentDLL._InitializeOpportunity_SP) on line 5358 of StudentDLL.T_StartTestOpportunity_SP.
+                Integer testLength = initializeStudentOpportunity(
+                        testOpportunity,
+                        testSession,
+                        clientTestProperty,
+                        formKeyList);
 
                 config = TestConfigHelper.getNew(clientTestProperty, timelimitConfiguration, testLength, scoreByTds);
-            } else {         // Restart the most recent test opportunity, starting @ line 5373 - StudentDLL
+            } else {         // Restart the most recent test opportunity, starting @ line 5405 of StudentDLL.T_StartTestOpportunity_SP.
                 Date lastActivity = testOpportunityDao.getLastActivity(opportunityInstance.getKey());
                 Integer gracePeriodRestarts = testOpportunity.getGracePeriodRestarts();
                 Integer restartCount = testOpportunity.getRestartCount();
                 Timestamp now = new Timestamp(dateUtility.getDbDate().getTime());
                 boolean isTimeDiffLessThanDelay =
-                        (DateUtils.minutesDiff(lastActivity, start) < timelimitConfiguration.getOpportunityDelay());
+                        (DateUtils.minutesDiff(lastActivity, now) < timelimitConfiguration.getOpportunityDelay());
 
                 if(isTimeDiffLessThanDelay) {
                     gracePeriodRestarts++;
@@ -179,7 +183,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                         scoreByTds);
             }
 
-            dbLatencyService.logLatency("T_StartTestOpportunity", start, null, testOpportunity);
+            dbLatencyService.logLatency("T_StartTestOpportunity", latencyStart, null, testOpportunity);
         } catch (ReturnErrorException e) {
             logger.error(e.getMessage(), e);
             legacyErrorHandlerService.logDbError("T_StartTestOpportunity", e.getMessage(), null, testKey, null, opportunityInstance.getKey());
@@ -348,6 +352,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                                                  String formKeyList) throws ReturnErrorException, SQLException, ReturnStatusException {
         SQLConnection legacyConnection = legacySqlConnection.get();
         Timestamp now = new Timestamp(dateUtility.getDbDate().getTime());
+        Date latencyDate = dateUtility.getLocalDate();
         Integer testLength;
         Float initialAbility;
         _Ref<String> reason = new _Ref<>();
@@ -393,13 +398,13 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
 
         testOpportunityDao.createAudit(new TestOpportunityAudit(
                 testOpportunity.getKey(),
-                new Timestamp(dateUtility.getDbDate().getTime()),
+                now,
                 "started",
                 testOpportunity.getSessionKey(),
                 HostNameHelper.getHostName(),
                 "session"));
 
-        dbLatencyService.logLatency("_InitializeOpportunity_SP", now, null, testOpportunity);
+        dbLatencyService.logLatency("_InitializeOpportunity_SP", latencyDate, null, testOpportunity);
 
         return testLength;
     }
