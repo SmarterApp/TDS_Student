@@ -15,4 +15,5 @@ public interface ConfigurationDao {
     Boolean isSetForScoreByTDS(String clientName, String testId);
     ClientTestMode getClientTestMode(TestOpportunity testOpportunity);
     List<TestFormWindow> getTestFormWindows(TestOpportunity testOpportunity, TestSession testSession);
+    TideTesteeTestWindowDto getTideTesteeTestWindowDto(TestOpportunity testOpportunity, TestSession testSession);
 }

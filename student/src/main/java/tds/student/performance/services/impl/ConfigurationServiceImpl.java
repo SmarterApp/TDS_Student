@@ -1,6 +1,6 @@
 package tds.student.performance.services.impl;
 
-import org.aspectj.weaver.ast.Test;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,8 +9,9 @@ import tds.student.performance.domain.*;
 import tds.student.performance.services.ConfigurationService;
 
 import java.security.Timestamp;
+import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -95,16 +96,28 @@ public class ConfigurationServiceImpl implements ConfigurationService {
      * @param formList
      */
     private void selectTestFormPredetermined(TestOpportunity testOpportunity, TestSession testSession, String formList) {
-
+        List<TestFormWindow> testFormWindows = getTesteeTestForms(testOpportunity, testSession, formList);
     }
 
+    /**
+     *
+     * <p>
+     *     This method emulates the functionality of {@code StudentDLL._SelectTestForm_EqDist_SP}.
+     * </p>
+     *
+     * @param testOpportunity
+     * @param formList
+     */
     private void selectTestFormEqDist(TestOpportunity testOpportunity, String formList) {
-
+        // TODO:  call legacy version;
     }
 
     /**
      * <p>
      *     This method emulates the functionality of {@code StudentDLL._GetTesteeTestForms_SP}.
+     *     {@code StudentDLL._GetTesteeTestForms_SP} is called from:
+     *     * (@code StudentDLL._GetTesteeTestWindows_SP}
+     *     * {@code StudentDLL._SelectTestForm_Predetermined_SP}
      * </p>
      *
      * @param testOpportunity
@@ -112,12 +125,45 @@ public class ConfigurationServiceImpl implements ConfigurationService {
      * @param formList
      */
     private List<TestFormWindow> getTesteeTestForms(TestOpportunity testOpportunity, TestSession testSession, String formList) {
-        List<TestFormWindow> testFormWindows = configurationDao.getTestFormWindows(testOpportunity, testSession);
+        List<TestFormWindow> tblName = configurationDao.getTestFormWindows(testOpportunity, testSession);
 
         // If 'guest' testees are allowed into the system, then they qualify for all forms by default since there is no
         // RTS data for them.
         if (testOpportunity.getTestee() < 0) {
-            return testFormWindows;
+            return tblName;
+        }
+
+        TideTesteeTestWindowDto tideTesteeTestWindowDto = configurationDao.getTideTesteeTestWindowDto(
+                testOpportunity,
+                testSession);
+
+        if (formList != null) {
+            if (formList.indexOf(':') > -1) {
+                tideTesteeTestWindowDto.setRequireFormWindow(true);
+            } else {
+                tideTesteeTestWindowDto.setRequireForm(true);
+                tideTesteeTestWindowDto.setRequireFormWindow(false);
+            }
+        } else if (tideTesteeTestWindowDto.getTideId() != null && tideTesteeTestWindowDto.getFormField() != null) {
+            // TODO:  call this:  StudentDLL._rtsDll._GetRTSAttribute_SP (connection, clientname, testee, formField, formListRef);
+        } // TODO:  There is no "else"; what should we do if none of the conditions above are satisfied?
+
+        if (formList != null && tideTesteeTestWindowDto.getTideId() != null) {
+            // key = form, value = WID
+            Map<String, String> formsTbl = new HashMap<>();
+            final String[] rows = StringUtils.split(formList, ';');
+            for (String row : rows) {
+                // Before colon delimiter = WID value.  After colon delimiter = form value.
+                final String[] splitRow = StringUtils.split(row, ':');
+                if (splitRow.length == 2) {
+                    String form = splitRow[1];
+                    String wid = splitRow[0];
+                    formsTbl.put(form, wid);
+                } else {
+                    // There was no split on the colon delimiter, so stuff the whole record in the key.
+                    formsTbl.put(splitRow[0], null);
+                }
+            }
         }
 
         return null;

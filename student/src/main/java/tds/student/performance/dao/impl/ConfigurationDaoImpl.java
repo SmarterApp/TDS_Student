@@ -1,6 +1,5 @@
 package tds.student.performance.dao.impl;
 
-import org.apache.commons.lang3.tuple.MutablePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -321,6 +320,8 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
     }
 
     @Override
+    @Transactional
+    @Cacheable(CacheType.LongTerm)
     public List<TestFormWindow> getTestFormWindows(TestOpportunity testOpportunity, TestSession testSession) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("clientName", testOpportunity.getClientName());
@@ -335,7 +336,7 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
                     "CASE\n" +
                         "WHEN W.startdate IS NULL THEN NOW(3)\n" +
                         "ELSE (W.startdate + INTERVAL shiftwindowstart DAY)\n" +
-                    "END AS startDate\n," +
+                    "END AS startDate,\n" +
                     "CASE\n" +
                         "WHEN W.enddate IS NULL THEN NOW(3)\n" +
                         "ELSE (W.enddate + INTERVAL shiftwindowend DAY)\n" +
@@ -353,7 +354,7 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
                     "F.language AS `language`,\n" +
                     "M.mode AS mode,\n" +
                     "M.testkey AS testKey,\n" +
-                    "W.sessionType AS windowSession\n," +
+                    "W.sessionType AS windowSession,\n" +
                     "M.sessionType AS modeSession\n" +
                 "FROM\n" +
                     "configs.client_testwindow W,\n" +
@@ -426,7 +427,7 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
                     "session._externs E\n" +
                 "WHERE\n" +
                     "S.clientname = :clientName\n" +
-                    "AND F.clientname = :clientName}\n" +
+                    "AND F.clientname = :clientName\n" +
                     "AND F.testkey = BANK._key\n" +
                     "AND S.parenttest = :testId\n" +
                     "AND M.clientname = :clientName\n" +
@@ -451,7 +452,7 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
                         "WHEN W.enddate IS NULL THEN NOW(3)\n" +
                         "ELSE (W.enddate + INTERVAL shiftwindowend DAY)\n" +
                     "END\n" +
-                    "AND W.clientname = ${clientname}\n" +
+                    "AND W.clientname = :clientName\n" +
                     "AND W.testid = S.parenttest\n" +
                     "AND (W.sessiontype = -1 OR W.sessiontype = :sessionType)";
 
@@ -459,5 +460,49 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
                 SQL,
                 parameters,
                 new BeanPropertyRowMapper<TestFormWindow>());
+    }
+
+    /**
+     * Emulates the output of {@code SQL_QUERY2} from the {@code StudentDLL._GetTesteeTestForms_SP}.
+     *
+     * @param testOpportunity The {@code TestOpportunity}.
+     * @param testSession The (@code TestSession}.
+     * @return A collection of {@code TideTesteeWindowDto}s.
+     */
+    @Override
+    @Transactional
+    @Cacheable(CacheType.LongTerm)
+    public TideTesteeTestWindowDto getTideTesteeTestWindowDto(TestOpportunity testOpportunity, TestSession testSession) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("clientName", testOpportunity.getClientName());
+        parameters.put("testId", testOpportunity.getTestId());
+        parameters.put("sessionType", testSession.getSessionType());
+
+        final String SQL =
+                "SELECT\n" +
+                    "tide_id AS tideId,\n" +
+                    "requirertsformwindow AS requireFormWindow,\n" +
+                    "rtsformfield AS formField,\n" +
+                    "requireRTSForm AS requireForm,\n" +
+                    "requireRTSformIfExists AS ifExists\n" +
+                "FROM\n" +
+                    "configs.client_testproperties T,\n" +
+                    "configs.client_testmode F\n" +
+                "WHERE\n" +
+                    "T.clientname = :clientName\n" +
+                    "AND T.TestID = :testId\n" +
+                    "AND F.clientname = :clientName\n" +
+                    "AND F.testID = :testId\n" +
+                    "AND (sessionType = -1 OR sessionTYpe = :sessionType)";
+
+        try {
+            return namedParameterJdbcTemplate.queryForObject(
+                    SQL,
+                    parameters,
+                    new BeanPropertyRowMapper<>(TideTesteeTestWindowDto.class));
+        } catch (EmptyResultDataAccessException e) {
+            logger.warn(String.format("%s did not return results for clientName = %s, testId = %s, sessionType = %s", SQL, parameters.get("clientName"), parameters.get("testId"), parameters.get("sessionType")));
+            return null;
+        }
     }
 }
