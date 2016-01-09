@@ -1,0 +1,176 @@
+@charset "UTF-8";
+/* VERSION 2 ////////////////////////////////*/
+
+
+
+
+/* keep size 12/14 accommodations the same */
+.TDS_PS_L1 .thePassage, .TDS_PS_L1 .theQuestions, 
+.TDS_IF_S14.TDS_PS_L1 .thePassage, .TDS_IF_S14.TDS_PS_L1 .theQuestions 
+ {
+	font-size: 1.25em !important;
+}
+.TDS_PS_L2 .thePassage, .TDS_PS_L2 .theQuestions, 
+.TDS_IF_S14.TDS_PS_L2 .thePassage, .TDS_IF_S14.TDS_PS_L2 .theQuestions  {
+	font-size: 1.75em !important;
+}
+.TDS_PS_L3 .thePassage, .TDS_PS_L3 .theQuestions, 
+.TDS_IF_S14.TDS_PS_L3 .thePassage, .TDS_IF_S14.TDS_PS_L3 .theQuestions  {
+	font-size: 2.5em !important;
+}
+.TDS_PS_L4 .thePassage, .TDS_PS_L4 .theQuestions, 
+.TDS_IF_S14.TDS_PS_L4 .thePassage, .TDS_IF_S14.TDS_PS_L4 .theQuestions  {
+	font-size: 3em !important;
+}
+
+
+/* @group Structural Stuff */
+.grouping {
+	font-size: 1.4em;
+	padding: 1em 2em;
+}
+.grouping h3 {
+	font-size: .9em;
+	font-weight: bold;
+	font-style: italic;
+	color: #666666;
+}
+.grouping .item h3 {
+	background-color: #DBDBDB;
+	display: block;
+	clear: both;
+	font-style: normal;
+	font-weight: bold;
+	color: #000000;
+	text-align: center;
+	margin-bottom: 0.5em;
+	padding-right: .2em;
+	padding-left: .2em;
+	/* so we don't have to set width for box shape */
+	float:left;
+}
+.response {
+	margin-bottom: 1em;
+	border-color: transparent;
+}
+
+/* @end */
+
+
+
+
+
+
+.item {
+	border-bottom: solid 1px #ccc;
+	margin-bottom: 1em;
+}
+.item:nth-last-child(1) {
+	border: none;
+}
+.question {
+	margin-bottom: .5em;
+}
+.thePassage {
+	border-bottom: solid 1px #666;
+	margin-bottom: 1em;
+	padding-bottom: .5em;
+}
+.optionContainer input, .questionLabel, .passageLabel {
+	overflow: hidden;
+	width: 1px;
+	height: 1px;
+	position: absolute;
+	left: -9999px;
+}
+.illustration td, .illustration th {
+	border: solid 1px #ccc;
+	padding: .4em;
+}
+.illustration th {
+	font-weight: bold;
+}
+
+/* @group item tools */
+
+
+.itemStatus {
+	float: left;
+	margin-top: -23px;
+	font-size: .9em;
+	clear: both;
+	margin-left: 6.5em;
+	color: #666;
+}
+.itemStatus ul, itemStatus li {
+	display: block;
+	float: left;
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+	
+}
+
+/* full size text box for equation editors */
+.EquationEditor textarea {
+	width: 100%;
+	min-width: 400px;
+	min-height: 4em;
+	resize: none;
+	font-size: 1em;
+}
+
+/* no tutorials in this shell */
+.TDS_T1 .contexthelp {
+	display: none !important;
+}
+
+/* make text areas bigger */
+.plaintext textarea {
+	width:100%;
+	font-size: 1em;
+}
+
+
+
+/* @group Sound Cue Repeat */
+.sound_cue {
+	text-decoration: none;
+	color: #FFF;
+}
+.sound_repeat {
+	display: -moz-inline-stack;
+	display: inline-block;
+	color: #fff;
+	text-decoration: none;
+	vertical-align: middle;
+}
+.sound_repeat.load_fail, .sound_repeat.load_fail:hover, .sound_repeat.playing_fail, .sound_repeat.playing_fail:hover, .sound_repeat.decode_fail, .sound_repeat.decode_fail:hover {
+	cursor: default;
+}
+.sound_repeat.load_incomplete, .sound_repeat.disabled,
+.sound_repeat.load_incomplete:hover, .sound_repeat.disabled:hover {
+	cursor: default;
+}
+.sound_repeat.load_start, .sound_repeat.load_complete, .sound_repeat.decode_start,
+.sound_repeat.load_start:hover, .sound_repeat.load_complete:hover, .sound_repeat.decode_start:hover {
+	background: url(../images/controls/loader24.gif) no-repeat center center;
+}
+
+.TDS_PS_L1 .sound_repeat.load_start, .TDS_PS_L1 .sound_repeat.load_complete, .TDS_PS_L1 .sound_repeat.decode_start,
+.TDS_PS_L1 .sound_repeat.load_start:hover, .TDS_PS_L1 .sound_repeat.load_complete:hover, .TDS_PS_L1 .sound_repeat.decode_start:hover {
+	background: url(../images/controls/loader29.gif) no-repeat center center;
+}
+.TDS_PS_L2 .sound_repeat.load_start, .TDS_PS_L2 .sound_repeat.load_complete, .TDS_PS_L2 .sound_repeat.decode_start, 
+.TDS_PS_L2 .sound_repeat.load_start:hover, .TDS_PS_L2 .sound_repeat.load_complete:hover, .TDS_PS_L2 .sound_repeat.decode_start:hover, .TDS_PS_L3 .sound_repeat.load_start, .TDS_PS_L3 .sound_repeat.load_complete, .TDS_PS_L3 .sound_repeat.decode_start, 
+.TDS_PS_L3 .sound_repeat.load_start:hover, .TDS_PS_L3 .sound_repeat.load_complete:hover, .TDS_PS_L3 .sound_repeat.decode_start:hover, .TDS_PS_L4 .sound_repeat.load_start, .TDS_PS_L4 .sound_repeat.load_complete, .TDS_PS_L4 .sound_repeat.decode_start, 
+.TDS_PS_L4 .sound_repeat.load_start:hover, .TDS_PS_L4 .sound_repeat.load_complete:hover, .TDS_PS_L4 .sound_repeat.decode_start:hover {
+	background: url(../images/controls/loader32.gif) no-repeat center center;
+}
+/* @end */
+
+
+
+
+
+

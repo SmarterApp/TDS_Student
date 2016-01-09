@@ -1,0 +1,3 @@
+.mode_ScoreEntry .sessionID, .mode_ResponseEntry .sessionID {
+	display: none;
+}

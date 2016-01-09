@@ -1,0 +1,21 @@
+@charset "UTF-8";
+/* Hawaii Rules*/
+
+/*html {
+	font-family: Arial, Helvetica, sans-serif;
+}
+.markComment a {
+	display: none;
+}
+a.markReview, a.contexthelp, a.markReviewMarked {
+	display: block;
+}*/
+
+.bigTable .thePassage h2 {
+	text-align: center;
+}
+/*linux lineheight fix for fractions */
+.platform_unix .noColumns .questionCell, .platform_unix .noColumns .questionContainer, 
+.platform_linux .noColumns .questionCell, .platform_linux .noColumns .questionContainer {
+	line-height: 1.34em;
+}
