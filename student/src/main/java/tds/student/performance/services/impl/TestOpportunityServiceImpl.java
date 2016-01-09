@@ -77,6 +77,18 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
     @Autowired
     LegacySqlConnection legacySqlConnection;
 
+    /**
+     * Start a {@link TestOpportunity} for the requested {@code OpportunityInstance}.
+     * <p>
+     *     This method is called from {@code OpportunityService.startTest()} in place of the existing
+     *     {@code _oppRepository.startTestOpportunity}.
+     * </p>
+     *
+     * @param opportunityInstance The {@code OpportunityInstance} passed in from {@code OpportunityService.startTest()}.
+     * @param testKey The test key passed in from {@code OpportunityService.startTest()}.
+     * @param formKeyList The formKeyList passed in from {@code OpportunityService.startTest()}.
+     * @return A {@code TestConfig} for the {@code TestOpportunity} being started.
+     */
     @Override
     public TestConfig startTestOpportunity(OpportunityInstance opportunityInstance, String testKey, String formKeyList) {
         Date latencyStart = dateUtility.getLocalDate();
@@ -188,7 +200,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             logger.error(e.getMessage(), e);
             legacyErrorHandlerService.logDbError("T_StartTestOpportunity", e.getMessage(), null, testKey, null, opportunityInstance.getKey());
 
-            // The legacy OpportunityStatus.startTest method looks for the TestConfig.getReturnStatus to determine
+            // The legacy OpportunityService.startTest method looks for the TestConfig.getReturnStatus to determine
             // if the call was successful or not.
             ReturnStatus failureStatus = new ReturnStatus();
             failureStatus.setStatus(e.getStatus());
@@ -201,7 +213,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             logger.error(e.getMessage(), e);
             legacyErrorHandlerService.logDbError("T_StartTestOpportunity", e.getMessage(), null, testKey, null, opportunityInstance.getKey());
 
-            // The legacy OpportunityStatus.startTest method looks for the TestConfig.getReturnStatus to determine
+            // The legacy OpportunityService.startTest method looks for the TestConfig.getReturnStatus to determine
             // if the call was successful or not.
             ReturnStatus failureStatus = new ReturnStatus();
             failureStatus.setStatus("failed");
@@ -212,7 +224,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             logger.error(e.getMessage(), e);
             legacyErrorHandlerService.logDbError("T_StartTestOpportunity", e.getMessage(), null, testKey, null, opportunityInstance.getKey());
 
-            // The legacy OpportunityStatus.startTest method looks for the TestConfig.getReturnStatus to determine
+            // The legacy OpportunityService.startTest method looks for the TestConfig.getReturnStatus to determine
             // if the call was successful or not.
             ReturnStatus failureStatus = new ReturnStatus();
             failureStatus.setStatus(e.getReturnStatus().getStatus());
@@ -224,7 +236,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
     }
 
     /**
-     * This method emulated the functionality and logic contained in {@code StudentDll._UnfinishedResponsePages_SP}.
+     * This method emulates the functionality and logic contained in {@code StudentDll._UnfinishedResponsePages_SP}.
      *
      * NOTE: The legacy _UnfinishedResponsePages_SP call has a return value that never appears to be read,
      * at least not by student or the tdsdll project. The original method also has a doUpdate flag that

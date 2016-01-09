@@ -42,6 +42,14 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
 
     /**
      * Get a single {@link TestOpportunity} from the {@code session.testopportunity} table for a specified key.
+     * <p>
+     *     Fetching the environment from {@code session._externs} and the number of records in the
+     *     {@code session.sim_segment} tables help us deteremine if this {@code TestOpportunity} is a simulation.
+     * </p>
+     * <p>
+     *     Considered using a {@code CASE WHEN EXISTS (SELECT...)... } for the simulationSegmentCount.  All that really
+     *     matters is if the {@code TestOpportunity} has records in the {@code session.sim_segment} table.
+     * </p>
      *
      * @param key The key for the desired {@link TestOpportunity}.
      * @return {@link TestOpportunity} that corresponds to the specified key.
@@ -84,33 +92,10 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
                         "ON (e.clientname = o.clientname)\n" +
                 "LEFT JOIN\n" +
                         "session.sim_segment s\n" +
-                        "ON (o._fk_session = s._fk_session\n" +
-                        "AND o._efk_adminsubject = o._efk_adminsubject)\n" +
+                        "ON (s._fk_session = o._fk_session\n" +
+                        "AND s._efk_adminsubject = o._efk_adminsubject)\n" +
                 "WHERE\n" +
-                    "_key = :key\n" +
-                "GROUP BY\n" +
-                    "o._key,\n" +
-                    "o._fk_session,\n" +
-                    "o._fk_browser,\n" +
-                    "o._efk_adminsubject,\n" +
-                    "o._efk_testee ,\n" +
-                    "o._efk_testid ,\n" +
-                    "o._efk_adminsubject,\n" +
-                    "o.opportunity,\n" +
-                    "o.status,\n" +
-                    "o.datestarted,\n" +
-                    "o.datechanged,\n" +
-                    "o.daterestarted,\n" +
-                    "o.expireFrom,\n" +
-                    "o.stage,\n" +
-                    "o.restart,\n" +
-                    "o.graceperiodrestarts ,\n" +
-                    "o.maxitems,\n" +
-                    "o.subject ,\n" +
-                    "o.clientname ,\n" +
-                    "o.issegmented ,\n" +
-                    "o.algorithm ,\n" +
-                    "e.environment \n";
+                    "_key = :key";
 
         try {
             return namedParameterJdbcTemplate.queryForObject(
