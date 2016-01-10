@@ -17,6 +17,7 @@ import tds.dll.api.IStudentDLL;
 import tds.student.performance.dao.ConfigurationDao;
 import tds.student.performance.dao.OpportunitySegmentDao;
 import tds.student.performance.dao.StudentDao;
+import tds.student.performance.domain.ItemForTesteeResponse;
 import tds.student.performance.domain.OpportunitySegment;
 import tds.student.performance.services.ConfigurationService;
 import tds.student.performance.services.DbLatencyService;
@@ -139,6 +140,13 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             logger.debug("Message: " + msgRef.get());
             return (new MultiDataResultSet(resultsSets));
         }
+
+        // Get the new itemInsertList
+        List<ItemForTesteeResponse> itemInsertList = opportunitySegmentDao.getItemForTesteeResponse(
+                oppSeg.getSegmentKey(),
+                oppSeg.getFormKey(),
+                groupId,
+                oppSeg.getLanguage());
 
         Integer minpos = null;
         Integer lastpos = null;
