@@ -81,7 +81,6 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
         Date starttime = _dateUtil.getDateWRetStatus(connection);
         String localhostname = _commonDll.getLocalhostName();
         _Ref<String> error = new _Ref<>();
-        //Long testee = null;
 
         _studentDll._ValidateTesteeAccessProc_SP(connection, oppKey, sessionKey, browserId, false, error);
         if (error.get() != null) {
@@ -90,26 +89,13 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
         }
 
         Integer count = null;
-        //Integer opprestart = null;
-        //String status = null;
-        //String clientname = null;
-        //String environment = null;
-        //String language = null;
         String item = null;
-        //String testkey = null;
         Integer lastPosition = null;
         String msg = null;
-        //String segmentKey = null;
-        //String formKey = null;
-        //String algorithm = null;
         String argstring = null;
 
         DataBaseTable itemsTable = getDataBaseTable("items").addColumn("p", SQL_TYPE_To_JAVA_TYPE.INT).addColumn("itemkey", SQL_TYPE_To_JAVA_TYPE.VARCHAR, 50);
         connection.createTemporaryTable(itemsTable);
-
-        // Looks like this is not used
-        //Map<String, String> unquotedParms = new HashMap<String, String>();
-        //unquotedParms.put("itemsTableName", itemsTable.getTableName());
 
         if (itemKeys != null) {
             DataBaseTable buildTable = _commonDll._BuildTable_FN(connection, "_BuildTable", itemKeys, delimiter.toString());
@@ -121,46 +107,17 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             connection.dropTemporaryTable(buildTable);
         }
         // Debug Table
-        SingleDataResultSet dumpItemsTable01 = dumpTable(connection, itemsTable.getTableName());
+        //SingleDataResultSet dumpItemsTable01 = dumpTable(connection, itemsTable.getTableName());
 
         OpportunitySegment oppSeg = opportunitySegmentDao.getOpportunitySegmentAccommodation(oppKey, segment);
         SqlParametersMaps parms1 = new SqlParametersMaps().put("oppkey", oppKey);
 
-        /* Not needed new DAO
-        final String SQL_QUERY1 = "select clientname, _efk_AdminSUbject as testkey, Restart as opprestart, status, environment, _efk_Testee as testee  from testopportunity where _key = ${oppkey};";
-        SqlParametersMaps parms1 = new SqlParametersMaps().put("oppkey", oppKey);
-        SingleDataResultSet result = executeStatement(connection, SQL_QUERY1, parms1, false).getResultSets().next();
-        DbResultRecord record = (result.getCount() > 0 ? result.getRecords().next() : null);
-        if (record != null) {
-            clientname = record.<String>get("clientname");
-            testkey = record.<String>get("testkey");
-            opprestart = record.<Integer>get("opprestart");
-            status = record.<String>get("status");
-            environment = record.<String>get("environment");
-            testee = record.<Long>get("testee");
-        } */
-
-        /* This trace is not used.
-        if (DbComparator.notEqual(oppSeg.getEnvironment(), "production")) {
-            // / set @trace = 'TRACING ' + @groupID + ':' + @itemkeys;
-            String trace = String.format("TRACING groupID = %s : itemkeys = %s", groupId, itemKeys);
-        }*/
         if (DbComparator.notEqual(oppSeg.getStatus(), "started")) {
             resultsSets.add(_commonDll._ReturnError_SP(connection, oppSeg.getClientName(), "T_InsertItems",
                     "Your test opportunity has been interrupted. Please check with your Test Administrator to resume your test.", null,
                     oppKey, "T_InsertItems_2009", "denied"));
             return (new MultiDataResultSet(resultsSets));
         }
-        /* Not needed New DAO
-        final String SQL_QUERY2 = "select _efk_Segment as segmentKey, formKey, algorithm from testopportunitysegment where _fk_TestOpportunity = ${oppkey} and SegmentPosition = ${segment};";
-        SqlParametersMaps parms2 = new SqlParametersMaps().put("oppkey", oppKey).put("segment", segment);
-        SingleDataResultSet result = executeStatement(connection, SQL_QUERY2, parms2, false).getResultSets().next();
-        DbResultRecord record = (result.getCount() > 0 ? result.getRecords().next() : null);
-        if (record != null) {
-            segmentKey = record.<String>get("segmentKey");
-            formKey = record.<String>get("formKey");
-            algorithm = record.<String>get("algorithm");
-        }*/
 
         if (oppSeg.getSegmentKey() == null) {
             argstring = segment.toString().trim();
@@ -180,15 +137,6 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             return (new MultiDataResultSet(resultsSets));
         }
 
-        /*  Replaced wit new DAO
-        final String SQL_QUERY3 = "select AccCode as language from testeeaccommodations where _fk_TestOpportunity = ${oppkey} and AccType = ${Language};";
-        SqlParametersMaps parms3 = new SqlParametersMaps().put("oppkey", oppKey).put("Language", "Language");
-        SingleDataResultSet result = executeStatement(connection, SQL_QUERY3, parms3, false).getResultSets().next();
-        DbResultRecord record = (result.getCount() > 0 ? result.getRecords().next() : null);
-        if (record != null) {
-            language = record.<String>get("language");
-        } */
-
         Integer minpos = null;
         Integer maxpos = null;
         Integer insertcnt = null;
@@ -196,13 +144,7 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
         Integer lastpage = null;
         Integer lastpos = null;
 
-   /*final String SQL_QUERY4 = "select max(position) as lastPosition from testeeresponse where _fk_TestOpportunity = ${oppkey} and _efk_ITSItem is not null;";
-   SqlParametersMaps parms4 = parms1;
-   result = executeStatement (connection, SQL_QUERY4, parms4, false).getResultSets ().next ();
-   record = (result.getCount () > 0 ? result.getRecords ().next () : null);
-   if (record != null) {
-     lastPosition = record.<Integer> get ("lastPosition");
-   }*/
+
 //   final String SQL_QUERY5 = "select segment as lastSegment, page as lastPage from testeeresponse where _fk_TestOpportunity = ${oppkey} and position = ${lastPosition};";
         final String SQL_QUERY5 = "select segment as lastSegment, page as lastPage, position as lastPosition from testeeresponse where _fk_TestOpportunity = ${oppkey} and position = (select max(position) as lastPosition from testeeresponse where _fk_TestOpportunity = ${oppkey} and _efk_ITSItem is not null);";
         SqlParametersMaps parms5 = new SqlParametersMaps().put("oppkey", oppKey)/*.put ("lastPosition", lastPosition)*/;
