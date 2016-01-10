@@ -39,6 +39,7 @@ import org.w3c.dom.Element;
 
 import tds.dll.api.ICommonDLL;
 import tds.dll.api.IStudentDLL;
+import tds.student.performance.services.OpenTestService;
 import tds.student.sql.abstractions.IOpportunityRepository;
 import tds.student.sql.data.BrowserCapabilities;
 import tds.student.sql.data.ClientLatency;
@@ -75,6 +76,9 @@ public class OpportunityRepository extends AbstractDAO implements IOpportunityRe
   private ICommonDLL          _commonDll  = null;
   @Autowired
   private IStudentDLL         _studentDll = null;
+
+  @Autowired
+  private OpenTestService openTestService;
 
   public OpportunityRepository () {
     super ();
@@ -143,7 +147,7 @@ public class OpportunityRepository extends AbstractDAO implements IOpportunityRe
     OpportunityInfo result = new OpportunityInfo ();
     try (SQLConnection connection = getSQLConnection ()) {
 
-      SingleDataResultSet firstResultSet = _studentDll.T_OpenTestOpportunity_SP (connection, testeeKey, testKey, sessionKey, browserKey, null);
+      SingleDataResultSet firstResultSet = openTestService.openTestOpporunity(connection, testeeKey, testKey, sessionKey, browserKey, null);
       ReturnStatusException.getInstanceIfAvailable (firstResultSet);
 
       Iterator<DbResultRecord> records = firstResultSet.getRecords ();
