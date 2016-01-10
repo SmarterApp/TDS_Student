@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/Pages/StudentMaster.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:tds="http://airast.org/jsfcustom" xmlns:section="http://java.sun.com/jsf/composite/sections">
+
+	<ui:define name="title">
+       Student: Error
+	</ui:define>
+
+	<ui:define name="headerHolder">
+		<tds:GlobalJavascript messages="Student.Master,Default.xhtml,Notification.xhtml" />
+	</ui:define>
+
+	<ui:define id="content" name="contentHolder">
+
+		<tds:SectionWrapper id="sectionLoginDenied" show="true" headerText="#{notificationBacking.headerText}">
+
+			<div id="loginError">
+
+				<div class="proctorMessage">
+					<p>
+						<h:outputText id="lblMessage" value="#{notificationBacking.labelMessage}"></h:outputText>
+					</p>
+				</div>
+
+				<span class="actions"> <tds:Button ID="btnNotificationLogin" Class="negative" Key="Notification.Link.GoToLoginScreen" rendered="#{notificationBacking.showBtnNotificationLogin}" />
+				</span>
+
+				<!-- diagnostics link -->
+				<div id="diagnostics">
+
+					<h:outputLabel id="lblErrorID" value="#{notificationBacking.labelErrorText}"></h:outputLabel>
+
+					<span class="browserVersion"> <span i18n-content="Browser.Label.BrowserId"></span> <span id="lblNotificationBrowserVer"></span>
+					</span>
+				</div>
+
+			</div>
+
+		</tds:SectionWrapper>
+
+		<script type="text/javascript">
+			function closeWindow() {
+				if (TDS.isProxyLogin) {
+					TDS.redirect(TDS.CLS.logoutPage + "?exl=false", true);
+				} else {
+					try {
+						SecureBrowser.CloseWindow();
+					} catch (ex) {
+					}
+
+					try {
+						this.focus();
+						self.opener = this;
+						window.open('', '_parent', '');
+						window.close();
+					} catch (ex) {
+					}
+				}
+			}
+		</script>
+
+		<script type="text/javascript">
+			// hide help
+			YUD.setStyle('btnHelp', 'display', 'none');
+
+			YUE.on('btnNotificationLogin', 'click', function() {
+				TDS.logout();
+			});
+		</script>
+
+		<script type="text/javascript">
+			if (TDS.BrowserInfo != null) {
+				YUD.get('lblNotificationBrowserVer').innerHTML = TDS.BrowserInfo.label;
+			}
+		</script>
+
+	</ui:define>
+
+</ui:composition>

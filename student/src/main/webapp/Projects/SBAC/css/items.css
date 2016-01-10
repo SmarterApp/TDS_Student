@@ -1,0 +1,40 @@
+.format_WER textarea {
+	height: 47em !important;
+}
+
+/* temporary styles until we support SIM for IE
+#noBrowser {
+	display:none;
+	background-color: #e1e1e1;
+	position:absolute;
+	left:0px;
+	top:0px;
+	height:100%;
+	width:100%;
+	z-index:9;
+	text-align:center;
+}
+#noIE {
+	width:50%;
+	left:25%;
+	top:33%;
+	position:absolute;
+	background-color:#fff;
+	border: 4px solid #00abf4;
+	-moz-border-radius:  10px;
+	-webkit-border-radius:  10px;
+	border-radius: 10px;
+	-webkit-box-shadow: 0em 0em .5em #666;
+	-moz-box-shadow: 0em 0em .5em #666;
+	box-shadow: 0em 0em .5em #666;
+	 -moz-box-sizing: border-box;
+	box-sizing: border-box;
+	font-size:24px;
+	padding:20px;
+	text-align:left;
+	line-height:1.2em;
+}
+.browser_ie.platform_windows.layout_29 #noBrowser {
+	display:block !important;
+}
+ temporary styles until we support SIM for IE*/
