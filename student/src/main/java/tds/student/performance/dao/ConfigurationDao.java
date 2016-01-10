@@ -1,9 +1,6 @@
 package tds.student.performance.dao;
 
-import tds.student.performance.domain.ClientSystemFlag;
-import tds.student.performance.domain.ClientTestProperty;
-import tds.student.performance.domain.ConfigTestToolType;
-import tds.student.performance.domain.StudentLoginField;
+import tds.student.performance.domain.*;
 
 import java.util.List;
 
@@ -16,4 +13,7 @@ public interface ConfigurationDao {
     List<StudentLoginField> getStudentLoginFields(String clientName);
     ConfigTestToolType getTestToolType(String clientName, String toolName, String contextType, String context);
     Boolean isSetForScoreByTDS(String clientName, String testId);
+    ClientTestMode getClientTestMode(TestOpportunity testOpportunity);
+    List<TestFormWindow> getTestFormWindows(TestOpportunity testOpportunity, TestSession testSession);
+    TideTesteeTestWindowDto getTideTesteeTestWindowDto(TestOpportunity testOpportunity, TestSession testSession);
 }

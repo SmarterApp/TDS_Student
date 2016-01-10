@@ -1,11 +1,9 @@
 package tds.student.performance.dao;
 
-import TDS.Shared.Exceptions.ReturnStatusException;
-import org.springframework.transaction.annotation.Transactional;
 import tds.student.performance.domain.TestOpportunity;
+import tds.student.performance.domain.TestOpportunityAudit;
 
 import java.sql.Timestamp;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,4 +16,5 @@ public interface TestOpportunityDao {
     void update(TestOpportunity opportunity);
 
     Timestamp getLastActivity(UUID key);
+    void createAudit(TestOpportunityAudit testOpportunityAudit);
 }
