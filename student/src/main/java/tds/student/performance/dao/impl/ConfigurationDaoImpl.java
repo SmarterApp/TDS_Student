@@ -505,4 +505,35 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
             return null;
         }
     }
+
+    @Override
+    @Cacheable(CacheType.LongTerm)
+    public Externs getExterns(String clientName) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("clientName", clientName);
+
+        final String SQL =
+                "SELECT\n" +
+                    "clientname AS clientName,\n" +
+                    "testeetype AS testeeType,\n" +
+                    "proctortype AS proctorType,\n" +
+                    "environment,\n" +
+                    "ispracticetest AS isPracticeTest,\n" +
+                    "sessiondb AS sessionDb,\n" +
+                    "testdb AS testDb\n" +
+                "FROM\n" +
+                    "session.externs\n" +
+                "WHERE\n" +
+                    "clientname = :clientName";
+
+        try {
+            return namedParameterJdbcTemplate.queryForObject(
+                    SQL,
+                    parameters,
+                    new BeanPropertyRowMapper<>(Externs.class));
+        } catch (EmptyResultDataAccessException e) {
+            logger.warn(String.format("%s did not return results for clientName = %s", SQL, clientName));
+            return null;
+        }
+    }
 }

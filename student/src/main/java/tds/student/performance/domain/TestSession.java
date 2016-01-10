@@ -23,6 +23,8 @@ import java.util.UUID;
 public class TestSession {
     private UUID key;
     private Integer sessionType;
+    private String sessionId;
+    private String proctorName;
     private String status;
     private Timestamp dateBegin;
     private Timestamp dateEnd;
@@ -124,5 +126,21 @@ public class TestSession {
         return this.status.toLowerCase().equals(OPEN_STATUS)
                 && now.after(fiveMinutesAgo)
                 && now.before(this.dateEnd);
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    public String getProctorName() {
+        return proctorName;
+    }
+
+    public void setProctorName(String proctorName) {
+        this.proctorName = proctorName;
     }
 }
