@@ -4,11 +4,14 @@ import AIR.Common.DB.SqlParametersMaps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
+import tds.student.performance.caching.CacheType;
 import tds.student.performance.dao.ItemBankDao;
+import tds.student.performance.dao.mappers.SetOfAdminSubjectMapper;
 import tds.student.performance.domain.SetOfAdminSubject;
 import tds.student.sql.data.TestGrade;
 
@@ -37,6 +40,7 @@ public class ItemBankDaoImpl implements ItemBankDao {
     }
 
     @Override
+    @Cacheable(CacheType.MediumTerm)
     public SetOfAdminSubject get(String adminSubject) {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("adminSubject", adminSubject);
@@ -45,7 +49,10 @@ public class ItemBankDaoImpl implements ItemBankDao {
                 "SELECT\n" +
                     "_key AS `key`,\n" +
                     "maxitems AS maxItems,\n" +
-                    "startability AS startAbility\n" +
+                    "startability AS startAbility,\n" +
+                    "testid AS testId,\n" +
+                    "issegmented AS isSegmented,\n" +
+                    "selectionalgorithm AS selectionAlgorithm\n" +
                 "FROM\n" +
                     "itembank.tblsetofadminsubjects\n" +
                 "WHERE\n" +
@@ -55,7 +62,7 @@ public class ItemBankDaoImpl implements ItemBankDao {
             return namedParameterJdbcTemplate.queryForObject(
                     SQL,
                     parameters,
-                    new BeanPropertyRowMapper<>(SetOfAdminSubject.class));
+                    new SetOfAdminSubjectMapper());
         } catch(EmptyResultDataAccessException e) {
             logger.warn(String.format("%s did not return results for adminSubject = %s", SQL, adminSubject));
             return null;
@@ -86,5 +93,23 @@ public class ItemBankDaoImpl implements ItemBankDao {
         }
 
         return results;
+    }
+
+    @Override
+    @Cacheable(CacheType.MediumTerm)
+    public String getTestSubject(String testKey) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put ("testKey", testKey);
+
+        // TODO: add integration test
+        final String SQL = "select S.Name from  itembank.tblsubject S, itembank.tblsetofadminsubjects A "
+                + " where A._key = :testKey and S._Key = A._fk_Subject";
+
+        try {
+            return namedParameterJdbcTemplate.queryForObject(SQL, parameters, String.class);
+        } catch(EmptyResultDataAccessException e) {
+            logger.warn(String.format("%s did not return results for testKey = %s", SQL, testKey));
+            return null;
+        }
     }
 }

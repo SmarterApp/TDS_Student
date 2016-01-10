@@ -55,6 +55,8 @@ public class TestSessionDaoImpl implements TestSessionDao {
                 "SELECT\n" +
                     "_key AS `key`,\n" +
                     "sessiontype AS sessionType,\n" +
+                    "sessionid AS sessionId,\n" +
+                    "proctorname AS proctorName,\n" +
                     "status AS status,\n" +
                     "datebegin AS dateBegin,\n" +
                     "dateend AS dateEnd,\n" +
