@@ -1,5 +1,6 @@
 package tds.student.performance.dao;
 
+import tds.student.performance.domain.SessionAudit;
 import tds.student.performance.domain.TestSession;
 import tds.student.performance.domain.TestSessionTimeLimitConfiguration;
 
@@ -16,5 +17,5 @@ public interface TestSessionDao {
     void pause(TestSession session, String reason);
     String validateProctorSession(TestSession testSession);
     String validateProctorSession(TestSession testSession, Long proctorKey, UUID browserKey);
-
+    void createAudit(SessionAudit sessionAudit);
 }

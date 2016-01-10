@@ -13,7 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import tds.student.performance.caching.CacheType;
 import tds.student.performance.dao.TestSessionDao;
 import tds.student.performance.dao.mappers.TestSessionMapper;
+import tds.student.performance.domain.SessionAudit;
 import tds.student.performance.domain.TestSessionTimeLimitConfiguration;
+import tds.student.performance.utils.DateUtility;
 import tds.student.performance.utils.UuidAdapter;
 import tds.student.performance.domain.TestSession;
 
@@ -27,6 +29,9 @@ import java.util.*;
 public class TestSessionDaoImpl implements TestSessionDao {
     private static final Logger logger = LoggerFactory.getLogger(TestSessionDaoImpl.class);
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    @Autowired
+    DateUtility dateUtility;
 
     @Autowired
     public void setDataSource(DataSource dataSource) {
@@ -205,7 +210,7 @@ public class TestSessionDaoImpl implements TestSessionDao {
         // Emulate line 1726: SQL_QUERY1
         //  Note: We are not using testSession.isOpen() since the logic here is different than there for some reason
         // TODO: validate that this java Date will compare correctly with the date coming from the DB
-        Date now = new Date();
+        Date now = dateUtility.getDbDate();
 
         if (now.before(testSession.getDateBegin()) || now.after(testSession.getDateEnd())) {
             return "The session is closed.";
@@ -220,6 +225,42 @@ public class TestSessionDaoImpl implements TestSessionDao {
         }
 
         return null;
+    }
+
+    @Override
+    @Transactional
+    public void createAudit(SessionAudit sessionAudit) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("sessionKey", UuidAdapter.getBytesFromUUID(sessionAudit.getSessionKey()));
+        parameters.put("dateAccessed", sessionAudit.getDateAccessed());
+        parameters.put("accessType", sessionAudit.getAccessType());
+        parameters.put("hostName", sessionAudit.getHostName());
+        parameters.put("browserKey", UuidAdapter.getBytesFromUUID(sessionAudit.getBrowserKey()));
+        parameters.put("databaseName", sessionAudit.getDatabaseName());
+
+        final String SQL =
+                "INSERT INTO\n" +
+                    "archive.sessionaudit (" +
+                    "_fk_session," +
+                    "dateaccessed," +
+                    "accesstype," +
+                    "hostname," +
+                    "browserkey," +
+                    "dbname)\n" +
+                "VALUES(" +
+                    ":sessionKey," +
+                    ":dateAccessed," +
+                    ":accessType," +
+                    ":hostName," +
+                    ":browserKey," +
+                    ":databaseName)";
+
+        try {
+            namedParameterJdbcTemplate.update(SQL, parameters);
+        } catch (DataAccessException e) {
+            logger.error(String.format("%s UPDATE threw exception", SQL), e);
+            throw e;
+        }
     }
 
     /**

@@ -13,10 +13,7 @@ import tds.dll.api.IStudentDLL;
 import tds.student.performance.dao.*;
 import tds.student.performance.domain.*;
 import tds.student.performance.exceptions.ReturnErrorException;
-import tds.student.performance.services.DbLatencyService;
-import tds.student.performance.services.LegacyErrorHandlerService;
-import tds.student.performance.services.TestOpportunityService;
-import tds.student.performance.services.TestSessionService;
+import tds.student.performance.services.*;
 import tds.student.performance.utils.*;
 import tds.student.sql.data.OpportunityInstance;
 import tds.student.sql.data.TestConfig;
@@ -41,25 +38,29 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
     TestOpportunityDao testOpportunityDao;
 
     @Autowired
-    SessionAuditDao sessionAuditDao;
-
-    @Autowired
-    TestOpportunityAuditDao testOpportunityAuditDao;
-
-    @Autowired
     TesteeResponseDao testeeResponseDao;
 
     @Autowired
     TestAbilityDao testAbilityDao;
 
+    // TODO:  Replace with calls to configurationService; no need to wire up both Dao and Service.
     @Autowired
     ConfigurationDao configurationDao;
+
+    @Autowired
+    ConfigurationService configurationService;
 
     @Autowired
     ItemBankDao itemBankDao;
 
     @Autowired
+    TestSegmentDao testSegmentDao;
+
+    @Autowired
     TestSessionService testSessionService;
+
+    @Autowired
+    TestOppAbilityEstimateDao testOppAbilityEstimateDao;
 
     @Autowired
     DateUtility dateUtility;
@@ -76,9 +77,22 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
     @Autowired
     LegacySqlConnection legacySqlConnection;
 
+    /**
+     * Start a {@link TestOpportunity} for the requested {@code OpportunityInstance}.
+     * <p>
+     *     This method is called from {@code OpportunityService.startTest()} in place of the existing
+     *     {@code _oppRepository.startTestOpportunity}.
+     * </p>
+     *
+     * @param opportunityInstance The {@code OpportunityInstance} passed in from {@code OpportunityService.startTest()}.
+     * @param testKey The test key passed in from {@code OpportunityService.startTest()}.
+     * @param formKeyList The formKeyList passed in from {@code OpportunityService.startTest()}.
+     * @return A {@code TestConfig} for the {@code TestOpportunity} being started.
+     */
     @Override
     public TestConfig startTestOpportunity(OpportunityInstance opportunityInstance, String testKey, String formKeyList) {
-        Date start = new Date();
+        Date latencyStart = dateUtility.getLocalDate();
+
         TestConfig config = new TestConfig();
 
         try {
@@ -92,7 +106,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             TestSession testSession = testSessionService.get(opportunityInstance.getSessionKey());
             if (testSession == null) {
                 String msg = String.format("Could not find TestSession record in session.session for key %s", opportunityInstance.getSessionKey());
-                legacyErrorHandlerService.throwReturnErrorException(testOpportunity.getClientName(), "T_StartTestOpportunity", msg, null, testOpportunity.getKey(), null, "failed");
+                legacyErrorHandlerService.throwReturnErrorException(null, "T_StartTestOpportunity", msg, null, opportunityInstance.getKey(), null, "failed");
             }
 
             verifyTesteeAccess(testOpportunity, testSession, opportunityInstance);
@@ -122,21 +136,21 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                     testOpportunity.getClientName(),
                     testOpportunity.getTestId());
 
-            if (testOpportunity.getDateStarted() == null) {
-                // Emulate logic to call legacy method (StudentDLL._InitializeOpportunity_SP) on line 5326
-                Integer testLength = initializeStudentOpportunity(testOpportunity, formKeyList);
+            if (testOpportunity.getDateStarted() == null) { // Emulate logic to call legacy method (StudentDLL._InitializeOpportunity_SP) on line 5358 of StudentDLL.T_StartTestOpportunity_SP.
+                Integer testLength = initializeStudentOpportunity(
+                        testOpportunity,
+                        testSession,
+                        clientTestProperty,
+                        formKeyList);
 
                 config = TestConfigHelper.getNew(clientTestProperty, timelimitConfiguration, testLength, scoreByTds);
-            } else {         // Restart the most recent test opportunity, starting @ line 5373 - StudentDLL
+            } else {         // Restart the most recent test opportunity, starting @ line 5405 of StudentDLL.T_StartTestOpportunity_SP.
                 Date lastActivity = testOpportunityDao.getLastActivity(opportunityInstance.getKey());
                 Integer gracePeriodRestarts = testOpportunity.getGracePeriodRestarts();
                 Integer restartCount = testOpportunity.getRestartCount();
-
-                //TODO: Replace below with db time
-                // Timestamp now = new Timestamp(System.currentTimeMillis());
                 Timestamp now = new Timestamp(dateUtility.getDbDate().getTime());
                 boolean isTimeDiffLessThanDelay =
-                        (DateUtils.minutesDiff(lastActivity, start) < timelimitConfiguration.getOpportunityDelay());
+                        (DateUtils.minutesDiff(lastActivity, now) < timelimitConfiguration.getOpportunityDelay());
 
                 if(isTimeDiffLessThanDelay) {
                     gracePeriodRestarts++;
@@ -157,7 +171,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                 oppAudit.setDatabaseName("session");
                 oppAudit.setDateAccessed(new Timestamp(System.currentTimeMillis()));
                 oppAudit.setAccessType("restart " + (restartCount + 1));
-                testOpportunityAuditDao.create(oppAudit);
+                testOpportunityDao.createAudit(oppAudit);
 
                 if (testSession.getSessionType() == 1) {
                     testeeResponseDao.updateRestartCount(opportunityInstance.getKey(), restartCount, false);
@@ -181,12 +195,12 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                         scoreByTds);
             }
 
-            dbLatencyService.logLatency("T_StartTestOpportunity", start, null, testOpportunity);
+            dbLatencyService.logLatency("T_StartTestOpportunity", latencyStart, null, testOpportunity);
         } catch (ReturnErrorException e) {
             logger.error(e.getMessage(), e);
             legacyErrorHandlerService.logDbError("T_StartTestOpportunity", e.getMessage(), null, testKey, null, opportunityInstance.getKey());
 
-            // The legacy OpportunityStatus.startTest method looks for the TestConfig.getReturnStatus to determine
+            // The legacy OpportunityService.startTest method looks for the TestConfig.getReturnStatus to determine
             // if the call was successful or not.
             ReturnStatus failureStatus = new ReturnStatus();
             failureStatus.setStatus(e.getStatus());
@@ -199,7 +213,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             logger.error(e.getMessage(), e);
             legacyErrorHandlerService.logDbError("T_StartTestOpportunity", e.getMessage(), null, testKey, null, opportunityInstance.getKey());
 
-            // The legacy OpportunityStatus.startTest method looks for the TestConfig.getReturnStatus to determine
+            // The legacy OpportunityService.startTest method looks for the TestConfig.getReturnStatus to determine
             // if the call was successful or not.
             ReturnStatus failureStatus = new ReturnStatus();
             failureStatus.setStatus("failed");
@@ -210,7 +224,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             logger.error(e.getMessage(), e);
             legacyErrorHandlerService.logDbError("T_StartTestOpportunity", e.getMessage(), null, testKey, null, opportunityInstance.getKey());
 
-            // The legacy OpportunityStatus.startTest method looks for the TestConfig.getReturnStatus to determine
+            // The legacy OpportunityService.startTest method looks for the TestConfig.getReturnStatus to determine
             // if the call was successful or not.
             ReturnStatus failureStatus = new ReturnStatus();
             failureStatus.setStatus(e.getReturnStatus().getStatus());
@@ -222,7 +236,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
     }
 
     /**
-     * This method emulated the functionality and logic contained in {@code StudentDll._UnfinishedResponsePages_SP}.
+     * This method emulates the functionality and logic contained in {@code StudentDll._UnfinishedResponsePages_SP}.
      *
      * NOTE: The legacy _UnfinishedResponsePages_SP call has a return value that never appears to be read,
      * at least not by student or the tdsdll project. The original method also has a doUpdate flag that
@@ -256,7 +270,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
      */
     @Override
     public Float getInitialAbility(TestOpportunity opportunity, ClientTestProperty property) {
-        Date start = new Date();
+        Timestamp start = new Timestamp(dateUtility.getDbDate().getTime());
         Float ability = null;
         Boolean bySubject = false;
         Double slope = null;
@@ -301,7 +315,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             }
         }
 
-        dbLatencyService.logLatency("GetInitialAbility", start, null, opportunity);
+        dbLatencyService.logLatency("_GetInitialAbility_SP", start, null, opportunity);
         return ability;
     }
 
@@ -346,32 +360,168 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
      * @param formKeyList A list of form keys passed in from the caller.
      * @return The total number of items in the test.
      */
-    private Integer initializeStudentOpportunity(TestOpportunity testOpportunity, String formKeyList) throws ReturnErrorException, SQLException, ReturnStatusException {
+    private Integer initializeStudentOpportunity(TestOpportunity testOpportunity, TestSession testSession, ClientTestProperty clientTestProperty,
+                                                 String formKeyList) throws ReturnErrorException, SQLException, ReturnStatusException {
         SQLConnection legacyConnection = legacySqlConnection.get();
-        _Ref<Integer> testLength = new _Ref<>();
+        Timestamp now = new Timestamp(dateUtility.getDbDate().getTime());
+        Date latencyDate = dateUtility.getLocalDate();
+        Integer testLength;
+        Float initialAbility;
         _Ref<String> reason = new _Ref<>();
 
-        legacyStudentDll._InitializeOpportunity_SP(
-                legacyConnection,
-                testOpportunity.getKey(),
-                testLength,
-                reason,
-                formKeyList);
+        legacyStudentDll._InitializeTestSegments_SP(legacyConnection, testOpportunity.getKey(), reason, formKeyList);
+        //initializeTestSegments(testOpportunity, testSession, formKeyList);
 
         if (reason.get() != null) {
             legacyErrorHandlerService.logDbError("T_StartTestOpportunity", reason.get(), testOpportunity.getTestee(), testOpportunity.getTestId(), null, testOpportunity.getKey());
             legacyErrorHandlerService.throwReturnErrorException(testOpportunity.getClientName(), "T_StartTestOpportunity", reason.get(), null, testOpportunity.getKey(), "_InitializeOpportunity", "failed");
         }
+        initialAbility = getInitialAbility(testOpportunity, clientTestProperty);
 
-        testOpportunityAuditDao.create(new TestOpportunityAudit(
+        //First session.testoppabilityestimate insert
+        testOppAbilityEstimateDao.create(
+            new TestOppAbilityEstimate(
                 testOpportunity.getKey(),
-                new Timestamp(new Date().getTime()),
+                "OVERALL",
+                initialAbility,
+                0,
+                now
+            )
+        );
+
+        //Second session.testoppabilityestimate insert  - gets "strand" from testopportunity and
+        //itembank.tbladminstrand tables
+        testOppAbilityEstimateDao.createFromItemBankAndTestOpp(
+                testOpportunity.getKey(),
+                initialAbility,
+                now
+        );
+
+        testLength = testSegmentDao.getTestLengthForOpportunitySegment(testOpportunity.getKey());
+        createResponseSet(testOpportunity, testLength, 0);
+
+        testOpportunity.setStatus("started");
+        testOpportunity.setDateStarted(now);
+        testOpportunity.setDateChanged(now);
+        testOpportunity.setExpireFrom(now);
+        testOpportunity.setStage("inprogress");
+        testOpportunity.setMaxItems(testLength);
+        testOpportunityDao.update(testOpportunity);
+
+        testOpportunityDao.createAudit(new TestOpportunityAudit(
+                testOpportunity.getKey(),
+                now,
                 "started",
                 testOpportunity.getSessionKey(),
                 HostNameHelper.getHostName(),
                 "session"));
 
-        return testLength.get();
+        dbLatencyService.logLatency("_InitializeOpportunity_SP", latencyDate, null, testOpportunity);
+
+        return testLength;
+    }
+
+    private void createResponseSet(TestOpportunity opportunity, Integer maxItems, Integer reset) {
+        Date start = dateUtility.getDbDate();
+        Long itemCount = testeeResponseDao.getTesteeResponseItemCount(opportunity.getKey());
+
+        if (itemCount > 0) {
+            if (reset != 0) {
+                testeeResponseDao.delete(opportunity.getKey());
+            }
+        } else {
+            return;
+        }
+
+        testeeResponseDao.insertBatch(opportunity.getKey(), maxItems);
+        dbLatencyService.logLatency("_CreateResponseSet_SP", start, null, opportunity);
+    }
+
+    private void initializeTestSegments(TestOpportunity testOpportunity, TestSession testSession, String formKeyList) throws SQLException, ReturnErrorException, ReturnStatusException {
+        List<TestSegmentItem> segmentItems;
+        Integer poolCount; //poolCountRef in legacy
+        if (testOpportunity.isSimulation()) { // Get segments for the simulation (StudentDLL._InitializeSegments_SP @ line 4589)
+            segmentItems = testSegmentDao.getForSimulation(testOpportunity);
+            // NOTE: can use testOpportunity.getSessionKey() in place of sessionPoolKey (StudentDLL._InitializeSegments_SP @ line 4611)
+        } else if (testOpportunity.getIsSegmented()) { // Get segments for the segment (StudentDLL._InitializeSegments_SP @ line 4598)
+            segmentItems = testSegmentDao.getSegmented(testOpportunity);
+        } else { // Get segments for un-segmented opportunity (StudentDLL._InitializeSegments_SP @ line 4604)
+            segmentItems = testSegmentDao.get(testOpportunity);
+        }
+
+        // Find the maximum segment position (this should be length of list - 1, but who knows?)
+        // TODO: Is this find even necessary?  Looping through each item in the results should be sufficient.
+
+        // LOOP through each segment fetched during the queries above:
+        for (TestSegmentItem segmentItem : segmentItems) {
+            // IF algorithm == "fixedform":
+            if (segmentItem.getAlgorithm().toLowerCase().equals("fixedform")) {
+                // CALL _SelectTestForm_Driver_SP
+                String testFormDriverResponse = configurationService.selectTestFormDriver(
+                        testOpportunity,
+                        testSession,
+                        formKeyList);
+
+                // IF the formKeyRef value that comes back from _SelectTestForm_Driver_SP == null
+                if (testFormDriverResponse == null ) {
+                    // EXCEPTION: return empty record set and set error reason to "Unable to complete test form selection"
+                    legacyErrorHandlerService.logDbError("T_StartTestOpportunity", "Did not find formKeyRef", testOpportunity.getTestee(), testOpportunity.getTestId(), null, testOpportunity.getKey());
+                    legacyErrorHandlerService.throwReturnErrorException(testOpportunity.getClientName(), "T_StartTestOpportunity", "Did not find formKeyRef", null, testOpportunity.getKey(), "_InitializeOpportunity", "failed");
+                }
+
+
+                //TODO poolCount = formLengthRef;
+
+                // IF formCohort == null:
+                    // get cohort from itembank.testform
+            } else { //Not a fixed form test...
+                //TODO: Update non-fixed form version to use new DB access layer
+                _Ref<Integer> newlenRef = new _Ref<> ();
+                _Ref<Integer> poolcountRef = new _Ref<> ();
+                _Ref<String> itemStringRef = new _Ref<> ();
+                SQLConnection legacyConnection = legacySqlConnection.get();
+                legacyStudentDll._ComputeSegmentPool_SP(legacyConnection, testOpportunity.getKey(),
+                        testOpportunity.getTestKey(), newlenRef, poolcountRef, itemStringRef, testOpportunity.getSessionKey());
+                poolCount = poolcountRef.get();
+
+//                int isElligbile = legacyStudentDll.FT_IsEligible_FN (legacySqlConnection, testOpportunity.getKey(),
+//                        testOpportunity.getTestKey(),  , language);
+                // CALL FT_IsEligible_FN to get isEligible value
+                // IF isEligible == 1 and newlenRef == opitems
+                    // CALL _FT_SelectItemgroups_SP
+                // ELSE:
+                    // ftcntRef = 0
+            }
+
+            // update current record to new values
+        }
+
+
+
+            // CALL _SelectTestForm_Driver_SP
+            // IF the formKeyRef value that comes back from _SelectTestForm_Driver_SP == null
+              // EXCEPTION: return empty record set and set error reason to "Unable to complete test form selection"
+           // set poolCountRef to whatever formLengthRef value is.
+           // IF formCohort == null:
+             // get cohort from itembank.testform
+          // ELSE algorithm != "fixedform":
+            // CALL StudentDLL._ComputeSegmentPool_SP
+            // CALL FT_IsEligible_FN to get isEligible value
+            // IF isEligible == 1 and newlenRef == opitems:
+              // CALL _FT_SelectItemgroups_SP
+           // ELSE:
+             // ftcntRef = 0
+          // update current record to new values
+        // END LOOP (phew!)
+
+        // IF there are no records in list that have opItemCnt + ftItemCnt > 0:
+          // EXECPTION: "No items in pool for _InitializeTestSegments"
+
+        // INSERT updated list into session.testopportunitysegment table.
+    }
+
+    private void selectTestFormPredetermined(TestOpportunity testOpportunity, String formList) {
+
     }
 
     /**
@@ -456,7 +606,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
         // NOTE:  checkIn time is in MINUTES, so need to multiply checkIn by 60,000 milliseconds so the math works out.
         Date dateVisitedPlusCheckIn = new Date(testSession.getDateVisited().getTime() + (checkIn * 60000L));
         if (now.after(dateVisitedPlusCheckIn)) {
-            sessionAuditDao.create(new SessionAudit(
+            testSessionService.createAudit(new SessionAudit(
                     testSession.getKey(),
                     new Timestamp(now.getTime()),
                     "TACheckin TIMEOUT",

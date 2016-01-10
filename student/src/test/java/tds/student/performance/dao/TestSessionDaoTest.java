@@ -4,13 +4,13 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import tds.student.performance.IntegrationTest;
+import tds.student.performance.domain.SessionAudit;
 import tds.student.performance.domain.TestSession;
 import tds.student.performance.domain.TestSessionTimeLimitConfiguration;
+import tds.student.performance.utils.UuidAdapter;
 
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 
 /**
@@ -194,5 +194,31 @@ public class TestSessionDaoTest extends IntegrationTest {
 
         String msg = testSessionDao.validateProctorSession(testSession, testSession.getProctorId(), UUID.randomUUID());
         Assert.assertEquals("Unauthorized session access", msg);
+    }
+
+    @Test
+    public void should_Create_a_New_SessionAudit_Record() {
+        UUID mockSessionKey = UUID.randomUUID();
+        UUID mockBrowserKey = UUID.randomUUID();
+        Timestamp mockDate = new Timestamp(new Date().getTime());
+
+        testSessionDao.createAudit(new SessionAudit(
+                mockSessionKey,
+                mockDate,
+                "unittest",
+                "unittest host",
+                mockBrowserKey,
+                "unittest_db"
+        ));
+
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("key", UuidAdapter.getBytesFromUUID(mockSessionKey));
+        parameters.put("browserKey", UuidAdapter.getBytesFromUUID(mockBrowserKey));
+        parameters.put("date", mockDate);
+
+        final String SQL = "SELECT COUNT(*) AS count FROM archive.sessionaudit WHERE _fk_session = :key AND browserkey = :browserKey AND dateaccessed = :date";
+        final Integer result = namedParameterJdbcTemplate.queryForInt(SQL, parameters);
+
+        Assert.assertEquals((Integer)1, result);
     }
 }

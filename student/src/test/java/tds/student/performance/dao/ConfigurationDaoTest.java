@@ -4,10 +4,7 @@ import org.junit.Assert;;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import tds.student.performance.IntegrationTest;
-import tds.student.performance.domain.ClientSystemFlag;
-import tds.student.performance.domain.ClientTestProperty;
-import tds.student.performance.domain.ConfigTestToolType;
-import tds.student.performance.domain.StudentLoginField;
+import tds.student.performance.domain.*;
 
 import java.util.List;
 
@@ -140,5 +137,37 @@ public class ConfigurationDaoTest extends IntegrationTest {
         Boolean result = configurationDao.isSetForScoreByTDS(clientName, testId);
 
         Assert.assertFalse(result);
+    }
+
+    @Test
+    public void should_Return_a_TideTesteeTestWindowDto_For_SBAC_PT_and_SBAC_Math_3_MATH_3() {
+        TestOpportunity mockTestOpportunity = new TestOpportunity();
+        mockTestOpportunity.setClientName("SBAC_PT");
+        mockTestOpportunity.setTestId("SBAC Math 3-MATH-3");
+
+        TestSession mockTestSession = new TestSession();
+        mockTestSession.setSessionType(0);
+
+        TideTesteeTestWindowDto result = configurationDao.getTideTesteeTestWindowDto(
+                mockTestOpportunity,
+                mockTestSession);
+
+        Assert.assertNotNull(result);
+        Assert.assertNull(result.getTideId()); // NOTE:  configs.client_testproperties.tideId is always null in available test/sample data.
+        Assert.assertFalse(result.getRequireFormWindow());
+        Assert.assertFalse(result.getRequireForm());
+        Assert.assertEquals("tds-testform", result.getFormField());
+        Assert.assertTrue(result.getIfExists());
+    }
+
+    @Test
+    public void splitTest() {
+        String foo = "someval,someOtherVal,delimited:value";
+
+        String[] split = org.apache.commons.lang.StringUtils.split(foo, ',');
+        for (String item : split) {
+            String[] splitItem = org.apache.commons.lang.StringUtils.split(item, ':');
+            splitItem[0].length();
+        }
     }
 }

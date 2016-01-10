@@ -1,6 +1,5 @@
 package tds.student.performance.dao.impl;
 
-import org.apache.commons.lang3.tuple.MutablePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +11,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import tds.student.performance.caching.CacheType;
 import tds.student.performance.dao.ConfigurationDao;
-import tds.student.performance.domain.ClientSystemFlag;
-import tds.student.performance.domain.ClientTestProperty;
-import tds.student.performance.domain.ConfigTestToolType;
-import tds.student.performance.domain.StudentLoginField;
+import tds.student.performance.dao.mappers.ClientTestModeMapper;
+import tds.student.performance.domain.*;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -262,7 +259,7 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
                 "SELECT\n" +
                     "COUNT(clientname)\n" +
                 "FROM\n" +
-                    "configs.client_testscorefeatures\n " +
+                    "configs.client_testscorefeatures\n" +
                 "WHERE\n" +
                     "clientname = :clientName\n" +
                     "AND TestID = :testId\n" +
@@ -275,5 +272,237 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
         Integer recordCount = namedParameterJdbcTemplate.queryForInt(SQL, parameters);
 
         return recordCount > 0;
+    }
+
+    /**
+     * Get the {@link ClientTestMode} from the {@code configs.client_testmode} table for the specified
+     * {@link TestOpportunity}.
+     *
+     * @param testOpportunity The {@code TestOpportunity}.
+     * @return  A {@code ClientTestMode} for the {@code TestOpportunity}.
+     */
+    @Override
+    @Transactional
+    @Cacheable(CacheType.LongTerm)
+    public ClientTestMode getClientTestMode(TestOpportunity testOpportunity) {
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("parentTest", testOpportunity.getTestKey());
+
+        final String SQL =
+                "SELECT\n" +
+                    "_key AS `key`,\n" +
+                    "clientname AS clientName,\n" +
+                    "testid AS testId,\n" +
+                    "mode AS mode,\n" +
+                    "algorithm AS algorithm,\n" +
+                    "formtideselectable AS formTideSelectable,\n" +
+                    "issegmented AS isSegmented,\n" +
+                    "maxopps AS maxOpps,\n" +
+                    "requirertsform AS requireRtsForm,\n" +
+                    "requirertsformwindow AS requireRtsFormWindow,\n" +
+                    "requirertsformifexists AS requireRtsFormIfExists,\n" +
+                    "sessiontype AS sessionType,\n" +
+                    "testkey AS testKey\n" +
+                "FROM\n" +
+                    "configs.client_testmode\n" +
+                "WHERE\n" +
+                    "testkey = :parentTest";
+
+        try {
+            return namedParameterJdbcTemplate.queryForObject(
+                    SQL,
+                    parameters,
+                    new ClientTestModeMapper());
+        } catch (EmptyResultDataAccessException e) {
+            logger.warn(String.format("%s did not return results for parentTest = %s", SQL, parameters.get("parentTest")));
+            return null;
+        }
+    }
+
+    @Override
+    @Transactional
+    @Cacheable(CacheType.LongTerm)
+    public List<TestFormWindow> getTestFormWindows(TestOpportunity testOpportunity, TestSession testSession) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("clientName", testOpportunity.getClientName());
+        parameters.put("testId", testOpportunity.getTestId());
+        parameters.put("sessionType", testSession.getSessionType());
+
+        final String SQL =
+                "SELECT\n" +
+                    "windowid AS windowId,\n" +
+                    "W.numopps AS windowMax,\n" +
+                    "M.maxopps AS modeMax,\n" +
+                    "CASE\n" +
+                        "WHEN W.startdate IS NULL THEN NOW(3)\n" +
+                        "ELSE (W.startdate + INTERVAL shiftwindowstart DAY)\n" +
+                    "END AS startDate,\n" +
+                    "CASE\n" +
+                        "WHEN W.enddate IS NULL THEN NOW(3)\n" +
+                        "ELSE (W.enddate + INTERVAL shiftwindowend DAY)\n" +
+                    "END AS endDate,\n" +
+                    "CASE\n" +
+                        "WHEN F.startDate IS NULL THEN NOW(3)\n" +
+                        "ELSE (F.startdate + INTERVAL shiftformstart DAY)\n" +
+                    "END AS formStart,\n" +
+                    "CASE\n" +
+                        "WHEN F.enddate IS NULL THEN NOW(3)\n" +
+                        "ELSE (F.enddate + INTERVAL shiftformend DAY)\n" +
+                    "END AS formEnd,\n" +
+                    "_efk_TestForm AS formKey,\n" +
+                    "formid AS formId,\n" +
+                    "F.language AS `language`,\n" +
+                    "M.mode AS mode,\n" +
+                    "M.testkey AS testKey,\n" +
+                    "W.sessionType AS windowSession,\n" +
+                    "M.sessionType AS modeSession\n" +
+                "FROM\n" +
+                    "configs.client_testwindow W,\n" +
+                    "configs.client_testformproperties F,\n" +
+                    "configs.client_testmode M,\n" +
+                    "itembank.tblsetofadminsubjects BANK,\n" +
+                    "session._externs E\n" +
+                "WHERE\n" +
+                    "F.clientname = :clientName\n" +
+                    "AND F.testID = :testId\n" +
+                    "AND M.testkey = F.testkey\n" +
+                    "AND M.testkey = BANK._key\n" +
+                    "AND M.clientname = :clientName\n" +
+                    "AND M.testID = :testId\n" +
+                    "AND (M.sessionType = -1 OR M.sessionType = :sessionType)\n" +
+                    "AND E.clientname = :clientName\n" +
+                    "AND NOW(3) BETWEEN CASE\n" +
+                            "WHEN F.startDate IS NULL THEN NOW(3)\n" +
+                            "ELSE (F.startdate + INTERVAL shiftformstart DAY)\n" +
+                        "END\n" +
+                    "AND CASE\n" +
+                            "WHEN F.enddate IS NULL THEN NOW(3)\n" +
+                            "ELSE (F.enddate + INTERVAL shiftformend DAY)\n" +
+                        "END\n" +
+                    "AND NOW(3) BETWEEN CASE\n" +
+                            "WHEN W.startDate IS NULL THEN NOW(3)\n" +
+                            "ELSE (W.startDate + INTERVAL shiftwindowstart DAY)\n" +
+                        "END\n" +
+                    "AND CASE\n" +
+                            "WHEN W.endDate IS NULL THEN NOW(3)\n" +
+                            "ELSE (W.endDate + INTERVAL shiftwindowend DAY )\n" +
+                        "END\n" +
+                    "AND W.clientname = :clientName\n" +
+                    "AND W.testID = :testId\n" +
+                    "AND (W.sessionType = -1 OR W.sessiontype = :sessionType)\n" +
+                "UNION\n" +
+                "SELECT\n" +
+                    "windowid AS windowId,\n" +
+                    "W.numopps AS windowMax,\n" +
+                    "M.maxopps AS modeMax,\n" +
+                    "CASE\n" +
+                        "WHEN W.startDate IS NULL THEN NOW(3)\n" +
+                        "ELSE (W.startDate + INTERVAL shiftwindowstart DAY)\n" +
+                    "END AS startDate,\n" +
+                    "CASE\n" +
+                        "WHEN W.endDate IS NULL THEN NOW(3)\n" +
+                        "ELSE (W.endDate + INTERVAL shiftwindowend DAY)\n" +
+                    "END AS endDate,\n" +
+                    "CASE\n" +
+                        "WHEN F.startDate IS NULL THEN NOW(3)\n" +
+                        "ELSE (F.startdate + INTERVAL shiftformstart DAY)\n" +
+                    "END AS formStart,\n" +
+                    "CASE\n" +
+                        "WHEN F.enddate IS NULL THEN NOW(3)\n" +
+                        "ELSE (F.enddate + INTERVAL shiftformend DAY)\n" +
+                    "END AS formEnd,\n" +
+                    "_efk_testform AS formKey,\n" +
+                    "formid AS formId,\n" +
+                    "F.language AS `language`,\n" +
+                    "M.mode AS mode,\n" +
+                    "M.testkey AS testKey,\n" +
+                    "W.sessiontype AS windowSession,\n" +
+                    "M.sessiontype AS modeSession\n" +
+                "FROM\n" +
+                    "configs.client_testwindow W,\n" +
+                    "configs.client_testformproperties F,\n" +
+                    "configs.client_segmentproperties S,\n" +
+                    "configs.client_testmode M,\n" +
+                    "itembank.tblsetofadminsubjects BANK,\n" +
+                    "session._externs E\n" +
+                "WHERE\n" +
+                    "S.clientname = :clientName\n" +
+                    "AND F.clientname = :clientName\n" +
+                    "AND F.testkey = BANK._key\n" +
+                    "AND S.parenttest = :testId\n" +
+                    "AND M.clientname = :clientName\n" +
+                    "AND M.testid = :testId\n" +
+                    "AND (M.sessiontype = -1 OR M.sessiontype = :sessionType)\n" +
+                    "AND S.modekey = M.testkey\n" +
+                    "AND S.segmentid = BANK.testid\n" +
+                    "AND E.clientname = :clientName\n" +
+                    "AND NOW(3) BETWEEN CASE\n" +
+                        "WHEN F.startdate IS NULL THEN NOW(3)\n" +
+                        "ELSE (F.startdate + INTERVAL shiftformstart DAY)\n" +
+                    "END\n" +
+                    "AND CASE\n" +
+                        "WHEN F.enddate IS NULL THEN NOW(3)\n" +
+                        "ELSE (F.enddate + INTERVAL shiftformend DAY)\n" +
+                    "END\n" +
+                    "AND NOW(3) BETWEEN CASE\n" +
+                        "WHEN W.startdate IS NULL THEN NOW(3)\n" +
+                        "ELSE (W.startdate + INTERVAL shiftwindowstart DAY)\n" +
+                    "END\n" +
+                    "AND CASE\n" +
+                        "WHEN W.enddate IS NULL THEN NOW(3)\n" +
+                        "ELSE (W.enddate + INTERVAL shiftwindowend DAY)\n" +
+                    "END\n" +
+                    "AND W.clientname = :clientName\n" +
+                    "AND W.testid = S.parenttest\n" +
+                    "AND (W.sessiontype = -1 OR W.sessiontype = :sessionType)";
+
+        return namedParameterJdbcTemplate.query(
+                SQL,
+                parameters,
+                new BeanPropertyRowMapper<TestFormWindow>());
+    }
+
+    /**
+     * Emulates the output of {@code SQL_QUERY2} from the {@code StudentDLL._GetTesteeTestForms_SP}.
+     *
+     * @param testOpportunity The {@code TestOpportunity}.
+     * @param testSession The (@code TestSession}.
+     * @return A collection of {@code TideTesteeWindowDto}s.
+     */
+    @Override
+    @Transactional
+    @Cacheable(CacheType.LongTerm)
+    public TideTesteeTestWindowDto getTideTesteeTestWindowDto(TestOpportunity testOpportunity, TestSession testSession) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("clientName", testOpportunity.getClientName());
+        parameters.put("testId", testOpportunity.getTestId());
+        parameters.put("sessionType", testSession.getSessionType());
+
+        final String SQL =
+                "SELECT\n" +
+                    "tide_id AS tideId,\n" +
+                    "requirertsformwindow AS requireFormWindow,\n" +
+                    "rtsformfield AS formField,\n" +
+                    "requireRTSForm AS requireForm,\n" +
+                    "requireRTSformIfExists AS ifExists\n" +
+                "FROM\n" +
+                    "configs.client_testproperties T,\n" +
+                    "configs.client_testmode F\n" +
+                "WHERE\n" +
+                    "T.clientname = :clientName\n" +
+                    "AND T.TestID = :testId\n" +
+                    "AND F.clientname = :clientName\n" +
+                    "AND F.testID = :testId\n" +
+                    "AND (sessionType = -1 OR sessionTYpe = :sessionType)";
+
+        try {
+            return namedParameterJdbcTemplate.queryForObject(
+                    SQL,
+                    parameters,
+                    new BeanPropertyRowMapper<>(TideTesteeTestWindowDto.class));
+        } catch (EmptyResultDataAccessException e) {
+            logger.warn(String.format("%s did not return results for clientName = %s, testId = %s, sessionType = %s", SQL, parameters.get("clientName"), parameters.get("testId"), parameters.get("sessionType")));
+            return null;
+        }
     }
 }

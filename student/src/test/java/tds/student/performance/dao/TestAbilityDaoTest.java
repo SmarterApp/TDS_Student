@@ -8,10 +8,11 @@ import tds.student.performance.domain.TestOpportunity;
 import tds.student.performance.utils.UuidAdapter;
 
 import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for {@code TestOpportunityDao} implementations.
@@ -19,12 +20,12 @@ import java.util.UUID;
 public class TestAbilityDaoTest extends IntegrationTest {
     private final String clientName = "SBAC_PT";
     private final String subject = "MATH";
-    private final String testee = "99999";
+    private final Long testee = 9999L;
     private final Timestamp dateScored = new Timestamp(System.currentTimeMillis());
-    private final Integer score = 100;
+    private final Float score = 100F;
     private final Integer opportunity = 100;
     private final String testId = "SBAC-IRP-Perf-MATH-3";
-    private final UUID otherOppKey = UUID.fromString("9f881758-0b4c-4eaa-b59f-b6ddd0934223");
+    private final UUID otherOppKey = UUID.randomUUID();
     private final String adminSubject = "AdminSubject";
 
 
@@ -50,29 +51,70 @@ public class TestAbilityDaoTest extends IntegrationTest {
 
         namedParameterJdbcTemplate.update(TEST_OPP_SQL, params);
 
+        params = new HashMap<>();
+        params.put("oppKey", UuidAdapter.getBytesFromUUID(otherOppKey));
+        params.put("score", score);
+        params.put("date", new Date());
+
+        final String TEST_SCORE_SQL =
+            "INSERT INTO session.testopportunityscores (_fk_testopportunity, measurelabel, measureof, value, useforability, _date) " +
+                    "VALUES (:oppKey, 'measure label', 'measure of', :score, 1, :date)";
+
+        namedParameterJdbcTemplate.update(TEST_SCORE_SQL, params);
+
+        params = new HashMap<>();
+        params.put("oppKey", UuidAdapter.getBytesFromUUID(otherOppKey));
+        params.put("score", score);
+        params.put("testee", testee);
+        params.put("clientName", clientName);
+        params.put("subject", subject);
+
+        final String TESTEE_HISTORY_SQL =
+                "INSERT INTO session.testeehistory (_Key, _efk_Testee, clientname, Subject, initialAbility) " +
+                        "VALUES (:oppKey, :testee, :clientName, :subject, :score)";
+
+        namedParameterJdbcTemplate.update(TESTEE_HISTORY_SQL, params);
     }
 
     @After
     public void cleanup() {
         Map<String, Object> params = new HashMap<>();
         params.put("oppKey", UuidAdapter.getBytesFromUUID(otherOppKey));
-        final String SQL =
+        final String DELETE_SQL1 =
+                "DELETE FROM session.testopportunityscores\n" +
+                        "WHERE _fk_testopportunity = :oppKey";
+
+        final String DELETE_SQL2 =
                 "DELETE FROM session.testopportunity\n" +
                         "WHERE _Key = :oppKey";
 
-        namedParameterJdbcTemplate.update(SQL, params);
+        final String DELETE_SQL3 =
+                "DELETE FROM session.testeehistory\n" +
+                        "WHERE _efk_Testee = :testee";
+
+        params.put("testee", testee);
+        namedParameterJdbcTemplate.update(DELETE_SQL1, params);
+        namedParameterJdbcTemplate.update(DELETE_SQL2, params);
+        namedParameterJdbcTemplate.update(DELETE_SQL3, params);
     }
 
-    /**
-     * Record used for testing:
-     * # key, sessionKey, browserKey, testKey, testee, testId, test, opportunity, status, dateStarted, dateChanged, rcnt, gpRestarts, testLength, subject, clientName
-     '9F8817580B4A4EAAB59FB6DEA0934223', '2B20031D4BD842A89963F6FFA44A9271', 'A27DAB06891648B3AB996E95EC7AE3BF', '(SBAC_PT)SBAC-IRP-Perf-MATH-3-Summer-2015-2016', '168', 'SBAC-IRP-Perf-MATH-3', '(SBAC_PT)SBAC-IRP-Perf-MATH-3-Summer-2015-2016', '1', 'started', '2015-12-23 23:23:13.028', '2015-12-23 23:30:15.409', '1', '1', '4', 'MATH', 'SBAC_PT'
-     */
     @Test
     public void getTestAbilitiesTest() {
-        UUID key = UUID.fromString("9f881758-0b4a-4eaa-b59f-b6dea0934223");
+        UUID key = UUID.randomUUID();
 
-        //List<TestAbility> testAbilities = testAbilityDao.getTestAbilities();
+        List<TestAbility> testAbilities = testAbilityDao.getTestAbilities(key, clientName, subject, testee);
+        assertNotNull(testAbilities);
+        assertTrue(testAbilities.size() == 1);
+        assertEquals(testAbilities.get(0).getOppkey(), otherOppKey);
+        assertEquals(testAbilities.get(0).getOpportunity(), opportunity);
+        assertEquals(testAbilities.get(0).getScore(), score);
+        assertEquals(testAbilities.get(0).getTest(), testId);
+    }
+
+    @Test
+    public void getMostRecentTestAbilityFromHistoryTest() {
+        Float ability = testAbilityDao.getMostRecentTestAbilityFromHistory(clientName, subject, testee);
+        assertEquals(ability, score);
     }
 
 }
