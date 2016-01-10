@@ -78,7 +78,7 @@ public class DbLatencyServiceImpl implements DbLatencyService {
     }
 
     // PORT of CommonDLL._LogDBLatency_SP line 2289
-    private void logLatency(String procName, Date startTime, Long userKey, Integer n, UUID testoppKey, UUID sessionKey, String clientName, String comment) {
+    public void logLatency(String procName, Date startTime, Long userKey, Integer n, UUID testoppKey, UUID sessionKey, String clientName, String comment) {
         if (!logLatencyEnabled) {
             return;
         }

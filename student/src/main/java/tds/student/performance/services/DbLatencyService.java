@@ -4,6 +4,7 @@ import tds.student.performance.domain.TestOpportunity;
 import tds.student.performance.domain.TestSession;
 
 import java.util.Date;
+import java.util.UUID;
 
 public interface DbLatencyService {
     void setEnabled(Boolean value);
@@ -20,6 +21,5 @@ public interface DbLatencyService {
     void logLatency(String procname, Date startTime, Long userKey, TestSession testSession);
     void logLatency(String procname, Date startTime, Long userKey, String clientName);
 
-    // TODO: made this private for now, with the assumption we could always have a TestOpportunity or TestSession available if relevant
-    //void logLatency(String procname, Date startTime, Long userKey, Integer n, UUID testoppKey, UUID sessionKey, String clientName, String comment);
+    void logLatency(String procname, Date startTime, Long userKey, Integer n, UUID testoppKey, UUID sessionKey, String clientName, String comment);
 }

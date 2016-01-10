@@ -8,4 +8,5 @@ import java.util.List;
 public interface ItemBankDao {
     SetOfAdminSubject get(String adminSubject);
     List<TestGrade> getTestGrades(String clientName, String testKey, Integer sessionType);
+    String getTestSubject(String testKey);
 }

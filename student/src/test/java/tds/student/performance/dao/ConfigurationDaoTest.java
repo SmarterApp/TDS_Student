@@ -170,4 +170,19 @@ public class ConfigurationDaoTest extends IntegrationTest {
             splitItem[0].length();
         }
     }
+
+    @Test
+    public void should_Return_Null_Get_Externs_Fake_Client_Name() {
+        Assert.assertNull(configurationDao.getExterns("FAKE_CLIENT"));
+    }
+
+    @Test
+    public void should_Return_Externs_Data_For_SBAC_PT() {
+        Externs externs = configurationDao.getExterns("SBAC_PT");
+
+        Assert.assertEquals("session", externs.getSessionDb());
+        Assert.assertEquals("itembank", externs.getTestDb());
+        Assert.assertEquals("RTS", externs.getTesteeType());
+        Assert.assertEquals("dev", externs.getEnvironment());
+    }
 }
