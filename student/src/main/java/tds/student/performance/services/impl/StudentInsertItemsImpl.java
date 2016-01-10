@@ -82,6 +82,9 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
         String localhostname = _commonDll.getLocalhostName();
         _Ref<String> error = new _Ref<>();
 
+        logger.debug("*** insertItems : oppkey: " + oppKey.toString() );
+
+
         _studentDll._ValidateTesteeAccessProc_SP(connection, oppKey, sessionKey, browserId, false, error);
         if (error.get() != null) {
             resultsSets.add(_commonDll._ReturnError_SP(connection, null, "T_InsertItems", error.get(), null, oppKey, "_ValidateTesteeAccesss", "denied"));
@@ -180,7 +183,7 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             unquotedParms4.put("insertsTableName", insertsTable.getTableName());
             unquotedParms4.put("itemsTableName", itemsTable.getTableName());
             executeStatement(connection, fixDataBaseNames(SQL_DELETE1, unquotedParms4), null, false).getUpdateCount();
-            // System.err.println (deletedCnt); // for testing
+            //System.err.println (deletedCnt); // for testing
         }
         final String SQL_QUERY6 = "select  bankitemkey from ${insertsTableName} where formPosition is null limit 1";
         if (DbComparator.isEqual(oppSeg.getAlgorithm(), "fixedform") && (exists(executeStatement(connection, fixDataBaseNames(SQL_QUERY6, unquotedParms3), null, false)))) {
@@ -275,7 +278,8 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             final String SQL_EXISTS1 = "select page from testeeresponse T,  ${insertsTableName} R where T._fk_TestOpportunity = ${oppkey} and "
                     + " (T.page = ${page} or (T._efk_ITSBank = R.bankkey and T._efk_ITSItem = R._efk_ITSItem))";
             SqlParametersMaps prm = (new SqlParametersMaps()).put("oppkey", oppKey).put("page", page);
-            if (!exists(executeStatement(connection, fixDataBaseNames(SQL_EXISTS1, unquotedParms3), prm, false))) {
+
+            if (exists(executeStatement(connection, fixDataBaseNames(SQL_EXISTS1, unquotedParms3), prm, false)) == false) {
                 final String SQL_UPDATE3 = "Update testeeresponse T, ${insertsTableName} R  set T.isRequired = R.IsRequired, T._efk_ITSItem = R._efk_ITSItem, T._efk_ITSBank = R.bankkey, "
                         + " T.response = null, T.OpportunityRestart = ${opprestart}, T.Page = ${page}, T.Answer = R.Answer, T.ScorePoint = R.ScorePoint, T.DateGenerated = ${today},"
                         + " T._fk_Session = ${session}, T.Format = R.format, T.isFieldTest = R.isFieldTest, T.Hostname = ${hostname}, T.GroupID = ${groupID}, T.groupItemsRequired = ${groupItemsRequired},"
@@ -295,7 +299,12 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
                 parms10.put("segmentID", segmentId);
                 parms10.put("groupB", groupB);
 
-                executeStatement(connection, fixDataBaseNames(SQL_UPDATE3, unquotedParms3), parms10, false).getUpdateCount();
+                int existsUpdateCnt = executeStatement(connection, fixDataBaseNames(SQL_UPDATE3, unquotedParms3), parms10, false).getUpdateCount();
+
+                logger.debug("*** Not SQL_EXISTS1 execute SQL_UPDATE3 updated: " + existsUpdateCnt);
+
+            }  else {
+                logger.debug("*** SQL_EXISTS1 skip SQL_UPDATE3");
             }
 
             // todo: Why do we have to check if an insert worked?
