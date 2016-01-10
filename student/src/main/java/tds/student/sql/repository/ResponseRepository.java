@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 
 import tds.dll.api.ICommonDLL;
 import tds.dll.api.IStudentDLL;
+import tds.student.performance.services.StudentInsertItemsService;
 import tds.student.sql.abstractions.IResponseRepository;
 import tds.student.sql.data.AdaptiveGroup;
 import tds.student.sql.data.AdaptiveItem;
@@ -56,6 +57,9 @@ public class ResponseRepository extends AbstractDAO implements IResponseReposito
   @Autowired
   private ITDSLogger          _tdsLogger;
 
+  @Autowired
+  private StudentInsertItemsService studentInsertItemsService;
+
   public ResponseRepository () {
     super ();
   }
@@ -76,9 +80,13 @@ public class ResponseRepository extends AbstractDAO implements IResponseReposito
 //    String itemKeys = null;
     try (SQLConnection connection = getSQLConnection ()) {
 
-      MultiDataResultSet resultSets = _studentDll.T_InsertItems_SP (connection, oppInstance.getKey (), oppInstance.getSessionKey (), oppInstance.getBrowserKey (), adaptiveGroup.getSegmentPosition (),
-          adaptiveGroup.getSegmentID (), adaptiveGroup.getPage (), adaptiveGroup.getGroupID (), itemKeys, '|', new Integer (adaptiveGroup.getNumItemsRequired ()), new Float (0), new Integer (0),
-          false);
+      //MultiDataResultSet resultSets = _studentDll.T_InsertItems_SP (connection, oppInstance.getKey (), oppInstance.getSessionKey (), oppInstance.getBrowserKey (), adaptiveGroup.getSegmentPosition (),
+      //    adaptiveGroup.getSegmentID (), adaptiveGroup.getPage (), adaptiveGroup.getGroupID (), itemKeys, '|', new Integer (adaptiveGroup.getNumItemsRequired ()), new Float (0), new Integer (0),
+      //    false);
+
+      MultiDataResultSet resultSets = studentInsertItemsService.insertItems (connection, oppInstance.getKey (), oppInstance.getSessionKey (), oppInstance.getBrowserKey (), adaptiveGroup.getSegmentPosition (),
+              adaptiveGroup.getSegmentID (), adaptiveGroup.getPage (), adaptiveGroup.getGroupID (), itemKeys, '|', new Integer (adaptiveGroup.getNumItemsRequired ()), new Float (0), new Integer (0),
+              false);
       Iterator<SingleDataResultSet> results = resultSets.getResultSets ();
       // first expected result set
 
