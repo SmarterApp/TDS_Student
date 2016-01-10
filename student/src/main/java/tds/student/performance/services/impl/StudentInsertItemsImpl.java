@@ -164,12 +164,6 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
                 .addColumn("Scorepoint", SQL_TYPE_To_JAVA_TYPE.INT).addColumn("contentLevel", SQL_TYPE_To_JAVA_TYPE.VARCHAR, 200).addColumn("Format", SQL_TYPE_To_JAVA_TYPE.VARCHAR, 50)
                 .addColumn("IsFieldTest", SQL_TYPE_To_JAVA_TYPE.BIT).addColumn("IsRequired", SQL_TYPE_To_JAVA_TYPE.BIT);
         connection.createTemporaryTable(insertsTable);
-        // DataBaseTable TestItemgroupDataTable = ITEMBANK_TestItemGroupData_FN
-        // (connection, testkey, groupId, language, formKey);
-        // final String SQL_INSERT2 =
-        // "insert into ${insertsTableName} (bankitemkey, relativePosition, bankkey, _efk_ITSItem, b, Scorepoint,  format, isFieldTest, IsRequired, contentLevel, formPosition, answer)"
-        // +
-        // "select bankitemkey, itemposition, bankkey, itemkey, IRT_b, scorepoint, itemType, IsFieldTest, IsRequired, ContentLevel, FormPosition, answerKey from ${TestItemgroupDataTableName} order by itemposition;";
 
         final String SQL_INSERT2 = "insert into ${insertsTableName} (bankitemkey, relativePosition, bankkey, _efk_ITSItem, b, Scorepoint,  format, isFieldTest, IsRequired, contentLevel, formPosition, answer)"
                 + " select  A._fk_Item as bankitemkey, ItemPosition, _efk_ItemBank as bankkey, _efk_Item as itemkey,  IRT_b,"
@@ -180,15 +174,6 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
                 + " and P._fk_AdminSubject = ${segmentKey} and P._fk_Item = A._fk_Item and P.Propname = 'Language' and P.Propvalue = ${language} "
                 + " order by itemposition";
 
-        // + " groupKey, GroupID,  P.IsActive, BlockID,     "
-        // + "  ContentSize,   "
-        // + " strandName, "
-        // +
-        // " (select concat(C.Homepath, B.HomePath, B.ItemPath, I.FilePath, I.FileName) "
-        // +
-        // " from ${ItemBankDB}.tblitembank B, ${ItemBankDB}.tblclient C, ${ItemBankDB}.tblitem I"
-        // +
-        // " where B._efk_Itembank = bankkey and B._fk_Client = C._Key and I._Key = concat(bankkey, '-', itemkey) limit 1) as itemFile "
 
         Map<String, String> unquotedParms3 = new HashMap<String, String>();
         unquotedParms3.put("insertsTableName", insertsTable.getTableName());
@@ -299,10 +284,7 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
                     " where not exists (select * from testeeresponse where _fk_TestOpportunity = ${oppkey} and position = R.position);";
             SqlParametersMaps parms9 = parms1;
             executeStatement(connection, fixDataBaseNames(SQL_INSERT3, unquotedParms3), parms9, false).getUpdateCount();
-            // TODO Elena: this is temporary solution while Sai further researches
-            // mysql capabilities around this and
-            // see if it is even possible to this and the next statement as 1
-            // statement call
+
             final String SQL_EXISTS1 = "select page from testeeresponse T,  ${insertsTableName} R where T._fk_TestOpportunity = ${oppkey} and "
                     + " (T.page = ${page} or (T._efk_ITSBank = R.bankkey and T._efk_ITSItem = R._efk_ITSItem))";
             SqlParametersMaps prm = (new SqlParametersMaps()).put("oppkey", oppKey).put("page", page);
@@ -312,8 +294,7 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
                         + " T._fk_Session = ${session}, T.Format = R.format, T.isFieldTest = R.isFieldTest, T.Hostname = ${hostname}, T.GroupID = ${groupID}, T.groupItemsRequired = ${groupItemsRequired},"
                         + " T._efk_Itemkey = R.bankitemkey, T.segment = ${segment}, T.segmentID = ${segmentID}, T.groupB = ${groupB}, T.itemB = b   "
                         + " where  _fk_TestOpportunity = ${oppkey} and T.position = R.position and T._efk_ITSItem is null ";
-                // +
-                // " and not exists (select * from testeeresponse T where T._fk_TestOpportunity = ${oppkey} and (T.page = ${page} or (T._efk_ITSBank = R.bankkey and T._efk_ITSItem = R._efk_ITSItem)));";
+
                 SqlParametersMaps parms10 = new SqlParametersMaps();
                 parms10.put("oppkey", oppKey);
                 parms10.put("opprestart", oppSeg.getRestart());
@@ -329,6 +310,7 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
 
                 executeStatement(connection, fixDataBaseNames(SQL_UPDATE3, unquotedParms3), parms10, false).getUpdateCount();
             }
+
             // check for successful insertion of ALL and ONLY the items in the group
             // given here
             final String SQL_QUERY16 = "select count(*) as itemcnt from testeeresponse where _fk_TestOpportunity = ${oppkey} and GroupID = ${groupID} and DateGenerated = ${today};";
