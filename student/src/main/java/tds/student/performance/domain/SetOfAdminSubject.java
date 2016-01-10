@@ -11,6 +11,9 @@ public class SetOfAdminSubject {
     private String key;
     private Integer maxItems; // Identified as operationalLength in StudentDLL.T_StartTestOpportunity_SP
     private Double startAbility;
+    private String testId;
+    private Boolean isSegmented;
+    private String selectionAlgorithm;
 
     public String getKey() {
         return key;
@@ -34,5 +37,29 @@ public class SetOfAdminSubject {
 
     public void setStartAbility(Double startAbility) {
         this.startAbility = startAbility;
+    }
+
+    public String getTestId() {
+        return testId;
+    }
+
+    public void setTestId(String testId) {
+        this.testId = testId;
+    }
+
+    public Boolean getSegmented() {
+        return isSegmented;
+    }
+
+    public void setSegmented(Boolean segmented) {
+        isSegmented = segmented;
+    }
+
+    public String getSelectionAlgorithm() {
+        return selectionAlgorithm;
+    }
+
+    public void setSelectionAlgorithm(String selectionAlgorithm) {
+        this.selectionAlgorithm = selectionAlgorithm;
     }
 }
