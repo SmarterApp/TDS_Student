@@ -211,7 +211,7 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             return (new MultiDataResultSet(resultsSets));
         } */
         // New make sure fixed form has not null form position items.
-        if (oppSeg.getAlgorithm() != null && oppSeg.getAlgorithm().equals("fixedform") && nullFormPositionList(itemInsertList).size() > 0 ) {
+        if (DbComparator.isEqual(oppSeg.getAlgorithm(), "fixedform") && nullFormPositionList(itemInsertList).size() > 0 ) {
             _commonDll._LogDBError_SP(connection, "T_InsertItems", String.format("Item(s) not on form: groupID = %s; items: = %s ", groupId, itemKeys), null, null, null, oppKey, oppSeg.getClientName(), sessionKey);
             resultsSets.add(_commonDll._ReturnError_SP(connection, oppSeg.getClientName(), "T_InsertItems", "Database record insertion failed for new test items", null, oppKey, null));
             return (new MultiDataResultSet(resultsSets));
@@ -246,6 +246,10 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             executeStatement(connection, fixDataBaseNames(SQL_UPDATE1, unquotedParms3), parms6, false).getUpdateCount();
             // System.err.println (updatedCnt); // for testing
         }
+
+
+
+
         final String SQL_QUERY9 = "select relativePosition from ${insertsTableName} group by relativePosition having count(*) > 1";
         final String SQL_QUERY10 = "select  bankitemkey from ${insertsTableName} where relativePosition is null limit 1";
 

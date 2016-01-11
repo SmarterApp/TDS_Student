@@ -152,4 +152,49 @@ public class OpportunitySegmentDaoTest extends IntegrationTest {
                 .toList();
     }
 
+    @Test
+    public void get_min_form_position() {
+
+    /*             final String SQL_QUERY8 = "select min(formPosition) as formStart from ${insertsTableName};";  */
+
+        String adminSubject = "(SBAC_PT)SBAC-IRP-Perf-MATH-3-Summer-2015-2016";
+        String testForm = "187-764";
+        String groupId = "G-187-3700-0";
+        String languagePropertyValue = "ENU";
+
+        List<ItemForTesteeResponse> itemInsertListDB = opportunitySegmentDao.getItemForTesteeResponse(adminSubject, testForm, groupId, languagePropertyValue);
+        assertTrue(itemInsertListDB.size() == 4);
+
+        String itemKeys = "187-2788|187-1576|187-2789|187-1578";
+        Character delimiter = '|';
+
+        List<ItemForTesteeResponse> t1 = createInsertsListTransform(itemInsertListDB, itemKeys, delimiter);
+        assertTrue(t1.size() == 4);
+        t1.get(0).setFormPosition(60);
+        t1.get(3).setFormPosition(0);
+
+
+        for (ItemForTesteeResponse item : t1) {
+            System.out.println(item);
+        }
+
+        // sort address by address line
+        // case insensitive order
+        List<ItemForTesteeResponse> sortedList = Ordering
+                .natural()
+                .nullsLast()
+                .onResultOf(new Function<ItemForTesteeResponse, Integer>() {
+                    public Integer apply(ItemForTesteeResponse item) {
+                        return item.getFormPosition();
+                    }
+                }).sortedCopy(t1);
+
+        System.out.println("Sorted: ");
+
+        for (ItemForTesteeResponse item : sortedList) {
+            System.out.println(item);
+        }
+
+    }
+
 }
