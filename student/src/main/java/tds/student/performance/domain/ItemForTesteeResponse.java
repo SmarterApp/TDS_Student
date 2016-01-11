@@ -1,19 +1,6 @@
 package tds.student.performance.domain;
 
 public class ItemForTesteeResponse {
-    // add position as int
-/*  A._fk_Item AS bankItemKey,         # string
-    A.itemposition AS itemPosition,    # int
-    I._efk_itembank AS bankKey,        # long
-    I._efk_item AS itemKey,            # long
-    A.irt_b AS irtb,                   # string need as float
-    I.scorepoint AS scorePoint,        # int
-    I.itemtype AS itemType,            # string
-    A.isfieldtest AS isFieldTest,      # boolean
-    A.isrequired AS isRequired,        # boolean
-    A._fk_strand AS contentLevel,      # string
-    F.formposition   AS formPosition,  # int
-    I.answer AS answerKey              # string    */
 
     private String bankItemKey;
     private Integer itemPosition;
@@ -29,6 +16,24 @@ public class ItemForTesteeResponse {
     private String answerKey;
 
     private Integer position=null;
+
+    public ItemForTesteeResponse() {
+    }
+
+    public ItemForTesteeResponse(ItemForTesteeResponse in) {
+        bankItemKey = in.getBankItemKey();
+        itemPosition = in.getItemPosition();
+        bankKey = in.getBankKey();
+        itemKey = in.getItemKey();
+        irtb = in.getIrtb();
+        scorePoint = in.getScorePoint();
+        itemType = in.getItemType();
+        isFieldTest = in.getIsFieldTest();
+        isRequired = in.getIsRequired();
+        contentLevel = in.getContentLevel();
+        formPosition = in.getFormPosition();
+        answerKey = in.getAnswerKey();
+    }
 
 
     public String getBankItemKey() {
