@@ -17,6 +17,7 @@ import tds.dll.api.IStudentDLL;
 import tds.student.performance.dao.ConfigurationDao;
 import tds.student.performance.dao.OpportunitySegmentDao;
 import tds.student.performance.dao.StudentDao;
+import tds.student.performance.domain.ItemForTesteeResponse;
 import tds.student.performance.domain.OpportunitySegment;
 import tds.student.performance.services.ConfigurationService;
 import tds.student.performance.services.DbLatencyService;
@@ -82,6 +83,9 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
         String localhostname = _commonDll.getLocalhostName();
         _Ref<String> error = new _Ref<>();
 
+        logger.debug("*** insertItems : oppkey: " + oppKey.toString() );
+
+
         _studentDll._ValidateTesteeAccessProc_SP(connection, oppKey, sessionKey, browserId, false, error);
         if (error.get() != null) {
             resultsSets.add(_commonDll._ReturnError_SP(connection, null, "T_InsertItems", error.get(), null, oppKey, "_ValidateTesteeAccesss", "denied"));
@@ -89,7 +93,7 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
         }
 
         Integer count = null;
-        String item = null;
+        //String item = null;
         Integer lastPosition = null;
         String msg = null;
         String argstring = null;
@@ -137,39 +141,31 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             return (new MultiDataResultSet(resultsSets));
         }
 
+        // Get the new itemInsertList
+        List<ItemForTesteeResponse> itemInsertList = opportunitySegmentDao.getItemForTesteeResponse(
+                oppSeg.getSegmentKey(),
+                oppSeg.getFormKey(),
+                groupId,
+                oppSeg.getLanguage());
+
         Integer minpos = null;
-        Integer maxpos = null;
-        Integer insertcnt = null;
-        Integer lastSegment = null;
-        Integer lastpage = null;
         Integer lastpos = null;
 
-
-//   final String SQL_QUERY5 = "select segment as lastSegment, page as lastPage from testeeresponse where _fk_TestOpportunity = ${oppkey} and position = ${lastPosition};";
         final String SQL_QUERY5 = "select segment as lastSegment, page as lastPage, position as lastPosition from testeeresponse where _fk_TestOpportunity = ${oppkey} and position = (select max(position) as lastPosition from testeeresponse where _fk_TestOpportunity = ${oppkey} and _efk_ITSItem is not null);";
         SqlParametersMaps parms5 = new SqlParametersMaps().put("oppkey", oppKey)/*.put ("lastPosition", lastPosition)*/;
         SingleDataResultSet result = executeStatement(connection, SQL_QUERY5, parms5, false).getResultSets().next();
         DbResultRecord record = (result.getCount() > 0 ? result.getRecords().next() : null);
         if (record != null) {
-            lastSegment = record.<Integer>get("lastSegment");
-            lastpage = record.<Integer>get("lastPage");
             lastPosition = record.<Integer>get("lastPosition");
         }
 
-        // Get item data from the itembank, filtering by the items that were chosen
-        // by the selection algorithm (some may have been excluded)
+        // Get item data from itembank, filter by items chosen by selection algorithm (some may have been excluded)
         DataBaseTable insertsTable = getDataBaseTable("inserts").addColumn("bankitemkey", SQL_TYPE_To_JAVA_TYPE.VARCHAR, 50).addColumn("relativePosition", SQL_TYPE_To_JAVA_TYPE.INT)
                 .addColumn("formPosition", SQL_TYPE_To_JAVA_TYPE.INT).addColumn("Position", SQL_TYPE_To_JAVA_TYPE.INT).addColumn("answer", SQL_TYPE_To_JAVA_TYPE.VARCHAR, 10)
                 .addColumn("b", SQL_TYPE_To_JAVA_TYPE.FLOAT).addColumn("bankkey", SQL_TYPE_To_JAVA_TYPE.BIGINT).addColumn("_efk_ITSItem", SQL_TYPE_To_JAVA_TYPE.BIGINT)
                 .addColumn("Scorepoint", SQL_TYPE_To_JAVA_TYPE.INT).addColumn("contentLevel", SQL_TYPE_To_JAVA_TYPE.VARCHAR, 200).addColumn("Format", SQL_TYPE_To_JAVA_TYPE.VARCHAR, 50)
                 .addColumn("IsFieldTest", SQL_TYPE_To_JAVA_TYPE.BIT).addColumn("IsRequired", SQL_TYPE_To_JAVA_TYPE.BIT);
         connection.createTemporaryTable(insertsTable);
-        // DataBaseTable TestItemgroupDataTable = ITEMBANK_TestItemGroupData_FN
-        // (connection, testkey, groupId, language, formKey);
-        // final String SQL_INSERT2 =
-        // "insert into ${insertsTableName} (bankitemkey, relativePosition, bankkey, _efk_ITSItem, b, Scorepoint,  format, isFieldTest, IsRequired, contentLevel, formPosition, answer)"
-        // +
-        // "select bankitemkey, itemposition, bankkey, itemkey, IRT_b, scorepoint, itemType, IsFieldTest, IsRequired, ContentLevel, FormPosition, answerKey from ${TestItemgroupDataTableName} order by itemposition;";
 
         final String SQL_INSERT2 = "insert into ${insertsTableName} (bankitemkey, relativePosition, bankkey, _efk_ITSItem, b, Scorepoint,  format, isFieldTest, IsRequired, contentLevel, formPosition, answer)"
                 + " select  A._fk_Item as bankitemkey, ItemPosition, _efk_ItemBank as bankkey, _efk_Item as itemkey,  IRT_b,"
@@ -180,23 +176,14 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
                 + " and P._fk_AdminSubject = ${segmentKey} and P._fk_Item = A._fk_Item and P.Propname = 'Language' and P.Propvalue = ${language} "
                 + " order by itemposition";
 
-        // + " groupKey, GroupID,  P.IsActive, BlockID,     "
-        // + "  ContentSize,   "
-        // + " strandName, "
-        // +
-        // " (select concat(C.Homepath, B.HomePath, B.ItemPath, I.FilePath, I.FileName) "
-        // +
-        // " from ${ItemBankDB}.tblitembank B, ${ItemBankDB}.tblclient C, ${ItemBankDB}.tblitem I"
-        // +
-        // " where B._efk_Itembank = bankkey and B._fk_Client = C._Key and I._Key = concat(bankkey, '-', itemkey) limit 1) as itemFile "
 
-        Map<String, String> unquotedParms3 = new HashMap<String, String>();
+        Map<String, String> unquotedParms3 = new HashMap<>();
         unquotedParms3.put("insertsTableName", insertsTable.getTableName());
 
         SqlParametersMaps params = (new SqlParametersMaps()).put("formkey", oppSeg.getFormKey())
                 .put("testkey", oppSeg.getTestKey()).put("groupid", groupId).put("language", oppSeg.getLanguage()).put("segmentKey", oppSeg.getSegmentKey());
         String query = fixDataBaseNames(SQL_INSERT2); // to substitute
-        // ${ItemBankDB}
+
         executeStatement(connection, fixDataBaseNames(query, unquotedParms3), params, false).getUpdateCount();
         if (itemKeys != null) {
             final String SQL_DELETE1 = "delete from  ${insertsTableName} where bankitemkey not in (select itemkey from ${itemsTableName});";
@@ -204,12 +191,10 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             unquotedParms4.put("insertsTableName", insertsTable.getTableName());
             unquotedParms4.put("itemsTableName", itemsTable.getTableName());
             executeStatement(connection, fixDataBaseNames(SQL_DELETE1, unquotedParms4), null, false).getUpdateCount();
-            // System.err.println (deletedCnt); // for testing
+            //System.err.println (deletedCnt); // for testing
         }
         final String SQL_QUERY6 = "select  bankitemkey from ${insertsTableName} where formPosition is null limit 1";
         if (DbComparator.isEqual(oppSeg.getAlgorithm(), "fixedform") && (exists(executeStatement(connection, fixDataBaseNames(SQL_QUERY6, unquotedParms3), null, false)))) {
-            // set @msg = 'Item(s) not on form: ' + @groupID + '; items: ' +
-            // @itemkeys;
             msg = String.format("Item(s) not on form: groupID = %s; items: = %s ", groupId, itemKeys);
             _commonDll._LogDBError_SP(connection, "T_InsertItems", msg, null, null, null, oppKey, oppSeg.getClientName(), sessionKey);
             resultsSets.add(_commonDll._ReturnError_SP(connection, oppSeg.getClientName(), "T_InsertItems", "Database record insertion failed for new test items", null, oppKey, null));
@@ -217,8 +202,6 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
         }
         final String SQL_QUERY7 = "select  bankitemkey from ${insertsTableName} limit 1";
         if (!exists(executeStatement(connection, fixDataBaseNames(SQL_QUERY7, unquotedParms3), null, false))) {
-            // set @msg = 'Item group does not exist: ' + @groupID + '; items: ' +
-            // @itemkeys;
             msg = String.format("Item group does not exist: groupID = %s; items: = %s ", groupId, itemKeys);
             _commonDll._LogDBError_SP(connection, "T_InsertItems", msg, null, null, null, oppKey, oppSeg.getClientName(), sessionKey);
             resultsSets.add(_commonDll._ReturnError_SP(connection, oppSeg.getClientName(), "T_InsertItems", "Database record insertion failed for new test items", null, oppKey, null));
@@ -286,7 +269,7 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             resultsSets.add(_commonDll._ReturnError_SP(connection, oppSeg.getClientName(), "T_InsertItems", "Database record insertion failed for new test items", null, oppKey, null));
             return (new MultiDataResultSet(resultsSets));
         }
-        if (noinsert == true) {
+        if ( noinsert ) {
             return (new MultiDataResultSet(resultsSets));
         }
         String errmsg = null;
@@ -299,21 +282,18 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
                     " where not exists (select * from testeeresponse where _fk_TestOpportunity = ${oppkey} and position = R.position);";
             SqlParametersMaps parms9 = parms1;
             executeStatement(connection, fixDataBaseNames(SQL_INSERT3, unquotedParms3), parms9, false).getUpdateCount();
-            // TODO Elena: this is temporary solution while Sai further researches
-            // mysql capabilities around this and
-            // see if it is even possible to this and the next statement as 1
-            // statement call
+
             final String SQL_EXISTS1 = "select page from testeeresponse T,  ${insertsTableName} R where T._fk_TestOpportunity = ${oppkey} and "
                     + " (T.page = ${page} or (T._efk_ITSBank = R.bankkey and T._efk_ITSItem = R._efk_ITSItem))";
             SqlParametersMaps prm = (new SqlParametersMaps()).put("oppkey", oppKey).put("page", page);
+
             if (exists(executeStatement(connection, fixDataBaseNames(SQL_EXISTS1, unquotedParms3), prm, false)) == false) {
                 final String SQL_UPDATE3 = "Update testeeresponse T, ${insertsTableName} R  set T.isRequired = R.IsRequired, T._efk_ITSItem = R._efk_ITSItem, T._efk_ITSBank = R.bankkey, "
                         + " T.response = null, T.OpportunityRestart = ${opprestart}, T.Page = ${page}, T.Answer = R.Answer, T.ScorePoint = R.ScorePoint, T.DateGenerated = ${today},"
                         + " T._fk_Session = ${session}, T.Format = R.format, T.isFieldTest = R.isFieldTest, T.Hostname = ${hostname}, T.GroupID = ${groupID}, T.groupItemsRequired = ${groupItemsRequired},"
                         + " T._efk_Itemkey = R.bankitemkey, T.segment = ${segment}, T.segmentID = ${segmentID}, T.groupB = ${groupB}, T.itemB = b   "
                         + " where  _fk_TestOpportunity = ${oppkey} and T.position = R.position and T._efk_ITSItem is null ";
-                // +
-                // " and not exists (select * from testeeresponse T where T._fk_TestOpportunity = ${oppkey} and (T.page = ${page} or (T._efk_ITSBank = R.bankkey and T._efk_ITSItem = R._efk_ITSItem)));";
+
                 SqlParametersMaps parms10 = new SqlParametersMaps();
                 parms10.put("oppkey", oppKey);
                 parms10.put("opprestart", oppSeg.getRestart());
@@ -327,10 +307,16 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
                 parms10.put("segmentID", segmentId);
                 parms10.put("groupB", groupB);
 
-                executeStatement(connection, fixDataBaseNames(SQL_UPDATE3, unquotedParms3), parms10, false).getUpdateCount();
+                int existsUpdateCnt = executeStatement(connection, fixDataBaseNames(SQL_UPDATE3, unquotedParms3), parms10, false).getUpdateCount();
+
+                logger.debug("*** Not SQL_EXISTS1 execute SQL_UPDATE3 updated: " + existsUpdateCnt);
+
+            }  else {
+                logger.debug("*** SQL_EXISTS1 skip SQL_UPDATE3");
             }
-            // check for successful insertion of ALL and ONLY the items in the group
-            // given here
+
+            // todo: Why do we have to check if an insert worked?
+            // check for successful insertion of ALL and ONLY the items in the group given here
             final String SQL_QUERY16 = "select count(*) as itemcnt from testeeresponse where _fk_TestOpportunity = ${oppkey} and GroupID = ${groupID} and DateGenerated = ${today};";
             SqlParametersMaps parms11 = new SqlParametersMaps().put("oppkey", oppKey).put("groupID", groupId).put("today", starttime);
             result = executeStatement(connection, SQL_QUERY16, parms11, false).getResultSets().next();
@@ -346,6 +332,8 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
                 resultsSets.add(_commonDll._ReturnError_SP(connection, oppSeg.getClientName(), "T_InsertItems", "Database record insertion failed for new test items", null, oppKey, null));
                 return (new MultiDataResultSet(resultsSets));
             }
+
+
             final String SQL_QUERY17 = "select  bankitemkey from ${insertsTableName} where isFIeldTest = 1 limit 1";
             if (exists(executeStatement(connection, fixDataBaseNames(SQL_QUERY17, unquotedParms3), null, false))) {
                 Integer minFTpos = null;
