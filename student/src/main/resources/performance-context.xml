@@ -11,15 +11,6 @@
     <context:component-scan base-package="tds.student.performance"/>
     <context:property-placeholder location="classpath*:performance-student.properties"/>
 
-    <!--<bean id="dataSource"-->
-          <!--class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
-
-        <!--<property name="driverClassName" value="${datasource.driverClassName}"/>-->
-        <!--<property name="url" value="${datasource.jdbcUrl}"/>-->
-        <!--<property name="username" value="${datasource.username}"/>-->
-        <!--<property name="password" value="${datasource.password}"/>-->
-
-    <!--</bean>-->
     <!-- Employee DB data source. -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
           destroy-method="close">
@@ -33,6 +24,13 @@
         <property name="checkoutTimeout" value="${performance.datasource.checkoutTimeout}" />
         <property name="testConnectionOnCheckout" value="${performance.datasource.testConnectionCheckout}" />
     </bean>
+
+    <!-- Spring Transaction Manager -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <!-- Annotations to manage transaction -->
+    <tx:annotation-driven proxy-target-class="true" transaction-manager="transactionManager" />
 
     <!-- To disable all caching, comment out the cache:annotation-driven line below AND change the enabled property to false for the cacher bean -->
     <cache:annotation-driven key-generator="cacheKeyGenerator" />

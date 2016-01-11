@@ -3,4 +3,8 @@
 	<property scope="local" name="app.base.package.name" value="org.air.student" />
 	<property scope="local" name="mna.appender.active" value="true" />
 	<include resource="logback-included-common-config.xml" />
+
+	<!--logger name="tds.student.performance" level="debug" /-->
+	<!--logger name="org.springframework" level="debug" /-->
+	<!--logger name="org.springframework.jdbc.datasource.DataSourceTransactionManager" level="debug" /-->
 </configuration>
