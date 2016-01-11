@@ -8,6 +8,10 @@ import AIR.Common.Helpers.CaseInsensitiveMap;
 import AIR.Common.Helpers._Ref;
 import AIR.Common.Sql.AbstractDateUtilDll;
 import TDS.Shared.Exceptions.ReturnStatusException;
+import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+import com.google.common.base.Splitter;
+import com.google.common.collect.FluentIterable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -141,12 +145,15 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             return (new MultiDataResultSet(resultsSets));
         }
 
-        // Get the new itemInsertList
-        List<ItemForTesteeResponse> itemInsertList = opportunitySegmentDao.getItemForTesteeResponse(
+        // Get the new item insert list from the database
+        List<ItemForTesteeResponse> itemInsertListDB = opportunitySegmentDao.getItemForTesteeResponse(
                 oppSeg.getSegmentKey(),
                 oppSeg.getFormKey(),
                 groupId,
                 oppSeg.getLanguage());
+
+        // Make a filtered copy
+        List<ItemForTesteeResponse> itemInsertList = createInsertsList(itemInsertListDB,  itemKeys,  delimiter);
 
         Integer minpos = null;
         Integer lastpos = null;
@@ -414,6 +421,32 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
         return (new MultiDataResultSet(resultsSets));
     }
 
+    // Filter list from database.
+    // Create new objects in case query is cached.
+    private List<ItemForTesteeResponse> createInsertsList(List<ItemForTesteeResponse> itemInsertList, String itemKeys, Character delimiter) {
+
+        final List<String> itemKeysList = Splitter.on(delimiter).omitEmptyStrings().trimResults().splitToList(itemKeys);
+
+        Predicate<ItemForTesteeResponse> predicate = new Predicate<ItemForTesteeResponse>() {
+            @Override
+            public boolean apply(ItemForTesteeResponse input) {
+                return input != null && itemKeysList.contains(input.getBankItemKey());
+            }
+        };
+
+        Function<ItemForTesteeResponse, ItemForTesteeResponse> transform = new Function<ItemForTesteeResponse,ItemForTesteeResponse>(){
+            @Override
+            public ItemForTesteeResponse apply(ItemForTesteeResponse input) {
+                return new ItemForTesteeResponse(input);
+            }
+        };
+
+        return FluentIterable
+                .from(itemInsertList)
+                .filter(predicate)
+                .transform(transform)
+                .toList();
+    }
 
     // *new* Helper to see contents of temp table
     private SingleDataResultSet dumpTable(SQLConnection connection, String tableName)
