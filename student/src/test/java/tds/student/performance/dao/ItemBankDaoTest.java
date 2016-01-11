@@ -31,6 +31,14 @@ public class ItemBankDaoTest extends IntegrationTest {
         Assert.assertEquals(adminSubject, result.getKey());
         Assert.assertEquals((Integer)8, result.getMaxItems());
         Assert.assertEquals(Double.valueOf(-1.23998), result.getStartAbility());
+        Assert.assertEquals("SBAC-IRP-CAT-ELA-3", result.getTestId());
+        Assert.assertFalse(result.getSegmented());
+        Assert.assertEquals("adaptive2", result.getSelectionAlgorithm());
+    }
+
+    @Test
+    public void should_Get_Null_SetOfAdminSubject_For_Fake_Admin_Subject() {
+        Assert.assertNull(itemBankDao.get("FAKE_ADMIN_SUBJECT"));
     }
 
     @Test
@@ -55,5 +63,19 @@ public class ItemBankDaoTest extends IntegrationTest {
         Assert.assertTrue(grades.contains(new TestGrade("10")));
         Assert.assertTrue(grades.contains(new TestGrade("11")));
         Assert.assertTrue(grades.contains(new TestGrade("12")));
+    }
+
+    @Test
+    public void should_Get_a_TestSubject_For_SBAC_IRP_CAT_ELA_3_Summer_2015_2016() {
+        String adminSubject = "(SBAC_PT)SBAC-IRP-CAT-ELA-3-Summer-2015-2016";
+
+        String testSubject = itemBankDao.getTestSubject(adminSubject);
+
+        Assert.assertEquals("ELA", testSubject);
+    }
+
+    @Test
+    public void should_Get_Null_TestSubject_For_Fake_Admin_Subject() {
+        Assert.assertNull(itemBankDao.getTestSubject("FAKE_ADMIN_SUBJECT"));
     }
 }
