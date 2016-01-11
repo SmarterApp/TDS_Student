@@ -149,6 +149,10 @@
 		<beans:property name="numHelperThreads" value="${datasource.numHelperThreads:6}" />
 		<beans:property name="maxStatements" value="${datasource.maxStatements:20000}" />
 		<beans:property name="maxStatementsPerConnection" value="${datasource.maxStatementsPerConnection:200}" />
+
+		<beans:property name="dataSourceName" value="AIR-DataSource" />
+		<beans:property name="unreturnedConnectionTimeout" value="50" />
+		<beans:property name="debugUnreturnedConnectionStackTraces" value="true" />
 	</beans:bean>
 
 	<!--End: c3p0 Datasource Configuration -->

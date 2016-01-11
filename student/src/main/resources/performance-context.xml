@@ -23,6 +23,7 @@
         <property name="maxStatements" value="${performance.datasource.maxStatements}" />
         <property name="checkoutTimeout" value="${performance.datasource.checkoutTimeout}" />
         <property name="testConnectionOnCheckout" value="${performance.datasource.testConnectionCheckout}" />
+        <property name="dataSourceName" value="Perf-DataSource" />
     </bean>
 
     <!-- Spring Transaction Manager -->
