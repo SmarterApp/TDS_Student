@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://java.sun.com/jsf/passthrough"
+	xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:cc="http://java.sun.com/jsf/composite" xmlns:tds="http://airast.org/jsfcustom" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+<cc:interface componentType="tds.student.web.controls.SectionControl">
+</cc:interface>
+<cc:implementation>
+	<tds:SectionWrapper id="sectionTestReview" headerKey="StaticContent.Label.Congratulations">
+
+		<div class="instructions" i18n-content="StaticContent.Label.ReviewSubmit"></div>
+
+		<div id="markedWarning" style="display: none;" i18n-content="QuestionsAreMarkedForReview"></div>
+		<div id="unansweredWarning" style="display: none;" i18n-content="QuestionsAreUnanswered"></div>
+		<div class="choices">
+			<!-- A Clegg: I am removing the size attribute from this select tag to try and fix bug 88470 for mobile -->
+			<label class="labelTestReview" i18n-content="TestReview.Label.ItemNavigation" for="ddlNavigation">Select question(s) to review:</label> <select id="ddlNavigation" title="Select question to review"></select>
+
+			<div class="actions">
+				<tds:Button id="btnReviewTest" styleClass="negative" key="TestReview.Button.MyAnswers" />
+				<tds:Button id="btnCompleteTest" styleClass="positive" key="TestReview.Button.Submit" />
+				<tds:Button id="btnPauseTest" styleClass="negative" key="TestReview.Button.Pause" text="Pause Test" />
+			</div>
+
+			<div style="display: none;" id="scoreMessage" i18n-content="TestReview.Label.ScoreMessage"></div>
+			<span class="clear"></span>
+		</div>
+
+	</tds:SectionWrapper>
+
+</cc:implementation>
+</html>
