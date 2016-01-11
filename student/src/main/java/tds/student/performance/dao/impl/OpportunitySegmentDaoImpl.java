@@ -1,10 +1,12 @@
 package tds.student.performance.dao.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import tds.student.performance.caching.CacheType;
 import tds.student.performance.dao.OpportunitySegmentDao;
 import tds.student.performance.domain.ItemForTesteeResponse;
 import tds.student.performance.domain.OpportunitySegment;
@@ -67,6 +69,7 @@ public class OpportunitySegmentDaoImpl implements OpportunitySegmentDao {
     // Replaces original T_InsertItems_SP SQL_INSERT2
     @Override
     @Transactional
+    @Cacheable(CacheType.MediumTerm)
     public List<ItemForTesteeResponse> getItemForTesteeResponse(String adminSubject, String testForm, String groupId, String languagePropertyValue ) {
 
         Map<String, Object> parameters = new HashMap<>();
