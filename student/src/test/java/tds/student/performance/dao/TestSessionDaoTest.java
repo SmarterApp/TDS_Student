@@ -3,12 +3,14 @@ package tds.student.performance.dao;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.SystemEnvironmentPropertySource;
 import tds.student.performance.IntegrationTest;
 import tds.student.performance.domain.SessionAudit;
 import tds.student.performance.domain.TestSession;
 import tds.student.performance.domain.TestSessionTimeLimitConfiguration;
 import tds.student.performance.utils.UuidAdapter;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -20,24 +22,58 @@ public class TestSessionDaoTest extends IntegrationTest {
     @Autowired
     TestSessionDao testSessionDao;
 
-    /**
-     * Record used for testing:
-     # key, status, dateBegin, dateEnd, dateVisited, clientName, proctor, sessionBrowser
-     '2B20031D4BD842A89963F6FFA44A9271', 'open', '2015-12-23 23:00:03.253', '2015-12-24 07:00:03.253', '2015-12-23 23:45:51.459', 'SBAC_PT', '93', '9DE1471D0A834A4FA3810B1D7EC24E4A'
-     */
     @Test
     public void should_Get_a_TestSession_For_Specified_Key() {
-        UUID key = UUID.fromString("2B20031D-4BD8-42A8-9963-F6FFA44A9271");
-        UUID expectedSessionBrowserKey = UUID.fromString("9DE1471D-0A83-4A4F-A381-0B1D7EC24E4A");
+        final UUID expectedKey = UUID.randomUUID();
+        final String expectedStatus = "open";
+        final Integer expectedSessionType = 0;
+        final Timestamp expectedDateCreated = new Timestamp(System.currentTimeMillis());
+        final Timestamp expectedDateBegin = new Timestamp(System.currentTimeMillis());
+        final Timestamp expectedDateEnd = new Timestamp(System.currentTimeMillis());
+        final Timestamp expectedDateVisited = new Timestamp(System.currentTimeMillis());
+        final String expectedClientName = "SBAC_PT";
+        final Long expectedEfkProctor = 93L;
+        final String expectedProctorId = "u7gvfxw1pseyue7k1hed36";
+        final String expectedProctorName = "Paulie Proctor36";
+        final String expectedSessionId = "UNT-TST-001";
+        final String expectedEnvironment = "unit-test";
+        final UUID expectedSessionBrowserKey = UUID.randomUUID();
 
-        TestSession result = testSessionDao.get(key);
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("key", UuidAdapter.getBytesFromUUID(expectedKey));
+        parameters.put("efkProctor", expectedEfkProctor);
+        parameters.put("proctorId", expectedProctorId);
+        parameters.put("proctorName", expectedProctorName);
+        parameters.put("sessionId", expectedSessionId);
+        parameters.put("status", expectedStatus);
+        parameters.put("dateCreated", expectedDateCreated);
+        parameters.put("dateBegin", expectedDateBegin);
+        parameters.put("dateEnd", expectedDateEnd);
+        parameters.put("dateVisited", expectedDateVisited);
+        parameters.put("clientName", expectedClientName);
+        parameters.put("sessionBrowser", UuidAdapter.getBytesFromUUID(expectedSessionBrowserKey));
+        parameters.put("environment", expectedEnvironment);
+        parameters.put("sessionType", expectedSessionType);
+
+        final String SQL =
+                "INSERT INTO session.session(_key, _efk_proctor, proctorid, proctorname, sessionid, status, datecreated, datebegin, dateend, datevisited, clientname, _fk_browser, environment, sessiontype)\n" +
+                "VALUES (:key, :efkProctor, :proctorId, :proctorName, :sessionId, :status, :dateCreated, :dateBegin, :dateEnd, :dateVisited, :clientName, :sessionBrowser, :environment, :sessionType)";
+
+        namedParameterJdbcTemplate.update(SQL, parameters);
+
+        TestSession result = testSessionDao.get(expectedKey);
 
         Assert.assertNotNull(result);
-        Assert.assertEquals(key, result.getKey());
-        Assert.assertEquals((Integer)0, result.getSessionType());
-        Assert.assertEquals("open", result.getStatus());
-        Assert.assertEquals("SBAC_PT", result.getClientName());
-        Assert.assertEquals(Long.valueOf(93), result.getProctorId());
+        Assert.assertEquals(expectedKey, result.getKey());
+        Assert.assertEquals(expectedEfkProctor, result.getProctorId());
+        Assert.assertEquals(expectedProctorName, result.getProctorName());
+        Assert.assertEquals(expectedSessionType, result.getSessionType());
+        Assert.assertEquals(expectedStatus, result.getStatus());
+        Assert.assertEquals(expectedClientName, result.getClientName());
+        Assert.assertEquals(expectedDateBegin, result.getDateBegin());
+        Assert.assertEquals(expectedDateEnd, result.getDateEnd());
+        Assert.assertEquals(expectedDateVisited, result.getDateVisited());
+        Assert.assertEquals(expectedSessionId, result.getSessionId());
         Assert.assertEquals(expectedSessionBrowserKey, result.getSessionBrowser());
     }
 
@@ -52,12 +88,40 @@ public class TestSessionDaoTest extends IntegrationTest {
 
     @Test
     public void should_Be_an_Open_TestSession() {
-        // TODO:  create test.
+        TestSession testSession = new TestSession();
+        testSession.setDateBegin(new Timestamp(System.currentTimeMillis()));
+        testSession.setDateEnd(new Timestamp(getDateAddSeconds(3600).getTime()));
+        testSession.setStatus("open");
+
+        Assert.assertTrue(testSession.isOpen(new Date()));
     }
 
     @Test
-    public void should_Not_Be_an_Open_TestSession() {
-        TestSession testSession = testSessionDao.get(UUID.fromString("2B20031D-4BD8-42A8-9963-F6FFA44A9271"));
+    public void should_Not_Be_an_Open_TestSession_When_Time_Has_Passed_and_Status_is_Closed() {
+        TestSession testSession = new TestSession();
+        testSession.setDateBegin(new Timestamp(getDateAddSeconds(-7200).getTime()));
+        testSession.setDateEnd(new Timestamp(getDateAddSeconds(-3600).getTime()));
+        testSession.setStatus("closed");
+
+        Assert.assertTrue(!testSession.isOpen(new Date()));
+    }
+
+    @Test
+    public void should_Not_Be_an_Open_TestSession_When_Time_Has_Passed_and_Status_is_Open() {
+        TestSession testSession = new TestSession();
+        testSession.setDateBegin(new Timestamp(getDateAddSeconds(-7200).getTime()));
+        testSession.setDateEnd(new Timestamp(getDateAddSeconds(-3600).getTime()));
+        testSession.setStatus("open");
+
+        Assert.assertTrue(!testSession.isOpen(new Date()));
+    }
+
+    @Test
+    public void should_Not_Be_an_Open_TestSession_When_Time_Has_Not_Passed_and_Status_is_Closed() {
+        TestSession testSession = new TestSession();
+        testSession.setDateBegin(new Timestamp(System.currentTimeMillis()));
+        testSession.setDateEnd(new Timestamp(getDateAddSeconds(3600).getTime()));
+        testSession.setStatus("closed");
 
         Assert.assertTrue(!testSession.isOpen(new Date()));
     }
