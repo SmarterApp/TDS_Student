@@ -139,4 +139,18 @@ public class ItemForTesteeResponse {
     public void setPosition(Integer position) {
         this.position = position;
     }
+
+
+    @Override
+    public String toString() {
+        return "ItemForTesteeResponse{" +
+                "itemType='" + itemType + '\'' +
+                ", bankItemKey='" + bankItemKey + '\'' +
+                ", itemPosition=" + itemPosition +
+                ", scorePoint='" + scorePoint + '\'' +
+                ", isFieldTest=" + isFieldTest +
+                ", formPosition=" + formPosition +
+                ", position=" + position +
+                '}';
+    }
 }

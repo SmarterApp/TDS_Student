@@ -109,4 +109,47 @@ public class OpportunitySegmentDaoTest extends IntegrationTest {
 
     }
 
+    @Test
+    public void should_Get_Items_no_null_pos() {
+
+        //final String SQL_QUERY6 = "select  bankitemkey from ${insertsTableName} where formPosition is null limit 1";
+
+        String adminSubject = "(SBAC_PT)SBAC-IRP-Perf-MATH-3-Summer-2015-2016";
+        String testForm = "187-764";
+        String groupId = "G-187-3700-0";
+        String languagePropertyValue = "ENU";
+
+        List<ItemForTesteeResponse> itemInsertListDB = opportunitySegmentDao.getItemForTesteeResponse(adminSubject, testForm, groupId, languagePropertyValue);
+        assertTrue(itemInsertListDB.size() == 4);
+
+        String itemKeys = "187-2788|187-1576|187-2789|187-1578";
+        Character delimiter = '|';
+
+        List<ItemForTesteeResponse> t1 = createInsertsListTransform(itemInsertListDB, itemKeys, delimiter);
+        assertTrue(t1.size() == 4);
+
+        // Any null form position?
+        assertTrue(nullFormPositionList(t1).size() == 0);
+
+        // Break it
+        t1.get(1).setFormPosition(null);
+        t1.get(3).setFormPosition(null);
+
+        // Check it
+        assertTrue(nullFormPositionList(t1).size() == 2);
+    }
+
+    // Transform
+    private List<ItemForTesteeResponse> nullFormPositionList(List<ItemForTesteeResponse> itemInsertList) {
+        return FluentIterable
+                .from(itemInsertList)
+                .filter(new Predicate<ItemForTesteeResponse>() {
+                    @Override
+                    public boolean apply(ItemForTesteeResponse input) {
+                        return input != null && input.getFormPosition() == null;
+                    }
+                })
+                .toList();
+    }
+
 }

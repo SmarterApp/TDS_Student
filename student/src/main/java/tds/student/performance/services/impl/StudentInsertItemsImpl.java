@@ -154,6 +154,7 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
 
         // Make a filtered copy
         List<ItemForTesteeResponse> itemInsertList = createInsertsList(itemInsertListDB,  itemKeys,  delimiter);
+        dumpInsertList(itemInsertList);
 
         Integer minpos = null;
         Integer lastpos = null;
@@ -200,20 +201,37 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             executeStatement(connection, fixDataBaseNames(SQL_DELETE1, unquotedParms4), null, false).getUpdateCount();
             //System.err.println (deletedCnt); // for testing
         }
+
+        /* old
         final String SQL_QUERY6 = "select  bankitemkey from ${insertsTableName} where formPosition is null limit 1";
         if (DbComparator.isEqual(oppSeg.getAlgorithm(), "fixedform") && (exists(executeStatement(connection, fixDataBaseNames(SQL_QUERY6, unquotedParms3), null, false)))) {
             msg = String.format("Item(s) not on form: groupID = %s; items: = %s ", groupId, itemKeys);
             _commonDll._LogDBError_SP(connection, "T_InsertItems", msg, null, null, null, oppKey, oppSeg.getClientName(), sessionKey);
             resultsSets.add(_commonDll._ReturnError_SP(connection, oppSeg.getClientName(), "T_InsertItems", "Database record insertion failed for new test items", null, oppKey, null));
             return (new MultiDataResultSet(resultsSets));
+        } */
+        // New make sure fixed form has not null form position items.
+        if (oppSeg.getAlgorithm() != null && oppSeg.getAlgorithm().equals("fixedform") && nullFormPositionList(itemInsertList).size() > 0 ) {
+            _commonDll._LogDBError_SP(connection, "T_InsertItems", String.format("Item(s) not on form: groupID = %s; items: = %s ", groupId, itemKeys), null, null, null, oppKey, oppSeg.getClientName(), sessionKey);
+            resultsSets.add(_commonDll._ReturnError_SP(connection, oppSeg.getClientName(), "T_InsertItems", "Database record insertion failed for new test items", null, oppKey, null));
+            return (new MultiDataResultSet(resultsSets));
         }
+
+        /* old
         final String SQL_QUERY7 = "select  bankitemkey from ${insertsTableName} limit 1";
         if (!exists(executeStatement(connection, fixDataBaseNames(SQL_QUERY7, unquotedParms3), null, false))) {
             msg = String.format("Item group does not exist: groupID = %s; items: = %s ", groupId, itemKeys);
             _commonDll._LogDBError_SP(connection, "T_InsertItems", msg, null, null, null, oppKey, oppSeg.getClientName(), sessionKey);
             resultsSets.add(_commonDll._ReturnError_SP(connection, oppSeg.getClientName(), "T_InsertItems", "Database record insertion failed for new test items", null, oppKey, null));
             return (new MultiDataResultSet(resultsSets));
+        } */
+        // Step 11: New check list has items
+        if ( itemInsertList == null || itemInsertList.size() <= 0 ) {
+            _commonDll._LogDBError_SP(connection, "T_InsertItems", String.format("Item group does not exist: groupID = %s; items: = %s ", groupId, itemKeys), null, null, null, oppKey, oppSeg.getClientName(), sessionKey);
+            resultsSets.add(_commonDll._ReturnError_SP(connection, oppSeg.getClientName(), "T_InsertItems", "Database record insertion failed for new test items", null, oppKey, null));
+            return (new MultiDataResultSet(resultsSets));
         }
+
 
         if (DbComparator.isEqual(oppSeg.getAlgorithm(), "fixedform")) {
             Integer formStart = null;
@@ -448,12 +466,33 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
                 .toList();
     }
 
-    // *new* Helper to see contents of temp table
+    // Return list of null form position
+    private List<ItemForTesteeResponse> nullFormPositionList(List<ItemForTesteeResponse> itemInsertList) {
+        return FluentIterable
+                .from(itemInsertList)
+                .filter(new Predicate<ItemForTesteeResponse>() {
+                    @Override
+                    public boolean apply(ItemForTesteeResponse input) {
+                        return input != null && input.getFormPosition() == null;
+                    }
+                })
+                .toList();
+    }
+
+    // Helper to see contents of temp table
     private SingleDataResultSet dumpTable(SQLConnection connection, String tableName)
             throws ReturnStatusException {
         Map<String, String> dumpParam = new HashMap<>();
         dumpParam.put("insertsTableName", tableName);
         return executeStatement(connection, fixDataBaseNames("select * from ${insertsTableName}", dumpParam), null, false).getResultSets().next();
+    }
+
+    private void dumpInsertList(Collection<ItemForTesteeResponse> items) {
+
+        for ( ItemForTesteeResponse i : items){
+            logger.debug("  Item: {} ", i.toString());
+        }
+
     }
 
 
