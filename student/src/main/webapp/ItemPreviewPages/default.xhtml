@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:usercontrol="http://java.sun.com/jsf/composite/usercontrols"
+	xmlns:tds="http://airast.org/jsfcustom" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head id="htmlHead">
+
+	<!-- set character encoding -->
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Test Shell</title>
+
+	<!-- Forces IE into standards mode -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+	<!-- Prevents scaling -->
+	<meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=no" />
+
+	<!-- Firebug lite -->
+	<h:outputScript library="js" name="https://getfirebug.com/firebug-lite.js#overrideConsole,startOpened" rendered="#{itempreviewDefaultBacking.isDebug}" />
+
+
+	<!-- Blackbox Config -->
+	<script type="text/javascript">
+		var blackboxConfig = {
+			container : 'testShell',
+			preventShowOnLoad : true
+		};
+	</script>
+
+	<!-- ItemPreview Config -->
+	<script type="text/javascript" src="#{itempreviewDefaultBacking.blackboxHandler}"></script>
+	<script type="text/javascript">
+		var ItemPreviewUrl = '#{itempreviewDefaultBacking.baseUrl}';
+		var ItemPreviewConfigCacheId = '#{itempreviewDefaultBacking.cacheId}';
+		var ItemScoringServerUrl = '#{itempreviewDefaultBacking.itemScoringUrl}';
+		var IsBlackBoxReadOnly = #{itempreviewDefaultBacking.isReadOnly};
+	</script>
+
+	<!-- ItemPreview Scripts -->
+	<tds:ScriptLink source="~/ItemPreviewScripts/itempreview.js" />
+	<tds:ScriptLink source="~/ItemPreviewScripts/navigation.js" />
+	<tds:ScriptLink source="~/ItemPreviewScripts/accommodations.js" />
+	<tds:ScriptLink source="~/ItemPreviewScripts/scoring.js" />
+	<tds:ScriptLink source="~/ItemPreviewScripts/xdm.js" />
+	<tds:ScriptLink source="~/ItemPreviewScripts/development.js" />
+</h:head>
+
+<h:body id="htmlBody" styleClass="yui-skin-sam">
+	<h:panelGroup rendered="#{itempreviewDefaultBacking.showLoading}" layout="block">
+		<div id="contentLoading" style="font-size: large; font-weight: bold; text-align: center;">Content Loading....Please wait...</div>
+	</h:panelGroup>
+	<div id="testShell"></div>
+	<form id="formShell"></form>
+	<tds:ClientScript binding="#{clientScriptBackingBean.clientScript}" />
+</h:body>
+</html>

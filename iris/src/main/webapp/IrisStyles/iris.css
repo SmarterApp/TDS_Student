@@ -1,0 +1,7 @@
+div#topBar {
+	display: none;
+}
+div#contents, 
+div#contents .layout_wai {
+    top: 0px;
+}

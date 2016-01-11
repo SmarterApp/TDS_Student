@@ -1,0 +1,423 @@
+/*#topBar {
+	height: 100px;
+	background: transparent url(../../Images/universal/topShadows.png) repeat-x left top !important;
+	color: #fff;
+	-webkit-box-shadow: inherit;
+	-moz-box-shadow: inherit;
+	box-shadow: inherit;
+}
+#infoBar {
+	height: 24px;
+	line-height: 24px;
+	border-bottom: solid 1px #63676e;
+	padding-right: 0px;
+	background-color: transparent;
+}
+#infoBar h1, 
+#infoBar h2 {
+	height: 24px;
+	line-height: 24px;
+	font-size: 12px;
+	margin: 0px;
+	float: left;
+	font-weight: normal;
+	border-right: 1px solid #63676e;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+#infoBar .sessionID {
+	height: 24px;
+	line-height: 24px;
+	font-size: 12px;
+	margin: 0px;
+	float: left;
+	font-weight: normal;
+   padding-left: 5px;
+   padding-right: 5px;
+   max-height: none;
+   min-width: 7em;
+}
+
+#jumpQuestions {
+	height: 24px;
+	line-height: 22px;
+	font-size: 12px;
+	border-right: 1px solid #63676e;
+	padding-right: 5px;
+}
+#jumpQuestions label {
+	padding-top: 0px;
+	height: 24px;
+	line-height: 24px;
+	font-size: 12px;
+}
+#jumpGo {
+	margin-top: 4px;
+	background-color: #e9e9e9;
+}
+#smallButtons {
+	right: 0px;
+}
+#smallButtons a {
+	float: left;
+	background: transparent url(../../Images/universal/modernish_shell.png) -999px -747px;
+	text-indent: -9999px;
+	width: 40px;
+	overflow: hidden;
+	height: 24px;
+	display: block;
+	border-left: 1px solid #63676E;
+	-moz-border-radius:  0%;
+	-webkit-border-radius:  0%;
+    border-radius: 0%;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	margin: 0px;
+}
+#smallButtons a:hover, 
+#smallButtons a:focus, 
+#smallButtons a:active {
+	background-color: #00aeef;
+	padding: 0px;
+	margin: 0px;
+	border-color: #63676E;
+	-webkit-box-shadow: inherit;
+	-moz-box-shadow: inherit;
+	box-shadow: inherit;
+}
+#smallButtons #btnHelp, 
+#smallButtons #btnHelp:active, 
+#smallButtons #btnHelp:focus, 
+#smallButtons #btnHelp:hover {
+	background-position: center -747px;
+}
+#smallButtons #proctorLogout, 
+#smallButtons #proctorLogout:active, 
+#smallButtons #proctorLogout:focus,
+#smallButtons #proctorLogout:hover {
+	background-position: center -3778px;
+}
+#smallButtons #btnSettings, 
+#smallButtons #btnSettings:active, 
+#smallButtons #btnSettings:focus, 
+#smallButtons #btnSettings:hover {
+	background-position: center -3827px;
+}
+#navigation {
+	height: 69px;
+	border-bottom: 1px solid #fff;
+}
+#navigation li {
+	height: 69px;
+}
+#navigation a {
+	display: block;
+	border: none;
+	color: #FFFFFF;
+	text-decoration: none;
+	text-transform: uppercase;
+	white-space: nowrap;
+	min-width: 65px;
+	height: 15px;
+	background: url(../../Images/universal/modernish_shell.png) no-repeat center -5px;
+	-moz-user-select:none;
+	-moz-transition: background-color .2s ease-in;
+    -webkit-transition: background-color .2s ease-in;
+    transition: background-color .2s ease-in;
+    padding-top: 54px;
+}
+#navigation #btnPause {
+	background-position: center -295px;
+}
+#navigation #btnEnd, 
+#navigation #btnResults {
+	background-position: center -445px;
+}
+#navigation button:hover, 
+#navigation button:focus, 
+#navigation button:active, 
+#navigation a:hover, 
+#navigation a:focus, 
+#navigation a:active {
+	background-position: center -145px !important;
+}
+.touch #navigation a:focus, 
+.touch #navigation a:active, 
+.touch #navigation a:hover {
+	background-position: center -5px !important;
+}
+.touch #navigation a:focus, 
+.touch #navigation a:active {
+	background-color: #00aeef !important;
+}
+#navigation .inactive, 
+#navigation .inactive:hover, 
+#navigation .inactive:focus, 
+#navigation .inactive:active {
+	background-position: center -595px !important;
+}
+#navigation .icon {
+	display: block;
+	height: 46px;
+	width: 64px;
+	margin-top: -4px;
+	margin-left: -32px;
+	background: url(../../Images/universal/modernish_shell.png) no-repeat 100px 100px;
+	-moz-border-radius:  0%;
+	-webkit-border-radius:  0%;
+    border-radius: 0%;
+    border: none;
+}
+#navigation a:active .icon, 
+#navigation a:focus .icon, 
+#navigation a:hover .icon {
+	height: 46px;
+	width: 64px;
+	background-color: transparent;
+	-moz-border-radius:  0%;
+	-webkit-border-radius:  0%;
+    border-radius: 0%;
+    border: none;
+    -webkit-box-shadow: inherit;
+	-moz-box-shadow: inherit;
+	box-shadow: inherit;
+}
+#btnZoomIn .icon {
+	background-position: center -813px !important;
+}
+#btnZoomOut .icon {
+	background-position: center -913px !important;
+}
+#btnNext .icon {
+	background-position: center -1016px !important;
+}
+#btnBack .icon {
+	background-position: center -1116px !important;
+}
+#btnPause .icon {
+	background-position: center -1213px !important;
+}
+#btnEnd .icon, #btnResults .icon {
+	background-position: center -1318px !important;
+}
+#btnSave .icon {
+	background-position: center -1414px !important;
+}
+#btnCalculator .icon {
+	background-position: center -1815px !important;
+}
+#btnFormula .icon {
+	background-position: center -1611px !important;
+}
+#btnPeriodic .icon {
+	background-position: center -1709px !important;
+}
+#btnPrint .icon, 
+#btnPrintPractice .icon, 
+#btnPagePrint .icon {
+	background-position: center -1514px !important;
+}
+#btnItemScore .icon {
+	background-position: center -1909px !important;
+}
+#btnCompass .icon {
+	background-position: center -2009px !important;
+}
+#btnProtractor .icon {
+	background-position: center -2107px !important;
+}
+#btnRuler .icon {
+	background-position: center -2203px !important;
+}
+#btnGlobalNotes .icon {
+	background-position: center -2619px !important;
+}
+#btnLineReader .icon {
+	background-position: center -2915px !important;
+}
+#btnMask .icon {
+	background-position: center -3437px !important;
+}
+#btnRubric .icon {
+	background-position: center -3541px !important;
+}
+#btnDictionary .icon {
+	background-position: center -3645px !important;
+}
+#btnContext .icon {
+	background-position: center -2311px !important;
+}
+
+.TDS_SLM1 a#btnNextBottom:focus, 
+.TDS_SLM1 a#btnNextBottom:active {
+	width: 65px;
+    height: 55px;
+    background: transparent url(../../Images/universal/modernish_shell.png) no-repeat center -145px;
+    border: none;
+}
+.TDS_SLM1 #btnNextBottom:focus .icon, 
+.TDS_SLM1 #btnNextBottom:active .icon {
+	height: 55px;
+	width: 65px;
+	position: static;
+	margin: 0px;
+	border:none;
+	-moz-border-radius:  0%;
+	-webkit-border-radius:  0%;
+    border-radius: 0%;
+    text-align: center;
+	background: transparent url(../../Images/universal/modernish_shell.png) no-repeat center -1016px;
+	-webkit-box-shadow: inherit;
+	-moz-box-shadow: inherit;
+	box-shadow: inherit;
+}
+#btnFullScreen .icon, 
+#btnFullScreen:active .icon, 
+#btnFullScreen:focus .icon, 
+#btnFullScreen:hover .icon {
+	background-position: center -3021px;
+}
+.fs-enabled #btnFullScreen .icon {
+	background-position: -25px -3130px;
+}
+.fs-enabled #btnFullScreen:hover, 
+.fs-enabled #btnFullScreen:active, 
+.fs-enabled #btnFullScreen:focus {
+	background-color: rgba(0,174,239,0.8);
+}
+
+.fs-enabled #studentTools, 
+.fs-enabled #studentControls a {
+    display: none;
+}
+.fs-enabled #studentControls {
+    height: 60px;
+    width: 60px;
+    visibility: visible;
+    position: static;
+}
+.fs-enabled #btnFullScreen {
+	display: block;
+	padding: 0px;
+	height: 60px;
+	min-width: 60px;
+	overflow: hidden;
+	text-indent: -9999px;
+	background-image: none;
+	margin: 0px;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+.fs-enabled #btnFullScreen .icon, 
+.fs-enabled #btnFullScreen:active .icon, 
+.fs-enabled #btnFullScreen:focus .icon, 
+.fs-enabled #btnFullScreen:hover .icon {
+	position: static;
+	margin: 0px;
+	height: 60px;
+	width: 60px;
+}
+.fs-enabled #topBar {
+	background-image: none !important;
+}
+
+#contents, 
+.layout_wai, 
+body.platform_chrome #contents {
+    top: 96px;
+}
+.multi-page {
+    top: 96px;
+}
+.touch.platform_android .theQuestions, 
+.touch.platform_android .thePassage {
+	top: 96px;
+}
+.toolsContainer.passageTools {
+    top: 115px;
+}
+.fs-enabled .multi-page {
+	top: 0px;
+}
+.fs-enabled .toolsContainer.passageTools {
+	top: 15px;
+}
+#soundCues {
+	height: 69px;
+	max-width: 46px;
+}
+#soundCues .audioControls.audio-layout-single a {
+	height: 69px;
+	border-color:#63676e;
+	border-right: none;
+	margin: 0 0 0 5px;
+	width: 40px;
+	background: transparent url(../../Images/universal/soundCue_modern.png) no-repeat center 15px;
+}
+#soundCues .audioControls.audio-layout-single a:active, 
+#soundCues .audioControls.audio-layout-single a:focus, 
+#soundCues .audioControls.audio-layout-single a:hover {
+	background-position: center -46px !important;
+}
+#soundCues .audioControls.audio-layout-single.load_incomplete a, 
+#soundCues .audioControls.audio-layout-single.disabled a, 
+#soundCues .audioControls.audio-layout-single.load_incomplete a:active, 
+#soundCues .audioControls.audio-layout-single.disabled a:active {
+	background-position: center -104px !important;
+}
+#soundCues .audioControls.audio-layout-single.playing_start a, 
+#soundCues .audioControls.audio-layout-single.playing_start a:active {
+	background-position: center 15px !important;
+	background-color: #fff !important;
+}
+#soundCues .audioControls.audio-layout-single.load_fail a, 
+#soundCues .audioControls.audio-layout-single.decode_fail a, 
+#soundCues .audioControls.audio-layout-single.playing_fail a, 
+#soundCues .audioControls.audio-layout-single.load_fail a:active, 
+#soundCues .audioControls.audio-layout-single.decode_fail a:active, 
+#soundCues .audioControls.audio-layout-single.playing_fail a:active {
+	background-position: center -164px !important;
+}
+#soundCues .audioControls.audio-layout-single.load_start a, 
+#soundCues .audioControls.audio-layout-single.load_complete a, 
+#soundCues .audioControls.audio-layout-single.decode_start a, 
+#soundCues .audioControls.audio-layout-single.load_start a:active, 
+#soundCues .audioControls.audio-layout-single.load_complete a:active, 
+#soundCues .audioControls.audio-layout-single.decode_start a:active {
+	background-position: center 22px !important;
+	background-color: #fff !important;
+}
+.TDS_Masking1.msk-enabled #navigation #studentTools #btnMasking .icon, 
+.TDS_Masking1.msk-enabled #navigation #studentTools #btnMask .icon {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    -webkit-box-shadow: inherit !important;
+	-moz-box-shadow: inherit !important;
+	box-shadow: inherit !important;
+}
+.lr-enabled #btnLineReader.lineReader,
+.TDS_Masking1.msk-enabled #navigation #studentTools #btnMask {
+    background-position: center -295px !important;
+}
+.answerCell .contextAreaFocus.optionContainer, 
+.theQuestions .answerContainer .contextAreaFocus.optionContainer, 
+.compound .questionContainer .contextAreaFocus.optionContainer {
+	border: dotted 1px #00aeef;
+	 -webkit-box-shadow: inherit !important;
+	-moz-box-shadow: inherit !important;
+	box-shadow: inherit !important;
+}
+#yuiSimpleDialog_mask {
+	background-image: url(../../Images/universal/mask_lighter.png);
+	opacity: .9;
+}
+.lr-enabled #btnLineReader .icon,
+.lr-enabled #btnLineReader:active .icon,
+.lr-enabled #btnLineReader:focus .icon,
+.lr-enabled #btnLineReader:hover .icon{
+    background-color: transparent !important;
+	border-color: none !important;
+	box-shadow: none !Important;
+}*/
