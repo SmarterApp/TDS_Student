@@ -270,7 +270,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
      */
     @Override
     public Float getInitialAbility(TestOpportunity opportunity, ClientTestProperty property) {
-        Timestamp start = new Timestamp(dateUtility.getDbDate().getTime());
+        Date start = dateUtility.getLocalDate();
         Float ability = null;
         Boolean bySubject = false;
         Double slope = null;
