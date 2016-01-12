@@ -9,6 +9,8 @@ import tds.student.performance.dao.DbLatencyDao;
 import tds.student.performance.domain.TestOpportunity;
 import tds.student.performance.domain.TestSession;
 import tds.student.performance.services.DbLatencyService;
+
+import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
@@ -83,19 +85,19 @@ public class DbLatencyServiceImpl implements DbLatencyService {
             return;
         }
 
-        boolean logDBLatency = true;
+        boolean logDBLatency = false;
         Date now = new Date();
         long duration = now.getTime() - startTime.getTime();
         if (duration < 0) {
             duration = 0;
         }
 
-//        Calendar nowCal = Calendar.getInstance();
-//        nowCal.setTime(now);
-//        int currSeconds = nowCal.get(Calendar.SECOND);
-//        if (currSeconds % logLatencyInterval == 0 || duration > logLatencyMaxTime) {
-//            logDBLatency = true;
-//        }
+        Calendar nowCal = Calendar.getInstance();
+        nowCal.setTime(now);
+        int currSeconds = nowCal.get(Calendar.SECOND);
+        if (currSeconds % logLatencyInterval == 0 || duration > logLatencyMaxTime) {
+            logDBLatency = true;
+        }
 
         if (!logDBLatency) {
             return;
