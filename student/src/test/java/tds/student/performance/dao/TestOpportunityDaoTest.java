@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Tests for {@code TestOpportunityDao} implementations.
@@ -26,35 +27,61 @@ public class TestOpportunityDaoTest extends IntegrationTest {
     @Autowired
     DateUtility dateUtility;
 
-    /**
-     * Record used for testing:
-     * # key, sessionKey, browserKey, testKey, testee, testId, test, opportunity, status, dateStarted, dateChanged, rcnt, gpRestarts, testLength, subject, clientName
-     '9F8817580B4A4EAAB59FB6DEA0934223', '2B20031D4BD842A89963F6FFA44A9271', 'A27DAB06891648B3AB996E95EC7AE3BF', '(SBAC_PT)SBAC-IRP-Perf-MATH-3-Summer-2015-2016', '168', 'SBAC-IRP-Perf-MATH-3', '(SBAC_PT)SBAC-IRP-Perf-MATH-3-Summer-2015-2016', '1', 'started', '2015-12-23 23:23:13.028', '2015-12-23 23:30:15.409', '1', '1', '4', 'MATH', 'SBAC_PT'
-     */
-    // TODO: this record doesn't appear to be here for me at least
     @Test
     public void should_Get_a_TestOpportunity() {
-        UUID key = UUID.fromString("9f881758-0b4a-4eaa-b59f-b6dea0934223");
-        UUID expectedSessionKey = UUID.fromString("50FB18AD-602D-44F6-897C-68AC90037FA5");
-        UUID expectedBrowserKey = UUID.fromString("0FBB9BCF-80C2-4D95-B425-17AF9A8A4B1E");
+        final UUID expectedKey = UUID.randomUUID();
+        final UUID expectedSessionKey = UUID.randomUUID();
+        final UUID expectedBrowserKey = UUID.randomUUID();
+        final String expectedTestKey = "(SBAC_PT)SBAC-IRP-Perf-MATH-3-Summer-2015-2016";
+        final Long expectedTestee = Math.round(ThreadLocalRandom.current().nextDouble(100, 500));
+        final String expectedTestId = "SBAC-IRP-Perf-MATH-3";
+        final Integer expectedOpportunity = 1;
+        final String expectedStatus = "pending";
+        final String expectedSubject = "MATH";
+        final String expectedClientName = "SBAC_PT";
+        final Boolean expectedIsSegmented = false;
+        final String expectedAlgorithm = "fixedform";
+        final String expectedEnvironment = "dev";
+        final Integer expectedSimulationSegmentCount = 0;
+        final Integer version = 1;
 
-        TestOpportunity result = testOpportunityDao.get(key);
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("key", UuidAdapter.getBytesFromUUID(expectedKey));
+        parameters.put("sessionKey", UuidAdapter.getBytesFromUUID(expectedSessionKey));
+        parameters.put("browserKey", UuidAdapter.getBytesFromUUID(expectedBrowserKey));
+        parameters.put("testKey", expectedTestKey);
+        parameters.put("testee", expectedTestee);
+        parameters.put("testId", expectedTestId);
+        parameters.put("subject", expectedSubject);
+        parameters.put("clientName", expectedClientName);
+        parameters.put("isSegmented", expectedIsSegmented);
+        parameters.put("algorithm", expectedAlgorithm);
+        parameters.put("version", version);
+        parameters.put("environment", expectedEnvironment);
+
+        final String SQL =
+                "INSERT INTO session.testopportunity(_key, _fk_session, _fk_browser, _efk_adminsubject, _efk_testee, _efk_testid, subject, clientname, issegmented, algorithm, _version, environment)" +
+                "VALUES(:key, :sessionKey, :browserKey, :testKey, :testee, :testId, :subject, :clientName, :isSegmented, :algorithm, :version, :environment)";
+
+        namedParameterJdbcTemplate.update(SQL, parameters);
+
+        TestOpportunity result = testOpportunityDao.get(expectedKey);
 
         Assert.assertNotNull(result);
-        Assert.assertEquals(key, result.getKey());
+        Assert.assertEquals(expectedKey, result.getKey());
         Assert.assertEquals(expectedSessionKey, result.getSessionKey());
         Assert.assertEquals(expectedBrowserKey, result.getBrowserKey());
-        Assert.assertEquals("(SBAC_PT)SBAC-IRP-Perf-MATH-3-Summer-2015-2016", result.getTestKey());
-        Assert.assertEquals((Double)168d, result.getTestee());
-        Assert.assertEquals("SBAC-IRP-Perf-MATH-3", result.getTestId());
-        Assert.assertEquals((Integer)1, result.getOpportunity());
-        Assert.assertEquals("paused", result.getStatus());
-        Assert.assertEquals("MATH", result.getSubject());
-        Assert.assertEquals("SBAC_PT", result.getClientName());
-        Assert.assertEquals(false, result.getIsSegmented());
-        Assert.assertEquals("fixedform", result.getAlgorithm());
-        Assert.assertEquals("dev", result.getEnvironment());
-        Assert.assertEquals((Integer)0, result.getSimulationSegmentCount());
+        Assert.assertEquals(expectedTestKey, result.getTestKey());
+        Assert.assertEquals(expectedTestee, result.getTestee());
+        Assert.assertEquals(expectedTestId, result.getTestId());
+        Assert.assertEquals(expectedOpportunity, result.getOpportunity());
+        Assert.assertEquals(expectedStatus, result.getStatus());
+        Assert.assertEquals(expectedSubject, result.getSubject());
+        Assert.assertEquals(expectedClientName, result.getClientName());
+        Assert.assertEquals(expectedIsSegmented, result.getIsSegmented());
+        Assert.assertEquals(expectedAlgorithm, result.getAlgorithm());
+        Assert.assertEquals(expectedEnvironment, result.getEnvironment());
+        Assert.assertEquals(expectedSimulationSegmentCount, result.getSimulationSegmentCount());
     }
 
     @Test
