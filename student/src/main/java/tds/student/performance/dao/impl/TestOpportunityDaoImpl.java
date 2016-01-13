@@ -50,6 +50,12 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
      *     Considered using a {@code CASE WHEN EXISTS (SELECT...)... } for the simulationSegmentCount.  All that really
      *     matters is if the {@code TestOpportunity} has records in the {@code session.sim_segment} table.
      * </p>
+     * <p>
+     *     The {@code GROUP BY} clause has to be in this query.  If the {@code GROUP BY} is omitted, then the
+     *     {@code COUNT} will still return 0 when looking for an opportunity key that does not exist, meaning a row
+     *     with all {@code NULL} values and a 0 simulationSegmentCount will be returned instead of no rows (which is the
+     *     intent; this method should return {@code null} if no record is found for the specified key).
+     * </p>
      *
      * @param key The key for the desired {@link TestOpportunity}.
      * @return {@link TestOpportunity} that corresponds to the specified key.
@@ -95,7 +101,8 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
                         "ON (s._fk_session = o._fk_session\n" +
                         "AND s._efk_adminsubject = o._efk_adminsubject)\n" +
                 "WHERE\n" +
-                    "_key = :key";
+                    "_key = :key\n" +
+                "GROUP BY _key";
 
         try {
             return namedParameterJdbcTemplate.queryForObject(
