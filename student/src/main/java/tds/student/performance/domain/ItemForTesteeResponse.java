@@ -15,8 +15,6 @@ public class ItemForTesteeResponse {
     private Integer formPosition;
     private String answerKey;
 
-    private Integer position=null;
-
     public ItemForTesteeResponse() {
     }
 
@@ -132,13 +130,6 @@ public class ItemForTesteeResponse {
         this.answerKey = answerKey;
     }
 
-    public Integer getPosition() {
-        return position;
-    }
-
-    public void setPosition(Integer position) {
-        this.position = position;
-    }
 
 
     @Override
@@ -150,7 +141,6 @@ public class ItemForTesteeResponse {
                 ", scorePoint='" + scorePoint + '\'' +
                 ", isFieldTest=" + isFieldTest +
                 ", formPosition=" + formPosition +
-                ", position=" + position +
                 '}';
     }
 }

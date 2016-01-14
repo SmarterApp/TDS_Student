@@ -8,10 +8,7 @@ import AIR.Common.Helpers.CaseInsensitiveMap;
 import AIR.Common.Helpers._Ref;
 import AIR.Common.Sql.AbstractDateUtilDll;
 import TDS.Shared.Exceptions.ReturnStatusException;
-import com.google.common.base.Function;
-import com.google.common.base.Predicate;
 import com.google.common.base.Splitter;
-import com.google.common.collect.FluentIterable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +17,20 @@ import tds.dll.api.ICommonDLL;
 import tds.dll.api.IStudentDLL;
 import tds.student.performance.dao.ConfigurationDao;
 import tds.student.performance.dao.OpportunitySegmentDao;
+import tds.student.performance.domain.InsertTesteeResponse;
 import tds.student.performance.domain.ItemForTesteeResponse;
 import tds.student.performance.domain.OpportunitySegment;
 import tds.student.performance.services.ConfigurationService;
 import tds.student.performance.services.DbLatencyService;
 import tds.student.performance.services.StudentInsertItemsService;
 import tds.student.performance.utils.DateUtility;
+import tds.student.performance.utils.TesteeResponseHelper;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+import static org.junit.Assert.assertFalse;
 
 
 /**
@@ -86,7 +87,12 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
         String localhostname = _commonDll.getLocalhostName();
         _Ref<String> error = new _Ref<>();
 
-        logger.debug("*** insertItems : oppkey: " + oppKey.toString() );
+        logger.debug("*** insertItems : oppKey: {} ", oppKey.toString() );
+
+        if ( itemKeys == null ) {
+            itemKeys = "";
+        }
+        final List<String> itemKeyList = Splitter.on(delimiter).omitEmptyStrings().trimResults().splitToList(itemKeys);
 
 
         _studentDll._ValidateTesteeAccessProc_SP(connection, oppKey, sessionKey, browserId, false, error);
@@ -152,7 +158,7 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
                 oppSeg.getLanguage());
 
         // Make a filtered copy
-        List<ItemForTesteeResponse> itemInsertList = createInsertsList(itemInsertListDB,  itemKeys,  delimiter);
+        List<InsertTesteeResponse> itemInsertList = TesteeResponseHelper.createInsertsList(itemInsertListDB, itemKeys, delimiter);
         dumpInsertList(itemInsertList);
 
         Integer minpos = null;
@@ -210,7 +216,7 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             return (new MultiDataResultSet(resultsSets));
         } */
         // New make sure fixed form has not null form position items.
-        if (DbComparator.isEqual(oppSeg.getAlgorithm(), "fixedform") && nullFormPositionList(itemInsertList).size() > 0 ) {
+        if (DbComparator.isEqual(oppSeg.getAlgorithm(), "fixedform") && TesteeResponseHelper.nullFormPositionList(itemInsertList).size() > 0 ) {
             _commonDll._LogDBError_SP(connection, "T_InsertItems", String.format("Item(s) not on form: groupID = %s; items: = %s ", groupId, itemKeys), null, null, null, oppKey, oppSeg.getClientName(), sessionKey);
             resultsSets.add(_commonDll._ReturnError_SP(connection, oppSeg.getClientName(), "T_InsertItems", "Database record insertion failed for new test items", null, oppKey, null));
             return (new MultiDataResultSet(resultsSets));
@@ -231,7 +237,7 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             return (new MultiDataResultSet(resultsSets));
         }
 
-
+        // Old
         if (DbComparator.isEqual(oppSeg.getAlgorithm(), "fixedform")) {
             Integer formStart = null;
             final String SQL_QUERY8 = "select min(formPosition) as formStart from ${insertsTableName};";
@@ -243,25 +249,33 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             final String SQL_UPDATE1 = "update ${insertsTableName} set relativePosition = formPosition - ${formStart};";
             SqlParametersMaps parms6 = new SqlParametersMaps().put("formStart", formStart);
             executeStatement(connection, fixDataBaseNames(SQL_UPDATE1, unquotedParms3), parms6, false).getUpdateCount();
-            // System.err.println (updatedCnt); // for testing
         }
+        // New
+        TesteeResponseHelper.updateItemPosition(itemInsertList);
+        dumpInsertList(itemInsertList);
 
-
-
-
+        /* Old
         final String SQL_QUERY9 = "select relativePosition from ${insertsTableName} group by relativePosition having count(*) > 1";
         final String SQL_QUERY10 = "select  bankitemkey from ${insertsTableName} where relativePosition is null limit 1";
-
         if ((exists(executeStatement(connection, fixDataBaseNames(SQL_QUERY9, unquotedParms3), null, false)))
                 || (exists(executeStatement(connection, fixDataBaseNames(SQL_QUERY10, unquotedParms3), null, false)))) {
             msg = String.format("Ambiguous item positions in item group %s", groupId);
             _commonDll._LogDBError_SP(connection, "T_InsertItems", msg, null, null, null, oppKey, oppSeg.getClientName(), sessionKey);
             resultsSets.add(_commonDll._ReturnError_SP(connection, oppSeg.getClientName(), "T_InsertItems", "Database record insertion failed for new test items"));
             return (new MultiDataResultSet(resultsSets));
+        } */
+        // New Step 13
+        if ( TesteeResponseHelper.ambiguousItemPosition(itemInsertList) ) {
+            _commonDll._LogDBError_SP(connection, "T_InsertItems", String.format("Ambiguous item positions in item group %s", groupId), null, null, null, oppKey, oppSeg.getClientName(), sessionKey);
+            resultsSets.add(_commonDll._ReturnError_SP(connection, oppSeg.getClientName(), "T_InsertItems", "Database record insertion failed for new test items"));
+            return (new MultiDataResultSet(resultsSets));
         }
+
+        /* Old
         lastpos = lastPosition;
         if (lastpos == null)
-            lastpos = 0;
+            lastpos = 0;  */
+        lastpos = lastPosition == null ? 0 : lastPosition;
 
         final String SQL_QUERY11 = "select  bankitemkey from ${insertsTableName} where position is null limit 1";
         while (exists(executeStatement(connection, fixDataBaseNames(SQL_QUERY11, unquotedParms3), null, false))) {
@@ -278,6 +292,11 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
 
             lastpos += 1;
         }
+        // New step 15
+        itemInsertList = TesteeResponseHelper.incrementItemPositionByLast(itemInsertList, lastPosition == null ? 0 : lastPosition);
+        dumpInsertList(itemInsertList);
+
+        /* old Step 16
         final String SQL_QUERY13 = "select count(*) as count from ${insertsTableName};";
         result = executeStatement(connection, fixDataBaseNames(SQL_QUERY13, unquotedParms3), null, false).getResultSets().next();
         record = (result.getCount() > 0 ? result.getRecords().next() : null);
@@ -288,7 +307,11 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             final String SQL_QUERY14 = "select * from ${insertsTableName} ;";
             result = executeStatement(connection, fixDataBaseNames(SQL_QUERY14, unquotedParms3), null, false).getResultSets().next();
             resultsSets.add(result);
-        }
+        } */
+        // New
+        count = itemInsertList.size();
+
+        /* Old
         final String SQL_QUERY15 = "select  bankitemkey from testeeresponse, ${insertsTableName} where _fk_TestOpportunity = ${oppkey} and _efk_Itemkey = bankitemkey limit 1";
         SqlParametersMaps parms8 = parms1;
         if (exists(executeStatement(connection, fixDataBaseNames(SQL_QUERY15, unquotedParms3), parms8, false))) {
@@ -296,10 +319,21 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             _commonDll._LogDBError_SP(connection, "T_InsertItems", msg, null, null, null, oppKey, oppSeg.getClientName(), sessionKey);
             resultsSets.add(_commonDll._ReturnError_SP(connection, oppSeg.getClientName(), "T_InsertItems", "Database record insertion failed for new test items", null, oppKey, null));
             return (new MultiDataResultSet(resultsSets));
+        } */
+        // New
+        if ( opportunitySegmentDao.existsTesteeResponsesByBankKeyAndOpportunity(oppKey, itemKeyList) ) {
+            msg = String.format("Attempt to duplicate existing item: %s", itemKeys);
+            _commonDll._LogDBError_SP(connection, "T_InsertItems", msg, null, null, null, oppKey, oppSeg.getClientName(), sessionKey);
+            resultsSets.add(_commonDll._ReturnError_SP(connection, oppSeg.getClientName(), "T_InsertItems", "Database record insertion failed for new test items", null, oppKey, null));
+            return (new MultiDataResultSet(resultsSets));
         }
+
+        // todo check when this is called and the debug mode
         if ( noinsert ) {
             return (new MultiDataResultSet(resultsSets));
         }
+
+
         String errmsg = null;
         Integer itemcnt = null;
         try {
@@ -442,45 +476,7 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
         return (new MultiDataResultSet(resultsSets));
     }
 
-    // Filter list from database.
-    // Create new objects in case query is cached.
-    private List<ItemForTesteeResponse> createInsertsList(List<ItemForTesteeResponse> itemInsertList, String itemKeys, Character delimiter) {
 
-        final List<String> itemKeysList = Splitter.on(delimiter).omitEmptyStrings().trimResults().splitToList(itemKeys);
-
-        Predicate<ItemForTesteeResponse> predicate = new Predicate<ItemForTesteeResponse>() {
-            @Override
-            public boolean apply(ItemForTesteeResponse input) {
-                return input != null && itemKeysList.contains(input.getBankItemKey());
-            }
-        };
-
-        Function<ItemForTesteeResponse, ItemForTesteeResponse> transform = new Function<ItemForTesteeResponse,ItemForTesteeResponse>(){
-            @Override
-            public ItemForTesteeResponse apply(ItemForTesteeResponse input) {
-                return new ItemForTesteeResponse(input);
-            }
-        };
-
-        return FluentIterable
-                .from(itemInsertList)
-                .filter(predicate)
-                .transform(transform)
-                .toList();
-    }
-
-    // Return list of null form position
-    private List<ItemForTesteeResponse> nullFormPositionList(List<ItemForTesteeResponse> itemInsertList) {
-        return FluentIterable
-                .from(itemInsertList)
-                .filter(new Predicate<ItemForTesteeResponse>() {
-                    @Override
-                    public boolean apply(ItemForTesteeResponse input) {
-                        return input != null && input.getFormPosition() == null;
-                    }
-                })
-                .toList();
-    }
 
     // Helper to see contents of temp table
     private SingleDataResultSet dumpTable(SQLConnection connection, String tableName)
@@ -490,9 +486,9 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
         return executeStatement(connection, fixDataBaseNames("select * from ${insertsTableName}", dumpParam), null, false).getResultSets().next();
     }
 
-    private void dumpInsertList(Collection<ItemForTesteeResponse> items) {
+    private void dumpInsertList(Collection<InsertTesteeResponse> items) {
 
-        for ( ItemForTesteeResponse i : items){
+        for (InsertTesteeResponse i : items) {
             logger.debug("  Item: {} ", i.toString());
         }
 
