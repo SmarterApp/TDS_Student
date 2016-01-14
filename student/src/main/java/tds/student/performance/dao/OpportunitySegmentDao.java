@@ -12,4 +12,6 @@ public interface OpportunitySegmentDao {
 
     List<ItemForTesteeResponse> getItemForTesteeResponse(String adminSubject, String testForm, String groupId, String languagePropertyValue);
 
+    Boolean existsTesteeResponsesByBankKeyAndOpportunity(UUID oppKey, List<String> itemKeys);
+
 }

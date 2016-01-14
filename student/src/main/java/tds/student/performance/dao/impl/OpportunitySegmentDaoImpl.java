@@ -3,6 +3,7 @@ package tds.student.performance.dao.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -120,5 +121,29 @@ public class OpportunitySegmentDaoImpl implements OpportunitySegmentDao {
                 new BeanPropertyRowMapper<>(ItemForTesteeResponse.class));
 
     }
+
+    @Override
+    @Transactional
+    public Boolean existsTesteeResponsesByBankKeyAndOpportunity(UUID oppKey, List<String> itemKeys) {
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("itemKeys", itemKeys);
+        parameters.addValue("oppKey", UuidAdapter.getBytesFromUUID(oppKey));
+
+        final String SQL = "SELECT \n" +
+                "    COUNT(*)\n" +
+                "FROM\n" +
+                "    testeeresponse R\n" +
+                "WHERE\n" +
+                "    R._fk_testopportunity = :oppKey\n" +
+                "        AND _efk_itemkey IN (:itemKeys);";
+
+        int count = namedParameterJdbcTemplate.queryForObject(
+                SQL,
+                parameters,
+                Integer.class);
+
+        return count > 0;
+    }
+
 
 }
