@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TransformationRules>
+  <Tag>
+    <ContextType>All</ContextType>
+    <TagName>p</TagName>
+    <Attributes>
+      <Attribute>
+        <Name>style</Name>
+        <Value></Value>
+      </Attribute>
+    </Attributes>
+    <Transformations>
+      <Transform>
+        <Occurrence>1</Occurrence>
+        <NewTag>
+          <TagName>p</TagName>
+          <Attributes>
+            <Attribute>
+              <Name>style</Name>
+              <Value>firstpara</Value>
+            </Attribute>
+          </Attributes>
+        </NewTag>
+      </Transform>
+      <Transform>
+        <NewTag>
+          <TagName>p</TagName>
+          <Attributes>
+            <Attribute>
+              <Name>style</Name>
+              <Value>secondpara</Value>
+            </Attribute>
+          </Attributes>
+        </NewTag>
+      </Transform>
+    </Transformations>
+  </Tag>
+  <Tag>
+    <ContextType>All</ContextType>
+    <TagName>p</TagName>
+    <Attributes>
+      <Attribute>
+        <Name>style</Name>
+        <!-- this is actually used as a passage title and that is why i have a separate rule in case we 
+    want to handle this differently in the future.-->
+        <Value>text-decoration:underline;</Value>
+      </Attribute>
+    </Attributes>
+    <Transformations>
+      <Transform>
+        <Occurrence>1</Occurrence>
+        <NewTag>
+          <TagName>p</TagName>
+          <Attributes>
+            <Attribute>
+              <Name>style</Name>
+              <Value>firstpara</Value>
+            </Attribute>
+          </Attributes>
+        </NewTag>
+      </Transform>
+      <Transform>
+        <NewTag>
+          <TagName>p</TagName>
+          <Attributes>
+            <Attribute>
+              <Name>style</Name>
+              <Value>secondpara</Value>
+            </Attribute>
+          </Attributes>
+        </NewTag>
+      </Transform>
+    </Transformations>
+  </Tag>
+
+  <Tag>
+    <ContextType>All</ContextType>
+    <TagName>div</TagName>
+    <Attributes>
+      <Attribute>
+        <Name>class</Name>
+        <Value>*</Value>
+      </Attribute>
+    </Attributes>
+    <Transformations>
+      <Transform>
+        <NewTag>
+          <TagName>p</TagName>
+          <Attributes>
+            <Attribute>
+              <Name>style</Name>
+              <Value>secondpara</Value>
+            </Attribute>
+          </Attributes>
+        </NewTag>
+      </Transform>
+    </Transformations>
+  </Tag>
+  <!-- The following were never used in production. -->
+  <!-- <Tag>
+    <ContextType>All</ContextType>
+    <TagName>h2</TagName>
+    <Attributes/>
+    <Transformations>
+      <Transform>
+        <Occurrence>1</Occurrence>
+        <Keepchildren>textOnly</Keepchildren>  -->
+  <!-- <NewTag>
+          <TagName>p</TagName>
+          <Attributes>
+            <Attribute>
+              <Name>style</Name>
+              <Value>secondpara</Value>
+            </Attribute>
+          </Attributes>
+        </NewTag> -->
+  <!-- </Transform>
+    </Transformations>
+  </Tag>  -->
+  <!-- <Tag>
+    <ContextType>All</ContextType>
+    <TagName>h3</TagName>
+    <Attributes/>
+    <Transformations>
+      <Transform>
+        <Occurrence>1</Occurrence>
+        <Keepchildren>textOnly</Keepchildren> -->
+  <!-- <NewTag>
+          <TagName>p</TagName>
+          <Attributes>
+            <Attribute>
+              <Name>style</Name>
+              <Value>secondpara</Value>
+            </Attribute>
+          </Attributes>
+        </NewTag> -->
+  <!--
+      </Transform>
+     </Transformations>
+   </Tag>
+   -->
+  <!-- This rule was used during the TTB pilot but was changed to the new one below for PRN generation. -->
+  <!--
+  <Tag>
+    <ContextType>Option</ContextType>
+    <TagName>p</TagName>
+    <Attributes>
+      <Attribute>
+        <Name>style</Name>
+        <Value></Value>
+      </Attribute>
+    </Attributes>
+    <Transformations>
+      <Transform>
+        <Keepchildren>textOnly</Keepchildren>
+      </Transform>
+    </Transformations>
+  </Tag>
+  -->
+  <Tag>
+    <ContextType>Option</ContextType>
+    <TagName>p</TagName>
+    <Attributes>
+      <Attribute>
+        <Name>style</Name>
+        <Value>*</Value>
+      </Attribute>
+    </Attributes>
+    <Transformations>
+      <Transform>
+        <NewTag>
+          <TagName>span</TagName>
+          <Attributes>
+            <Attribute>
+              <Name>style</Name>
+              <Value>firstpara</Value>
+            </Attribute>
+          </Attributes>
+        </NewTag>
+      </Transform>
+    </Transformations>
+  </Tag>
+</TransformationRules>
+

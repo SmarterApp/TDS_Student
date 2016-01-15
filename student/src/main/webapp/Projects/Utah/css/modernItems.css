@@ -1,0 +1,5 @@
+/* empty page, just to prevent 404s */
+
+.cke_button.cke_button__numberedlist, .cke_button.cke_button__bulletedlist {
+	display: none;
+}
