@@ -362,63 +362,67 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
      */
     private Integer initializeStudentOpportunity(TestOpportunity testOpportunity, TestSession testSession, ClientTestProperty clientTestProperty,
                                                  String formKeyList) throws ReturnErrorException, SQLException, ReturnStatusException {
-        SQLConnection legacyConnection = legacySqlConnection.get();
-        Timestamp now = new Timestamp(dateUtility.getDbDate().getTime());
-        Date latencyDate = dateUtility.getLocalDate();
-        Integer testLength;
-        Float initialAbility;
-        _Ref<String> reason = new _Ref<>();
+        try (SQLConnection legacyConnection = legacySqlConnection.get()) {
+            Timestamp now = new Timestamp(dateUtility.getDbDate().getTime());
+            Date latencyDate = dateUtility.getLocalDate();
+            Integer testLength;
+            Float initialAbility;
+            _Ref<String> reason = new _Ref<>();
 
-        legacyStudentDll._InitializeTestSegments_SP(legacyConnection, testOpportunity.getKey(), reason, formKeyList);
-        //initializeTestSegments(testOpportunity, testSession, formKeyList);
+            legacyStudentDll._InitializeTestSegments_SP(legacyConnection, testOpportunity.getKey(), reason, formKeyList);
+            //initializeTestSegments(testOpportunity, testSession, formKeyList);
 
-        if (reason.get() != null) {
-            legacyErrorHandlerService.logDbError("T_StartTestOpportunity", reason.get(), testOpportunity.getTestee(), testOpportunity.getTestId(), null, testOpportunity.getKey());
-            legacyErrorHandlerService.throwReturnErrorException(testOpportunity.getClientName(), "T_StartTestOpportunity", reason.get(), null, testOpportunity.getKey(), "_InitializeOpportunity", "failed");
+            if (reason.get() != null) {
+                legacyErrorHandlerService.logDbError("T_StartTestOpportunity", reason.get(), testOpportunity.getTestee(), testOpportunity.getTestId(), null, testOpportunity.getKey());
+                legacyErrorHandlerService.throwReturnErrorException(testOpportunity.getClientName(), "T_StartTestOpportunity", reason.get(), null, testOpportunity.getKey(), "_InitializeOpportunity", "failed");
+            }
+            initialAbility = getInitialAbility(testOpportunity, clientTestProperty);
+
+            //First session.testoppabilityestimate insert
+            testOppAbilityEstimateDao.create(
+                    new TestOppAbilityEstimate(
+                            testOpportunity.getKey(),
+                            "OVERALL",
+                            initialAbility,
+                            0,
+                            now
+                    )
+            );
+
+            //Second session.testoppabilityestimate insert  - gets "strand" from testopportunity and
+            //itembank.tbladminstrand tables
+            testOppAbilityEstimateDao.createFromItemBankAndTestOpp(
+                    testOpportunity.getKey(),
+                    initialAbility,
+                    now
+            );
+
+            testLength = testSegmentDao.getTestLengthForOpportunitySegment(testOpportunity.getKey());
+            createResponseSet(testOpportunity, testLength, 0);
+
+            testOpportunity.setStatus("started");
+            testOpportunity.setDateStarted(now);
+            testOpportunity.setDateChanged(now);
+            testOpportunity.setExpireFrom(now);
+            testOpportunity.setStage("inprogress");
+            testOpportunity.setMaxItems(testLength);
+            testOpportunityDao.update(testOpportunity);
+
+            testOpportunityDao.createAudit(new TestOpportunityAudit(
+                    testOpportunity.getKey(),
+                    now,
+                    "started",
+                    testOpportunity.getSessionKey(),
+                    HostNameHelper.getHostName(),
+                    "session"));
+
+            dbLatencyService.logLatency("_InitializeOpportunity_SP", latencyDate, null, testOpportunity);
+
+            return testLength;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw e;
         }
-        initialAbility = getInitialAbility(testOpportunity, clientTestProperty);
-
-        //First session.testoppabilityestimate insert
-        testOppAbilityEstimateDao.create(
-            new TestOppAbilityEstimate(
-                testOpportunity.getKey(),
-                "OVERALL",
-                initialAbility,
-                0,
-                now
-            )
-        );
-
-        //Second session.testoppabilityestimate insert  - gets "strand" from testopportunity and
-        //itembank.tbladminstrand tables
-        testOppAbilityEstimateDao.createFromItemBankAndTestOpp(
-                testOpportunity.getKey(),
-                initialAbility,
-                now
-        );
-
-        testLength = testSegmentDao.getTestLengthForOpportunitySegment(testOpportunity.getKey());
-        createResponseSet(testOpportunity, testLength, 0);
-
-        testOpportunity.setStatus("started");
-        testOpportunity.setDateStarted(now);
-        testOpportunity.setDateChanged(now);
-        testOpportunity.setExpireFrom(now);
-        testOpportunity.setStage("inprogress");
-        testOpportunity.setMaxItems(testLength);
-        testOpportunityDao.update(testOpportunity);
-
-        testOpportunityDao.createAudit(new TestOpportunityAudit(
-                testOpportunity.getKey(),
-                now,
-                "started",
-                testOpportunity.getSessionKey(),
-                HostNameHelper.getHostName(),
-                "session"));
-
-        dbLatencyService.logLatency("_InitializeOpportunity_SP", latencyDate, null, testOpportunity);
-
-        return testLength;
     }
 
     private void createResponseSet(TestOpportunity opportunity, Integer maxItems, Integer reset) {
@@ -479,10 +483,14 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                 _Ref<Integer> newlenRef = new _Ref<> ();
                 _Ref<Integer> poolcountRef = new _Ref<> ();
                 _Ref<String> itemStringRef = new _Ref<> ();
-                SQLConnection legacyConnection = legacySqlConnection.get();
-                legacyStudentDll._ComputeSegmentPool_SP(legacyConnection, testOpportunity.getKey(),
-                        testOpportunity.getTestKey(), newlenRef, poolcountRef, itemStringRef, testOpportunity.getSessionKey());
-                poolCount = poolcountRef.get();
+
+
+                try (SQLConnection legacyConnection = legacySqlConnection.get()) {
+                    legacyStudentDll._ComputeSegmentPool_SP(legacyConnection, testOpportunity.getKey(),
+                            testOpportunity.getTestKey(), newlenRef, poolcountRef, itemStringRef, testOpportunity.getSessionKey());
+                    poolCount = poolcountRef.get();
+                }
+
 
 //                int isElligbile = legacyStudentDll.FT_IsEligible_FN (legacySqlConnection, testOpportunity.getKey(),
 //                        testOpportunity.getTestKey(),  , language);

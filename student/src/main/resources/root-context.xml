@@ -126,34 +126,59 @@
 	<!-- HTTP web helper -->
 	<beans:bean id="httpWebHelper" class="AIR.Common.Web.HttpWebHelper" />
 
+	<beans:bean id="hikariAIRConfig" class="com.zaxxer.hikari.HikariConfig">
+		<beans:property name="dataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlDataSource" />
+		<beans:property name="dataSourceProperties" >
+			<beans:props>
+				<beans:prop key="url">${datasource.url}</beans:prop>
+				<beans:prop key="user">${datasource.username}</beans:prop>
+				<beans:prop key="password">${datasource.password}</beans:prop>
+			</beans:props>
+		</beans:property>
+
+		<beans:property name="poolName" value="AIRHikariCP" />
+		<beans:property name="maxLifetime" value="1800000" />
+		<beans:property name="maximumPoolSize" value="500" />
+		<beans:property name="leakDetectionThreshold" value="15000" />
+
+		<!-- The follow values are the defaults -->
+		<!--<beans:property name="autoCommit" value="true" />-->
+		<!--<beans:property name="connectionTimeout" value="30000" />-->
+		<!--<beans:property name="idleTimeout" value="30000" /> &lt;!&ndash; connect_timeout on MySQL is 60 seconds, and HikariCP recommends making this 30 seconds less than that value &ndash;&gt;-->
+	</beans:bean>
+
+	<beans:bean id="applicationDataSource" class="com.zaxxer.hikari.HikariDataSource">
+		<beans:constructor-arg ref="hikariAIRConfig" />
+	</beans:bean>
+
 	<!--Start: c3p0 Datasource Configuration -->
 	<!-- see http://www.mchange.com/projects/c3p0/index.html#configuring_connection_testing -->
 
-	<beans:bean id="applicationDataSource" destroy-method="close" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-		<beans:property name="driverClass" value="${datasource.driverClassName:com.mysql.jdbc.Driver}" />
-		<beans:property name="jdbcUrl" value="${datasource.url:jdbc:mysql://tds-db.dev.opentestsystem.org:3306/session}" />
-		<beans:property name="user" value="${datasource.username:dbsbac}" />
-		<beans:property name="password" value="${datasource.password:osTyMhRM1C}" />
-		<beans:property name="initialPoolSize" value="${datasource.initialPoolSize:5}" />
-		<beans:property name="minPoolSize" value="${datasource.minPoolSize:5}" />
-		<beans:property name="acquireIncrement" value="${datasource.acquireIncrement:5}" />
-		<beans:property name="maxPoolSize" value="${datasource.maxPoolSize:20}" />
-		<beans:property name="checkoutTimeout" value="${datasource.checkoutTimeout:60000}" />
-		<!-- <beans:property name="preferredTestQuery" value="SELECT 1" /> -->
-		<beans:property name="maxConnectionAge" value="${datasource.maxConnectionAge:0}" />
-		<beans:property name="maxIdleTime" value="${datasource.maxIdleTime:0}" />
-		<beans:property name="acquireRetryAttempts" value="${datasource.acquireRetryAttempts:5}" />
-		<beans:property name="idleConnectionTestPeriod" value="${datasource.idleConnectionTestPeriod:300}" />
-		<beans:property name="testConnectionOnCheckout" value="${datasource.testConnectionOnCheckout:false}" />
-		<beans:property name="testConnectionOnCheckin" value="${datasource.testConnectionOnCheckin:false}" />
-		<beans:property name="numHelperThreads" value="${datasource.numHelperThreads:6}" />
-		<beans:property name="maxStatements" value="${datasource.maxStatements:20000}" />
-		<beans:property name="maxStatementsPerConnection" value="${datasource.maxStatementsPerConnection:200}" />
+	<!--<beans:bean id="applicationDataSource" destroy-method="close" class="com.mchange.v2.c3p0.ComboPooledDataSource">-->
+		<!--<beans:property name="driverClass" value="${datasource.driverClassName:com.mysql.jdbc.Driver}" />-->
+		<!--<beans:property name="jdbcUrl" value="${datasource.url:jdbc:mysql://tds-db.dev.opentestsystem.org:3306/session}" />-->
+		<!--<beans:property name="user" value="${datasource.username:dbsbac}" />-->
+		<!--<beans:property name="password" value="${datasource.password:osTyMhRM1C}" />-->
+		<!--<beans:property name="initialPoolSize" value="${datasource.initialPoolSize:5}" />-->
+		<!--<beans:property name="minPoolSize" value="${datasource.minPoolSize:5}" />-->
+		<!--<beans:property name="acquireIncrement" value="${datasource.acquireIncrement:5}" />-->
+		<!--<beans:property name="maxPoolSize" value="${datasource.maxPoolSize:20}" />-->
+		<!--<beans:property name="checkoutTimeout" value="${datasource.checkoutTimeout:60000}" />-->
+		<!--&lt;!&ndash; <beans:property name="preferredTestQuery" value="SELECT 1" /> &ndash;&gt;-->
+		<!--<beans:property name="maxConnectionAge" value="${datasource.maxConnectionAge:0}" />-->
+		<!--<beans:property name="maxIdleTime" value="${datasource.maxIdleTime:0}" />-->
+		<!--<beans:property name="acquireRetryAttempts" value="${datasource.acquireRetryAttempts:5}" />-->
+		<!--<beans:property name="idleConnectionTestPeriod" value="${datasource.idleConnectionTestPeriod:300}" />-->
+		<!--<beans:property name="testConnectionOnCheckout" value="${datasource.testConnectionOnCheckout:false}" />-->
+		<!--<beans:property name="testConnectionOnCheckin" value="${datasource.testConnectionOnCheckin:false}" />-->
+		<!--<beans:property name="numHelperThreads" value="${datasource.numHelperThreads:6}" />-->
+		<!--<beans:property name="maxStatements" value="${datasource.maxStatements:20000}" />-->
+		<!--<beans:property name="maxStatementsPerConnection" value="${datasource.maxStatementsPerConnection:200}" />-->
 
-		<beans:property name="dataSourceName" value="AIR-DataSource" />
-		<beans:property name="unreturnedConnectionTimeout" value="50" />
-		<beans:property name="debugUnreturnedConnectionStackTraces" value="true" />
-	</beans:bean>
+		<!--<beans:property name="dataSourceName" value="AIR-DataSource" />-->
+		<!--<beans:property name="unreturnedConnectionTimeout" value="50" />-->
+		<!--<beans:property name="debugUnreturnedConnectionStackTraces" value="true" />-->
+	<!--</beans:bean>-->
 
 	<!--End: c3p0 Datasource Configuration -->
 	<!-- <jee:jndi-lookup id="applicationDataSource" jndi-name="${student-sessiondb-jndi:java:/comp/env/jdbc/sessiondb}" expected-type="javax.sql.DataSource" /> -->
