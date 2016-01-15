@@ -1,7 +1,9 @@
 package tds.student.performance.services.impl;
 
+import AIR.Common.DB.SQLConnection;
 import TDS.Shared.Exceptions.ReturnStatusException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ExceptionDepthComparator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tds.dll.api.ICommonDLL;
@@ -21,6 +23,8 @@ public class LegacyTestOpportunityServiceImpl implements LegacyTestOpportunitySe
     LegacySqlConnection legacySqlConnection;
 
     public void setOpportunityStatus(TestOpportunity opportunity, String status) throws SQLException, ReturnStatusException {
-        commonDll.SetOpportunityStatus_SP(legacySqlConnection.get(), opportunity.getKey(), status, true, opportunity.getSessionKey().toString());
+        try (SQLConnection connection = legacySqlConnection.get()) {
+            commonDll.SetOpportunityStatus_SP(connection, opportunity.getKey(), status, true, opportunity.getSessionKey().toString());
+        }
     }
 }

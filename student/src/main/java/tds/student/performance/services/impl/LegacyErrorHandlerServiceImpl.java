@@ -1,5 +1,6 @@
 package tds.student.performance.services.impl;
 
+import AIR.Common.DB.SQLConnection;
 import AIR.Common.DB.results.DbResultRecord;
 import AIR.Common.DB.results.SingleDataResultSet;
 import TDS.Shared.Exceptions.ReturnStatusException;
@@ -28,8 +29,8 @@ public class LegacyErrorHandlerServiceImpl implements LegacyErrorHandlerService 
 
     @Override
     public void logDbError(String procName, String message, Long testee, String test, Integer opportunity, UUID key) {
-        try {
-            commonDll._LogDBError_SP(legacySqlConnection.get(), procName, message, testee, test, opportunity, key);
+        try (SQLConnection connection = legacySqlConnection.get()) {
+            commonDll._LogDBError_SP(connection, procName, message, testee, test, opportunity, key);
         } catch (Exception e) {
             logger.error(String.format("Error logging error for %s, %s", procName, message), e);
         }
@@ -53,22 +54,25 @@ public class LegacyErrorHandlerServiceImpl implements LegacyErrorHandlerService 
      */
     @Override
     public void throwReturnErrorException(String client, String procName, String appkey, String argstring, UUID oppkey, String context, String status) throws ReturnErrorException, SQLException, ReturnStatusException {
-        SingleDataResultSet resultSet = commonDll._ReturnError_SP(legacySqlConnection.get(), client, procName, appkey, argstring, oppkey, context, status);
+        try (SQLConnection connection = legacySqlConnection.get()) {
+            SingleDataResultSet resultSet = commonDll._ReturnError_SP(connection, client, procName, appkey, argstring, oppkey, context, status);
 
-        Iterator<DbResultRecord> records = resultSet.getRecords();
+            Iterator<DbResultRecord> records = resultSet.getRecords();
 
-        if (records.hasNext()) {
-            DbResultRecord record = records.next();
+            if (records.hasNext()) {
+                DbResultRecord record = records.next();
 
-            throw new ReturnErrorException(
-                    record.<String>get("status"),
-                    record.<String>get("reason"),
-                    record.<String>get("context"),
-                    record.<String>get("appkey")
-            );
+                throw new ReturnErrorException(
+                        record.<String>get("status"),
+                        record.<String>get("reason"),
+                        record.<String>get("context"),
+                        record.<String>get("appkey")
+                );
+            }
+            else {
+                throw new ReturnErrorException("ReturnError returned no results");
+            }
         }
-        else {
-            throw new ReturnErrorException("ReturnError returned no results");
-        }
+
     }
 }
