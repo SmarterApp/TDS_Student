@@ -22,7 +22,6 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    @Transactional
     public List<String> findStudentId(int key) {
 
         Map<String, Object> parameters = new HashMap<String, Object>();

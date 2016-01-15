@@ -34,7 +34,6 @@ public class OpportunitySegmentDaoImpl implements OpportunitySegmentDao {
     }
 
     @Override
-    @Transactional
     public OpportunitySegment getOpportunitySegmentAccommodation(UUID oppKey, Integer segment) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("oppKey", UuidAdapter.getBytesFromUUID(oppKey));
@@ -69,7 +68,6 @@ public class OpportunitySegmentDaoImpl implements OpportunitySegmentDao {
 
     // Replaces original T_InsertItems_SP SQL_INSERT2
     @Override
-    @Transactional
     @Cacheable(CacheType.MediumTerm)
     public List<ItemForTesteeResponse> getItemForTesteeResponse(String adminSubject, String testForm, String groupId, String languagePropertyValue ) {
 
@@ -123,7 +121,6 @@ public class OpportunitySegmentDaoImpl implements OpportunitySegmentDao {
     }
 
     @Override
-    @Transactional
     public Boolean existsTesteeResponsesByBankKeyAndOpportunity(UUID oppKey, List<String> itemKeys) {
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         parameters.addValue("itemKeys", itemKeys);

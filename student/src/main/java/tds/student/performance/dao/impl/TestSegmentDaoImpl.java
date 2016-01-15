@@ -41,7 +41,6 @@ public class TestSegmentDaoImpl implements TestSegmentDao {
      * @return A {@link TestSegmentItem} collection.
      */
     @Override
-    @Transactional
     public List<TestSegmentItem> getForSimulation(TestOpportunity testOpportunity) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("key", testOpportunity.getKey());
@@ -81,7 +80,6 @@ public class TestSegmentDaoImpl implements TestSegmentDao {
      * @return A {@link TestSegmentItem} collection.
      */
     @Override
-    @Transactional
     @Cacheable(CacheType.LongTerm)
     public List<TestSegmentItem> getSegmented(TestOpportunity testOpportunity) {
         Map<String, Object> parameters = new HashMap<>();
@@ -125,7 +123,6 @@ public class TestSegmentDaoImpl implements TestSegmentDao {
      * @return A {@link TestSegmentItem} collection for the {@code TestOpportunity.getTestKey()}.
      */
     @Override
-    @Transactional
     @Cacheable(CacheType.LongTerm)
     public List<TestSegmentItem> get(TestOpportunity testOpportunity) {
         Map<String, Object> parameters = new HashMap<>();
@@ -163,7 +160,6 @@ public class TestSegmentDaoImpl implements TestSegmentDao {
      * @return
      */
     @Override
-    @Transactional
     public Integer getTestLengthForOpportunitySegment(UUID oppKey) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("oppKey", UuidAdapter.getBytesFromUUID(oppKey));
@@ -180,7 +176,6 @@ public class TestSegmentDaoImpl implements TestSegmentDao {
     }
 
     @Override
-    @Transactional
     public void createTestOpportunitySegments(TestOpportunity testOpportunity, List<TestSegmentItem> items) {
 
     }

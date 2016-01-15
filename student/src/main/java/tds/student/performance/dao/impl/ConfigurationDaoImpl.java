@@ -52,7 +52,6 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
      * @return A collection of {@code ClientSystemFlag} records for the specified client name.
      */
     @Override
-    @Transactional
     @Cacheable(CacheType.LongTerm)
     public List<ClientSystemFlag> getSystemFlags(String clientName) {
         Map<String, String> parameters = new HashMap<>();
@@ -99,7 +98,6 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
      * @return A {@code ClientTestProperty} for the specified client name and test id.
      */
     @Override
-    @Transactional
     @Cacheable(CacheType.LongTerm)
     public ClientTestProperty getClientTestProperty(String clientName, String testId) {
         Map<String, String> parameters = new HashMap<>();
@@ -170,7 +168,6 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
     }
 
     @Override
-    @Transactional
     @Cacheable(CacheType.LongTerm)
     public List<StudentLoginField> getStudentLoginFields(String clientName) {
         Map<String, String> parameters = new HashMap<>();
@@ -199,7 +196,6 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
     }
 
     @Override
-    @Transactional
     @Cacheable(CacheType.LongTerm)
     public ConfigTestToolType getTestToolType(String clientName, String toolName, String context, String contextType) {
         Map<String, Object> parameters = new HashMap<>();
@@ -248,7 +244,6 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
      * @return {@code true} if the {@code scoreByTDS} should be set; otherwise {@code false}.
      */
     @Override
-    @Transactional
     @Cacheable(CacheType.LongTerm)
     public Boolean isSetForScoreByTDS(String clientName, String testId) {
         Map<String, String> parameters = new HashMap<>();
@@ -282,7 +277,6 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
      * @return  A {@code ClientTestMode} for the {@code TestOpportunity}.
      */
     @Override
-    @Transactional
     @Cacheable(CacheType.LongTerm)
     public ClientTestMode getClientTestMode(TestOpportunity testOpportunity) {
         Map<String, String> parameters = new HashMap<>();
@@ -320,7 +314,6 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
     }
 
     @Override
-    @Transactional
     @Cacheable(CacheType.LongTerm)
     public List<TestFormWindow> getTestFormWindows(TestOpportunity testOpportunity, TestSession testSession) {
         Map<String, Object> parameters = new HashMap<>();
@@ -470,7 +463,6 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
      * @return A collection of {@code TideTesteeWindowDto}s.
      */
     @Override
-    @Transactional
     @Cacheable(CacheType.LongTerm)
     public TideTesteeTestWindowDto getTideTesteeTestWindowDto(TestOpportunity testOpportunity, TestSession testSession) {
         Map<String, Object> parameters = new HashMap<>();

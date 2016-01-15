@@ -133,7 +133,6 @@ public class TestSessionServiceImpl implements TestSessionService {
      * @param reason A description of why the {@code TestSession} was put in a paused state.
      */
     @Override
-    @Transactional
     public void pause(TestOpportunity testOpportunity, TestSession testSession, String reason) throws SQLException, ReturnStatusException, ReturnErrorException {
         Date date = new Date();
         final Timestamp now = new Timestamp(date.getTime());

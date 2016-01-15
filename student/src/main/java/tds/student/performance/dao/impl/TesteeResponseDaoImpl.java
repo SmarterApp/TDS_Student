@@ -32,7 +32,6 @@ public class TesteeResponseDaoImpl implements TesteeResponseDao {
     }
 
     @Override
-    @Transactional
     public void updateRestartCount(UUID opportunityKey, Integer restartCount, boolean isRcntSpecific) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("rcnt", restartCount);
@@ -54,7 +53,6 @@ public class TesteeResponseDaoImpl implements TesteeResponseDao {
     }
 
     @Override
-    @Transactional
     public Long getTesteeResponseItemCount(UUID oppKey) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("oppKey", UuidAdapter.getBytesFromUUID(oppKey));
@@ -71,7 +69,6 @@ public class TesteeResponseDaoImpl implements TesteeResponseDao {
     }
 
     @Override
-    @Transactional
     public List<UnfinishedResponsePage> getUnfinishedPages(UUID oppKey) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("oppKey", UuidAdapter.getBytesFromUUID(oppKey));
@@ -101,7 +98,6 @@ public class TesteeResponseDaoImpl implements TesteeResponseDao {
 
 
     @Override
-    @Transactional
     public void insertBatch(UUID oppKey, final Integer maxPosition) {
         List<SqlParameterSource> parameters = new ArrayList<>();
         for (int pos = 1; pos <= maxPosition; ++pos) {
@@ -120,7 +116,6 @@ public class TesteeResponseDaoImpl implements TesteeResponseDao {
     }
 
     @Override
-    @Transactional
     public void delete(UUID oppKey) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("oppKey", UuidAdapter.getBytesFromUUID(oppKey));

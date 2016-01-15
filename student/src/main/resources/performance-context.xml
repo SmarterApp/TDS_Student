@@ -51,11 +51,11 @@
     <!--</bean>-->
 
     <!-- Spring Transaction Manager -->
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
+    <!--<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">-->
+        <!--<property name="dataSource" ref="dataSource"/>-->
+    <!--</bean>-->
     <!-- Annotations to manage transaction -->
-    <tx:annotation-driven proxy-target-class="true" transaction-manager="transactionManager" />
+    <!--<tx:annotation-driven proxy-target-class="true" transaction-manager="transactionManager" />-->
 
     <!-- To disable all caching, comment out the cache:annotation-driven line below AND change the enabled property to false for the cacher bean -->
     <cache:annotation-driven key-generator="cacheKeyGenerator" />

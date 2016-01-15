@@ -45,7 +45,6 @@ public class TestSessionDaoImpl implements TestSessionDao {
      * @return A (@code TestSession} for the specified session key.
      */
     @Override
-    @Transactional
     @Cacheable(CacheType.MediumTerm)
     public TestSession get(UUID key) {
         Map<String, byte[]> parameters = new HashMap<>();
@@ -94,7 +93,6 @@ public class TestSessionDaoImpl implements TestSessionDao {
      * @return A {@link TestSessionTimeLimitConfiguration} containing the record(s) for the specified client name and test id.
      */
     @Override
-    @Transactional
     @Cacheable(CacheType.LongTerm)
     public TestSessionTimeLimitConfiguration getTimeLimitConfiguration(String clientName) {
         Map<String, String> parameters = new HashMap<>();
@@ -150,7 +148,6 @@ public class TestSessionDaoImpl implements TestSessionDao {
      * @return A {@link TestSessionTimeLimitConfiguration} containing the record(s) for the specified client name and test id.
      */
     @Override
-    @Transactional
     @Cacheable(CacheType.LongTerm)
     public TestSessionTimeLimitConfiguration getTimeLimitConfiguration(String clientName, String testId) {
         Map<String, String> parameters = new HashMap<>();
@@ -230,7 +227,6 @@ public class TestSessionDaoImpl implements TestSessionDao {
     }
 
     @Override
-    @Transactional
     public void createAudit(SessionAudit sessionAudit) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("sessionKey", UuidAdapter.getBytesFromUUID(sessionAudit.getSessionKey()));
@@ -272,7 +268,6 @@ public class TestSessionDaoImpl implements TestSessionDao {
      * @param reason A {@code String} describing why the {@code TestSession} was paused.
      */
     @Override
-    @Transactional
     public void pause(TestSession session, String reason) {
         final Date closedDate = new Date();
         Map<String, Object> parameters = new HashMap<>();

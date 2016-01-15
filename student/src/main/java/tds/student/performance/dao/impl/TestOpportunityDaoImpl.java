@@ -61,7 +61,6 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
      * @return {@link TestOpportunity} that corresponds to the specified key.
      */
     @Override
-    @Transactional
     public TestOpportunity get(UUID key) {
         Map<String, byte[]> parameters = new HashMap<>();
         parameters.put("key", UuidAdapter.getBytesFromUUID(key));
@@ -117,7 +116,6 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
     }
 
     @Override
-    @Transactional
     public List<TestOpportunity> getBySessionAndStatus(UUID sessionKey, String statusUsage, String statusStage) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("sessionKey", UuidAdapter.getBytesFromUUID(sessionKey));
@@ -165,7 +163,6 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
     }
 
     @Override
-    @Transactional
     public void update(TestOpportunity opportunity) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("algorithm", opportunity.getAlgorithm());
@@ -224,7 +221,6 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
         namedParameterJdbcTemplate.update(SQL, parameters);
     }
 
-    @Transactional
     @Override
     public Timestamp getLastActivity(UUID key) {
         Map<String, byte[]> parameters = new HashMap<>();
@@ -276,7 +272,6 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
      * @param testOpportunityAudit The {@code TestOpportunityAudit} that needs to be recorded in the database.
      */
     @Override
-    @Transactional
     public void createAudit(TestOpportunityAudit testOpportunityAudit) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("key", UuidAdapter.getBytesFromUUID(testOpportunityAudit.getTestOpportunityKey()));

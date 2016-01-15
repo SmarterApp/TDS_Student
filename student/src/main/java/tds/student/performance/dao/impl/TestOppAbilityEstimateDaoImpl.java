@@ -31,7 +31,6 @@ public class TestOppAbilityEstimateDaoImpl implements TestOppAbilityEstimateDao 
     }
 
     @Override
-    @Transactional
     public void create(TestOppAbilityEstimate estimate) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("oppKey", UuidAdapter.getBytesFromUUID(estimate.getOppKey()));
@@ -64,7 +63,6 @@ public class TestOppAbilityEstimateDaoImpl implements TestOppAbilityEstimateDao 
     }
 
     @Override
-    @Transactional
     public void createFromItemBankAndTestOpp(UUID oppKey, Float ability, Timestamp date) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("oppKey", UuidAdapter.getBytesFromUUID(oppKey));

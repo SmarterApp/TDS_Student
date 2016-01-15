@@ -14,7 +14,6 @@ import tds.student.performance.utils.LegacySqlConnection;
 import java.sql.SQLException;
 
 @Service
-@Transactional
 public class LegacyTestOpportunityServiceImpl implements LegacyTestOpportunityService {
     @Autowired
     ICommonDLL commonDll;
@@ -22,6 +21,16 @@ public class LegacyTestOpportunityServiceImpl implements LegacyTestOpportunitySe
     @Autowired
     LegacySqlConnection legacySqlConnection;
 
+    /**
+     * <p>
+     *     Opted to let legacy code handle transaction on its own.
+     * </p>
+     *
+     * @param opportunity
+     * @param status
+     * @throws SQLException
+     * @throws ReturnStatusException
+     */
     public void setOpportunityStatus(TestOpportunity opportunity, String status) throws SQLException, ReturnStatusException {
         try (SQLConnection connection = legacySqlConnection.get()) {
             commonDll.SetOpportunityStatus_SP(connection, opportunity.getKey(), status, true, opportunity.getSessionKey().toString());

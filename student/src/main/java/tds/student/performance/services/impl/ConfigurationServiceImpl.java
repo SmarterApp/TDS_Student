@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional
 public class ConfigurationServiceImpl implements ConfigurationService {
     // Represents the DataBaseTable assignedTbl = getDataBaseTable ("stfpAssigned")
     private class StfpAssigned {
