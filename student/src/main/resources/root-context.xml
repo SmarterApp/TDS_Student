@@ -138,6 +138,7 @@
 
 		<beans:property name="poolName" value="AIRHikariCP" />
 		<beans:property name="maxLifetime" value="1800000" />
+		<beans:property name="minimumIdle" value="60" />
 		<beans:property name="maximumPoolSize" value="500" />
 		<beans:property name="leakDetectionThreshold" value="15000" />
 
