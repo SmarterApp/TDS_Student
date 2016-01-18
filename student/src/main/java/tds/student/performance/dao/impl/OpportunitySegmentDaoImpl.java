@@ -157,7 +157,8 @@ public class OpportunitySegmentDaoImpl implements OpportunitySegmentDao {
         JdbcTemplate singleTemplate = new JdbcTemplate(singleDataSource);
         NamedParameterJdbcTemplate singleNamedTemplate = new NamedParameterJdbcTemplate(singleDataSource);
 
-        String tempTableName = "TempInsertTesteeResponse";
+        String tempTableName = String.format ("%s%s", "inserts", UUID.randomUUID().toString ().replace ('-', 'z'));
+
 
         final String SQL = "CREATE TEMPORARY TABLE " + tempTableName + " (\n" +
                 "  Format varchar(50),\n" +
@@ -214,13 +215,11 @@ public class OpportunitySegmentDaoImpl implements OpportunitySegmentDao {
                             "VALUES(:Format, :IsRequired, :relativePosition, :b, :IsFieldTest, :efk_ITSItem, :Position, :bankkey, :Scorepoint, :bankitemkey, :formPosition, :contentLevel)";
         }
 
-        int[] insertCounts = singleNamedTemplate.batchUpdate(sqlInsert, parameters.toArray(new SqlParameterSource[itemList.size()]));
-        //todo: could add a check of counts.
+        singleNamedTemplate.batchUpdate(sqlInsert, parameters.toArray(new SqlParameterSource[itemList.size()]));
 
         // for debug
         //String sqlQuery = "select * from " + tempTableName;
         //List<Map<String, Object>> mapList =  singleTemplate.queryForList(sqlQuery);
-
 
         return tempTableName;
     }

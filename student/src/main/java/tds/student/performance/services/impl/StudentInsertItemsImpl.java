@@ -84,7 +84,6 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
         Date starttime = _dateUtil.getDateWRetStatus(connection);
         String localhostname = _commonDll.getLocalhostName();
         _Ref<String> error = new _Ref<>();
-        String newTempTable;
 
         logger.debug("*** insertItems : oppKey: {} ", oppKey.toString() );
 
@@ -220,7 +219,7 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             boolean preexistingAutoCommitMode = connection.getAutoCommit();
             connection.setAutoCommit(false);
 
-            newTempTable = opportunitySegmentDao.loadInsertTableForTesteeResponses(connection, itemInsertList);
+            String newTempTable = opportunitySegmentDao.loadInsertTableForTesteeResponses(connection, itemInsertList);
             Map<String, String> unquotedParamsTempInsert = new HashMap<>();
             unquotedParamsTempInsert.put("insertsTableName", newTempTable);
 
@@ -255,6 +254,7 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
                 parms10.put("groupB", groupB);
 
                 int existsUpdateCnt = executeStatement(connection, fixDataBaseNames(SQL_UPDATE3, unquotedParamsTempInsert), parms10, false).getUpdateCount();
+                opportunitySegmentDao.dropTempTable(connection, newTempTable);
                 logger.debug("*** Not SQL_EXISTS1 execute SQL_UPDATE3 updated: " + existsUpdateCnt);
             }
 
@@ -342,7 +342,6 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
         // New result set from data structure. Replaces SQL_QUERY21
         resultsSets.add(createResultsetFromItemList(itemInsertList, page));
 
-        opportunitySegmentDao.dropTempTable(connection, newTempTable);
         _commonDll._LogDBLatency_SP(connection, "T_InsertItems", starttime, null, true, page, oppKey, sessionKey, oppSeg.getClientName(), null);
         return (new MultiDataResultSet(resultsSets));
     }
