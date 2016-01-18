@@ -55,6 +55,19 @@ public class TesteeResponseHelper {
                 .toList();
     }
 
+    // Filter the input list for is a field test.
+    public static List<InsertTesteeResponse> isFieldTestList(List<InsertTesteeResponse> itemList) {
+        return FluentIterable
+                .from(itemList)
+                .filter(new Predicate<InsertTesteeResponse>() {
+                    @Override
+                    public boolean apply(InsertTesteeResponse input) {
+                        return input != null && input.getIsFieldTest() != null && input.getIsFieldTest();
+                    }
+                })
+                .toList();
+    }
+
     // Sort the input list by form position.
     // Use the first as the form start.
     // If first then update relative position for items in the list.

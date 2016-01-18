@@ -347,7 +347,8 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             final String SQL_INSERT3 = "insert into testeeresponse (_fk_TestOpportunity, Position) select ${oppkey}, R.position from ${insertsTableName} R " +
                     " where not exists (select * from testeeresponse where _fk_TestOpportunity = ${oppkey} and position = R.position);";
             SqlParametersMaps parms9 = parms1;
-            executeStatement(connection, fixDataBaseNames(SQL_INSERT3, unquotedParamsTempInsert), parms9, false).getUpdateCount();
+            int insertCount = executeStatement(connection, fixDataBaseNames(SQL_INSERT3, unquotedParamsTempInsert), parms9, false).getUpdateCount();
+            logger.debug("*** SQL_INSERT3 to testeeresponse count: {}", insertCount);
 
             final String SQL_EXISTS1 = "select page from testeeresponse T,  ${insertsTableName} R where T._fk_TestOpportunity = ${oppkey} and "
                     + " (T.page = ${page} or (T._efk_ITSBank = R.bankkey and T._efk_ITSItem = R._efk_ITSItem))";
@@ -374,11 +375,7 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
                 parms10.put("groupB", groupB);
 
                 int existsUpdateCnt = executeStatement(connection, fixDataBaseNames(SQL_UPDATE3, unquotedParamsTempInsert), parms10, false).getUpdateCount();
-
                 logger.debug("*** Not SQL_EXISTS1 execute SQL_UPDATE3 updated: " + existsUpdateCnt);
-
-            }  else {
-                logger.debug("*** SQL_EXISTS1 skip SQL_UPDATE3");
             }
 
             // todo: Why do we have to check if an insert worked?
@@ -415,6 +412,8 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
                         .put("segment", segment);
                 executeStatement(connection, SQL_UPDATE4, parms12, false).getUpdateCount();
             }
+
+
             if (_studentDll._AA_IsSegmentSatisfied_FN(connection, oppKey, segment)) {
                 final String SQL_UPDATE5 = "update testopportunitysegment set IsSatisfied = 1 where _fk_TestOpportunity = ${oppkey} and segmentPosition = ${segment};";
                 SqlParametersMaps parms13 = new SqlParametersMaps().put("oppkey", oppKey).put("segment", segment);

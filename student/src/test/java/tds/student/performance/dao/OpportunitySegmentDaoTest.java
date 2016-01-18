@@ -98,6 +98,38 @@ public class OpportunitySegmentDaoTest extends IntegrationTest {
     }
 
     @Test
+    public void check_contains_field_test() {
+
+        //final String SQL_QUERY6 = "select  bankitemkey from ${insertsTableName} where formPosition is null limit 1";
+
+        String adminSubject = "(SBAC_PT)SBAC-IRP-Perf-MATH-3-Summer-2015-2016";
+        String testForm = "187-764";
+        String groupId = "G-187-3700-0";
+        String languagePropertyValue = "ENU";
+
+        List<ItemForTesteeResponse> itemList = opportunitySegmentDao.getItemForTesteeResponse(adminSubject, testForm, groupId, languagePropertyValue);
+        assertTrue(itemList.size() == 4);
+
+        String itemKeys = "187-2788|187-1576|187-2789|187-1578";
+        Character delimiter = '|';
+
+        List<InsertTesteeResponse> t1 = TesteeResponseHelper.createInsertsList(itemList, itemKeys, delimiter);
+        assertTrue(t1.size() == 4);
+
+        // Any null form position?
+        assertTrue(TesteeResponseHelper.isFieldTestList(t1).size() == 0);
+
+        // Break it
+        t1.get(0).setIsFieldTest(true);
+        t1.get(1).setIsFieldTest(true);
+        t1.get(3).setIsFieldTest(null);
+
+        // Check it
+        assertTrue(TesteeResponseHelper.isFieldTestList(t1).size() == 2);
+    }
+
+
+    @Test
     public void should_exists_TesteeResponses_ByBankKey_And_Opportunity() {
 
         UUID key = UUID.fromString("B8876987-F3CF-44E0-A526-AE4EBE6CA8E2");
@@ -203,8 +235,6 @@ public class OpportunitySegmentDaoTest extends IntegrationTest {
 
     }
 
-
-    //ambiguousItemPosition
     @Test
     public void check_increment_item_position() {
 
@@ -234,8 +264,6 @@ public class OpportunitySegmentDaoTest extends IntegrationTest {
         dumpInsertList(s2);
         assertEquals(s2.get(0).getPosition().intValue(), 8);
         assertEquals(s2.get(3).getPosition().intValue(), 11);
-
-
     }
 
     @Test
