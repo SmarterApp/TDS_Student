@@ -128,6 +128,42 @@ public class OpportunitySegmentDaoTest extends IntegrationTest {
         assertTrue(TesteeResponseHelper.isFieldTestList(t1).size() == 2);
     }
 
+    @Test
+    public void check_minimum_position() {
+
+        String adminSubject = "(SBAC_PT)SBAC-IRP-Perf-MATH-3-Summer-2015-2016";
+        String testForm = "187-764";
+        String groupId = "G-187-3700-0";
+        String languagePropertyValue = "ENU";
+
+        List<ItemForTesteeResponse> itemList = opportunitySegmentDao.getItemForTesteeResponse(adminSubject, testForm, groupId, languagePropertyValue);
+        assertTrue(itemList.size() == 4);
+
+        String itemKeys = "187-2788|187-1576|187-2789|187-1578";
+        Character delimiter = '|';
+
+        List<InsertTesteeResponse> t1 = TesteeResponseHelper.createInsertsList(itemList, itemKeys, delimiter);
+        assertTrue(t1.size() == 4);
+
+        List<InsertTesteeResponse> s1 = TesteeResponseHelper.incrementItemPositionByLast(t1, 0);
+        assertEquals(TesteeResponseHelper.minimumPosition(s1), new Integer(1));
+
+        // Change it
+        s1.get(3).setPosition(0);
+        s1.get(1).setPosition(null);
+        assertEquals(TesteeResponseHelper.minimumPosition(s1), new Integer(0));
+
+        // All Null
+        s1.get(0).setPosition(null);
+        s1.get(1).setPosition(null);
+        s1.get(2).setPosition(null);
+        s1.get(3).setPosition(null);
+        assertNull(TesteeResponseHelper.minimumPosition(s1));
+
+        assertNull(TesteeResponseHelper.minimumPosition( new ArrayList<InsertTesteeResponse>()));
+
+    }
+
 
     @Test
     public void should_exists_TesteeResponses_ByBankKey_And_Opportunity() {
