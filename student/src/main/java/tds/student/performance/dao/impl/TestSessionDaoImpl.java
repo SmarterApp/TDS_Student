@@ -128,7 +128,7 @@ public class TestSessionDaoImpl implements TestSessionDao {
                     parameters,
                     new BeanPropertyRowMapper<>(TestSessionTimeLimitConfiguration.class));
         } catch(EmptyResultDataAccessException e) {
-            logger.warn(String.format("%s did not return any results for clientName = %s", SQL, clientName), e);
+            logger.info(String.format("%s did not return any results for clientName = %s", SQL, clientName));
             return null;
         }
     }
@@ -184,7 +184,7 @@ public class TestSessionDaoImpl implements TestSessionDao {
                     parameters,
                     new BeanPropertyRowMapper<>(TestSessionTimeLimitConfiguration.class));
         } catch (EmptyResultDataAccessException e) {
-            logger.warn(String.format("%s did not return any results for testId = %s, clientName = %s", SQL, testId, clientName), e);
+            logger.info(String.format("%s did not return any results for testId = %s, clientName = %s", SQL, testId, clientName));
             return null;
         }
     }

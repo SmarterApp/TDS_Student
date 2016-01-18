@@ -432,9 +432,9 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
         if (itemCount > 0) {
             if (reset != 0) {
                 testeeResponseDao.delete(opportunity.getKey());
+            } else {
+                return;
             }
-        } else {
-            return;
         }
 
         testeeResponseDao.insertBatch(opportunity.getKey(), maxItems);

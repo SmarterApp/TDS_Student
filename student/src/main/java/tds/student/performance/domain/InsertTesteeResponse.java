@@ -22,7 +22,7 @@ public class InsertTesteeResponse extends ItemForTesteeResponse {
 
     @Override
     public String toString() {
-        return "InsertTesteeResponse{" +
+        return "Insert {" +
                 "position=" + position +
                 "} " + super.toString();
     }

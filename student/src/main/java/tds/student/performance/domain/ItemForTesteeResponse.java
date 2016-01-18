@@ -130,17 +130,21 @@ public class ItemForTesteeResponse {
         this.answerKey = answerKey;
     }
 
-
-
     @Override
     public String toString() {
-        return "ItemForTesteeResponse{" +
-                "itemType='" + itemType + '\'' +
-                ", bankItemKey='" + bankItemKey + '\'' +
+        return "Item {" +
+                "bankItemKey='" + bankItemKey + '\'' +
                 ", itemPosition=" + itemPosition +
+                ", bankKey=" + bankKey +
+                ", itemKey=" + itemKey +
+                ", irtb=" + irtb +
                 ", scorePoint='" + scorePoint + '\'' +
+                ", itemType='" + itemType + '\'' +
                 ", isFieldTest=" + isFieldTest +
+                ", isRequired=" + isRequired +
+                ", contentLevel='" + contentLevel + '\'' +
                 ", formPosition=" + formPosition +
+                ", answerKey='" + answerKey + '\'' +
                 '}';
     }
 }
