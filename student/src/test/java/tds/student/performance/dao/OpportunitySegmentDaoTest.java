@@ -12,11 +12,12 @@ import tds.student.performance.domain.ItemForTesteeResponse;
 import tds.student.performance.domain.OpportunitySegment;
 import tds.student.performance.utils.TesteeResponseHelper;
 
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 public class OpportunitySegmentDaoTest extends IntegrationTest {
@@ -26,6 +27,9 @@ public class OpportunitySegmentDaoTest extends IntegrationTest {
 
     @Autowired
     OpportunitySegmentDao opportunitySegmentDao;
+
+    @Autowired
+    DataSource dataSource2;
 
     @Test
     public void should_Get_a_OpportunitySegment() {
@@ -121,7 +125,7 @@ public class OpportunitySegmentDaoTest extends IntegrationTest {
         final List<String> itemKeyList1 = Splitter.on(delimiter).omitEmptyStrings().trimResults()
                 .splitToList("9187-2788|9187-1576|9187-2789|9187-1578");
 
-        assertFalse(opportunitySegmentDao.existsTesteeResponsesByBankKeyAndOpportunity(key, itemKeyList1) );
+        assertFalse(opportunitySegmentDao.existsTesteeResponsesByBankKeyAndOpportunity(key, itemKeyList1));
 
     }
 
@@ -231,6 +235,34 @@ public class OpportunitySegmentDaoTest extends IntegrationTest {
         assertEquals(s2.get(0).getPosition().intValue(), 8);
         assertEquals(s2.get(3).getPosition().intValue(), 11);
 
+
+    }
+
+    @Test
+    public void check_create_inserts_temp_table() throws SQLException {
+
+        String adminSubject = "(SBAC_PT)SBAC-IRP-Perf-MATH-3-Summer-2015-2016";
+        String testForm = "187-764";
+        String groupId = "G-187-3700-0";
+        String languagePropertyValue = "ENU";
+
+        List<ItemForTesteeResponse> itemList = opportunitySegmentDao.getItemForTesteeResponse(adminSubject, testForm, groupId, languagePropertyValue);
+        assertTrue(itemList.size() == 4);
+
+        String itemKeys = "187-2788|187-1576|187-2789|187-1578";
+        Character delimiter = '|';
+
+        List<InsertTesteeResponse> t1 = TesteeResponseHelper.createInsertsList(itemList, itemKeys, delimiter);
+        assertTrue(t1.size() == 4);
+        TesteeResponseHelper.incrementItemPositionByLast(t1, 0);
+
+        Connection connection = dataSource2.getConnection();
+
+        String insertTable = opportunitySegmentDao.loadInsertTableForTesteeResponses(connection, t1);
+
+        assertNotNull(insertTable);
+
+        opportunitySegmentDao.dropTempTable(connection, insertTable);
 
     }
 
