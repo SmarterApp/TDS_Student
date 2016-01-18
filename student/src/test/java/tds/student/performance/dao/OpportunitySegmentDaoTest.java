@@ -325,6 +325,7 @@ public class OpportunitySegmentDaoTest extends IntegrationTest {
         String insertTable = opportunitySegmentDao.loadInsertTableForTesteeResponses(connection, t1);
 
         assertNotNull(insertTable);
+        logger.debug("Temp Table Name {} ", insertTable);
 
         opportunitySegmentDao.dropTempTable(connection, insertTable);
 
