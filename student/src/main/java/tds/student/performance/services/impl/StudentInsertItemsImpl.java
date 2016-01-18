@@ -105,19 +105,6 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
         String msg = null;
         String argstring = null;
 
-        DataBaseTable itemsTable = getDataBaseTable("items").addColumn("p", SQL_TYPE_To_JAVA_TYPE.INT).addColumn("itemkey", SQL_TYPE_To_JAVA_TYPE.VARCHAR, 50);
-        connection.createTemporaryTable(itemsTable);
-
-        if (itemKeys != null) {
-            DataBaseTable buildTable = _commonDll._BuildTable_FN(connection, "_BuildTable", itemKeys, delimiter.toString());
-            final String SQL_INSERT1 = "insert into ${itemsTableName} (p, itemkey) select idx, record from ${temporaryTableName};";
-            Map<String, String> unquotedParms1 = new HashMap<String, String>();
-            unquotedParms1.put("itemsTableName", itemsTable.getTableName());
-            unquotedParms1.put("temporaryTableName", buildTable.getTableName());
-            executeStatement(connection, fixDataBaseNames(SQL_INSERT1, unquotedParms1), null, false).getUpdateCount();
-            connection.dropTemporaryTable(buildTable);
-        }
-
         OpportunitySegment oppSeg = opportunitySegmentDao.getOpportunitySegmentAccommodation(oppKey, segment);
         SqlParametersMaps parms1 = new SqlParametersMaps().put("oppkey", oppKey);
 
@@ -168,99 +155,25 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             lastPosition = record.<Integer>get("lastPosition");
         }
 
-        // Get item data from itembank, filter by items chosen by selection algorithm (some may have been excluded)
-        DataBaseTable insertsTable = getDataBaseTable("inserts").addColumn("bankitemkey", SQL_TYPE_To_JAVA_TYPE.VARCHAR, 50).addColumn("relativePosition", SQL_TYPE_To_JAVA_TYPE.INT)
-                .addColumn("formPosition", SQL_TYPE_To_JAVA_TYPE.INT).addColumn("Position", SQL_TYPE_To_JAVA_TYPE.INT).addColumn("answer", SQL_TYPE_To_JAVA_TYPE.VARCHAR, 10)
-                .addColumn("b", SQL_TYPE_To_JAVA_TYPE.FLOAT).addColumn("bankkey", SQL_TYPE_To_JAVA_TYPE.BIGINT).addColumn("_efk_ITSItem", SQL_TYPE_To_JAVA_TYPE.BIGINT)
-                .addColumn("Scorepoint", SQL_TYPE_To_JAVA_TYPE.INT).addColumn("contentLevel", SQL_TYPE_To_JAVA_TYPE.VARCHAR, 200).addColumn("Format", SQL_TYPE_To_JAVA_TYPE.VARCHAR, 50)
-                .addColumn("IsFieldTest", SQL_TYPE_To_JAVA_TYPE.BIT).addColumn("IsRequired", SQL_TYPE_To_JAVA_TYPE.BIT);
-        connection.createTemporaryTable(insertsTable);
-
-        final String SQL_INSERT2 = "insert into ${insertsTableName} (bankitemkey, relativePosition, bankkey, _efk_ITSItem, b, Scorepoint,  format, isFieldTest, IsRequired, contentLevel, formPosition, answer)"
-                + " select  A._fk_Item as bankitemkey, ItemPosition, _efk_ItemBank as bankkey, _efk_Item as itemkey,  IRT_b,"
-                + " ScorePoint, ItemType, IsFieldTest, IsRequired, _fk_Strand as ContentLevel, "
-                + " (select FormPosition from ${ItemBankDB}.testformitem F where F._fk_Item = A._fk_Item and _fk_TestForm = ${formkey} and F._fk_AdminSubject = ${segmentKey}) as FormPosition, "
-                + " Answer as answerKey "
-                + " from ${ItemBankDB}.tblsetofadminitems A, ${ItemBankDB}.tblitem I, ${ItemBankDB}.tblitemprops P where A._fk_AdminSubject = ${segmentKey} and A.groupID = ${groupID} and A._fk_ITem = I._Key"
-                + " and P._fk_AdminSubject = ${segmentKey} and P._fk_Item = A._fk_Item and P.Propname = 'Language' and P.Propvalue = ${language} "
-                + " order by itemposition";
-
-
-        Map<String, String> unquotedParms3 = new HashMap<>();
-        unquotedParms3.put("insertsTableName", insertsTable.getTableName());
-
-        SqlParametersMaps params = (new SqlParametersMaps()).put("formkey", oppSeg.getFormKey())
-                .put("testkey", oppSeg.getTestKey()).put("groupid", groupId).put("language", oppSeg.getLanguage()).put("segmentKey", oppSeg.getSegmentKey());
-        String query = fixDataBaseNames(SQL_INSERT2); // to substitute
-
-        executeStatement(connection, fixDataBaseNames(query, unquotedParms3), params, false).getUpdateCount();
-        if (itemKeys != null) {
-            final String SQL_DELETE1 = "delete from  ${insertsTableName} where bankitemkey not in (select itemkey from ${itemsTableName});";
-            Map<String, String> unquotedParms4 = new HashMap<String, String>();
-            unquotedParms4.put("insertsTableName", insertsTable.getTableName());
-            unquotedParms4.put("itemsTableName", itemsTable.getTableName());
-            executeStatement(connection, fixDataBaseNames(SQL_DELETE1, unquotedParms4), null, false).getUpdateCount();
-        }
-
-        /* old
-        final String SQL_QUERY6 = "select  bankitemkey from ${insertsTableName} where formPosition is null limit 1";
-        if (DbComparator.isEqual(oppSeg.getAlgorithm(), "fixedform") && (exists(executeStatement(connection, fixDataBaseNames(SQL_QUERY6, unquotedParms3), null, false)))) {
-            msg = String.format("Item(s) not on form: groupID = %s; items: = %s ", groupId, itemKeys);
-            _commonDll._LogDBError_SP(connection, "T_InsertItems", msg, null, null, null, oppKey, oppSeg.getClientName(), sessionKey);
-            resultsSets.add(_commonDll._ReturnError_SP(connection, oppSeg.getClientName(), "T_InsertItems", "Database record insertion failed for new test items", null, oppKey, null));
-            return (new MultiDataResultSet(resultsSets));
-        } */
-        // New make sure fixed form has not null form position items.
+        // New make sure fixed form has not null form position items. SQL_QUERY6
         if (DbComparator.isEqual(oppSeg.getAlgorithm(), "fixedform") && TesteeResponseHelper.nullFormPositionList(itemInsertList).size() > 0 ) {
             _commonDll._LogDBError_SP(connection, "T_InsertItems", String.format("Item(s) not on form: groupID = %s; items: = %s ", groupId, itemKeys), null, null, null, oppKey, oppSeg.getClientName(), sessionKey);
             resultsSets.add(_commonDll._ReturnError_SP(connection, oppSeg.getClientName(), "T_InsertItems", "Database record insertion failed for new test items", null, oppKey, null));
             return (new MultiDataResultSet(resultsSets));
         }
 
-        /* old
-        final String SQL_QUERY7 = "select  bankitemkey from ${insertsTableName} limit 1";
-        if (!exists(executeStatement(connection, fixDataBaseNames(SQL_QUERY7, unquotedParms3), null, false))) {
-            msg = String.format("Item group does not exist: groupID = %s; items: = %s ", groupId, itemKeys);
-            _commonDll._LogDBError_SP(connection, "T_InsertItems", msg, null, null, null, oppKey, oppSeg.getClientName(), sessionKey);
-            resultsSets.add(_commonDll._ReturnError_SP(connection, oppSeg.getClientName(), "T_InsertItems", "Database record insertion failed for new test items", null, oppKey, null));
-            return (new MultiDataResultSet(resultsSets));
-        } */
-        // Step 11: New check list has items
+        // Step 11: New check list has items  SQL_QUERY7
         if ( itemInsertList == null || itemInsertList.size() <= 0 ) {
             _commonDll._LogDBError_SP(connection, "T_InsertItems", String.format("Item group does not exist: groupID = %s; items: = %s ", groupId, itemKeys), null, null, null, oppKey, oppSeg.getClientName(), sessionKey);
             resultsSets.add(_commonDll._ReturnError_SP(connection, oppSeg.getClientName(), "T_InsertItems", "Database record insertion failed for new test items", null, oppKey, null));
             return (new MultiDataResultSet(resultsSets));
         }
 
-        /* Old
-        if (DbComparator.isEqual(oppSeg.getAlgorithm(), "fixedform")) {
-            Integer formStart = null;
-            final String SQL_QUERY8 = "select min(formPosition) as formStart from ${insertsTableName};";
-            result = executeStatement(connection, fixDataBaseNames(SQL_QUERY8, unquotedParms3), null, false).getResultSets().next();
-            record = (result.getCount() > 0 ? result.getRecords().next() : null);
-            if (record != null) {
-                formStart = record.<Integer>get("formStart");
-            }
-            final String SQL_UPDATE1 = "update ${insertsTableName} set relativePosition = formPosition - ${formStart};";
-            SqlParametersMaps parms6 = new SqlParametersMaps().put("formStart", formStart);
-            executeStatement(connection, fixDataBaseNames(SQL_UPDATE1, unquotedParms3), parms6, false).getUpdateCount();
-        } */
-
         // New: Step 12: Replaces SQL_QUERY8 and SQL_UPDATE1 for relativePosition
         TesteeResponseHelper.updateItemPosition(itemInsertList);
         dumpInsertList(itemInsertList);
 
-        /* Old
-        final String SQL_QUERY9 = "select relativePosition from ${insertsTableName} group by relativePosition having count(*) > 1";
-        final String SQL_QUERY10 = "select  bankitemkey from ${insertsTableName} where relativePosition is null limit 1";
-        if ((exists(executeStatement(connection, fixDataBaseNames(SQL_QUERY9, unquotedParms3), null, false)))
-                || (exists(executeStatement(connection, fixDataBaseNames(SQL_QUERY10, unquotedParms3), null, false)))) {
-            msg = String.format("Ambiguous item positions in item group %s", groupId);
-            _commonDll._LogDBError_SP(connection, "T_InsertItems", msg, null, null, null, oppKey, oppSeg.getClientName(), sessionKey);
-            resultsSets.add(_commonDll._ReturnError_SP(connection, oppSeg.getClientName(), "T_InsertItems", "Database record insertion failed for new test items"));
-            return (new MultiDataResultSet(resultsSets));
-        } */
-        // New Step 13
+        // New Step 13   SQL_QUERY9, SQL_QUERY10
         if ( TesteeResponseHelper.ambiguousItemPosition(itemInsertList) ) {
             _commonDll._LogDBError_SP(connection, "T_InsertItems", String.format("Ambiguous item positions in item group %s", groupId), null, null, null, oppKey, oppSeg.getClientName(), sessionKey);
             resultsSets.add(_commonDll._ReturnError_SP(connection, oppSeg.getClientName(), "T_InsertItems", "Database record insertion failed for new test items"));
@@ -273,31 +186,10 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             lastpos = 0;  */
         lastpos = lastPosition == null ? 0 : lastPosition;
 
-        /* Old
-        final String SQL_QUERY11 = "select  bankitemkey from ${insertsTableName} where position is null limit 1";
-        while (exists(executeStatement(connection, fixDataBaseNames(SQL_QUERY11, unquotedParms3), null, false))) {
-            final String SQL_QUERY12 = "select min(relativePosition) as minpos from ${insertsTableName} where position is null;";
-            result = executeStatement(connection, fixDataBaseNames(SQL_QUERY12, unquotedParms3), null, false).getResultSets().next();
-            record = (result.getCount() > 0 ? result.getRecords().next() : null);
-            if (record != null) {
-                minpos = record.<Integer>get("minpos");
-            }
-            final String SQL_UPDATE2 = "update ${insertsTableName} set position = ${lastpos} + 1 where relativePosition = ${minpos};";
-            SqlParametersMaps parms7 = new SqlParametersMaps().put("lastpos", lastpos).put("minpos", minpos);
-            executeStatement(connection, fixDataBaseNames(SQL_UPDATE2, unquotedParms3), parms7, false).getUpdateCount();
-            lastpos += 1;
-        } */
+
         // New: Step 15: Replaces SQL_QUERY11, SQL_QUERY12, SQL_UPDATE2
         itemInsertList = TesteeResponseHelper.incrementItemPositionByLast(itemInsertList, lastPosition == null ? 0 : lastPosition);
         dumpInsertList(itemInsertList);
-
-        /* old Step 16
-        final String SQL_QUERY13 = "select count(*) as count from ${insertsTableName};";
-        result = executeStatement(connection, fixDataBaseNames(SQL_QUERY13, unquotedParms3), null, false).getResultSets().next();
-        record = (result.getCount() > 0 ? result.getRecords().next() : null);
-        if (record != null) {
-            count = record.<Long>get("count").intValue();
-        } */
 
         /* todo: do we need this debug?
         if (debug == 1) {
@@ -309,15 +201,6 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
         // New: Step 16: Replaces SQL_QUERY13, SQL_QUERY14
         count = itemInsertList.size();
 
-        /* Old
-        final String SQL_QUERY15 = "select  bankitemkey from testeeresponse, ${insertsTableName} where _fk_TestOpportunity = ${oppkey} and _efk_Itemkey = bankitemkey limit 1";
-        SqlParametersMaps parms8 = parms1;
-        if (exists(executeStatement(connection, fixDataBaseNames(SQL_QUERY15, unquotedParms3), parms8, false))) {
-            msg = String.format("Attempt to duplicate existing item: %s", itemKeys);
-            _commonDll._LogDBError_SP(connection, "T_InsertItems", msg, null, null, null, oppKey, oppSeg.getClientName(), sessionKey);
-            resultsSets.add(_commonDll._ReturnError_SP(connection, oppSeg.getClientName(), "T_InsertItems", "Database record insertion failed for new test items", null, oppKey, null));
-            return (new MultiDataResultSet(resultsSets));
-        } */
         // New Step 18: replaces SQL_QUERY15,
         if ( opportunitySegmentDao.existsTesteeResponsesByBankKeyAndOpportunity(oppKey, itemKeyList) ) {
             msg = String.format("Attempt to duplicate existing item: %s", itemKeys);
@@ -330,7 +213,6 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
         if ( noinsert ) {
             return (new MultiDataResultSet(resultsSets));
         }
-
 
         String errmsg = null;
         Integer itemcnt = null;
@@ -393,23 +275,6 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
                 resultsSets.add(_commonDll._ReturnError_SP(connection, oppSeg.getClientName(), "T_InsertItems", "Database record insertion failed for new test items", null, oppKey, null));
                 return (new MultiDataResultSet(resultsSets));
             }
-
-            /* Old
-            final String SQL_QUERY17 = "select  bankitemkey from ${insertsTableName} where isFIeldTest = 1 limit 1";
-            if (exists(executeStatement(connection, fixDataBaseNames(SQL_QUERY17, unquotedParms3), null, false))) {
-                Integer minFTpos = null;
-                final String SQL_QUERY18 = "select min(position) as minFTpos from ${insertsTableName}";
-                result = executeStatement(connection, fixDataBaseNames(SQL_QUERY18, unquotedParms3), null, false).getResultSets().next();
-                record = (result.getCount() > 0 ? result.getRecords().next() : null);
-                if (record != null) {
-                    minFTpos = record.<Integer>get("minFTpos");
-                }
-                final String SQL_UPDATE4 = "update ft_opportunityitem set dateAdministered = ${now}, positionAdministered = ${minFTpos} where _fk_TestOpportunity = ${oppkey} " +
-                        "and segment = ${segment} and groupID = ${groupID};";
-                SqlParametersMaps parms12 = new SqlParametersMaps().put("oppkey", oppKey).put("groupID", groupId).put("now", starttime).put("minFTpos", minFTpos)
-                        .put("segment", segment);
-                executeStatement(connection, SQL_UPDATE4, parms12, false).getUpdateCount();
-            } */
 
             // New Replaces  SQL_QUERY17, SQL_QUERY18
             if ( TesteeResponseHelper.isFieldTestList(itemInsertList).size() > 0 ) {
@@ -474,19 +339,10 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
         rs1.addRecords(resultList);
         resultsSets.add(rs1);
 
-        /* Old
-        final String SQL_QUERY21 = "select bankitemkey, bankkey, _efk_ITSItem as itemkey, bigtoint(${page}) as page, position," +
-                " format from ${insertsTableName} order by position;";
-        SqlParametersMaps parms17 = new SqlParametersMaps().put("page", page);
-        SingleDataResultSet rs2 = executeStatement(connection, fixDataBaseNames(SQL_QUERY21, unquotedParms3), parms17, false).getResultSets().next();
-        resultsSets.add(rs2); */
-
         // New result set from data structure. Replaces SQL_QUERY21
         resultsSets.add(createResultsetFromItemList(itemInsertList, page));
 
         opportunitySegmentDao.dropTempTable(connection, newTempTable);
-        connection.dropTemporaryTable(insertsTable);
-        connection.dropTemporaryTable(itemsTable);
         _commonDll._LogDBLatency_SP(connection, "T_InsertItems", starttime, null, true, page, oppKey, sessionKey, oppSeg.getClientName(), null);
         return (new MultiDataResultSet(resultsSets));
     }
