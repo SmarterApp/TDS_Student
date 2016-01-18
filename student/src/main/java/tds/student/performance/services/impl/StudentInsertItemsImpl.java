@@ -30,8 +30,6 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static org.junit.Assert.assertFalse;
-
 
 /**
  * A service to replace T_InsertItems_SP  in StudentDLL
@@ -251,7 +249,7 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             SqlParametersMaps parms6 = new SqlParametersMaps().put("formStart", formStart);
             executeStatement(connection, fixDataBaseNames(SQL_UPDATE1, unquotedParms3), parms6, false).getUpdateCount();
         }
-        // New
+        // New: Step 12: Replaces SQL_QUERY8 and SQL_UPDATE1 for relativePosition
         TesteeResponseHelper.updateItemPosition(itemInsertList);
         dumpInsertList(itemInsertList);
 
@@ -289,11 +287,9 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             final String SQL_UPDATE2 = "update ${insertsTableName} set position = ${lastpos} + 1 where relativePosition = ${minpos};";
             SqlParametersMaps parms7 = new SqlParametersMaps().put("lastpos", lastpos).put("minpos", minpos);
             executeStatement(connection, fixDataBaseNames(SQL_UPDATE2, unquotedParms3), parms7, false).getUpdateCount();
-            // System.err.println (updatedCnt); // for testing
-
             lastpos += 1;
         }
-        // New step 15
+        // New: Step 15: Replaces SQL_QUERY11, SQL_QUERY12, SQL_UPDATE2
         itemInsertList = TesteeResponseHelper.incrementItemPositionByLast(itemInsertList, lastPosition == null ? 0 : lastPosition);
         dumpInsertList(itemInsertList);
 
@@ -303,13 +299,16 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
         record = (result.getCount() > 0 ? result.getRecords().next() : null);
         if (record != null) {
             count = record.<Long>get("count").intValue();
-        }
+        } */
+
+        /* todo: do we need this debug?
         if (debug == 1) {
             final String SQL_QUERY14 = "select * from ${insertsTableName} ;";
             result = executeStatement(connection, fixDataBaseNames(SQL_QUERY14, unquotedParms3), null, false).getResultSets().next();
             resultsSets.add(result);
         } */
-        // New
+
+        // New: Step 16: Replaces SQL_QUERY13, SQL_QUERY14
         count = itemInsertList.size();
 
         /* Old
@@ -321,7 +320,7 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             resultsSets.add(_commonDll._ReturnError_SP(connection, oppSeg.getClientName(), "T_InsertItems", "Database record insertion failed for new test items", null, oppKey, null));
             return (new MultiDataResultSet(resultsSets));
         } */
-        // New
+        // New Step 18: replaces SQL_QUERY15,
         if ( opportunitySegmentDao.existsTesteeResponsesByBankKeyAndOpportunity(oppKey, itemKeyList) ) {
             msg = String.format("Attempt to duplicate existing item: %s", itemKeys);
             _commonDll._LogDBError_SP(connection, "T_InsertItems", msg, null, null, null, oppKey, oppSeg.getClientName(), sessionKey);
@@ -329,7 +328,7 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             return (new MultiDataResultSet(resultsSets));
         }
 
-        // todo check when this is called and the debug mode
+        // todo: check when this is called and the debug mode
         if ( noinsert ) {
             return (new MultiDataResultSet(resultsSets));
         }
@@ -341,7 +340,7 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             boolean preexistingAutoCommitMode = connection.getAutoCommit();
             connection.setAutoCommit(false);
 
-            newTempTable = opportunitySegmentDao.loadInsertTableForTesteeResponses(connection,itemInsertList);
+            newTempTable = opportunitySegmentDao.loadInsertTableForTesteeResponses(connection, itemInsertList);
             Map<String, String> unquotedParamsTempInsert = new HashMap<>();
             unquotedParamsTempInsert.put("insertsTableName", newTempTable);
 
@@ -469,11 +468,15 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
         rs1.addRecords(resultList);
         resultsSets.add(rs1);
 
+        /* Old
         final String SQL_QUERY21 = "select bankitemkey, bankkey, _efk_ITSItem as itemkey, bigtoint(${page}) as page, position," +
                 " format from ${insertsTableName} order by position;";
         SqlParametersMaps parms17 = new SqlParametersMaps().put("page", page);
         SingleDataResultSet rs2 = executeStatement(connection, fixDataBaseNames(SQL_QUERY21, unquotedParms3), parms17, false).getResultSets().next();
-        resultsSets.add(rs2);
+        resultsSets.add(rs2); */
+
+        // New result set from data structure. Replaces SQL_QUERY21
+        resultsSets.add(createResultsetFromItemList(itemInsertList, page));
 
         opportunitySegmentDao.dropTempTable(connection, newTempTable);
         connection.dropTemporaryTable(insertsTable);
@@ -483,6 +486,34 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
     }
 
 
+    private SingleDataResultSet createResultsetFromItemList(List<InsertTesteeResponse> items, Integer page)
+            throws ReturnStatusException {
+
+        SingleDataResultSet newResultSet = new SingleDataResultSet();
+        newResultSet.addColumn("bankitemkey", SQL_TYPE_To_JAVA_TYPE.VARCHAR);
+        newResultSet.addColumn("bankkey", SQL_TYPE_To_JAVA_TYPE.BIGINT);
+        newResultSet.addColumn("itemkey", SQL_TYPE_To_JAVA_TYPE.BIGINT);
+        newResultSet.addColumn("page", SQL_TYPE_To_JAVA_TYPE.INT);
+        newResultSet.addColumn("position", SQL_TYPE_To_JAVA_TYPE.INT);
+        newResultSet.addColumn("format", SQL_TYPE_To_JAVA_TYPE.VARCHAR);
+
+        for (InsertTesteeResponse newItem : items) {
+            List<CaseInsensitiveMap<Object>> newResultList = new ArrayList<>();
+
+            CaseInsensitiveMap<Object> map = new CaseInsensitiveMap<>();
+            map.put("bankitemkey", newItem.getBankItemKey());
+            map.put("bankkey", newItem.getBankKey());
+            map.put("itemkey", newItem.getItemKey());
+            map.put("page", page);
+            map.put("position", newItem.getPosition());
+            map.put("format", newItem.getItemType());
+
+            newResultList.add(map);
+            newResultSet.addRecords(newResultList);
+        }
+
+        return newResultSet;
+    }
 
     // Helper to see contents of temp table
     private SingleDataResultSet dumpTable(SQLConnection connection, String tableName)
