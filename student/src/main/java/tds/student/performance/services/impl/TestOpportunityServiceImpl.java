@@ -426,7 +426,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
     }
 
     private void createResponseSet(TestOpportunity opportunity, Integer maxItems, Integer reset) {
-        Date start = dateUtility.getDbDate();
+        Date start = dateUtility.getLocalDate();
         Long itemCount = testeeResponseDao.getTesteeResponseItemCount(opportunity.getKey());
 
         if (itemCount > 0) {
