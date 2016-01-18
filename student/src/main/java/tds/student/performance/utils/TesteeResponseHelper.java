@@ -56,6 +56,7 @@ public class TesteeResponseHelper {
     }
 
     // Filter the input list for is a field test.
+    // SQL_QUERY17
     public static List<InsertTesteeResponse> isFieldTestList(List<InsertTesteeResponse> itemList) {
         return FluentIterable
                 .from(itemList)
@@ -66,6 +67,23 @@ public class TesteeResponseHelper {
                     }
                 })
                 .toList();
+    }
+
+    // Get the minimum position
+    // SQL_QUERY18
+    public static Integer minimumPosition(List<InsertTesteeResponse> itemList) {
+
+        InsertTesteeResponse minimumPosition = Iterables.getFirst(
+                Ordering.natural()
+                        .nullsLast()
+                        .onResultOf(new Function<InsertTesteeResponse, Integer>() {
+                            public Integer apply(InsertTesteeResponse item) {
+                                return item.getPosition();
+                            }
+                        }).sortedCopy(itemList)
+                , null);
+
+        return minimumPosition == null ? null : minimumPosition.getPosition();
     }
 
     // Sort the input list by form position.

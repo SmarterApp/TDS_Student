@@ -96,12 +96,11 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
 
         _studentDll._ValidateTesteeAccessProc_SP(connection, oppKey, sessionKey, browserId, false, error);
         if (error.get() != null) {
-            resultsSets.add(_commonDll._ReturnError_SP(connection, null, "T_InsertItems", error.get(), null, oppKey, "_ValidateTesteeAccesss", "denied"));
+            resultsSets.add(_commonDll._ReturnError_SP(connection, null, "T_InsertItems", error.get(), null, oppKey, "_ValidateTesteeAccess", "denied"));
             return (new MultiDataResultSet(resultsSets));
         }
 
         Integer count = null;
-        //String item = null;
         Integer lastPosition = null;
         String msg = null;
         String argstring = null;
@@ -118,8 +117,6 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             executeStatement(connection, fixDataBaseNames(SQL_INSERT1, unquotedParms1), null, false).getUpdateCount();
             connection.dropTemporaryTable(buildTable);
         }
-        // Debug Table
-        //SingleDataResultSet dumpItemsTable01 = dumpTable(connection, itemsTable.getTableName());
 
         OpportunitySegment oppSeg = opportunitySegmentDao.getOpportunitySegmentAccommodation(oppKey, segment);
         SqlParametersMaps parms1 = new SqlParametersMaps().put("oppkey", oppKey);
@@ -156,7 +153,7 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
                 groupId,
                 oppSeg.getLanguage());
 
-        // Make a filtered copy
+        // Make a copy that filters out items not in itemList
         List<InsertTesteeResponse> itemInsertList = TesteeResponseHelper.createInsertsList(itemInsertListDB, itemKeys, delimiter);
         dumpInsertList(itemInsertList);
 
@@ -203,7 +200,6 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             unquotedParms4.put("insertsTableName", insertsTable.getTableName());
             unquotedParms4.put("itemsTableName", itemsTable.getTableName());
             executeStatement(connection, fixDataBaseNames(SQL_DELETE1, unquotedParms4), null, false).getUpdateCount();
-            //System.err.println (deletedCnt); // for testing
         }
 
         /* old
@@ -236,7 +232,7 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             return (new MultiDataResultSet(resultsSets));
         }
 
-        // Old
+        /* Old
         if (DbComparator.isEqual(oppSeg.getAlgorithm(), "fixedform")) {
             Integer formStart = null;
             final String SQL_QUERY8 = "select min(formPosition) as formStart from ${insertsTableName};";
@@ -248,7 +244,8 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             final String SQL_UPDATE1 = "update ${insertsTableName} set relativePosition = formPosition - ${formStart};";
             SqlParametersMaps parms6 = new SqlParametersMaps().put("formStart", formStart);
             executeStatement(connection, fixDataBaseNames(SQL_UPDATE1, unquotedParms3), parms6, false).getUpdateCount();
-        }
+        } */
+
         // New: Step 12: Replaces SQL_QUERY8 and SQL_UPDATE1 for relativePosition
         TesteeResponseHelper.updateItemPosition(itemInsertList);
         dumpInsertList(itemInsertList);
@@ -276,6 +273,7 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             lastpos = 0;  */
         lastpos = lastPosition == null ? 0 : lastPosition;
 
+        /* Old
         final String SQL_QUERY11 = "select  bankitemkey from ${insertsTableName} where position is null limit 1";
         while (exists(executeStatement(connection, fixDataBaseNames(SQL_QUERY11, unquotedParms3), null, false))) {
             final String SQL_QUERY12 = "select min(relativePosition) as minpos from ${insertsTableName} where position is null;";
@@ -288,7 +286,7 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             SqlParametersMaps parms7 = new SqlParametersMaps().put("lastpos", lastpos).put("minpos", minpos);
             executeStatement(connection, fixDataBaseNames(SQL_UPDATE2, unquotedParms3), parms7, false).getUpdateCount();
             lastpos += 1;
-        }
+        } */
         // New: Step 15: Replaces SQL_QUERY11, SQL_QUERY12, SQL_UPDATE2
         itemInsertList = TesteeResponseHelper.incrementItemPositionByLast(itemInsertList, lastPosition == null ? 0 : lastPosition);
         dumpInsertList(itemInsertList);
@@ -396,7 +394,7 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
                 return (new MultiDataResultSet(resultsSets));
             }
 
-
+            /* Old
             final String SQL_QUERY17 = "select  bankitemkey from ${insertsTableName} where isFIeldTest = 1 limit 1";
             if (exists(executeStatement(connection, fixDataBaseNames(SQL_QUERY17, unquotedParms3), null, false))) {
                 Integer minFTpos = null;
@@ -411,6 +409,15 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
                 SqlParametersMaps parms12 = new SqlParametersMaps().put("oppkey", oppKey).put("groupID", groupId).put("now", starttime).put("minFTpos", minFTpos)
                         .put("segment", segment);
                 executeStatement(connection, SQL_UPDATE4, parms12, false).getUpdateCount();
+            } */
+
+            // New Replaces  SQL_QUERY17, SQL_QUERY18
+            if ( TesteeResponseHelper.isFieldTestList(itemInsertList).size() > 0 ) {
+                Integer minFTpos = TesteeResponseHelper.minimumPosition(itemInsertList);
+                final String SQL_UPDATE4 = "update ft_opportunityitem set dateAdministered = ${now}, positionAdministered = ${minFTpos} where _fk_TestOpportunity = ${oppkey} " +
+                        "and segment = ${segment} and groupID = ${groupID};";
+                SqlParametersMaps paramsFieldTest = new SqlParametersMaps().put("oppkey", oppKey).put("groupID", groupId).put("now", starttime).put("minFTpos", minFTpos).put("segment", segment);
+                executeStatement(connection, SQL_UPDATE4, paramsFieldTest, false).getUpdateCount();
             }
 
 
