@@ -1,0 +1,221 @@
+/* for layout 11, two columns */
+.thePassage, .theQuestions {
+	position:absolute;
+	left:0;
+	top:0;
+	bottom:0;
+	z-index:4;
+	overflow:auto;
+	height:100%;
+	width:60%;	
+}
+.theQuestions {
+	left:60%;
+}
+/* for layouts without columns */
+.noColumns  {
+	position:absolute;
+	left:0;
+	top:0;
+	bottom:0;
+	z-index:4;
+	overflow:hidden;
+	height:100%;
+	width:100%;
+}
+.noColumns .theQuestions {
+	position:absolute;
+	left:0;
+	top:0;
+	bottom:0;
+	z-index:4;
+	overflow:auto;
+	height:100%;
+	width:100%;
+}
+
+/* for shell page */
+#topHalf {
+	position: relative;
+	left: 0px;
+	top: 0px;
+	height: 100%;
+	width: 100%;
+	right: 0px;
+	border-bottom-width: 50px;
+	border-bottom-style: solid;
+	border-bottom-color: #FFFFFF;
+}
+.headCell {
+	height: 65px;
+}
+.bottomBar {
+	margin-top: -3px;
+}
+#frmContent {
+	position:absolute;
+	left:0;
+	top:0;
+	z-index:9;
+	overflow:auto;	
+}
+
+/*
+#foot a {
+	width: 4.5em;
+	line-height:1.2em;
+}
+*/
+
+/* gets pop-ups working again */
+body.dialogAlertShow #dialogAlert, body.dialogPromptShow #dialogPrompt, body.contentLoading #dialogProgress, body.closeBrowser #logOut {
+	position: absolute;
+	height: 100%;
+	left: 0px;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+}
+#dialogPrompt, #dialogAlert, #dialogProgress, #dialogPracticePrint {
+	position: absolute;
+	height: 100%;
+	left: 0px;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+}
+
+/* fixes transparent PNG for IE 6 */
+.browserVer_6 .dialogWrapper, .browserVer_5_5 .dialogWrapper {
+	filter:alpha(opacity=70);
+}
+.browserVer_6 .dialogBox, .browserVer_5_5 .dialogBox {
+	position:relative;
+}
+#toolFormula, #toolPeriodicTable, #help, #keyNav {
+	position: absolute;
+}
+#help {
+	top: 5px;
+}
+.popupHeader {
+	margin-right:-4px;
+}
+/* hides drop-down from peeking through for IE6*/
+.dialogAlertShow #navigation select, .dialogPromptShow #navigation select, .contentLoading #navigation select {
+	display: none;
+}
+.Loading {
+	width:250px !important;
+}
+
+/* comments*/
+.markComment a {
+	background-image: url(../../Images/controls/commentIE.gif);
+}
+.markComment a:hover {
+	background-position: 0px -22px;
+}
+/* Mark for Review */
+a.markReview, a.markReview:hover {
+	background-image: url(../../Images/controls/marks.gif);
+	width: 28px;
+	height: 17px;
+	background-position: -30px 0px;
+}
+a.markReviewMarked, a.markReviewMarked:hover {
+	display: block;
+	margin-right: 4px;
+	background-image: url(../../Images/controls/marks.gif);
+	width: 28px;
+	height: 17px;
+	background-position: 0px 0px;
+}
+a.markReviewDisabled, a.markReviewDisabled:hover {
+	display: block;
+	margin-right: 4px;
+	background-image: url(../../Images/controls/marks.gif);
+	width: 28px;
+	height: 17px;
+	background-position: -30px 0px;
+	cursor: default;
+	filter:alpha(opacity=50);
+	-moz-opacity: 0.50;
+	opacity: 0.50;
+}
+
+/* fixes login box for IE 6 */
+.browserVer_6 .topCheck, .browserVer_5_5 .topCheck {
+	height:1% ;
+}
+.browserVer_6 .togetherBorder, .browserVer_5_5 .togetherBorder {
+	margin-bottom:-1em;
+}
+
+/* lets IE6 see select grade drop-dwon */
+.browserVer_6 .selectGrade, .browserVer_5_5 .selectGrade {
+	display:block;
+	padding-bottom:.3em !important;
+	padding-top:.3em !important;
+}
+.browserVer_7 .selectGrade {
+	display:block;
+}
+
+
+
+/* ZOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOMMMMM */
+
+/* magnify stuff */
+.TDS_PS_Larger .bigTable h2, .magnify .bigTable h2, .TDS_PS_Larger .questionContainer, .TDS_PS_Larger .questionCell, .magnify .questionContainer, .magnify .questionCell, .TDS_PS_Larger .answerCell input, .TDS_PS_Larger .answerContainer input, .magnify .answerCell input, .magnify .answerContainer input, .TDS_PS_Larger .answerCell .option, .TDS_PS_Larger .answerContainer .option, .magnify .answerCell .option, .magnify .answerContainer .option, .TDS_PS_Larger .thePassage .padding, .TDS_PS_Larger .theQuestions .padding, .magnify .thePassage .padding, .magnify .theQuestions .padding, .TDS_PS_Larger .commentBox .greenBtn, .magnify .commentBox .greenBtn, .TDS_PS_Largest .answerCell input, .TDS_PS_Largest .answerContainer input, .magnify_2 .answerCell input, .magnify_2 .answerContainer input, .TDS_PS_Largest .answerCell .option, .TDS_PS_Largest .answerContainer .option, .magnify_2 .answerCell .option, .magnify_2 .answerContainer .option, .TDS_PS_Largest .thePassage .padding, .TDS_PS_Largest .theQuestions .padding, .magnify_2 .thePassage .padding, .magnify_2 .theQuestions .padding  {
+	position: inherit !important;
+}
+
+
+/* fixes questions, question numbers from jumping around */
+.TDS_PS_Largest .bigTable h2, .magnify_2 .bigTable h2 {
+	position: static !important;
+}
+.TDS_PS_Largest .questionContainer, .TDS_PS_Largest .questionCell, .magnify_2 .questionContainer, .magnify_2 .questionCell {
+	position: static !important;
+}
+.TDS_PS_Larger .commentBox .greenBtn, .magnify_1 .commentBox .greenBtn, .TDS_PS_Largest .commentBox .greenBtn, .magnify_2 .commentBox .greenBtn {
+	position: static !important;
+}
+
+.multipleChoiceItem .commentBox {
+	width:99%;
+}
+
+/* fixes double border that sometimes gets rendered b/c IE sucks */
+.layout11 .activeItem {
+	position: relative;
+}
+
+
+/* ligatures */
+.optionContent p img, .questionCell p img {
+	margin-top: .1em;
+	margin-bottom: -.1em;
+}
+.questionCell p, .optionContent p {
+	line-height:1.1em;
+}
+/* more item tweaks */
+.questionCell, .questionContainer, .thePassage p {
+	text-align:left;
+}
+.attribute, .attributes {
+	clear:both;
+}
+.optionContent, .questionCell, .questionContainer, .thePassage p {
+	font-weight:normal;
+}
+.questionCell ol li {
+	margin-left:1.5em;
+}
+
+/*  Fades images to mach text in weight aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa */
+.optionContent img {
+	filter:alpha(opacity=85);
+}
