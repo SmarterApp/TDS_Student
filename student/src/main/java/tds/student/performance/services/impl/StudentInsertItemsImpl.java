@@ -86,6 +86,7 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
         Date starttime = _dateUtil.getDateWRetStatus(connection);
         String localhostname = _commonDll.getLocalhostName();
         _Ref<String> error = new _Ref<>();
+        String newTempTable;
 
         logger.debug("*** insertItems : oppKey: {} ", oppKey.toString() );
 
@@ -340,16 +341,20 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             boolean preexistingAutoCommitMode = connection.getAutoCommit();
             connection.setAutoCommit(false);
 
+            newTempTable = opportunitySegmentDao.loadInsertTableForTesteeResponses(connection,itemInsertList);
+            Map<String, String> unquotedParamsTempInsert = new HashMap<>();
+            unquotedParamsTempInsert.put("insertsTableName", newTempTable);
+
             final String SQL_INSERT3 = "insert into testeeresponse (_fk_TestOpportunity, Position) select ${oppkey}, R.position from ${insertsTableName} R " +
                     " where not exists (select * from testeeresponse where _fk_TestOpportunity = ${oppkey} and position = R.position);";
             SqlParametersMaps parms9 = parms1;
-            executeStatement(connection, fixDataBaseNames(SQL_INSERT3, unquotedParms3), parms9, false).getUpdateCount();
+            executeStatement(connection, fixDataBaseNames(SQL_INSERT3, unquotedParamsTempInsert), parms9, false).getUpdateCount();
 
             final String SQL_EXISTS1 = "select page from testeeresponse T,  ${insertsTableName} R where T._fk_TestOpportunity = ${oppkey} and "
                     + " (T.page = ${page} or (T._efk_ITSBank = R.bankkey and T._efk_ITSItem = R._efk_ITSItem))";
             SqlParametersMaps prm = (new SqlParametersMaps()).put("oppkey", oppKey).put("page", page);
 
-            if (exists(executeStatement(connection, fixDataBaseNames(SQL_EXISTS1, unquotedParms3), prm, false)) == false) {
+            if (exists(executeStatement(connection, fixDataBaseNames(SQL_EXISTS1, unquotedParamsTempInsert), prm, false)) == false) {
                 final String SQL_UPDATE3 = "Update testeeresponse T, ${insertsTableName} R  set T.isRequired = R.IsRequired, T._efk_ITSItem = R._efk_ITSItem, T._efk_ITSBank = R.bankkey, "
                         + " T.response = null, T.OpportunityRestart = ${opprestart}, T.Page = ${page}, T.Answer = R.Answer, T.ScorePoint = R.ScorePoint, T.DateGenerated = ${today},"
                         + " T._fk_Session = ${session}, T.Format = R.format, T.isFieldTest = R.isFieldTest, T.Hostname = ${hostname}, T.GroupID = ${groupID}, T.groupItemsRequired = ${groupItemsRequired},"
@@ -369,7 +374,7 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
                 parms10.put("segmentID", segmentId);
                 parms10.put("groupB", groupB);
 
-                int existsUpdateCnt = executeStatement(connection, fixDataBaseNames(SQL_UPDATE3, unquotedParms3), parms10, false).getUpdateCount();
+                int existsUpdateCnt = executeStatement(connection, fixDataBaseNames(SQL_UPDATE3, unquotedParamsTempInsert), parms10, false).getUpdateCount();
 
                 logger.debug("*** Not SQL_EXISTS1 execute SQL_UPDATE3 updated: " + existsUpdateCnt);
 
@@ -470,6 +475,7 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
         SingleDataResultSet rs2 = executeStatement(connection, fixDataBaseNames(SQL_QUERY21, unquotedParms3), parms17, false).getResultSets().next();
         resultsSets.add(rs2);
 
+        opportunitySegmentDao.dropTempTable(connection, newTempTable);
         connection.dropTemporaryTable(insertsTable);
         connection.dropTemporaryTable(itemsTable);
         _commonDll._LogDBLatency_SP(connection, "T_InsertItems", starttime, null, true, page, oppKey, sessionKey, oppSeg.getClientName(), null);

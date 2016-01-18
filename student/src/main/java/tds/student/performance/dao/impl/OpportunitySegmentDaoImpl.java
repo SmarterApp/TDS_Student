@@ -1,24 +1,28 @@
 package tds.student.performance.dao.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import tds.student.performance.caching.CacheType;
 import tds.student.performance.dao.OpportunitySegmentDao;
+import tds.student.performance.domain.InsertTesteeResponse;
 import tds.student.performance.domain.ItemForTesteeResponse;
 import tds.student.performance.domain.OpportunitySegment;
 import tds.student.performance.domain.StudentLoginField;
 import tds.student.performance.utils.UuidAdapter;
 
 import javax.sql.DataSource;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.sql.Connection;
+import java.util.*;
 
 /**
  * Data Access Object to query testopportunity and  testopportunitysegment
@@ -26,7 +30,7 @@ import java.util.UUID;
 @Repository
 public class OpportunitySegmentDaoImpl implements OpportunitySegmentDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    //private static final Logger logger = LoggerFactory.getLogger(OpportunitySegmentDaoImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(OpportunitySegmentDaoImpl.class);
 
     @Autowired
     public void setDataSource(DataSource dataSource) {
@@ -140,6 +144,97 @@ public class OpportunitySegmentDaoImpl implements OpportunitySegmentDao {
                 Integer.class);
 
         return count > 0;
+    }
+
+
+    @Override
+    public String loadInsertTableForTesteeResponses(Connection connection,  List<InsertTesteeResponse> itemList) {
+
+        // todo: table name
+        // todo: create/replace
+
+        SingleConnectionDataSource singleDataSource = new SingleConnectionDataSource(connection, false);
+        JdbcTemplate singleTemplate = new JdbcTemplate(singleDataSource);
+        NamedParameterJdbcTemplate singleNamedTemplate = new NamedParameterJdbcTemplate(singleDataSource);
+
+        String tempTableName = "TempInsertTesteeResponse";
+
+        final String SQL = "CREATE TEMPORARY TABLE " + tempTableName + " (\n" +
+                "  Format varchar(50),\n" +
+                "  IsRequired bit,\n" +
+                "  relativePosition int,\n" +
+                "  b float,\n" +
+                "  answer varchar(10),\n" +
+                "  IsFieldTest bit,\n" +
+                "  _efk_ITSItem bigint,\n" +
+                "  Position int,\n" +
+                "  bankkey bigint,\n" +
+                "  Scorepoint int,\n" +
+                "  bankitemkey varchar(50),\n" +
+                "  formPosition int,\n" +
+                "  contentLevel varchar(200)\n" +
+                ") ENGINE = MEMORY\n";
+
+        singleTemplate.execute(SQL);
+
+        Integer nullItemCount = 0;
+        List<SqlParameterSource> parameters = new ArrayList<>();
+        for (InsertTesteeResponse item : itemList) {
+            parameters.add(new MapSqlParameterSource()
+                    .addValue("Format", item.getItemType())
+                    .addValue("IsRequired", item.getIsRequired())
+                    .addValue("relativePosition", item.getItemPosition())
+                    .addValue("b", item.getIrtb())
+                    .addValue("answer", item.getAnswerKey())
+                    .addValue("IsFieldTest", item.getIsFieldTest())
+                    .addValue("efk_ITSItem", item.getItemKey())
+                    .addValue("Position", item.getPosition())
+                    .addValue("bankkey", item.getBankKey())
+                    .addValue("Scorepoint", item.getScorePoint())
+                    .addValue("bankitemkey", item.getBankItemKey())
+                    .addValue("formPosition", item.getFormPosition())
+                    .addValue("contentLevel", item.getContentLevel()));
+            if (item.getAnswerKey() == null) {
+                nullItemCount++;
+            }
+        }
+
+        // todo: spring 3.2.6 and 4.0 fixes the harmless exception thrown and caught causes minor performance issue.
+        // todo: answer is the only field expected to be null so can be fixed by minor logic.
+        String sqlInsert;
+        if (nullItemCount < itemList.size()) {
+            sqlInsert =
+                    "INSERT INTO " + tempTableName + " \n" +
+                            "(Format, IsRequired, relativePosition, b, answer, IsFieldTest, _efk_ITSItem, Position, bankkey, Scorepoint, bankitemkey, formPosition, contentLevel)\n" +
+                            "VALUES(:Format, :IsRequired, :relativePosition, :b, :answer, :IsFieldTest, :efk_ITSItem, :Position, :bankkey, :Scorepoint, :bankitemkey, :formPosition, :contentLevel)";
+        } else {
+            sqlInsert =
+                    "INSERT INTO " + tempTableName + " \n" +
+                            "(Format, IsRequired, relativePosition, b, IsFieldTest, _efk_ITSItem, Position, bankkey, Scorepoint, bankitemkey, formPosition, contentLevel)\n" +
+                            "VALUES(:Format, :IsRequired, :relativePosition, :b, :IsFieldTest, :efk_ITSItem, :Position, :bankkey, :Scorepoint, :bankitemkey, :formPosition, :contentLevel)";
+        }
+
+        int[] insertCounts = singleNamedTemplate.batchUpdate(sqlInsert, parameters.toArray(new SqlParameterSource[itemList.size()]));
+        //todo: could add a check of counts.
+
+        // for debug
+        //String sqlQuery = "select * from " + tempTableName;
+        //List<Map<String, Object>> mapList =  singleTemplate.queryForList(sqlQuery);
+
+
+        return tempTableName;
+    }
+
+    @Override
+    public void dropTempTable(Connection connection, String tableName) {
+
+        SingleConnectionDataSource singleDataSource = new SingleConnectionDataSource(connection, false);
+        JdbcTemplate singleTemplate = new JdbcTemplate(singleDataSource);
+
+        final String SQL = "DROP TEMPORARY TABLE " + tableName;
+
+        singleTemplate.execute(SQL);
+        logger.debug("Dropped temp table {}", tableName);
     }
 
 
