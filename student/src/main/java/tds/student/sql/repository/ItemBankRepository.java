@@ -40,6 +40,9 @@ import AIR.Common.DB.results.MultiDataResultSet;
 import AIR.Common.DB.results.SingleDataResultSet;
 import TDS.Shared.Exceptions.ReturnStatusException;
 
+/**
+ * Moved to ItemBankService to utilize new optimized methods and use caching
+ */
 @Component
 @Scope ("prototype")
 @Deprecated
@@ -88,6 +91,12 @@ public class ItemBankRepository extends AbstractDAO implements IItemBankReposito
     return testKeys;
   }
 
+  /**
+   * This has been replaced by ItemBankService and utilizes caching.
+   *
+   * @deprecated use {@link #ItemBankService.getTestProperties()} instead.
+   */
+  @Deprecated
   public TestProperties getTestProperties (String testKey) throws ReturnStatusException {
     TestProperties testProps = null;
 
@@ -161,6 +170,12 @@ public class ItemBankRepository extends AbstractDAO implements IItemBankReposito
     return testProps;
   }
 
+  /**
+   * This has been replaced by ItemBankService.getTestAccommodations and utilizes caching.
+   *
+   * @deprecated use {@link #ItemBankService.getTestAccommodations()} instead.
+   */
+  @Deprecated
   public AccList getTestAccommodations (String testKey) throws ReturnStatusException {
     AccList accList = new AccList ();
     try (SQLConnection connection = getSQLConnection ()) {
@@ -207,6 +222,11 @@ public class ItemBankRepository extends AbstractDAO implements IItemBankReposito
     return accList;
   }
 
+  /**
+   * This has been replaced by ItemBankService.getGrades.
+   *
+   * @deprecated use {@link #ItemBankService.getGrades()} instead.
+   */
   public List<String> getGrades () throws ReturnStatusException {
 
     List<TestGrade> testGrades = new ArrayList<TestGrade> ();
@@ -248,6 +268,11 @@ public class ItemBankRepository extends AbstractDAO implements IItemBankReposito
     }, new ArrayList<String> ())));
   }
 
+  /**
+   * This has been replaced by ItemBankService.getTestForms.
+   *
+   * @deprecated use {@link #ItemBankService.getTestForms()} instead.
+   */
   public List<TestForm> getTestForms (String testID) throws ReturnStatusException {
 
     List<TestForm> testforms = new ArrayList<TestForm> ();
@@ -279,6 +304,11 @@ public class ItemBankRepository extends AbstractDAO implements IItemBankReposito
     return testforms;
   }
 
+  /**
+   * This has been replaced by ItemBankService.getItemPath.
+   *
+   * @deprecated use {@link #ItemBankService.getItemPath()} instead.
+   */
   public String getItemPath (long bankKey, long itemKey) throws ReturnStatusException {
     String itemPath = null;
 
@@ -300,6 +330,11 @@ public class ItemBankRepository extends AbstractDAO implements IItemBankReposito
     return itemPath;
   }
 
+  /**
+   * This has been replaced by ItemBankService.getStimulusPath.
+   *
+   * @deprecated use {@link #ItemBankService.getStimulusPath()} instead.
+   */
   public String getStimulusPath (long bankKey, long stimulusKey) throws ReturnStatusException {
     String stimulusPath = null;
 
