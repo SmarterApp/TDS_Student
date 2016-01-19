@@ -27,7 +27,7 @@ public class DbLatencyServiceImpl implements DbLatencyService {
     @Value ("${logLatencyMaxTime:30000}")
     private Integer logLatencyMaxTime;
 
-    @Value("${logLatency.enabled:true}")
+    @Value("${performance.logLatency.enabled}")
     private Boolean logLatencyEnabled;
 
     public void setEnabled(Boolean value) {
@@ -81,7 +81,7 @@ public class DbLatencyServiceImpl implements DbLatencyService {
 
     // PORT of CommonDLL._LogDBLatency_SP line 2289
     public void logLatency(String procName, Date startTime, Long userKey, Integer n, UUID testoppKey, UUID sessionKey, String clientName, String comment) {
-        if (!logLatencyEnabled) {
+        if (logLatencyEnabled == null || !logLatencyEnabled) {
             return;
         }
 
