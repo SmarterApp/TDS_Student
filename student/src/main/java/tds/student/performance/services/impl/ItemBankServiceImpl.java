@@ -140,7 +140,7 @@ public class ItemBankServiceImpl extends AbstractDAO implements ItemBankService 
         AccList accList = new AccList ();
         try (SQLConnection connection = getSQLConnection()) {
 
-            // TODO: look into this "stored proc" - the optimization attempt adds complexity and that appears to be it
+            // TODO: look into this "stored proc" - the optimization attempt adds complexity
             Iterator<SingleDataResultSet> results = _commonDll.IB_GetTestAccommodations_SP (connection, testKey).getResultSets ();
             if (results.hasNext ()) {
                 SingleDataResultSet firstResultSet = results.next ();
@@ -183,7 +183,7 @@ public class ItemBankServiceImpl extends AbstractDAO implements ItemBankService 
         return accList;
     }
 
-    // Note: Caching is not implemented because the call to itemBankDao.getTestGrades() has a date check in the SQL that utilizes now()
+    // NOTE: Caching is NOT implemented because the call to itemBankDao.getTestGrades() has a date check in the SQL that utilizes now()
     public List<String> getGrades () throws ReturnStatusException {
 
         List<TestGrade> testGrades = itemBankDao.getTestGrades(getTdsSettings().getClientName(), null, getTdsSettings().getSessionType());
