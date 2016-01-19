@@ -10,6 +10,7 @@ import TDS.Shared.Exceptions.ReturnStatusException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import tds.dll.api.ICommonDLL;
 import tds.dll.api.IRtsDLL;
@@ -35,6 +36,9 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
     private static final String ID_FIELD_NAME = "ID";
     private static final String AT_LOGIN_VERIFY = "VERIFY";
     private static final String AT_LOGIN_REQUIRE = "REQUIRE";
+
+    @Value("${performance.logMaxTestOpportunities.enabled}")
+    private Boolean logMaxTestOpportunities;
 
     @Autowired
     private IStudentDLL _studentDll = null;
@@ -68,8 +72,10 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
         Long studentKey;
 
         // Accounting: how many open test opportunities currently for this client?
-        recordMaxTestOpportunities(connection, clientName, startTime);
-
+        logger.debug("Property performance.logMaxTestOpportunities.enabled {} ", logMaxTestOpportunities);
+        if ( logMaxTestOpportunities ) {
+            recordMaxTestOpportunities(connection, clientName, startTime);
+        }
 
         // Get list of fields from config
         Map<String, StudentFieldValue> fieldValueMap = createFieldMap(configurationDao.getStudentLoginFields(clientName));
