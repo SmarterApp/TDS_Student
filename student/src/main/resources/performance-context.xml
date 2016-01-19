@@ -11,6 +11,7 @@
     <context:component-scan base-package="tds.student.performance"/>
     <context:property-placeholder location="classpath*:performance-student.properties"/>
 
+    <!-- uses the same data source url and credentials as the rest of the site and set in ProgMan -->
     <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
         <property name="dataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlDataSource" />
         <property name="dataSourceProperties" >
@@ -36,27 +37,6 @@
         <constructor-arg ref="hikariConfig" />
     </bean>
 
-    <!--&lt;!&ndash; Employee DB data source. &ndash;&gt;-->
-    <!--<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"-->
-          <!--destroy-method="close">-->
-        <!--<property name="driverClass" value="${performance.datasource.driverClassName}" />-->
-        <!--<property name="jdbcUrl" value="${performance.datasource.jdbcUrl}" />-->
-        <!--<property name="user" value="${performance.datasource.username}" />-->
-        <!--<property name="password" value="${performance.datasource.password}" />-->
-        <!--<property name="maxPoolSize" value="${performance.datasource.maxPoolSize}" />-->
-        <!--<property name="minPoolSize" value="${performance.datasource.minPoolSize}" />-->
-        <!--<property name="maxStatements" value="${performance.datasource.maxStatements}" />-->
-        <!--<property name="checkoutTimeout" value="${performance.datasource.checkoutTimeout}" />-->
-        <!--<property name="testConnectionOnCheckout" value="${performance.datasource.testConnectionCheckout}" />-->
-        <!--<property name="dataSourceName" value="Perf-DataSource" />-->
-    <!--</bean>-->
-
-    <!-- Spring Transaction Manager -->
-    <!--<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">-->
-        <!--<property name="dataSource" ref="dataSource"/>-->
-    <!--</bean>-->
-    <!-- Annotations to manage transaction -->
-    <!--<tx:annotation-driven proxy-target-class="true" transaction-manager="transactionManager" />-->
 
     <!-- To disable all caching, comment out the cache:annotation-driven line below AND change the enabled property to false for the cacher bean -->
     <cache:annotation-driven key-generator="cacheKeyGenerator" />
