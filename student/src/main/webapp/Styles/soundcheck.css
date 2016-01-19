@@ -1,0 +1,224 @@
+﻿@charset "UTF-8";
+
+#sectionSoundCheck .instructions, #sectionTTSCheck .instructions {
+	border: none;
+}
+
+.platform_ios #sectionTTSCheck #TTS_Adjustments .instructions,
+.platform_android #sectionTTSCheck #TTS_Adjustments .instructions {
+    display: none;
+}
+
+#sectionSoundCheck .elicitedwrap {
+    float: right;
+}
+#sectionSoundCheck .instructions ol {
+    list-style-position: outside;
+    list-style-type: decimal;
+    margin-top: -1em;
+    padding: 0 10px 10px 30px;
+}
+
+
+
+/* @group Soundcheck */
+.checker {
+	display: block;
+	float: left;
+	border: solid 3px #fff;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	width: 90px;
+	height: 99px;
+	text-indent: -9999px;
+	margin-right: 1em;
+	margin-bottom: 1em;
+	background: url(../Shared/Images/controls/loader32.gif) no-repeat center center;
+	cursor: default;
+}
+.checker.soundReady, .checker.soundPlaying {
+	background: #333f58 url(../Shared/Images/controls/audio2013.png) -411px -98px;
+	cursor: pointer;
+}
+.checker.soundReady:hover {
+	background-position: -499px -98px;
+}
+.checker.soundPlaying span {
+	display: block;
+	height: 24px;
+	width: 15px;
+	background: url(../Shared/Images/controls/sound_play.gif) no-repeat;
+	margin-top:18px;
+	margin-left:60px;
+}
+.checker.soundPlaying:hover {
+	background-position: -587px -98px;
+	background-color: #963e3e !important;
+}
+.checker.soundPlaying:hover span {
+	display: none;
+}
+/* @end */
+
+#TTS_Adjustments .instructions {
+	border: none;
+	margin-top: 0px;
+}
+.voicePacks {
+	font-size: 1.5em;
+}
+#CurrentVoicePack {
+	font-weight: bold;
+}
+#TTS_Adjustments .actions {
+	margin-bottom: 1em;
+}
+#TTS_Adjustments h2,
+#sectionSoundCheck h2 {
+	margin-top: -1.5em;
+	background: url(../Images/masterShell/plus.png) no-repeat right top;
+	display: block;
+	text-align: center;
+} 
+#TTS_Adjustments .sliderWrap,
+#sectionSoundCheck .sliderWrap {
+	background: url(../Images/masterShell/minus.png) no-repeat left top;
+}
+
+.platform_android #TTS_Adjustments .sliderWrap {
+	display: none;
+}
+
+#TTS_Adjust_Pitch, #TTS_Adjust_Volume, #TTS_Adjust_Rate, #SoundCheck_Adjust_Volume{
+    background:url(../Scripts/Libraries/yahoo/yui2/build/slider/assets/bg-fader.gif) 5px bottom no-repeat;
+    padding-top: 1.5em;
+}
+#TTS_Adjust_Pitch .yui-slider-thumb img, #TTS_Adjust_Volume .yui-slider-thumb img, #TTS_Adjust_Rate .yui-slider-thumb img, #SoundCheck_Adjust_Volume .yui-slider-thumb img {
+	margin-top: 1.7em !important;
+}
+
+.disableTTSAdjustments {
+	opacity:0.4;
+}
+
+/* Disabling into response to bug 138883
+#sectionSoundCheck .ot-innerShadow :focus{
+	outline: 1px dotted #0D4373;
+}*/
+
+/*For bug 97402:  Oh yeah text indent -9999px might have fun with that outline rule*/
+#speakHelp a:focus {
+    border: medium none;
+    outline: medium none;
+}
+
+.elicitedaround a:focus {
+    outline: none;
+}
+
+/* for Bug 91394  */
+.TTSdefaultcheckbox{
+    display: none;
+    visbility: hidden;
+}
+
+#audioSourceSelect {
+	
+}
+#audioSourceSelect .device {
+	border: 3px solid #f6f6f6;
+	margin-bottom: 10px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box; 
+	-moz-border-radius:  5px;
+	-webkit-border-radius:  5px;
+    border-radius: 5px;
+    -moz-transition: all .2s ease-in;
+    -webkit-transition: all .2s ease-in;
+ 	-ms-transition: all .2s ease-in;
+    transition: all .2s ease-in;
+    font-size: 1.5em;
+    line-height: 1em;
+    position: relative;
+}
+#audioSourceSelect .device:after {
+    content: "";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    font-size: 0;
+    height: 0;
+}
+#audioSourceSelect .device:focus, 
+#audioSourceSelect .device:active, 
+#audioSourceSelect .device:hover {
+	border-color: #fff;
+	 -webkit-box-shadow: 0px 0px 2px #00aeef;
+	-moz-box-shadow: 0px 0px 2px #00aeef;
+	box-shadow: 0px 0px 2px #00aeef;
+	background-color: rgba(179,248,255,0.09);
+}
+#audioSourceSelect .device:hover {
+	cursor: pointer;
+}
+#audioSourceSelect .device.selected, 
+#audioSourceSelect .device.selected:focus, 
+#audioSourceSelect .device.selected:active, 
+#audioSourceSelect .device.selected:hover {
+	border: solid 3px #00aeef;
+	 -webkit-box-shadow: 0px 0px 5px #ccc;
+	-moz-box-shadow: 0px 0px 5px #ccc;
+	box-shadow: 0px 0px 5px #ccc;
+	background-color: rgba(179,248,255,0.09);
+}
+#audioSourceSelect .device.selected:focus, 
+#audioSourceSelect .device.selected:active, 
+#audioSourceSelect .device.selected:hover {
+	border-color: #efb431;
+}
+#audioSourceSelect .label {
+	padding: 10px;
+	width: 65%;
+}
+#audioSourceSelect .meter {
+	width: 30%;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	border-left: 1px solid #929292;
+	/*background-color: rgba(179,248,255,0.5);*/
+	 -moz-transition: inherit;
+    -webkit-transition: inherit;
+ 	-ms-transition: inherit;
+ 	-moz-border-radius: 0px 3px 3px 0px;
+ 	-webkit-border-radius: 0 3px 3px 0px;
+	border-radius: 0px 3px 3px 0px;
+	background: rgb(229,229,229); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(229,229,229,.2) 0%, rgba(255,255,255,.2) 47%, rgba(219,219,219,.2) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(229,229,229,.2)), color-stop(47%,rgba(255,255,255,.2)), color-stop(100%,rgba(219,219,219,.2))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(229,229,229,.2) 0%,rgba(255,255,255,.2) 47%,rgba(219,219,219,.2) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgba(229,229,229,.2) 0%,rgba(255,255,255,.2) 47%,rgba(219,219,219,.2) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgba(229,229,229,.2) 0%,rgba(255,255,255,.2) 47%,rgba(219,219,219,.2) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgba(229,229,229,.2) 0%,rgba(255,255,255,.2) 47%,rgba(219,219,219,.2) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e5e5', endColorstr='#dbdbdb',GradientType=0 ); /* IE6-9 */
+}
+#audioSourceSelect .volumeLevel {
+	text-indent: -9999px;
+	overflow: hidden;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	bottom: 0px;
+	border-right: solid 1px #00aeef;
+	background: rgb(199,221,224); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(199,221,224,.2) 0%, rgba(206,250,255,.2) 48%, rgba(169,208,211,.2) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(199,221,224,.2)), color-stop(48%,rgba(206,250,255,.2)), color-stop(100%,rgba(169,208,211,.2))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(199,221,224,.2) 0%,rgba(206,250,255,.2) 48%,rgba(169,208,211,.2) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgba(199,221,224,.2) 0%,rgba(206,250,255,.2) 48%,rgba(169,208,211,.2) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgba(199,221,224,.2) 0%,rgba(206,250,255,.2) 48%,rgba(169,208,211,.2) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgba(199,221,224,.2) 0%,rgba(206,250,255,.2) 48%,rgba(169,208,211,.2) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c7dde0', endColorstr='#a9d0d3',GradientType=0 ); /* IE6-9 */
+}

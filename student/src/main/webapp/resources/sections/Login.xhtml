@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://java.sun.com/jsf/passthrough"
+	xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:cc="http://java.sun.com/jsf/composite" xmlns:tds="http://airast.org/jsfcustom" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+<cc:interface componentType="tds.student.web.controls.SectionControl">
+</cc:interface>
+<cc:implementation>
+	<tds:SectionWrapper id="sectionLogin" shadow="false">
+
+		<div id="loginWrap">
+
+			<div class="ot-shadowBox">
+				<div class="ot-innerShadow">
+					<h1 id="sectionLoginHeader" i18n-content="Login.Label.Prompt"></h1>
+					<a class="hiddenLink" href="#instructions">Sign in instructions below</a>
+
+					<form id="loginForm" target="xhrFrame">
+						<!-- onsubmit="return(loginForm()) -->
+						<div id="loginForm1" class="loginForm loginForm1">
+							<span class="checkHolder forPractice"> <input id="cbUser" name="user" type="checkbox" value="userWho" tabindex="0" /> <label for="cbUser" i18n-content="User.Label.Guest"></label>
+							</span>
+
+							<div id="loginContainer"></div>
+							<span class="clear"></span>
+						</div>
+
+						<div id="loginForm2" class="loginForm loginForm2">
+							<span class="checkHolder forPractice"> <input id="cbSession" name="session" type="checkbox" value="noSession" tabindex="0" /> <label for="cbSession" i18n-content="User.Label.Session"></label>
+							</span>
+							<fieldset class="sessionID" role="group">
+								<legend i18n-content="User.Label.SessionID">SessionID:</legend>
+								<label for="loginSessionID1">Session ID Part 1</label> <input type="text" id="loginSessionID1" name="loginSessionID1" size="6" maxlength="6" tabindex="0" value=""/> <span> - </span> <label
+									for="loginSessionID2">Session ID Part 2</label> <input type="text" id="loginSessionID2" name="loginSessionID2" size="6" maxlength="6" tabindex="0" value=""/> <span> - </span> <label
+									for="loginSessionID3">Session ID Part 3</label> <input type="text" id="loginSessionID3" name="loginSessionID3" size="6" maxlength="6" tabindex="0" value=""/>
+							</fieldset>
+							<span id="loginSessionIDError" class="validation">&nbsp;</span> <span class="clear"></span>
+						</div>
+
+						<div id="loginAlert">
+							<!-- Used for when we allow unsecure browsers. -->
+							<div id="browserWrong" class="browserWrong forOperational" style="display: none;">
+								<h:outputLabel id="lblLoginBrowserWrong" />
+							</div>
+						</div>
+
+						<span class="actions"> <tds:Button id="btnLogin" styleClass="positive" key="Login.Button.SignIn" inputType="Submit" />
+						</span>
+
+					</form>
+
+					<div id="loginInstructions">
+						<a name="instructions">&nbsp;</a>
+						<div class="instructions forOperational"></div>
+						<div class="instructions forPractice" i18n-content="StaticContent.Label.PTLoginText"></div>
+					</div>
+
+					<!-- diagnostics link -->
+					<div id="diagnostics">
+						<!-- TODO need to put client name before url -->
+						<a id="btnDiagnostic" href="#{request.contextPath}/Pages/systemdiagnostics.xhtml?c=#{loginBacking.loginClientName}&amp;url=#{loginBacking.baseUrl}" i18n-content="Browser.Button.RunDiagnosticsPrompt"></a>
+						<span
+							class="browserVersion"> <span i18n-content="Browser.Label.BrowserId"></span> <span id="lblLoginBrowserVer"></span>
+						</span>
+					</div>
+
+					<div id="loginLinks" i18n-content="Login.Label.MiscLinks"></div>
+
+				</div>
+			</div>
+			<!-- shadowBox -->
+			<div id="ot-blurbs" class="forPractice" role="complementary" i18n-content="StaticContent.Label.PTIntroText"></div>
+			<span class="clear"></span> <span class="forOperational" i18n-content="StaticContent.Label.PTLink"></span>
+			<!-- remove link from static text and move to here -->
+
+		</div>
+		<!-- loginWrap -->
+
+	</tds:SectionWrapper>
+
+</cc:implementation>
+</html>
