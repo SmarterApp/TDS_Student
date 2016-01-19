@@ -6,7 +6,6 @@ import AIR.Common.DB.results.MultiDataResultSet;
 import AIR.Common.DB.results.SingleDataResultSet;
 import AIR.Common.Helpers.CaseInsensitiveMap;
 import AIR.Common.Helpers._Ref;
-import AIR.Common.Sql.AbstractDateUtilDll;
 import TDS.Shared.Exceptions.ReturnStatusException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tds.dll.api.ICommonDLL;
 import tds.dll.api.IRtsDLL;
+import tds.dll.api.IStudentDLL;
 import tds.student.performance.dao.ConfigurationDao;
 import tds.student.performance.domain.ConfigTestToolType;
 import tds.student.performance.domain.StudentLoginField;
@@ -37,7 +37,7 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
     private static final String AT_LOGIN_REQUIRE = "REQUIRE";
 
     @Autowired
-    private AbstractDateUtilDll _dateUtil = null;
+    private IStudentDLL _studentDll = null;
 
     @Autowired
     private ICommonDLL _commonDll = null;
@@ -59,19 +59,20 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
     private DbLatencyService dbLatencyService;
 
     @Override
-    public MultiDataResultSet login(SQLConnection connection, String clientname, Map<String, String> keyValues, String sessionId)
+    public MultiDataResultSet login(SQLConnection connection, String clientName, Map<String, String> keyValues, String sessionId)
             throws ReturnStatusException {
 
-        List<SingleDataResultSet> resultsSets = new ArrayList<SingleDataResultSet>();
+        List<SingleDataResultSet> resultsSets = new ArrayList<>();
         Date startTime = dateUtility.getLocalDate();
         String ssId;
         Long studentKey;
 
-        // todo: Remove this for now Note _maxtestopps inserts only if there is existing rows to select from, or so it seems.
-        // START: Accounting: how many open test opportunities are there currently for this client?
+        // Accounting: how many open test opportunities currently for this client?
+        recordMaxTestOpportunities(connection, clientName, startTime);
+
 
         // Get list of fields from config
-        Map<String, StudentFieldValue> fieldValueMap = createFieldMap(configurationDao.getStudentLoginFields(clientname));
+        Map<String, StudentFieldValue> fieldValueMap = createFieldMap(configurationDao.getStudentLoginFields(clientName));
 
         // *new* Copy inputs to map.
         for (Map.Entry<String, String> pair : keyValues.entrySet()) {
@@ -84,7 +85,7 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
         if (fieldValueMap.containsKey(ID_FIELD_NAME)) {
             ssId = fieldValueMap.get(ID_FIELD_NAME).inValue;
         }   else {
-            resultsSets.add(_commonDll._ReturnError_SP(connection, clientname, "T_Login", "No match for student ID"));
+            resultsSets.add(_commonDll._ReturnError_SP(connection, clientName, "T_Login", "No match for student ID"));
             return (new MultiDataResultSet(resultsSets));
         }
         // todo: remove guest session logic for now
@@ -95,10 +96,10 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
         // -- This 'may' be a real student. Attempt to validate that
         _Ref<String> errorRef = new _Ref<>();
         _Ref<Long> entityRef = new _Ref<>();
-        _T_ValidateTesteeLogin_SP(connection, clientname, ssId, sessionId, errorRef, entityRef);
+        _T_ValidateTesteeLogin_SP(connection, clientName, ssId, sessionId, errorRef, entityRef);
         studentKey = entityRef.get();
         if (errorRef.get() != null) {
-            resultsSets.add(_commonDll._ReturnError_SP(connection, clientname, "T_Login", errorRef.get()));
+            resultsSets.add(_commonDll._ReturnError_SP(connection, clientName, "T_Login", errorRef.get()));
             //connection.dropTemporaryTable(valsTbl);
             return (new MultiDataResultSet(resultsSets));
         }
@@ -110,7 +111,7 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
 
         // *new* Replace temp tables
         // todo -- check for login failure due to bad required input data
-        collectAndVerifyFields(connection, studentKey, clientname, fieldValueMap);
+        collectAndVerifyFields(connection, studentKey, clientName, fieldValueMap);
 
         SingleDataResultSet resultSetEntity = createResultEntity(studentKey);
         resultsSets.add(resultSetEntity);
@@ -118,7 +119,7 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
         SingleDataResultSet resultSetInputs = createResultFields(fieldValueMap);
         resultsSets.add(resultSetInputs);
 
-        dbLatencyService.logLatency("T_Login", startTime, studentKey, clientname);
+        dbLatencyService.logLatency("T_Login", startTime, studentKey, clientName);
         return (new MultiDataResultSet(resultsSets));
     }
 
@@ -168,9 +169,9 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
             }
             // -- proctor key is the USERKEY in RTS, NOT the Entity key
             Long proctorKey = null;
-            final String SQL_QUERY3 = "select _efk_Proctor from session where clientname = ${clientname} and sessionID = ${sessionID} "
+            final String SQL_QUERY3 = "select _efk_Proctor from session where clientName = ${clientName} and sessionID = ${sessionID} "
                     + " and status = 'open' and ${now} between DateBegin and DateEnd";
-            SqlParametersMaps parms3 = (new SqlParametersMaps()).put("clientname", clientname).put("sessionID", sessionId).put("now", startTime);
+            SqlParametersMaps parms3 = (new SqlParametersMaps()).put("clientName", clientname).put("sessionID", sessionId).put("now", startTime);
             result = executeStatement(connection, SQL_QUERY3, parms3, false).getResultSets().next();
             record = (result.getCount() > 0 ? result.getRecords().next() : null);
             if (record != null) {
@@ -267,7 +268,7 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
             if (fieldValue.loginField.getAtLogin().equals(AT_LOGIN_REQUIRE) && !fieldValue.loginField.getTdsId().equals(ID_FIELD_NAME)) {
                 // todo must throw error if in not equal to out.
                 // select  _key from ${valsTblName} where _key <> 'ID' and action = 'REQUIRE' and (outval is null or inval is null or inval <> outval ) limit 1
-                // resultsSets.add(_commonDll._ReturnError_SP(connection, clientname, "T_Login", "No match"));
+                // resultsSets.add(_commonDll._ReturnError_SP(connection, clientName, "T_Login", "No match"));
                 if (!fieldValue.inValue.equalsIgnoreCase(fieldValue.outValue)) {
                     throw new ReturnStatusException("Invalid Login");
                 }
@@ -297,6 +298,54 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
             this.outValue = null;
         }
 
+    }
+
+    private void recordMaxTestOpportunities(SQLConnection connection, String clientName, Date startTime)
+            throws ReturnStatusException {
+
+        logger.debug("Record current test opportunities to _maxtestopps for client {}", clientName);
+
+        try {
+
+            //Interval for logging into the _maxtestopps table
+            final int maxTestOppsIntervalInMinutes = 10;
+            Date lastupdate = null;
+            final String SQL_QUERY1 = "select max(_time) as lastupdate from _maxtestopps where clientName = ${clientName}";
+            SqlParametersMaps parms1 = (new SqlParametersMaps()).put("clientName", clientName);
+            SingleDataResultSet result = executeStatement(connection, SQL_QUERY1, parms1, false).getResultSets().next();
+            DbResultRecord record = (result.getCount() > 0 ? result.getRecords().next() : null);
+            if (record != null) {
+                lastupdate = record.get("lastupdate");
+            }
+
+            if (lastupdate == null || DbComparator.greaterOrEqual(minutesDiff(lastupdate, startTime), maxTestOppsIntervalInMinutes)) {
+                final String SQL_QUERY2 = "insert into _maxtestopps(numopps,_time,clientName) "
+                        + " SELECT -1,now(3), ${clientName} FROM dual WHERE"
+                        + " 1 = (select (time_to_sec(TIMEDIFF(now(3),max(_time)))/60) >=${maxTestOppsIntervalInMinutes} as diff_minutes "
+                        + " from _maxtestopps where clientName =  ${clientName}) ";
+                SqlParametersMaps parms2 = (new SqlParametersMaps()).put("clientName", clientName).put("maxTestOppsIntervalInMinutes", maxTestOppsIntervalInMinutes);
+                int insertCount = executeStatement(connection, SQL_QUERY2, parms2, false).getUpdateCount();
+
+                if (insertCount > 0) {
+                    Integer numOpps = _studentDll._ActiveOpps_FN(connection, clientName);
+                    final String SQL_QUERY3 = "update _maxtestopps set numopps =  ${numopps},_time = now(3) where numopps= -1 and  clientName = ${clientName}";
+                    SqlParametersMaps parms3 = (new SqlParametersMaps()).put("numopps", numOpps).put("clientName", clientName);
+                    executeStatement(connection, SQL_QUERY3, parms3, false).getUpdateCount();
+                }
+            }
+        } catch (ReturnStatusException re) {
+            // Original comment here mentions the external ID is not known.
+            // Changed to log the client instead of user externalID on error.
+            String error = String.format(" for testee ID %s: %s", clientName, re.getMessage());
+            _commonDll._LogDBError_SP(connection, "T_Login", error, null, null, null, null, clientName, null);
+        }
+    }
+
+    private Long minutesDiff (Date from, Date to) {
+
+        if (from == null || to == null)
+            return null;
+        return (to.getTime () - from.getTime ()) / 1000 / 60;
     }
 
 
