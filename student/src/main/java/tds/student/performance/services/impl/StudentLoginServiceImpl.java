@@ -71,7 +71,6 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
         List<SingleDataResultSet> resultsSets = new ArrayList<>();
         Date startTime = dateUtility.getLocalDate();
         String ssId;
-        Long studentKey;
 
         // Accounting: how many open test opportunities currently for this client?
         logger.debug("Property performance.logMaxTestOpportunities.enabled {} ", logMaxTestOpportunities);
@@ -82,7 +81,7 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
         // Get list of fields from config database
         Map<String, StudentFieldValue> fieldValueMap = createFieldMap(configurationDao.getStudentLoginFields(clientName));
 
-        // Copy keyValues from input form to config database map inValue by field key.
+        // Copy keyValues from input form to config database. Map inValue by field key.
         for (Map.Entry<String, String> pair : keyValues.entrySet()) {
             if (fieldValueMap.containsKey(pair.getKey())) {
                 StudentFieldValue studentFieldValue = fieldValueMap.get(pair.getKey());
@@ -97,111 +96,51 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
             resultsSets.add(_commonDll._ReturnError_SP(connection, clientName, "T_Login", "No match for student ID"));
             return (new MultiDataResultSet(resultsSets));
         }
-        // todo: remove guest session logic for now
 
-
-        ////////////////////////
-        _Ref<UUID> sessionKeyRef = new _Ref<> ();
-        UUID sessionKey = null;
-
-        // START: Open guest session, if requested and permitted by client configuration
+        // Open guest session, if requested and permitted by client configuration
         if (DbComparator.isEqual (sessionId, "GUEST Session")) {
             if (_studentDll._AllowProctorlessSessions_FN(connection, clientName)) {
+                _Ref<UUID> sessionKeyRef = new _Ref<> ();
                 _Ref<String> sessionIdRef = new _Ref<> ();
                 _studentDll._SetupProctorlessSession_SP(connection, clientName, sessionKeyRef, sessionIdRef);
                 sessionId = sessionIdRef.get();
-                sessionKey = sessionKeyRef.get();
+                //UUID sessionKey = sessionKeyRef.get();
             } else {
                 resultsSets.add (_commonDll._ReturnError_SP (connection, clientName, "T_Login", "You are not allowed to log in without a Test Administrator"));
                 return (new MultiDataResultSet (resultsSets));
             }
         }
-        // END: Open guest session, if requested and permitted by client configuration
 
-        // START: Handle request for anonymous login for practice test (assumes GUEST session?)
-        Long guestKey = 0L;
-        if (DbComparator.isEqual (ssId, "GUEST") && _studentDll._AllowAnonymousTestee_FN(connection, clientName)) {
-
-            final String SQL_QUERY6 = "insert into _anonymoustestee (dateCreated, clientname) values (${now}, ${clientname})";
-            SqlParametersMaps parms6 = (new SqlParametersMaps ()).put ("now", startTime).put ("clientname", clientName);
-            executeStatement (connection, SQL_QUERY6, parms6, false).getUpdateCount ();
-
-            // to get auto_increment _key column, we use SELECT LAST_INSERT_ID()
-            final String SQL_QUERY7 = "select cast(LAST_INSERT_ID() as SIGNED) as maxkey";
-            SingleDataResultSet result = executeStatement (connection, SQL_QUERY7, null, false).getResultSets ().next ();
-            DbResultRecord record = (result.getCount () > 0 ? result.getRecords ().next () : null);
-            if (record != null) {
-                guestKey = record.<Long> get ("maxKey");
-                guestKey = (guestKey == null ? 0 : (-1 * guestKey));
-            }
-
-            // set the ID to the generated gKey.
-            StudentFieldValue guestIdField = fieldValueMap.get(ID_FIELD_NAME);
-            if ( guestIdField != null ) {
-                guestIdField.outValue = String.format ("GUEST %d", guestKey);
-            }
-
-            StudentFieldValue lastNameField = fieldValueMap.get(LAST_NAME_FIELD_NAME);
-            if ( lastNameField != null ) {
-                lastNameField.outValue = "GUEST" ;
-            }
-
-            StudentFieldValue firstNameField = fieldValueMap.get(FIRST_NAME_FIELD_NAME);
-            if ( firstNameField != null ) {
-                firstNameField.outValue = "GUEST" ;
-            }
-
-            // Convert relationship fields such as School to GUESTSchool
-            for (Map.Entry<String, StudentFieldValue> entry : fieldValueMap.entrySet()) {
-                StudentFieldValue fieldValue = entry.getValue();
-                if ( fieldValue.loginField != null && fieldValue.loginField.getFieldType().equalsIgnoreCase("relationship")) {
-                    fieldValue.outValue = "GUEST" + fieldValue.loginField.getTdsId();
-                }
-            }
-
-            // select 'success' as status, @gkey as entityKey, null as accommodations;
-
-            List<CaseInsensitiveMap<Object>> resultList = new ArrayList<> ();
-            CaseInsensitiveMap<Object> rcd = new CaseInsensitiveMap<> ();
-            rcd.put ("status", "success");
-            rcd.put ("entityKey", guestKey);
-            rcd.put("accommodations", null);
-            resultList.add(rcd);
-
-            SingleDataResultSet rs1 = new SingleDataResultSet ();
-            rs1.addColumn("status", SQL_TYPE_To_JAVA_TYPE.VARCHAR);
-            rs1.addColumn("entityKey", SQL_TYPE_To_JAVA_TYPE.BIGINT);
-            rs1.addColumn("accommodations", SQL_TYPE_To_JAVA_TYPE.VARCHAR);
-            rs1.addRecords(resultList);
-
-            resultsSets.add(rs1);
-
-            SingleDataResultSet resultSetInputsGuest = createResultFields(fieldValueMap);
-            resultsSets.add(resultSetInputsGuest);
-
-            return (new MultiDataResultSet (resultsSets));
+        // Return a guest login
+        if (DbComparator.isEqual(ssId, "GUEST") && _studentDll._AllowAnonymousTestee_FN(connection, clientName)) {
+            return  handleGuestLogin(connection, clientName, startTime, fieldValueMap );
         }
-        // END: Handle request for anonymous login for practice test
-        /////////////////////////
 
-        // START: Handle request for validated login.
-        // -- This 'may' be a real student. Attempt to validate that
+        // Return a User login
+        return handleUserLogin( connection,  clientName,  startTime, fieldValueMap,  ssId,  sessionId);
+    }
+
+    
+    protected MultiDataResultSet handleUserLogin(SQLConnection connection, String clientName, Date startTime, Map<String, StudentFieldValue> fieldValueMap, String ssId, String sessionId)
+            throws ReturnStatusException {
+
+        List<SingleDataResultSet> resultsSets = new ArrayList<>();
+        Long studentKey;
+
         _Ref<String> errorRef = new _Ref<>();
         _Ref<Long> entityRef = new _Ref<>();
         _T_ValidateTesteeLogin_SP(connection, clientName, ssId, sessionId, errorRef, entityRef);
         studentKey = entityRef.get();
         if (errorRef.get() != null) {
             resultsSets.add(_commonDll._ReturnError_SP(connection, clientName, "T_Login", errorRef.get()));
-            //connection.dropTemporaryTable(valsTbl);
             return (new MultiDataResultSet(resultsSets));
         }
 
-        // *new* -- Student has been validated against the proctor and a valid RTS Key returned. Now check required attributes
+        // Student has been validated against the proctor and a valid RTS Key returned. Now check required attributes
         if (fieldValueMap.containsKey(ID_FIELD_NAME)) {
             fieldValueMap.get(ID_FIELD_NAME).outValue = fieldValueMap.get(ID_FIELD_NAME).inValue;
         }
 
-        // *new* Replace temp tables
         // todo -- check for login failure due to bad required input data
         collectAndVerifyFields(connection, studentKey, clientName, fieldValueMap);
 
@@ -214,6 +153,73 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
         dbLatencyService.logLatency("T_Login", startTime, studentKey, clientName);
         return (new MultiDataResultSet(resultsSets));
     }
+
+
+    protected MultiDataResultSet handleGuestLogin(SQLConnection connection, String clientName, Date startTime, Map<String, StudentFieldValue> fieldValueMap)
+            throws ReturnStatusException {
+
+        logger.debug("Handle a Guest Login");
+
+        List<SingleDataResultSet> resultsSets = new ArrayList<>();
+        Long guestKey = 0L;
+
+        final String SQL_QUERY6 = "insert into _anonymoustestee (dateCreated, clientname) values (${now}, ${clientname})";
+        SqlParametersMaps params6 = (new SqlParametersMaps()).put("now", startTime).put("clientname", clientName);
+        executeStatement(connection, SQL_QUERY6, params6, false).getUpdateCount();
+
+        // to get auto_increment _key column, we use SELECT LAST_INSERT_ID()
+        final String SQL_QUERY7 = "select cast(LAST_INSERT_ID() as SIGNED) as maxkey";
+        SingleDataResultSet result = executeStatement(connection, SQL_QUERY7, null, false).getResultSets().next();
+        DbResultRecord record = (result.getCount() > 0 ? result.getRecords().next() : null);
+        if (record != null) {
+            guestKey = record.<Long>get("maxKey");
+            guestKey = (guestKey == null ? 0 : (-1 * guestKey));
+        }
+
+        // Set the ID to the generated gKey.
+        StudentFieldValue guestIdField = fieldValueMap.get(ID_FIELD_NAME);
+        if (guestIdField != null) {
+            guestIdField.outValue = String.format("GUEST %d", guestKey);
+        }
+
+        StudentFieldValue lastNameField = fieldValueMap.get(LAST_NAME_FIELD_NAME);
+        if (lastNameField != null) {
+            lastNameField.outValue = "GUEST";
+        }
+
+        StudentFieldValue firstNameField = fieldValueMap.get(FIRST_NAME_FIELD_NAME);
+        if (firstNameField != null) {
+            firstNameField.outValue = "GUEST";
+        }
+
+        // Convert relationship fields such as School to GUESTSchool
+        for (Map.Entry<String, StudentFieldValue> entry : fieldValueMap.entrySet()) {
+            StudentFieldValue fieldValue = entry.getValue();
+            if (fieldValue.loginField != null && fieldValue.loginField.getFieldType().equalsIgnoreCase("relationship")) {
+                fieldValue.outValue = "GUEST" + fieldValue.loginField.getTdsId();
+            }
+        }
+
+        List<CaseInsensitiveMap<Object>> resultList = new ArrayList<>();
+        CaseInsensitiveMap<Object> rcd = new CaseInsensitiveMap<>();
+        rcd.put("status", "success");
+        rcd.put("entityKey", guestKey);
+        rcd.put("accommodations", null);
+        resultList.add(rcd);
+
+        SingleDataResultSet rs1 = new SingleDataResultSet();
+        rs1.addColumn("status", SQL_TYPE_To_JAVA_TYPE.VARCHAR);
+        rs1.addColumn("entityKey", SQL_TYPE_To_JAVA_TYPE.BIGINT);
+        rs1.addColumn("accommodations", SQL_TYPE_To_JAVA_TYPE.VARCHAR);
+        rs1.addRecords(resultList);
+
+        resultsSets.add(rs1);
+
+        SingleDataResultSet resultSetInputsGuest = createResultFields(fieldValueMap);
+        resultsSets.add(resultSetInputsGuest);
+        return (new MultiDataResultSet(resultsSets));
+    }
+
 
 
     private void _T_ValidateTesteeLogin_SP(SQLConnection connection, String clientname, String testeeId, String sessionId,
