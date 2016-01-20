@@ -1,0 +1,2090 @@
+@charset "UTF-8";
+@import url(reset.css);
+
+/*Positioning Stuff*/
+html {
+	height:100%;
+	max-height:100%;
+	padding:0;
+	margin:0;
+	border:0;
+	background:#fff;
+	font-size:76%;
+	font-family:Times New Roman, Times, serif;
+	overflow: hidden;
+}
+body {
+	height:100%;
+	max-height:100%;
+	overflow:hidden;
+}
+#head {
+	color:#fff;
+	font-family: "Lucida Grande", "Lucida Sans", Arial, Helvetica, sans-serif;
+	background-color: #fbfbfb;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #333F58;
+	vertical-align:top;
+	position: relative;
+	left: 0px;
+	top: 0px;
+}
+#foot {
+	position:absolute;
+	margin:0;
+	bottom:0;
+	left:0;
+	width:100%;
+	z-index:5;
+	color:#FFFFFF;
+	background-color: #333f58;
+	background-image: url(../images/studentFooter.gif);
+	background-repeat: repeat-x;
+	background-position: 0px 0px;
+	vertical-align:top;
+	padding-bottom: 1px;
+	height: 4em;
+}
+#topHalf {
+	overflow: hidden;
+	vertical-align: top;
+	position:absolute;
+	margin:0;
+	bottom:4em;
+	left:0;
+	top: 0px;
+	right: 0px;
+}
+.TDS_PS_L1 #topHalf {
+	bottom:4.9em;
+}
+.TDS_PS_L2 #topHalf, .TDS_PS_L3 #topHalf, .TDS_PS_L4 #topHalf {
+	bottom:5.7em;
+}
+.browser_firefox.platform_mac.TDS_PS_L2 #topHalf, .browser_firefox.platform_mac.TDS_PS_L3 #topHalf, .browser_firefox.platform_mac.TDS_PS_L4 #topHalf {
+	bottom:6.1em;
+}
+.headCell {
+	display:block;
+	position:relative;
+}
+.testContent {
+	width:100%;
+	height: 100%;
+	overflow: hidden; /*was auto */
+	bottom: 0px;
+	position:relative;
+}
+/* gives the footer extra space in Mozilla 1.3.1 for Mac OS 9 */
+body.browserVer_1_3  #foot, .browserVer_1_3 #topHalf {
+	padding-bottom: 15px; /* firebug debug? set to 200px */
+}
+
+/* Random Layout Stuff */
+.clear {
+	clear: both;
+	display: block;
+}
+
+/* Head Stuff */
+
+.topBar {
+	background-color: #333f58;
+	background-image: url(../images/logo_default.gif);
+	background-repeat: no-repeat;
+	background-position: right bottom;
+	padding-right: 178px;
+	height: 2.2em;
+}
+.studentInfo {
+	display: block;
+	background-color: #333f58;
+	float: left;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #FFFFFF;
+	line-height: 2.2em;
+	height: 2.2em;
+	padding-right: 0.5em;
+	padding-left: 0.5em;
+}
+.sessionID {
+	/* Bug 98966 - Request to hide Session ID */
+	/*display: block;*/
+	display: none;
+	float: right;
+	line-height: 2.2em;
+	height: 2.2em;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #FFFFFF;
+	padding-right: 0.5em;	/*font-size: 0.8em;*/
+}
+.smallButtons a {
+	background-color: #DBEDFB;
+    color: #000000;
+    display: block;
+    float: right;
+    line-height: 1em;
+    margin-left: 0.3em;
+	margin-right: 0.3em;
+	margin-top: .4em;
+    padding: 1px 5px;
+    cursor: pointer;
+    text-decoration: none;
+    text-transform: uppercase;
+    border: solid 1px #77aadf;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+	border-radius: 3px; 
+}
+.smallButtons a:hover {
+	background-color: #04A033;
+    color: #fff; 
+}
+.smallButtons .disabled, .smallButtons .disabled:hover {
+	background-color: #245C94;
+	color: #7AADE2;
+	cursor: default;
+	border-color: #7AADE2;
+}
+.bottomBar {
+	background-color: #ececec;
+	border-top-width: 1px;
+	border-bottom-width: 1px;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-top-color: #333F58;
+	border-bottom-color: #333F58;
+	line-height: 1.6em;
+	height: 1.6em;
+	color: #000000;
+}
+.TDS_PS_L1 .bottomBar {
+	font-size: 1.25em;
+}
+.TDS_PS_L2 .bottomBar, .TDS_PS_L3 .bottomBar, .TDS_PS_L4 .bottomBar {
+	font-size: 1.5em;
+}
+.testName {
+	background-color: #c2c2c2;
+	display: block;
+	float: left;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #333F58;
+	padding-right: 0.5em;
+	padding-left: 0.5em;
+}
+.currentQuestionNumber {
+	background-color: #9cc766;
+	display: block;
+	float: left;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #04A033;
+	padding-right: .5em;
+	padding-left: .5em;
+}
+.jumptTo {
+	display: block;
+	float: left;
+	padding-left: .5em;
+}
+.jumptTo label {
+	display: block;
+	float: left;
+	margin-right: .5em;
+}
+.jumptTo select {
+	display: block;
+	float: left;
+	font-size: .9em;
+	margin-right: .5em;
+	line-height: 1.6em;
+}
+.jumptTo select .disabled{
+	background-color: #eff1f1;
+	font-style: italic;
+	color: #999;
+}
+#navigation {
+	height:1.5em;
+	/*width:30em;*/
+	float: left;
+}
+.browser_firefox.browserVer_2.platform_mac .jumptTo select, .browser_airsecurebrowser.browserVer_3_5.platform_mac .jumptTo select, .browser_airsecurebrowser.browserVer_3_6.platform_mac .jumptTo select {
+	height: 1.5em;
+}
+/* @group footer */
+
+#foot li {
+	display: block;
+	float: left;
+	text-align: center;
+}
+#foot a {
+	display: block;
+	float: left;
+	background-repeat: no-repeat;
+	background-position: 50% -1px;
+	font-size: 0.8em;
+	color: #FFFFFF;
+	margin-left: 0.4em;
+	margin-right: 0.7em;
+	text-decoration: none;
+	background-image: url(../Images/controls/buttons_base.png);
+	font-family: Arial, Helvetica, sans-serif;
+	text-transform: uppercase;
+	white-space: nowrap;
+	min-width:44px;
+	-moz-user-select:none;
+}
+#foot a:hover {
+	background-position: 50% -94px;
+}
+#foot .inactive a, #foot .inactive a:hover {
+	background-position: 50% -187px;
+	cursor: default !important;
+}
+#foot .icon {
+	display: block;
+	padding-top: 33px;
+	background: url(../Images/controls/sprites_student.png) no-repeat 50% 0;
+}
+#studentTools {
+	padding-top: 1px;
+	background-image: url(../images/studentFooterTools.gif);
+	background-repeat: repeat-x;
+	background-position: 0px 0px;
+	float: left;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #333f58;
+	padding-right: 5px;
+}
+#studentControls {
+	float: right;
+	padding-top: 1px;
+	padding-right: 5px;
+}
+.word {
+	display: block;
+	float: left;
+}
+.shortcut {
+	display: block;
+	float: left;
+	width: 9px;
+	height: 8px;
+	margin-left: 3px;
+	background: #57595d url(../Images/controls/sprites_student.png) no-repeat;
+	border: 1px solid #aaa;
+	/*margin-top: -1px;*/
+}
+.platform_linux .shortcut {
+	margin-top: 2px;
+}
+#foot .zoomIn .icon {
+	background-position: 50% -494px;
+}
+#foot .zoomIn .shortcut {
+	background-position: -27px -3290px;
+}
+#foot .zoomOut .icon {
+	background-position: 50% -544px;
+}
+#foot .zoomOut .shortcut {
+	background-position: -18px -3290px;
+}
+#foot .highlight .icon {
+	background-position: 50% -143px;
+}
+#foot .highlight, #foot .removeHighlight, #foot .math, #foot .periodic, #foot .calculator {
+	display: none !important;
+}
+/* moved to accommodations.css
+
+.TDS_CalcBasic #foot .calculator, .TDS_CalcStd #foot .calculator, .TDS_CalcSci #foot .calculator, .TDS_CalcGraphing #foot .calculator, 
+.TDS_F_OR3_5 #foot .math, .TDS_FOR6_8Math #foot .math, .TDS_F_ORCIM_Math #foot .math, .TDS_F_DE_6_8Math #foot .math, .TDS_F_DE_9_10Math #foot .math, .TDS_F_HI_4Math #foot .math, .TDS_F_HI_5Math #foot .math, .TDS_F_HI_6Math #foot .math, .TDS_F_HI_7Math #foot .math, .TDS_F_HI_8Math #foot .math, .TDS_F_HI_10Math #foot .math, .TDS_F_HI_11Sci #foot .math, .TDS_F_DE_2Math #foot .math, 
+.TDS_PT_HTML #foot .periodic, .TDS_PT_Basic #foot .periodic, .TDS_PT_Expanded #foot .periodic {
+	display: block !important;
+}*/
+#foot .removeHighlight .icon {
+	background-position: 50% -194px;
+}
+#foot .math .icon {
+	background-position: 50% -243px;
+}
+#foot .printer, #foot .printerPractice {
+	display:none;
+}
+#foot .printer .icon, #foot .printerPractice .icon {
+	background-position: 50% -394px;
+}
+#foot .periodic .icon {
+	background-position: 50% -344px;
+}
+#foot .calculator .icon {
+	background-position: 50% -3858px;
+}
+#foot .pause {
+	background-position: 50% -280px;
+}
+#foot .pause .icon {
+	background-position: 50% -294px;
+}
+#foot .back .icon {
+	background-position: 50% 6px;
+}
+#foot .back .shortcut {
+	background-position: 2px -3290px;
+	width: 11px;
+}
+#foot #btnSave .icon {
+	background-position: 50% -444px;
+}
+.language_ENU #foot .back .word {
+	padding-left: 1px;
+}
+#foot .next .icon {
+	background-position: 50% -44px;
+}
+#foot .next .shortcut {
+	background-position: -7px -3290px;
+	width: 11px;
+}
+.language_ENU #foot .next .word {
+	padding-left: 2px;
+}
+#foot .endTest {
+	background-position: 50% -373px;
+}
+#foot .endTest .icon {
+	background-position: 50% -94px;
+}
+#foot .startTest {
+	background-image: url(../Images/controls/startTest.gif);
+}
+#foot .inactive .endTest, #foot .inactive .startTest, #foot .inactive .pause {
+	display: none !important;
+}
+#foot #btnSave {
+	display:none;
+}
+#foot #btnSave.enable {
+	display:block;
+}
+/* disable line reader and rubric in classic shell*/
+#foot #btnLineReader, #foot #btnRubric {
+	display: none !important;
+}
+
+.TDS_PS_L1 #foot {
+	font-size: 80%;
+	background-position: 0px -100px;
+	padding-bottom: 2px;
+}
+.TDS_PS_L1 #studentTools {
+	background-position: 0px -100px;
+}
+.TDS_PS_L1 #foot a {
+	background-position: 50% -499px;
+	min-width: 60px;
+}
+.TDS_PS_L1 #foot a:hover {
+	background-position: 50% -615px;
+}
+.TDS_PS_L1 #foot .inactive a, .TDS_PS_L1 #foot .inactive a:hover {
+	background-position: 50% -731px;
+}
+.TDS_PS_L1 #foot .icon {
+	padding-top: 42px;
+}
+.TDS_PS_L1 .shortcut {
+	width: 10px;
+	height: 10px;
+	margin-left: 4px;
+}
+.TDS_PS_L1 #foot .zoomIn .icon {
+	background-position: 50% -1341px;
+}
+.TDS_PS_L1 #foot .zoomIn .shortcut {
+	background-position: -40px -3301px;
+}
+.TDS_PS_L1 #foot .zoomOut .icon {
+	background-position: 50% -1416px;
+}
+.TDS_PS_L1 #foot .zoomOut .shortcut {
+	background-position: -26px -3301px;
+}
+.TDS_PS_L1 #foot .highlight .icon {
+	background-position: 50% -816px;
+}
+.TDS_PS_L1 #foot .removeHighlight .icon {
+	background-position: 50% -892px;
+}
+.TDS_PS_L1 #foot .math .icon {
+	background-position: 50% -965px;
+}
+.TDS_PS_L1 #foot .printer .icon, .TDS_PS_L1 #foot .printerPractice .icon {
+	background-position: 50% -1191px;
+}
+.TDS_PS_L1 #foot .periodic .icon {
+	background-position: 50% -1116px;
+}
+.TDS_PS_L1 #foot .calculator .icon {
+	background-position: 50% -3906px;
+}
+.TDS_PS_L1 #foot .pause {
+	background-position: 50% -847px;
+}
+.TDS_PS_L1 #foot .pause .icon {
+	background-position: 50% -1041px;
+}
+.TDS_PS_L1 #foot .back .icon {
+	background-position: 50% -591px;
+}
+.TDS_PS_L1 #foot .back .shortcut {
+	background-position: 2px -3302px;
+	width: 12px;
+}
+.TDS_PS_L1.language_ENU #foot .back .word {
+	padding-left: 5px;
+}
+.TDS_PS_L1 #foot .next .icon {
+	background-position: 50% -666px;
+}
+.TDS_PS_L1 #foot .next .shortcut {
+	background-position: -11px -3302px;
+	width: 12px;
+}
+.TDS_PS_L1.language_ENU #foot .next .word {
+	padding-left: 5px;
+}
+.TDS_PS_L1 #foot .endTest {
+	background-position: 50% -964px;
+}
+.TDS_PS_L1 #foot .endTest .icon {
+	background-position: 50% -741px;
+}
+.TDS_PS_L1 #foot #btnSave .icon {
+	background-position: 50% -1266px;
+}
+.TDS_PS_L2 #foot, .TDS_PS_L3 #foot, .TDS_PS_L4 #foot {
+	font-size: 80%;
+	background-position: 0px -200px;
+	height: auto;
+	padding-bottom: 3px;
+}
+.TDS_PS_L2 #studentTools, .TDS_PS_L3 #studentTools, .TDS_PS_L4 #studentTools {
+	background-position: 0px -200px;
+}
+.TDS_PS_L2 #foot a, .TDS_PS_L3 #foot a, .TDS_PS_L4 #foot a {
+	background-position: 50% -1117px;
+	min-width: 71px;
+}
+.TDS_PS_L2 #foot a:hover, .TDS_PS_L3 #foot a:hover, .TDS_PS_L4 #foot a:hover {
+	background-position: 50% -1262px;
+}
+.TDS_PS_L2 #foot .inactive a, .TDS_PS_L2 #foot .inactive a:hover, .TDS_PS_L3 #foot .inactive a, .TDS_PS_L3 #foot .inactive a:hover, .TDS_PS_L4 #foot .inactive a, .TDS_PS_L4 #foot .inactive a:hover {
+	background-position: 50% -1407px;
+}
+.TDS_PS_L2 #foot .icon, .TDS_PS_L3 #foot .icon, .TDS_PS_L4 #foot .icon {
+	padding-top: 50px;
+}
+.TDS_PS_L2 .shortcut, .TDS_PS_L3 .shortcut, .TDS_PS_L4 .shortcut {
+	width: 15px;
+	height: 13px;
+	margin-left: 5px;
+	margin-top: 0px;
+}
+.TDS_PS_L2 #foot .zoomIn .icon, .TDS_PS_L3 #foot .zoomIn .icon, .TDS_PS_L4 #foot .zoomIn .icon {
+	background-position: 50% -2992px;
+}
+.TDS_PS_L2 #foot .zoomIn .shortcut, .TDS_PS_L3 #foot .zoomIn .shortcut, .TDS_PS_L4 #foot .zoomIn .shortcut {
+	background-position: -45px -3316px;
+}
+.TDS_PS_L2 #foot .zoomOut .icon, .TDS_PS_L3 #foot .zoomOut .icon, .TDS_PS_L4 #foot .zoomOut .icon {
+	background-position: 50% -3142px;
+}
+.TDS_PS_L2 #foot .zoomOut .shortcut, .TDS_PS_L3 #foot .zoomOut .shortcut, .TDS_PS_L4 #foot .zoomOut .shortcut {
+	background-position: -28px -3316px;
+}
+.TDS_PS_L2 #foot .highlight .icon, .TDS_PS_L3 #foot .highlight .icon, .TDS_PS_L4 #foot .highlight .icon {
+	background-position: 50% -1944px;
+}
+.TDS_PS_L2 #foot .removeHighlight .icon, .TDS_PS_L3 #foot .removeHighlight .icon, .TDS_PS_L4 #foot .removeHighlight .icon {
+	background-position: 50% -2092px;
+}
+.TDS_PS_L2 #foot .math .icon, .TDS_PS_L3 #foot .math .icon, .TDS_PS_L4 #foot .math .icon {
+	background-position: 50% -2239px;
+}
+.TDS_PS_L2 #foot .printer .icon, .TDS_PS_L2 #foot .printerPractice .icon, .TDS_PS_L3 #foot .printer .icon, .TDS_PS_L3 #foot .printerPractice .icon, .TDS_PS_L4 #foot .printer .icon, .TDS_PS_L4 #foot .printerPractice .icon {
+	background-position: 50% -2690px;
+}
+.TDS_PS_L2 #foot .periodic .icon, .TDS_PS_L3 #foot .periodic .icon, .TDS_PS_L4 #foot .periodic .icon {
+	background-position: 50% -2540px;
+}
+.TDS_PS_L2 #foot .calculator .icon, .TDS_PS_L3 #foot .calculator .icon, .TDS_PS_L4 #foot .calculator .icon {
+	background-position: 50% -3978px;
+}
+.TDS_PS_L2 #foot .pause, .TDS_PS_L3 #foot .pause, .TDS_PS_L4 #foot .pause {
+	background-position: 50% -1553px;
+}
+.TDS_PS_L2 #foot .pause .icon, .TDS_PS_L3 #foot .pause .icon, .TDS_PS_L4 #foot .pause .icon {
+	background-position: 50% -2390px;
+}
+.TDS_PS_L2 #foot .back .icon, .TDS_PS_L3 #foot .back .icon, .TDS_PS_L4 #foot .back .icon {
+	background-position: 50% -1490px;
+}
+.TDS_PS_L2 #foot .back .shortcut, .TDS_PS_L3 #foot .back .shortcut, .TDS_PS_L4 #foot .back .shortcut {
+	background-position: 2px -3315px;
+	width: 15px;
+}
+.TDS_PS_L2.language_ENU #foot .back .word, .TDS_PS_L3.language_ENU #foot .back .word, .TDS_PS_L4.language_ENU #foot .back .word {
+	padding-left: 3px;
+}
+.TDS_PS_L2 #foot .next .icon, .TDS_PS_L3 #foot .next .icon, .TDS_PS_L4 #foot .next .icon {
+	background-position: 50% -1640px;
+}
+.TDS_PS_L2 #foot .next .shortcut, .TDS_PS_L3 #foot .next .shortcut, .TDS_PS_L4 #foot .next .shortcut {
+	background-position: -12px -3315px;
+	width: 15px;
+}
+.TDS_PS_L2.language_ENU #foot .next .word, .TDS_PS_L3.language_ENU #foot .next .word, .TDS_PS_L4.language_ENU #foot .next .word {
+	padding-left: 4px;
+}
+.TDS_PS_L2 #foot .endTest, .TDS_PS_L3 #foot .endTest, .TDS_PS_L4 #foot .endTest {
+	background-position: 50% -1698px;
+}
+.TDS_PS_L2 #foot .endTest .icon, .TDS_PS_L3 #foot .endTest .icon, .TDS_PS_L4 #foot .endTest .icon {
+	background-position: 50% -1790px;
+}
+.TDS_PS_L2 #foot #btnSave .icon, .TDS_PS_L3 #foot #btnSave .icon, .TDS_PS_L4 #foot #btnSave .icon {
+	background-position: 50% -2840px;
+}
+/* @end */
+
+/* keeps names centered even when there's only one tool*/
+.centerFix {
+	width: 1px;
+}
+
+.TDS_PoD_Stim .Layout_11 .printer, .TDS_PoD_Stim .Layout_17 .printer, .TDS_PoD_Stim .Layout_21 .printer { 
+	display:block !important;
+}
+.TDS_PoD_Stim .Layout_11 .printerPractice, .TDS_PoD_Stim .Layout_17 .printerPractice, .TDS_PoD_Stim .Layout_21 .printerPractice { 
+	display:none !important;
+}
+.TDS_PoD_Stim.unproctored .Layout_11 .printer, .TDS_PoD_Stim.unproctored .Layout_17 .printer, .TDS_PoD_Stim.unproctored .Layout_21 .printer { 
+	display:none !important;
+}
+/* turns off self printing in practice test
+.practiceTest.TDS_PoD_Stim .Layout_11 .printer, .practiceTest.TDS_PoD_Stim .Layout_17 .printer, .practiceTest.TDS_PoD_Stim .Layout_21 .printer { 
+	display:none !important;
+}
+.practiceTest.TDS_PoD_Stim .Layout_11 .printerPractice, .practiceTest.TDS_PoD_Stim .Layout_17 .printerPractice, .practiceTest.TDS_PoD_Stim .Layout_21 .printerPractice { 
+	display:block !important;
+}*/
+
+/* */
+
+.printRequest {
+	display: block;
+	background-image: url(../images/studentControls/printRequest.gif);
+	background-repeat: no-repeat;
+	height: 25px;
+	width: 30px;
+	text-indent: -9999px;
+	float: left;
+	margin-top: -0.5em;
+	margin-right: .5em;
+}
+.printRequest:hover {
+	background-position: 0px -25px;
+}
+.noRequests {
+	background-position: 0px -50px;
+	cursor: default;
+}
+.noRequests:hover {
+	background-position: 0px -50px;
+}
+.tooltipContainer {
+	display: none;
+}
+/* pop up stuff */
+.tool-formula {
+	height: 510px !important;
+	width: 630px !important;
+}
+.TDS_PS_L1 .tool-formula {
+	width: 772px !important;
+}
+.TDS_PS_L2 .tool-formula, .TDS_PS_L3 .tool-formula, .TDS_PS_L4 .tool-formula {
+	width: 915px !important;
+}
+
+/* @group MN formulas */
+
+.TDS_F_MN_6Math .tool-formula, .TDS_F_MN_7Math .tool-formula {
+	height: 540px !important;
+	width: 390px !important;
+}
+.TDS_F_MN_6Math.TDS_PS_L1 .tool-formula, .TDS_F_MN_7Math.TDS_PS_L1 .tool-formula {
+	width: 470px !important;
+}
+.TDS_F_MN_6Math.TDS_PS_L2 .tool-formula, .TDS_F_MN_6Math.TDS_PS_L3 .tool-formula, .TDS_F_MN_6Math.TDS_PS_L4 .tool-formula, .TDS_F_MN_7Math.TDS_PS_L2 .tool-formula, .TDS_F_MN_7Math.TDS_PS_L3 .tool-formula, .TDS_F_MN_7Math.TDS_PS_L4 .tool-formula {
+	width: 580px !important;
+}
+.TDS_F_MN_8Math .tool-formula {
+	width: 430px !important;
+}
+.TDS_F_MN_8Math.TDS_PS_L1 .tool-formula {
+	width: 528px !important;
+}
+.TDS_F_MN_8Math.TDS_PS_L2 .tool-formula, .TDS_F_MN_8Math.TDS_PS_L3 .tool-formula, .TDS_F_MN_8Math.TDS_PS_L4 .tool-formula {
+	width: 625px !important;
+}
+.TDS_F_MN_5Math .tool-formula {
+	width: 370px !important;
+	height: 300px !important;
+}
+.TDS_F_MN_5Math.TDS_PS_L1 .tool-formula {
+	width: 470px !important;
+	height: 400px !important;
+}
+.TDS_F_MN_5Math.TDS_PS_L2 .tool-formula, .TDS_F_MN_5Math.TDS_PS_L3 .tool-formula, .TDS_F_MN_5Math.TDS_PS_L4 .tool-formula {
+	width: 570px !important;
+	height: 500px !important;
+}
+
+/* @end */
+.tool-periodictable {
+	height: 570px !important;
+	width: 680px !important;
+}
+.TDS_PS_L1.TDS_PT_HTML .tool-periodictable {
+	width: 725px !important;
+}
+.TDS_PS_L2.TDS_PT_HTML .tool-periodictable, .TDS_PS_L3.TDS_PT_HTML .tool-periodictable, .TDS_PS_L4.TDS_PT_HTML .tool-periodictable {
+	width: 830px !important;
+}
+.TDS_PT_Expanded .tool-periodictable, .TDS_PT_Basic .tool-periodictable {
+	height: 442px !important;
+}
+.TDS_PT_Expanded #toolPeriodicTable iframe, .TDS_PT_Basic #toolPeriodicTable iframe {
+	height: 402px;
+}
+.TDS_PS_L1.TDS_PT_Expanded .tool-periodictable, .TDS_PS_L1.TDS_PT_Basic .tool-periodictable {
+	width: 766px !important;
+}
+.TDS_PS_L2.TDS_PT_Expanded .tool-periodictable, .TDS_PS_L2.TDS_PT_Basic .tool-periodictable, .TDS_PS_L3.TDS_PT_Expanded .tool-periodictable, .TDS_PS_L3.TDS_PT_Basic .tool-periodictable, .TDS_PS_L4.TDS_PT_Expanded .tool-periodictable, .TDS_PS_L4.TDS_PT_Basic .tool-periodictable {
+	width: 912px !important;
+}
+/* @group calculator */
+.tool-calculator {
+	height: 530px !important;
+	width: 740px !important;
+	max-height: inherit !important;
+}
+.TDS_CalcBasic .tool-calculator {
+	height: 320px !important;
+	width: 228px !important;
+}
+.TDS_PS_L1.TDS_CalcBasic .tool-calculator {
+	height: 340px !important;
+	width: 255px !important;
+}
+.TDS_PS_L2.TDS_CalcBasic .tool-calculator, .TDS_PS_L3.TDS_CalcBasic .tool-calculator, .TDS_PS_L4.TDS_CalcBasic .tool-calculator {
+	width: 275px !important;
+	height: 360px !important;
+}
+/*.platform_linux .TDS_PS_L2.TDS_CalcBasic .tool-calculator, .platform_linux .TDS_PS_L3.TDS_CalcBasic .tool-calculator, .platform_linux TDS_PS_L4.TDS_CalcBasic .tool-calculator{
+	width: 275px !important;
+}*/
+.TDS_CalcStd .tool-calculator, .TDS_CalcStdMem .tool-calculator {
+	height: 340px !important;
+	width: 322px !important;
+}
+.TDS_PS_L1.TDS_CalcStd .tool-calculator, .TDS_PS_L1.TDS_CalcStdMem .tool-calculator {
+	height: 345px !important;
+	width: 365px !important;
+}
+.TDS_PS_L2.TDS_CalcStd .tool-calculator, .TDS_PS_L3.TDS_CalcStd .tool-calculator, .TDS_PS_L4.TDS_CalcStd .tool-calculator, 
+.TDS_PS_L2.TDS_CalcStdMem .tool-calculator, .TDS_PS_L3.TDS_CalcStdMem .tool-calculator, .TDS_PS_L4.TDS_CalcStdMem .tool-calculator {
+	height: 372px !important;
+	width: 400px !important;
+}
+/* scientific with just one or fewer other modes available */
+#tools .TDS_CalcSci .tool-calculator {
+	height: 420px !important;
+	width: 449px !important;
+}
+.TDS_PS_L1 #tools .TDS_CalcSci .tool-calculator {
+	width: 523px !important;
+	height: 430px !important;
+}
+.TDS_PS_L2 #tools .TDS_CalcSci .tool-calculator, 
+.TDS_PS_L3 #tools .TDS_CalcSci .tool-calculator, 
+.TDS_PS_L4 #tools .TDS_CalcSci .tool-calculator {
+	width: 580px !important;
+	height: 450px !important;
+}
+
+
+/* scientific with two other modes available */
+.TDS_CalcMatrices.TDS_CalcRegress #tools .TDS_CalcSci .tool-calculator,
+.TDS_CalcMatrices.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator
+.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator 
+ {
+	height: 420px !important;
+	width: 420px !important;
+}
+.TDS_PS_L1.TDS_CalcMatrices.TDS_CalcRegress #tools .TDS_CalcSci .tool-calculator,
+.TDS_PS_L1.TDS_CalcMatrices.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator
+.TDS_PS_L1.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator {
+	width: 500px !important;
+	height: 430px !important;
+}
+.TDS_PS_L2.TDS_CalcMatrices.TDS_CalcRegress #tools .TDS_CalcSci .tool-calculator,
+.TDS_PS_L2.TDS_CalcMatrices.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator
+.TDS_PS_L2.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator, 
+
+.TDS_PS_L3.TDS_CalcMatrices.TDS_CalcRegress #tools .TDS_CalcSci .tool-calculator,
+.TDS_PS_L3.TDS_CalcMatrices.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator
+.TDS_PS_L3.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator, 
+
+.TDS_PS_L4.TDS_CalcMatrices.TDS_CalcRegress #tools .TDS_CalcSci .tool-calculator,
+.TDS_PS_L4.TDS_CalcMatrices.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator
+.TDS_PS_L4.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator {
+	width: 500px !important;
+	height: 450px !important;
+}
+
+/* scientific with three other modes available */
+.TDS_CalcMatrices.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator {
+	height: 420px !important;
+	width: 505px !important;
+}
+.TDS_PS_L1.TDS_CalcMatrices.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator {
+	width: 720px !important;
+	height: 430px !important;
+}
+.TDS_PS_L2.TDS_CalcMatrices.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator, 
+.TDS_PS_L3.TDS_CalcMatrices.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator, 
+.TDS_PS_L4.TDS_CalcMatrices.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator {
+	width: 720px !important;
+	height: 450px !important;
+}
+
+
+#tools .TDS_CalcMatrices .tool-calculator {
+	height: 440px !important;
+	width: 700px !important;
+}
+.TDS_PS_L1 #tools .TDS_CalcMatrices .tool-calculator {
+	height: 450px !important;
+	width: 700px !important;
+}
+.TDS_PS_L2 #tools .TDS_CalcMatrices .tool-calculator, 
+.TDS_PS_L3 #tools .TDS_CalcMatrices .tool-calculator, 
+.TDS_PS_L4 #tools .TDS_CalcMatrices .tool-calculator {
+	height: 470px !important;
+	width: 700px !important;
+}
+
+
+#tools .TDS_CalcRegress .tool-calculator {
+	height: 520px !important;
+	width: 700px !important;
+}
+.TDS_PS_L1 #tools .TDS_CalcRegress .tool-calculator {
+	height: 540px !important;
+	width: 705px !important;
+}
+.TDS_PS_L2 #tools .TDS_CalcRegress .tool-calculator, 
+.TDS_PS_L3 #tools .TDS_CalcRegress .tool-calculator, 
+.TDS_PS_L4 #tools .TDS_CalcRegress .tool-calculator {
+	height: 555px !important;
+	width: 750px !important;
+}
+
+#tools .TDS_CalcGraphing .tool-calculator {
+	height: 530px !important;
+	width: 700px !important;
+}
+.TDS_PS_L1 #tools .TDS_CalcGraphing .tool-calculator {
+	width: 800px !important;
+	height: 550px !important;
+}
+.TDS_PS_L2 #tools .TDS_CalcGraphing .tool-calculator, 
+.TDS_PS_L3 #tools .TDS_CalcGraphing .tool-calculator, 
+.TDS_PS_L4 #tools .TDS_CalcGraphing .tool-calculator {
+	width: 825px !important;
+	height: 560px !important;
+}
+
+/* @end */
+
+.tool-help {
+	height: 530px !important;
+	width: 720px !important;
+}
+.TDS_PS_L1 .tool-help {
+	width: 820px !important;
+}
+.TDS_PS_L2 .tool-help, .TDS_PS_L3 .tool-help, .TDS_PS_L4 .tool-help {
+	width: 900px !important;
+}
+.popupHeader {
+	background-color: #fdfac2;
+	display: block;
+	font-weight: bold;
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
+	border-bottom-color: #f6c501;
+	line-height: 18px;
+	height: 18px;
+	font-family: "Lucida Grande", "Lucida Sans", Arial, Helvetica, sans-serif;
+}
+.popupTitle {
+	display: block;
+	float: left;
+	height: 18px;
+	line-height: 18px;
+	padding-left: 10px;
+}
+.popupClose a {
+	background-color: #faf5a2;
+	display: block;
+	float: right;
+	height: 18px;
+	background-image: url(../Images/icons/xmark.gif);
+	background-repeat: no-repeat;
+	background-position: 5px 3px;
+	padding-right: 10px;
+	padding-left: 20px;
+	line-height: 18px;
+	color: #000000;
+	text-decoration: none;
+	border-left-width: 2px;
+	border-left-style: solid;
+	border-left-color: #f6c501;
+}
+.popupClose a:hover {
+	background-color: #990000;
+	text-decoration:underline;
+	color: #FFFFFF;
+}
+.TDS_PS_L2 .popupHeader, .TDS_PS_L3 .popupHeader, .TDS_PS_L4 .popupHeader {
+	font-size: .8em;
+}
+.browser_firefox.browserVer_2.platform_mac .jumptTo option, .browser_airsecurebrowser.browserVer_3_5.platform_mac .jumptTo option, .browser_airsecurebrowser.browserVer_3_6.platform_mac .jumptTo option {
+	border-bottom: solid 1px #fff;
+}
+/* notifications */
+.notificationsContainer {
+	height:17px;
+}
+.notificationsContainer div {
+	background-repeat: no-repeat;
+	background-position: left top;
+	padding-top: 1px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 30px;
+	line-height: 16px;
+	color: #000000;
+	font-weight: bold;
+}
+.notificationError {
+	background-color: #f6c1c3;
+	background-image: url(../../Images/alerts/stopSmall.gif);
+}
+.notificationNotice {
+	background-color: #fff899;
+	background-image: url(../../Images/alerts/attentionSmall.gif);
+}
+.notificationSuccess {
+	background-color: #d6edba;
+	background-image: url(../../Images/alerts/okSmall.gif);
+}
+.notificationError a, .notificationNotice a, .notificationSuccess a {
+    color:#000000;
+}
+/* modal dialogs */
+.dialogWrapper {
+	height: 100%;
+	width: 100%;
+	display:table;
+	vertical-align:middle;
+	text-align:center;
+	padding-top: 20%;
+	background-image: url(../Images/darkGrey.png);
+	background-repeat: repeat;
+}
+#dialogProgress .dialogWrapper {
+	background-image: url(../Images/white.png);
+}
+.dialogBox {
+	background-color: #FFFFFF;
+	border: 3px solid #fdf7cf;
+	margin-right: auto;
+	margin-left: auto;
+	text-align: left;
+	width: 50%;
+	padding: 2em;
+	-moz-box-shadow: 0em 0em 5px #000;
+	-webkit-box-shadow: 0em 0em 5px #000;
+	box-shadow: 0em 0em 5px #000;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+}
+#dialogProgress  .dialogBox {
+	width: 200px;
+	padding: 2em;
+}
+.dialogBox h2 {
+	font-size: 2.5em;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #E7D142;
+	margin-bottom: 0.2em;
+	background-repeat: no-repeat;
+	background-position: left center;
+	background-color: #fdf7cf;
+	margin-top: -0.8em;
+	margin-right: -0.8em;
+	margin-left: -0.8em;
+	padding-left: 47px;
+	line-height: 20px;
+	padding-right: 10px;
+	padding-top: .5em;
+	padding-bottom: .5em;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #666;
+}
+.dialogBox p {
+	font-size: 1.3em;
+	padding-left:1.5em;
+}
+.dialogBox .yourChoices {
+	margin-top: 0px;
+	margin-right: -2.5em;
+	margin-bottom: -1.5em;
+	margin-left: 0px;
+}
+.dialogBox .yourChoices a {
+	float: right;
+}
+.TDS_PS_L1 .dialogWrapper {
+	padding-top: 10%;
+}
+.TDS_PS_L1 #dialogContent, .TDS_PS_L1 #dialogPracticePrint, .TDS_PS_L1 #dialogAlert, .TDS_PS_L1 #dialogPrompt {
+	font-size: .8em;
+}
+.TDS_PS_L2 .dialogWrapper, .TDS_PS_L3 .dialogWrapper, .TDS_PS_L4 .dialogWrapper {
+	padding-top: 15%;
+}
+.TDS_PS_L2 #dialogContent, .TDS_PS_L2 #dialogPracticePrint, .TDS_PS_L2 #dialogAlert, .TDS_PS_L2  #dialogPrompt, .TDS_PS_L3 #dialogContent, .TDS_PS_L3 #dialogPracticePrint, .TDS_PS_L3 #dialogAlert, .TDS_PS_L3  #dialogPrompt, .TDS_PS_L4 #dialogContent, .TDS_PS_L4 #dialogPracticePrint, .TDS_PS_L4 #dialogAlert, .TDS_PS_L4  #dialogPrompt {
+	font-size: .7em;
+}
+.Green {
+	border: 3px solid #04A033;
+}
+.Green h2 {
+	background-image: url(../../Images/alerts/okMedium.gif);
+	background-color: #d6edba;
+	border-bottom-color: #04A033;
+}
+.Yellow, .Red {
+	border: 3px solid #f5f7f7;
+}
+.Yellow h2, .Red h2 {
+	background-image: url(../../Images/alerts/alert.png);
+	background-color: #f5f7f7;
+	border-bottom-color: #ccc;
+}
+.Loading {
+	display: block;
+	background-color: #ccc;
+	width: 228px !important;
+	margin-top: 15%;
+	margin-left: auto;
+	margin-right: auto;
+	border: 3px solid #4b4b4b;
+	text-align: left;
+	-moz-box-shadow: 0em 0em .5em #000;
+	-webkit-box-shadow: 0em 0em .5em #000;
+	box-shadow: 0em 0em .5em #000;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	padding: 0px !important;
+}
+.Loading h2 {
+	background-color: #666;
+	border-bottom-color: #CCCCCC;
+	text-align:left;
+	color: #fff;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	margin: 0px;
+	line-height: 1.3em;
+}
+.Loading span {
+	display: block;
+	background-image: url(../Images/loadingAnimation.gif);
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-color: #f4f4f4;
+	text-align: center;
+	height: 30px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+/*
+.Loading {
+	border: 3px solid #E7D142;
+	width:30%;
+}
+.Loading h2 {
+	background-color: #E7D142;
+	border-bottom-color: #E7D142;
+	text-align:center;
+	color: #FFFFFF;
+	padding-top: .3em;
+	padding-right: 0px;
+	padding-bottom: .3em;
+	padding-left: 0px;
+}
+.Loading span {
+	display: block;
+	background-image: url(../Images/loadingAnimation.gif);
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-color: #fff899;
+	text-align: center;
+	height: 30px;
+	margin-right: -2em;
+	margin-bottom: -2em;
+	margin-left: -2em;
+	margin-top: -.5em;
+}
+*/
+.yourChoices a {
+	font-size: 1.5em;
+	margin-right: 1em;
+}
+.yourChoices .greenBtn {
+	display: block;
+	background-image: none;
+	float: left;
+	text-decoration: none;
+	color: #04A033;
+	padding: 6px;
+	border: solid 1px #04A033;
+	-webkit-border-top-left-radius: 10px;
+	-webkit-border-top-right-radius: 0px;
+	-webkit-border-bottom-right-radius: 10px;
+	-webkit-border-bottom-left-radius: 0px;
+	-moz-border-radius-topleft: 10px;
+	-moz-border-radius-topright: 0px;
+	-moz-border-radius-bottomright: 10px;
+	-moz-border-radius-bottomleft: 0px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 0px; 
+}
+.yourChoices .greenBtn:hover {
+	color: #FFFFFF;
+	background-color: #04A033;
+}
+.yourChoices .redBtn {
+	display: block;
+	background-image: none;
+	float: left;
+	text-decoration: none;
+	color: #990000;
+	padding: 6px;
+	border: solid 1px #990000;
+	-webkit-border-top-left-radius: 10px;
+	-webkit-border-top-right-radius: 0px;
+	-webkit-border-bottom-right-radius: 10px;
+	-webkit-border-bottom-left-radius: 0px;
+	-moz-border-radius-topleft: 10px;
+	-moz-border-radius-topright: 0px;
+	-moz-border-radius-bottomright: 10px;
+	-moz-border-radius-bottomleft: 0px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 0px; 
+}
+.yourChoices .redBtn:hover {
+	color: #FFFFFF;
+	background-color: #990000;
+}
+
+#dialogPrompt, #dialogAlert, #dialogProgress, #dialogPracticePrint {
+	position: fixed;
+	z-index: 500;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	display:none;
+}
+#logOut {
+	display:none;
+}
+body.dialogAlertShow #dialogAlert, body.dialogPromptShow #dialogPrompt, body.contentLoading #dialogProgress, body.closeBrowser #logOut {
+	display:block;
+}
+/* ensure that dialog messages are always on top */
+#yuiSimpleDialog_c {
+	z-index: 2010 !important;
+}
+#yuiSimpleDialog_mask {
+	z-index: 2000 !important;
+	background: url(../Images/mask_circles.png) repeat;
+	opacity: 1;
+}
+
+/* end modal stuff */
+
+/* ====================================== Writing ======================================= */
+/*.subject_Writing #foot .periodic {
+	display:none;
+}
+.subject_Writing #foot .math {
+	display:none;
+}
+.subject_Writing #foot .printer {
+	display:none !important;
+}
+.subject_Writing #foot.Layout_12 .highlight, .subject_Writing #foot.Layout_12 .removeHighlight {
+	display:none !important;
+}*/
+
+/* Hides frames (NOTE: DO NOT USE.. causes issues for FF2 and SVG */
+/*
+.contentFrame {
+	display: block;
+	height: 100%;
+	width: 100%;
+}
+.contentFrameHide {
+	display: none;
+}
+*/
+
+/* Hides frames */
+/* all content iframes are assigned this class */
+.contentFrame {
+	height: 100%;
+	width: 100%;
+	display: block;
+}
+/* when a content iframe is hidden it is assigned this class */
+.contentFrameHide {
+	width: 0px;
+	height: 0px;
+	visibility: hidden;
+	display: block;
+}
+
+/* @group tutorials, etc... */
+
+#dialogContent {
+	display:none;
+}
+#dialogContent.enable {
+	position: fixed;
+	z-index: 500;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	display:block;
+}
+
+#dialogContent .dialogWrapper {
+	padding-top: 40px;
+	position: relative;
+}
+#dialogContentFrames {
+	background-color:#FFFFFF;
+	border:2px solid #F6C501;
+	height:490px;
+	width:700px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/*
+#dialogContentFrames iframe.contentFrameHide {
+	display: none;
+}
+#dialogContentFrames {
+	display: inherit;
+	width: 100%;
+	height: 100%;
+}
+*/
+
+#dialogContentHeader{
+	background-color: #F6C501;
+	width: 700px;
+	text-align: left;
+	margin-left: auto;
+	margin-right: auto;
+	height: 18px;
+	line-height: 18px;
+	padding-left: 2px;
+	padding-right: 2px;
+	font-family:"Lucida Grande","Lucida Sans",Arial,Helvetica,sans-serif;
+}
+#dialogContentTitle {
+	background-color: #faf5a2;
+	display: block;
+	border-top:2px solid #F6C501;
+	padding-left: 10px;
+	font-weight: bold;
+}
+#dialogContentHeader a {
+	background-color: #faf5a2;
+	display: block;
+	float: right;
+	height: 16px;
+	background-image: url(../Images/icons/xmark.gif);
+	background-repeat: no-repeat;
+	background-position: 5px 3px;
+	padding-right: 10px;
+	padding-left: 20px;
+	line-height: 16px;
+	color: #000000;
+	text-decoration: none;
+	border-left-width: 2px;
+	border-left-style: solid;
+	border-left-color: #f6c501;
+	margin-top: -18px;
+}
+#dialogContentHeader a:hover {
+	background-color: #990000;
+	text-decoration:underline;
+	color: #FFFFFF;
+}
+#dialogContentControls {
+	display: none;
+}
+#dialogContentControls.enable {
+	background-color: #F6C501;
+	width: 700px;
+	text-align: left;
+	margin-left: auto;
+	margin-right: auto;
+	height: 18px;
+	line-height: 18px;
+	padding-left: 2px;
+	padding-right: 2px;
+	font-family:"Lucida Grande","Lucida Sans",Arial,Helvetica,sans-serif;
+	display: block;
+}
+/* @end */
+
+.formulaHolder, .periodicHolder {
+	display: none;
+	background: no-repeat center center;
+}
+
+
+/* @group sound cue */
+
+#soundCues {
+	float: left;
+}
+.sound_cue {
+	display:block;
+	height: 13px;
+	width: 17px;
+	margin-top: 2px;
+	text-decoration: none;
+	background: url(../images/controls/avcontrols.gif) no-repeat scroll -75px -86px transparent;
+}
+.sound_cue:hover {
+	background-position: -100px -86px;
+}
+.sound_cue.load_incomplete, .sound_cue.disabled {
+	background: url(../Images/controls/speaker_noclick.gif) no-repeat center center;
+	cursor: default;
+}
+.TDS_PS_L1 .sound_cue, .TDS_PS_L1 .sound_cue.load_incomplete, .TDS_PS_L1 .sound_cue.disabled {
+	margin-top: 5px;
+}
+.TDS_PS_L2 .sound_cue, .TDS_PS_L2 .sound_cue.load_incomplete, .TDS_PS_L2 .sound_cue.disabled, .TDS_PS_L3 .sound_cue, .TDS_PS_L3 .sound_cue.load_incomplete, .TDS_PS_L3 .sound_cue.disabled, .TDS_PS_L4 .sound_cue, .TDS_PS_L4 .sound_cue.load_incomplete, .TDS_PS_L4 .sound_cue.disabled {
+	margin-top: 8px;
+}
+.sound_cue.playing_start {
+	background: url(../images/controls/animatedSpeaker.gif) no-repeat center center;
+}
+.sound_cue.load_fail, .sound_cue.decode_fail, .sound_cue.playing_fail {
+	background: url(../images/controls/avcontrols.gif);
+	background-position: -350px -289px;
+	cursor: default;
+}
+.sound_cue.load_start, .sound_cue.load_complete, .sound_cue.decode_start {
+	cursor: default;
+	background: url(../images/controls/testshell_loader13.gif) no-repeat center center;
+}
+/* original with different states 
+.sound_cue {
+	display:block;
+	background: url(../images/controls/avcontrols.gif) no-repeat -75px -86px;
+	height: 13px;
+	width: 17px;
+	text-decoration: none;
+	margin-top: 2px;
+}
+.sound_cue:hover {
+	background-position: -100px -86px;
+}
+.sound_cue.playing_start {
+	background-position: -121px -280px;
+}
+.sound_cue.playing_start:hover {
+	background-position: -142px -280px;
+}
+.sound_cue.load_fail, .sound_cue.load_fail:hover {
+	background-position: -350px -289px;
+	cursor: default;
+}
+.sound_cue.load_incomplete, .sound_cue.disabled,
+.sound_cue.load_incomplete:hover, .sound_cue.disabled:hover {
+	background-position: -124px -86px;
+	cursor: default;
+}
+.sound_cue.load_start, .sound_cue.load_complete, .sound_cue.decode_start, .sound_cue.decode_complete,
+.sound_cue.load_start:hover, .sound_cue.load_complete:hover, .sound_cue.decode_start:hover, .sound_cue.decode_complete:hover {
+	cursor: default;
+	background: url(../images/controls/loader13.gif) no-repeat center center;
+}
+*/
+
+/* @end */
+/* @group sound status */
+
+#soundStatus {
+	display:block;
+    background: url(../images/controls/avcontrols.gif) no-repeat -75px -86px;
+	height: 13px;
+	width: 17px;
+	text-decoration: none;
+	margin-top: 2px;
+	float: left;
+}
+
+/* @end */
+
+#btnReload {
+	display:block;
+	background: url(../images/controls/reload.gif) no-repeat 0 0;
+	height: 13px;
+	width: 17px;
+	text-decoration: none;
+	margin-top: 2px;
+	float: right;
+	text-indent: -9999px;
+}
+
+#btnReload:hover {
+	background-position: 0 -24px;
+}
+
+.popupPage {
+	display: block;
+	height: 100%;
+	overflow: auto;
+}
+
+/* preloads images so they don't appear 'missing' */
+.preloader {
+	display: block;
+	height: 1px;
+	width: 1px;
+	background-color: #333F58;
+	position: absolute;
+	top: -1;
+	left: -1;
+	z-index: 0;
+}
+.preloader span {
+	display: block;
+}
+.preloader .badGrid {
+	background-image: url(../../Images/alerts/stopWhite.gif);
+}
+.preloader .sprites_yui {
+	background-image: url(../Images/controls/context.gif);
+}
+.preloader .sprites_buttons {
+	background-image: url(../Images/controls/sprites_student.png);
+}
+.preloader .answerA {
+	background-image: url(../Images/controls/options/optionA.png);
+}
+.preloader .answerB {
+	background-image: url(../Images/controls/options/optionB.png);
+}
+.preloader .answerC {
+	background-image: url(../Images/controls/options/optionC.png);
+}
+.preloader .answerD {
+	background-image: url(../Images/controls/options/optionD.png);
+}
+.preloader .answerE {
+	background-image: url(../Images/controls/options/optionE.png);
+}
+.preloader .answerF {
+	background-image: url(../Images/controls/options/optionF.png);
+}
+.preloader .answerI {
+	background-image: url(../Images/controls/options/optionI.png);
+}
+.preloader .answerO {
+	background-image: url(../Images/controls/options/optionO.png);
+}
+.preloader .answerBlank {
+	background-image: url(../Images/controls/options/optionBlank.png);
+}
+.preloader .writingOpen {
+	background-image: url(../Images/writing/nowCenterRight.gif);
+}
+.preloader .writingClosed {
+	background-image: url(../Images/writing/nowCenterRight2.gif);
+}
+/* @group context menu */
+/* zoom for contaxt menu*/
+.TDS_PS_L1{
+	font-size:1.5em;
+}
+.TDS_PS_L1 #topHalf {
+	font-size:67%;
+}
+.TDS_PS_L2, .TDS_PS_L3, .TDS_PS_L4 {
+	font-size:2em;
+}
+.TDS_PS_L2 #topHalf, .TDS_PS_L3 #topHalf, .TDS_PS_L4 #topHalf {
+	font-size: .5em;
+} 
+/* fixes zooming box issues for FF 2 */
+.TDS_PS_L1 .yuimenuitemlabel {
+	margin-bottom: 1px;
+}
+
+/* @group icons */
+.yui-skin-sam .yuimenu ul {
+	background-color: #ececec;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1.1em;
+	border: solid 2px #3e4a61 !important;
+}
+.yui-skin-sam .yuimenuitem-selected {
+	background-color: #c5d5f5 !important;
+}
+/* makes room for icons */
+.yui-skin-sam a.yuimenuitemlabel {
+	padding-left: 40px;
+	line-height: 20px;
+	margin-bottom: .2em;
+}
+.TDS_PS_L1 .yuimenuitemlabel, .TDS_PS_L2 .yuimenuitemlabel, .TDS_PS_L3 .yuimenuitemlabel, .TDS_PS_L4 .yuimenuitemlabel {
+	line-height: inherit !important;
+}
+
+.yuimenu a {
+	background: url(../Images/controls/context.gif) no-repeat left 900px;
+}
+
+.yuimenu .speaksection a, .yuimenu .speaktext a {
+	background-position: left -15px;
+}
+.TDS_PS_L1 .yuimenu .speaksection a, .TDS_PS_L1 .yuimenu .speaktext a {
+	background-position: left -12px;
+}
+.TDS_PS_L2 .yuimenu .speaksection a, .TDS_PS_L2 .yuimenu .speaktext a, .TDS_PS_L3 .yuimenu .speaksection a, .TDS_PS_L3 .yuimenu .speaktext a, .TDS_PS_L4 .yuimenu .speaksection a, .TDS_PS_L4 .yuimenu .speaktext a {
+	background-position: left -7px;
+}
+
+.yuimenu .playquestion a, .yuimenu .playrecording a, .yuimenu .sound_instructions a, .yuimenu .resumespeaking a {
+	background-position: left -1014px;
+}
+.TDS_PS_L1 .yuimenu .playquestion a, .TDS_PS_L1 .yuimenu .playrecording a, .TDS_PS_L1 .yuimenu .sound_instructions a, .TDS_PS_L1 .yuimenu .resumespeaking a {
+	background-position: left -1011px;
+}
+.TDS_PS_L2 .yuimenu .playquestion a, .TDS_PS_L2 .yuimenu .playrecording a, .TDS_PS_L2 .yuimenu .sound_instructions a, .TDS_PS_L3 .yuimenu .playquestion a, .TDS_PS_L3 .yuimenu .playrecording a, .TDS_PS_L3 .yuimenu .sound_instructions a, .TDS_PS_L4 .yuimenu .playquestion a, .TDS_PS_L4 .yuimenu .playrecording a, .TDS_PS_L4 .yuimenu .sound_instructions a, 
+.TDS_PS_L2 .yuimenu .resumespeaking a, .TDS_PS_L3 .yuimenu .resumespeaking a, .TDS_PS_L4 .yuimenu .resumespeaking a {
+	background-position: left -1005px;
+}
+
+.yuimenu .speakstop a, .yuimenu .stopspeaking a, .yuimenu .stoprecording a, .yuimenu .stopquestion a {
+	background-position: left -65px;
+}
+.TDS_PS_L1 .yuimenu .speakstop a, .TDS_PS_L1 .yuimenu .stopspeaking a, .TDS_PS_L1 .yuimenu .stoprecording a, .TDS_PS_L1 .yuimenu .stopquestion a {
+	background-position: left -62px;
+}
+.TDS_PS_L2 .yuimenu .speakstop a, .TDS_PS_L2 .yuimenu .stopspeaking a, .TDS_PS_L2 .yuimenu .stoprecording a, .TDS_PS_L2 .yuimenu .stopquestion a, 
+.TDS_PS_L3 .yuimenu .speakstop a, .TDS_PS_L3 .yuimenu .stopspeaking a, .TDS_PS_L3 .yuimenu .stoprecording a, .TDS_PS_L3 .yuimenu .stopquestion a, 
+.TDS_PS_L4 .yuimenu .speakstop a, .TDS_PS_L4 .yuimenu .stopspeaking a, .TDS_PS_L4 .yuimenu .stoprecording a, .TDS_PS_L4 .yuimenu .stopquestion a {
+	background-position: left -56px;
+}
+
+.yuimenu .highlight a, .yuimenu .highlighttext a {
+	background-position:left -115px;
+}
+.TDS_PS_L1 .yuimenu .highlight a, .TDS_PS_L1 .yuimenu .highlighttext a {
+	background-position: left -112px;
+}
+.TDS_PS_L2 .yuimenu .highlight a, .TDS_PS_L2 .yuimenu .highlighttext a, .TDS_PS_L3 .yuimenu .highlight a, .TDS_PS_L3 .yuimenu .highlighttext a, .TDS_PS_L4 .yuimenu .highlight a, .TDS_PS_L4 .yuimenu .highlighttext a {
+	background-position: left -106px;
+}
+
+.yuimenu .removehighlight a, .yuimenu .highlightclear a {
+	background-position: left -165px;
+}
+.TDS_PS_L1 .yuimenu .removehighlight a, .TDS_PS_L1 .yuimenu .highlightclear a {
+	background-position: left -162px;
+}
+.TDS_PS_L2 .yuimenu .removehighlight a, .TDS_PS_L3 .yuimenu .removehighlight a, .TDS_PS_L4 .yuimenu .removehighlight a, 
+.TDS_PS_L2 .yuimenu .highlightclear a, .TDS_PS_L3 .yuimenu .highlightclear a, .TDS_PS_L4 .yuimenu .highlightclear a {
+	background-position: left -156px;
+}
+
+
+.yuimenu .strikethrough a {
+	background-position: left -215px;
+}
+.TDS_PS_L1 .yuimenu .strikethrough a {
+	background-position: left -212px;
+}
+.TDS_PS_L2 .yuimenu .strikethrough a, .TDS_PS_L3 .yuimenu .strikethrough a, .TDS_PS_L4 .yuimenu .strikethrough a {
+	background-position: left -206px;
+}
+
+.yuimenu .pause a, .yuimenu .pausespeaking a {
+	background-position: left -415px;
+}
+.TDS_PS_L1 .yuimenu .pause a, .TDS_PS_L1 .yuimenu .pausespeaking a {
+	background-position: left -412px;
+}
+.TDS_PS_L2 .yuimenu .pause a, .TDS_PS_L3 .yuimenu .pause a, .TDS_PS_L4 .yuimenu .pause a, 
+.TDS_PS_L2 .yuimenu .pausespeaking a, .TDS_PS_L3 .yuimenu .pausespeaking a, .TDS_PS_L4 .yuimenu .pausespeaking a {
+	background-position: left -406px;
+}
+
+.yuimenu .next a {
+	background-position: left -465px;
+}
+.TDS_PS_L1 .yuimenu .next a {
+	background-position: left -462px;
+}
+.TDS_PS_L2 .yuimenu .next a, .TDS_PS_L3 .yuimenu .next a, .TDS_PS_L4 .yuimenu .next a {
+	background-position: left -456px;
+}
+
+.yuimenu .back a {
+	background-position: left -515px;
+}
+.TDS_PS_L1 .yuimenu .back a {
+	background-position: left -512px;
+}
+.TDS_PS_L2 .yuimenu .back a, .TDS_PS_L3 .yuimenu .back a, .TDS_PS_L4 .yuimenu .back a {
+	background-position: left -506px;
+}
+
+.yuimenu .zoomIn a {
+	background-position: left -565px;
+}
+.TDS_PS_L1 .yuimenu .zoomIn a {
+	background-position: left -562px;
+}
+.TDS_PS_L2 .yuimenu .zoomIn a, .TDS_PS_L3 .yuimenu .zoomIn a, .TDS_PS_L4 .yuimenu .zoomIn a {
+	background-position: left -556px;
+}
+
+.yuimenu .zoomOut a {
+	background-position: left -615px;
+}
+.TDS_PS_L1 .yuimenu .zoomOut a {
+	background-position: left -612px;
+}
+.TDS_PS_L2 .yuimenu .zoomOut a, .TDS_PS_L3 .yuimenu .zoomOut a, .TDS_PS_L4 .yuimenu .zoomOut a {
+	background-position: left -606px;
+}
+
+.yuimenu .calculator a {
+	background-position: left -665px;
+}
+.TDS_PS_L1 .yuimenu .calculator a {
+	background-position: left -662px;
+}
+.TDS_PS_L2 .yuimenu .calculator a, .TDS_PS_L3 .yuimenu .calculator a, .TDS_PS_L4 .yuimenu .calculator a {
+	background-position: left -656px;
+}
+
+.yuimenu .math a {
+	background-position: left -815px;
+}
+.TDS_PS_L1 .yuimenu .math a {
+	background-position: left -812px;
+}
+.TDS_PS_L2 .yuimenu .math a, .TDS_PS_L3 .yuimenu .math a, .TDS_PS_L4 .yuimenu .math a {
+	background-position: left -806px;
+}
+
+.yuimenu .periodic a {
+	background-position: left -765px;
+}
+.TDS_PS_L1 .yuimenu .periodic a {
+	background-position: left -762px;
+}
+.TDS_PS_L2 .yuimenu .periodic a, .TDS_PS_L3 .yuimenu .periodic a, .TDS_PS_L4 .yuimenu .periodic a {
+	background-position: left -756px;
+}
+
+.yuimenu .printerPractice a, .yuimenu .printer a, .yuimenu .printItem a, .yuimenu .printPassage a {
+	background-position: left -265px;
+}
+.TDS_PS_L1 .yuimenu .printerPractice a, .TDS_PS_L1 .yuimenu .printer a, .TDS_PS_L1 .yuimenu .printItem a, .TDS_PS_L1 .yuimenu .printPassage a {
+	background-position: left -262px;
+}
+.TDS_PS_L2 .yuimenu .printerPractice a, .TDS_PS_L2 .yuimenu .printer a, .TDS_PS_L2 .yuimenu .printItem a, .TDS_PS_L2 .yuimenu .printPassage a, .TDS_PS_L3 .yuimenu .printerPractice a, .TDS_PS_L3 .yuimenu .printer a, .TDS_PS_L3 .yuimenu .printItem a, .TDS_PS_L3 .yuimenu .printPassage a, .TDS_PS_L4 .yuimenu .printerPractice a, .TDS_PS_L4 .yuimenu .printer a, .TDS_PS_L4 .yuimenu .printItem a, .TDS_PS_L4 .yuimenu .printPassage a {
+	background-position: left -256px;
+}
+
+.yuimenu .help a, .yuimenu .tutorial a, .yuimenu .helpItem a {
+	background-position: left -715px;
+}
+.TDS_PS_L1 .yuimenu .help a, .TDS_PS_L1 .yuimenu .tutorial a, .TDS_PS_L1 .yuimenu .helpItem a {
+	background-position: left -712px;
+}
+.TDS_PS_L2 .yuimenu .help a, .TDS_PS_L2 .yuimenu .tutorial a, .TDS_PS_L2 .yuimenu .helpItem a, .TDS_PS_L3 .yuimenu .help a, .TDS_PS_L3 .yuimenu .tutorial a, .TDS_PS_L3 .yuimenu .helpItem a, .TDS_PS_L4 .yuimenu .help a, .TDS_PS_L4 .yuimenu .tutorial a, .TDS_PS_L4 .yuimenu .helpItem a {
+	background-position: left -706px;
+}
+
+.yuimenu .markReview a {
+	background-position: left -365px;
+}
+.TDS_PS_L1 .yuimenu .markReview a {
+	background-position: left -362px;
+}
+.TDS_PS_L2 .yuimenu .markReview a, .TDS_PS_L3 .yuimenu .markReview a, .TDS_PS_L4 .yuimenu .markReview a {
+	background-position: left -356px;
+}
+
+.yuimenu .comment a {
+	background-position: left -315px;
+}
+.TDS_PS_L1 .yuimenu .comment a {
+	background-position: left -312px;
+}
+.TDS_PS_L2 .yuimenu .comment a, .TDS_PS_L3 .yuimenu .comment a, .TDS_PS_L4 .yuimenu .comment a {
+	background-position: left -306px;
+}
+
+.yuimenu .save a {
+	background-position: left -915px;
+}
+.TDS_PS_L1 .yuimenu .save a {
+	background-position: left -912px;
+}
+.TDS_PS_L2 .yuimenu .save a, .TDS_PS_L3 .yuimenu .save a, .TDS_PS_L4 .yuimenu .save a {
+	background-position: left -906px;
+}
+
+.yuimenu .endTest a {
+	background-position: left -865px;
+}
+.TDS_PS_L1 .yuimenu .endTest a {
+	background-position: left -862px;
+}
+.TDS_PS_L2 .yuimenu .endTest a, .TDS_PS_L3 .yuimenu .endTest a, .TDS_PS_L4 .yuimenu .endTest a {
+	background-position: left -856px;
+}
+
+.yuimenu .caretMode a {
+	background-position: left -965px;
+}
+.TDS_PS_L1 .yuimenu .caretMode a {
+	background-position: left -962px;
+}
+.TDS_PS_L2 .yuimenu .caretMode a, .TDS_PS_L3 .yuimenu .caretMode a, .TDS_PS_L4 .yuimenu .caretMode a {
+	background-position: left -956px;
+}
+
+.yuimenu .startrecording a {
+	background-position: left -1067px;
+}
+.TDS_PS_L1 .yuimenu .startrecording a {
+	background-position: left -1064px;
+}
+.TDS_PS_L2 .yuimenu .startrecording a, .TDS_PS_L3 .yuimenu .startrecording a, .TDS_PS_L4 .yuimenu .startrecording a {
+	background-position: left -1058px;
+}
+
+.yuimenu .gtrItem a {
+	background-position: left -1116px;
+}
+.TDS_PS_L1 .yuimenu .gtrItem a {
+	background-position: left -1111px;
+}
+.TDS_PS_L2 .yuimenu .gtrItem a, .TDS_PS_L3 .yuimenu .gtrItem a, .TDS_PS_L4 .yuimenu .gtrItem a {
+	background-position: left -1107px;
+}
+
+.yuimenu .changePrompt a {
+	background-position: left -1166px;
+}
+.TDS_PS_L1 .yuimenu .changePrompt a {
+	background-position: left -1161px;
+}
+.TDS_PS_L2 .yuimenu .changePrompt a, .TDS_PS_L3 .yuimenu .changePrompt a, .TDS_PS_L4 .yuimenu .changePrompt a {
+	background-position: left -1157px;
+}
+
+/* @end */
+/* @end */
+
+/* fix for menu dipping behind footer */
+.yui-skin-sam .yuimenu .bd {
+	margin-bottom:4em;
+}
+
+.startSpeak, .stopSpeak {
+	display: block;
+	float: left;
+	color: #000;
+	text-decoration: none;
+	width: 18px;
+	height: 18px;
+	text-indent: -9999px;
+	background: url(../Images/controls/audio2010.png) no-repeat;
+	margin-left: 2px;
+}
+.startSpeak {
+	background-position: -422px -416px;
+	display: block;
+}
+.startSpeak:hover {
+	background-position: -441px -416px;
+}
+.stopSpeak {
+	background-position: -459px -416px;
+	display: block;
+}
+.stopSpeak:hover {
+	background-position: -477px -416px;
+}
+.startSpeak.disabled, .startSpeak.disabled:hover {
+	background-position: -422px -416px;
+	cursor: default;
+	-khtml-opacity: 0.3;
+	-moz-opacity: 0.3;
+	opacity: 0.3;
+}
+.stopSpeak.disabled, .disableSpeak.disabled:hover {
+	background-position: -459px -416px;
+	cursor: default;
+	-khtml-opacity: 0.3;
+	-moz-opacity: 0.3;
+	opacity: 0.3;
+}
+#ttsHelp {
+	height: 18px;
+	line-height: 18px;
+	background-color: #fdf5e0;
+	padding: 2px;
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
+	border-bottom-color: #f6c501;
+}
+.ttsText {
+	margin-left: 5px;
+}
+/*keep ff2 scrollbars hidden when dialog is showing */
+
+.browser_firefox.browserVer_2.platform_mac.showingDialog .contentFrame, 
+.browser_airsecurebrowser.browserVer_3_5.platform_mac.showingDialog .contentFrame, 
+.browser_airsecurebrowser.browserVer_3_6.platform_mac.showingDialog .contentFrame {
+	height: 20000;
+}
+.browser_firefox.browserVer_2.platform_mac.showingDialog #tools .bd, 
+.browser_airsecurebrowser.browserVer_3_5.platform_mac.showingDialog #tools .bd, 
+.browser_airsecurebrowser.browserVer_3_6.platform_mac.showingDialog #tools .bd {
+	overflow: hidden;
+}
+.browser_firefox.browserVer_2.platform_mac.showingDialog #tools iframe, 
+.browser_airsecurebrowser.browserVer_3_5.platform_mac.showingDialog #tools iframe, 
+.browser_airsecurebrowser.browserVer_3_6.platform_mac.showingDialog #tools iframe {
+	height: 10000px;
+}
+.browser_firefox.browserVer_2.platform_mac.showingDialog .review.showing, 
+.browser_airsecurebrowser.browserVer_3_5.platform_mac.showingDialog .review.showing, 
+.browser_airsecurebrowser.browserVer_3_6.platform_mac.showingDialog .review.showing {
+	overflow: hidden;
+}
+
+/* @end */
+
+/* @group New iFrames */
+.bottomthing {
+	height: 100%;
+}
+#contents iframe {
+	display: block;
+	visibility: hidden;
+	height: 0px;
+	width: 0px;	
+}
+#contents iframe.showing {
+	height: 100%;
+	width: 100%;
+	visibility: visible;
+}
+/* @end */
+
+/* @group Review page */
+.Content_No #studentTools {
+	display: none;
+}
+.TDS_PS_L1 .reviewContainer {
+	font-size: 1.5em;
+}
+.TDS_PS_L2 .reviewContainer {
+	font-size: 2em;
+}
+.TDS_PS_L3 .reviewContainer {
+	font-size: 2.5em;
+}
+.TDS_PS_L4 .reviewContainer {
+	font-size: 3em;
+}
+#contents #reviews div.review {
+	display: none;
+	visibility: hidden;
+	height: 0px;
+	width: 0px;	
+}
+#contents #reviews div.review.showing {
+	display: block;
+	visibility: visible;
+	height: 100%;
+	width: 100%;
+	overflow: auto;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	text-align: center;
+}
+.reviewContainer {
+	width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: left;
+	padding: 40px;
+}
+.reviewInstructions {
+	float: right;
+	width: 570px;
+}
+.TDS_PS_L2 .reviewInstructions {
+	width: 545px;
+}
+.TDS_PS_L3 .reviewInstructions {
+	width: 505px;
+}
+.TDS_PS_L4 .reviewInstructions {
+	width: 475px;
+}
+.review h2, .review h3 {
+	border-bottom: solid 1px #ccc;
+	font-size: 1.5em;
+	line-height: 1.7em;
+	margin-bottom: 1em;
+}
+.review .pages {
+	border-right: solid 1px #ccc;
+	float: left;
+	padding-right: 40px;
+	width: 150px;
+}
+.review .pages a, .review .pages li {
+	display: block;
+}
+.review .pages ul {
+	display: block;
+	line-height: 1.9em;
+}
+.TDS_PS_L2 .review .pages {
+	width: 180px;
+}
+.TDS_PS_L3 .review .pages {
+	width: 215px;
+}
+.TDS_PS_L4 .review .pages {
+	width: 245px;
+}
+.review .pages a {
+	color: #000;
+	text-decoration: none;
+	border: solid 1px #000;
+	margin-bottom: 1em;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	padding: .3em 35px .3em .3em;
+}
+.TDS_CCYellowB .review .pages a {
+	color: #FC0;
+	border-color: #FC0;
+}
+.TDS_CCInvert .review .pages a, .TDS_CCWhiteN .review .pages a {
+	color: #FFF;
+	border-color: #FFF;
+}
+.TDS_CCYellowB .review .pages a:hover {
+	color: #FFF;
+	border-color: #FFF;
+}
+.TDS_CCInvert .review .pages a:hover, .TDS_CCWhiteN .review .pages a:hover {
+	color: #FC0;
+	border-color: #FC0;
+}
+.review .pages a:hover, .review .pages a:focus {
+	color: #336699;
+	text-decoration: underline;
+	background: url(../Images/lightGrey.png) repeat;
+}
+.review .pages a:visited {
+	color: #666;
+}
+.review .pages a:active {
+	font-style: italic;
+	border-color: #336699;
+}
+.pages a.marked {
+	background: url(../Images/controls/review.gif) no-repeat 100% 3px;
+	border-color: #3b90fc;
+	border-width: 3px;
+}
+.TDS_PS_L1 .pages a.marked {
+	background-position: 100% 9px;
+}
+.TDS_PS_L2 .pages a.marked {
+	background-position: 100% 17px;
+}
+.TDS_PS_L3 .pages a.marked {
+	background-position: 100% 26px;
+}
+.TDS_PS_L4 .pages a.marked {
+	background-position: 100% 35px;
+}
+.pages a.marked:hover {
+	background: url(../Images/controls/review.gif) no-repeat 100% -67px;
+	border-color: #148a0c;
+}
+.TDS_PS_L1 .pages a.marked:hover {
+	background-position: 100% -61px;
+}
+.TDS_PS_L2 .pages a.marked:hover {
+	background-position: 100% -53px;
+}
+.TDS_PS_L3 .pages a.marked:hover {
+	background-position: 100% -44px;
+}
+.TDS_PS_L4 .pages a.marked:hover {
+	background-position: 100% -35px;
+}
+/* @end */
+
+/* @group new comments */
+
+/* lets comment form elements scale*/
+.yui-skin-sam .yui-panel.comment .bd select, .yui-skin-sam .yui-panel.comment .bd textarea {
+	font-size: .9em;
+	width: 100%;
+}
+.TDS_SCNotepad .yui-panel.comment {
+	height: 400px !important;
+}
+.TDS_SCNotepad .yui-panel.comment textarea {
+	width: 100%;
+	height: 310px;
+	overflow: auto;
+}
+.TDS_PS_L1.TDS_SCNotepad .yui-panel.comment {
+	height: 430px !important;
+}
+.TDS_PS_L2.TDS_SCNotepad .yui-panel.comment, .TDS_PS_L3.TDS_SCNotepad .yui-panel.comment, .TDS_PS_L4.TDS_SCNotepad .yui-panel.comment {
+	height: 460px !important;
+	width: 495px !important;
+}
+.TDS_SCTextArea .yui-panel.comment {
+	height: 200px !important;
+}
+.TDS_SCTextArea .yui-panel.comment textarea {
+	width: 100%;
+	height: 110px;
+	overflow: auto;
+}
+.TDS_PS_L1.TDS_SCTextArea .yui-panel.comment {
+	height: 230px !important;
+}
+.TDS_PS_L2.TDS_SCTextArea .yui-panel.comment, .TDS_PS_L3.TDS_SCTextArea .yui-panel.comment, .TDS_PS_L4.TDS_SCTextArea .yui-panel.comment {
+	height: 280px !important;
+	width: 465px !important;
+}
+.TDS_SCDropDown .yui-panel.comment {
+	height: 120px !important;
+}
+.TDS_PS_L1.TDS_SCDropDown .yui-panel.comment {
+	height: 150px !important;
+	width: 500px!important;
+}
+.TDS_PS_L2.TDS_SCDropDown .yui-panel.comment, .TDS_PS_L3.TDS_SCDropDown .yui-panel.comment, .TDS_PS_L4.TDS_SCDropDown .yui-panel.comment {
+	height: 195px !important;
+	width: 600px !important;
+}
+
+/* @end */
+
+/*hack for score table in item demo, please remove */
+
+explanation {
+	display: block;
+    height: 300px;
+    overflow: auto;
+}
+
+/* bug 103063 - Comments Notepad resize */
+.TDS_PS_L1 #comments textarea, .TDS_PS_L1 .notes_dialog_container textarea {
+	font-size: 1.25em;
+}
+.TDS_PS_L2 #comments textarea, .TDS_PS_L2 .notes_dialog_container textarea {
+	font-size: 1.5em;
+}
+.TDS_PS_L3 #comments textarea, .TDS_PS_L3 .notes_dialog_container textarea {
+	font-size: 2em;
+}
+.TDS_PS_L4 #comments textarea, .TDS_PS_L4 .notes_dialog_container textarea {
+	font-size: 2.5em;
+}
+/* @end */
