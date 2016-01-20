@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd"
+	version="2.1">
+	<managed-bean>
+		<managed-bean-name>studentInfo</managed-bean-name>
+		<managed-bean-class>tds.student.web.data.StudentInfo</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>debugSettings</managed-bean-name>
+		<managed-bean-class>tds.student.web.DebugSettings</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>dialogFrameBacking</managed-bean-name>
+		<managed-bean-class>tds.student.web.backing.DialogFrameBacking</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>loginBacking</managed-bean-name>
+		<managed-bean-class>tds.student.web.backing.LoginBacking</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>testShellScriptsBacking</managed-bean-name>
+		<managed-bean-class>tds.student.web.backing.TestShellScriptsBacking</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>reviewShellBacking</managed-bean-name>
+		<managed-bean-class>tds.student.web.backing.ReviewShellBacking</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>notificationBacking</managed-bean-name>
+		<managed-bean-class>tds.student.web.backing.NotificationBacking</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>diagnosticsBackingBean</managed-bean-name>
+		<managed-bean-class>tds.student.web.backing.DiagnosticsBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<application>
+		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+	</application>
+</faces-config>

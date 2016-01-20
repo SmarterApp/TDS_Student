@@ -1,0 +1,15 @@
+.iat-interaction-container {
+	margin: 1em 0 .5em;
+}
+.iat-interaction-name {
+	font-weight: bold;
+	font-size: 1em;
+	border-bottom: solid 1px #ccc;
+}
+.iat-interaction-name.iat-first-interaction-name {
+	position: absolute;
+	height: 0px;
+	width: 0px;
+	left: -9999px;
+	overflow: hidden;
+}

@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://java.sun.com/jsf/passthrough"
+	xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:cc="http://java.sun.com/jsf/composite" xmlns:tds="http://airast.org/jsfcustom" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+<cc:interface componentType="tds.student.web.controls.SectionControl">
+</cc:interface>
+<cc:implementation>
+
+	<tds:SectionWrapper id="sectionDiagnostics">
+
+		<span class="nugget diagnosticsIntro">
+			<h2 i18n-content="Diagnostics.Label.Header">Diagnostic Screen</h2>
+			<div i18n-content="Diagnostics.Label.IntroText">
+				This page allows you to check the <strong>current</strong> bandwidth of your network. Select a test from the drop-down list and enter the maximum number of students likely to test at one time,
+				then click [Run Network Diagnostics Tests].
+			</div>
+		</span>
+
+		<div class="browserPreferences" i18n-content="Diagnostics.Label.Browser.Preferences" style="display: none;"></div>
+
+		<div id="diagnosticsDebug" class="nugget" style="display: none;">
+			<p>
+				<span>User Agent:</span><br /> <strong id="lblDiagUAEl"></strong>
+			</p>
+			<p>
+				<span>OS Name: </span><strong id="lblDiagOSName"></strong>
+			</p>
+			<p>
+				<span>OS Version: </span><strong id="lblDiagOSVer"></strong>
+			</p>
+			<p>
+				<span>Architecture: </span><strong id="lblDiagArch"></strong>
+			</p>
+			<p>
+				<span>Name: </span><strong id="lblDiagBrowserName"></strong>
+			</p>
+			<p>
+				<span>Version: </span><strong id="lblDiagBrowserVer"></strong>
+			</p>
+		</div>
+
+		<span class="nugget browserOSFullName">
+			<p>
+				<span i18n-content="Diagnostics.Label.Browser.OSFullName">Your Operating System:</span> <strong id="lblDiagOSLabel"></strong>
+			</p>
+		</span>
+
+		<span class="nugget browserVersion">
+			<p>
+				<span i18n-content="Diagnostics.Label.Browser.Version">Your Browser Version:</span> <strong id="lblDiagBrowserLabel"></strong>
+			</p>
+		</span>
+
+		<span class="nugget isSecureBrowser">
+			<p>
+				<span i18n-content="Diagnostics.Label.Browser.SecureBrowser">Secure Browser:</span> <strong id="lblDiagBrowserSecure"></strong>
+			</p>
+		</span>
+
+		<span class="nugget networkDiagnostics"> <span id="connSpeed" i18n-content="Diagnostics.Label.NetworkDiagnostics">Network Diagnostics:</span> <br /> <span id="diagnosticsTestInput"
+			style="display: none"> <span id="chooseTest">
+					<p>
+						<span i18n-content="Diagnostics.Label.SelectTest">Select a Test:</span> <select id="availableTests">
+							<option value=""><span i18n-content="Diagnostics.Label.SelectTest">Select Test</span></option>
+						</select> <span id="chooseTestError" class="error" style="display: none" i18n-content="Diagnostics.Label.PleaseSelectTest">Please select a Test</span>
+					</p>
+			</span> <span id="chooseStudentCount">
+					<p>
+						<span i18n-content="Diagnostics.Label.TotalNumberOfStudentsTakingTest">Enter the total number of students you would like to test at one time:</span> <input id="numStudentsTesting" type="text"
+							size="10" maxlength="10" tabindex="0" /> <span id="chooseStudentCountError" class="error" style="display: none" i18n-content="Diagnostics.Label.PleaseEnterTotalNumberOfStudentsTakingTest">Please
+							enter number of students you want to test</span>
+					</p>
+			</span>
+		</span> <span class="actions inline"> <tds:Button id="btnDiagSpeedTest" key="Diagnostics.Label.RunNetworkDiagnosticsTests" text="Run Network Diagnostics Tests" />
+		</span> <span class="clear"></span> <span id="downloadResults" i18n-content="Diagnostics.Label.DownloadResults"></span> <span id="uploadResults" i18n-content="Diagnostics.Label.UploadResults"></span> <span
+			id="bandwidthSummary" i18n-content="Diagnostics.Label.BandwidthSummary"></span> <span class="clear"></span>
+		</span>
+
+		<span class="nugget flashVersion">
+			<p>
+				<span i18n-content="Diagnostics.Label.FlashVersion">Flash Version:</span> <strong> <span id="flashversion" i18n-content="Diagnostics.Label.Loading">Loading...</span>
+				</strong><span class="flashminversion" i18n-content="Diagnostics.Label.FlashMinVersion">(version 9 or higher required)</span>
+			</p>
+		</span>
+
+		<span class="nugget jreVersion">
+			<p>
+				<span i18n-content="Diagnostics.Label.JREVersion">JRE Version:</span> <strong> <span id="jreversion" i18n-content="Diagnostics.Label.Loading">Loading...</span>
+				</strong><span id="jreminversion" i18n-content="Diagnostics.Label.JREMinVersion">(version 1.4 or higher required)</span>
+			</p>
+		</span>
+
+		<div class="actions">
+
+			<c:if test="#{(param['login'] == null || param['login'].toLowerCase() !='false')}">
+				<tds:Button id="btnDiagLogin" key="Diagnostics.Label.ReturnToLogin" text="Return to Login Screen" />
+			</c:if>
+
+			<tds:Button id="btnDiagELPA" key="Diagnostics.Label.ELPACheck" text="ELPA Check" />
+			<tds:Button id="btnDiagTTS" key="Diagnostics.Label.TTSCheck" text="Text-To-Speech Check" />
+		</div>
+		<span class="clear"></span>
+	</tds:SectionWrapper>
+
+</cc:implementation>
+</html>

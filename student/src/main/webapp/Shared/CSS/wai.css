@@ -1,0 +1,1055 @@
+@charset "UTF-8";
+/* VERSION 1 ////////////////////////////////*/
+
+/* @group Reset Code */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+}
+:focus {
+	outline: 0;
+}
+body {
+	line-height: 1;
+	color: black;
+	background: white;
+}
+table {
+	border-collapse: separate;
+	border-spacing: 0;
+}
+caption, th {
+	text-align: left;
+	font-weight: normal;
+}
+td {
+	font-weight: normal;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: "";
+}
+blockquote, q {
+	quotes: "" "";
+}
+
+/* @end */
+
+/* @group Misc */
+
+html {
+	background:#fff;
+	font-size:76%;
+	font-family:Times New Roman, Times, serif;
+}
+body {
+	/*padding: 2em;
+	font-size: 1.4em;*/
+}
+.clear {
+	clear: both;
+	display: block;
+}
+/* specific style for indenting all new lists */
+.indent, .indent ul, .indent ol {
+	padding-top: 0.5em;
+	padding-right: 1em;
+	padding-bottom: 0.5em;
+	padding-left: 1em;
+}
+
+/* @end */
+/* keep size 12/14 accommodations the same */
+.TDS_PS_L1 .thePassage, .TDS_PS_L1 .theQuestions, 
+.TDS_IF_S14.TDS_PS_L1 .thePassage, .TDS_IF_S14.TDS_PS_L1 .theQuestions 
+ {
+	font-size: 1.25em !important;
+}
+.TDS_PS_L2 .thePassage, .TDS_PS_L2 .theQuestions, 
+.TDS_IF_S14.TDS_PS_L2 .thePassage, .TDS_IF_S14.TDS_PS_L2 .theQuestions  {
+	font-size: 1.75em !important;
+}
+.TDS_PS_L3 .thePassage, .TDS_PS_L3 .theQuestions, 
+.TDS_IF_S14.TDS_PS_L3 .thePassage, .TDS_IF_S14.TDS_PS_L3 .theQuestions  {
+	font-size: 2.5em !important;
+}
+.TDS_PS_L4 .thePassage, .TDS_PS_L4 .theQuestions, 
+.TDS_IF_S14.TDS_PS_L4 .thePassage, .TDS_IF_S14.TDS_PS_L4 .theQuestions  {
+	font-size: 3em !important;
+}
+
+/* @group Multiple Items Layouts */
+
+.thePassage p {
+	font-size:1em;
+	/* fixes line hieght/highlighting issue with linux browsers */
+	line-height:1.2em;	
+}
+.thePassage td p {
+	font-size: .9em;
+	line-height:1em;
+}
+/* keeps border when wide tables need to scroll */
+.thePassage table {
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #FFFFFF;
+}
+.thePassage table table {
+	border-right-style: inherit;
+	border-right-color: inherit;
+	border-right-width: auto;
+}
+
+/* original style */
+.theQuestions ol, .theQuestions ul {
+	display: block;
+	margin-left: 2em;
+	margin-right: 2em;
+}
+.response li {
+	padding-bottom: .5em;
+}
+
+.response h3 {
+	font-weight: bold;
+}
+/* setting list styles */
+.item ul, .item ol {
+	padding-left: 1.5em;
+}
+.item em, .passage em {
+	font-style:italic;
+}
+.theQuestions strong, .thePassage strong {
+	font-weight:bold;
+}
+.lastItem {
+	border-bottom-color: #FFFFFF !important;
+}
+.attribute {
+	font-size: 0.7em !important;
+	font-style: italic;
+	margin-top: 1em;
+	padding-top: .5em;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #999999;
+	clear:both;
+}
+.attribute br {
+	display: block;
+}
+/* @end */
+
+/* @group Structural Stuff */
+.grouping {
+	font-size: 1.4em;
+	padding: 1em 2em;
+}
+.grouping h3 {
+	font-size: .9em;
+	font-weight: bold;
+	font-style: italic;
+	color: #666666;
+}
+.grouping .item h3 {
+	background-color: #DBDBDB;
+	display: block;
+	clear: both;
+	font-style: normal;
+	font-weight: bold;
+	color: #000000;
+	text-align: center;
+	margin-bottom: 0.5em;
+	padding-right: .2em;
+	padding-left: .2em;
+	/* so we don't have to set width for box shape */
+	float:left;
+}
+/* clears the question for the question number */
+.question p {
+	display: block;
+	clear: both;
+}
+.thePassage h3 {
+	text-transform: uppercase;
+	font-size: 1.3em;
+	color: #000000;
+}
+.stemContainer, .response {
+	margin-bottom: 1em;
+	border-color: transparent;
+}
+
+/* @end */
+
+/* @group options */
+
+.optionContainer {
+	display:block;
+	cursor: pointer;
+	clear:both;
+}
+.optionClicker {
+	background-image: url(../Images/controls/options/optionBlank.png);
+	display: block;
+	height: 20px;
+	width: 20px;
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	float: left;
+}
+.response .optionContainer:hover span {
+	background-position: 0px -21px;
+}
+.optionA .optionClicker {
+	background-image: url(../Images/controls/options/optionA.png);
+}
+.optionB .optionClicker {
+	background-image: url(../Images/controls/options/optionB.png);
+}
+.optionC .optionClicker {
+	background-image: url(../Images/controls/options/optionC.png);
+}
+.optionD .optionClicker {
+	background-image: url(../Images/controls/options/optionD.png);
+}
+.optionE .optionClicker {
+	background-image: url(../Images/controls/options/optionE.png);
+}
+.optionF .optionClicker {
+	background-image: url(../Images/controls/options/optionF.png);
+}
+.optionG .optionClicker {
+	background-image: url(../Images/controls/options/optionG.png);
+}
+.optionI .optionClicker {
+	background-image: url(../Images/controls/options/optionI.png);
+}
+.option9 .optionClicker {
+	background-image: url(../Images/controls/options/option9.png);
+}
+.option8 .optionClicker {
+	background-image: url(../Images/controls/options/option8.png);
+}
+.option7 .optionClicker {
+	background-image: url(../Images/controls/options/option7.png);
+}
+.option6 .optionClicker {
+	background-image: url(../Images/controls/options/option6.png);
+}
+.option5 .optionClicker {
+	background-image: url(../Images/controls/options/option5.png);
+}
+.option4 .optionClicker {
+	background-image: url(../Images/controls/options/option4.png);
+}
+.option3 .optionClicker {
+	background-image: url(../Images/controls/options/option3.png);
+}
+.option2 .optionClicker {
+	background-image: url(../Images/controls/options/option2.png);
+}
+.option1 .optionClicker {
+	background-image: url(../Images/controls/options/option1.png);
+}
+.option0 .optionClicker {
+	background-image: url(../Images/controls/options/option0.png);
+}
+/* used to be ...NR.png*/
+.optionNR .optionClicker {
+	background-image: url(../Images/controls/options/optionN.png);
+}
+/* used to be ...AL.png*/
+.optionAL .optionClicker {
+	background-image: url(../Images/controls/options/optionA.png);
+}
+/* for Hawaiian*/
+.HAW .optionA .optionClicker {
+	background-image: url(../Images/controls/options/optionA.png);
+}
+.HAW .optionB .optionClicker {
+	background-image: url(../Images/controls/options/optionE.png);
+}
+.HAW .optionC .optionClicker {
+	background-image: url(../Images/controls/options/optionI.png);
+}
+.HAW .optionD .optionClicker {
+	background-image: url(../Images/controls/options/optionO.png);
+}
+
+
+.optionSelected .optionClicker, .optionSelectedDisabled .optionClicker  {
+	background: url(../Images/controls/options/optionBlank.png) 0px -40px !important;
+}
+.optionContent {
+	display: block;
+	clear: right;
+	margin-left:35px;
+	text-align: left;
+	margin-bottom: 1em;
+}
+.optionDisabled, .optionSelectedDisabled {
+	cursor: default;
+	filter:alpha(opacity=50);
+	-moz-opacity: 0.50;
+	opacity: 0.50;
+}
+.response div.optionDisabled:hover span {
+	background-position: 0px 0px;
+}
+
+
+/* @group mc option zooming */
+
+/* level 1 zoom */
+.TDS_PS_L1 .optionClicker {
+	background-position: -40px 0px;
+	height: 30px;
+	width: 30px;
+}
+
+.TDS_PS_L1 .optionSelected .optionClicker, 
+.TDS_PS_L1 .optionSelectedDisabled .optionClicker {
+	background: url(../Images/controls/options/optionBlank.png) -40px -60px no-repeat !important;
+}
+.TDS_PS_L1 .optionContent {
+	margin-left:40px;
+	padding-top:5px;
+	margin-bottom: .75em;
+}
+.TDS_PS_L1 .stemContainer, .TDS_PS_L1 .response {
+    margin-bottom: .75em;
+}
+.TDS_PS_L1 .optionContainer {
+	padding-bottom:10px;
+}
+.TDS_PS_L1 .optionContainer:hover .optionClicker{
+	background-position: -40px -30px;
+}
+
+
+/* level 2 */
+.TDS_PS_L2 .optionClicker {
+	background-position: 0px -60px;
+	height: 40px;
+	width: 40px;
+}
+.TDS_PS_L2 .optionSelected .optionClicker, 
+.TDS_PS_L2 .optionSelectedDisabled .optionClicker {
+	background: url(../Images/controls/options/optionBlank.png) no-repeat -40px -100px !important;
+}
+.TDS_PS_L2 .optionContent {
+	margin-left:52px;
+	padding-top:6px;
+	margin-bottom: .5em;
+}
+.TDS_PS_L2 .stemContainer, .TDS_PS_L2 .response {
+    margin-bottom: .5em;
+}
+.TDS_PS_L2 .optionContainer {
+	padding-bottom:15px;
+}
+.TDS_PS_L2 .optionContainer:hover .optionClicker {
+	background-position: 0px -100px;
+}
+
+/* level 3 */
+.TDS_PS_L3 .optionClicker {
+	background-position: -80px -70px;
+	height: 55px;
+	width: 55px;
+}
+.TDS_PS_L3 .optionSelected .optionClicker, 
+.TDS_PS_L3 .optionSelectedDisabled .optionClicker {
+	background: url(../Images/controls/options/optionBlank.png) no-repeat -12px -140px !important;
+}
+.TDS_PS_L3 .optionContent {
+	margin-left:70px;
+	padding-top:8px;
+	margin-bottom: .33em;
+}
+.TDS_PS_L3 .stemContainer, .TDS_PS_L3 .response {
+    margin-bottom: .33em;
+}
+.TDS_PS_L3 .optionContainer {
+	padding-bottom:20px;
+}
+.TDS_PS_L3 .optionContainer:hover .optionClicker {
+	background-position: -80px -127px;
+}
+
+/* level 4 */
+.TDS_PS_L4 .optionClicker {
+	background-position: -70px 0px;
+	height: 68px;
+	width: 68px;
+}
+.TDS_PS_L4 .optionSelected .optionClicker, 
+.TDS_PS_L4 .optionSelectedDisabled .optionClicker {
+	background: url(../Images/controls/options/optionBlank.png) no-repeat -140px -70px !important;
+}
+.TDS_PS_L4 .optionContent {
+	margin-left:84px;
+	padding-top:9px;
+	margin-bottom: .25em;
+}
+.TDS_PS_L4 .stemContainer, .TDS_PS_L4 .response {
+    margin-bottom: .25em;
+}
+.TDS_PS_L4 .optionContainer {
+	padding-bottom:23px;
+}
+.TDS_PS_L4 .optionContainer:hover .optionClicker {
+	background-position: -140px -1px;
+}
+
+/* @end */
+/* @end */
+
+.item {
+	border-bottom: solid 1px #ccc;
+	margin-bottom: 1em;
+}
+.item:nth-last-child(1) {
+	border: none;
+}
+.question {
+	margin-bottom: .5em;
+}
+.thePassage {
+	border-bottom: solid 1px #666;
+	margin-bottom: 1em;
+	padding-bottom: .5em;
+}
+.optionContainer input, .questionLabel, .passageLabel {
+	overflow: hidden;
+	width: 1px;
+	height: 1px;
+	position: absolute;
+	left: -9999px;
+}
+.illustration td, .illustration th {
+	border: solid 1px #ccc;
+	padding: .4em;
+}
+.illustration th {
+	font-weight: bold;
+}
+.item h3 {
+	margin-right: 1em;
+}
+
+/* @group item tools */
+
+.itemTools {
+	margin-bottom: .5em;
+	height: 15px;
+}
+.itemTools a{
+	display: none;
+	float: left;
+	margin-right: .5em;
+	width: 15px !important;
+	overflow: hidden;
+	text-indent: -9999px;
+	background: url(../Images/controls/item_sprites.png) no-repeat 100px 100px;
+	height: 15px !important;
+}
+a.commentItem {
+	background-position: -620px -75px !important;
+}
+.commentItem:hover, .commentItem:focus{
+	background-position: -635px -75px !important;
+}
+a.markReview {
+	background-position: -500px -75px !important;
+}
+a.markReview:hover, a.markReview:focus {
+	background-position: -515px -75px !important;
+}
+a.markReviewMarked, a.markReviewMarked:hover, a.markReviewMarked:focus, a.markReview:active {
+	background-position: -530px -75px !important;
+}
+a.printItem {
+	background-position: -545px -75px !important;
+}
+a.printItem:hover, a.printItem:focus {
+	background-position: -560px -75px !important;
+}
+a.printSubmitted.printItem {
+	background-position: -575px -75px !important;
+}
+a.contexthelp {
+	background-position: -590px -75px !important;
+}
+a.contexthelp:hover, a.contexthelp:focus {
+	background-position: -605px -75px !important;
+}
+/*level 1 zoom*/
+.TDS_PS_L1 .itemTools {
+	height: 25px;
+}
+.TDS_PS_L1 .itemTools a{
+	width: 25px !important;
+	height: 25px !important;
+}
+.TDS_PS_L1 a.commentItem {
+	background-position: -550px -125px !important;
+}
+.TDS_PS_L1 .commentItem:hover, .TDS_PS_L1 .commentItem:focus{
+	background-position: -575px -125px !important;
+}
+.TDS_PS_L1 a.markReview {
+	background-position: -350px -125px !important;
+}
+.TDS_PS_L1 a.markReview:hover, .TDS_PS_L1 a.markReview:focus {
+	background-position: -375px -125px !important;
+}
+.TDS_PS_L1 a.markReviewMarked, .TDS_PS_L1 a.markReviewMarked:hover, .TDS_PS_L1 a.markReviewMarked:focus, .TDS_PS_L1 a.markReview:active {
+	background-position: -400px -125px !important;
+}
+.TDS_PS_L1 a.printItem {
+	background-position: -425px -125px !important;
+}
+.TDS_PS_L1 a.printItem:hover, .TDS_PS_L1 a.printItem:focus {
+	background-position: -450px -125px !important;
+}
+.TDS_PS_L1 a.printSubmitted.printItem {
+	background-position: -475px -125px !important;
+}
+.TDS_PS_L1 a.contexthelp {
+	background-position: -500px -125px !important;
+}
+.TDS_PS_L1 a.contexthelp:hover, .TDS_PS_L1 a.contexthelp:focus {
+	background-position: -525px -125px !important;
+}
+/* level 2 zoom */
+.TDS_PS_L2 .itemTools {
+	height: 35px;
+}
+.TDS_PS_L2 .itemTools a{
+	width: 35px !important;
+	height: 35px !important;
+}
+.TDS_PS_L2 a.commentItem {
+	background-position: -280px -125px !important;
+}
+.TDS_PS_L2 .commentItem:hover, .TDS_PS_L2 .commentItem:focus{
+	background-position: -315px -125px !important;
+}
+.TDS_PS_L2 a.markReview {
+	background-position: 0px -125px !important;
+}
+.TDS_PS_L2 a.markReview:hover, .TDS_PS_L2 a.markReview:focus {
+	background-position: -35px -125px !important;
+}
+.TDS_PS_L2 a.markReviewMarked, .TDS_PS_L2 a.markReviewMarked:hover, .TDS_PS_L2 a.markReviewMarked:focus, .TDS_PS_L2 a.markReview:active {
+	background-position: -70px -125px !important;
+}
+.TDS_PS_L2 a.printItem {
+	background-position: -105px -125px !important;
+}
+.TDS_PS_L2 a.printItem:hover, .TDS_PS_L2 a.printItem:focus {
+	background-position: -140px -125px !important;
+}
+.TDS_PS_L2 a.printSubmitted.printItem {
+	background-position: -175px -125px !important;
+}
+.TDS_PS_L2 a.contexthelp {
+	background-position: -210px -125px !important;
+}
+.TDS_PS_L2 a.contexthelp:hover, .TDS_PS_L2 a.contexthelp:focus {
+	background-position: -245px -125px !important;
+}
+/*level 3 zoom*/
+.TDS_PS_L3 .itemTools {
+	height: 50px;
+}
+.TDS_PS_L3 .itemTools a{
+	width: 50px !important;
+	height: 50px !important;
+}
+.TDS_PS_L3 a.commentItem {
+	background-position: -400px -75px !important;
+}
+.TDS_PS_L3 .commentItem:hover, .TDS_PS_L3 .commentItem:focus{
+	background-position: -450px -75px !important;
+}
+.TDS_PS_L3 a.markReview {
+	background-position: 0px -75px !important;
+}
+.TDS_PS_L3 a.markReview:hover, .TDS_PS_L3 a.markReview:focus {
+	background-position: -50px -75px !important;
+}
+.TDS_PS_L3 a.markReviewMarked, .TDS_PS_L3 a.markReviewMarked:hover, .TDS_PS_L3 a.markReviewMarked:focus, .TDS_PS_L3 a.markReview:active {
+	background-position: -100px -75px !important;
+}
+.TDS_PS_L3 a.printItem {
+	background-position: -150px -75px !important;
+}
+.TDS_PS_L3 a.printItem:hover, .TDS_PS_L3 a.printItem:focus {
+	background-position: -200px -75px !important;
+}
+.TDS_PS_L3 a.printSubmitted.printItem {
+	background-position: -250px -75px !important;
+}
+.TDS_PS_L3 a.contexthelp {
+	background-position: -300px -75px !important;
+}
+.TDS_PS_L3 a.contexthelp:hover, .TDS_PS_L3 a.contexthelp:focus {
+	background-position: -350px -75px !important;
+}
+/*level 4 zoom*/
+.TDS_PS_L4 .itemTools {
+	height: 75px;
+}
+.TDS_PS_L4 .itemTools a{
+	width: 75px !important;
+	height: 75px !important;
+}
+.TDS_PS_L4 a.commentItem {
+	background-position: -600px 0px !important;
+}
+.TDS_PS_L4 .commentItem:hover, .TDS_PS_L4 .commentItem:focus{
+	background-position: -675px 0px !important;
+}
+.TDS_PS_L4 a.markReview {
+	background-position: 0px 0px !important;
+}
+.TDS_PS_L4 a.markReview:hover, .TDS_PS_L4 a.markReview:focus {
+	background-position: -75px 0px !important;
+}
+.TDS_PS_L4 a.markReviewMarked, .TDS_PS_L4 a.markReviewMarked:hover, .TDS_PS_L4 a.markReviewMarked:focus, .TDS_PS_L4 a.markReview:active {
+	background-position: -150px 0px !important;
+}
+.TDS_PS_L4 a.printItem {
+	background-position: -225px 0px !important;
+}
+.TDS_PS_L4 a.printItem:hover, .TDS_PS_L4 a.printItem:focus {
+	background-position: -300px 0px !important;
+}
+.TDS_PS_L4 a.printSubmitted.printItem {
+	background-position: -375px 0px !important;
+}
+.TDS_PS_L4 a.contexthelp {
+	background-position: -450px 0px !important;
+}
+.TDS_PS_L4 a.contexthelp:hover, .TDS_PS_L4 a.contexthelp:focus {
+	background-position: -525px 0px !important;
+}
+/* @end */
+
+.itemStatus {
+	float: left;
+	margin-top: -23px;
+	font-size: .9em;
+	clear: both;
+	margin-left: 6.5em;
+	color: #666;
+}
+.itemStatus ul, itemStatus li {
+	display: block;
+	float: left;
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+	
+}
+
+/* full size text box for equation editors */
+.EquationEditor textarea {
+	width: 100%;
+	min-width: 400px;
+	min-height: 4em;
+	resize: none;
+	font-size: 1em;
+}
+
+/* no tutorials in this shell */
+.TDS_T1 .contexthelp {
+	display: none !important;
+}
+
+/* make text areas bigger */
+.plaintext textarea {
+	width:100%;
+	font-size: 1em;
+}
+
+
+
+/* @group Sound Cue Repeat */
+.sound_cue {
+	text-decoration: none;
+	color: #FFF;
+}
+.sound_repeat {
+	display: -moz-inline-stack;
+	display: inline-block;
+	color: #fff;
+	text-decoration: none;
+	vertical-align: middle;
+}
+.sound_repeat.load_fail, .sound_repeat.load_fail:hover, .sound_repeat.playing_fail, .sound_repeat.playing_fail:hover, .sound_repeat.decode_fail, .sound_repeat.decode_fail:hover {
+	cursor: default;
+}
+.sound_repeat.load_incomplete, .sound_repeat.disabled,
+.sound_repeat.load_incomplete:hover, .sound_repeat.disabled:hover {
+	cursor: default;
+}
+.sound_repeat.load_start, .sound_repeat.load_complete, .sound_repeat.decode_start,
+.sound_repeat.load_start:hover, .sound_repeat.load_complete:hover, .sound_repeat.decode_start:hover {
+	background: url(../images/controls/loader24.gif) no-repeat center center;
+}
+
+.TDS_PS_L1 .sound_repeat.load_start, .TDS_PS_L1 .sound_repeat.load_complete, .TDS_PS_L1 .sound_repeat.decode_start,
+.TDS_PS_L1 .sound_repeat.load_start:hover, .TDS_PS_L1 .sound_repeat.load_complete:hover, .TDS_PS_L1 .sound_repeat.decode_start:hover {
+	background: url(../images/controls/loader29.gif) no-repeat center center;
+}
+.TDS_PS_L2 .sound_repeat.load_start, .TDS_PS_L2 .sound_repeat.load_complete, .TDS_PS_L2 .sound_repeat.decode_start, 
+.TDS_PS_L2 .sound_repeat.load_start:hover, .TDS_PS_L2 .sound_repeat.load_complete:hover, .TDS_PS_L2 .sound_repeat.decode_start:hover, .TDS_PS_L3 .sound_repeat.load_start, .TDS_PS_L3 .sound_repeat.load_complete, .TDS_PS_L3 .sound_repeat.decode_start, 
+.TDS_PS_L3 .sound_repeat.load_start:hover, .TDS_PS_L3 .sound_repeat.load_complete:hover, .TDS_PS_L3 .sound_repeat.decode_start:hover, .TDS_PS_L4 .sound_repeat.load_start, .TDS_PS_L4 .sound_repeat.load_complete, .TDS_PS_L4 .sound_repeat.decode_start, 
+.TDS_PS_L4 .sound_repeat.load_start:hover, .TDS_PS_L4 .sound_repeat.load_complete:hover, .TDS_PS_L4 .sound_repeat.decode_start:hover {
+	background: url(../images/controls/loader32.gif) no-repeat center center;
+}
+/* @end */
+
+.format_ms .optionClicker {
+	background-image: url(../Images/checks.png) !important;
+}
+
+/* @group Multi-select options */
+
+.format_ms .response .optionContainer:hover .optionClicker {
+	background-position: 0px -149px;
+}
+.format_ms .response .optionSelected .optionClicker  {
+	background-position: 0px -299px !important;
+}
+.TDS_PS_L1 .format_ms .optionClicker {
+	background-position: 0px -449px;
+}
+.TDS_PS_L1 .format_ms .response .optionSelected .optionClicker {
+	background-position: 0px -799px !important;
+	background-image: url(../Images/checks.png) !important;
+}
+.TDS_PS_L1 .format_ms .response .optionContainer:hover .optionClicker {
+	background-position: 0px -625px;
+}
+.TDS_PS_L2 .format_ms .optionClicker {
+	background-position: 0px -975px;
+}
+.TDS_PS_L2 .format_ms .response .optionSelected .optionClicker {
+	background-position: 0px -1375px !important;
+	background-image: url(../Images/checks.png) !important;
+}
+.TDS_PS_L2 .format_ms .response .optionContainer:hover .optionClicker {
+	background-position: 0px -1174px;
+}
+.TDS_PS_L3 .format_ms .optionClicker {
+	background-position: 0px -1575px;
+}
+.TDS_PS_L3 .format_ms .response .optionSelected .optionClicker {
+	background-position: 0px -2075px !important;
+	background-image: url(../Images/checks.png) !important;
+}
+.TDS_PS_L3 .format_ms .response .optionContainer:hover .optionClicker {
+	background-position: 0px -1825px;
+}
+.TDS_PS_L4 .format_ms .optionClicker {
+	background-position: 0px -2325px;
+}
+.TDS_PS_L4 .format_ms .response .optionSelected .optionClicker {
+	background-position: 0px -2925px !important;
+	background-image: url(../Images/checks.png) !important;
+}
+.TDS_PS_L4 .format_ms .response .optionContainer:hover .optionClicker {
+	background-position: 0px -2626px;
+}
+
+/* @end */
+
+
+
+/* @group Keyboard */
+
+.keyboard {
+	text-align: left;
+	margin-top: .8em;
+}
+.keyboard ul {
+	display:block;
+	height:2.3em;
+	clear: both;
+}
+.TDS_PS_L1 .keyboard ul, .TDS_PS_L2 .keyboard ul {
+	height:2.2em;
+}
+.TDS_PS_L3 .keyboard ul {
+	height:1.8em;
+}
+.TDS_PS_L4 .keyboard ul {
+	height:1.3em;
+}
+.keyboard li {
+	display: block;
+	float: left;
+	list-style-type: none;
+	height: 29px;
+	width: 29px;
+	text-align: center;
+	line-height: 29px;
+	margin-right: 0.5em;
+	/*margin-bottom: .5em;*/
+}
+.TDS_PS_L1 .keyboard li {
+	height: 40px;
+	width: 39px;
+	line-height: 40px;
+	margin-right: 0.3em;
+	margin-bottom: .3em;
+}
+.TDS_PS_L2 .keyboard li {
+	height: 50px;
+	width: 48px;
+	line-height: 50px;
+	margin-right: 0.3em;
+	margin-bottom: .3em;
+}
+.TDS_PS_L3 .keyboard li, .TDS_PS_L4 .keyboard li {
+	height: 50px;
+	width: 48px;
+	line-height: 50px;
+	margin-right: .2em;
+	margin-bottom: .2em;
+}
+.keyboard a {
+	background-image: url(../images/controls/keys.gif);
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	display: block;
+	font-weight: bold;
+	color: #000;
+	text-decoration: none;
+	font-family: "Courier New", Courier, monospace;
+}
+.TDS_PS_L1 .keyboard a {
+	background-position: -31px 0px;
+}
+.TDS_PS_L2 .keyboard a, .TDS_PS_L3 .keyboard a, .TDS_PS_L4 .keyboard a {
+	background-position: -72px 0px;
+}
+.keyboard a:hover {
+	background-position: 0px -40px;
+}
+.TDS_PS_L1 .keyboard a:hover {
+	background-position: -31px -42px;
+}
+.TDS_PS_L2 .keyboard a:hover, .TDS_PS_L3 .keyboard a:hover, .TDS_PS_L4 .keyboard a:hover {
+	background-position: -72px -52px;
+}
+.keyboard a:active {
+	background-position: 0px -80px;
+}
+.TDS_PS_L1 .keyboard a:active {
+	background-position: -31px -84px;
+}
+.TDS_PS_L2 .keyboard a:active, .TDS_PS_L3 .keyboard a:active, .TDS_PS_L4 .keyboard a:active {
+	background-position: -72px -105px;
+}
+
+.key-space {
+	width: 200px !important;
+}
+.key-space a {
+	background-position: 0px -157px;
+}
+.TDS_PS_L1 .key-space {
+	width: 250px !important;
+}
+.TDS_PS_L1 .key-space a {
+	background-position: -203px -157px;
+}
+.TDS_PS_L2 .key-space a, .TDS_PS_L3 .key-space a, .TDS_PS_L4 .key-space a {
+	width: 312px !important;
+	background-position: -141px 0px;
+}
+.TDS_PS_L4 .key-space {
+	font-size: .85em;
+}
+.key-space a:hover {
+	background-position: 0px -197px;
+}
+.TDS_PS_L1 .key-space a:hover {
+	background-position: -203px -199px;
+}
+.TDS_PS_L2 .key-space a:hover, .TDS_PS_L3 .key-space a:hover, .TDS_PS_L4 .key-space a:hover {
+	background-position: -141px -52px;
+}
+.key-space a:active {
+	background-position: 0px -237px;
+}
+.TDS_PS_L1 .key-space a:active {
+	background-position: -203px -242px;
+}
+.TDS_PS_L2 .key-space a:active, .TDS_PS_L3 .key-space a:active, .TDS_PS_L4 .key-space a:active {
+	background-position: -141px -104px;
+}
+.key-delete {
+	width: 100px !important;
+}
+.key-delete a {
+	background-position: -353px -314px;
+}
+.TDS_PS_L1 .key-delete {
+	width: 126px !important;
+}
+.TDS_PS_L1 .key-delete a {
+	background-position: -200px -297px;
+}
+.TDS_PS_L2 .key-delete, .TDS_PS_L3 .key-delete, .TDS_PS_L4 .key-delete {
+	width: 156px !important;
+}
+.TDS_PS_L4 .key-delete {
+	font-size: .85em;
+}
+.TDS_PS_L2 .key-delete a, .TDS_PS_L3 .key-delete a, .TDS_PS_L4 .key-delete a {
+	background-position: 0px -269px;
+}
+.key-delete a:hover {
+	background-position: -353px -354px;
+}
+.TDS_PS_L1 .key-delete a:hover {
+	background-position: -200px -339px;
+}
+.TDS_PS_L2 .key-delete a:hover, .TDS_PS_L3 .key-delete a:hover, .TDS_PS_L4 .key-delete a:hover {
+	background-position: 0px -321px;
+}
+.key-delete a:active {
+	background-position: -353px -394px;
+}
+.TDS_PS_L1 .key-delete a:active {
+	background-position: -200px -382px;
+}
+.TDS_PS_L2 .key-delete a:active, .TDS_PS_L3 .key-delete a:active, .TDS_PS_L4 .key-delete a:active {
+	background-position: 0px -373px;
+}
+.qwerty .key-a {
+	margin-left: .5em;
+}
+.qwerty .key-z {
+	margin-left: 1em;
+}
+.qwerty .key-m {
+	margin-right: 100px;
+}
+.qwerty .key-space {
+	margin-left: 1.5em;
+}
+.TDS_PS_L1 .qwerty .key-delete {
+	margin-left: .3em;
+}
+.TDS_PS_L2 .qwerty .key-delete {
+	margin-left: 4.5em;
+}
+.TDS_PS_L3 .qwerty .key-delete {
+	margin-left: 4.5em;
+}
+.TDS_PS_L4 .qwerty .key-delete {
+	margin-left: 4.5em;
+}
+.keyboard.qwerty  {
+	text-align: left;
+	width: 380px;
+	margin-top: .8em;
+}
+.TDS_PS_L1 .qwerty.keyboard {
+	width: 460px;
+}
+.TDS_PS_L2 .qwerty.keyboard, .TDS_PS_L3 .qwerty.keyboard, .TDS_PS_L4 .qwerty.keyboard {
+	width: 580px;
+}
+.keyboard.abcd  {
+	text-align: left;
+	width: 340px;
+	margin-top: .8em;
+}
+.TDS_PS_L1 .abcd.keyboard {
+	width: 420px;
+}
+.TDS_PS_L2 .abcd.keyboard, .TDS_PS_L3 .abcd.keyboard, .TDS_PS_L4 .abcd.keyboard {
+	width: 525px;
+}
+.TDS_PS_L3 .abcd.keyboard, .TDS_PS_L4 .abcd.keyboard, .TDS_PS_L3 .qwerty.keyboard, .TDS_PS_L4 .qwerty.keyboard, .TDS_PS_L3 .keyboard, .TDS_PS_L4 .keyboard {
+	margin-top: 0em;
+}
+
+.abcd .key-delete {
+	float:right;
+}
+/* tweak for Streamlined UI*/
+.keyboard ul {
+	margin-left: 0px;
+	margin-right: 0px;
+	padding-left: 0px;
+}
+.keyboard li {
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+}
+
+/* @end */
+
+/* @group Word List */
+
+.TDS_WORD_LIST
+{
+    -webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	border-top: 1px dotted #ccc;
+	border-bottom: 1px dotted #ccc;
+	-moz-transition: background-color .2s ease-in;
+    -webkit-transition: background-color .2s ease-in;
+    -o-transition: background-color .2s ease-in;
+    transition: background-color .2s ease-in;
+}
+.TDS_CCMedGrayLtGray .TDS_WORD_LIST, 
+.TDS_CCGray .TDS_WORD_LIST, 
+.TDS_CCGray2 .TDS_WORD_LIST {
+	border-color: #000;
+}
+.TDS_WORD_LIST:hover
+{
+    background-color: #6bd4fc;
+    background-color: rgba(0, 174, 239, .3);
+     -moz-transition: background-color .2s ease-in, color .2s ease-in;
+    -webkit-transition: background-color .2s ease-in, color .2s ease-in;
+    transition: background-color .2s ease-in, color .2s ease-in; 
+}
+.TDS_WORD_LIST_HOVER
+{
+    background-color:  #6bd4fc;
+    background-color: rgba(0, 174, 239, .3);
+     -moz-transition: background-color .2s ease-in, color .2s ease-in;
+    -webkit-transition: background-color .2s ease-in, color .2s ease-in;
+    transition: background-color .2s ease-in, color .2s ease-in;  
+}
+
+/* @end */

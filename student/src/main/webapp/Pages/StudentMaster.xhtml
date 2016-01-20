@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:section="http://java.sun.com/jsf/composite/sections" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:vds="http://java.sun.com/jsf/composite/usercontrols"
+	xmlns:tds="http://airast.org/jsfcustom" xmlns:p="http://java.sun.com/jsf/passthrough">
+
+<!-- TODO Shajib: ManifestSingleton.Html is used here, skipped it for now { "<%= ManifestSingleton.Html %> "-->
+
+<!-- debug="true" -->
+<h:head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title><ui:insert name="title"></ui:insert></title>
+	<meta name="format-detection" content="telephone=no" />
+
+	<tds:CSSLink href="~/Shared/CSS/reset.css" media="screen" type="text/css" rel="stylesheet" />
+	<tds:CSSLink href="~/Styles/masterShell.css" media="screen" type="text/css" rel="stylesheet" />
+	<tds:CSSLink href="~/Shared/CSS/elpa.css" media="screen" type="text/css" rel="stylesheet" />
+	<tds:CSSLink href="~/Styles/soundcheck.css" media="screen" type="text/css" rel="stylesheet" />
+	<tds:CSSLink href="~/Scripts/Libraries/yahoo/yui2/build/button/assets/skins/sam/button.css" type="text/css" rel="stylesheet" />
+	<tds:CSSLink href="~/Shared/CSS/dialogs.css" media="screen" type="text/css" rel="stylesheet" />
+	<tds:CSSLink href="~/Projects/%s/css/masterShell.css" rel="stylesheet" type="text/css" />
+	<tds:CSSLink href="~/Shared/CSS/accommodations.css" media="screen" type="text/css" rel="stylesheet" />
+	<tds:CSSLink href="~/Scripts/Libraries/yahoo/yui2/build/slider/assets/skins/sam/slider.css" type="text/css" rel="stylesheet" />
+
+
+	<style type="text/css">
+a:focus {
+	background-color: #069 !important;
+	color: #fff;
+}
+</style>
+
+	<tds:ResourcesLink file="~/Scripts/scripts_student.xml" name="base" />
+
+	<ui:insert name="headerHolder"></ui:insert>
+
+	<!--
+    <tds:ScriptLink src="~/Scripts/Libraries/firebug/firebug.js" type="text/javascript" ></tds:ScriptLink>
+    -->
+
+	<script type="text/javascript">
+		// check if this page has been loaded in an iframe
+		if (top != self) {
+			// check if we are in test shell
+			if (typeof (top.onFrameLogout) == 'function')
+				top.onFrameLogout();
+			else
+				TDS.logout();
+		}
+	</script>
+
+</h:head>
+
+<h:body id="htmlBody">
+
+	<span class="preloader"> <span class="selectTest"></span><span class="loading"></span><span class="sprites_buttons"></span><span class="sprites_yui"></span><span class="recorder"></span><span
+		class="spinner"></span><span class="buttons_back"></span><span class="masking"></span><span class="logo_small"></span>
+	</span>
+
+	<div class="tds-ot-wrapper">
+
+		<a href="#body" class="hiddenLink">Skip Navigation</a>
+
+		<form id="mainForm"></form>
+
+		<div id="tds-ot-header" role="banner">
+
+			<div id="ot-topBar">
+				<div class="ot-smallButtons">
+					<a id="btnLaunchpad" href="http://mobile.tds.airast.org/Launchpad/" style="display: none;" tabindex="1001">Change Assessment Program</a> <a id="logOut" href="javascript:closeWindow();"
+						tabindex="1003"><span i18n-content="StudentMaster.Button.Close"></span></a> <a id="btnHelp" href="#" tabindex="1002"><span i18n-content="StudentMaster.Button.Help"></span></a> <a
+						id="btnAccGlobal" href="#" style="display: none;" tabindex="1001">Settings</a> <a id="proctorLogout" name="goLogout" tabindex="1000" style="display: none;"><span
+						i18n-content="StudentMaster.Button.Logout"></span></a>
+				</div>
+				<!--  reference: http://java.dzone.com/articles/calling-static-method-el -->
+				<span class="sessionID">SESSION ID</span> <span id="ot-studentInfo">FULL NAME</span> <span class="clear"></span>
+
+			</div>
+
+			<div id="tds-ot-branding">
+				<span id="ot-brand1"> <span id="ot-logo_spot1"></span> <span class="hiddenHeader" i18n-content="StudentMaster.StaticContent.Header"></span> <span id="ot-logo_spot2"></span>
+				</span> <span id="ot-brand2"> <span id="ot-logo_spot3"></span> <strong i18n-content="StudentMaster.StaticContent.StudentPTTag"></strong> <span id="ot-logo_spot4"></span>
+				</span>
+			</div>
+
+		</div>
+
+		<h:panelGroup id="pnlNotificationError" class="notificationError" rendered="false" layout="block">
+			<h:outputText id="lblNotificationError"></h:outputText>
+		</h:panelGroup>
+
+		<h:panelGroup id="pnlNotificationNotice" class="notificationNotice" rendered="false" layout="block">
+			<h:outputText id="lblNotificationNotice"></h:outputText>
+		</h:panelGroup>
+
+		<h:panelGroup id="pnlNotificationSuccess" class="notificationSuccess" rendered="false" layout="block">
+			<h:outputText id="lblNotificationSuccess"></h:outputText>
+		</h:panelGroup>
+
+
+		<!-- 
+		NOTE: These ARIA tags cause the virtual buffer to read all sections 
+		aria-live="polite" 
+		aria-relevant="additions text" 
+		-->
+
+		<a name="body" class="hiddenLink"></a>
+		<div id="sections" role="main">
+			<ui:insert name="contentHolder">Master page content</ui:insert>
+		</div>
+
+		<div id="tds-ot-footer" role="footer" aria-hidden="true" i18n-content="StudentMaster.StaticContent.Address"></div>
+
+		<div id="popups">
+			<div id="help" style="display: none;">
+				<div class="popupHeader">
+					<span class="popupTitle" i18n-content="StudentMaster.Label.HelpGuider"></span> <span class="popupClose"><a href="javascript:toggleHelp()" i18n-content="StudentMaster.Button.Close"></a></span>
+				</div>
+				<div id="ttsHelp">
+					<a id='startSpeakingButtonMaster' class="startSpeak disabled" href="#">Start Speaking</a> <a id='stopSpeakingButtonMaster' class="stopSpeak disabled" href="#">Stop Speaking</a> <span
+						class="ttsText"> <!--- Help text. We show one of these divs conditionally -->
+						<div id="ttsHelpMessageMaster" i18n-content="TestInstructions.Label.Help"></div>
+						<div id="noTTSHelpMessageMaster" style="display: none;" i18n-content="TestInstructions.Label.NoTTSHelp"></div> <!--- End Help text -->
+					</span>
+				</div>
+
+				<iframe id="helpShell" title="Help Guide"></iframe>
+			</div>
+
+		</div>
+
+	</div>
+
+	<!-- accommodations dialog -->
+	<div id="globalAccDialog" style="visibility: hidden;">
+		<!-- style="" -->
+		<div class="hd" i18n-content="StudentMaster.Label.ChooseAccommodations"></div>
+		<div class="bd"></div>
+		<div class="ft"></div>
+	</div>
+
+	<!-- empty xhr postback frame for forms -->
+	<iframe id="xhrFrame" name="xhrFrame" style="display: none"></iframe>
+	<tds:ClientScript binding="#{clientScriptBackingBean.clientScript}" />
+
+</h:body>
+</html>

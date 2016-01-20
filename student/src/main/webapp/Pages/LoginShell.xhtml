@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/Pages/StudentMaster.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:tds="http://airast.org/jsfcustom" xmlns:section="http://java.sun.com/jsf/composite/sections">
+
+	<ui:define name="title">
+       Student: Login Shell
+	</ui:define>
+
+	<ui:define name="headerHolder">
+		<tds:ResourcesLink file="~/Scripts/scripts_student.xml" name="loginshell" />
+		<tds:GlobalJavascript contextName="LoginShell" binding="#{loginBacking.globalJavascript}" />
+	</ui:define>
+
+
+
+	<ui:define name="contentHolder">
+		<section:Diagnostics />
+
+
+		<section:LoginProctor rendered="#{loginBacking.isProxyLogin()}" />
+		<c:choose>
+			<c:when test="#{loginBacking.doNothaveLoginData()}">
+				<section:Login />
+				<section:LoginVerify />
+			</c:when>
+			<c:otherwise>
+				<section:TestSelection />
+				<section:TestApproval />
+				<section:Accommodations />
+				<section:TestVerify />
+			</c:otherwise>
+		</c:choose>
+
+		<section:SoundCheck />
+		<section:TTSCheck />
+		<section:Instructions />
+
+		<c:if test="#{loginBacking.isPrefetchEnabled()}">
+			<iframe src="#{loginBacking.resolveUrl('~/Pages/API/Prefetch.axd/load')}" style="display: none;"> </iframe>
+		</c:if>
+
+	</ui:define>
+
+
+
+</ui:composition>
