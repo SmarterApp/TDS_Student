@@ -27,7 +27,7 @@ public class DbLatencyServiceImpl implements DbLatencyService {
     @Value ("${logLatencyMaxTime:30000}")
     private Integer logLatencyMaxTime;
 
-    @Value("${performance.logLatency.enabled}")
+    @Value("${performance.logLatency.enabled:false}")
     private Boolean logLatencyEnabled;
 
     public void setEnabled(Boolean value) {

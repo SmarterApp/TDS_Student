@@ -7,9 +7,7 @@
        xmlns:task="http://www.springframework.org/schema/task"
        xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.2.xsd  http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-3.2.xsd">
 
-
     <context:component-scan base-package="tds.student.performance"/>
-    <context:property-placeholder location="classpath*:performance-student.properties"/>
 
     <!-- uses the same data source url and credentials as the rest of the site and set in ProgMan -->
     <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
@@ -24,8 +22,9 @@
 
         <property name="poolName" value="PerfHikariCP" />
         <property name="maxLifetime" value="1800000" />
-        <property name="minimumIdle" value="${performance.datasource.minPoolSize}" />
-        <property name="maximumPoolSize" value="${performance.datasource.maxPoolSize}" />
+        <property name="minimumIdle" value="${performance.datasource.minPoolSize:5}" />
+        <property name="maximumPoolSize" value="${performance.datasource.maxPoolSize:20}" />
+        <!-- <property name="leakDetectionThreshold" value="15000" /> -->
 
         <!-- The follow values are the defaults -->
         <!--<property name="autoCommit" value="true" />-->
