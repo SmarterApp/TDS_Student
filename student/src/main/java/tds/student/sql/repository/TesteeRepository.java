@@ -28,7 +28,6 @@ import tds.dll.api.ICommonDLL;
 import tds.dll.api.IRtsDLL;
 import tds.dll.api.IStudentDLL;
 import tds.dll.mysql.RtsPackageDLL;
-import tds.student.performance.dao.StudentDao;
 import tds.student.performance.services.StudentLoginService;
 import tds.student.services.abstractions.IStudentPackageService;
 import tds.student.sql.abstractions.IConfigRepository;
@@ -189,8 +188,10 @@ public class TesteeRepository extends AbstractDAO implements ITesteeRepository
         }
       }
 
-//
-      //MultiDataResultSet resultSets = _studentDll.T_Login_SP (connection, clientName, keyValues, sessionID);
+      // Original login method.
+      // MultiDataResultSet resultSets = _studentDll.T_Login_SP (connection, clientName, keyValues, sessionID);
+
+      // New Login method to improve performance.  See comments in module for further details.
       MultiDataResultSet resultSets = studentLoginService.login(connection, clientName, keyValues, sessionID);
 
       Iterator<SingleDataResultSet> results = resultSets.getResultSets ();
