@@ -22,7 +22,7 @@ public class TestSessionMapper implements RowMapper<TestSession> {
         testSession.setDateEnd(resultSet.getTimestamp("dateEnd"));
         testSession.setDateVisited(resultSet.getTimestamp("dateVisited"));
         testSession.setClientName(resultSet.getString("clientName"));
-        testSession.setProctorId(resultSet.getLong("proctor"));
+        testSession.setProctorId(resultSet.getObject("proctor") != null ? resultSet.getLong("proctor") : null);
         testSession.setProctorName(resultSet.getString("proctorName"));
         testSession.setSessionId(resultSet.getString("sessionId"));
         testSession.setSessionBrowser(UuidAdapter.getUUIDFromBytes(resultSet.getBytes("sessionBrowser")));
