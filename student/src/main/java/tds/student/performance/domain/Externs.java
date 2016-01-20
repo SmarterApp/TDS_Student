@@ -44,11 +44,11 @@ public class Externs {
         this.environment = environment;
     }
 
-    public Boolean getPracticeTest() {
+    public Boolean getIsPracticeTest() {
         return isPracticeTest;
     }
 
-    public void setPracticeTest(Boolean practiceTest) {
+    public void setIsPracticeTest(Boolean practiceTest) {
         isPracticeTest = practiceTest;
     }
 
