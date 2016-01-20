@@ -1,5 +1,6 @@
 package tds.student.performance.services.impl;
 
+import AIR.Common.DB.DbComparator;
 import AIR.Common.DB.SQLConnection;
 import AIR.Common.Helpers._Ref;
 import TDS.Shared.Data.ReturnStatus;
@@ -149,8 +150,9 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                 Integer gracePeriodRestarts = testOpportunity.getGracePeriodRestarts();
                 Integer restartCount = testOpportunity.getRestartCount();
                 Timestamp now = new Timestamp(dateUtility.getDbDate().getTime());
-                boolean isTimeDiffLessThanDelay =
-                        (DateUtils.minutesDiff(lastActivity, now) < timelimitConfiguration.getOpportunityDelay());
+
+                boolean isTimeDiffLessThanDelay =   // if lastActivity is null, then this is "false" - No NPE
+                        (DbComparator.lessThan(DateUtils.minutesDiff(lastActivity, now), timelimitConfiguration.getOpportunityDelay()));
 
                 if(isTimeDiffLessThanDelay) {
                     gracePeriodRestarts++;
@@ -289,7 +291,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
         //First, try to get the ability for current subject/test
         if (initialAbility != null) {
             ability = initialAbility.getScore();
-        } else if (bySubject) { // If that didn't retrieve anything, get the ability from the same subject, any test
+        } else if (DbComparator.isEqual (bySubject, true)) { // If that didn't retrieve anything, get the ability from the same subject, any test
             initialAbility = getMostRecentTestAbility(testAbilities, opportunity.getTestKey(), true);
             if (initialAbility != null) {
                 ability = initialAbility.getScore();
@@ -376,7 +378,13 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                 legacyErrorHandlerService.logDbError("T_StartTestOpportunity", reason.get(), testOpportunity.getTestee(), testOpportunity.getTestId(), null, testOpportunity.getKey());
                 legacyErrorHandlerService.throwReturnErrorException(testOpportunity.getClientName(), "T_StartTestOpportunity", reason.get(), null, testOpportunity.getKey(), "_InitializeOpportunity", "failed");
             }
+
             initialAbility = getInitialAbility(testOpportunity, clientTestProperty);
+            if (initialAbility == null) {
+                legacyErrorHandlerService.logDbError("T_StartTestOpportunity", reason.get(), testOpportunity.getTestee(), testOpportunity.getTestId(), null, testOpportunity.getKey());
+                legacyErrorHandlerService.throwReturnErrorException(testOpportunity.getClientName(), "T_StartTestOpportunity", "Could not retrieve the initial ability.",
+                        null, testOpportunity.getKey(), "_InitializeOpportunity", "failed");
+            }
 
             //First session.testoppabilityestimate insert
             testOppAbilityEstimateDao.create(
@@ -398,25 +406,32 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             );
 
             testLength = testSegmentDao.getTestLengthForOpportunitySegment(testOpportunity.getKey());
-            createResponseSet(testOpportunity, testLength, 0);
 
-            testOpportunity.setStatus("started");
-            testOpportunity.setDateStarted(now);
-            testOpportunity.setDateChanged(now);
-            testOpportunity.setExpireFrom(now);
-            testOpportunity.setStage("inprogress");
-            testOpportunity.setMaxItems(testLength);
-            testOpportunityDao.update(testOpportunity);
+            if (testLength != null) {
+                createResponseSet(testOpportunity, testLength, 0);
 
-            testOpportunityDao.createAudit(new TestOpportunityAudit(
-                    testOpportunity.getKey(),
-                    now,
-                    "started",
-                    testOpportunity.getSessionKey(),
-                    HostNameHelper.getHostName(),
-                    "session"));
+                testOpportunity.setStatus("started");
+                testOpportunity.setDateStarted(now);
+                testOpportunity.setDateChanged(now);
+                testOpportunity.setExpireFrom(now);
+                testOpportunity.setStage("inprogress");
+                testOpportunity.setMaxItems(testLength);
+                testOpportunityDao.update(testOpportunity);
 
-            dbLatencyService.logLatency("_InitializeOpportunity_SP", latencyDate, null, testOpportunity);
+                testOpportunityDao.createAudit(new TestOpportunityAudit(
+                        testOpportunity.getKey(),
+                        now,
+                        "started",
+                        testOpportunity.getSessionKey(),
+                        HostNameHelper.getHostName(),
+                        "session"));
+
+                dbLatencyService.logLatency("_InitializeOpportunity_SP", latencyDate, null, testOpportunity);
+            } else {
+                legacyErrorHandlerService.logDbError("T_StartTestOpportunity", reason.get(), testOpportunity.getTestee(), testOpportunity.getTestId(), null, testOpportunity.getKey());
+                legacyErrorHandlerService.throwReturnErrorException(testOpportunity.getClientName(), "T_StartTestOpportunity", "Could not obtain test length.", null, testOpportunity.getKey(), "_InitializeOpportunity", "failed");
+            }
+
 
             return testLength;
         } catch (Exception e) {
