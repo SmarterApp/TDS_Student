@@ -200,7 +200,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                         timelimitConfiguration,
                         testOpportunity.getMaxItems(),
                         restartCount,
-                        resumeItemPosition, // TODO:  Need to set restartPosition properly.
+                        resumeItemPosition,
                         scoreByTds);
             }
 
@@ -254,7 +254,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
      * </p>
      * <p>
      *     NOTE:  The legacy version of this method ({@code StudentDll._UnfinishedResponsePages_SP}) has a parameter
-     *     called {@code doupdate}.  In the context of restarting an existing {@code TestOpportunity}, the argument is
+     *     called {@code doUpdate}.  In the context of restarting an existing {@code TestOpportunity}, the argument is
      *     always {@code true}, so the {@code doUpdate} parameter has been omitted.  The only time this refactored
      *     method is called is within the refactored {@code startTestOpportunity}, so the {@code doUpdate} parameter is
      *     not necessary.
