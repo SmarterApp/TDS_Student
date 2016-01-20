@@ -30,7 +30,7 @@ public class ItemBankDaoTest extends IntegrationTest {
         Assert.assertNotNull(result);
         Assert.assertEquals(adminSubject, result.getKey());
         Assert.assertEquals((Integer)8, result.getMaxItems());
-        Assert.assertEquals(Double.valueOf(-1.23998), result.getStartAbility());
+        Assert.assertEquals(Float.valueOf(-1.23998F), result.getStartAbility());
         Assert.assertEquals("SBAC-IRP-CAT-ELA-3", result.getTestId());
         Assert.assertFalse(result.getSegmented());
         Assert.assertEquals("adaptive2", result.getSelectionAlgorithm());

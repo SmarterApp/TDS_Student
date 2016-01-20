@@ -108,7 +108,7 @@ public class TestSegmentDaoTest extends IntegrationTest {
         List<TestSegmentItem> result = testSegmentDao.getSegmented(mockTestOpportunity);
 
         Assert.assertNotNull(result);
-        Assert.assertTrue(result.size() == 2);
+        Assert.assertTrue(result.size() == 2);;
     }
 
     @Test

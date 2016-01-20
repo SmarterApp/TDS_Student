@@ -31,7 +31,7 @@ public class TestOpportunity {
     private Boolean isSegmented;
     private String algorithm;
     private String environment;
-    private Integer simulationSegmentCount;
+    private Long simulationSegmentCount;
     private Integer waitingForSegment;
 
     public UUID getKey() {
@@ -240,7 +240,7 @@ public class TestOpportunity {
      * </p>
      * @return {@code Integer} that is a count of the rows in {@code session.sim_segment} for this {@code TestOpportunity}
      */
-    public Integer getSimulationSegmentCount() {
+    public Long getSimulationSegmentCount() {
         return simulationSegmentCount;
     }
 
@@ -254,7 +254,7 @@ public class TestOpportunity {
      * @param simulationSegmentCount  {@code Integer} that is a count of the rows in {@code session.sim_segment} for
      *                                this {@code TestOpportunity}
      */
-    public void setSimulationSegmentCount(Integer simulationSegmentCount) {
+    public void setSimulationSegmentCount(Long simulationSegmentCount) {
         this.simulationSegmentCount = simulationSegmentCount;
     }
 

@@ -4,10 +4,13 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.SystemEnvironmentPropertySource;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import tds.student.performance.IntegrationTest;
 import tds.student.performance.domain.SessionAudit;
 import tds.student.performance.domain.TestSession;
 import tds.student.performance.domain.TestSessionTimeLimitConfiguration;
+import tds.student.performance.utils.DateUtility;
 import tds.student.performance.utils.UuidAdapter;
 
 import java.sql.Time;
@@ -21,6 +24,9 @@ import java.util.*;
 public class TestSessionDaoTest extends IntegrationTest {
     @Autowired
     TestSessionDao testSessionDao;
+
+    @Autowired
+    DateUtility dateUtility;
 
     @Test
     public void should_Get_a_TestSession_For_Specified_Key() {
@@ -177,8 +183,9 @@ public class TestSessionDaoTest extends IntegrationTest {
         UUID sessionKey = UUID.randomUUID();
         UUID browserKey = UUID.randomUUID();
 
-        Timestamp begin = new Timestamp(getDateAddSeconds(-120).getTime());
-        Timestamp end = new Timestamp(getDateAddSeconds(120).getTime());
+        Date databaseDate = dateUtility.getDbDate();
+        Timestamp begin = new Timestamp(databaseDate.getTime() - 120000L);
+        Timestamp end = new Timestamp(databaseDate.getTime() + 120000L);
 
         TestSession testSession = new TestSession();
         testSession.setKey(sessionKey);
@@ -199,8 +206,9 @@ public class TestSessionDaoTest extends IntegrationTest {
         UUID sessionKey = UUID.randomUUID();
         UUID browserKey = UUID.randomUUID();
 
-        Timestamp begin = new Timestamp(getDateAddSeconds(60).getTime());
-        Timestamp end = new Timestamp(getDateAddSeconds(120).getTime());
+        Date databaseDate = dateUtility.getDbDate();
+        Timestamp begin = new Timestamp(databaseDate.getTime() + 60000L);
+        Timestamp end = new Timestamp(databaseDate.getTime() + 120000L);
 
         TestSession testSession = new TestSession();
         testSession.setKey(sessionKey);
@@ -212,8 +220,8 @@ public class TestSessionDaoTest extends IntegrationTest {
         String msg = testSessionDao.validateProctorSession(testSession);
         Assert.assertEquals("The session is closed.", msg);
 
-        begin = new Timestamp(getDateAddSeconds(-120).getTime());
-        end = new Timestamp(getDateAddSeconds(-60).getTime());
+        begin = new Timestamp(databaseDate.getTime() - 120000L);
+        end = new Timestamp(databaseDate.getTime() - 60000L);
 
         testSession.setDateBegin(begin);
         testSession.setDateEnd(end);
@@ -227,8 +235,9 @@ public class TestSessionDaoTest extends IntegrationTest {
         UUID sessionKey = UUID.randomUUID();
         UUID browserKey = UUID.randomUUID();
 
-        Timestamp begin = new Timestamp(getDateAddSeconds(-60).getTime());
-        Timestamp end = new Timestamp(getDateAddSeconds(120).getTime());
+        Date databaseDate = dateUtility.getDbDate();
+        Timestamp begin = new Timestamp(databaseDate.getTime() - 60000L);
+        Timestamp end = new Timestamp(databaseDate.getTime() + 120000L);
 
         TestSession testSession = new TestSession();
         testSession.setKey(sessionKey);
@@ -246,8 +255,9 @@ public class TestSessionDaoTest extends IntegrationTest {
         UUID sessionKey = UUID.randomUUID();
         UUID browserKey = UUID.randomUUID();
 
-        Timestamp begin = new Timestamp(getDateAddSeconds(-60).getTime());
-        Timestamp end = new Timestamp(getDateAddSeconds(120).getTime());
+        Date databaseDate = dateUtility.getDbDate();
+        Timestamp begin = new Timestamp(databaseDate.getTime() - 60000L);
+        Timestamp end = new Timestamp(databaseDate.getTime() + 120000L);
 
         TestSession testSession = new TestSession();
         testSession.setKey(sessionKey);
@@ -284,5 +294,20 @@ public class TestSessionDaoTest extends IntegrationTest {
         final Integer result = namedParameterJdbcTemplate.queryForInt(SQL, parameters);
 
         Assert.assertEquals((Integer)1, result);
+    }
+
+    @Test
+    public void should_Have_a_Null_Proctor_Id_for_Guest_TestSession() {
+        UUID sessionKey = UUID.fromString("6cb31bc2-5c35-48f8-bad8-ee53efbaaacc"); // Session Key for GUEST Session
+        Map<String, UUID> parameters = new HashMap<>();
+        parameters.put("key", sessionKey);
+
+        TestSession result = testSessionDao.get(sessionKey);
+
+        Assert.assertNotNull(result);
+        Assert.assertNull(result.getProctorId());
+        Assert.assertNull(result.getProctorName());
+        Assert.assertNotNull(result.getSessionId());
+        Assert.assertEquals("GUEST Session", result.getSessionId());
     }
 }

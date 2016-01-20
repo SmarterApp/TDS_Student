@@ -1,8 +1,6 @@
 package tds.student.performance.dao;
 
-import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import tds.student.performance.IntegrationTest;
 import tds.student.performance.domain.TestOpportunity;
@@ -28,26 +26,26 @@ public class TestOpportunityDaoTest extends IntegrationTest {
     @Autowired
     DateUtility dateUtility;
 
-    @Test
-    public void should_Get_a_TestOpportunity() {
-        final UUID expectedKey = UUID.randomUUID();
-        final UUID expectedSessionKey = UUID.randomUUID();
-        final UUID expectedBrowserKey = UUID.randomUUID();
-        final String expectedTestKey = "(SBAC_PT)SBAC-IRP-Perf-MATH-3-Summer-2015-2016";
-        final Long expectedTestee = Math.round(ThreadLocalRandom.current().nextDouble(100, 500));
-        final String expectedTestId = "SBAC-IRP-Perf-MATH-3";
-        final Integer expectedOpportunity = 1;
-        final String expectedStatus = "pending";
-        final String expectedSubject = "MATH";
-        final String expectedClientName = "SBAC_PT";
-        final Boolean expectedIsSegmented = false;
-        final String expectedAlgorithm = "fixedform";
-        final String expectedEnvironment = "dev";
-        final Integer expectedSimulationSegmentCount = 0;
-        final Integer version = 1;
+    private final UUID expectedOpportunityKey = UUID.randomUUID();
+    private final UUID expectedSessionKey = UUID.randomUUID();
+    private final UUID expectedBrowserKey = UUID.randomUUID();
+    private final String expectedTestKey = "(SBAC_PT)SBAC-IRP-Perf-MATH-3-Summer-2015-2016";
+    private final Long expectedTestee = Math.round(ThreadLocalRandom.current().nextDouble(100, 500));
+    private final String expectedTestId = "SBAC-IRP-Perf-MATH-3";
+    private final Integer expectedOpportunity = 1;
+    private final String expectedStatus = "pending";
+    private final String expectedSubject = "MATH";
+    private final String expectedClientName = "SBAC_PT";
+    private final Boolean expectedIsSegmented = false;
+    private final String expectedAlgorithm = "fixedform";
+    private final String expectedEnvironment = "dev";
+    private final Long expectedSimulationSegmentCount = 0L;
+    private final Integer version = 1;
 
+    @Before
+    public void setup() {
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("key", UuidAdapter.getBytesFromUUID(expectedKey));
+        parameters.put("key", UuidAdapter.getBytesFromUUID(expectedOpportunityKey));
         parameters.put("sessionKey", UuidAdapter.getBytesFromUUID(expectedSessionKey));
         parameters.put("browserKey", UuidAdapter.getBytesFromUUID(expectedBrowserKey));
         parameters.put("testKey", expectedTestKey);
@@ -65,11 +63,24 @@ public class TestOpportunityDaoTest extends IntegrationTest {
                 "VALUES(:key, :sessionKey, :browserKey, :testKey, :testee, :testId, :subject, :clientName, :isSegmented, :algorithm, :version, :environment)";
 
         namedParameterJdbcTemplate.update(SQL, parameters);
+    }
 
-        TestOpportunity result = testOpportunityDao.get(expectedKey);
+    @After
+    public void teardown() {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("key", expectedOpportunityKey);
+
+        final String SQL = "DELETE FROM session.testopportunity WHERE _key = :key";
+
+        namedParameterJdbcTemplate.update(SQL, parameters);
+    }
+
+    @Test
+    public void should_Get_a_TestOpportunity() {
+        TestOpportunity result = testOpportunityDao.get(expectedOpportunityKey);
 
         Assert.assertNotNull(result);
-        Assert.assertEquals(expectedKey, result.getKey());
+        Assert.assertEquals(expectedOpportunityKey, result.getKey());
         Assert.assertEquals(expectedSessionKey, result.getSessionKey());
         Assert.assertEquals(expectedBrowserKey, result.getBrowserKey());
         Assert.assertEquals(expectedTestKey, result.getTestKey());
@@ -132,17 +143,16 @@ public class TestOpportunityDaoTest extends IntegrationTest {
      * statuses, therefore the INSERT... SELECT statement in TestOpportunityAuditDao.create doesn't insert any records.
      * The SQL in TestOpportunityAuditDao.create is valid, but still need to come up with an accurate unit test.
      */
+    @Ignore
     @Test
     public void should_Create_TestOpportunityAudit_Records_For_Specified_TestOpportunity() {
-        UUID opportunityKey = UUID.fromString("f42fc375-f78e-4cdd-9bd6-e67bf0b1bbcf");
-        UUID sessionKey = UUID.fromString("f23784e9-6e6f-492c-bf48-819503d07d17");
         Timestamp dateAccessed = dateUtility.getTimestamp();
 
         TestOpportunityAudit auditRecord = new TestOpportunityAudit(
-                opportunityKey,
+                expectedOpportunityKey,
                 dateAccessed,
                 "unittest",
-                sessionKey,
+                expectedSessionKey,
                 "unittest host",
                 "unittest_db"
         );
@@ -150,8 +160,8 @@ public class TestOpportunityDaoTest extends IntegrationTest {
         testOpportunityDao.createAudit(auditRecord);
 
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("key", UuidAdapter.getBytesFromUUID(opportunityKey));
-        parameters.put("sessionKey", UuidAdapter.getBytesFromUUID(sessionKey));
+        parameters.put("key", UuidAdapter.getBytesFromUUID(expectedOpportunityKey));
+        parameters.put("sessionKey", UuidAdapter.getBytesFromUUID(expectedSessionKey));
         parameters.put("dateAccessed", dateAccessed);
 
         final String SQL = "SELECT COUNT(*) AS count FROM archive.opportunityaudit WHERE _fk_testopportunity = :key AND _fk_session = :sessionKey AND dateaccessed = :dateAccessed";
