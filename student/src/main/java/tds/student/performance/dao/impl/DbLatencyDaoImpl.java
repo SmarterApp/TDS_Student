@@ -22,7 +22,6 @@ import java.util.*;
  * </p>
  */
 @Repository
-//@Transactional
 public class DbLatencyDaoImpl implements DbLatencyDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private static final Logger logger = LoggerFactory.getLogger(DbLatencyDaoImpl.class);
