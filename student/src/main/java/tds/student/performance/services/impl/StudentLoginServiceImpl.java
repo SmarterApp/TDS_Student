@@ -34,6 +34,8 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
 
     private static final String UNKNOWN_ATTRIBUTE_VALUE = "UNKNOWN";
     private static final String ID_FIELD_NAME = "ID";
+    private static final String LAST_NAME_FIELD_NAME = "LastName";
+    private static final String FIRST_NAME_FIELD_NAME = "FirstName";
     private static final String AT_LOGIN_VERIFY = "VERIFY";
     private static final String AT_LOGIN_REQUIRE = "REQUIRE";
 
@@ -77,26 +79,110 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
             recordMaxTestOpportunities(connection, clientName, startTime);
         }
 
-        // Get list of fields from config
+        // Get list of fields from config database
         Map<String, StudentFieldValue> fieldValueMap = createFieldMap(configurationDao.getStudentLoginFields(clientName));
 
-        // *new* Copy inputs to map.
+        // Copy keyValues from input form to config database map inValue by field key.
         for (Map.Entry<String, String> pair : keyValues.entrySet()) {
             if (fieldValueMap.containsKey(pair.getKey())) {
                 StudentFieldValue studentFieldValue = fieldValueMap.get(pair.getKey());
                 studentFieldValue.inValue = pair.getValue();
             }
         }
-        // *new* Look for ID
+
+        // Look for the field that is the ID
         if (fieldValueMap.containsKey(ID_FIELD_NAME)) {
             ssId = fieldValueMap.get(ID_FIELD_NAME).inValue;
-        }   else {
+        } else {
             resultsSets.add(_commonDll._ReturnError_SP(connection, clientName, "T_Login", "No match for student ID"));
             return (new MultiDataResultSet(resultsSets));
         }
         // todo: remove guest session logic for now
+
+
+        ////////////////////////
+        _Ref<UUID> sessionKeyRef = new _Ref<> ();
+        UUID sessionKey = null;
+
         // START: Open guest session, if requested and permitted by client configuration
+        if (DbComparator.isEqual (sessionId, "GUEST Session")) {
+            if (_studentDll._AllowProctorlessSessions_FN(connection, clientName)) {
+                _Ref<String> sessionIdRef = new _Ref<> ();
+                _studentDll._SetupProctorlessSession_SP(connection, clientName, sessionKeyRef, sessionIdRef);
+                sessionId = sessionIdRef.get();
+                sessionKey = sessionKeyRef.get();
+            } else {
+                resultsSets.add (_commonDll._ReturnError_SP (connection, clientName, "T_Login", "You are not allowed to log in without a Test Administrator"));
+                return (new MultiDataResultSet (resultsSets));
+            }
+        }
+        // END: Open guest session, if requested and permitted by client configuration
+
         // START: Handle request for anonymous login for practice test (assumes GUEST session?)
+        Long guestKey = 0L;
+        if (DbComparator.isEqual (ssId, "GUEST") && _studentDll._AllowAnonymousTestee_FN(connection, clientName)) {
+
+            final String SQL_QUERY6 = "insert into _anonymoustestee (dateCreated, clientname) values (${now}, ${clientname})";
+            SqlParametersMaps parms6 = (new SqlParametersMaps ()).put ("now", startTime).put ("clientname", clientName);
+            executeStatement (connection, SQL_QUERY6, parms6, false).getUpdateCount ();
+
+            // to get auto_increment _key column, we use SELECT LAST_INSERT_ID()
+            final String SQL_QUERY7 = "select cast(LAST_INSERT_ID() as SIGNED) as maxkey";
+            SingleDataResultSet result = executeStatement (connection, SQL_QUERY7, null, false).getResultSets ().next ();
+            DbResultRecord record = (result.getCount () > 0 ? result.getRecords ().next () : null);
+            if (record != null) {
+                guestKey = record.<Long> get ("maxKey");
+                guestKey = (guestKey == null ? 0 : (-1 * guestKey));
+            }
+
+            // set the ID to the generated gKey.
+            StudentFieldValue guestIdField = fieldValueMap.get(ID_FIELD_NAME);
+            if ( guestIdField != null ) {
+                guestIdField.outValue = String.format ("GUEST %d", guestKey);
+            }
+
+            StudentFieldValue lastNameField = fieldValueMap.get(LAST_NAME_FIELD_NAME);
+            if ( lastNameField != null ) {
+                lastNameField.outValue = "GUEST" ;
+            }
+
+            StudentFieldValue firstNameField = fieldValueMap.get(FIRST_NAME_FIELD_NAME);
+            if ( firstNameField != null ) {
+                firstNameField.outValue = "GUEST" ;
+            }
+
+            // Convert relationship fields such as School to GUESTSchool
+            for (Map.Entry<String, StudentFieldValue> entry : fieldValueMap.entrySet()) {
+                StudentFieldValue fieldValue = entry.getValue();
+                if ( fieldValue.loginField != null && fieldValue.loginField.getFieldType().equalsIgnoreCase("relationship")) {
+                    fieldValue.outValue = "GUEST" + fieldValue.loginField.getTdsId();
+                }
+            }
+
+            // select 'success' as status, @gkey as entityKey, null as accommodations;
+
+            List<CaseInsensitiveMap<Object>> resultList = new ArrayList<> ();
+            CaseInsensitiveMap<Object> rcd = new CaseInsensitiveMap<> ();
+            rcd.put ("status", "success");
+            rcd.put ("entityKey", guestKey);
+            rcd.put("accommodations", null);
+            resultList.add(rcd);
+
+            SingleDataResultSet rs1 = new SingleDataResultSet ();
+            rs1.addColumn("status", SQL_TYPE_To_JAVA_TYPE.VARCHAR);
+            rs1.addColumn("entityKey", SQL_TYPE_To_JAVA_TYPE.BIGINT);
+            rs1.addColumn("accommodations", SQL_TYPE_To_JAVA_TYPE.VARCHAR);
+            rs1.addRecords(resultList);
+
+            resultsSets.add(rs1);
+
+            SingleDataResultSet resultSetInputsGuest = createResultFields(fieldValueMap);
+            resultsSets.add(resultSetInputsGuest);
+
+            return (new MultiDataResultSet (resultsSets));
+        }
+        // END: Handle request for anonymous login for practice test
+        /////////////////////////
 
         // START: Handle request for validated login.
         // -- This 'may' be a real student. Attempt to validate that
