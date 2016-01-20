@@ -10,7 +10,7 @@ package tds.student.performance.domain;
 public class SetOfAdminSubject {
     private String key;
     private Integer maxItems; // Identified as operationalLength in StudentDLL.T_StartTestOpportunity_SP
-    private Double startAbility;
+    private Float startAbility;
     private String testId;
     private Boolean isSegmented;
     private String selectionAlgorithm;
@@ -31,11 +31,11 @@ public class SetOfAdminSubject {
         this.maxItems = maxItems;
     }
 
-    public Double getStartAbility() {
+    public Float getStartAbility() {
         return startAbility;
     }
 
-    public void setStartAbility(Double startAbility) {
+    public void setStartAbility(Float startAbility) {
         this.startAbility = startAbility;
     }
 

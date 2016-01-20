@@ -343,7 +343,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
         if (ability == null) {
             SetOfAdminSubject subject = itemBankDao.get(opportunity.getTestKey());
             if (subject != null) {
-                ability = subject.getStartAbility().floatValue();
+                ability = subject.getStartAbility();
             } else {
                 logger.warn("Could not set the ability for oppKey " + opportunity.getKey());
             }

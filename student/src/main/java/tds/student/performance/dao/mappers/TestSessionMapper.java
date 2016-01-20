@@ -16,13 +16,13 @@ public class TestSessionMapper implements RowMapper<TestSession> {
     public TestSession mapRow(ResultSet resultSet, int i) throws SQLException {
         TestSession testSession = new TestSession();
         testSession.setKey(UuidAdapter.getUUIDFromBytes(resultSet.getBytes("key")));
-        testSession.setSessionType(resultSet.getInt("sessionType"));
+        testSession.setSessionType((Integer)resultSet.getObject("sessionType"));
         testSession.setStatus(resultSet.getString("status"));
         testSession.setDateBegin(resultSet.getTimestamp("dateBegin"));
         testSession.setDateEnd(resultSet.getTimestamp("dateEnd"));
         testSession.setDateVisited(resultSet.getTimestamp("dateVisited"));
         testSession.setClientName(resultSet.getString("clientName"));
-        testSession.setProctorId(resultSet.getObject("proctor") != null ? resultSet.getLong("proctor") : null);
+        testSession.setProctorId((Long)resultSet.getObject("proctor"));
         testSession.setProctorName(resultSet.getString("proctorName"));
         testSession.setSessionId(resultSet.getString("sessionId"));
         testSession.setSessionBrowser(UuidAdapter.getUUIDFromBytes(resultSet.getBytes("sessionBrowser")));
