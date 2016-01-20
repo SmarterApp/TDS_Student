@@ -80,13 +80,15 @@ public class ResponseRepository extends AbstractDAO implements IResponseReposito
 //    String itemKeys = null;
     try (SQLConnection connection = getSQLConnection ()) {
 
-      //MultiDataResultSet resultSets = _studentDll.T_InsertItems_SP (connection, oppInstance.getKey (), oppInstance.getSessionKey (), oppInstance.getBrowserKey (), adaptiveGroup.getSegmentPosition (),
+      // Original call to insert items.
+      // MultiDataResultSet resultSets = _studentDll.T_InsertItems_SP (connection, oppInstance.getKey (), oppInstance.getSessionKey (), oppInstance.getBrowserKey (), adaptiveGroup.getSegmentPosition (),
       //    adaptiveGroup.getSegmentID (), adaptiveGroup.getPage (), adaptiveGroup.getGroupID (), itemKeys, '|', new Integer (adaptiveGroup.getNumItemsRequired ()), new Float (0), new Integer (0),
       //    false);
 
+      // New insert items method to improve performance.  See comments in module for further details.
       MultiDataResultSet resultSets = studentInsertItemsService.insertItems (connection, oppInstance.getKey (), oppInstance.getSessionKey (), oppInstance.getBrowserKey (), adaptiveGroup.getSegmentPosition (),
-              adaptiveGroup.getSegmentID (), adaptiveGroup.getPage (), adaptiveGroup.getGroupID (), itemKeys, '|', new Integer (adaptiveGroup.getNumItemsRequired ()), new Float (0), new Integer (0),
-              false);
+              adaptiveGroup.getSegmentID (), adaptiveGroup.getPage (), adaptiveGroup.getGroupID (), itemKeys, '|', adaptiveGroup.getNumItemsRequired (), 0f);
+
       Iterator<SingleDataResultSet> results = resultSets.getResultSets ();
       // first expected result set
 

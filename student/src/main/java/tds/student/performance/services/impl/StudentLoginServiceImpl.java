@@ -26,7 +26,7 @@ import tds.student.performance.utils.DateUtility;
 import java.util.*;
 
 /**
- * A service for interacting with a {@code TestOpportunity}.
+ * Service to contain a new version of StudentDLL.T_Login_SP.
  */
 @Service
 public class StudentLoginServiceImpl extends AbstractDLL implements StudentLoginService {
@@ -41,7 +41,7 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
     private static final String GUEST_USER_NAME = "GUEST";
 
 
-    @Value("${performance.logMaxTestOpportunities.enabled}")
+    @Value("${performance.logMaxTestOpportunities.enabled:false}")
     private Boolean logMaxTestOpportunities;
 
     @Autowired
@@ -65,6 +65,17 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
     @Autowired
     private DbLatencyService dbLatencyService;
 
+    /**
+     * A new implementation of StudentDLL.T_Login_SP.  The objective of this implementation is to reduce round
+     * trips to the database by replacing temporary tables with data structures.
+     *
+     * @param connection Database connection.
+     * @param clientName The client name.
+     * @param keyValues A map of login fields and their input values.
+     * @param sessionId An id for the session the student is logging into.
+     * @return A {@link MultiDataResultSet} with student data or error information.
+     * @throws ReturnStatusException
+     */
     @Override
     public MultiDataResultSet login(SQLConnection connection, String clientName, Map<String, String> keyValues, String sessionId)
             throws ReturnStatusException {
@@ -122,7 +133,7 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
     }
 
 
-    protected MultiDataResultSet handleUserLogin(SQLConnection connection, String clientName, Date startTime, Map<String, StudentFieldValue> fieldValueMap, String ssId, String sessionId)
+    private MultiDataResultSet handleUserLogin(SQLConnection connection, String clientName, Date startTime, Map<String, StudentFieldValue> fieldValueMap, String ssId, String sessionId)
             throws ReturnStatusException {
 
         logger.debug("Handle a User Login");
@@ -161,7 +172,7 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
     }
 
 
-    protected MultiDataResultSet handleGuestLogin(SQLConnection connection, String clientName, Date startTime, Map<String, StudentFieldValue> fieldValueMap)
+    private MultiDataResultSet handleGuestLogin(SQLConnection connection, String clientName, Date startTime, Map<String, StudentFieldValue> fieldValueMap)
             throws ReturnStatusException {
 
         logger.debug("Handle a Guest Login");
@@ -226,8 +237,9 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
         return (new MultiDataResultSet(resultsSets));
     }
 
-
-
+    /**
+     *  A new version of StudentDLL._T_ValidateTesteeLogin_SP
+     */
     private void _T_ValidateTesteeLogin_SP(SQLConnection connection, String clientname, String testeeId, String sessionId,
                                           _Ref<String> reasonRef, _Ref<Long> testeeKeyRef) throws ReturnStatusException {
         Date startTime = dateUtility.getLocalDate();
