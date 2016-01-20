@@ -1,0 +1,12 @@
+@charset "UTF-8";
+
+/* Oregon Rules */
+
+/* OS 9 Hack for word builder */
+.browserVer_1_3.forceRedraw .structure {
+	position: relative;
+}
+/* hide tutorial link b/c OS 9 doesn't support flash */
+.browserVer_1_3 a.contexthelp  {
+	display: none;
+}

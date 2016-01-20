@@ -1,0 +1,17 @@
+@charset "UTF-8";
+@import url(../../../Themes/flag/css/testShell.css);
+
+td.incorrect img {
+	visibility:hidden;
+}
+
+/* show iframe shim for dialogs */
+body.dialogAlertShow #dialogShim, body.dialogPromptShow #dialogShim, body.contentLoading #dialogShim {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+.mode_ScoreEntry .sessionID, .mode_ResponseEntry .sessionID {
+	display: none;
+}

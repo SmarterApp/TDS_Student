@@ -1,0 +1,32 @@
+package tds.student.performance.dao.mappers;
+
+import org.springframework.jdbc.core.RowMapper;
+import tds.student.performance.utils.UuidAdapter;
+import tds.student.performance.domain.TestSession;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+/**
+ * Map a record from the {@code session.session} table to a {@code TestSession} object.
+ */
+public class TestSessionMapper implements RowMapper<TestSession> {
+
+    @Override
+    public TestSession mapRow(ResultSet resultSet, int i) throws SQLException {
+        TestSession testSession = new TestSession();
+        testSession.setKey(UuidAdapter.getUUIDFromBytes(resultSet.getBytes("key")));
+        testSession.setSessionType((Integer)resultSet.getObject("sessionType"));
+        testSession.setStatus(resultSet.getString("status"));
+        testSession.setDateBegin(resultSet.getTimestamp("dateBegin"));
+        testSession.setDateEnd(resultSet.getTimestamp("dateEnd"));
+        testSession.setDateVisited(resultSet.getTimestamp("dateVisited"));
+        testSession.setClientName(resultSet.getString("clientName"));
+        testSession.setProctorId((Long)resultSet.getObject("proctor"));
+        testSession.setProctorName(resultSet.getString("proctorName"));
+        testSession.setSessionId(resultSet.getString("sessionId"));
+        testSession.setSessionBrowser(UuidAdapter.getUUIDFromBytes(resultSet.getBytes("sessionBrowser")));
+
+        return testSession;
+    }
+}
