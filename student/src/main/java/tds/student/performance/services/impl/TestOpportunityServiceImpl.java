@@ -5,6 +5,9 @@ import AIR.Common.DB.SQLConnection;
 import AIR.Common.Helpers._Ref;
 import TDS.Shared.Data.ReturnStatus;
 import TDS.Shared.Exceptions.ReturnStatusException;
+import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+import com.google.common.collect.FluentIterable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,7 @@ import tds.student.performance.utils.*;
 import tds.student.sql.data.OpportunityInstance;
 import tds.student.sql.data.TestConfig;
 
+import javax.annotation.Nullable;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -138,11 +142,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                     testOpportunity.getTestId());
 
             if (testOpportunity.getDateStarted() == null) { // Emulate logic to call legacy method (StudentDLL._InitializeOpportunity_SP) on line 5358 of StudentDLL.T_StartTestOpportunity_SP.
-                Integer testLength = initializeStudentOpportunity(
-                        testOpportunity,
-                        testSession,
-                        clientTestProperty,
-                        formKeyList);
+                Integer testLength = initializeStudentOpportunity(testOpportunity, clientTestProperty, formKeyList);
 
                 config = TestConfigHelper.getNew(clientTestProperty, timelimitConfiguration, testLength, scoreByTds);
             } else {         // Restart the most recent test opportunity, starting @ line 5405 of StudentDLL.T_StartTestOpportunity_SP.
@@ -175,25 +175,32 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                 oppAudit.setAccessType("restart " + (restartCount + 1));
                 testOpportunityDao.createAudit(oppAudit);
 
-                if (testSession.getSessionType() == 1) {
+                // Conditions starting on StudentDLL.T_StartTestOpportunity_SP @ line 5424
+                if (LegacyComparer.isEqual(testSession.getSessionType(), 1)) {
                     testeeResponseDao.updateRestartCount(opportunityInstance.getKey(), restartCount, false);
                 } else if (isTimeDiffLessThanDelay) {
                     testeeResponseDao.updateRestartCount(opportunityInstance.getKey(), restartCount, true);
-                } else if (clientTestProperty.getDeleteUnansweredItems()) {
+                } else if (LegacyComparer.isEqual(clientTestProperty.getDeleteUnansweredItems(), true)) {
                     removeUnanswered(testOpportunity);
                 }
 
+                // CAREFUL! This assignment required to call the procedure below (StudentDLL.T_StartTestOpportunity_SP @ line 5439)
                 restartCount++;
 
-                //Call _UnfinishedResponsePages_SP (connection, oppKey, rcnt, true) equivalent
+                // Call _UnfinishedResponsePages_SP (connection, oppKey, rcnt, true) equivalent @ StudentDLL line 5441.
                 updateUnfinishedResponsePages(opportunityInstance.getKey(), restartCount);
+
+                // Call StudentDLL.ResumeItemPosition_FN equivalent @ StudentDLL line 5442.
+                Integer resumeItemPosition = testOpportunityDao.getResumeItemPosition(
+                        testOpportunity.getKey(),
+                        restartCount);
 
                 config = TestConfigHelper.getRestart(
                         clientTestProperty,
                         timelimitConfiguration,
                         testOpportunity.getMaxItems(),
                         restartCount,
-                        0, // TODO:  Need to set restartPosition properly.
+                        resumeItemPosition, // TODO:  Need to set restartPosition properly.
                         scoreByTds);
             }
 
@@ -239,30 +246,55 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
 
     /**
      * This method emulates the functionality and logic contained in {@code StudentDll._UnfinishedResponsePages_SP}.
+     * <p>
+     *     NOTE: The legacy _UnfinishedResponsePages_SP call has a return value that never appears to be read,
+     *      at least not by student or the tdsdll project. The original method also has a doUpdate flag that
+     *      seems to be only set to "true" in every instance that the legacy method is called in production code.
+     *      Because of this, the flag and option select branch has been removed and the method has a void return value.
+     * </p>
+     * <p>
+     *     NOTE:  The legacy version of this method ({@code StudentDll._UnfinishedResponsePages_SP}) has a parameter
+     *     called {@code doupdate}.  In the context of restarting an existing {@code TestOpportunity}, the argument is
+     *     always {@code true}, so the {@code doUpdate} parameter has been omitted.  The only time this refactored
+     *     method is called is within the refactored {@code startTestOpportunity}, so the {@code doUpdate} parameter is
+     *     not necessary.
+     * </p>
      *
-     * NOTE: The legacy _UnfinishedResponsePages_SP call has a return value that never appears to be read,
-     * at least not by student or the tdsdll project. The original method also has a doUpdate flag that
-     * seems to be only set to "true" in every instance that the legacy method is called in production code.
-     * Because of this, the flag and option select branch has been removed and the method has a void return value.
-     *
-     * @param oppKey
-     * @param newRestartCount
+     * @param oppKey The id of the {@code TestOpportunity}.
+     * @param newRestartCount the next number in the restart sequence.
      */
-    public void updateUnfinishedResponsePages(UUID oppKey, Integer newRestartCount){
+    public void updateUnfinishedResponsePages(UUID oppKey, Integer newRestartCount) {
         List<UnfinishedResponsePage> pages = testeeResponseDao.getUnfinishedPages(oppKey);
 
-        for (UnfinishedResponsePage page : pages) {
-            if (page.getGroupRequired() == -1) {
-                page.setGroupRequired(page.getNumItems());
-            }
+        // Emulates setting the groupRequired column in StudentDLL._UnfinishedResponsePages_SP @ line 5139
+        // and setting the IsVisible column in StudentDLL._UnfinishedResponsePages_SP @ line 5142.  Effectively, this
+        // filter predicate returns the UnfinishedResponsePages that should be visible to the student restarting a test.
+        Predicate<UnfinishedResponsePage> filterPredicate = new Predicate<UnfinishedResponsePage>() {
+            @Override
+            public boolean apply(@Nullable UnfinishedResponsePage page) {
+                if (page.getGroupRequired() == -1) {
+                    page.setGroupRequired(page.getNumItems());
+                }
 
-            if (page.getRequiredResponses() < page.getRequiredItems() ||
-                    page.getValidCount() < page.getGroupRequired()) {
-                page.setVisible(true);
-                testeeResponseDao.updateRestartCount(oppKey, newRestartCount, false);
+                return page.getRequiredResponses() < page.getRequiredItems()
+                        || page.getValidCount() < page.getGroupRequired();
             }
-        }
+        };
+        Function<UnfinishedResponsePage, Integer> getPageIdTransformer = new Function<UnfinishedResponsePage, Integer>() {
+            @Override
+            public Integer apply(UnfinishedResponsePage page) {
+                return page.getPage();
+            }
+        };
 
+        // Get a collection of pages that should be visible for this test opportunity.
+        List<Integer> pageIds = FluentIterable
+                .from(pages)
+                .filter(filterPredicate)
+                .transform(getPageIdTransformer)
+                .toList();
+
+        testeeResponseDao.updateRestartCountForPages(oppKey, pageIds, newRestartCount);
     }
 
     /**
@@ -357,13 +389,21 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
      *     This method currently wraps a call to the {@code StudentDLL._InitializeOpportunity_SP} in the legacy
      *     codebase.
      * </p>
+     * <p>
+     *     <strong>NOTE:</strong> Once the {@code initializeTestSegments} method is complete, the signature for this
+     *     method will have to include a {@code TestSession} (which can be passed in from the
+     *     {@code startTestOpportunity} method).
+     * </p>
      *
      * @param testOpportunity The {@link TestOpportunity} to initialize.
      * @param formKeyList A list of form keys passed in from the caller.
      * @return The total number of items in the test.
      */
-    private Integer initializeStudentOpportunity(TestOpportunity testOpportunity, TestSession testSession, ClientTestProperty clientTestProperty,
-                                                 String formKeyList) throws ReturnErrorException, SQLException, ReturnStatusException {
+    private Integer initializeStudentOpportunity(
+            TestOpportunity testOpportunity,
+            ClientTestProperty clientTestProperty,
+            String formKeyList)
+            throws ReturnErrorException, SQLException, ReturnStatusException {
         try (SQLConnection legacyConnection = legacySqlConnection.get()) {
             Timestamp now = new Timestamp(dateUtility.getDbDate().getTime());
             Date latencyDate = dateUtility.getLocalDate();
@@ -585,28 +625,28 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
     private void verifyTesteeAccess(TestOpportunity testOpportunity, TestSession testSession, OpportunityInstance opportunityInstance) throws ReturnErrorException, SQLException, ReturnStatusException {
         Date now = dateUtility.getDbDate(); // since this is used to check if the test is open, it needs to match the DB server timezone
 
-        // Emulate logic on line 492 of _ValidateTesteeAccessProc_SP in StudentDLL.class
+        // Emulate logic on line 1060 of _ValidateTesteeAccessProc_SP in StudentDLL.class
         // RULE:  The test opportunity's browser key must match the opportunity instance's browser key.
         if (!testOpportunity.getBrowserKey().equals(opportunityInstance.getBrowserKey())) {
             String msg = String.format("testOpportunity.getBrowserKey() %s does not match opportunityInstance.getBrowserKey() %s", testOpportunity.getBrowserKey(), opportunityInstance.getBrowserKey());
             legacyErrorHandlerService.throwReturnErrorException(testOpportunity.getClientName(), "T_StartTestOpportunity", msg, null, testOpportunity.getKey(), "_ValidateTesteeAccess", "denied");
         }
 
-        // Emulate logic on line 555 of _ValidateTesteeAccessProc_SP in StudentDLL.class
+        // Emulate logic on line 1069 of _ValidateTesteeAccessProc_SP in StudentDLL.class
         // RULE:  The test opportunity's session key must match the opportunity instance's session key.
         if (!testOpportunity.getSessionKey().equals(opportunityInstance.getSessionKey())) {
             String msg = String.format("testOpportunity.getSessionKey() %s does not match opportunityInstance.getSessionKey() %s", testOpportunity.getSessionKey(), opportunityInstance.getSessionKey());
             legacyErrorHandlerService.throwReturnErrorException(testOpportunity.getClientName(), "T_StartTestOpportunity", msg, null, testOpportunity.getKey(), "_ValidateTesteeAccess", "denied");
         }
 
-        // Emulate logic on line 523 of _ValidateTesteeAccessProc_SP in StudentDLL.class
+        // Emulate logic on line 1104 of _ValidateTesteeAccessProc_SP in StudentDLL.class
         // RULE:  The test session must be open in order for the student to start the test.
         if (!testSession.isOpen(now)) {
             String msg = String.format("TestSession.isOpen for session key %s and date %s is false.", testSession.getKey(), now);
             legacyErrorHandlerService.throwReturnErrorException(testOpportunity.getClientName(), "T_StartTestOpportunity", msg, null, testOpportunity.getKey(), "_ValidateTesteeAccess", "denied");
         }
 
-        // Emulate logic on line 529 of _ValidateTesteeAccessProc_SP in StudentDLL.class.  Apparently, having a NULL
+        // Emulate logic on line 1111 of _ValidateTesteeAccessProc_SP in StudentDLL.class.  Apparently, having a NULL
         // proctor value for the test session is okay...?  In the legacy method,  _ValidateTesteeAccessProc_SP in StudentDLL.class
         // only fails if the error has some message in it.  This call in the  _ValidateTesteeAccessProc_SP in StudentDLL.class
         // just returns without assigning a message to the error argument.
@@ -615,14 +655,14 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             return;
         }
 
-        // Emulate logic on line 533 of _ValidateTesteeAccessProc_SP in StudentDLL.class.
+        // Emulate logic on line 1116 of _ValidateTesteeAccessProc_SP in StudentDLL.class.
         Integer checkIn = testSessionService.getCheckInTimeLimit(testSession.getClientName());
         if (checkIn == null || checkIn == 0) {
             String msg = String.format("Check in value for TestSession with client name '%s' %s", testSession.getClientName(), checkIn == null ? "is null" : "is 0");
             legacyErrorHandlerService.throwReturnErrorException(testOpportunity.getClientName(), "T_StartTestOpportunity", msg, null, testOpportunity.getKey(), "_ValidateTesteeAccess", "denied");
         }
 
-        // Emulate logic on line 533 of _ValidateTesteeAccessProc_SP in StudentDLL.class.
+        // Emulate logic on line 1125 of _ValidateTesteeAccessProc_SP in StudentDLL.class.
         // RULE:  Student should not be able to start a test if the timeout window has expired.
         // NOTE:  Unlike CommonDLL.P_PauseSession_SP, the StudentDLL._ValidateTesteeAccessProc_SP does not check the
         // configs.client_systemflags table to determine if the client is configured to log session audit records.
