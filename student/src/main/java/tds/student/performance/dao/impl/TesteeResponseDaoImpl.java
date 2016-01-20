@@ -52,6 +52,36 @@ public class TesteeResponseDaoImpl implements TesteeResponseDao {
         namedParameterJdbcTemplate.update(SQL, parameters);
     }
 
+    /**
+     * Update the {@code session.testeeresponse} table to display the pages that should be visible to a student that is
+     * restarting a test.
+     * <p>
+     *     This method emulates functionality of {@code StudentDLL._UnfinishedResponsePages_SP} @ line 5146
+     * </p>
+     *
+     * @param opportunityKey The id of the {@code TestOpportunity} being restarted.
+     * @param pageIds The ids of the page(s) that should be visible.
+     * @param newRestart The next sequence in the number of restarts for this {@code TestOpportunity}
+     */
+    @Override
+    public void updateRestartCountForPages(UUID opportunityKey, List<Integer> pageIds, Integer newRestart) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("pages", pageIds);
+        parameters.put("oppKey", UuidAdapter.getBytesFromUUID(opportunityKey));
+        parameters.put("newRestart", newRestart);
+
+        final String SQL =
+                "UPDATE\n" +
+                    "session.testeeresponse\n" +
+                "SET\n" +
+                    "opportunityrestart = :newRestart\n" +
+                "WHERE\n" +
+                    "_fk_testopportunity = :oppKey\n" +
+                    "AND page IN (:pages)";
+
+        namedParameterJdbcTemplate.update(SQL, parameters);
+    }
+
     @Override
     public Long getTesteeResponseItemCount(UUID oppKey) {
         Map<String, Object> parameters = new HashMap<>();

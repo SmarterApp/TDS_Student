@@ -83,18 +83,40 @@ public class TestSessionTimeLimitConfiguration {
         this.opportunityDelay = opportunityDelay;
     }
 
+    /**
+     * This value is in minutes.  This definition came from the {@link tds.student.sql.data.TestConfig} getter.
+     *
+     * @return The number of minutes a student can be idle before logging them out.
+     */
     public Integer getInterfaceTimeout() {
         return interfaceTimeout;
     }
 
+    /**
+     * The number of minutes a student can be idle before logging them out.
+     * <p>
+     *     This value is in minutes.  This definition came from the {@link tds.student.sql.data.TestConfig} getter.
+     * </p>
+     */
     public void setInterfaceTimeout(Integer interfaceTimeout) {
         this.interfaceTimeout = interfaceTimeout;
     }
 
+    /**
+     * This value is in minutes.  This definition came from the {@link tds.student.sql.data.TestConfig} getter.
+     *
+     * @return The number of minutes a student can be idle after making a print request before logging them out.
+     */
     public Integer getRequestInterfaceTimeout() {
         return requestInterfaceTimeout;
     }
 
+    /**
+     * The number of minutes a student can be idle after making a print request before logging them out.
+     * <p>
+     *     This value is in minutes.  This definition came from the {@link tds.student.sql.data.TestConfig} getter.
+     * </p>
+     */
     public void setRequestInterfaceTimeout(Integer requestInterfaceTimeout) {
         this.requestInterfaceTimeout = requestInterfaceTimeout;
     }

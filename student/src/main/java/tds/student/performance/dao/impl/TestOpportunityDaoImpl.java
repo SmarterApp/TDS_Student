@@ -1,27 +1,23 @@
 package tds.student.performance.dao.impl;
 
-import TDS.Shared.Exceptions.ReturnStatusException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-import tds.dll.api.ICommonDLL;
 import tds.student.performance.dao.TestOpportunityDao;
 import tds.student.performance.dao.mappers.TestOpportunityMapper;
-import tds.student.performance.domain.ClientSystemFlag;
 import tds.student.performance.domain.TestOpportunityAudit;
-import tds.student.performance.utils.LegacySqlConnection;
 import tds.student.performance.utils.UuidAdapter;
 import tds.student.performance.domain.TestOpportunity;
 
 import javax.sql.DataSource;
 import java.sql.Timestamp;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,10 +30,12 @@ Data access object for accessing records in the {@code session.testopportunity} 
 public class TestOpportunityDaoImpl implements TestOpportunityDao {
     private static final Logger logger = LoggerFactory.getLogger(TestOpportunityDaoImpl.class);
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private SimpleJdbcCall resumeItemPositionFunctionCall;
 
     @Autowired
     public void setDataSource(DataSource dataSource) {
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+        this.resumeItemPositionFunctionCall = new SimpleJdbcCall(dataSource).withFunctionName("resumeitemposition");
     }
 
     /**
@@ -314,5 +312,27 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
             logger.error(String.format("%s INSERT threw exception", SQL), e);
             throw e;
         }
+    }
+
+    /**
+     * Determine the position when a student restarts/resumes an existing {@code TestOpportunity}.
+     * <p>
+     *     This method emulates {@code StudentDLL.ResumeItemPosition_FN}.  Rather than try to refactor all the SQL
+     *     contained within the legacy method, this method invokes the {@code session.resumeitemposition} function on
+     *     the database.
+     * </p>
+     *
+     * @param opportunityKey The id of the {@code TestOpportunity}.
+     * @param newRestartInstance The next restart of the  {@code TestOpportunity}.
+     * @return An integer representing the item where the restarted test should begin.  This value is for
+     * {@code TestConfig.getStartPosition()}.
+     */
+    @Override
+    public Integer getResumeItemPosition(UUID opportunityKey, Integer newRestartInstance) {
+        SqlParameterSource parameterSource = new MapSqlParameterSource()
+                .addValue("v_oppkey", UuidAdapter.getBytesFromUUID(opportunityKey))
+                .addValue("v_restart", newRestartInstance);
+
+        return resumeItemPositionFunctionCall.executeFunction(Integer.class, parameterSource);
     }
 }
