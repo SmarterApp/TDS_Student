@@ -1,0 +1,9 @@
+.browser_firefox.browserVer_17 .container {
+	height: 95%;
+    overflow: auto;
+    position: absolute;
+    width: 98%;
+}
+.browser_firefox.browserVer_17.TDS_PS_L1 .container, .browser_firefox.browserVer_17.TDS_PS_L2 .container, .browser_firefox.browserVer_17.TDS_PS_L3 .container, .browser_firefox.browserVer_17.TDS_PS_L4 .container {
+	padding: 0px;
+}
