@@ -269,7 +269,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
         // Emulates setting the groupRequired column in StudentDLL._UnfinishedResponsePages_SP @ line 5139
         // and setting the IsVisible column in StudentDLL._UnfinishedResponsePages_SP @ line 5142.  Effectively, this
         // filter predicate returns the UnfinishedResponsePages that should be visible to the student restarting a test.
-        Predicate<UnfinishedResponsePage> filterPredicate = new Predicate<UnfinishedResponsePage>() {
+        Predicate<UnfinishedResponsePage> visiblePages = new Predicate<UnfinishedResponsePage>() {
             @Override
             public boolean apply(@Nullable UnfinishedResponsePage page) {
                 if (page.getGroupRequired() == -1) {
@@ -280,7 +280,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                         || page.getValidCount() < page.getGroupRequired();
             }
         };
-        Function<UnfinishedResponsePage, Integer> getPageIdTransformer = new Function<UnfinishedResponsePage, Integer>() {
+        Function<UnfinishedResponsePage, Integer> toPageIds = new Function<UnfinishedResponsePage, Integer>() {
             @Override
             public Integer apply(UnfinishedResponsePage page) {
                 return page.getPage();
@@ -290,8 +290,8 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
         // Get a collection of pages that should be visible for this test opportunity.
         List<Integer> pageIds = FluentIterable
                 .from(pages)
-                .filter(filterPredicate)
-                .transform(getPageIdTransformer)
+                .filter(visiblePages)
+                .transform(toPageIds)
                 .toList();
 
         testeeResponseDao.updateRestartCountForPages(oppKey, pageIds, newRestartCount);
