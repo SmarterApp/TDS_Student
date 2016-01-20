@@ -1,6 +1,7 @@
 package tds.student.performance.dao;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import tds.student.performance.IntegrationTest;
@@ -157,5 +158,17 @@ public class TestOpportunityDaoTest extends IntegrationTest {
         final Integer result = namedParameterJdbcTemplate.queryForInt(SQL, parameters);
 
         Assert.assertEquals((Integer)1, result);
+    }
+
+    // TODO:  refactor test so that it doesn't depend on a hard-coded UUID/restartCount combo.
+    @Ignore
+    @Test
+    public void should_Get_a_Resume_Item_Position() {
+        UUID opportunityKey = UUID.fromString("7cdeb5fe-9afd-4b60-b2fb-2c69cd8b46b5");
+        Integer restartCount = 37;
+
+        Integer result = testOpportunityDao.getResumeItemPosition(opportunityKey, restartCount);
+
+        Assert.assertNotNull(result);
     }
 }

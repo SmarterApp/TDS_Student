@@ -14,7 +14,7 @@ public interface TestOpportunityDao {
     TestOpportunity get(UUID key);
     List<TestOpportunity> getBySessionAndStatus(UUID sessionKey, String statusUsage, String statusStage);
     void update(TestOpportunity opportunity);
-
     Timestamp getLastActivity(UUID key);
     void createAudit(TestOpportunityAudit testOpportunityAudit);
+    Integer getResumeItemPosition(UUID opportunityKey, Integer newRestartInstance);
 }

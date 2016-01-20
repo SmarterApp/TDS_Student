@@ -20,6 +20,16 @@ public interface TesteeResponseDao {
     void updateRestartCount(UUID opportunityKey, Integer restartCount, boolean isRcntSpecific);
 
     /**
+     * Update the {@code session.testeeresponse} table to display the pages that should be visible to a student that is
+     * restarting a test.
+     *
+     * @param opportunityKey The id of the {@code TestOpportunity} being restarted.
+     * @param pageIds The ids of the page(s) that should be visible.
+     * @param newRestart The next sequence in the number of restarts for this {@code TestOpportunity}
+     */
+    void updateRestartCountForPages(UUID opportunityKey, List<Integer> pageIds, Integer newRestart);
+
+    /**
      * Retrieves a list of unfinished response pages for a specific opportunity
      * @param opportunityKey
      * @return
