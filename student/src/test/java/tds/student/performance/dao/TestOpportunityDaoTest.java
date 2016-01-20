@@ -138,12 +138,6 @@ public class TestOpportunityDaoTest extends IntegrationTest {
         Assert.assertEquals(2, results.size());
     }
 
-    /**
-     * Currently, the assert on this test fails because the opportunityKey and sessionKey values do not have legit
-     * statuses, therefore the INSERT... SELECT statement in TestOpportunityAuditDao.create doesn't insert any records.
-     * The SQL in TestOpportunityAuditDao.create is valid, but still need to come up with an accurate unit test.
-     */
-    @Ignore
     @Test
     public void should_Create_TestOpportunityAudit_Records_For_Specified_TestOpportunity() {
         Timestamp dateAccessed = dateUtility.getTimestamp();
