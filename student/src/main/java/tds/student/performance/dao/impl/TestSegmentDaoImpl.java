@@ -44,7 +44,7 @@ public class TestSegmentDaoImpl implements TestSegmentDao {
     public List<TestSegmentItem> getForSimulation(TestOpportunity testOpportunity) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("key", testOpportunity.getKey());
-        parameters.put("sessionKey", testOpportunity.getSessionKey());
+        parameters.put("sessionKey", UuidAdapter.getBytesFromUUID(testOpportunity.getSessionKey()));
         parameters.put("testKey", testOpportunity.getTestKey());
         parameters.put("isPermeable", -1);
         parameters.put("isSatisfied", false);
