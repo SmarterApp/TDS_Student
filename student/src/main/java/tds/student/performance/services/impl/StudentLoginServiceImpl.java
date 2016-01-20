@@ -36,8 +36,10 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
     private static final String ID_FIELD_NAME = "ID";
     private static final String LAST_NAME_FIELD_NAME = "LastName";
     private static final String FIRST_NAME_FIELD_NAME = "FirstName";
-    private static final String AT_LOGIN_VERIFY = "VERIFY";
     private static final String AT_LOGIN_REQUIRE = "REQUIRE";
+    private static final String GUEST_SESSION_NAME = "GUEST Session";
+    private static final String GUEST_USER_NAME = "GUEST";
+
 
     @Value("${performance.logMaxTestOpportunities.enabled}")
     private Boolean logMaxTestOpportunities;
@@ -54,7 +56,6 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
     @Autowired
     private ConfigurationDao configurationDao;
 
-    // TODO: access if both the DAO and Service are needed.  The service holds the convenience method to determine if a flag is on
     @Autowired
     private ConfigurationService configurationService;
 
@@ -98,7 +99,7 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
         }
 
         // Open guest session, if requested and permitted by client configuration
-        if (DbComparator.isEqual (sessionId, "GUEST Session")) {
+        if (DbComparator.isEqual (sessionId, GUEST_SESSION_NAME)) {
             if (_studentDll._AllowProctorlessSessions_FN(connection, clientName)) {
                 _Ref<UUID> sessionKeyRef = new _Ref<> ();
                 _Ref<String> sessionIdRef = new _Ref<> ();
@@ -112,7 +113,7 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
         }
 
         // Return a guest login
-        if (DbComparator.isEqual(ssId, "GUEST") && _studentDll._AllowAnonymousTestee_FN(connection, clientName)) {
+        if (DbComparator.isEqual(ssId, GUEST_USER_NAME) && _studentDll._AllowAnonymousTestee_FN(connection, clientName)) {
             return  handleGuestLogin(connection, clientName, startTime, fieldValueMap );
         }
 
@@ -120,9 +121,11 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
         return handleUserLogin( connection,  clientName,  startTime, fieldValueMap,  ssId,  sessionId);
     }
 
-    
+
     protected MultiDataResultSet handleUserLogin(SQLConnection connection, String clientName, Date startTime, Map<String, StudentFieldValue> fieldValueMap, String ssId, String sessionId)
             throws ReturnStatusException {
+
+        logger.debug("Handle a User Login");
 
         List<SingleDataResultSet> resultsSets = new ArrayList<>();
         Long studentKey;
@@ -141,8 +144,11 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
             fieldValueMap.get(ID_FIELD_NAME).outValue = fieldValueMap.get(ID_FIELD_NAME).inValue;
         }
 
-        // todo -- check for login failure due to bad required input data
-        collectAndVerifyFields(connection, studentKey, clientName, fieldValueMap);
+        List<SingleDataResultSet> errorSets = collectAndVerifyFields(connection, studentKey, clientName, fieldValueMap);
+        if ( errorSets != null ) {
+            logger.error("Login error in collectAndVerifyFields");
+            return (new MultiDataResultSet(errorSets));
+        }
 
         SingleDataResultSet resultSetEntity = createResultEntity(studentKey);
         resultsSets.add(resultSetEntity);
@@ -343,7 +349,7 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
         return resultSet;
     }
 
-    private void collectAndVerifyFields(SQLConnection connection, Long studentKey, String clientName, Map<String, StudentFieldValue> fieldValueMap)
+    private List<SingleDataResultSet> collectAndVerifyFields(SQLConnection connection, Long studentKey, String clientName, Map<String, StudentFieldValue> fieldValueMap)
             throws ReturnStatusException {
 
         for (Map.Entry<String, StudentFieldValue> entry : fieldValueMap.entrySet()) {
@@ -364,14 +370,15 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
 
             // Required fields (expect ID). Check that the in matches the out
             if (fieldValue.loginField.getAtLogin().equals(AT_LOGIN_REQUIRE) && !fieldValue.loginField.getTdsId().equals(ID_FIELD_NAME)) {
-                // todo must throw error if in not equal to out.
-                // select  _key from ${valsTblName} where _key <> 'ID' and action = 'REQUIRE' and (outval is null or inval is null or inval <> outval ) limit 1
-                // resultsSets.add(_commonDll._ReturnError_SP(connection, clientName, "T_Login", "No match"));
+                // Replaces Logic:  select _key from ${valsTblName} where _key <> 'ID' and action = 'REQUIRE' and (outval is null or inval is null or inval <> outval ) limit 1
                 if (!fieldValue.inValue.equalsIgnoreCase(fieldValue.outValue)) {
-                    throw new ReturnStatusException("Invalid Login");
+                    List<SingleDataResultSet> errorSets = new ArrayList<>();
+                    errorSets.add(_commonDll._ReturnError_SP(connection, clientName, "T_Login", "No match"));
+                    return errorSets;
                 }
             }
         }
+        return null;
     }
 
     private Map<String, StudentFieldValue> createFieldMap(List<StudentLoginField> studentLoginFields) {
