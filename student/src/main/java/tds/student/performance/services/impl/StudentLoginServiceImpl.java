@@ -41,7 +41,7 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
     private static final String GUEST_USER_NAME = "GUEST";
 
 
-    @Value("${performance.logMaxTestOpportunities.enabled}")
+    @Value("${performance.logMaxTestOpportunities.enabled:false}")
     private Boolean logMaxTestOpportunities;
 
     @Autowired
