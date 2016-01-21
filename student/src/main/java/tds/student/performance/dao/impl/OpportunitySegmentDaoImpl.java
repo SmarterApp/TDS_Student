@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -64,10 +65,15 @@ public class OpportunitySegmentDaoImpl implements OpportunitySegmentDao {
                 "WHERE\n" +
                 "    _key = :oppKey";
 
-        return namedParameterJdbcTemplate.queryForObject(
-                SQL,
-                parameters,
-                new BeanPropertyRowMapper<>(OpportunitySegment.class));
+        try {
+            return namedParameterJdbcTemplate.queryForObject(
+                    SQL,
+                    parameters,
+                    new BeanPropertyRowMapper<>(OpportunitySegment.class));
+        } catch (DataAccessException exception) {
+            logger.error(String.format("%s SELECT threw exception", SQL), exception);
+            return null;
+        }
     }
 
     // Replaces original T_InsertItems_SP SQL_INSERT2
