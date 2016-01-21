@@ -61,7 +61,7 @@ public class TestConfigHelper {
         config.setValidateCompleteness(clientTestProperty.getValidateCompleteness());
 
         ReturnStatus startStatus = new ReturnStatus();
-        startStatus.setStatus("started");
+        startStatus.setStatus(STARTED_STATUS);
         config.setReturnStatus(startStatus);
 
         return config;
@@ -99,7 +99,7 @@ public class TestConfigHelper {
         config.setValidateCompleteness(clientTestProperty.getValidateCompleteness());
 
         ReturnStatus startStatus = new ReturnStatus();
-        startStatus.setStatus("started");
+        startStatus.setStatus(STARTED_STATUS);
         config.setReturnStatus(startStatus);
 
         return config;
