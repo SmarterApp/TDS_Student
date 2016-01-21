@@ -183,7 +183,11 @@ public class ItemBankServiceImpl extends AbstractDAO implements ItemBankService 
         return accList;
     }
 
-    // NOTE: Caching is NOT implemented because the call to itemBankDao.getTestGrades() has a date check in the SQL that utilizes now()
+    /**
+     * <p>
+     *     NOTE: Caching is NOT implemented because the call to itemBankDao.getTestGrades() has a date check in the SQL that utilizes now()
+     * </p>
+     */
     public List<String> getGrades () throws ReturnStatusException {
 
         List<TestGrade> testGrades = itemBankDao.getTestGrades(getTdsSettings().getClientName(), null, getTdsSettings().getSessionType());
