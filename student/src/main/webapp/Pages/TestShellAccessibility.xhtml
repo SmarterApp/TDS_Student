@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:usercontrol="http://java.sun.com/jsf/composite/usercontrols"
+	xmlns:tds="http://airast.org/jsfcustom" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	
+<h:head id="htmlHead" >
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Alternate UI Assessment Site</title>
+    
+    <!-- YUI Styles -->
+    <tds:CSSLink  href="~/Scripts/Libraries/YUI/button/assets/skins/sam/button.css" rel="stylesheet" type="text/css" />
+    
+    <!-- adding modern styles -->
+    <tds:CSSLink  href="~/Shared/CSS/modernShell.css" rel="stylesheet" type="text/css" />
+    <tds:CSSLink  href="~/Shared/CSS/modernItems.css" rel="stylesheet" type="text/css" />
+    
+    <!-- Shell/Content Styles -->
+    <tds:CSSLink  href="~/Shared/CSS/wai.css" rel="stylesheet" type="text/css" />
+    <tds:CSSLink  href="~/Shared/CSS/wai_shell.css" rel="stylesheet" type="text/css" />
+    <tds:CSSLink  href="~/Projects/%s/css/wai_shell.css" media="screen" type="text/css" rel="stylesheet" />
+    <tds:CSSLink  href="~/Shared/CSS/dialogs.css" rel="stylesheet" type="text/css"  />
+    <tds:CSSLink  href="~/Shared/CSS/accommodations.css" rel="stylesheet" type="text/css" />
+    
+    <!-- Widget Styles -->
+    <ui:include src="TestShellStyles.xhtml" />
+
+</h:head>
+
+<h:body id="htmlBody" >
+	<a href="#contents">Skip navigation</a>
+    
+    <div id="topBar">
+    	<span id="brand1"></span>
+        <div id="topGroup">
+            <div id="banner" role="banner">
+                <h1 id="lblTestName"></h1>
+                <h2><h:outputText value="#{studentInfo.getFullName()}" escape="false"/></h2> <!-- Daniel Schwartz, SSID: 99999991234 -->
+            </div>
+            <div id="jumpTo">
+                <label for="ddlNavigation">Jump to Question Number:</label>
+                <select id="ddlNavigation"></select>
+            </div>
+            <a id="btnHelp" href="#"><span>Help</span></a>
+        </div>
+        <span id="brand2"></span>
+    </div>
+    
+    <a id="contentsFocuser" class="element-invisible" tabindex="-1">Page is ready</a>
+    <div id="contents" role="main">
+        <div id="reviews"></div>
+    </div>
+	
+    <div id="foot"> 
+        <span class="stripe"></span>
+        
+        <ul id="studentControls" role="navigation">
+            <li id="listBack"><tds:Button id="btnBack" key="TestShell.Link.Back"  /></li>
+            <li id="listNext"><tds:Button id="btnNext" key="TestShell.Link.Next"  /></li>
+            <li id="listSave"><tds:Button id="btnSave" key="TestShell.Link.Save"  /></li>
+            <li id="listPause"><tds:Button id="btnPause" key="TestShell.Link.Pause"  /></li>
+            <li id="listEnd"><tds:Button id="btnEnd" key="TestShell.Link.EndTest"  /></li>
+            
+            <li id="listZoomIn" class="studentTools">
+                <a id="btnZoomIn" href="#" class="zoomIn" aria-labelledby="lblZoomIn">
+                    <span id="lblZoomIn" i18n-content="TestShell.Link.ZoomIn"></span>
+                </a>
+            </li>
+    	      <li id="listZoomOut" class="studentTools">
+    	        <a id="btnZoomOut" href="#" class="zoomOut" aria-labelledby="lblZoomOut">
+    	            <span id="lblZoomOut" i18n-content="TestShell.Link.ZoomOut"></span>
+              </a>
+            </li>
+    	      <li id="listLineReader" class="studentTools">
+    	        <a id="btnLineReader" href="#" class="lineReader" aria-labelledby="lblLineReader">
+    	            <span id="lblLineReader" i18n-content="TestShell.Link.LineReader"></span>
+              </a>
+            </li>
+            <li id="listCalculator" class="studentTools">
+                <a id="btnCalculator" href="#" class="calculator" aria-labelledby="lblCalculator">
+                    <span id="lblCalculator" i18n-content="TestShell.Link.Calculator"></span>
+                </a>
+            </li>
+            <li id="listFormula" class="studentTools">
+                <a id="btnFormula" href="#" class="math" aria-labelledby="lblFormula">
+                    <span id="lblFormula" i18n-content="TestShell.Link.Formula"></span>
+                </a>
+            </li>
+            <li id="listPeriodic" class="studentTools">
+                <a id="btnPeriodic" href="#" class="periodic" aria-labelledby="lblPeriodic">
+                    <span id="lblPeriodic" i18n-content="TestShell.Link.PeriodicTable"></span>
+                </a>
+            </li>
+            <li id="listPrint" class="studentTools">
+                <a id="btnPrint" href="#" class="printer excludeMenu" aria-labelledby="lblPrint">
+                    <span id="lblPrint" i18n-content="TestShell.Link.Print"></span>
+                </a>
+            </li>
+            <li id="listPrintPractice" class="studentTools">
+                <a id="btnPrintPractice" href="#" class="printerPractice excludeMenu" aria-labelledby="lblPrintPractice">
+                    <span id="lblPrintPractice" i18n-content="TestShell.Link.PrintPractice"></span>
+                </a>
+            </li>
+            <!--<li id="listSetHighlight" class="studentTools">
+                <a id="btnSetHighlight" href="#" class="highlight" aria-labelledby="lblSetHighlight">
+                    <span id="lblSetHighlight" i18n-content="TestShell.Link.Highlight""></span>
+                </a>
+            </li>
+            <li id="listClearHighlight" class="studentTools">
+                <a id="btnClearHighlight" href="#" class="removeHighlight" aria-labelledby="lblClearHighlight">
+                    <span id="lblClearHighlight" i18n-content="TestShell.Link.ResetHighlighting"></span>
+                </a>
+            </li>-->
+        </ul>
+    </div>
+    
+    <div id="dialogs">
+		<div id="loadingDialog">
+            <span class="border"><span class="container"></span></span>
+        </div>
+	</div>
+    
+    <!-- Help Dialog -->
+    <usercontrol:Help />
+    <!-- Javascript -->
+    <div id="js-files">
+        <tds:ResourcesLink file="~/Scripts/scripts_student.xml" name="base"  />
+        <tds:ResourcesLink file="~/Scripts/scripts_student.xml" name="testshell-accessibility"  />
+    </div>
+    <ui:include src="TestShellScripts.xhtml" /> 
+
+    <script type="text/javascript">
+
+        TestShell.name = 'accessibility';
+
+        // enable accessibility mode in content manager 
+        ContentManager.enableAccessibility();
+
+        // disable test shell keyboard shortcuts
+        TestShell.enableKeyEvents = false;
+        
+        // override renderer styles to an empty array as CSS is assigned on the main page
+        ContentManager.Renderer.getStyles = function() { return []; };
+
+        // create renderer
+        ContentManager.Renderer.init('contents', ContentManager.Renderer.Direct);
+
+    </script>
+
+</h:body>
+</html>

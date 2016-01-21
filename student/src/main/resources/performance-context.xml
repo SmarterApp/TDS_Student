@@ -1,0 +1,54 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.2.xsd  http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-3.2.xsd">
+
+    <context:component-scan base-package="tds.student.performance"/>
+
+    <!-- uses the same data source url and credentials as the rest of the site and set in ProgMan -->
+    <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+        <property name="dataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlDataSource" />
+        <property name="dataSourceProperties" >
+            <props>
+                <prop key="url">${datasource.url}</prop>
+                <prop key="user">${datasource.username}</prop>
+                <prop key="password">${datasource.password}</prop>
+            </props>
+        </property>
+
+        <property name="poolName" value="PerfHikariCP" />
+        <property name="maxLifetime" value="1800000" />
+        <property name="minimumIdle" value="${performance.datasource.minPoolSize:5}" />
+        <property name="maximumPoolSize" value="${performance.datasource.maxPoolSize:20}" />
+        <!-- <property name="leakDetectionThreshold" value="15000" /> -->
+
+        <!-- The follow values are the defaults -->
+        <!--<property name="autoCommit" value="true" />-->
+        <!--<property name="connectionTimeout" value="30000" />-->
+        <!--<property name="idleTimeout" value="30000" /> &lt;!&ndash; connect_timeout on MySQL is 60 seconds, and HikariCP recommends making this 30 seconds less than that value &ndash;&gt;-->
+    </bean>
+
+    <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
+        <constructor-arg ref="hikariConfig" />
+    </bean>
+
+
+    <!-- To disable all caching, comment out the cache:annotation-driven line below AND change the enabled property to false for the cacher bean -->
+    <cache:annotation-driven key-generator="cacheKeyGenerator" />
+
+    <bean id="cachingService" class="tds.student.performance.caching.impl.CachingServiceImpl" >
+        <property name="enabled" value="true" />
+    </bean>
+
+    <bean id="cacheKeyGenerator" class="tds.student.performance.caching.CacheKeyGenerator" />
+
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" p:cacheManager-ref="ehcache" />
+
+    <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:configLocation="classpath:ehcache.xml" p:shared="true" />
+
+    <bean id="itemBankService" class="tds.student.performance.services.impl.ItemBankServiceImpl" />
+</beans>
