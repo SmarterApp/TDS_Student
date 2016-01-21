@@ -48,7 +48,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
     @Autowired
     TestAbilityDao testAbilityDao;
 
-    // TODO:  Replace with calls to configurationService; no need to wire up both Dao and Service.
+    // TODO:  Replace with calls to configurationService.
     @Autowired
     ConfigurationDao configurationDao;
 
@@ -229,6 +229,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             failureStatus.setReason(e.getMessage());
             failureStatus.setAppKey(opportunityInstance.getKey().toString());
 
+            config.setReturnStatus(failureStatus);
         } catch (ReturnStatusException e) {
             logger.error(e.getMessage(), e);
             legacyErrorHandlerService.logDbError("T_StartTestOpportunity", e.getMessage(), null, testKey, null, opportunityInstance.getKey());
@@ -239,6 +240,8 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             failureStatus.setStatus(e.getReturnStatus().getStatus());
             failureStatus.setReason(e.getMessage());
             failureStatus.setAppKey(e.getReturnStatus().getAppKey());
+
+            config.setReturnStatus(failureStatus);
         }
 
         return config;
@@ -496,97 +499,6 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
         dbLatencyService.logLatency("_CreateResponseSet_SP", start, null, opportunity);
     }
 
-    private void initializeTestSegments(TestOpportunity testOpportunity, TestSession testSession, String formKeyList) throws SQLException, ReturnErrorException, ReturnStatusException {
-        List<TestSegmentItem> segmentItems;
-        Integer poolCount; //poolCountRef in legacy
-        if (testOpportunity.isSimulation()) { // Get segments for the simulation (StudentDLL._InitializeSegments_SP @ line 4589)
-            segmentItems = testSegmentDao.getForSimulation(testOpportunity);
-            // NOTE: can use testOpportunity.getSessionKey() in place of sessionPoolKey (StudentDLL._InitializeSegments_SP @ line 4611)
-        } else if (testOpportunity.getIsSegmented()) { // Get segments for the segment (StudentDLL._InitializeSegments_SP @ line 4598)
-            segmentItems = testSegmentDao.getSegmented(testOpportunity);
-        } else { // Get segments for un-segmented opportunity (StudentDLL._InitializeSegments_SP @ line 4604)
-            segmentItems = testSegmentDao.get(testOpportunity);
-        }
-
-        // Find the maximum segment position (this should be length of list - 1, but who knows?)
-        // TODO: Is this find even necessary?  Looping through each item in the results should be sufficient.
-
-        // LOOP through each segment fetched during the queries above:
-        for (TestSegmentItem segmentItem : segmentItems) {
-            // IF algorithm == "fixedform":
-            if (segmentItem.getAlgorithm().toLowerCase().equals("fixedform")) {
-                // CALL _SelectTestForm_Driver_SP
-                String testFormDriverResponse = configurationService.selectTestFormDriver(
-                        testOpportunity,
-                        testSession,
-                        formKeyList);
-
-                // IF the formKeyRef value that comes back from _SelectTestForm_Driver_SP == null
-                if (testFormDriverResponse == null ) {
-                    // EXCEPTION: return empty record set and set error reason to "Unable to complete test form selection"
-                    legacyErrorHandlerService.logDbError("T_StartTestOpportunity", "Did not find formKeyRef", testOpportunity.getTestee(), testOpportunity.getTestId(), null, testOpportunity.getKey());
-                    legacyErrorHandlerService.throwReturnErrorException(testOpportunity.getClientName(), "T_StartTestOpportunity", "Did not find formKeyRef", null, testOpportunity.getKey(), "_InitializeOpportunity", "failed");
-                }
-
-
-                //TODO poolCount = formLengthRef;
-
-                // IF formCohort == null:
-                    // get cohort from itembank.testform
-            } else { //Not a fixed form test...
-                //TODO: Update non-fixed form version to use new DB access layer
-                _Ref<Integer> newlenRef = new _Ref<> ();
-                _Ref<Integer> poolcountRef = new _Ref<> ();
-                _Ref<String> itemStringRef = new _Ref<> ();
-
-
-                try (SQLConnection legacyConnection = legacySqlConnection.get()) {
-                    legacyStudentDll._ComputeSegmentPool_SP(legacyConnection, testOpportunity.getKey(),
-                            testOpportunity.getTestKey(), newlenRef, poolcountRef, itemStringRef, testOpportunity.getSessionKey());
-                    poolCount = poolcountRef.get();
-                }
-
-
-//                int isElligbile = legacyStudentDll.FT_IsEligible_FN (legacySqlConnection, testOpportunity.getKey(),
-//                        testOpportunity.getTestKey(),  , language);
-                // CALL FT_IsEligible_FN to get isEligible value
-                // IF isEligible == 1 and newlenRef == opitems
-                    // CALL _FT_SelectItemgroups_SP
-                // ELSE:
-                    // ftcntRef = 0
-            }
-
-            // update current record to new values
-        }
-
-
-
-            // CALL _SelectTestForm_Driver_SP
-            // IF the formKeyRef value that comes back from _SelectTestForm_Driver_SP == null
-              // EXCEPTION: return empty record set and set error reason to "Unable to complete test form selection"
-           // set poolCountRef to whatever formLengthRef value is.
-           // IF formCohort == null:
-             // get cohort from itembank.testform
-          // ELSE algorithm != "fixedform":
-            // CALL StudentDLL._ComputeSegmentPool_SP
-            // CALL FT_IsEligible_FN to get isEligible value
-            // IF isEligible == 1 and newlenRef == opitems:
-              // CALL _FT_SelectItemgroups_SP
-           // ELSE:
-             // ftcntRef = 0
-          // update current record to new values
-        // END LOOP (phew!)
-
-        // IF there are no records in list that have opItemCnt + ftItemCnt > 0:
-          // EXECPTION: "No items in pool for _InitializeTestSegments"
-
-        // INSERT updated list into session.testopportunitysegment table.
-    }
-
-    private void selectTestFormPredetermined(TestOpportunity testOpportunity, String formList) {
-
-    }
-
     /**
      * Remove unanswered test items from the {@link TestOpportunity}.
      * <p>
@@ -646,12 +558,10 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             legacyErrorHandlerService.throwReturnErrorException(testOpportunity.getClientName(), "T_StartTestOpportunity", msg, null, testOpportunity.getKey(), "_ValidateTesteeAccess", "denied");
         }
 
-        // Emulate logic on line 1111 of _ValidateTesteeAccessProc_SP in StudentDLL.class.  Apparently, having a NULL
-        // proctor value for the test session is okay...?  In the legacy method,  _ValidateTesteeAccessProc_SP in StudentDLL.class
-        // only fails if the error has some message in it.  This call in the  _ValidateTesteeAccessProc_SP in StudentDLL.class
-        // just returns without assigning a message to the error argument.
+        // Emulate logic on line 1111 of _ValidateTesteeAccessProc_SP in StudentDLL.class.  If the proctor id is null,
+        // then the test is part of a GUEST session.  In this case, there is no proctor or session to be concerned with,
+        // so the verifyTesteeAccess method can safely exit.
         if (testSession.getProctorId() == null) {
-            logger.warn(String.format("TestSession for session key %s has a NULL proctor value.", testSession.getKey()));
             return;
         }
 
