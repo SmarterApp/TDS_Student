@@ -250,13 +250,13 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
     /**
      * This method emulates the functionality and logic contained in {@code StudentDll._UnfinishedResponsePages_SP}.
      * <p>
-     *     NOTE: The legacy _UnfinishedResponsePages_SP call has a return value that never appears to be read,
+     *      The legacy _UnfinishedResponsePages_SP call has a return value that never appears to be read,
      *      at least not by student or the tdsdll project. The original method also has a doUpdate flag that
      *      seems to be only set to "true" in every instance that the legacy method is called in production code.
      *      Because of this, the flag and option select branch has been removed and the method has a void return value.
      * </p>
      * <p>
-     *     NOTE:  The legacy version of this method ({@code StudentDll._UnfinishedResponsePages_SP}) has a parameter
+     *     The legacy version of this method ({@code StudentDll._UnfinishedResponsePages_SP}) has a parameter
      *     called {@code doUpdate}.  In the context of restarting an existing {@code TestOpportunity}, the argument is
      *     always {@code true}, so the {@code doUpdate} parameter has been omitted.  The only time this refactored
      *     method is called is within the refactored {@code startTestOpportunity}, so the {@code doUpdate} parameter is
