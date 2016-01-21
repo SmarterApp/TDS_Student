@@ -152,7 +152,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                 Timestamp now = new Timestamp(dateUtility.getDbDate().getTime());
 
                 boolean isTimeDiffLessThanDelay =   // if lastActivity is null, then this is "false" - No NPE
-                        (DbComparator.lessThan(DateUtils.minutesDiff(lastActivity, now), timelimitConfiguration.getOpportunityDelay()));
+                        (DbComparator.lessThan(DateUtility.minutesDiff(lastActivity, now), timelimitConfiguration.getOpportunityDelay()));
 
                 if(isTimeDiffLessThanDelay) {
                     gracePeriodRestarts++;
