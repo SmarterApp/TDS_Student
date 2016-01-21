@@ -6,6 +6,6 @@
          transactionalMode="off"
 >
     <cache name="shortTerm" timeToLiveSeconds="20" />
-    <cache name="mediumTerm" timeToLiveSeconds="300" />
+    <cache name="mediumTerm" timeToLiveSeconds="600" />
     <cache name="longTerm" timeToLiveSeconds="7200" />
 </ehcache>
