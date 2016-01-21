@@ -23,8 +23,6 @@ public class TestSegmentDaoTest extends IntegrationTest {
     @Autowired
     private TestSegmentDao testSegmentDao;
 
-    // TODO:  This test doesn't work yet; need to figure out the data situation.
-    @Ignore
     @Test
     public void should_Return_TestSegmentItems_For_a_Simulation_TestOpportunity() {
         TestOpportunity mockTestOpportunity = new TestOpportunity();
