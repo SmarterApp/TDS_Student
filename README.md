@@ -164,6 +164,27 @@ The following parameters need to be configured inside Program Management for Stu
 * `itemscoring.qti.sympyTimeoutMillis=10000` - Timeout for Python ItemscoringEngine
 * `itemScoring.callbackUrl=http://localhost:8080/student/ItemScoringCallback.axd`  - Itemscoring callback url
 
+#### New Student Properties (as of January performance release)
+* `performance.datasource.minPoolSize=5` - Minimum pool size for the January release code 
+* `performance.datasource.maxPoolSize=20` - Maximum pool size for the January release code 
+* `performance.logMaxTestOpportunities.enabled=false` - Enable the tracking of the maximum test opportunities active at a given time
+* `performance.logLatency.enabled=false` - Enable the logging of DB latencies from the code for debugging/tracking performance
+
+## Caching
+Certain configuration and test metadata is now cached for a limited amount of time on the web server.  It is enabled by default and provides the following caching buckets:
+
+* Short Term: 20 seconds
+* Medium Term: 10 minutes
+* Long Term: 2 hours
+
+These values can be changed in the `resources\ehcache.xml` if needed.
+
+### Disabling Caching
+In order to disable caching you will need to make the following changes to `resources\performance-context.xml`:
+
+* Comment out this line: `<cache:annotation-driven key-generator="cacheKeyGenerator" />`
+* Change the enabled property to `false` in the `cachingService` bean
+
 ## Build Order
 These are the steps that should be taken in order to build all of the Student-related artifacts:
 
@@ -239,11 +260,12 @@ Student has a number of direct dependencies that are necessary for it to functio
 * javax.inject
 * servlet-api
 * jsp-api
-* c3p0
+* HikariCP
 
 
 ### Test Dependencies
 * junit
+* c3p0
 
 
 ### Runtime Dependencies

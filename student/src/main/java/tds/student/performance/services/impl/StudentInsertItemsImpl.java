@@ -106,7 +106,12 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
         Integer lastPosition = null;
         String msg;
 
+        // Query the opportunity segment and return error if not found
         OpportunitySegment oppSeg = opportunitySegmentDao.getOpportunitySegmentAccommodation(oppKey, segment);
+        if (oppSeg == null) {
+            resultsSets.add(_commonDll._ReturnError_SP(connection, "Empty", "T_InsertItems", "Segment not found"));
+            return (new MultiDataResultSet(resultsSets));
+        }
         SqlParametersMaps parms1 = new SqlParametersMaps().put("oppkey", oppKey);
 
         if (DbComparator.notEqual(oppSeg.getStatus(), "started")) {
