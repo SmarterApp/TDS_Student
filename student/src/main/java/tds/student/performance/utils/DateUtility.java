@@ -28,4 +28,10 @@ public class DateUtility {
     public Timestamp getTimestamp() {
         return new Timestamp(getLocalDate().getTime());
     }
+
+    public static Long minutesDiff (Date from, Date to) {
+        if (from == null || to == null)
+            return null;
+        return (to.getTime () - from.getTime ()) / 1000 / 60;
+    }
 }

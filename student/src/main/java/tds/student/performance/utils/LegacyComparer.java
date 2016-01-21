@@ -5,14 +5,16 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
+ * <p>
  * This replaces DbComparator and is a straight port with the exact same functionality
  *
- * WARNING: NULL != NULL in this implementation, so we must be extra careful not to introduce a bug by replacing calls to DbComaparator to var.equals(var2)
+ * WARNING: NULL != NULL in this implementation, so we must be extra careful not to introduce a bug by replacing calls to DbComparator to var.equals(var2)
  *
  * IMPORTANT NOTE: We were going to replace calls to DbComparator with calls to var1.equals(var2) (with var1 != null as needed)
  *      but noticed that we might introduce subtle bugs with the way that DbComparator handles NULLs
- *      For example, DbComaprator.isEqual(NULL, NULL) will return FALSE
+ *      For example, DbComparator.isEqual(NULL, NULL) will return FALSE
  *      and DbComparator.notEqual(NULL, UUID(.....)) will return FALSE
+ * </p>
  */
 public class LegacyComparer {
     public static boolean greaterThan(Integer one, Integer two) {
