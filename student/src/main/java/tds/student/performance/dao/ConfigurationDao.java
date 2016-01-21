@@ -13,8 +13,5 @@ public interface ConfigurationDao {
     List<StudentLoginField> getStudentLoginFields(String clientName);
     ConfigTestToolType getTestToolType(String clientName, String toolName, String contextType, String context);
     Boolean isSetForScoreByTDS(String clientName, String testId);
-    ClientTestMode getClientTestMode(TestOpportunity testOpportunity);
-    List<TestFormWindow> getTestFormWindows(TestOpportunity testOpportunity, TestSession testSession);
-    TideTesteeTestWindowDto getTideTesteeTestWindowDto(TestOpportunity testOpportunity, TestSession testSession);
     Externs getExterns(String clientName);
 }

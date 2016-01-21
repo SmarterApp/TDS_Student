@@ -255,7 +255,6 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
         return namedParameterJdbcTemplate.queryForObject(SQL, parameters, Timestamp.class);
     }
 
-    // TODO: consider renaming to indicate that this may insert many records, not just one.
     /**
      * Insert a {@code TestOpportunityAudit} record into the {@code archive.opportunityaudit}.
      * <p>
