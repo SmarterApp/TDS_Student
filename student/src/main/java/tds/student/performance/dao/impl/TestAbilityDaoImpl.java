@@ -27,7 +27,6 @@ public class TestAbilityDaoImpl implements TestAbilityDao {
     }
 
     @Override
-    @Cacheable(CacheType.ShortTerm)
     public List<TestAbility> getTestAbilities(UUID oppKey, String clientname, String subject, Long testee) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("oppkey", UuidAdapter.getBytesFromUUID(oppKey));
@@ -59,7 +58,6 @@ public class TestAbilityDaoImpl implements TestAbilityDao {
     }
 
     @Override
-    @Cacheable(CacheType.ShortTerm)
     public Float getMostRecentTestAbilityFromHistory(String clientname, String subject, Long testee) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("clientname", clientname);
