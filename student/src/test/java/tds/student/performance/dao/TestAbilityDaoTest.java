@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import tds.student.performance.IntegrationTest;
 import tds.student.performance.domain.TestAbility;
 import tds.student.performance.domain.TestOpportunity;
+import tds.student.performance.utils.LegacyDbNameUtility;
 import tds.student.performance.utils.UuidAdapter;
 
 import java.sql.Timestamp;
@@ -40,6 +41,8 @@ public class TestAbilityDaoTest extends IntegrationTest {
     private final UUID otherOppKey = UUID.randomUUID();
     private final String adminSubject = "AdminSubject";
 
+    @Autowired
+    LegacyDbNameUtility dbNameUtility;
 
     @Autowired
     TestAbilityDao testAbilityDao;
@@ -57,11 +60,11 @@ public class TestAbilityDaoTest extends IntegrationTest {
         params.put("adminSubject", adminSubject);
 
         final String TEST_OPP_SQL =
-            "INSERT INTO session.testopportunity (_Key, _efk_Testee, _efk_TestID, opportunity, dateScored, subject, " +
+            "INSERT INTO ${sessiondb}.testopportunity (_Key, _efk_Testee, _efk_TestID, opportunity, dateScored, subject, " +
                     "clientname, _version, _efk_adminsubject, environment, isSegmented, algorithm) " +
             "VALUES (:oppKey, :testee, :testid, :opportunity, :dateScored, :subject, :clientName, 1, :adminSubject, 'dev', 0, 'fixedform')";
 
-        namedParameterJdbcTemplate.update(TEST_OPP_SQL, params);
+        namedParameterJdbcTemplate.update(dbNameUtility.setDatabaseNames(TEST_OPP_SQL), params);
 
         params = new HashMap<>();
         params.put("oppKey", UuidAdapter.getBytesFromUUID(otherOppKey));
@@ -69,10 +72,10 @@ public class TestAbilityDaoTest extends IntegrationTest {
         params.put("date", new Date());
 
         final String TEST_SCORE_SQL =
-            "INSERT INTO session.testopportunityscores (_fk_testopportunity, measurelabel, measureof, value, useforability, _date) " +
+            "INSERT INTO ${sessiondb}.testopportunityscores (_fk_testopportunity, measurelabel, measureof, value, useforability, _date) " +
                     "VALUES (:oppKey, 'measure label', 'measure of', :score, 1, :date)";
 
-        namedParameterJdbcTemplate.update(TEST_SCORE_SQL, params);
+        namedParameterJdbcTemplate.update(dbNameUtility.setDatabaseNames(TEST_SCORE_SQL), params);
 
         params = new HashMap<>();
         params.put("oppKey", UuidAdapter.getBytesFromUUID(otherOppKey));
@@ -82,10 +85,10 @@ public class TestAbilityDaoTest extends IntegrationTest {
         params.put("subject", subject);
 
         final String TESTEE_HISTORY_SQL =
-                "INSERT INTO session.testeehistory (_Key, _efk_Testee, clientname, Subject, initialAbility) " +
+                "INSERT INTO ${sessiondb}.testeehistory (_Key, _efk_Testee, clientname, Subject, initialAbility) " +
                         "VALUES (:oppKey, :testee, :clientName, :subject, :score)";
 
-        namedParameterJdbcTemplate.update(TESTEE_HISTORY_SQL, params);
+        namedParameterJdbcTemplate.update(dbNameUtility.setDatabaseNames(TESTEE_HISTORY_SQL), params);
     }
 
     @After
@@ -93,21 +96,21 @@ public class TestAbilityDaoTest extends IntegrationTest {
         Map<String, Object> params = new HashMap<>();
         params.put("oppKey", UuidAdapter.getBytesFromUUID(otherOppKey));
         final String DELETE_SQL1 =
-                "DELETE FROM session.testopportunityscores\n" +
+                "DELETE FROM ${sessiondb}.testopportunityscores\n" +
                         "WHERE _fk_testopportunity = :oppKey";
 
         final String DELETE_SQL2 =
-                "DELETE FROM session.testopportunity\n" +
+                "DELETE FROM ${sessiondb}.testopportunity\n" +
                         "WHERE _Key = :oppKey";
 
         final String DELETE_SQL3 =
-                "DELETE FROM session.testeehistory\n" +
+                "DELETE FROM ${sessiondb}.testeehistory\n" +
                         "WHERE _efk_Testee = :testee";
 
         params.put("testee", testee);
-        namedParameterJdbcTemplate.update(DELETE_SQL1, params);
-        namedParameterJdbcTemplate.update(DELETE_SQL2, params);
-        namedParameterJdbcTemplate.update(DELETE_SQL3, params);
+        namedParameterJdbcTemplate.update(dbNameUtility.setDatabaseNames(DELETE_SQL1), params);
+        namedParameterJdbcTemplate.update(dbNameUtility.setDatabaseNames(DELETE_SQL2), params);
+        namedParameterJdbcTemplate.update(dbNameUtility.setDatabaseNames(DELETE_SQL3), params);
     }
 
     @Test

@@ -12,19 +12,18 @@
  ******************************************************************************/
 package tds.student.performance.dao.impl;
 
-import AIR.Common.DB.SqlParametersMaps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import tds.student.performance.caching.CacheType;
 import tds.student.performance.dao.ItemBankDao;
 import tds.student.performance.dao.mappers.SetOfAdminSubjectMapper;
 import tds.student.performance.domain.SetOfAdminSubject;
+import tds.student.performance.utils.LegacyDbNameUtility;
 import tds.student.sql.data.TestGrade;
 
 import javax.sql.DataSource;
@@ -47,6 +46,9 @@ public class ItemBankDaoImpl implements ItemBankDao {
     private static final Logger logger = LoggerFactory.getLogger(ConfigurationDaoImpl.class);
 
     @Autowired
+    private LegacyDbNameUtility dbNameUtility;
+
+    @Autowired
     public void setDataSource(DataSource dataSource) {
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
@@ -66,13 +68,13 @@ public class ItemBankDaoImpl implements ItemBankDao {
                     "issegmented AS isSegmented,\n" +
                     "selectionalgorithm AS selectionAlgorithm\n" +
                 "FROM\n" +
-                    "itembank.tblsetofadminsubjects\n" +
+                    "${itembankdb}.tblsetofadminsubjects\n" +
                 "WHERE\n" +
                     "_key = :adminSubject";
 
         try{
             return namedParameterJdbcTemplate.queryForObject(
-                    SQL,
+                    dbNameUtility.setDatabaseNames(SQL),
                     parameters,
                     new SetOfAdminSubjectMapper());
         } catch(EmptyResultDataAccessException e) {
@@ -89,13 +91,13 @@ public class ItemBankDaoImpl implements ItemBankDao {
         parameters.put ("sessionType", sessionType);
 
         final String SQL = "select distinct grade "
-                + " from itembank.tblsetofadminsubjects S, configs.client_testmode M, configs.client_testgrades G, configs.client_testwindow W, configs.client_testproperties P "
+                + " from ${itembankdb}.tblsetofadminsubjects S, ${configdb}.client_testmode M, ${configdb}.client_testgrades G, ${configdb}.client_testwindow W, ${configdb}.client_testproperties P "
                 + " where M.clientname = :clientName and (:testKey is null or M.testkey = :testKey) and M.testkey = S._Key and (M.sessionType = -1 or M.sessionType = :sessionType) "
                 + "    and M.clientname = G.clientname and M.TestID = G.TestID  and W.clientname = :clientName and W.TestID = M.testID and P.clientname = :clientName and P.TestID = M.testID "
                 + "    and P.IsSelectable = 1 and now() between W.startDate and W.endDate order by grade";
 
         List<Map<String, Object>> list = namedParameterJdbcTemplate.queryForList(
-                SQL,
+                dbNameUtility.setDatabaseNames(SQL),
                 parameters);
 
         List<TestGrade> results = new ArrayList<>();
@@ -115,11 +117,11 @@ public class ItemBankDaoImpl implements ItemBankDao {
         parameters.put ("testKey", testKey);
 
         // TODO: add integration test
-        final String SQL = "select S.Name from  itembank.tblsubject S, itembank.tblsetofadminsubjects A "
+        final String SQL = "select S.Name from  ${itembankdb}.tblsubject S, ${itembankdb}.tblsetofadminsubjects A "
                 + " where A._key = :testKey and S._Key = A._fk_Subject";
 
         try {
-            return namedParameterJdbcTemplate.queryForObject(SQL, parameters, String.class);
+            return namedParameterJdbcTemplate.queryForObject(dbNameUtility.setDatabaseNames(SQL), parameters, String.class);
         } catch(EmptyResultDataAccessException e) {
             logger.warn(String.format("%s did not return results for testKey = %s", SQL, testKey));
             return null;

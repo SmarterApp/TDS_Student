@@ -13,14 +13,12 @@
 package tds.student.performance.dao.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-import tds.student.performance.caching.CacheType;
 import tds.student.performance.dao.TestAbilityDao;
 import tds.student.performance.dao.mappers.TestAbilityMapper;
 import tds.student.performance.domain.TestAbility;
+import tds.student.performance.utils.LegacyDbNameUtility;
 import tds.student.performance.utils.UuidAdapter;
 
 import javax.sql.DataSource;
@@ -32,6 +30,9 @@ import java.util.*;
 @Repository
 public class TestAbilityDaoImpl implements TestAbilityDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    @Autowired
+    private LegacyDbNameUtility dbNameUtility;
 
     @Autowired
     public void setDataSource(DataSource dataSource) {
@@ -54,7 +55,7 @@ public class TestAbilityDaoImpl implements TestAbilityDao {
                     "OTHEROPP.dateScored as dateScored,\n" +
                     "SCORE.value as score\n" +
                 "FROM\n" +
-                    "session.testopportunity OTHEROPP, session.testopportunityscores SCORE\n" +
+                    "${sessiondb}.testopportunity OTHEROPP, ${sessiondb}.testopportunityscores SCORE\n" +
                 "WHERE\n" +
                     "clientname = :clientname AND\n" +
                     "OTHEROPP._efk_Testee = :testee AND\n" +
@@ -66,7 +67,7 @@ public class TestAbilityDaoImpl implements TestAbilityDao {
                     "SCORE.UseForAbility = 1 AND\n" +
                     "SCORE.value is not null";
 
-        return namedParameterJdbcTemplate.query(SQL, parameters, new TestAbilityMapper());
+        return namedParameterJdbcTemplate.query(dbNameUtility.setDatabaseNames(SQL), parameters, new TestAbilityMapper());
     }
 
     @Override
@@ -80,13 +81,13 @@ public class TestAbilityDaoImpl implements TestAbilityDao {
                 "SELECT\n" +
                     "MAX(initialAbility) as ability\n" +
                 "FROM\n" +
-                    "session.testeehistory\n" +
+                    "${sessiondb}.testeehistory\n" +
                 "WHERE\n" +
                     "clientname = :clientname AND\n" +
                     "_efk_Testee = :testee AND\n" +
                     "Subject = :subject AND\n" +
                     "initialAbility is not null;";
 
-        return namedParameterJdbcTemplate.queryForObject(SQL, parameters, Float.class);
+        return namedParameterJdbcTemplate.queryForObject(dbNameUtility.setDatabaseNames(SQL), parameters, Float.class);
     }
 }

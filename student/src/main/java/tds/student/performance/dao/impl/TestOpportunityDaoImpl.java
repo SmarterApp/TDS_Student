@@ -25,6 +25,7 @@ import org.springframework.stereotype.Repository;
 import tds.student.performance.dao.TestOpportunityDao;
 import tds.student.performance.dao.mappers.TestOpportunityMapper;
 import tds.student.performance.domain.TestOpportunityAudit;
+import tds.student.performance.utils.LegacyDbNameUtility;
 import tds.student.performance.utils.UuidAdapter;
 import tds.student.performance.domain.TestOpportunity;
 
@@ -45,9 +46,14 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
     private SimpleJdbcCall resumeItemPositionFunctionCall;
 
     @Autowired
+    private LegacyDbNameUtility dbNameUtility;
+
+    @Autowired
     public void setDataSource(DataSource dataSource) {
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-        this.resumeItemPositionFunctionCall = new SimpleJdbcCall(dataSource).withFunctionName("resumeitemposition");
+        this.resumeItemPositionFunctionCall = new SimpleJdbcCall(dataSource)
+                .withCatalogName(dbNameUtility.getDatabaseName(LegacyDbNameUtility.Databases.Session))
+                .withFunctionName("resumeitemposition");
     }
 
     /**
@@ -101,12 +107,12 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
                     "e.environment AS environment,\n" +
                     "COUNT(s._fk_session) AS simulationSegmentCount\n" +
                 "FROM\n" +
-                    "session.testopportunity o\n" +
+                    "${sessiondb}.testopportunity o\n" +
                 "LEFT JOIN\n" +
-                        "session._externs e\n" +
+                        "${sessiondb}._externs e\n" +
                         "ON (e.clientname = o.clientname)\n" +
                 "LEFT JOIN\n" +
-                        "session.sim_segment s\n" +
+                        "${sessiondb}.sim_segment s\n" +
                         "ON (s._fk_session = o._fk_session\n" +
                         "AND s._efk_adminsubject = o._efk_adminsubject)\n" +
                 "WHERE\n" +
@@ -115,7 +121,7 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
 
         try {
             return namedParameterJdbcTemplate.queryForObject(
-                    SQL,
+                    dbNameUtility.setDatabaseNames(SQL),
                     parameters,
                     new TestOpportunityMapper());
         } catch (EmptyResultDataAccessException e) {
@@ -155,19 +161,19 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
                     "e.environment AS environment,\n" +
                     "0 AS simulationSegmentCount\n" + // TODO: this is not used right now so not adding the extra LEFT JOIN at this point
                 "FROM\n" +
-                    "session.testopportunity o\n" +
+                    "${sessiondb}.testopportunity o\n" +
                 "JOIN\n" +
-                    "configs.statuscodes sc\n" + // This join should alleviate the need to call CommonDLL.GetStatusCodes_FN
+                    "${configdb}.statuscodes sc\n" + // This join should alleviate the need to call CommonDLL.GetStatusCodes_FN
                 "ON (sc.status = o.status\n" +
                     "AND sc.`usage` = :usage\n" +
                     "AND sc.stage = :stage)\n" +
                 "LEFT JOIN\n" +
-                    "session._externs e\n" +
+                    "${sessiondb}._externs e\n" +
                     "ON (e.clientname = o.clientname)\n" +
                 "WHERE o._fk_session = :sessionKey";
 
         return namedParameterJdbcTemplate.query(
-                SQL,
+                dbNameUtility.setDatabaseNames(SQL),
                 parameters,
                 new TestOpportunityMapper());
     }
@@ -201,7 +207,7 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
 
         final String SQL =
                 "UPDATE\n" +
-                    "session.testopportunity\n" +
+                    "${sessiondb}.testopportunity\n" +
                 "SET\n" +
                     "_fk_session = :sessionKey,\n" +
                     "_fk_browser = :browserKey,\n" +
@@ -228,7 +234,7 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
                 "WHERE\n" +
                     "_key = :key";
 
-        namedParameterJdbcTemplate.update(SQL, parameters);
+        namedParameterJdbcTemplate.update(dbNameUtility.setDatabaseNames(SQL), parameters);
     }
 
     @Override
@@ -243,14 +249,14 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
                     "SELECT\n" +
                         "datePaused AS activityDate\n" +
                     "FROM\n" +
-                        "session.testopportunity\n" +
+                        "${sessiondb}.testopportunity\n" +
                     "WHERE\n" +
                         "_key = :key\n" +
                     "UNION ALL\n" +
                     "SELECT\n" +
                         "MAX(dateSubmitted) AS activityDate\n" +
                     "FROM\n" +
-                        "session.testeeresponse\n" +
+                        "${sessiondb}.testeeresponse\n" +
                     "WHERE\n" +
                         "_fk_TestOpportunity = :key\n" +
                         "AND dateSubmitted IS NOT NULL\n" +
@@ -258,13 +264,13 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
                     "SELECT\n" +
                         "MAX(dateGenerated) AS activityDate\n" +
                     "FROM\n" +
-                        "session.testeeresponse\n" +
+                        "${sessiondb}.testeeresponse\n" +
                     "WHERE\n" +
                         "_fk_TestOpportunity = :key\n" +
                         "AND dateGenerated is not null\n" +
                 ") as subQuery";
 
-        return namedParameterJdbcTemplate.queryForObject(SQL, parameters, Timestamp.class);
+        return namedParameterJdbcTemplate.queryForObject(dbNameUtility.setDatabaseNames(SQL), parameters, Timestamp.class);
     }
 
     /**
@@ -309,16 +315,16 @@ public class TestOpportunityDaoImpl implements TestOpportunityDao {
                     "t._fk_Browser,\n" +
                     ":databaseName\n" +
                 "FROM\n" +
-                    "session.testopportunity t\n" +
+                    "${sessiondb}.testopportunity t\n" +
                 "JOIN\n" +
-                    "configs.statuscodes s\n" + // This join should alleviate the need to call CommonDLL.GetStatusCodes_FN
+                    "${configdb}.statuscodes s\n" + // This join should alleviate the need to call CommonDLL.GetStatusCodes_FN
                     "ON (s.status = t.status\n" +
                     "AND s.`usage` = 'Opportunity'\n" +
                     "AND s.stage = 'inuse')\n" +
                 "WHERE t._fk_session = :sessionKey";
 
         try {
-            namedParameterJdbcTemplate.update(SQL, parameters);
+            namedParameterJdbcTemplate.update(dbNameUtility.setDatabaseNames(SQL), parameters);
         } catch (DataAccessException e) {
             logger.error(String.format("%s INSERT threw exception", SQL), e);
             throw e;

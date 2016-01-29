@@ -18,9 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import tds.student.performance.dao.DbLatencyDao;
 import tds.student.performance.utils.HostNameHelper;
+import tds.student.performance.utils.LegacyDbNameUtility;
 import tds.student.performance.utils.UuidAdapter;
 
 import javax.sql.DataSource;
@@ -37,6 +37,9 @@ import java.util.*;
 public class DbLatencyDaoImpl implements DbLatencyDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private static final Logger logger = LoggerFactory.getLogger(DbLatencyDaoImpl.class);
+
+    @Autowired
+    private LegacyDbNameUtility dbNameUtility;
 
     @Autowired
     public void setDataSource(DataSource dataSource) {
@@ -62,7 +65,7 @@ public class DbLatencyDaoImpl implements DbLatencyDao {
 
         final String SQL =
                 "INSERT INTO\n" +
-                        "archive._dblatency (" +
+                        "${archivedb}._dblatency (" +
                         "userkey," +
                         "duration," +
                         "starttime," +
@@ -90,7 +93,7 @@ public class DbLatencyDaoImpl implements DbLatencyDao {
                         ":dbName)";
 
         try {
-            namedParameterJdbcTemplate.update(SQL, parameters);
+            namedParameterJdbcTemplate.update(dbNameUtility.setDatabaseNames(SQL), parameters);
         } catch (DataAccessException e) {
             logger.error(String.format("%s INSERT threw exception", SQL), e);
             throw e;

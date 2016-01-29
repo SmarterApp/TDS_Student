@@ -18,9 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import tds.student.performance.dao.TestOppAbilityEstimateDao;
 import tds.student.performance.domain.TestOppAbilityEstimate;
+import tds.student.performance.utils.LegacyDbNameUtility;
 import tds.student.performance.utils.UuidAdapter;
 
 import javax.sql.DataSource;
@@ -38,6 +38,9 @@ public class TestOppAbilityEstimateDaoImpl implements TestOppAbilityEstimateDao 
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Autowired
+    private LegacyDbNameUtility dbNameUtility;
+
+    @Autowired
     public void setDataSource(DataSource dataSource) {
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
@@ -53,7 +56,7 @@ public class TestOppAbilityEstimateDaoImpl implements TestOppAbilityEstimateDao 
 
         final String SQL =
                 "INSERT INTO\n" +
-                    "session.testoppabilityestimate (\n" +
+                    "${sessiondb}.testoppabilityestimate (\n" +
                         "_fk_TestOpportunity,\n" +
                         "strand,\n" +
                         "estimate,\n" +
@@ -67,7 +70,7 @@ public class TestOppAbilityEstimateDaoImpl implements TestOppAbilityEstimateDao 
                         ":date)";
 
             try {
-                namedParameterJdbcTemplate.update(SQL, parameters);
+                namedParameterJdbcTemplate.update(dbNameUtility.setDatabaseNames(SQL), parameters);
             } catch (DataAccessException e) {
                 logger.error(String.format("%s INSERT threw exception", SQL), e);
                 throw e;
@@ -83,7 +86,7 @@ public class TestOppAbilityEstimateDaoImpl implements TestOppAbilityEstimateDao 
 
         final String SQL =
             "INSERT INTO\n" +
-                "session.testoppabilityestimate (\n" +
+                "${sessiondb}.testoppabilityestimate (\n" +
                     "_fk_TestOpportunity,\n" +
                     "strand,\n" +
                     "estimate,\n" +
@@ -96,14 +99,14 @@ public class TestOppAbilityEstimateDaoImpl implements TestOppAbilityEstimateDao 
                     "0,\n" +
                     ":date\n" +
                 "FROM\n" +
-                    "itembank.tbladminstrand S, session.testopportunity O\n" +
+                    "${itembankdb}.tbladminstrand S, session.testopportunity O\n" +
                 "WHERE\n" +
                     "O._key = :oppKey AND\n" +
                     "O._efk_AdminSubject = S._fk_AdminSubject AND\n" +
                     "S.startAbility is not null";
 
         try {
-            namedParameterJdbcTemplate.update(SQL, parameters);
+            namedParameterJdbcTemplate.update(dbNameUtility.setDatabaseNames(SQL), parameters);
         } catch (DataAccessException e) {
             logger.error(String.format("%s INSERT threw exception", SQL), e);
             throw e;

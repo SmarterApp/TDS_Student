@@ -24,13 +24,12 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import tds.student.performance.caching.CacheType;
 import tds.student.performance.dao.OpportunitySegmentDao;
 import tds.student.performance.domain.InsertTesteeResponse;
 import tds.student.performance.domain.ItemForTesteeResponse;
 import tds.student.performance.domain.OpportunitySegment;
-import tds.student.performance.domain.StudentLoginField;
+import tds.student.performance.utils.LegacyDbNameUtility;
 import tds.student.performance.utils.UuidAdapter;
 
 import javax.sql.DataSource;
@@ -44,6 +43,9 @@ import java.util.*;
 public class OpportunitySegmentDaoImpl implements OpportunitySegmentDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private static final Logger logger = LoggerFactory.getLogger(OpportunitySegmentDaoImpl.class);
+
+    @Autowired
+    private LegacyDbNameUtility dbNameUtility;
 
     @Autowired
     public void setDataSource(DataSource dataSource) {
@@ -69,17 +71,17 @@ public class OpportunitySegmentDaoImpl implements OpportunitySegmentDao {
                 "    s.algorithm,                       \n" +
                 "    a.acccode AS language        \n" +
                 "FROM\n" +
-                "    testopportunity o\n" +
-                "        LEFT OUTER JOIN\n" +
-                "    testopportunitysegment s ON (s._fk_testopportunity = o._key AND s.segmentposition = :segment)\n" +
-                "        LEFT OUTER JOIN\n" +
-                "    testeeaccommodations a ON (a._fk_testopportunity = o._key AND a.acctype = 'Language')\n" +
+                "    ${sessiondb}.testopportunity o\n" +
+                "LEFT OUTER JOIN\n" +
+                "    ${sessiondb}.testopportunitysegment s ON (s._fk_testopportunity = o._key AND s.segmentposition = :segment)\n" +
+                "LEFT OUTER JOIN\n" +
+                "    ${sessiondb}.testeeaccommodations a ON (a._fk_testopportunity = o._key AND a.acctype = 'Language')\n" +
                 "WHERE\n" +
                 "    _key = :oppKey";
 
         try {
             return namedParameterJdbcTemplate.queryForObject(
-                    SQL,
+                    dbNameUtility.setDatabaseNames(SQL),
                     parameters,
                     new BeanPropertyRowMapper<>(OpportunitySegment.class));
         } catch (DataAccessException exception) {
@@ -114,18 +116,18 @@ public class OpportunitySegmentDaoImpl implements OpportunitySegmentDao {
                 "    (SELECT \n" +
                 "            F.formposition\n" +
                 "        FROM\n" +
-                "            itembank.testformitem F\n" +
+                "            ${itembankdb}.testformitem F\n" +
                 "        WHERE\n" +
                 "            F._fk_Item = A._fk_Item\n" +
                 "                AND _fk_TestForm = :testForm\n" +
                 "                AND F._fk_AdminSubject = :adminSubject) AS formPosition,\n" +
                 "    I.answer AS answerKey\n" +
                 "FROM\n" +
-                "    itembank.tblsetofadminitems A\n" +
+                "    ${itembankdb}.tblsetofadminitems A\n" +
                 "        LEFT JOIN\n" +
-                "    itembank.tblitem I ON (A._fk_ITem = I._Key)\n" +
+                "    ${itembankdb}.tblitem I ON (A._fk_ITem = I._Key)\n" +
                 "        LEFT JOIN\n" +
-                "    itembank.tblitemprops P ON (P._fk_Item = A._fk_Item)\n" +
+                "    ${itembankdb}.tblitemprops P ON (P._fk_Item = A._fk_Item)\n" +
                 "WHERE\n" +
                 "    A._fk_adminsubject = :adminSubject\n" +
                 "        AND A.groupid = :groupId\n" +
@@ -136,7 +138,7 @@ public class OpportunitySegmentDaoImpl implements OpportunitySegmentDao {
 
 
         return namedParameterJdbcTemplate.query(
-                SQL,
+                dbNameUtility.setDatabaseNames(SQL),
                 parameters,
                 new BeanPropertyRowMapper<>(ItemForTesteeResponse.class));
 
@@ -151,13 +153,13 @@ public class OpportunitySegmentDaoImpl implements OpportunitySegmentDao {
         final String SQL = "SELECT \n" +
                 "    COUNT(*)\n" +
                 "FROM\n" +
-                "    testeeresponse R\n" +
+                "    ${sessiondb}.testeeresponse R\n" +
                 "WHERE\n" +
                 "    R._fk_testopportunity = :oppKey\n" +
                 "        AND _efk_itemkey IN (:itemKeys);";
 
         int count = namedParameterJdbcTemplate.queryForObject(
-                SQL,
+                dbNameUtility.setDatabaseNames(SQL),
                 parameters,
                 Integer.class);
 

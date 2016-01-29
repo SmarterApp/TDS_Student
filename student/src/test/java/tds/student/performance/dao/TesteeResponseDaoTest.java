@@ -18,6 +18,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import tds.student.performance.IntegrationTest;
 import tds.student.performance.domain.UnfinishedResponsePage;
+import tds.student.performance.utils.LegacyDbNameUtility;
 import tds.student.performance.utils.UuidAdapter;
 
 import java.sql.Timestamp;
@@ -46,6 +47,9 @@ public class TesteeResponseDaoTest extends IntegrationTest {
     private final Integer page = 3;
 
     @Autowired
+    LegacyDbNameUtility dbNameUtility;
+
+    @Autowired
     TesteeResponseDao testeeResponseDao;
 
     @Before
@@ -61,11 +65,11 @@ public class TesteeResponseDaoTest extends IntegrationTest {
         params.put("adminSubject", adminSubject);
 
         final String TEST_OPP_SQL =
-                "INSERT INTO session.testopportunity (_Key, _efk_Testee, _efk_TestID, opportunity, dateScored, subject, " +
+                "INSERT INTO ${sessiondb}.testopportunity (_Key, _efk_Testee, _efk_TestID, opportunity, dateScored, subject, " +
                         "clientname, _version, _efk_adminsubject, environment, isSegmented, algorithm) " +
                         "VALUES (:oppKey, :testee, :testid, :opportunity, :dateScored, :subject, :clientName, 1, :adminSubject, 'dev', 0, 'fixedform')";
 
-        namedParameterJdbcTemplate.update(TEST_OPP_SQL, params);
+        namedParameterJdbcTemplate.update(dbNameUtility.setDatabaseNames(TEST_OPP_SQL), params);
 
         params = new HashMap<>();
         params.put("oppKey", UuidAdapter.getBytesFromUUID(oppKey));
@@ -74,10 +78,10 @@ public class TesteeResponseDaoTest extends IntegrationTest {
         params.put("page", page);
 
         final String SQL =
-                "INSERT INTO session.testeeresponse (_fk_testopportunity, position, dategenerated, page) " +
+                "INSERT INTO ${sessiondb}.testeeresponse (_fk_testopportunity, position, dategenerated, page) " +
                         "VALUES (:oppKey, :position, :dateGenerated, :page)";
 
-        namedParameterJdbcTemplate.update(SQL, params);
+        namedParameterJdbcTemplate.update(dbNameUtility.setDatabaseNames(SQL), params);
 }
 
     @After
@@ -86,15 +90,15 @@ public class TesteeResponseDaoTest extends IntegrationTest {
         params.put("oppKey", UuidAdapter.getBytesFromUUID(oppKey));
 
         final String DELETE_SQL1 =
-                "DELETE FROM session.testeeresponse WHERE _fk_testopportunity = :oppKey";
+                "DELETE FROM ${sessiondb}.testeeresponse WHERE _fk_testopportunity = :oppKey";
 
         final String DELETE_SQL2 =
-                "DELETE FROM session.testopportunity\n" +
+                "DELETE FROM ${sessiondb}.testopportunity\n" +
                         "WHERE _Key = :oppKey";
 
 
-        namedParameterJdbcTemplate.update(DELETE_SQL1, params);
-        namedParameterJdbcTemplate.update(DELETE_SQL2, params);
+        namedParameterJdbcTemplate.update(dbNameUtility.setDatabaseNames(DELETE_SQL1), params);
+        namedParameterJdbcTemplate.update(dbNameUtility.setDatabaseNames(DELETE_SQL2), params);
     }
 
     @Test

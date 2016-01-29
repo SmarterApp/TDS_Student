@@ -28,6 +28,7 @@ import tds.student.performance.dao.mappers.TestSessionMapper;
 import tds.student.performance.domain.SessionAudit;
 import tds.student.performance.domain.TestSessionTimeLimitConfiguration;
 import tds.student.performance.utils.DateUtility;
+import tds.student.performance.utils.LegacyDbNameUtility;
 import tds.student.performance.utils.UuidAdapter;
 import tds.student.performance.domain.TestSession;
 
@@ -43,7 +44,10 @@ public class TestSessionDaoImpl implements TestSessionDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Autowired
-    DateUtility dateUtility;
+    private LegacyDbNameUtility dbNameUtility;
+
+    @Autowired
+    private DateUtility dateUtility;
 
     @Autowired
     public void setDataSource(DataSource dataSource) {
@@ -76,13 +80,13 @@ public class TestSessionDaoImpl implements TestSessionDao {
                     "_efk_proctor AS proctor,\n" +
                     "_fk_browser AS sessionBrowser\n" +
                 "FROM\n" +
-                    "session.session\n" +
+                    "${sessiondb}.session\n" +
                 "WHERE\n" +
                     "_key = :key";
 
         try {
             return namedParameterJdbcTemplate.queryForObject(
-                    SQL,
+                    dbNameUtility.setDatabaseNames(SQL),
                     parameters,
                     new TestSessionMapper());
         } catch(EmptyResultDataAccessException e) {
@@ -129,14 +133,14 @@ public class TestSessionDaoImpl implements TestSessionDao {
                     "sessionexpire AS sessionExpiration,\n" +
                     "refreshvaluemultiplier AS refreshValueMultiplier\n" +
                 "FROM\n" +
-                    "session.timelimits\n" +
+                    "${sessiondb}.timelimits\n" +
                 "WHERE\n" +
                     "_efk_testid IS NULL\n" +
                     "AND clientname = :clientName";
 
         try {
             return namedParameterJdbcTemplate.queryForObject(
-                    SQL,
+                    dbNameUtility.setDatabaseNames(SQL),
                     parameters,
                     new BeanPropertyRowMapper<>(TestSessionTimeLimitConfiguration.class));
         } catch(EmptyResultDataAccessException e) {
@@ -185,14 +189,14 @@ public class TestSessionDaoImpl implements TestSessionDao {
                     "sessionexpire AS sessionExpiration,\n" +
                     "refreshvaluemultiplier AS refreshValueMultiplier\n" +
                 "FROM\n" +
-                    "session.timelimits\n" +
+                    "${sessiondb}.timelimits\n" +
                 "WHERE\n" +
                     "_efk_testid = :testId\n" +
                     "AND clientname = :clientName\n";
 
         try {
             return namedParameterJdbcTemplate.queryForObject(
-                    SQL,
+                    dbNameUtility.setDatabaseNames(SQL),
                     parameters,
                     new BeanPropertyRowMapper<>(TestSessionTimeLimitConfiguration.class));
         } catch (EmptyResultDataAccessException e) {
@@ -250,7 +254,7 @@ public class TestSessionDaoImpl implements TestSessionDao {
 
         final String SQL =
                 "INSERT INTO\n" +
-                    "archive.sessionaudit (" +
+                    "${archivedb}.sessionaudit (" +
                     "_fk_session," +
                     "dateaccessed," +
                     "accesstype," +
@@ -266,7 +270,7 @@ public class TestSessionDaoImpl implements TestSessionDao {
                     ":databaseName)";
 
         try {
-            namedParameterJdbcTemplate.update(SQL, parameters);
+            namedParameterJdbcTemplate.update(dbNameUtility.setDatabaseNames(SQL), parameters);
         } catch (DataAccessException e) {
             logger.error(String.format("%s UPDATE threw exception", SQL), e);
             throw e;
@@ -290,7 +294,7 @@ public class TestSessionDaoImpl implements TestSessionDao {
 
         final String SQL =
                 "UPDATE\n" +
-                    "session.session\n" +
+                    "${session}.session\n" +
                 "SET\n" +
                     "status = :reason,\n" +
                     "datechanged = :dateChanged,\n" +
@@ -299,7 +303,7 @@ public class TestSessionDaoImpl implements TestSessionDao {
                     "_key = :key";
 
         try {
-            namedParameterJdbcTemplate.update(SQL, parameters);
+            namedParameterJdbcTemplate.update(dbNameUtility.setDatabaseNames(SQL), parameters);
         } catch (DataAccessException e) {
             logger.error(String.format("%s UPDATE threw exception", SQL), e);
             throw e;
