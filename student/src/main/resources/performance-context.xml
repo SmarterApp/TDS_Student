@@ -36,6 +36,9 @@
         <constructor-arg ref="hikariConfig" />
     </bean>
 
+    <bean id="legacyDbNameUtility" class="tds.student.performance.utils.LegacyDbNameUtility">
+        <constructor-arg name="settingsFileName" type="java.lang.String" value="settings-mysql.xml" />
+    </bean>
 
     <!-- To disable all caching, comment out the cache:annotation-driven line below AND change the enabled property to false for the cacher bean -->
     <cache:annotation-driven key-generator="cacheKeyGenerator" />

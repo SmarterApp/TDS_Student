@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import tds.student.performance.IntegrationTest;
 import tds.student.performance.utils.DateUtility;
+import tds.student.performance.utils.LegacyDbNameUtility;
 import tds.student.performance.utils.UuidAdapter;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -28,6 +29,9 @@ import java.util.concurrent.ThreadLocalRandom;
 public class DbLatencyDaoTest extends IntegrationTest {
     @Autowired
     private DbLatencyDao dbLatencyDao;
+
+    @Autowired
+    LegacyDbNameUtility dbNameUtility;
 
     @Autowired
     DateUtility dateUtility;
@@ -67,10 +71,10 @@ public class DbLatencyDaoTest extends IntegrationTest {
         parameters.put("startTime", startDate);
         parameters.put("n", n);
 
-        final String SQL = "SELECT COUNT(*) AS count FROM archive._dblatency WHERE procName = :procName AND _fk_session = :sessionKey AND _fk_testopportunity = :testOppKey AND starttime = :startTime AND n = :n";
+        final String SQL = "SELECT COUNT(*) AS count FROM ${archivedb}._dblatency WHERE procName = :procName AND _fk_session = :sessionKey AND _fk_testopportunity = :testOppKey AND starttime = :startTime AND n = :n";
 
         Integer expectedValue = 1;
-        Integer count = namedParameterJdbcTemplate.queryForInt(SQL, parameters);
+        Integer count = namedParameterJdbcTemplate.queryForInt(dbNameUtility.setDatabaseNames(SQL), parameters);
         Assert.assertEquals(expectedValue, count);
     }
 }

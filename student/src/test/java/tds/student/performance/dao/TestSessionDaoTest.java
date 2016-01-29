@@ -23,6 +23,7 @@ import tds.student.performance.domain.SessionAudit;
 import tds.student.performance.domain.TestSession;
 import tds.student.performance.domain.TestSessionTimeLimitConfiguration;
 import tds.student.performance.utils.DateUtility;
+import tds.student.performance.utils.LegacyDbNameUtility;
 import tds.student.performance.utils.UuidAdapter;
 
 import java.sql.Time;
@@ -36,6 +37,9 @@ import java.util.*;
 public class TestSessionDaoTest extends IntegrationTest {
     @Autowired
     TestSessionDao testSessionDao;
+
+    @Autowired
+    LegacyDbNameUtility dbNameUtility;
 
     @Autowired
     DateUtility dateUtility;
@@ -74,10 +78,10 @@ public class TestSessionDaoTest extends IntegrationTest {
         parameters.put("sessionType", expectedSessionType);
 
         final String SQL =
-                "INSERT INTO session.session(_key, _efk_proctor, proctorid, proctorname, sessionid, status, datecreated, datebegin, dateend, datevisited, clientname, _fk_browser, environment, sessiontype)\n" +
+                "INSERT INTO ${sessiondb}.session(_key, _efk_proctor, proctorid, proctorname, sessionid, status, datecreated, datebegin, dateend, datevisited, clientname, _fk_browser, environment, sessiontype)\n" +
                 "VALUES (:key, :efkProctor, :proctorId, :proctorName, :sessionId, :status, :dateCreated, :dateBegin, :dateEnd, :dateVisited, :clientName, :sessionBrowser, :environment, :sessionType)";
 
-        namedParameterJdbcTemplate.update(SQL, parameters);
+        namedParameterJdbcTemplate.update(dbNameUtility.setDatabaseNames(SQL), parameters);
 
         TestSession result = testSessionDao.get(expectedKey);
 
@@ -302,8 +306,8 @@ public class TestSessionDaoTest extends IntegrationTest {
         parameters.put("browserKey", UuidAdapter.getBytesFromUUID(mockBrowserKey));
         parameters.put("date", mockDate);
 
-        final String SQL = "SELECT COUNT(*) AS count FROM archive.sessionaudit WHERE _fk_session = :key AND browserkey = :browserKey AND dateaccessed = :date";
-        final Integer result = namedParameterJdbcTemplate.queryForInt(SQL, parameters);
+        final String SQL = "SELECT COUNT(*) AS count FROM ${archivedb}.sessionaudit WHERE _fk_session = :key AND browserkey = :browserKey AND dateaccessed = :date";
+        final Integer result = namedParameterJdbcTemplate.queryForInt(dbNameUtility.setDatabaseNames(SQL), parameters);
 
         Assert.assertEquals((Integer)1, result);
     }

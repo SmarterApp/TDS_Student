@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import tds.student.performance.dao.TestSegmentDao;
+import tds.student.performance.utils.LegacyDbNameUtility;
 import tds.student.performance.utils.UuidAdapter;
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -28,6 +29,9 @@ import java.util.UUID;
 @Repository
 public class TestSegmentDaoImpl implements TestSegmentDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    @Autowired
+    private LegacyDbNameUtility dbNameUtility;
 
     @Autowired
     public void setDataSource(DataSource dataSource) {
@@ -49,10 +53,10 @@ public class TestSegmentDaoImpl implements TestSegmentDao {
             "SELECT\n" +
                 "CONVERT(SUM(opItemCnt), SIGNED) + CONVERT(SUM(ftItemCnt), SIGNED) AS testLength\n" +
             "FROM\n" +
-                "session.testopportunitysegment\n" +
+                "${sessiondb}.testopportunitysegment\n" +
             "WHERE\n" +
                 "_fk_TestOpportunity = :oppKey";
 
-        return namedParameterJdbcTemplate.queryForInt(SQL, parameters);
+        return namedParameterJdbcTemplate.queryForInt(dbNameUtility.setDatabaseNames(SQL), parameters);
     }
 }

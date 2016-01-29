@@ -18,7 +18,7 @@
 
 	
 	<!-- TDSSettings bean. This gives access to clientname and any other info such as session type etc. -->
-	<beans:bean id="tdsSettings" class="TDS.Shared.Configuration.TDSSettings" scope="prototype"/>
+	<!--<beans:bean id="tdsSettings" class="TDS.Shared.Configuration.TDSSettings" scope="prototype"/>-->
 
 	<!-- DLL -->	
 	<beans:bean id="iCommonDLL" class="tds.dll.mysql.CommonDLL"  scope="singleton"/>

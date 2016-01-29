@@ -23,6 +23,7 @@ import org.springframework.stereotype.Repository;
 import tds.student.performance.caching.CacheType;
 import tds.student.performance.dao.ConfigurationDao;
 import tds.student.performance.domain.*;
+import tds.student.performance.utils.LegacyDbNameUtility;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -41,6 +42,9 @@ import java.util.Map;
 public class ConfigurationDaoImpl implements ConfigurationDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private static final Logger logger = LoggerFactory.getLogger(ConfigurationDaoImpl.class);
+
+    @Autowired
+    private LegacyDbNameUtility dbNameUtility;
 
     @Autowired
     public void setDataSource(DataSource dataSource) {
@@ -77,9 +81,9 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
                     "s.datechanged AS dateChanged,\n" +
                     "s.datepublished AS datePublished\n" +
                 "FROM\n" +
-                    "configs.client_systemflags s\n" +
+                    "${configdb}.client_systemflags s\n" +
                 "JOIN\n" +
-                    "session.externs e\n" +
+                    "${sessiondb}.externs e\n" +
                     "ON (e.clientname = s.clientname\n" +
                     "AND e.ispracticetest = s.ispracticetest)\n" +
                 "WHERE\n" +
@@ -87,7 +91,7 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
 
         try {
             return namedParameterJdbcTemplate.query(
-                    SQL,
+                    dbNameUtility.setDatabaseNames(SQL),
                     parameters,
                     new BeanPropertyRowMapper<>(ClientSystemFlag.class));
         } catch(EmptyResultDataAccessException e) {
@@ -160,14 +164,14 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
                     "proctoreligibility AS proctorEligibility,\n" +
                     "category AS category\n" +
                 "FROM\n" +
-                    "configs.client_testproperties\n" +
+                    "${configdb}.client_testproperties\n" +
                 "WHERE\n" +
                     "clientname = :clientName\n" +
                     "AND testid = :testId";
 
         try {
             return namedParameterJdbcTemplate.queryForObject(
-                    SQL,
+                    dbNameUtility.setDatabaseNames(SQL),
                     parameters,
                     new BeanPropertyRowMapper<>(ClientTestProperty.class));
         } catch (EmptyResultDataAccessException e) {
@@ -191,7 +195,7 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
                 "    cta.Label as label,\n" +
                 "    cta.SortOrder as sortOrder\n" +
                 "FROM\n" +
-                "    configs.client_testeeattribute cta\n" +
+                "    ${configdb}.client_testeeattribute cta\n" +
                 "WHERE\n" +
                 "    cta.clientname = :clientName\n" +
                 "        AND atLogin is not null\n" +
@@ -199,7 +203,7 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
 
 
         return namedParameterJdbcTemplate.query(
-                SQL,
+                dbNameUtility.setDatabaseNames(SQL),
                 parameters,
                 new BeanPropertyRowMapper<>(StudentLoginField.class));
 
@@ -224,7 +228,7 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
                 "context,\n" +
                 "testmode AS testMode\n" +
             "FROM\n" +
-                "configs.client_testtooltype\n" +
+                "${configdb}.client_testtooltype\n" +
             "WHERE\n" +
                 "clientname = :clientName\n" +
                 "AND contexttype = :contextType\n" +
@@ -233,7 +237,7 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
 
         try {
             return namedParameterJdbcTemplate.queryForObject(
-                    SQL,
+                    dbNameUtility.setDatabaseNames(SQL),
                     parameters,
                     new BeanPropertyRowMapper<>(ConfigTestToolType.class));
         } catch (EmptyResultDataAccessException e) {
@@ -264,7 +268,7 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
                 "SELECT\n" +
                     "COUNT(clientname)\n" +
                 "FROM\n" +
-                    "configs.client_testscorefeatures\n" +
+                    "${configdb}.client_testscorefeatures\n" +
                 "WHERE\n" +
                     "clientname = :clientName\n" +
                     "AND TestID = :testId\n" +
@@ -274,7 +278,7 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
                         "OR UseForAbility = 1)\n" +
                 "LIMIT 1";
 
-        Integer recordCount = namedParameterJdbcTemplate.queryForInt(SQL, parameters);
+        Integer recordCount = namedParameterJdbcTemplate.queryForInt(dbNameUtility.setDatabaseNames(SQL), parameters);
 
         return recordCount > 0;
     }
@@ -295,13 +299,13 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
                     "sessiondb AS sessionDb,\n" +
                     "testdb AS testDb\n" +
                 "FROM\n" +
-                    "session.externs\n" +
+                    "${sessiondb}.externs\n" +
                 "WHERE\n" +
                     "clientname = :clientName";
 
         try {
             return namedParameterJdbcTemplate.queryForObject(
-                    SQL,
+                    dbNameUtility.setDatabaseNames(SQL),
                     parameters,
                     new BeanPropertyRowMapper<>(Externs.class));
         } catch (EmptyResultDataAccessException e) {

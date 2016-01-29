@@ -13,22 +13,17 @@
 package tds.student.performance.dao.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import tds.student.performance.dao.TesteeResponseDao;
 import tds.student.performance.domain.UnfinishedResponsePage;
+import tds.student.performance.utils.LegacyDbNameUtility;
 import tds.student.performance.utils.UuidAdapter;
 
 import javax.sql.DataSource;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.*;
 
 /**
@@ -37,6 +32,9 @@ import java.util.*;
 @Repository
 public class TesteeResponseDaoImpl implements TesteeResponseDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    @Autowired
+    private LegacyDbNameUtility dbNameUtility;
 
     @Autowired
     public void setDataSource(DataSource dataSource) {
@@ -51,7 +49,7 @@ public class TesteeResponseDaoImpl implements TesteeResponseDao {
 
         String SQL =
             "UPDATE\n" +
-                "session.testeeresponse\n" +
+                "${sessiondb}.testeeresponse\n" +
             "SET\n" +
                 "OpportunityRestart = :rcnt + 1\n" +
             "WHERE\n" +
@@ -61,7 +59,7 @@ public class TesteeResponseDaoImpl implements TesteeResponseDao {
             SQL += " AND OpportunityRestart = :rcnt";
         }
 
-        namedParameterJdbcTemplate.update(SQL, parameters);
+        namedParameterJdbcTemplate.update(dbNameUtility.setDatabaseNames(SQL), parameters);
     }
 
     /**
@@ -84,14 +82,14 @@ public class TesteeResponseDaoImpl implements TesteeResponseDao {
 
         final String SQL =
                 "UPDATE\n" +
-                    "session.testeeresponse\n" +
+                    "${sessiondb}.testeeresponse\n" +
                 "SET\n" +
                     "opportunityrestart = :newRestart\n" +
                 "WHERE\n" +
                     "_fk_testopportunity = :oppKey\n" +
                     "AND page IN (:pages)";
 
-        namedParameterJdbcTemplate.update(SQL, parameters);
+        namedParameterJdbcTemplate.update(dbNameUtility.setDatabaseNames(SQL), parameters);
     }
 
     @Override
@@ -103,11 +101,11 @@ public class TesteeResponseDaoImpl implements TesteeResponseDao {
             "SELECT\n" +
                 "COUNT(*) as numItems\n" +
             "FROM\n" +
-                "session.testeeresponse\n" +
+                "${sessiondb}.testeeresponse\n" +
             "WHERE\n" +
                 "_fk_TestOpportunity = :oppKey";
 
-        return namedParameterJdbcTemplate.queryForLong(SQL, parameters);
+        return namedParameterJdbcTemplate.queryForLong(dbNameUtility.setDatabaseNames(SQL), parameters);
     }
 
     @Override
@@ -127,14 +125,14 @@ public class TesteeResponseDaoImpl implements TesteeResponseDao {
                     "CASE WHEN isRequired = 1 AND isValid = 1 THEN 1 ELSE 0 END\n" +
                 ") as requiredResponses\n" +
             "FROM\n" +
-                "session.testeeresponse\n" +
+                "${sessiondb}.testeeresponse\n" +
             "WHERE\n" +
                 "_fk_TestOpportunity = :oppKey AND\n" +
                 "DateGenerated is not null\n" +
             "GROUP BY\n" +
                 "page, groupItemsRequired";
 
-        return namedParameterJdbcTemplate.query(SQL, parameters,
+        return namedParameterJdbcTemplate.query(dbNameUtility.setDatabaseNames(SQL), parameters,
                 new BeanPropertyRowMapper<>(UnfinishedResponsePage.class));
     }
 
@@ -150,11 +148,11 @@ public class TesteeResponseDaoImpl implements TesteeResponseDao {
 
         final String SQL =
                 "INSERT INTO\n" +
-                    "session.testeeresponse\n" +
+                    "${sessiondb}.testeeresponse\n" +
                 "(_fk_TestOpportunity, position)\n" +
                 "VALUES(:oppKey, :position)";
 
-        namedParameterJdbcTemplate.batchUpdate(SQL, parameters.toArray(new SqlParameterSource[0]));
+        namedParameterJdbcTemplate.batchUpdate(dbNameUtility.setDatabaseNames(SQL), parameters.toArray(new SqlParameterSource[0]));
     }
 
     @Override
@@ -164,10 +162,10 @@ public class TesteeResponseDaoImpl implements TesteeResponseDao {
 
         final String SQL =
             "DELETE FROM\n" +
-                "session.testeeresponse\n" +
+                "${sessiondb}.testeeresponse\n" +
             "WHERE\n" +
                 "_fk_TestOpportunity = :oppKey";
 
-        namedParameterJdbcTemplate.update(SQL, parameters);
+        namedParameterJdbcTemplate.update(dbNameUtility.setDatabaseNames(SQL), parameters);
     }
 }

@@ -14,6 +14,7 @@ package tds.student.performance.utils;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import tds.student.performance.IntegrationTest;
 import tds.student.performance.domain.TestSession;
@@ -25,6 +26,8 @@ import java.util.Map;
  * A class for exploratory testing of various data access methods.
  */
 public class DataAccessTest extends IntegrationTest {
+    @Autowired
+    LegacyDbNameUtility dbNameUtility;
 
     /**
      * The intent of this test is to determine if the {@code BeanRowPropertyMapper} sets primitive types
@@ -42,12 +45,12 @@ public class DataAccessTest extends IntegrationTest {
                 "   sessionid AS sessionId,\n" +
                 "   proctorname AS proctorName\n" +
                 "FROM\n" +
-                "   session.session\n" +
+                "   ${sessiondb}.session\n" +
                 "WHERE\n" +
                 "   sessionid = :sessionId";
 
         TestSession result = namedParameterJdbcTemplate.queryForObject(
-                SQL,
+                dbNameUtility.setDatabaseNames(SQL),
                 parameters,
                 new BeanPropertyRowMapper<>(TestSession.class));
 
