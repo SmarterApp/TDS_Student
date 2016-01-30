@@ -38,10 +38,6 @@
         <property name="enabled" value="true" />
     </bean>
 
-    <bean id="legacyDbNameUtility" class="tds.student.performance.utils.LegacyDbNameUtility">
-        <constructor-arg name="settingsFileName" type="java.lang.String" value="test-settings.xml" />
-    </bean>
-
     <bean id="cacheKeyGenerator" class="tds.student.performance.caching.CacheKeyGenerator" />
 
     <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" p:cacheManager-ref="ehcache" />

@@ -294,7 +294,7 @@ public class TestSessionDaoImpl implements TestSessionDao {
 
         final String SQL =
                 "UPDATE\n" +
-                    "${session}.session\n" +
+                    "${sessiondb}.session\n" +
                 "SET\n" +
                     "status = :reason,\n" +
                     "datechanged = :dateChanged,\n" +
