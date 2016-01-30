@@ -12,26 +12,11 @@
  ******************************************************************************/
 package tds.student.performance.utils;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Properties;
-
 /**
- * This class is used to update SQL strings to use whatever database names are configured in the settings file.
- * <p>
- *     To configure the constructor argument for auto-wiring this class, add the following to the appropriate
- *     {@code settings.xml} file:
- *
- *     <pre>
- *         {@code
- *          <bean id="legacyDbNameReplacer" class="tds.student.performance.utils.LegacyDbNameReplacer">
- *              <constructor-arg name="settingsFileName" type="java.lang.String" value="name-of-settings-where-db-names-are.xml" />
- *          </bean>
- *         }
- *     </pre>
- * </p>
+ * This class is used to update SQL strings to use whatever database names are configured in program management.
  * <p>
  *     Auto-wiring the {@code ITDSSettingsSource} to get the database names (which the legacy code uses) was
  *     unfortunately not possible.  Using the {@code ITDSSettingsSource} works correctly in the actual code, but causes
@@ -42,7 +27,17 @@ import java.util.Properties;
  */
 @Component
 public class LegacyDbNameUtility {
-    private Properties properties = null;
+    @Value("${student.TDSArchiveDBName:archive}")
+    private String archiveDbName;
+
+    @Value("${student.TDSConfigsDBName:configs}")
+    private String configsDbName;
+
+    @Value("${student.ItembankDBName:itembank}")
+    private String itembankDbName;
+
+    @Value("${student.TDSSessionDBName:session}")
+    private String sessionDbName;
 
     public enum Databases {
         Archive,
@@ -52,24 +47,7 @@ public class LegacyDbNameUtility {
     }
 
     /**
-     * Load the properties file that has the configured database names.
-     * <p>
-     *     The settings file in question must be in the classpath.
-     * </p>
-     *
-     * @param settingsFileName The name of the settings file.
-     * @throws IOException
-     */
-    public LegacyDbNameUtility(String settingsFileName) throws IOException {
-        this.properties = new Properties();
-
-        try (FileInputStream settingsFile = new FileInputStream(this.getClass().getClassLoader().getResource(settingsFileName).getFile())) {
-            this.properties.loadFromXML(settingsFile);
-        }
-    }
-
-    /**
-     * Replace database name placeholders with whatever is configured in the settings file.
+     * Replace database name placeholders with whatever is configured.
      * <p>
      *     The placeholders are:
      *
@@ -81,36 +59,36 @@ public class LegacyDbNameUtility {
      *     The replacement is case-insensitive; ${archivedb}, ${ArchiveDB} and/or ${ARCHIVEDB} will work.
      * </p>
      * <p>
-     *     If one of the expected database name configuration values is missing from the settings.xml file, then a
-     *     default value will be returned instead.
+     *     If one of the expected database name configuration values is missing, then a default value will be returned
+     *     instead.
      * </p>
      *
      * @param sql The SQL to be updated.
      * @return The SQL with the placeholders replaced with configured database names.
      */
     public String setDatabaseNames(String sql) {
-        return sql.replaceAll("(?iu)\\$\\{archivedb\\}", properties.getProperty("TDSArchiveDBName", "archive"))
-                .replaceAll("(?iu)\\$\\{configdb\\}", properties.getProperty("TDSConfigsDBName", "configs"))
-                .replaceAll("(?iu)\\$\\{itembankdb\\}", properties.getProperty("ItembankDBName", "itembank"))
-                .replaceAll("(?iu)\\$\\{sessiondb\\}", properties.getProperty("TDSSessionDBName", "session"));
+        return sql.replaceAll("(?iu)\\$\\{archivedb\\}", archiveDbName)
+                .replaceAll("(?iu)\\$\\{configdb\\}", configsDbName)
+                .replaceAll("(?iu)\\$\\{itembankdb\\}", itembankDbName)
+                .replaceAll("(?iu)\\$\\{sessiondb\\}", sessionDbName);
     }
 
     /**
      * Get the configured database name for the type of database.
      *
      * @param db The database
-     * @return The name of the database as configured in the settings file.
+     * @return The name of the database as configured.
      */
     public String getDatabaseName(Databases db) {
         switch (db) {
             case Archive:
-                return properties.getProperty("TDSArchiveDBName", "archive");
+                return archiveDbName;
             case Config:
-                return properties.getProperty("TDSConfigsDBName", "configs");
+                return configsDbName;
             case Itembank:
-                return properties.getProperty("ItembankDBName", "itembank");
+                return itembankDbName;
             case Session:
-                return properties.getProperty("TDSSessionDBName", "session");
+                return sessionDbName;
             default:
                 return null;
         }
