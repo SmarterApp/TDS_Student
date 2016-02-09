@@ -61,10 +61,10 @@ public class TestConfigHelper {
 
         TestConfig config = new TestConfig();
         config.setContentLoadTimeout(CONTENT_LOAD_TIMEOUT);
-        config.setInterfaceTimeout(timeLimitConfiguration.getInterfaceTimeout());
-        config.setOppRestartMins(timeLimitConfiguration.getOpportunityRestart());
+        config.setInterfaceTimeout(timeLimitConfiguration.getInterfaceTimeoutMinutes());
+        config.setOppRestartMins(timeLimitConfiguration.getOpportunityRestartWindowMinutes());
         config.setPrefetch(clientTestProperty.getPrefetch());
-        config.setRequestInterfaceTimeout(timeLimitConfiguration.getRequestInterfaceTimeout());
+        config.setRequestInterfaceTimeout(timeLimitConfiguration.getRequestInterfaceTimeoutMinutes());
         config.setRestart(0);
         config.setScoreByTDS(scoreByTds);
         config.setStartPosition(1);
@@ -99,10 +99,10 @@ public class TestConfigHelper {
             Boolean scoreByTds) {
         TestConfig config = new TestConfig();
         config.setContentLoadTimeout(CONTENT_LOAD_TIMEOUT);
-        config.setInterfaceTimeout(timeLimitConfiguration.getInterfaceTimeout());
-        config.setOppRestartMins(timeLimitConfiguration.getOpportunityRestart());
+        config.setInterfaceTimeout(timeLimitConfiguration.getInterfaceTimeoutMinutes());
+        config.setOppRestartMins(timeLimitConfiguration.getOpportunityRestartWindowMinutes());
         config.setPrefetch(clientTestProperty.getPrefetch());
-        config.setRequestInterfaceTimeout(timeLimitConfiguration.getRequestInterfaceTimeout());
+        config.setRequestInterfaceTimeout(timeLimitConfiguration.getRequestInterfaceTimeoutMinutes());
         config.setRestart(restartCount);
         config.setScoreByTDS(scoreByTds);
         config.setStartPosition(restartPosition);

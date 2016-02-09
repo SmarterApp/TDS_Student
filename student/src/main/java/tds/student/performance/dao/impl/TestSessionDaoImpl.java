@@ -118,16 +118,16 @@ public class TestSessionDaoImpl implements TestSessionDao {
                 "SELECT\n" +
                     "_efk_testid AS testId,\n" +
                     "oppexpire AS opportunityExpiration,\n" +
-                    "opprestart AS opportunityRestart,\n" +
-                    "oppdelay AS opportunityDelay,\n" +
-                    "interfacetimeout AS interfaceTimeout,\n" +
-                    "requestinterfacetimeout AS requestInterfaceTimeout,\n" +
+                    "opprestart AS opportunityRestartMinutes,\n" +
+                    "oppdelay AS opportunityDelayDays,\n" +
+                    "interfacetimeout AS interfaceTimeoutMinutes,\n" +
+                    "requestinterfacetimeout AS requestInterfaceTimeoutMinutes,\n" +
                     "clientname AS clientName,\n" +
                     "environment AS environment,\n" +
                     "ispracticetest AS isPracticeTest,\n" +
                     "refreshvalue AS refreshValue,\n" +
                     "tainterfacetimeout AS taInterfaceTimeout,\n" +
-                    "tacheckintime AS taCheckinTime,\n" +
+                    "tacheckintime AS taCheckinTimeMinutes,\n" +
                     "datechanged AS dateChanged,\n" +
                     "datepublished AS datePublished,\n" +
                     "sessionexpire AS sessionExpiration,\n" +

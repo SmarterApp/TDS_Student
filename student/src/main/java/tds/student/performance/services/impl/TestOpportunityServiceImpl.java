@@ -163,8 +163,9 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                 Integer restartCount = testOpportunity.getRestartCount();
                 Timestamp now = new Timestamp(dateUtility.getDbDate().getTime());
 
-                boolean isTimeDiffLessThanDelay =   // if lastActivity is null, then this is "false" - No NPE
-                        (DbComparator.lessThan(DateUtility.minutesDiff(lastActivity, now), timelimitConfiguration.getOpportunityDelay()));
+                boolean isTimeDiffLessThanDelay = DbComparator.lessThan(
+                                DateUtility.minutesDiff(lastActivity, now), // if lastActivity is null, then this is "false" - No NPE
+                                timelimitConfiguration.getOpportunityRestartWindowMinutes());
 
                 if(isTimeDiffLessThanDelay) {
                     gracePeriodRestarts++;
@@ -196,17 +197,18 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                     removeUnanswered(testOpportunity);
                 }
 
-                // CAREFUL! This assignment required to call the procedure below (StudentDLL.T_StartTestOpportunity_SP @ line 5439)
+                // CAREFUL! This assignment required to call the procedure below (StudentDLL.T_StartTestOpportunity_SP @ line 5444)
                 restartCount++;
 
-                // Call _UnfinishedResponsePages_SP (connection, oppKey, rcnt, true) equivalent @ StudentDLL line 5441.
+                // Call _UnfinishedResponsePages_SP (connection, oppKey, rcnt, true) equivalent @ StudentDLL line 5446.
                 updateUnfinishedResponsePages(opportunityInstance.getKey(), restartCount);
 
-                // Call StudentDLL.ResumeItemPosition_FN equivalent @ StudentDLL line 5442.
+                // Call StudentDLL.ResumeItemPosition_FN equivalent @ StudentDLL line 5447.
                 Integer resumeItemPosition = testOpportunityDao.getResumeItemPosition(
                         testOpportunity.getKey(),
                         restartCount);
 
+                // Emulate results of SQL_QUERY8 starting @ StudentDLL line 5449
                 config = TestConfigHelper.getRestart(
                         clientTestProperty,
                         timelimitConfiguration,
@@ -262,12 +264,6 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
     /**
      * This method emulates the functionality and logic contained in {@code StudentDll._UnfinishedResponsePages_SP}.
      * <p>
-     *      The legacy _UnfinishedResponsePages_SP call has a return value that never appears to be read,
-     *      at least not by student or the tdsdll project. The original method also has a doUpdate flag that
-     *      seems to be only set to "true" in every instance that the legacy method is called in production code.
-     *      Because of this, the flag and option select branch has been removed and the method has a void return value.
-     * </p>
-     * <p>
      *     The legacy version of this method ({@code StudentDll._UnfinishedResponsePages_SP}) has a parameter
      *     called {@code doUpdate}.  In the context of restarting an existing {@code TestOpportunity}, the argument is
      *     always {@code true}, so the {@code doUpdate} parameter has been omitted.  The only time this refactored
@@ -309,7 +305,9 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                 .transform(toPageIds)
                 .toList();
 
-        testeeResponseDao.updateRestartCountForPages(oppKey, pageIds, newRestartCount);
+        if (pageIds.size() > 0) {
+            testeeResponseDao.updateRestartCountForPages(oppKey, pageIds, newRestartCount);
+        }
     }
 
     /**

@@ -15,9 +15,6 @@ package tds.student.performance.dao;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.SystemEnvironmentPropertySource;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.support.rowset.SqlRowSet;
 import tds.student.performance.IntegrationTest;
 import tds.student.performance.domain.SessionAudit;
 import tds.student.performance.domain.TestSession;
@@ -26,7 +23,6 @@ import tds.student.performance.utils.DateUtility;
 import tds.student.performance.utils.LegacyDbNameUtility;
 import tds.student.performance.utils.UuidAdapter;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -163,16 +159,16 @@ public class TestSessionDaoTest extends IntegrationTest {
 
         Assert.assertEquals(null, result.getTestId());
         Assert.assertEquals((Integer)1, result.getOpportunityExpiration());
-        Assert.assertEquals((Integer)10, result.getOpportunityRestart());
-        Assert.assertEquals(Integer.valueOf(-1), result.getOpportunityDelay());
-        Assert.assertEquals((Integer)10, result.getInterfaceTimeout());
-        Assert.assertEquals((Integer)15, result.getRequestInterfaceTimeout());
+        Assert.assertEquals((Integer)10, result.getOpportunityRestartWindowMinutes());
+        Assert.assertEquals(Integer.valueOf(-1), result.getOpportunityDelayDays());
+        Assert.assertEquals((Integer)10, result.getInterfaceTimeoutMinutes());
+        Assert.assertEquals((Integer)15, result.getRequestInterfaceTimeoutMinutes());
         Assert.assertEquals(clientName, result.getClientName());
         Assert.assertEquals("dev", result.getEnvironment());
         Assert.assertEquals(true, result.getIsPracticeTest());
         Assert.assertEquals((Integer)30, result.getRefreshValue());
         Assert.assertEquals((Integer)20, result.getTaInterfaceTimeout());
-        Assert.assertEquals((Integer)20, result.getTaCheckinTime());
+        Assert.assertEquals((Integer)20, result.getTaCheckinTimeMinutes());
         Assert.assertEquals((Integer)8, result.getSessionExpiration());
         Assert.assertEquals((Integer)2, result.getRefreshValueMultiplier());
     }
@@ -183,7 +179,7 @@ public class TestSessionDaoTest extends IntegrationTest {
 
         TestSessionTimeLimitConfiguration result = testSessionDao.getTimeLimitConfiguration(clientName);
 
-        Integer checkin = result.getTaCheckinTime();
+        Integer checkin = result.getTaCheckinTimeMinutes();
 
         Assert.assertNotNull(checkin);
         Assert.assertEquals((Integer)20, checkin);

@@ -15,7 +15,6 @@ package tds.student.performance.services.impl;
 import TDS.Shared.Exceptions.ReturnStatusException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import tds.student.performance.dao.*;
 import tds.student.performance.exceptions.ReturnErrorException;
 import tds.student.performance.services.ConfigurationService;
@@ -85,7 +84,7 @@ public class TestSessionServiceImpl implements TestSessionService {
 
         return timeLimitConfiguration == null
                 ? 0
-                : timeLimitConfiguration.getTaCheckinTime();
+                : timeLimitConfiguration.getTaCheckinTimeMinutes();
     }
 
     /**

@@ -13,7 +13,6 @@
 package tds.student.performance.domain;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 /**
  * Represents a record from the {@code session.timelimits} view.
@@ -21,16 +20,16 @@ import java.util.Date;
 public class TestSessionTimeLimitConfiguration {
     private String testId;
     private Integer opportunityExpiration;
-    private Integer opportunityRestart;
-    private Integer opportunityDelay;
-    private Integer interfaceTimeout;
-    private Integer requestInterfaceTimeout;
+    private Integer opportunityRestartMinutes;
+    private Integer opportunityDelayDays;
+    private Integer interfaceTimeoutMinutes;
+    private Integer requestInterfaceTimeoutMinutes;
     private String clientName;
     private String environment;
     private Boolean isPracticeTest;
     private Integer refreshValue;
     private Integer taInterfaceTimeout;
-    private Integer taCheckinTime;
+    private Integer taCheckinTimeMinutes;
     private Timestamp dateChanged;
     private Timestamp datePublished;
     private Integer sessionExpiration;
@@ -65,8 +64,8 @@ public class TestSessionTimeLimitConfiguration {
      *     This value is in minutes.
      * </p>
      */
-    public Integer getOpportunityRestart() {
-        return opportunityRestart;
+    public Integer getOpportunityRestartWindowMinutes() {
+        return opportunityRestartMinutes;
     }
 
     /**
@@ -79,20 +78,36 @@ public class TestSessionTimeLimitConfiguration {
      *     This value is in minutes.
      * </p>
      *
-     * @param opportunityRestart the value that {@code opportunityRestart} should be set to.
+     * @param opportunityRestart the value that {@code opportunityRestartMinutes} should be set to.
      */
-    public void setOpportunityRestart(Integer opportunityRestart) {
-        this.opportunityRestart = opportunityRestart == null
+    public void setOpportunityRestartMinutes(Integer opportunityRestart) {
+        this.opportunityRestartMinutes = opportunityRestart == null
             ? 1
             : opportunityRestart;
     }
 
-    public Integer getOpportunityDelay() {
-        return opportunityDelay;
+    /**
+     * The number of days that must pass before a student can resume/restart the same opportunity..
+     * <p>
+     *     This value is expressed in days.
+     * </p>
+     *
+     * @return The number of days before an opportunity can be retaken.
+     */
+    public Integer getOpportunityDelayDays() {
+        return opportunityDelayDays;
     }
 
-    public void setOpportunityDelay(Integer opportunityDelay) {
-        this.opportunityDelay = opportunityDelay;
+    /**
+     * The number of days that must pass before a student can resume/restart the same opportunity.
+     * <p>
+     *     This value is expressed in days.
+     * </p>
+     *
+     * @param opportunityDelay  The number of days before an opportunity can be retaken.
+     */
+    public void setOpportunityDelayDays(Integer opportunityDelay) {
+        this.opportunityDelayDays = opportunityDelay;
     }
 
     /**
@@ -100,8 +115,8 @@ public class TestSessionTimeLimitConfiguration {
      *
      * @return The number of minutes a student can be idle before logging them out.
      */
-    public Integer getInterfaceTimeout() {
-        return interfaceTimeout;
+    public Integer getInterfaceTimeoutMinutes() {
+        return interfaceTimeoutMinutes;
     }
 
     /**
@@ -110,8 +125,8 @@ public class TestSessionTimeLimitConfiguration {
      *     This value is in minutes.  This definition came from the {@link tds.student.sql.data.TestConfig} getter.
      * </p>
      */
-    public void setInterfaceTimeout(Integer interfaceTimeout) {
-        this.interfaceTimeout = interfaceTimeout;
+    public void setInterfaceTimeoutMinutes(Integer interfaceTimeout) {
+        this.interfaceTimeoutMinutes = interfaceTimeout;
     }
 
     /**
@@ -119,8 +134,8 @@ public class TestSessionTimeLimitConfiguration {
      *
      * @return The number of minutes a student can be idle after making a print request before logging them out.
      */
-    public Integer getRequestInterfaceTimeout() {
-        return requestInterfaceTimeout;
+    public Integer getRequestInterfaceTimeoutMinutes() {
+        return requestInterfaceTimeoutMinutes;
     }
 
     /**
@@ -129,8 +144,8 @@ public class TestSessionTimeLimitConfiguration {
      *     This value is in minutes.  This definition came from the {@link tds.student.sql.data.TestConfig} getter.
      * </p>
      */
-    public void setRequestInterfaceTimeout(Integer requestInterfaceTimeout) {
-        this.requestInterfaceTimeout = requestInterfaceTimeout;
+    public void setRequestInterfaceTimeoutMinutes(Integer requestInterfaceTimeout) {
+        this.requestInterfaceTimeoutMinutes = requestInterfaceTimeout;
     }
 
     public String getClientName() {
@@ -178,8 +193,8 @@ public class TestSessionTimeLimitConfiguration {
      *
      * @return The number of minutes before the TA CheckIn time expires.
      */
-    public Integer getTaCheckinTime() {
-        return taCheckinTime;
+    public Integer getTaCheckinTimeMinutes() {
+        return taCheckinTimeMinutes;
     }
 
     /**
@@ -187,8 +202,8 @@ public class TestSessionTimeLimitConfiguration {
      *
      * @return The number of minutes before the TA CheckIn time expires.
      */
-    public void setTaCheckinTime(Integer taCheckinTime) {
-        this.taCheckinTime = taCheckinTime;
+    public void setTaCheckinTimeMinutes(Integer taCheckinTimeMinutes) {
+        this.taCheckinTimeMinutes = taCheckinTimeMinutes;
     }
 
     public Timestamp getDateChanged() {
