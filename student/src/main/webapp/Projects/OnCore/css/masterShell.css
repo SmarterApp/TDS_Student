@@ -1,0 +1,33 @@
+@charset "UTF-8";
+@import url(../../../Themes/icons/css/masterShell.css);
+
+.languages {
+	display: none;
+}
+.loginForm label {
+   width: 33%;
+   max-width: inherit;
+   min-width: inherit;
+}
+.TDS_PS_L3 .loginForm label, .TDS_PS_L4 .loginForm label{
+   width: 35%;
+}
+#quickQuide {
+	border: solid 1px #ccc;
+}
+#sectionTestApproval h2 {
+    font-size: 2.35em;
+}
+
+/* temp hide elements */
+#btnDiagTTS {
+	display: none !important;
+}
+
+/* Hide Tricycle for OnCore */
+.practiceTest #ot-brand2 strong, .practiceTest #sections{
+	background-image: none;
+}
+.practiceTest #ot-brand2 strong{
+	padding-left: 20px;
+}
