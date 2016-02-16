@@ -896,7 +896,8 @@ ul#studentTools {
     overflow: hidden;
     text-indent: -9999px;
     line-height: 25px;
-    margin-top: -25px;
+    /* SB-622: commenting following line for tutorial close button
+	margin-top: -25px; */
     text-decoration: none;
 	background: url(../../Images/modern/sprites_mobile_0.png) center -2730px no-repeat;
 }
