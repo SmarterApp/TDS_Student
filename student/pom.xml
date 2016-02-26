@@ -5,13 +5,12 @@
 	<parent>
 		<groupId>org.opentestsystem.shared</groupId>
 		<artifactId>shared-master</artifactId>
-		<version>1.0.1</version>
+		<version>1.0.1-BUILD-SNAPSHOT</version>
 	</parent>
 	<groupId>org.opentestsystem.delivery</groupId>
 	<artifactId>student</artifactId>
 	<name>student</name>
 	<packaging>war</packaging>
-        <version>R01.00.74</version>
 
 	<licenses>
 		<license>
@@ -25,12 +24,12 @@
 
 	<properties>
 
-		<item-selection.version>0.0.1</item-selection.version>
-		<testscoring.version>0.0.1</testscoring.version>
-		<spellcheck.version>0.0.1</spellcheck.version>
-		<progman-client.version>0.0.4</progman-client.version>
-		<sb11-mna-client.version>0.0.4</sb11-mna-client.version>
-		<sb11-shared-code.version>0.0.6</sb11-shared-code.version>
+		<item-selection.version>0.0.1-SNAPSHOT</item-selection.version>
+		<testscoring.version>0.0.1-SNAPSHOT</testscoring.version>
+		<spellcheck.version>0.0.1-SNAPSHOT</spellcheck.version>
+		<progman-client.version>0.0.4-SNAPSHOT</progman-client.version>
+		<sb11-mna-client.version>0.0.4-SNAPSHOT</sb11-mna-client.version>
+		<sb11-shared-code.version>0.0.6-SNAPSHOT</sb11-shared-code.version>
 	</properties>
 
 	<dependencies>
@@ -134,15 +133,14 @@
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>student.library</artifactId>
-			<version>0.0.1</version>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.opentestsystem.blackbox</groupId>
 			<artifactId>shared-blackbox</artifactId>
-			<version>1.0.1</version>
+			<version>1.0.1-BUILD-SNAPSHOT</version>
 			<type>war</type>
 		</dependency>
-
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -168,6 +166,6 @@
 			<scope>test</scope>
 		</dependency>
 
-
+		
 	</dependencies>
 </project>
