@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en"><!-- language attribute, change if Spanish, etc. is in use -->
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=no">
+<title>Student Test - Questions 1-4</title><!-- page title gets updated as student navigates between items -->
+
+<!-- Shell Styles -->
+<link href="../../normalize.css" media="screen" type="text/css" rel="stylesheet">
+<link href="../../universal/shell.css" rel="stylesheet" type="text/css">
+<link href="../../dialogs.css" media="screen" type="text/css" rel="stylesheet">
+<link href="../../accommodations.css" media="screen" type="text/css" rel="stylesheet">
+<link href="../../frames.css" media="screen" type="text/css" rel="stylesheet">
+
+<!-- Content Styles -->
+<link href="../../items.css" media="screen" type="text/css" rel="stylesheet">
+<link href="../../elpa.css" media="screen" type="text/css" rel="stylesheet">
+<link href="../../universal/items.css" media="screen" type="text/css" rel="stylesheet">
+
+<!-- modern theme -->
+<link href="../../universal/modernish.css" rel="stylesheet" type="text/css">
+</head>
+
+<body id="htmlBody" role="application" class="yui-skin-sam browser_firefox browserVer_16 platform_osx practiceTest unproctored app_Student mode_Student no-touch TDS_BP1 TDS_Calc0 TDS_CP_Z1 TDS_ExpandablePassages1 TDS_F_S12 TDS_FT_San-Serif TDS_Highlight1 TDS_IF_S12 TDS_ISR_SumViewResp ENU TDS_MfR1 TDS_ST1 TDS_TTS_Inst TDS_TTS_Stim TDS_TTS_Item TDS_TTSAA_Volume TDS_TTSAA_Pitch TDS_TTSAA_Rate TDS_TTSAA_SelectVP TDS_TTSPause1 TDS_TTX_M101 passage-collapsed TDS_ITM1 TDS_CC0 TDS_PS_L0 TDS_FS_On fs-enabledx">
+
+<div id="topBar">
+	<a href="#contents" class="contentHidden" id="skipNav">Skip navigation</a>
+	<div id="infoBar" role="banner">
+    	<div id="jumpQuestions">
+        	<label id="jumplabel">Question:</label>
+            <select name="jumpDrop" id="jumpDrop" aria-labeled-by="jumplabel jumpGo">
+              <option value="1-4" selected>1-4</option>
+              <option value="5">5 (marked)</option>
+              <option value="6-7">6-7</option>
+            </select>
+            <input type="button" value="Go" aria-controls="jumpDrop" id="jumpGo"><!-- DEQUE, what's the best way to show the relationship of the GO button to the drop-down -->
+        </div>
+        <h1>Test Name</h1>
+        <h2>Student Name</h2>
+        <div id="smallButtons">
+        	<a href="#" id="btnHelp" aria-haspopup="true">Help</a>
+            <a href="#" id="btnSettings" aria-haspopup="true">Settings</a>
+            <a href="#" id="proctorLogout" aria-hidden="true" class="contentHidden">Log Out</a>
+        </div>
+    </div>
+    <nav id="navigation" role="navigation">
+    	<ul id="studentControls">
+        	<!-- example of disabled, but visible nav button. We can probably remove the 'disabled' attribute if you can progromaticaly stop registering clicks. -->
+            <li><a tabindex="-1" disabled="disabled" aria-disabled="true" id="btnBack" class="inactive" href="#"><span class="icon"></span>Back</a></li>
+            <li><a id="btnNext" href="#"><span class="icon"></span>Next</a></li>
+            <li><a id="btnPause" href="#"><span class="icon"></span>Pause</a></li>
+            <!-- example of disabled and hidden nav button -->
+            <li class="contentHidden" aria-hidden="true"><a tabindex="-1" disabled="disabled" aria-disabled="true" id="btnSave" href="#"><span class="icon"></span>Save</a></li>
+            <li><a id="btnEnd" href="#"><span class="icon"></span>End Test</a></li>
+      	</ul>
+    	<div id="soundCues">
+<a id="soundcue-144-5472" class="sound_cue playing_done disabled" data-audio-event="playing_done" style="display: block;" title="Play or stop recorded audio." href="#"></a>
+</div>
+    	<ul id="studentTools">
+            <li><a id="btnZoomIn" href="#"><span class="icon"></span>Zoom In</a></li>
+            <li><a id="btnZoomOut" href="#"><span class="icon"></span>Zoom Out</a></li>
+            <!-- example of disabled and hidden nav button that will also open a modal window -->
+            <li aria-hidden="true" class="contentHidden"><a tabindex="-1" id="btnFormula" href="#" class="math" aria-haspopup="true"><span class="icon"></span>Formula</a>
+            </li>
+            <!-- example of nav button that will open a menu -->
+            
+            <li class="active">
+                <a id="btnFullScreen" class="fullscreen" tabindex="-1" href="#" aria-disabled="false" aria-hidden="false">
+                <span class="icon"></span>
+                <span class="label">Full Screen</span>
+                </a>
+			</li>
+            <li><a id="btnContext" href="#" aria-haspopup="true"><span class="icon"></span>Menu</a></li>
+        </ul>
+    </nav>
+</div>
+
+<!-- changed from a link to a div, added role -->
+<div id="contentsFocuser" class="element-invisible" tabindex="-1" role="note">Page is ready. 1 Passage and 4 Questions</div>
+
+
+<!-- alertActive shows the dialog, alertClosed is added after a student dismisses the dialog
+<div class="alertBar alertActive" aria-hidden="false" role="alertdialog">
+<div class="alertBar alertActive alertClosed" aria-hidden="false" role="alertdialog">
+-->
+<div class="alertBar" aria-hidden="true" role="alertdialog">
+	<a href="#" class="alertDismiss">Open or Close</a>
+    	<ul class="alertContent">
+        	<li>You've reached the end of the test!</li>
+            <li>You are out of coffee!</li>
+            <li>Your library books are overdue!</li>
+        </ul>
+</div>
+
+<div id="contents" role="main">
+	
+    <div aria-hidden="false" id="yui-gen24" class="review showing">
+        <div class="reviewContainer">
+            <div class="reviewInstructions">
+                <h2 i18n-content="TestShellScripts.Label.Review">You have reached the end of this segment:</h2>
+                <p i18n-content="TestShellScripts.Label.ReviewInstructions">Please review your answers before you continue testing. You <span style="font-weight:bold;">will not</span> be able to come back to these questions later. <br><br>Click on a question number on the left to review it.</p>
+            </div>
+            <div class="pages">
+                <h3 i18n-content="TestShellScripts.Label.Questions">Questions:</h3>
+                <ul><li><a href="#">1</a></li><li><a class="marked" href="#">2</a></li><li><a href="#">3</a></li><li><a href="#">4</a></li><li><a href="#">5</a></li><li><a href="#">6</a></li><li><a href="#">7</a></li><li><a href="#">8</a></li><li><a href="#">9</a></li><li><a href="#">10</a></li><li><a href="#">11</a></li><li><a href="#">12</a></li><li><a href="#">13</a></li><li><a href="#">14</a></li><li><a href="#">15</a></li><li><a href="#">16</a></li><li><a href="#">17</a></li><li><a href="#">18</a></li><li><a href="#">19</a></li></ul>
+            </div>
+            <span class="clear"></span>
+        </div>
+    </div>
+
+
+</div><!-- end contents-->
+
+
+</body>
+</html>

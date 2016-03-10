@@ -1,0 +1,44 @@
+@charset "UTF-8";
+/* Delaware Alt Rules*/
+
+.bigTable #thePassage h2 {
+	text-align: center;
+}
+.questionContainer h2, .questionCell h2 {
+	display: none;
+}
+
+/*linux lineheight fix for fractions */
+.platform_unix .noColumns .questionCell, .platform_unix .noColumns .questionContainer, 
+.platform_linux .noColumns .questionCell, .platform_linux .noColumns .questionContainer {
+	line-height: 1.34em;
+}
+
+/* to keep passage from dissapearing with iframe method of 0px to 100% x 100%*/
+.TDS_PS_Normal #thePassage .padding{
+	position:static !important;
+	border-bottom-width: .03em;
+	border-bottom-style: solid;
+	border-bottom-color: transparent;
+}
+.TDS_PS_Larger #thePassage .padding, .magnify #thePassage .padding{
+	position:relative !important;
+	border-bottom-width: .02em;
+	border-bottom-style: solid;
+	border-bottom-color: transparent;
+}
+.TDS_PS_Largest #thePassage .padding, .magnify_2 #thePassage .padding{
+	position:static !important;
+	border-bottom-width: .01em;
+	border-bottom-style: solid;
+	border-bottom-color: transparent;
+}
+
+/* hide applet when dialogs are shown */
+body.dialog #StudentGrid, body.dialog #StudentGrid {
+	visibility: hidden;
+}
+/*moved to accommodations...
+.bigTable .questionCell h2, .bigTable .questionContainer h2 { 
+	display: none; 
+}*/

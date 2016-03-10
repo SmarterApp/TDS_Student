@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://java.sun.com/jsf/passthrough"
+	xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:cc="http://java.sun.com/jsf/composite" xmlns:tds="http://airast.org/jsfcustom" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+<cc:interface componentType="tds.student.web.controls.SectionControl">
+</cc:interface>
+<cc:implementation>
+	<tds:SectionWrapper id="sectionLoginProctor" headerKey="LoginProctor.Header" shadow="false">
+
+		<div id="loginWrap">
+			<div class="ot-shadwoBox">
+				<div class="ot-innerShadow">
+					<h2 id="sectionLoginHeader" i18n-content="Login.Label.PromptTA"></h2>
+
+					<form id="loginProctorForm" target="xhrFrame">
+						<div id="loginForm3" class="loginForm loginForm1">
+							<span class="checkHolder forPractice"> <input id="cbUser" name="user" type="checkbox" value="userWho" tabindex="0" /> <label for="cbUser" i18n-content="User.Label.Guest"></label>
+							</span> <label for="txtProctorUserName" i18n-content="Login.Label.UserName">:</label> <input type="text" id="txtProctorUserName" name="txtProctorUserName" tabindex="0" /> <label
+								for="txtProctorPassword" i18n-content="Login.Label.UserPassword">:</label> <input type="password" id="txtProctorPassword" name="txtProctorPassword" tabindex="0" /> <span class="clear"></span>
+						</div>
+
+						<span class="actions"> <tds:Button id="btnLoginProctor" styleClass="positive" key="Login.Button.SignIn" type="Submit" />
+						</span>
+					</form>
+
+					<div id="loginInstructions">
+						<div class="instructions forPractice">
+							<label for="user" i18n-content="Login.Label.UserPrompt"></label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</tds:SectionWrapper>
+</cc:implementation>
+</html>

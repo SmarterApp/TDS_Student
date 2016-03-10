@@ -1,0 +1,20 @@
+@charset "UTF-8";
+@import url(../../../Themes/lighthouse/css/testShell.css);
+
+/* delaware logos*/ 
+.topBar {
+	background-image: url(../images/logo_delaware_small.gif);
+	padding-right:375px;
+}
+
+body.dialogAlertShow #dialogShim, body.dialogPromptShow #dialogShim, body.contentLoading #dialogShim {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+.startSpeak, .stopSpeak, .speakHelp {
+	visibility: hidden;
+	overflow: hidden;
+	height: 0px;
+	width: 0px;
+}
