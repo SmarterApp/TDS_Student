@@ -31,6 +31,8 @@
 		<url-pattern>/Pages/SpellEngine.axd/*</url-pattern>
 		<url-pattern>/ItemScoringRubric.axd/*</url-pattern>
 		<url-pattern>/ItemScoringCallback.axd/*</url-pattern>
+		<url-pattern>/status/*</url-pattern>
+		<url-pattern>/status/summary/*</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
