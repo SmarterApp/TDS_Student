@@ -14,6 +14,7 @@ import java.io.InputStreamReader;
 import java.util.Enumeration;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
@@ -23,6 +24,7 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import tds.student.sbacossmerge.data.LoginInfo;
+import tds.student.securebrowser.enums.TDSCookieNames;
 import tds.student.web.StudentContext;
 import tds.student.web.StudentCookie;
 import tds.student.web.StudentSettings;
@@ -92,7 +94,6 @@ public class LoginBacking extends StudentPage
   }
 
   private void pageInit () {
-
     boolean logout = WebHelper.getQueryBoolean ("logout");
 
     try {
@@ -108,9 +109,8 @@ public class LoginBacking extends StudentPage
       exp.printStackTrace ();
     }
 
-    
     // clear cookies
-    if (logout || (WebHelper.getQueryString ("section") == null && !_haveLoginData)) {
+    if (logout || (WebHelper.getQueryString ("section") == null && !_haveLoginData && !checkSecureBrowserLaunchProtocolRedirect())) {
       // NOTE: clearing cookies use to go here but not sure why?
       StudentCookie.clear ();
       FormsAuthentication.signOut ();
@@ -152,6 +152,21 @@ public class LoginBacking extends StudentPage
       StudentSettings settings = getBean ("studentSettings", StudentSettings.class);
       settings.setModeName (modeName);
     }
+  }
+
+  private boolean checkSecureBrowserLaunchProtocolRedirect() {
+    boolean sbLaunchProtocol = false;
+
+    if (getRequest() != null && getRequest().getCookies() != null  ) {
+      for (Cookie cookie : getRequest().getCookies()) {
+        if (TDSCookieNames.TDS_SECURE_BROWSER_LAUNCH_PROTOCOL.getCookieName().equals(cookie.getName())) {
+          sbLaunchProtocol = true;
+          break;
+        }
+      }
+    }
+
+    return sbLaunchProtocol;
   }
 
   // / <summary>
