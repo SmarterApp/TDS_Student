@@ -94,7 +94,8 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
             throws ReturnStatusException {
 
         List<SingleDataResultSet> resultsSets = new ArrayList<>();
-        Date startTime = dateUtility.getLocalDate();
+        Date startTime = dateUtility.getDbDate(); // dateUtility.getLocalDate();
+
         String ssId;
         boolean isSBLaunchProtocolLogin = keyValues.containsKey(LoginKeys.SECURE_BROWSER_LAUNCH_PROTOCOL.getKeyName());
         // Accounting: how many open test opportunities currently for this client?
@@ -143,7 +144,8 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
         }
 
         // Return a User login
-        return handleUserLogin( connection,  clientName,  startTime, fieldValueMap,  ssId,  sessionId, isSBLaunchProtocolLogin);
+        // The dbLatencyTime is passed in since the startTime in handleUserLogin is only used to record latency/performance metrics.
+        return handleUserLogin( connection,  clientName, dateUtility.getLocalDate(), fieldValueMap,  ssId,  sessionId, isSBLaunchProtocolLogin);
     }
 
 
@@ -256,7 +258,6 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
      */
     private void _T_ValidateTesteeLogin_SP(SQLConnection connection, String clientname, String testeeId, String sessionId,
                                           _Ref<String> reasonRef, _Ref<Long> testeeKeyRef) throws ReturnStatusException {
-        Date startTime = dateUtility.getDbDate();
         Date dbLatencyTime = dateUtility.getLocalDate();
 
         // START: Get internal key for student with official ID testeeId
@@ -299,7 +300,7 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
             Long proctorKey = null;
             final String SQL_QUERY3 = "select _efk_Proctor from session where clientName = ${clientName} and sessionID = ${sessionID} "
                     + " and status = 'open' and ${now} between DateBegin and DateEnd";
-            SqlParametersMaps parms3 = (new SqlParametersMaps()).put("clientName", clientname).put("sessionID", sessionId).put("now", startTime);
+            SqlParametersMaps parms3 = (new SqlParametersMaps()).put("clientName", clientname).put("sessionID", sessionId).put("now", dateUtility.getDbDate());
             result = executeStatement(connection, SQL_QUERY3, parms3, false).getResultSets().next();
             record = (result.getCount() > 0 ? result.getRecords().next() : null);
             if (record != null) {
