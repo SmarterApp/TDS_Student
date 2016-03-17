@@ -1,0 +1,14 @@
+/* fixes small header buttons, so the entire word is visible within the container*/
+.ot-smallButtons a span {
+	min-width: 2.5em;
+	display: block;
+	text-align: center;
+}
+/* makes buttons closer to same size*/
+#sectionTestSelection .testSelection {
+	min-height: 7em;
+}
+/* gets the tiny next/back arrows displaying in the proper locations*/
+.showingLoading #foot .word {
+    height: 1em;
+}
