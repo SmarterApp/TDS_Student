@@ -108,8 +108,6 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
      */
     @Override
     public TestConfig startTestOpportunity(OpportunityInstance opportunityInstance, String testKey, String formKeyList) {
-        Date latencyStart = dateUtility.getLocalDate();
-
         TestConfig config = new TestConfig();
 
         try {
@@ -184,7 +182,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                 oppAudit.setHostName(legacyCommonDll.getLocalhostName());
                 oppAudit.setBrowserKey(opportunityInstance.getBrowserKey());
                 oppAudit.setDatabaseName("session");
-                oppAudit.setDateAccessed(new Timestamp(System.currentTimeMillis()));
+                oppAudit.setDateAccessed(now);
                 oppAudit.setAccessType("restart " + (restartCount + 1));
                 testOpportunityDao.createAudit(oppAudit);
 
@@ -218,7 +216,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                         scoreByTds);
             }
 
-            dbLatencyService.logLatency("T_StartTestOpportunity", latencyStart, null, testOpportunity);
+            dbLatencyService.logLatency("T_StartTestOpportunity", dateUtility.getLocalDate(), null, testOpportunity);
         } catch (ReturnErrorException e) {
             logger.error(e.getMessage(), e);
             legacyErrorHandlerService.logDbError("T_StartTestOpportunity", e.getMessage(), null, testKey, null, opportunityInstance.getKey());
@@ -317,7 +315,6 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
      */
     @Override
     public Float getInitialAbility(TestOpportunity opportunity, ClientTestProperty property) {
-        Date start = dateUtility.getLocalDate();
         Float ability = null;
         Boolean bySubject = false;
         Double slope = null;
@@ -362,7 +359,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             }
         }
 
-        dbLatencyService.logLatency("_GetInitialAbility_SP", start, null, opportunity);
+        dbLatencyService.logLatency("_GetInitialAbility_SP", dateUtility.getLocalDate(), null, opportunity);
         return ability;
     }
 
@@ -494,7 +491,6 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
     }
 
     private void createResponseSet(TestOpportunity opportunity, Integer maxItems, Integer reset) {
-        Date start = dateUtility.getLocalDate();
         Long itemCount = testeeResponseDao.getTesteeResponseItemCount(opportunity.getKey());
 
         if (itemCount > 0) {
@@ -506,7 +502,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
         }
 
         testeeResponseDao.insertBatch(opportunity.getKey(), maxItems);
-        dbLatencyService.logLatency("_CreateResponseSet_SP", start, null, opportunity);
+        dbLatencyService.logLatency("_CreateResponseSet_SP", dateUtility.getLocalDate(), null, opportunity);
     }
 
     /**
