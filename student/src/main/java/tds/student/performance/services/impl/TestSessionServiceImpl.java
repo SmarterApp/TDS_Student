@@ -21,12 +21,12 @@ import tds.student.performance.services.ConfigurationService;
 import tds.student.performance.services.DbLatencyService;
 import tds.student.performance.services.LegacyTestOpportunityService;
 import tds.student.performance.services.TestSessionService;
+import tds.student.performance.utils.DateUtility;
 import tds.student.performance.utils.HostNameHelper;
 import tds.student.performance.domain.*;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -52,6 +52,9 @@ public class TestSessionServiceImpl implements TestSessionService {
 
     @Autowired
     DbLatencyService dbLatencyService;
+
+    @Autowired
+    DateUtility dateUtility;
 
     /**
      * Get a {@code TestSession} for the specified key.
@@ -145,8 +148,7 @@ public class TestSessionServiceImpl implements TestSessionService {
      */
     @Override
     public void pause(TestOpportunity testOpportunity, TestSession testSession, String reason) throws SQLException, ReturnStatusException, ReturnErrorException {
-        Date date = new Date();
-        final Timestamp now = new Timestamp(date.getTime());
+        final Timestamp now = new Timestamp(dateUtility.getDbDate().getTime());
 
         // TODO:  Implement this to make sure the proctor session is valid: CommonDLL.ValidateProctorSession_FN
         String accessDeniedMessage = testSessionDao.validateProctorSession(testSession);
@@ -192,7 +194,7 @@ public class TestSessionServiceImpl implements TestSessionService {
             legacyTestOpportunityService.setOpportunityStatus(opportunity, "paused");
         }
 
-        dbLatencyService.logLatency("P_PauseSession_SP", date, null, testSession);
+        dbLatencyService.logLatency("P_PauseSession_SP", dateUtility.getLocalDate(), null, testSession);
     }
 
 
