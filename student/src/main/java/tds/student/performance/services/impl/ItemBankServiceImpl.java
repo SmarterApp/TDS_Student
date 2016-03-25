@@ -27,7 +27,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import tds.dll.api.ICommonDLL;
 import tds.dll.api.IStudentDLL;
-import tds.student.performance.caching.CacheType;
+import tds.dll.common.performance.caching.CacheType;
 import tds.student.performance.dao.ItemBankDao;
 import tds.student.performance.services.ItemBankService;
 import tds.student.sql.data.*;

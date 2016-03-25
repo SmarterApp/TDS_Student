@@ -20,10 +20,10 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
-import tds.student.performance.caching.CacheType;
+import tds.dll.common.performance.caching.CacheType;
+import tds.dll.common.performance.utils.LegacyDbNameUtility;
 import tds.student.performance.dao.ConfigurationDao;
 import tds.student.performance.domain.*;
-import tds.student.performance.utils.LegacyDbNameUtility;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -39,66 +39,7 @@ import java.util.Map;
  * </p>
  */
 @Repository
-public class ConfigurationDaoImpl implements ConfigurationDao {
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private static final Logger logger = LoggerFactory.getLogger(ConfigurationDaoImpl.class);
-
-    @Autowired
-    private LegacyDbNameUtility dbNameUtility;
-
-    @Autowired
-    public void setDataSource(DataSource dataSource) {
-        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-    }
-
-    /**
-     * Get all the {@code ClientSystemFlag} records from the {@code configs.client_systemflags} database for the
-     * specified client name.
-     * <p>
-     *     <strong>NOTE:</strong> Candidate for caching.
-     * </p>
-     * <p>
-     *     The {@code JOIN} to the {@code session.externs} view came from looking at the SQL contained in the
-     *     {@code CommonDLL.selectIsOnByAuditObject} method.
-     * </p>
-     *
-     * @param clientName The client name for which the {@code ClientSystemFlag} records should be fetched.
-     * @return A collection of {@code ClientSystemFlag} records for the specified client name.
-     */
-    @Override
-    @Cacheable(CacheType.LongTerm)
-    public List<ClientSystemFlag> getSystemFlags(String clientName) {
-        Map<String, String> parameters = new HashMap<>();
-        parameters.put("clientName", clientName);
-
-        final String SQL =
-                "SELECT\n" +
-                    "s.auditobject AS auditObject,\n" +
-                    "s.clientname AS clientName,\n" +
-                    "s.ispracticetest AS isPracticeTest,\n" +
-                    "s.ison AS isOn,\n" +
-                    "s.description AS description,\n" +
-                    "s.datechanged AS dateChanged,\n" +
-                    "s.datepublished AS datePublished\n" +
-                "FROM\n" +
-                    "${configdb}.client_systemflags s\n" +
-                "JOIN\n" +
-                    "${sessiondb}.externs e\n" +
-                    "ON (e.clientname = s.clientname\n" +
-                    "AND e.ispracticetest = s.ispracticetest)\n" +
-                "WHERE\n" +
-                    "e.clientname = :clientName";
-
-        try {
-            return namedParameterJdbcTemplate.query(
-                    dbNameUtility.setDatabaseNames(SQL),
-                    parameters,
-                    new BeanPropertyRowMapper<>(ClientSystemFlag.class));
-        } catch(EmptyResultDataAccessException e) {
-            logger.warn(String.format("%s did not return results for clientName = %s", SQL, clientName));
-            return null;
-        }
-    }
+public class ConfigurationDaoImpl extends tds.dll.common.performance.dao.impl.ConfigurationDaoImpl implements ConfigurationDao {
 
     /**
      * Get the {@code ClientTestProperty} record from {@code configs.client_testproperties} for the specified client name
@@ -283,34 +224,4 @@ public class ConfigurationDaoImpl implements ConfigurationDao {
         return recordCount > 0;
     }
 
-    @Override
-    @Cacheable(CacheType.LongTerm)
-    public Externs getExterns(String clientName) {
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("clientName", clientName);
-
-        final String SQL =
-                "SELECT\n" +
-                    "clientname AS clientName,\n" +
-                    "testeetype AS testeeType,\n" +
-                    "proctortype AS proctorType,\n" +
-                    "environment,\n" +
-                    "ispracticetest AS isPracticeTest,\n" +
-                    "sessiondb AS sessionDb,\n" +
-                    "testdb AS testDb\n" +
-                "FROM\n" +
-                    "${sessiondb}.externs\n" +
-                "WHERE\n" +
-                    "clientname = :clientName";
-
-        try {
-            return namedParameterJdbcTemplate.queryForObject(
-                    dbNameUtility.setDatabaseNames(SQL),
-                    parameters,
-                    new BeanPropertyRowMapper<>(Externs.class));
-        } catch (EmptyResultDataAccessException e) {
-            logger.warn(String.format("%s did not return results for clientName = %s", SQL, clientName));
-            return null;
-        }
-    }
 }

@@ -4,11 +4,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import tds.dll.common.performance.utils.LegacyDbNameUtility;
 import tds.student.performance.IntegrationTest;
 
-/**
- * Created by jjohnson on 1/28/16.
- */
 public class LegacyDbNameUtilityTest extends IntegrationTest {
     @Autowired
     LegacyDbNameUtility dbNameUtility;

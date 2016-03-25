@@ -16,9 +16,9 @@ import TDS.Shared.Exceptions.ReturnStatusException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
+import tds.dll.common.performance.caching.CacheType;
 import tds.itemrenderer.ITSDocumentFactory;
 import tds.itemrenderer.data.IITSDocument;
-import tds.student.performance.caching.CacheType;
 import tds.student.performance.domain.AccLookupWrapper;
 import tds.student.performance.services.ContentHelperService;
 

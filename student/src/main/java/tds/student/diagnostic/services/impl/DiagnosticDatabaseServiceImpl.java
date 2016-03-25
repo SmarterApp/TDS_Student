@@ -16,12 +16,12 @@ package tds.student.diagnostic.services.impl;
 import com.google.common.base.Stopwatch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tds.dll.common.performance.utils.LegacyDbNameUtility;
 import tds.student.diagnostic.dao.ReadTestDao;
 import tds.student.diagnostic.dao.WriteTestDao;
 import tds.student.diagnostic.domain.*;
 import tds.student.diagnostic.exceptions.DiagnosticException;
 import tds.student.diagnostic.services.DiagnosticDatabaseService;
-import tds.student.performance.utils.LegacyDbNameUtility;
 
 import java.util.ArrayList;
 import java.util.List;
