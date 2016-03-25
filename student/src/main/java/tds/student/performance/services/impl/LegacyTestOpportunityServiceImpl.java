@@ -15,13 +15,11 @@ package tds.student.performance.services.impl;
 import AIR.Common.DB.SQLConnection;
 import TDS.Shared.Exceptions.ReturnStatusException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ExceptionDepthComparator;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import tds.dll.api.ICommonDLL;
+import tds.dll.common.performance.utils.LegacySqlConnection;
 import tds.student.performance.domain.TestOpportunity;
 import tds.student.performance.services.LegacyTestOpportunityService;
-import tds.student.performance.utils.LegacySqlConnection;
 
 import java.sql.SQLException;
 

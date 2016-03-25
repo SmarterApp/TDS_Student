@@ -16,6 +16,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import tds.dll.common.performance.utils.LegacyDbNameUtility;
 import tds.student.performance.IntegrationTest;
 import tds.student.performance.domain.TestSession;
 

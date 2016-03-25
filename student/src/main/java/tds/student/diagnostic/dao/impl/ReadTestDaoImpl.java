@@ -18,9 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
+import tds.dll.common.performance.utils.LegacyDbNameUtility;
 import tds.student.diagnostic.dao.ReadTestDao;
 import tds.student.diagnostic.exceptions.DiagnosticException;
-import tds.student.performance.utils.LegacyDbNameUtility;
 
 import javax.sql.DataSource;
 

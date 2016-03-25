@@ -18,17 +18,14 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
+import tds.dll.common.performance.utils.LegacyDbNameUtility;
+import tds.dll.common.performance.utils.UuidAdapter;
 import tds.student.performance.dao.TesteeResponseDao;
 import tds.student.performance.domain.UnfinishedResponsePage;
-import tds.student.performance.utils.LegacyDbNameUtility;
-import tds.student.performance.utils.UuidAdapter;
 
 import javax.sql.DataSource;
 import java.util.*;
 
-/**
- * Created by emunoz on 12/30/15.
- */
 @Repository
 public class TesteeResponseDaoImpl implements TesteeResponseDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;

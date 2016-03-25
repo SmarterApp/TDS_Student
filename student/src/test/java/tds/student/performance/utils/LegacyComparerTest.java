@@ -15,6 +15,7 @@ package tds.student.performance.utils;
 import AIR.Common.DB.DbComparator;
 import org.junit.Assert;
 import org.junit.Test;
+import tds.dll.common.performance.utils.LegacyComparer;
 
 import java.util.UUID;
 

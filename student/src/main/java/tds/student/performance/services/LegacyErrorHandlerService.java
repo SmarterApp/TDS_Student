@@ -13,7 +13,7 @@
 package tds.student.performance.services;
 
 import TDS.Shared.Exceptions.ReturnStatusException;
-import tds.student.performance.exceptions.ReturnErrorException;
+import tds.dll.common.performance.exceptions.ReturnErrorException;
 
 import java.sql.SQLException;
 import java.util.UUID;

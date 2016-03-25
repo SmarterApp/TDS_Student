@@ -19,11 +19,11 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
-import tds.student.performance.caching.CacheType;
+import tds.dll.common.performance.caching.CacheType;
+import tds.dll.common.performance.utils.LegacyDbNameUtility;
 import tds.student.performance.dao.ItemBankDao;
 import tds.student.performance.dao.mappers.SetOfAdminSubjectMapper;
 import tds.student.performance.domain.SetOfAdminSubject;
-import tds.student.performance.utils.LegacyDbNameUtility;
 import tds.student.sql.data.TestGrade;
 
 import javax.sql.DataSource;

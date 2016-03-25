@@ -16,10 +16,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import tds.dll.common.performance.utils.LegacyDbNameUtility;
+import tds.dll.common.performance.utils.UuidAdapter;
 import tds.student.performance.IntegrationTest;
 import tds.student.performance.domain.UnfinishedResponsePage;
-import tds.student.performance.utils.LegacyDbNameUtility;
-import tds.student.performance.utils.UuidAdapter;
 
 import java.sql.Timestamp;
 import java.util.HashMap;
@@ -30,9 +30,6 @@ import java.util.UUID;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by emunoz on 12/30/15.
- */
 public class TesteeResponseDaoTest extends IntegrationTest {
     private final UUID oppKey = UUID.randomUUID();
     private final String clientName = "SBAC_PT";

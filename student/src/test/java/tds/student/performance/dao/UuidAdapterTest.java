@@ -18,7 +18,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
-import tds.student.performance.utils.UuidAdapter;
+import tds.dll.common.performance.utils.UuidAdapter;
 
 import java.util.UUID;
 

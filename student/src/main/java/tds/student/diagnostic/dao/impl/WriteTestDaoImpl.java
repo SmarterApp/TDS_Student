@@ -19,9 +19,9 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.stereotype.Repository;
+import tds.dll.common.performance.utils.LegacyDbNameUtility;
 import tds.student.diagnostic.dao.WriteTestDao;
 import tds.student.diagnostic.exceptions.DiagnosticException;
-import tds.student.performance.utils.LegacyDbNameUtility;
 
 import javax.sql.DataSource;
 import java.sql.Connection;

@@ -21,7 +21,6 @@ import tds.itemrenderer.data.IITSDocument;
 import tds.itemrenderer.data.ITSMachineRubric;
 import tds.itemscoringengine.RubricContentSource;
 import tds.student.services.data.PageGroup;
-import tds.student.sql.repository.ItemBankRepository;
 import AIR.test.framework.AbstractTest;
 import TDS.Shared.Exceptions.ReturnStatusException;
 
