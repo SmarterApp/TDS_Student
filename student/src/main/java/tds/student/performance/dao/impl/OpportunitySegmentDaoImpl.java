@@ -270,15 +270,40 @@ public class OpportunitySegmentDaoImpl implements OpportunitySegmentDao {
     }
 
     @Override
-    public List<OpportunitySegmentProperties> getOpportunitySegmentProperties(UUID oppKey, String efkSegment, Integer segmentPosition) {
+    public List<OpportunitySegmentProperties> getOpportunitySegmentPropertiesSegmented(UUID oppKey, String testKey) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("oppKey", UuidAdapter.getBytesFromUUID(oppKey));
-        parameters.put("efkSegment", efkSegment);
+        parameters.put("testKey", testKey);
+
+        final String SQL = "SELECT \n" +
+                "    :oppKey AS _fk_TestOpportunity,\n" +
+                "    _key AS _efk_Segment,\n" +
+                "    s.testid AS segmentId,\n" +
+                "    testposition AS segmentPosition,\n" +
+                "    s.selectionAlgorithm AS algorithm,\n" +
+                "    s.maxItems AS opItemCnt,\n" +
+                "    -1 AS isPermeable,\n" +
+                "    false AS isSatisfied,\n" +
+                "    now(3) AS _date\n" +
+                "FROM\n" +
+                "    ${itembankdb}.tblsetofadminsubjects s\n" +
+                "WHERE\n" +
+                "    s.virtualtest = :testKey;";
+
+        return namedParameterJdbcTemplate.query(dbNameUtility.setDatabaseNames(SQL), parameters, new OpportunitySegmentPropertiesMapper());
+
+    }
+
+    @Override
+    public List<OpportunitySegmentProperties> getOpportunitySegmentProperties(UUID oppKey, String testKey, Integer segmentPosition) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("oppKey", UuidAdapter.getBytesFromUUID(oppKey));
+        parameters.put("testKey", testKey);
         parameters.put("segmentPosition", segmentPosition);
 
         final String SQL = "SELECT \n" +
                 "    :oppKey AS _fk_TestOpportunity,\n" +
-                "    :efkSegment AS _efk_Segment,\n" +
+                "    :testKey AS _efk_Segment,\n" +
                 "    s.testid AS segmentId,\n" +
                 "    :segmentPosition AS segmentPosition,\n" +
                 "    s.selectionAlgorithm AS algorithm,\n" +
@@ -289,7 +314,7 @@ public class OpportunitySegmentDaoImpl implements OpportunitySegmentDao {
                 "FROM\n" +
                 "    ${itembankdb}.tblsetofadminsubjects s\n" +
                 "WHERE\n" +
-                "    s._key = '(SBAC_PT)SBAC-IRP-Perf-MATH-3-Summer-2015-2016'; ";
+                "    s._key = :testKey;";
 
         return namedParameterJdbcTemplate.query(dbNameUtility.setDatabaseNames(SQL), parameters, new OpportunitySegmentPropertiesMapper());
 

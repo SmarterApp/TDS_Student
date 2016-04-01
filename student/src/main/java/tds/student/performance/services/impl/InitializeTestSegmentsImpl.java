@@ -55,6 +55,8 @@ public class InitializeTestSegmentsImpl extends AbstractDLL implements Initializ
     public MultiDataResultSet _InitializeTestSegments_SP(SQLConnection connection, UUID oppKey, _Ref<String> error, String formKeyList, Boolean debug) throws ReturnStatusException {
         List<SingleDataResultSet> resultsets = new ArrayList<SingleDataResultSet>();
 
+        logger.debug("== _InitializeTestSegments_SP : oppKey: {} ", oppKey);
+
         // Step 1: Get db date used for segments and latency
         Date now = _dateUtil.getDateWRetStatus(connection);
 
@@ -62,27 +64,24 @@ public class InitializeTestSegmentsImpl extends AbstractDLL implements Initializ
         final String SQL_QUERY1 = "select  _efk_Segment from testopportunitysegment where _fk_TestOpportunity = ${oppkey} and ${debug} = 0 limit 1";
         SqlParametersMaps parms1 = new SqlParametersMaps().put("oppkey", oppKey).put("debug", debug);
         if (exists(executeStatement(connection, SQL_QUERY1, parms1, false))) {
-            /* NEW comment out debug
-            if (debug == true) {
-                // System.err.println ("Segments already exist"); // for testing purpose
-            }*/
             return (new MultiDataResultSet(resultsets));
         }
+
         String testKey = null;
-        String testId = null;
+        //String testId = null;
         String segmentId = null;
         String parentKey = null;
         String clientName = null;
-        String query = null;
+        //String query = null;
         Boolean isSegmented = null;
         String algorithm = null;
         Integer pos = null;
         Integer opitems = null;
-        Integer ftitems = null;
+        //Integer ftitems = null;
         String language = null;
         String formCohort = null; // for enforcing form consistency across segments
         Boolean isSatisfied = null;
-        UUID session = null;
+        //UUID session = null;
         UUID sessionPoolKey = null;
         Integer segcnt = null;
         Integer segpos = null;
@@ -94,10 +93,18 @@ public class InitializeTestSegmentsImpl extends AbstractDLL implements Initializ
         _Ref<Integer> ftcntRef = new _Ref<>();
         _Ref<String> itemStringRef = new _Ref<>();
         Boolean isSimulation = _studentDll.IsSimulation_FN(connection, oppKey);
+
+        // New
+        // Skip new implementation of simulation
+        if (DbComparator.isEqual(isSimulation, true)) {
+           return  _studentDll._InitializeTestSegments_SP(connection, oppKey, error, formKeyList, false);
+        }
+
         // create a temporary table to build segments in. WHen done, insert them en
         // masse into testopportunitysegment table with guard against duplication
 
         // Step 3: Create a temp table to help build segments to insert
+        /*
         DataBaseTable segmentsTable = getDataBaseTable("Segments").addColumn("_fk_TestOpportunity", SQL_TYPE_To_JAVA_TYPE.UNIQUEIDENTIFIER)
                 .addColumn("_efk_Segment", SQL_TYPE_To_JAVA_TYPE.VARCHAR, 250)
                 .addColumn("SegmentPosition", SQL_TYPE_To_JAVA_TYPE.INT).addColumn("formKey", SQL_TYPE_To_JAVA_TYPE.VARCHAR, 50).addColumn("FormID", SQL_TYPE_To_JAVA_TYPE.VARCHAR, 200)
@@ -110,7 +117,8 @@ public class InitializeTestSegmentsImpl extends AbstractDLL implements Initializ
 
         connection.createTemporaryDiskTable(segmentsTable);
         Map<String, String> unquotedParms = new HashMap<>();
-        unquotedParms.put("segmentsTableName", segmentsTable.getTableName());
+        unquotedParms.put("segmentsTableName", segmentsTable.getTableName());  */
+
         error.set(null);
 
         // Step 4: get the lang ( could this be passed in ? )
@@ -122,9 +130,9 @@ public class InitializeTestSegmentsImpl extends AbstractDLL implements Initializ
         SingleDataResultSet result = executeStatement(connection, SQL_QUERY2, parms2, false).getResultSets().next();
         DbResultRecord record = (result.getCount() > 0 ? result.getRecords().next() : null);
         if (record != null) {
-            session = record.<UUID>get("session");
+            //session = record.<UUID>get("session");
             clientName = record.<String>get("clientname");
-            testId = record.<String>get("testID");
+            //testId = record.<String>get("testID");
             testKey = record.<String>get("testkey");
             isSegmented = record.<Boolean>get("isSegmented");
             algorithm = record.<String>get("algorithm");
@@ -143,41 +151,39 @@ public class InitializeTestSegmentsImpl extends AbstractDLL implements Initializ
         } */
 
         // Step 6 : populate the temp table properties from tblsetofadminsubjects
-        try {
-            if (DbComparator.isEqual(isSimulation, true)) {
-                final String SQL_INSERT1 = "insert into ${segmentsTableName} (_fk_TestOpportunity, _efk_Segment, segmentID, SegmentPosition, algorithm, opItemCnt, IsPermeable, IsSatisfied, _date)" +
-                        " select ${oppkey}, _efk_Segment, segmentID, segmentPosition, selectionalgorithm, MaxItems, ${IsPermeable}, ${IsSatisfied}, ${_date} from sim_segment SS " +
-                        " where _fk_Session = ${session} and _efk_AdminSubject = ${testkey}; ";
-                SqlParametersMaps parms4 = new SqlParametersMaps().put("oppkey", oppKey).put("session", session).put("testkey", testKey).put("IsPermeable", -1).put("IsSatisfied", false)
-                        .put("_date", now);
-                executeStatement(connection, fixDataBaseNames(SQL_INSERT1, unquotedParms), parms4, false).getUpdateCount();
+        // simulation calls legacy code only need to check segmented.
 
-                sessionPoolKey = session;
-            } else if (DbComparator.isEqual(isSegmented, true)) {
+        List<OpportunitySegmentProperties> segmentPropertiesList = null;
+
+        try {
+            if (DbComparator.isEqual(isSegmented, true)) {
+                logger.debug("==== Segmented ====");
+                // New 6.2 get data to prep for insert.
+                segmentPropertiesList = opportunitySegmentDao.getOpportunitySegmentPropertiesSegmented(oppKey, testKey);
+
+                // step 6.2 segmented
+                /*
                 final String SQL_INSERT2 = "insert into ${segmentsTableName} (_fk_TestOpportunity, _efk_Segment, segmentID, SegmentPosition, algorithm, opItemCnt, IsPermeable, IsSatisfied, _date)"
                         + " select ${oppkey}, _Key, testID, testPosition, selectionAlgorithm, maxItems, ${IsPermeable}, ${IsSatisfied}, ${_date} from ${ItemBankDB}.tblsetofadminsubjects SS where VirtualTest = ${testkey};";
                 String finalQuery = fixDataBaseNames(SQL_INSERT2);
                 SqlParametersMaps parms5 = new SqlParametersMaps().put("oppkey", oppKey).put("testkey", testKey).put("IsPermeable", -1).put("IsSatisfied", false).put("_date", now);
-                executeStatement(connection, fixDataBaseNames(finalQuery, unquotedParms), parms5, false).getUpdateCount();
+                executeStatement(connection, fixDataBaseNames(finalQuery, unquotedParms), parms5, false).getUpdateCount(); */
             } else { // not segmented, so make the test its own segment
+                logger.debug("==== NOT Segmented ====");
+                // New 6.3 get data to prep for insert.
+                segmentPropertiesList = opportunitySegmentDao.getOpportunitySegmentProperties(oppKey, testKey, 1);
+
+                // Old
+                /*
                 final String SQL_INSERT3 = "insert into ${segmentsTableName} (_fk_TestOpportunity, _efk_Segment, segmentID, SegmentPosition, algorithm, opItemCnt, IsPermeable, IsSatisfied, _date) " +
                         " select ${oppkey}, ${testkey}, TestID, 1, selectionAlgorithm, maxItems, ${IsPermeable}, ${IsSatisfied}, ${_date}  from ${ItemBankDB}.tblsetofadminsubjects SS where _Key = ${testkey}; ";
                 String finalQuery = fixDataBaseNames(SQL_INSERT3);
                 SqlParametersMaps parms6 = new SqlParametersMaps().put("oppkey", oppKey).put("testkey", testKey).put("IsPermeable", -1).put("IsSatisfied", false).put("_date", now);
                 executeStatement(connection, fixDataBaseNames(finalQuery, unquotedParms), parms6, false).getUpdateCount();
-                // System.err.println (insertedCnt);
+                */
             }
-            /* NEW comment out debug
-            if (debug == true) {
-                final String SQL_QUERY4 = "select * from ${segmentsTableName};";
-                SingleDataResultSet rs2 = executeStatement(connection, fixDataBaseNames(SQL_QUERY4, unquotedParms), null, false).getResultSets().next();
-                resultsets.add(rs2);
-            } */
 
-            // New get data to prep for insert.
-            List<OpportunitySegmentProperties> segmentPropertiesList = opportunitySegmentDao.getOpportunitySegmentProperties(oppKey, testKey, 1);
-            dumpPropertiesList(segmentPropertiesList);
-
+            logger.debug( "Dump properties {} ",  dumpPropertiesList(segmentPropertiesList) ) ;
             // New copy database properties to insert list
             List<OpportunitySegmentInsert> segmentInsertList = InitializeSegmentsHelper.createOpportunitySegmentInsertList(segmentPropertiesList);
 
@@ -197,9 +203,9 @@ public class InitializeTestSegmentsImpl extends AbstractDLL implements Initializ
 
             // Step 8 : while loop on min vs max
             // initialize form selection and field test item selection on each segment
-            int counter = 0;
+            //int counter = 0;
             while (DbComparator.lessOrEqual(segpos, segcnt)) {
-                counter++;
+                //counter++;
                 ftcntRef.set(0);
                 formKeyRef.set(null);
                 formIdRef.set(null);
@@ -384,7 +390,7 @@ public class InitializeTestSegmentsImpl extends AbstractDLL implements Initializ
             int[] bytes = opportunitySegmentDao.insertOpportunitySegments(segmentInsertList);
             logger.debug(" Insert {} ", bytes);
 
-            connection.dropTemporaryTable(segmentsTable);
+            //connection.dropTemporaryTable(segmentsTable);
         } catch (ReturnStatusException re) {
             String msg = null;
             // set @msg = ERROR_PROCEDURE() + ': ' + ERROR_MESSAGE();
@@ -411,10 +417,11 @@ public class InitializeTestSegmentsImpl extends AbstractDLL implements Initializ
     }
 
     // NEW Helper to log properties collection
-    private void dumpPropertiesList(Collection<OpportunitySegmentProperties> properties) {
+    private String dumpPropertiesList(Collection<OpportunitySegmentProperties> properties) {
         for (OpportunitySegmentProperties i : properties) {
             logger.debug("  Property: {} ", i.toString());
         }
+        return " Dumped properties";
     }
 
 }
