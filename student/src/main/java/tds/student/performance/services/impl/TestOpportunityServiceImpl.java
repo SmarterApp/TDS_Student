@@ -99,6 +99,9 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
     @Autowired
     LegacySqlConnection legacySqlConnection;
 
+    @Autowired
+    InitializeTestSegmentsService initializeTestSegmentsService;
+
     /**
      * Start a {@link TestOpportunity} for the requested {@code OpportunityInstance}.
      * <p>
@@ -426,7 +429,8 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             Float initialAbility;
             _Ref<String> reason = new _Ref<>();
 
-            legacyStudentDll._InitializeTestSegments_SP(legacyConnection, testOpportunity.getKey(), reason, formKeyList);
+            initializeTestSegmentsService._InitializeTestSegments_SP(legacyConnection, testOpportunity.getKey(), reason, formKeyList, false);
+            //legacyStudentDll._InitializeTestSegments_SP(legacyConnection, testOpportunity.getKey(), reason, formKeyList);
             //initializeTestSegments(testOpportunity, testSession, formKeyList);
 
             if (reason.get() != null) {

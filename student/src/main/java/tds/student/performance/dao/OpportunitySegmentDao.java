@@ -12,12 +12,11 @@
  ******************************************************************************/
 package tds.student.performance.dao;
 
-import tds.student.performance.domain.InsertTesteeResponse;
-import tds.student.performance.domain.ItemForTesteeResponse;
-import tds.student.performance.domain.OpportunitySegment;
+import tds.student.performance.domain.*;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public interface OpportunitySegmentDao {
@@ -31,6 +30,12 @@ public interface OpportunitySegmentDao {
     String loadInsertTableForTesteeResponses(Connection connection,  List<InsertTesteeResponse> itemList);
 
     void dropTempTable(Connection connection, String tableName);
+
+    List<Map<String, Object>> dumpTable(Connection connection, String tableName);
+
+    List<OpportunitySegmentProperties> getOpportunitySegmentProperties(UUID oppKey, String efkSegment, Integer segmentPosition);
+
+    int[] insertOpportunitySegments(List<OpportunitySegmentInsert> segmentList);
 
 
     }
