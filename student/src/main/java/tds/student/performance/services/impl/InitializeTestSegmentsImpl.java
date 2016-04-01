@@ -60,7 +60,11 @@ public class InitializeTestSegmentsImpl extends AbstractDLL implements Initializ
 
         logger.debug("== _InitializeTestSegments_SP : oppKey: {} ", oppKey);
 
+        // todo: get rid of debug param
+        // todo: no need to return data; make void
+
         // Step 1: Get db date used for segments and latency
+        // todo : use new latency
         Date now = _dateUtil.getDateWRetStatus(connection);
 
         // Step 2: Return empty results if segments exist for this opp
@@ -104,6 +108,7 @@ public class InitializeTestSegmentsImpl extends AbstractDLL implements Initializ
         // Step 4: get the lang ( could this be passed in ? )
         language = _studentDll.GetOpportunityLanguage_FN(connection, oppKey);
 
+        // todo : could the opp be passed in?
         // Step 5: get details of the opp ( could this be passed in ? )
         final String SQL_QUERY2 = "select _fk_Session as session, clientname, _efk_TestID as testID, _efk_AdminSubject as testkey, isSegmented, algorithm from testopportunity where _Key = ${oppkey};";
         SqlParametersMaps parms2 = new SqlParametersMaps().put("oppkey", oppKey);
@@ -174,6 +179,7 @@ public class InitializeTestSegmentsImpl extends AbstractDLL implements Initializ
                         return (new MultiDataResultSet(resultsets));
                     }
                     poolcountRef.set(formlengthRef.get());
+                    // todo cache this!
                     // Step 9.1 : get formCohort, !Cache!
                     if (formCohort == null) {
                         final String SQL_QUERY8 = "select cohort as formCohort from ${ItemBankDB}.testform where _fk_AdminSubject = ${testkey} and _Key = ${formkey};";
@@ -240,6 +246,7 @@ public class InitializeTestSegmentsImpl extends AbstractDLL implements Initializ
                 error.set("Segment initialization failed");
             }
         }
+        // todo : use new latency
         _commonDll._LogDBLatency_SP(connection, "_InitializeTestSegments_SP", now, null, true, null, oppKey);
         return (new MultiDataResultSet(resultsets));
     }
