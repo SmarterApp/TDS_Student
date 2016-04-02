@@ -29,6 +29,10 @@ import tds.student.diagnostic.services.DiagnosticDependencyService;
 import tds.student.diagnostic.services.DiagnosticSystemService;
 import tds.student.diagnostic.services.impl.DiagnosticDatabaseServiceImpl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 @Controller
 public class StatusController {
 
@@ -104,7 +108,7 @@ public class StatusController {
         if ( !single ) {
             status.setLocalSystem(diagnosticSystemService.getSystem());
         }
-        status.setConfiguration(diagnosticConfigurationService.getConfiguration());
+        status.setConfiguration(diagnosticConfigurationService.getConfiguration(configPropertyWhitelist));
         return status;
     }
 
@@ -114,7 +118,7 @@ public class StatusController {
         Status status = new Status("Student", Level.LEVEL_3, new DateTime());
         if ( !single ) {
             status.setLocalSystem(diagnosticSystemService.getSystem());
-            status.setConfiguration(diagnosticConfigurationService.getConfiguration());
+            status.setConfiguration(diagnosticConfigurationService.getConfiguration(configPropertyWhitelist));
         }
         status.setDatabase(diagnosticDatabaseService.readLevelTest());
         return status;
@@ -126,7 +130,7 @@ public class StatusController {
         Status status = new Status("Student", Level.LEVEL_4, new DateTime());
         if ( !single ) {
             status.setLocalSystem(diagnosticSystemService.getSystem());
-            status.setConfiguration(diagnosticConfigurationService.getConfiguration());
+            status.setConfiguration(diagnosticConfigurationService.getConfiguration(configPropertyWhitelist));
         }
         status.setDatabase(diagnosticDatabaseService.writeLevelTest());
         return status;
@@ -138,11 +142,99 @@ public class StatusController {
         Status status = new Status("Student", Level.LEVEL_5, new DateTime());
         if ( !single ) {
             status.setLocalSystem(diagnosticSystemService.getSystem());
-            status.setConfiguration(diagnosticConfigurationService.getConfiguration());
+            status.setConfiguration(diagnosticConfigurationService.getConfiguration(configPropertyWhitelist));
             status.setDatabase(diagnosticDatabaseService.writeLevelTest());
         }
         status.setProviders(diagnosticDependencyService.getProviders());
         return status;
     }
+
+    final private List<String> configPropertyWhitelist = Arrays.asList(
+            "component.name",
+
+            "datasource.acquireRetryAttempts",
+            "datasource.minPoolSize",
+            "datasource.testConnectionOnCheckout",
+            "datasource.maxPoolSize",
+            "datasource.numHelperThreads",
+            "datasource.maxStatements",
+            "datasource.idleConnectionTestPeriod",
+            "datasource.testConnectionOnCheckin",
+            "datasource.url", // TODO: is this safe?
+            "datasource.checkoutTimeout",
+            "datasource.maxStatementsPerConnection",
+            "datasource.driverClassName",
+            "datasource.acquireIncrement",
+            "datasource.maxConnectionAge",
+
+            "dbLockRetrySleepInterval",
+            "dbLockRetryAttemptMax",
+
+            "iris.ContentPath",
+            "itemscoring.qti.sympyTimeoutMillis",
+            "itemscoring.qti.sympyServiceUrl",
+            "itemscoring.qti.sympyMaxTries",
+            "itemScoring.callbackUrl",
+
+            "logLatencyInterval",
+            "logLatencyMaxTime",
+
+            "mnaNodeName",
+            "mnaServerName",
+            "mna.mnaUrl",
+            "mna.logger.level",
+
+            "opportunity.isScoredByTDS",
+
+            "performance.logMaxTestOpportunities.enabled",
+            "performance.logLatency.enabled",
+            "performance.datasource.maxPoolSize",
+            "performance.datasource.minPoolSize",
+
+            "permission.uri",
+            "permission.security.profile",
+
+            "proctor.AppName",
+            "proctor.Appkey",
+            "proctor.StateCode",
+            "proctor.TestRegistrationApplicationUrl",
+            "proctor.ItembankDBName",
+            "proctor.IsCheckinSite",
+            "proctor.TDSSessionDBName",
+            "proctor.ClientQueryString",
+            "proctor.ClientName",
+            "proctor.TDSArchiveDBName",
+            "proctor.security.dir",
+            "proctor.webapp.saml.metadata.filename",
+            "proctor.SessionType",
+            "proctor.security.idp", // TODO: is this safe?
+            "proctor.Debug.AllowFTP",
+            "proctor.DBJndiName",
+            "proctor.RecordSystemClient",
+            "proctor.TDSConfigsDBName",
+            "proctor.SqlCommandTimeout",
+
+            "student.AppName",
+            "student.ItembankDBName",
+            "student.testScoring.logDebug",
+            "student.TDSConfigsDBName",
+            "student.RecordSystemClient",
+            "student.Debug.AllowFTP",
+            "student.TDSReportsRootDirectory",
+            "student.StateCode",
+            "student.SqlCommandTimeout",
+            "student.StudentMaxOpps", // TODO: is this used anywhere?
+            "student.TDSSessionDBName",
+            "student.ClientCookie",
+            "student.IsCheckinSite",
+            "student.ClientQueryString",
+            "student.TDSArchiveDBName",
+            "student.Appkey",
+            "student.SessionType",
+            "student.DBDialect",
+            "student.testScoring.logError",
+            "student.ClientName",
+            "student.TestRegistrationApplicationUrl"
+    );
 
 }

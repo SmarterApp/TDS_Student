@@ -25,6 +25,8 @@ import tds.student.diagnostic.domain.Setting;
 import tds.student.diagnostic.services.DiagnosticConfigurationService;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -46,7 +48,7 @@ public class DiagnosticConfigurationServiceImpl implements DiagnosticConfigurati
     ProgManRetriever progManRetriever;
 
 
-    public Configuration getConfiguration() {
+    public Configuration getConfiguration(List<String> propertyWhitelist) {
 
         List<Setting> settings = new ArrayList<>();
         settings.add(new Setting("progman.locator", progmanLocatorSetting ));
@@ -69,9 +71,19 @@ public class DiagnosticConfigurationServiceImpl implements DiagnosticConfigurati
                 List<Setting> properties = new ArrayList<>();
 
                 for (String key : clientPropertyConfiguration.getPropertyKeys() ) {
-                    Setting property = new Setting(key,clientPropertyConfiguration.getPrintSafePropertyValue(key));
+                    Setting property = new Setting(key,
+                            propertyWhitelist.contains(key) ? clientPropertyConfiguration.getPrintSafePropertyValue(key) : "<redacted>"
+                    );
                     properties.add(property);
                 }
+
+                Collections.sort(properties, new Comparator<Setting>() {
+                    @Override
+                    public int compare(Setting s1, Setting s2) {
+                        return s1.getName().compareTo(s2.getName());
+                    }
+                });
+
                 progmanConfiguration.setProperties(properties);
                 progmanConfigurations.add(progmanConfiguration);
 
