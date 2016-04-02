@@ -127,4 +127,21 @@ public class ItemBankDaoImpl implements ItemBankDao {
             return null;
         }
     }
+
+    @Override
+    @Cacheable(CacheType.MediumTerm)
+    public String getTestFormCohort(String testKey, String formKey) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("testKey", testKey);
+        parameters.put("formKey", formKey);
+
+        final String SQL = "select cohort as formCohort from ${itembankdb}.testform where _fk_AdminSubject = :testKey and _key = :formKey";
+
+        try {
+            return namedParameterJdbcTemplate.queryForObject(dbNameUtility.setDatabaseNames(SQL), parameters, String.class);
+        } catch(EmptyResultDataAccessException e) {
+            logger.warn(String.format("%s did not return results for testKey = %s and formKy = %s", SQL, testKey, formKey));
+            return null;
+        }
+    }
 }

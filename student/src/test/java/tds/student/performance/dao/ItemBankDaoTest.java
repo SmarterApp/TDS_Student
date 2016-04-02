@@ -90,4 +90,14 @@ public class ItemBankDaoTest extends IntegrationTest {
     public void should_Get_Null_TestSubject_For_Fake_Admin_Subject() {
         Assert.assertNull(itemBankDao.getTestSubject("FAKE_ADMIN_SUBJECT"));
     }
+
+    @Test
+    public void should_Get_Null_Cohort_For_Fake_Data() {
+        Assert.assertNull(itemBankDao.getTestFormCohort("FAKE_TEST_KEY", "FAKE_FORM_KEY"));
+    }
+
+    @Test
+    public void should_Get_Cohort_Value_For_Math3_PracticeTest() {
+        Assert.assertEquals("Default", itemBankDao.getTestFormCohort("(SBAC_PT)SBAC-MATH-3-Spring-2013-2015", "187-507"));
+    }
 }

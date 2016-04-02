@@ -28,9 +28,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tds.dll.api.ICommonDLL;
 import tds.dll.api.IStudentDLL;
+import tds.dll.common.performance.utils.DateUtility;
+import tds.student.performance.dao.ItemBankDao;
 import tds.student.performance.dao.OpportunitySegmentDao;
 import tds.student.performance.domain.OpportunitySegmentInsert;
 import tds.student.performance.domain.OpportunitySegmentProperties;
+import tds.student.performance.domain.TestOpportunity;
+import tds.student.performance.services.DbLatencyService;
 import tds.student.performance.services.InitializeTestSegmentsService;
 import tds.student.performance.utils.InitializeSegmentsHelper;
 
@@ -41,9 +45,11 @@ import java.util.*;
 public class InitializeTestSegmentsImpl extends AbstractDLL implements InitializeTestSegmentsService {
     private static final Logger logger = LoggerFactory.getLogger(InitializeTestSegmentsImpl.class);
 
+    @Autowired
+    private DateUtility dateUtility;
 
     @Autowired
-    private AbstractDateUtilDll _dateUtil = null;
+    private DbLatencyService dbLatencyService;
 
     @Autowired
     private ICommonDLL _commonDll = null;
@@ -54,24 +60,22 @@ public class InitializeTestSegmentsImpl extends AbstractDLL implements Initializ
     @Autowired
     private OpportunitySegmentDao opportunitySegmentDao;
 
+    @Autowired
+    private ItemBankDao itemBankDao;
 
-    public MultiDataResultSet _InitializeTestSegments_SP(SQLConnection connection, UUID oppKey, _Ref<String> error, String formKeyList, Boolean debug) throws ReturnStatusException {
-        List<SingleDataResultSet> resultsets = new ArrayList<SingleDataResultSet>();
 
+    public void initializeTestSegments(SQLConnection connection, TestOpportunity testOpportunity, _Ref<String> error, String formKeyList) throws ReturnStatusException {
+        UUID oppKey = testOpportunity.getKey();
         logger.debug("== _InitializeTestSegments_SP : oppKey: {} ", oppKey);
 
-        // todo: get rid of debug param
-        // todo: no need to return data; make void
-
         // Step 1: Get db date used for segments and latency
-        // todo : use new latency
-        Date now = _dateUtil.getDateWRetStatus(connection);
+        Date dbLatencyTime = dateUtility.getLocalDate();
 
         // Step 2: Return empty results if segments exist for this opp
-        final String SQL_QUERY1 = "select  _efk_Segment from testopportunitysegment where _fk_TestOpportunity = ${oppkey} and ${debug} = 0 limit 1";
-        SqlParametersMaps parms1 = new SqlParametersMaps().put("oppkey", oppKey).put("debug", debug);
+        final String SQL_QUERY1 = "select  _efk_Segment from testopportunitysegment where _fk_TestOpportunity = ${oppkey} limit 1";
+        SqlParametersMaps parms1 = new SqlParametersMaps().put("oppkey", oppKey);
         if (exists(executeStatement(connection, SQL_QUERY1, parms1, false))) {
-            return (new MultiDataResultSet(resultsets));
+            return;
         }
 
         String testKey = null;
@@ -99,7 +103,8 @@ public class InitializeTestSegmentsImpl extends AbstractDLL implements Initializ
 
         // New Skip new implementation of simulation
         if (DbComparator.isEqual(isSimulation, true)) {
-           return  _studentDll._InitializeTestSegments_SP(connection, oppKey, error, formKeyList, false);
+           _studentDll._InitializeTestSegments_SP(connection, oppKey, error, formKeyList, false);
+            return;
         }
 
         // Step 3: Create a temp table to help build segments to insert removed
@@ -108,18 +113,12 @@ public class InitializeTestSegmentsImpl extends AbstractDLL implements Initializ
         // Step 4: get the lang ( could this be passed in ? )
         language = _studentDll.GetOpportunityLanguage_FN(connection, oppKey);
 
-        // todo : could the opp be passed in?
-        // Step 5: get details of the opp ( could this be passed in ? )
-        final String SQL_QUERY2 = "select _fk_Session as session, clientname, _efk_TestID as testID, _efk_AdminSubject as testkey, isSegmented, algorithm from testopportunity where _Key = ${oppkey};";
-        SqlParametersMaps parms2 = new SqlParametersMaps().put("oppkey", oppKey);
-        SingleDataResultSet result = executeStatement(connection, SQL_QUERY2, parms2, false).getResultSets().next();
-        DbResultRecord record = (result.getCount() > 0 ? result.getRecords().next() : null);
-        if (record != null) {
-            clientName = record.<String>get("clientname");
-            testKey = record.<String>get("testkey");
-            isSegmented = record.<Boolean>get("isSegmented");
-            algorithm = record.<String>get("algorithm");
-        }
+        // Step 5: get details of the opp from the domain object instad of querying the DB again
+        // final String SQL_QUERY2 = "select _fk_Session as session, clientname, _efk_TestID as testID, _efk_AdminSubject as testkey, isSegmented, algorithm from testopportunity where _Key = ${oppkey};";
+        clientName = testOpportunity.getClientName();
+        testKey = testOpportunity.getTestKey();
+        isSegmented = testOpportunity.getIsSegmented();
+        algorithm = testOpportunity.getAlgorithm();
         parentKey = testKey;
 
         // Step 6 : populate collection of properties from tblsetofadminsubjects
@@ -176,20 +175,14 @@ public class InitializeTestSegmentsImpl extends AbstractDLL implements Initializ
                     if (formKeyRef.get() == null) {
                         // New Step 9.1 : check form key not null no need to delete from temp table
                         error.set("Unable to complete test form selection");
-                        return (new MultiDataResultSet(resultsets));
+                        return;
                     }
                     poolcountRef.set(formlengthRef.get());
-                    // todo cache this!
+
                     // Step 9.1 : get formCohort, !Cache!
                     if (formCohort == null) {
-                        final String SQL_QUERY8 = "select cohort as formCohort from ${ItemBankDB}.testform where _fk_AdminSubject = ${testkey} and _Key = ${formkey};";
-                        String finalQuery = fixDataBaseNames(SQL_QUERY8);
-                        SqlParametersMaps parms10 = new SqlParametersMaps().put("formkey", formKeyRef.get()).put("testkey", testKey);
-                        result = executeStatement(connection, finalQuery, parms10, false).getResultSets().next();
-                        record = (result.getCount() > 0 ? result.getRecords().next() : null);
-                        if (record != null) {
-                            formCohort = record.<String>get("formCohort");
-                        }
+//                        final String SQL_QUERY8 = "select cohort as formCohort from ${ItemBankDB}.testform where _fk_AdminSubject = ${testkey} and _Key = ${formkey};";
+                        formCohort = itemBankDao.getTestFormCohort(testKey, formKeyRef.get());
                     }
                 } else {
                     // Step 9.2 : Not fixed form
@@ -240,15 +233,10 @@ public class InitializeTestSegmentsImpl extends AbstractDLL implements Initializ
             String msg = null;
             msg = String.format("_InitializeTestSegments %s", re.getMessage());
             _commonDll._LogDBError_SP(connection, "_InitializeTestSegments", msg, null, null, null, oppKey, clientName, null);
-            if (debug == true) {
-                error.set(msg);
-            } else {
-                error.set("Segment initialization failed");
-            }
+            error.set("Segment initialization failed");
         }
-        // todo : use new latency
-        _commonDll._LogDBLatency_SP(connection, "_InitializeTestSegments_SP", now, null, true, null, oppKey);
-        return (new MultiDataResultSet(resultsets));
+
+        dbLatencyService.logLatency("_InitializeTestSegments_SP", dbLatencyTime, null, null, oppKey, null, null, null);
     }
 
     // NEW Helper to see contents of temp table

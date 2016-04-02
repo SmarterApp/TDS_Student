@@ -21,4 +21,5 @@ public interface ItemBankDao {
     SetOfAdminSubject get(String adminSubject);
     List<TestGrade> getTestGrades(String clientName, String testKey, Integer sessionType);
     String getTestSubject(String testKey);
+    String getTestFormCohort(String testKey, String formKey);
 }

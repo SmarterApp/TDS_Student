@@ -429,7 +429,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             Float initialAbility;
             _Ref<String> reason = new _Ref<>();
 
-            initializeTestSegmentsService._InitializeTestSegments_SP(legacyConnection, testOpportunity.getKey(), reason, formKeyList, false);
+            initializeTestSegmentsService.initializeTestSegments(legacyConnection, testOpportunity, reason, formKeyList);
             // legacyStudentDll._InitializeTestSegments_SP(legacyConnection, testOpportunity.getKey(), reason, formKeyList);
             //initializeTestSegments(testOpportunity, testSession, formKeyList);
 
