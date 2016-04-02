@@ -14,8 +14,10 @@ package tds.student.diagnostic.services;
 
 import tds.student.diagnostic.domain.Configuration;
 
+import java.util.List;
+
 public interface DiagnosticConfigurationService {
 
-    Configuration getConfiguration();
+    Configuration getConfiguration(List<String> propertyWhitelist);
 
 }
