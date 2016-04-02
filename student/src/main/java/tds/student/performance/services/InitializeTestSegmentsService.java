@@ -16,11 +16,12 @@ import AIR.Common.DB.SQLConnection;
 import AIR.Common.DB.results.MultiDataResultSet;
 import AIR.Common.Helpers._Ref;
 import TDS.Shared.Exceptions.ReturnStatusException;
+import tds.student.performance.domain.TestOpportunity;
 
 import java.util.UUID;
 
 public interface InitializeTestSegmentsService {
 
-    MultiDataResultSet _InitializeTestSegments_SP (SQLConnection connection, UUID oppKey, _Ref<String> error, String formKeyList, Boolean debug) throws ReturnStatusException;
+    void initializeTestSegments(SQLConnection connection, TestOpportunity testOpportunity, _Ref<String> error, String formKeyList) throws ReturnStatusException;
 
 }
