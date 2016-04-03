@@ -13,7 +13,6 @@
 
 package tds.student.diagnostic.services.impl;
 
-import org.joda.time.DateTime;
 import org.opentestsystem.shared.progman.client.ProgManClient;
 import org.opentestsystem.shared.progman.client.domain.TenantType;
 import org.opentestsystem.shared.trapi.ITrClient;
@@ -21,20 +20,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tds.student.diagnostic.domain.Level;
-import tds.student.diagnostic.domain.Providers;
-import tds.student.diagnostic.domain.Rating;
-import tds.student.diagnostic.domain.Status;
-import tds.student.diagnostic.services.DiagnosticDependencyService;
+import tds.dll.common.diagnostic.domain.Level;
+import tds.dll.common.diagnostic.domain.Providers;
+import tds.dll.common.diagnostic.domain.Rating;
+import tds.dll.common.diagnostic.domain.Status;
+import tds.dll.common.diagnostic.services.DiagnosticDependencyService;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
 @Service
-public class DiagnosticDependencyServiceImpl implements DiagnosticDependencyService {
+public class StudentDiagnosticDependencyServiceImpl implements DiagnosticDependencyService {
 
-    private static final Logger logger = LoggerFactory.getLogger(DiagnosticDependencyServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(StudentDiagnosticDependencyServiceImpl.class);
 
     @Autowired
     private ProgManClient progManClient;
@@ -59,11 +59,11 @@ public class DiagnosticDependencyServiceImpl implements DiagnosticDependencyServ
         try {
             String clients = _trClient.getForObject("clients");
             logger.debug("Client from ART {}", clients);
-            return new Status(unit, Level.LEVEL_0, new DateTime());
+            return new Status(unit, Level.LEVEL_0, new Date());
 
         } catch (Exception e) {
             logger.error("Diagnostic error with dependency ART ", e);
-            Status errorStatus = new Status(unit, Level.LEVEL_0, new DateTime());
+            Status errorStatus = new Status(unit, Level.LEVEL_0, new Date());
             errorStatus.setRating(Rating.FAILED);
             errorStatus.setError("Diagnostic error with dependency ART");
             return errorStatus;
@@ -82,11 +82,11 @@ public class DiagnosticDependencyServiceImpl implements DiagnosticDependencyServ
             List<TenantType> tenantTypes = progManClient.getTenantTypes();
             logger.debug("Tenant Types from progman: {}", tenantTypes);
 
-            return new Status(unit, Level.LEVEL_0, new DateTime());
+            return new Status(unit, Level.LEVEL_0, new Date());
 
         } catch (Exception e) {
             logger.error("Diagnostic error with dependency Progman ", e);
-            Status errorStatus = new Status(unit, Level.LEVEL_0, new DateTime());
+            Status errorStatus = new Status(unit, Level.LEVEL_0, new Date());
             errorStatus.setRating(Rating.FAILED);
             errorStatus.setError("Diagnostic error with dependency Progman");
             return errorStatus;

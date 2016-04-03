@@ -13,6 +13,7 @@
         <context:exclude-filter type="regex" expression="tds.dll.common.performance.services.impl.DbLatencyServiceImpl" />
     </context:component-scan>
 
+    <context:component-scan base-package="tds.dll.common.diagnostic"/>
     <context:component-scan base-package="tds.student.performance"/>
     <context:component-scan base-package="tds.student.diagnostic"/>
 
