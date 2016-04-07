@@ -4,7 +4,7 @@
 	<groupId>org.opentestsystem.delivery</groupId>
 	<artifactId>iris</artifactId>
 	<packaging>war</packaging>
-	<version>R02.00.02</version>
+	<version>0.0.1</version>
 	<name>iris</name>
 
 	<dependencies>
@@ -17,7 +17,7 @@
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>student</artifactId>
-			<version>1.0.1</version>
+			<version>R02.00.02</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.opentestsystem.shared</groupId>
