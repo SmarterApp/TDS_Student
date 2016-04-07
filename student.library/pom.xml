@@ -4,22 +4,22 @@
 	<parent>
 		<groupId>org.opentestsystem.shared</groupId>
 		<artifactId>shared-master</artifactId>
-		<version>1.0.1-BUILD-SNAPSHOT</version>
+		<version>1.0.1</version>
 	</parent>
 	<groupId>org.opentestsystem.delivery</groupId>
 	<artifactId>student.library</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
 	<name>student.library</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
-		<resource-bundler.version>0.0.1-SNAPSHOT</resource-bundler.version>
+		<resource-bundler.version>0.0.1</resource-bundler.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<item-renderer.version>0.0.1-SNAPSHOT</item-renderer.version>
-		<item-scoring.version>1.1.0-SNAPSHOT</item-scoring.version>
-		<item-selection.version>0.0.1-SNAPSHOT</item-selection.version>
+		<item-renderer.version>0.0.1</item-renderer.version>
+		<item-scoring.version>1.1.0</item-scoring.version>
+		<item-selection.version>0.0.1</item-selection.version>
 	</properties>
 
 	<dependencies>
