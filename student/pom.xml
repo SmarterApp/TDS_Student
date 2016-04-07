@@ -11,7 +11,7 @@
 	<artifactId>student</artifactId>
 	<name>student</name>
 	<packaging>war</packaging>
-        <version>R01.00.74</version>
+        <version>R02.00.02</version>
 
 	<licenses>
 		<license>
@@ -142,7 +142,6 @@
 			<version>1.0.1</version>
 			<type>war</type>
 		</dependency>
-
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -168,6 +167,6 @@
 			<scope>test</scope>
 		</dependency>
 
-
+		
 	</dependencies>
 </project>

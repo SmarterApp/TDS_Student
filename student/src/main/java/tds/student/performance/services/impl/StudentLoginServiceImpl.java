@@ -93,7 +93,8 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
             throws ReturnStatusException {
 
         List<SingleDataResultSet> resultsSets = new ArrayList<>();
-        Date startTime = dateUtility.getLocalDate();
+        Date startTime = dateUtility.getDbDate();
+        Date dbLatencyTime = dateUtility.getLocalDate();
         String ssId;
 
         // Accounting: how many open test opportunities currently for this client?
@@ -137,15 +138,16 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
 
         // Return a guest login
         if (DbComparator.isEqual(ssId, GUEST_USER_NAME) && _studentDll._AllowAnonymousTestee_FN(connection, clientName)) {
-            return  handleGuestLogin(connection, clientName, startTime, fieldValueMap );
+            return  handleGuestLogin(connection, clientName, startTime, dbLatencyTime, fieldValueMap );
         }
 
         // Return a User login
-        return handleUserLogin( connection,  clientName,  startTime, fieldValueMap,  ssId,  sessionId);
+        // The dbLatencyTime is passed in since the startTime in handleUserLogin is only used to record latency/performance metrics.
+        return handleUserLogin( connection,  clientName,  dbLatencyTime, fieldValueMap,  ssId,  sessionId);
     }
 
 
-    private MultiDataResultSet handleUserLogin(SQLConnection connection, String clientName, Date startTime, Map<String, StudentFieldValue> fieldValueMap, String ssId, String sessionId)
+    private MultiDataResultSet handleUserLogin(SQLConnection connection, String clientName, Date dbLatencyTime, Map<String, StudentFieldValue> fieldValueMap, String ssId, String sessionId)
             throws ReturnStatusException {
 
         logger.debug("Handle a User Login");
@@ -179,12 +181,12 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
         SingleDataResultSet resultSetInputs = createResultFields(fieldValueMap);
         resultsSets.add(resultSetInputs);
 
-        dbLatencyService.logLatency("T_Login", startTime, studentKey, clientName);
+        dbLatencyService.logLatency("T_Login", dbLatencyTime, studentKey, clientName);
         return (new MultiDataResultSet(resultsSets));
     }
 
 
-    private MultiDataResultSet handleGuestLogin(SQLConnection connection, String clientName, Date startTime, Map<String, StudentFieldValue> fieldValueMap)
+    private MultiDataResultSet handleGuestLogin(SQLConnection connection, String clientName, Date startTime, Date dbLatencyTime, Map<String, StudentFieldValue> fieldValueMap)
             throws ReturnStatusException {
 
         logger.debug("Handle a Guest Login");
@@ -246,6 +248,8 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
 
         SingleDataResultSet resultSetInputsGuest = createResultFields(fieldValueMap);
         resultsSets.add(resultSetInputsGuest);
+
+        dbLatencyService.logLatency("T_Login", dbLatencyTime, guestKey, clientName);
         return (new MultiDataResultSet(resultsSets));
     }
 
@@ -254,7 +258,7 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
      */
     private void _T_ValidateTesteeLogin_SP(SQLConnection connection, String clientname, String testeeId, String sessionId,
                                           _Ref<String> reasonRef, _Ref<Long> testeeKeyRef) throws ReturnStatusException {
-        Date startTime = dateUtility.getLocalDate();
+        Date dbLatencyTime = dateUtility.getLocalDate();
 
         // START: Get internal key for student with official ID testeeId
         _rtsDll._GetRTSEntity_SP(connection, clientname, testeeId, "STUDENT", testeeKeyRef);
@@ -275,8 +279,7 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
             if (DbComparator.isEqual(rtsValueRef.get(), "TDS_ParentExempt1")) {
                 reasonRef.set("parent exempt");
 
-                _commonDll._LogDBLatency_SP(connection, "_T_ValidateTesteeLogin", startTime, testeeKeyRef.get(), true,
-                        null, null, null, clientname, null);
+                dbLatencyService.logLatency("_T_ValidateTesteeLogin", dbLatencyTime, testeeKeyRef.get(), clientname);
                 return;
             }
         }
@@ -291,15 +294,14 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
                 // -- this is an internal system error
                 _commonDll._RecordSystemError_SP(connection, "T_GetRTSTestee", "Missing session ID");
                 reasonRef.set("Session ID required");
-                _commonDll._LogDBLatency_SP(connection, "_T_ValidateTesteeLogin", startTime, testeeKeyRef.get(), true,
-                        null, null, null, clientname, null);
+                dbLatencyService.logLatency("_T_ValidateTesteeLogin", dbLatencyTime, testeeKeyRef.get(), clientname);
                 return;
             }
             // -- proctor key is the USERKEY in RTS, NOT the Entity key
             Long proctorKey = null;
             final String SQL_QUERY3 = "select _efk_Proctor from session where clientName = ${clientName} and sessionID = ${sessionID} "
                     + " and status = 'open' and ${now} between DateBegin and DateEnd";
-            SqlParametersMaps parms3 = (new SqlParametersMaps()).put("clientName", clientname).put("sessionID", sessionId).put("now", startTime);
+            SqlParametersMaps parms3 = (new SqlParametersMaps()).put("clientName", clientname).put("sessionID", sessionId).put("now", dateUtility.getDbDate());
             result = executeStatement(connection, SQL_QUERY3, parms3, false).getResultSets().next();
             record = (result.getCount() > 0 ? result.getRecords().next() : null);
             if (record != null) {
@@ -307,8 +309,7 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
             }
             if (proctorKey == null) {
                 reasonRef.set("The session is not available for testing");
-                _commonDll._LogDBLatency_SP(connection, "_T_ValidateTesteeLogin", startTime, testeeKeyRef.get(), true,
-                        null, null, null, clientname, null);
+                dbLatencyService.logLatency("_T_ValidateTesteeLogin", dbLatencyTime, testeeKeyRef.get(), clientname);
                 return;
             }
             _Ref<String> schoolKeyRef = new _Ref<>();
@@ -316,13 +317,12 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
             _rtsDll._ValidateInstitutionMatch_SP(connection, clientname, testeeKeyRef.get(), proctorKey, schoolKeyRef);
             if (schoolKeyRef.get() == null) {
                 reasonRef.set("You must test in a session in your own school");
-                _commonDll._LogDBLatency_SP(connection, "_T_ValidateTesteeLogin", startTime, testeeKeyRef.get(), true,
-                        null, null, null, clientname, null);
+                dbLatencyService.logLatency("_T_ValidateTesteeLogin", dbLatencyTime, testeeKeyRef.get(), clientname);
                 return;
             }
         }
 
-        dbLatencyService.logLatency("_T_ValidateTesteeLogin", startTime, testeeKeyRef.get(), clientname);
+        dbLatencyService.logLatency("_T_ValidateTesteeLogin", dbLatencyTime, testeeKeyRef.get(), clientname);
     }
 
     private SingleDataResultSet createResultEntity(Long studentKey)
