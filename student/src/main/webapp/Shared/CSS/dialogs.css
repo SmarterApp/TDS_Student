@@ -632,3 +632,15 @@ div#tools div.tool iframe {
 	overflow: auto;
 	-webkit-overflow-scrolling: touch;
 }
+
+/* make the resize handles larger than the default 5x5px */
+.yui-resize .yui-resize-handle-br,
+.yui-resize .yui-resize-handle-bl {
+	height: 8px;
+	width: 8px;
+}
+
+/* dialog has a max-height of 500px by default. now tha we can resize we need it to go bigger than that */
+#wordListPanel {
+	max-height: none;
+}
