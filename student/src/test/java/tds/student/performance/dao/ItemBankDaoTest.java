@@ -15,8 +15,8 @@ package tds.student.performance.dao;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import tds.dll.common.performance.domain.SetOfAdminSubject;
 import tds.student.performance.IntegrationTest;
-import tds.student.performance.domain.SetOfAdminSubject;
 import tds.student.sql.data.TestGrade;
 
 import java.util.List;
