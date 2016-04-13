@@ -12,14 +12,10 @@
  ******************************************************************************/
 package tds.student.performance.dao;
 
-import tds.student.performance.domain.SetOfAdminSubject;
 import tds.student.sql.data.TestGrade;
 
 import java.util.List;
 
-public interface ItemBankDao {
-    SetOfAdminSubject get(String adminSubject);
+public interface ItemBankDao extends tds.dll.common.performance.dao.ItemBankDao {
     List<TestGrade> getTestGrades(String clientName, String testKey, Integer sessionType);
-    String getTestSubject(String testKey);
-    String getTestFormCohort(String testKey, String formKey);
 }
