@@ -37,17 +37,6 @@ import java.util.Map;
  */
 @Repository
 public class ItemBankDaoImpl extends tds.dll.common.performance.dao.impl.ItemBankDaoImpl implements ItemBankDao  {
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private static final Logger logger = LoggerFactory.getLogger(ConfigurationDaoImpl.class);
-
-    @Autowired
-    private LegacyDbNameUtility dbNameUtility;
-
-    @Autowired
-    public void setDataSource(DataSource dataSource) {
-        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-    }
-
     @Override
     public List<TestGrade> getTestGrades(String clientName, String testKey, Integer sessionType) {
         Map<String, Object> parameters = new HashMap<>();

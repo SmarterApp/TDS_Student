@@ -11,6 +11,7 @@
         <!-- these 2 classes are base classes for extended methods in the local implemenation used in student -->
         <context:exclude-filter type="regex" expression="tds.dll.common.performance.dao.impl.ConfigurationDaoImpl" />
         <context:exclude-filter type="regex" expression="tds.dll.common.performance.services.impl.DbLatencyServiceImpl" />
+        <context:exclude-filter type="regex" expression="tds.dll.common.performance.dao.impl.ItemBankDaoImpl" />
     </context:component-scan>
 
     <context:component-scan base-package="tds.dll.common.diagnostic"/>
