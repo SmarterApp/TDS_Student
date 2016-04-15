@@ -872,6 +872,13 @@ div.toolsContainer a.itemMenu {
 	border-top: none;
 	background-color: #fff;
 }
+
+/* center a wordlist illustration glossary image */
+#wordListPanel .bd .yui-content img {
+	display: block;
+	margin: 0 auto;
+}
+
 .TDS_CCInvert #wordListPanel .yui-content {
 	background-color: #000;
 }
