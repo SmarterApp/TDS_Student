@@ -636,8 +636,12 @@ div#tools div.tool iframe {
 /* make the resize handles larger than the default 5x5px */
 .yui-resize .yui-resize-handle-br,
 .yui-resize .yui-resize-handle-bl {
-	height: 8px;
-	width: 8px;
+	background: url(../../Images/resize-handle.png) no-repeat 0 0 !important;
+	background-position: 0 0 !important;
+	height: 12px;
+	width: 12px;
+	background-size: 12px;
+	right: 10px;
 }
 
 /* dialog has a max-height of 500px by default. now tha we can resize we need it to go bigger than that */
