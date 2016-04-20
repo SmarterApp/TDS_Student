@@ -634,8 +634,7 @@ div#tools div.tool iframe {
 }
 
 /* make the resize handles larger than the default 5x5px */
-.yui-resize .yui-resize-handle-br,
-.yui-resize .yui-resize-handle-bl {
+.yui-resize .yui-resize-handle-br {
 	background: url(../../Images/resize-handle.png) no-repeat 0 0 !important;
 	background-position: 0 0 !important;
 	height: 12px;
@@ -644,6 +643,13 @@ div#tools div.tool iframe {
 	right: 10px;
 }
 
+/* this resizes the handle correctly but the resize functionality breaks
+.TDS_PS_L1 .yui-resize .yui-resize-handle-br {
+	zoom:1.25;
+	-moz-transform:scale(1.25);
+	-moz-transform-origin: 0 0;
+}
+*/
 /* dialog has a max-height of 500px by default. now tha we can resize we need it to go bigger than that */
 #wordListPanel {
 	max-height: none;
