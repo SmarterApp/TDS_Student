@@ -897,19 +897,31 @@ div.toolsContainer a.itemMenu {
 }
 .TDS_PS_L1 #wordListPanel .container-close {
     right: 2px;
-    top: 8px;
+    top: 6px;
+	zoom:1.25;
+	-moz-transform:scale(1.25);
+	-moz-transform-origin: 0 0;
 }
 .TDS_PS_L2 #wordListPanel .container-close {
     right: 2px;
-    top: 12px;
+    top: 7px;
+	zoom:1.5;
+	-moz-transform:scale(1.5);
+	-moz-transform-origin: 0 0;
 }
 .TDS_PS_L3 #wordListPanel .container-close {
     right: 2px;
-    top: 16px;
+    top: 8px;
+	zoom:1.75;
+	-moz-transform:scale(1.75);
+	-moz-transform-origin: 0 0;
 }
 .TDS_PS_L4 #wordListPanel .container-close {
     right: 2px;
-    top: 20px;
+    top: 9px;
+	zoom:2.0;
+	-moz-transform:scale(2.0);
+	-moz-transform-origin: 0 0;
 }
 #wordListPanel .container-close:hover {
 	border-color: #00aeef !important;
