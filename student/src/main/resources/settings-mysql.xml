@@ -2,21 +2,16 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <entry key="IsCheckinSite">${student.IsCheckinSite:false}</entry>
-	<entry key="DONOT_Distributed">${student.DONOT_Distributed}</entry>
+	<entry key="DONOT_Distributed">${student.DONOT_Distributed:true}</entry>
 	<entry key="ClientName">${student.ClientName}</entry>
 	<entry key="ClientQueryString">${student.ClientQueryString:true}</entry>
 	<entry key="ClientCookie">${student.ClientCookie:true}</entry>
 	<entry key="Appkey">${student.Appkey:Student}</entry>
-	<entry key="EncryptedPassword">${student.EncryptedPassword}</entry>
 	<entry key="RecordSystemClient">${student.RecordSystemClient:true}</entry>
-	<entry key="AdminPassword">${student.AdminPassword}</entry>
-	<!-- not used, guessing it was used for SQL Server at some point -->
-	<!-- <entry key="SqlCommandTimeout">${student.SqlCommandTimeout:60}</entry> -->
 	<entry key="AppName">${student.AppName:Student}</entry>
 	<entry key="SessionType">${student.SessionType:0}</entry>
 	<entry key="StateCode">${student.StateCode}</entry>
-		
-	<!-- <entry key="student-sessiondb-jndi">java:/comp/env/jdbc/sessiondb</entry> --> 
+
 	<entry key="DBDialect">MYSQL</entry>
 	<entry key="TDSArchiveDBName">${student.TDSArchiveDBName:archive}</entry>
     <entry key="TDSSessionDBName">${student.TDSSessionDBName:session}</entry>
@@ -28,7 +23,7 @@
 		
 	<!-- Unit test code only -->
 	<!-- TODO Ravi create a settings-test.xml under src/test/resources and use that.-->
-	<entry key="StudentMaxOpps">${student.StudentMaxOpps}</entry>
+	<entry key="StudentMaxOpps">${student.StudentMaxOpps:3}</entry>
 	<!-- Start Item Preview Settings -->
 	<entry key="tds.itemPreview.blackboxUrl">http://localhost/blackbox/</entry>
 	<entry key="tds.itemPreview.itemScoringUrl">http://localhost/ItemScoringServer/ItemScoring.axd</entry>
@@ -56,4 +51,12 @@
 	<entry key="tds.itemRenderer.enableFeedback">false</entry>
 	<entry key="tds.itemRenderer.forceQTI">true</entry>
 	<!-- End BlackBox Settings -->
+
+
+	<!-- not used in code anywhere -->
+	<!--
+	<entry key="EncryptedPassword">${student.EncryptedPassword}</entry>
+	<entry key="AdminPassword">${student.AdminPassword}</entry>
+	<entry key="SqlCommandTimeout">${student.SqlCommandTimeout:60}</entry>
+	-->
 </properties>
