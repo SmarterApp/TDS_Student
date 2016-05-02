@@ -143,7 +143,7 @@ public class TestResponseHandler extends TDSHandler
       // If scoring is done asynchronously, then updateDB (with score -1 and
       // status WaitingForMachineScore) and then score
       List<ItemResponseUpdateStatus> responseResults = null;
-        responseResults = _itemScoringService.updateResponses (testOpp.getOppInstance (), responseReader.getResponses ());
+        responseResults = _itemScoringService.updateResponses (testOpp.getOppInstance (), responseReader.getResponses (), responseReader.getPageDuration());
         /*
          * } catch (ReturnStatusException rse) {
          * response.setStatus(HttpServletResponse.SC_FORBIDDEN);

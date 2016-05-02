@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -50,6 +51,9 @@ import TDS.Shared.Exceptions.ReturnStatusException;
 public class ResponseRepository extends AbstractDAO implements IResponseRepository
 {
   private static final Logger _logger     = LoggerFactory.getLogger (SessionRepository.class);
+
+  private static final Float MS_TO_SECS_DIVISOR = 1000F;
+
   @Autowired
   private ICommonDLL          _commonDll  = null;
   @Autowired
@@ -193,17 +197,16 @@ public class ResponseRepository extends AbstractDAO implements IResponseReposito
     return itemKeys;
   }
 
-  public ReturnStatus updateScoredResponse (OpportunityInstance oppInstance, IItemResponseUpdate responseUpdate, int score, String scoreStatus, String scoreRationale, long scoreLatency)
+  public ReturnStatus updateScoredResponse (OpportunityInstance oppInstance, IItemResponseUpdate responseUpdate, int score, String scoreStatus, String scoreRationale, long scoreLatency, Float itemDuration)
       throws ReturnStatusException {
     ReturnStatus returnStatus = null;
 
     try (SQLConnection connection = getSQLConnection ()) {
       SingleDataResultSet firstResultSet = _studentDll.T_UpdateScoredResponse_SP (connection, oppInstance.getKey (), oppInstance.getSessionKey (), oppInstance.getBrowserKey (),
           responseUpdate.getItemID (), responseUpdate.getPage (), responseUpdate.getPosition (), responseUpdate.getDateCreated (), responseUpdate.getSequence (), score, responseUpdate.getValue (),
-          responseUpdate.getIsSelected (), responseUpdate.getIsValid (), (int) scoreLatency, scoreStatus, scoreRationale);
+          responseUpdate.getIsSelected (), responseUpdate.getIsValid (), (int) scoreLatency, scoreStatus, scoreRationale, itemDuration / MS_TO_SECS_DIVISOR);
       ReturnStatusException.getInstanceIfAvailable (firstResultSet);
       Iterator<DbResultRecord> records = firstResultSet.getRecords ();
-
       if (records.hasNext ()) {
         DbResultRecord record = records.next ();
         returnStatus = ReturnStatus.parse (record);
