@@ -29,7 +29,7 @@ public interface IItemScoringService
 
   boolean updateItemScore (UUID oppKey, IItemResponseScorable response, ItemScore score) throws ReturnStatusException;
 
-  List<ItemResponseUpdateStatus> updateResponses (OpportunityInstance oppInstance, List<ItemResponseUpdate> responsesUpdated) throws ReturnStatusException;
+  List<ItemResponseUpdateStatus> updateResponses (OpportunityInstance oppInstance, List<ItemResponseUpdate> responsesUpdated, Float pageDuration) throws ReturnStatusException;
 
   ItemScore scoreItem (UUID oppKey, IItemResponseScorable responseScorable, IITSDocument itsDoc) throws ReturnStatusException;
 }

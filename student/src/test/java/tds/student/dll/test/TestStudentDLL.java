@@ -4467,7 +4467,7 @@ public class TestStudentDLL extends AbstractTest
       starttime = new Date ();
       SingleDataResultSet result = _dll.T_UpdateScoredResponse_SP (connection, oppKey, session, browserId, itemId, page, position, dateCreated, responseSequence, score, response, isSelected,
           isValid,
-          scoreLatency, scoreStatus, scoreRationale);
+          scoreLatency, scoreStatus, scoreRationale, 1F);
       now = new Date ();
       diff = now.getTime () - starttime.getTime ();
       System.out.println (String.format ("T_UpdateScoredResponse latency: %d millisec", (long) diff));
@@ -4516,7 +4516,7 @@ public class TestStudentDLL extends AbstractTest
       starttime = new Date ();
       SingleDataResultSet result = _dll.T_UpdateScoredResponse_SP (connection, oppKey, session, browserId, itemId, page, position, dateCreated, responseSequence, score, response, isSelected,
           isValid,
-          scoreLatency, scoreStatus, scoreRationale);
+          scoreLatency, scoreStatus, scoreRationale, 1F);
       now = new Date ();
       diff = now.getTime () - starttime.getTime ();
       System.out.println (String.format ("T_UpdateScoredResponse latency: %d millisec", (long) diff));
@@ -4559,7 +4559,7 @@ public class TestStudentDLL extends AbstractTest
       String scoreRationale = null;
       SingleDataResultSet result = _dll.T_UpdateScoredResponse_SP (connection, oppKey, session, browserId, itemId, page, position, dateCreated, responseSequence, score, response, isSelected,
           isValid,
-          scoreLatency, scoreStatus, scoreRationale);
+          scoreLatency, scoreStatus, scoreRationale, 1F);
       DbResultRecord record = result.getRecords ().next ();
       assertTrue (record != null);
       String status = record.<String> get ("status");

@@ -42,6 +42,11 @@ public class TestResponseReader
   private long                      _timestamp;
 
   // / <summary>
+  // / The duration that a student spent on this page in the current browser session and opportunity
+  // / </summary>
+  private float                      _pageDuration;
+
+  // / <summary>
   // / A list of responses that were updated.
   // / </summary>
   private List<ItemResponseUpdate> _responses;
@@ -91,6 +96,9 @@ public class TestResponseReader
               break;
             case "timestamp":              
               responseReader.setTimestamp (Long.parseLong (attrValue));
+              break;
+            case "pageDuration":
+              responseReader.setPageDuration(Float.parseFloat(attrValue));
               break;
             }
           }
@@ -263,6 +271,13 @@ public class TestResponseReader
     this._timestamp = value;
   }
 
+  public void setPageDuration(float pageDuration) {
+    this._pageDuration = pageDuration;
+  }
+
+  public float getPageDuration() {
+    return this._pageDuration;
+  }
   public List<ItemResponseUpdate> getResponses () {
     return _responses;
   }

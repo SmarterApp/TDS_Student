@@ -72,7 +72,7 @@ public class ResponseRepositoryTest extends AbstractTest
           sessionKey, browserKey);
       IItemResponseUpdate iItemResponseUpdate = null;
       ReturnStatus returnStatus = responseRepository.updateScoredResponse
-          (opportunityInstance, iItemResponseUpdate, 1, null, null, 1);
+          (opportunityInstance, iItemResponseUpdate, 1, null, null, 1, 1F);
       Assert.assertTrue (returnStatus != null);
       if (returnStatus != null)
         _logger.info ("Return Status Value::" + returnStatus.getStatus ());
