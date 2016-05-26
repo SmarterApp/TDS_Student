@@ -138,20 +138,15 @@ The following parameters need to be configured inside Program Management for Stu
 * `student.ClientQueryString=true` 
 * `student.ClientCookie=true`  - If it is turned on, Student will try to get clientname from cookie
 * `student.Appkey=Student` 
-* `student.EncryptedPassword=true` 
 * `student.RecordSystemClient=true`  
-* `student.AdminPassword=<password>`  -  Admin Password
 * `student.AppName=Student`  - Application name
 * `student.SessionType=0`  - Type of the testing supported: 0 is online, 1 is paper-based
-* `student.DBDialect=MYSQL`  -  Indicates which database we are using
 * `student.TestRegistrationApplicationUrl=http://localhost:8083/`  -  URL to TR(ART) Application
 * `student.TDSArchiveDBName=archive`  - Name of the archive schema
 * `student.TDSSessionDBName=session`  - Name of the session schema
 * `student.TDSConfigsDBName=configs`  - Name of the config schema
 * `student.ItembankDBName=itembank`  -  Name of the itembank schema
 * `student.Debug.AllowFTP=true` 
-* `student.TDSReportsRootDirectory=/usr/local/tomcat/resources/tds/tdsreports/`  - Directory on Student server box where TDS reports generated  after student finished the test are located.
-* `student.StudentMaxOpps=2` 
 * `EncryptionKey=testKey123456789123456789`  - Encryption key is used for encrypting the cookies and item file path. There is no default value set for this property. It must be set in program management. Minimum length of this key is 24 characters.
 * `opportunity.isScoredByTDS=false`  - Set to false always. ScoreByTDS is not implemented yet and needs to be set false.
 * `tds.testshell.dictionaryUrl=http://<host>/Dictionary`  - URL for the Dictionary project deployment.
@@ -184,6 +179,29 @@ In order to disable caching you will need to make the following changes to `reso
 
 * Comment out this line: `<cache:annotation-driven key-generator="cacheKeyGenerator" />`
 * Change the enabled property to `false` in the `cachingService` bean
+
+## Diagnostic API
+
+### Usage
+
+The diagnostic API is available via the `/status` endpoint.  Most commonly that would mean `https://url.com/student/status`.
+
+There are 5 different levels of details provided depending on what is passed in via the level querystring parameter like `status?level=1`.  The levels are defined below:
+
+1. Local system details such as CPU usage, memory usage and free storage space
+2. Configuration details for the local java environment settings and ProgMan settings
+3. Database read access checks to each of the 4 databases used in TDS
+4. Database write access checks to each of the 4 databases used in TDS
+5. Component dependency checks for access to ART, ProgMan, TIS, Equation Scorer and the Student Report Processor.
+
+### ProgMan Settings
+
+The Diagnostic API has a few settings which can adjusted via ProgMan.  Logical defaults are provided for each so there is no need to enter them usually.  The default values are provided below.
+
+* `diagnostic.enabled: true` - Disable access to the API by setting to `false`
+* `diagnostic.volume.minimumPercentFree: 5` - When the percent free space on disk is less than this value an error state is returned.
+* `diagnostic.volume.warningPercentFree: 15` - A warning state is returned when the percent available disk space is below this value.
+
 
 ## Build Order
 These are the steps that should be taken in order to build all of the Student-related artifacts:
