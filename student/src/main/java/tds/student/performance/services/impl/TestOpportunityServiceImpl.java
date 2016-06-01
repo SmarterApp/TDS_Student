@@ -120,6 +120,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
         TestConfig config = new TestConfig();
 
         try {
+            Date dbLatencyTime = dateUtility.getLocalDate();
             TestOpportunity testOpportunity = testOpportunityDao.get(opportunityInstance.getKey());
             if (testOpportunity == null) {
                 String msg = String.format("No TestOpportunity for key %s", opportunityInstance.getKey());
@@ -225,7 +226,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                         scoreByTds);
             }
 
-            dbLatencyService.logLatency("T_StartTestOpportunity", dateUtility.getLocalDate(), null, testOpportunity);
+            dbLatencyService.logLatency("T_StartTestOpportunity", dbLatencyTime, null, testOpportunity);
         } catch (ReturnErrorException e) {
             logger.error(e.getMessage(), e);
             legacyErrorHandlerService.logDbError("T_StartTestOpportunity", e.getMessage(), null, testKey, null, opportunityInstance.getKey());
@@ -324,6 +325,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
      */
     @Override
     public Float getInitialAbility(TestOpportunity opportunity, ClientTestProperty property) {
+        Date dbLatencyTime = dateUtility.getLocalDate();
         Float ability = null;
         Boolean bySubject = false;
         Double slope = null;
@@ -368,7 +370,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             }
         }
 
-        dbLatencyService.logLatency("_GetInitialAbility_SP", dateUtility.getLocalDate(), null, opportunity);
+        dbLatencyService.logLatency("_GetInitialAbility_SP", dbLatencyTime, null, opportunity);
         return ability;
     }
 
@@ -425,7 +427,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             throws ReturnErrorException, SQLException, ReturnStatusException {
         try (SQLConnection legacyConnection = legacySqlConnection.get()) {
             Timestamp now = new Timestamp(dateUtility.getDbDate().getTime());
-            Date latencyDate = dateUtility.getLocalDate();
+            Date dbLatencyTime = dateUtility.getLocalDate();
             Integer testLength;
             Float initialAbility;
             _Ref<String> reason = new _Ref<>();
@@ -486,7 +488,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                         HostNameHelper.getHostName(),
                         "session"));
 
-                dbLatencyService.logLatency("_InitializeOpportunity_SP", latencyDate, null, testOpportunity);
+                dbLatencyService.logLatency("_InitializeOpportunity_SP", dbLatencyTime, null, testOpportunity);
             } else {
                 legacyErrorHandlerService.logDbError("T_StartTestOpportunity", reason.get(), testOpportunity.getTestee(), testOpportunity.getTestId(), null, testOpportunity.getKey());
                 legacyErrorHandlerService.throwReturnErrorException(testOpportunity.getClientName(), "T_StartTestOpportunity", "Could not obtain test length.", null, testOpportunity.getKey(), "_InitializeOpportunity", "failed");
@@ -501,6 +503,8 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
     }
 
     private void createResponseSet(TestOpportunity opportunity, Integer maxItems, Integer reset) {
+        Date dbLatencyTime = dateUtility.getLocalDate();
+
         Long itemCount = testeeResponseDao.getTesteeResponseItemCount(opportunity.getKey());
 
         if (itemCount > 0) {
@@ -512,7 +516,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
         }
 
         testeeResponseDao.insertBatch(opportunity.getKey(), maxItems);
-        dbLatencyService.logLatency("_CreateResponseSet_SP", dateUtility.getLocalDate(), null, opportunity);
+        dbLatencyService.logLatency("_CreateResponseSet_SP", dbLatencyTime, null, opportunity);
     }
 
     /**

@@ -222,7 +222,9 @@ public class TestSessionDaoImpl implements TestSessionDao {
 
         // Emulate line 1726: SQL_QUERY1
         //  Note: We are not using testSession.isOpen() since the logic here is different than there for some reason
-        // TODO: validate that this java Date will compare correctly with the date coming from the DB
+        //  RULE:  The current time must fall between test session's begin date and end date.  Because the test session's
+        //  begin date and end date come from the db server, the date we're using to make sure the session is open must
+        //  come from the database (to make sure all dates come from the same time zone).
         Date now = dateUtility.getDbDate();
 
         if (now.before(testSession.getDateBegin()) || now.after(testSession.getDateEnd())) {
