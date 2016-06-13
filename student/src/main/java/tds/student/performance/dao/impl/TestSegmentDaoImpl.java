@@ -13,19 +13,28 @@
 package tds.student.performance.dao.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.stereotype.Repository;
+import tds.dll.common.performance.caching.CacheType;
+import tds.dll.common.performance.utils.LegacyDbNameUtility;
+import tds.dll.common.performance.utils.UuidAdapter;
 import tds.student.performance.dao.TestSegmentDao;
-import tds.student.performance.utils.LegacyDbNameUtility;
-import tds.student.performance.utils.UuidAdapter;
+import tds.student.performance.dao.mappers.TestAbilityMapper;
+import tds.student.performance.domain.InsertTesteeResponse;
+import tds.student.performance.domain.ItemForTesteeResponse;
+import tds.student.performance.domain.TestAbility;
+
 import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-/**
- * Created by jjohnson on 1/2/16.
- */
 @Repository
 public class TestSegmentDaoImpl implements TestSegmentDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;

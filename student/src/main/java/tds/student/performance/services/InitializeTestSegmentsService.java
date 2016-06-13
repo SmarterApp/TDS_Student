@@ -10,24 +10,18 @@
  * Developed by Fairway Technologies, Inc. (http://fairwaytech.com)
  * for the Smarter Balanced Assessment Consortium (http://smarterbalanced.org)
  ******************************************************************************/
-package tds.student.performance.utils;
+package tds.student.performance.services;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import AIR.Common.DB.SQLConnection;
+import AIR.Common.DB.results.MultiDataResultSet;
+import AIR.Common.Helpers._Ref;
+import TDS.Shared.Exceptions.ReturnStatusException;
+import tds.student.performance.domain.TestOpportunity;
 
-public class HostNameHelper {
-    /**
-     * <p>
-     *     Emulates the CommonDLL.getLocalhostName (in tds.dll.mysql package).
-     * </p>
-     * @return The host name of the machine. If an {@code UnknownHostException} is caught, a {@code String} stating "Unknown
-     * host name" will be returned instead.
-     */
-    public static String getHostName() {
-        try {
-            return InetAddress.getLocalHost().getHostName();
-        } catch (UnknownHostException e) {
-            return "Unknown host name";
-        }
-    }
+import java.util.UUID;
+
+public interface InitializeTestSegmentsService {
+
+    void initializeTestSegments(SQLConnection connection, TestOpportunity testOpportunity, _Ref<String> error, String formKeyList) throws ReturnStatusException;
+
 }

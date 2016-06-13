@@ -15,18 +15,15 @@ package tds.student.performance.dao.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
+import tds.dll.common.performance.utils.LegacyDbNameUtility;
+import tds.dll.common.performance.utils.UuidAdapter;
 import tds.student.performance.dao.TestAbilityDao;
 import tds.student.performance.dao.mappers.TestAbilityMapper;
 import tds.student.performance.domain.TestAbility;
-import tds.student.performance.utils.LegacyDbNameUtility;
-import tds.student.performance.utils.UuidAdapter;
 
 import javax.sql.DataSource;
 import java.util.*;
 
-/**
- * Created by emunoz on 12/28/15.
- */
 @Repository
 public class TestAbilityDaoImpl implements TestAbilityDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;

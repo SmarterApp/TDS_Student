@@ -16,6 +16,7 @@ import java.util.Stack;
 import javax.xml.parsers.*;
 
 import org.apache.commons.lang3.StringUtils;
+import org.eclipse.jetty.util.StringUtil;
 import org.xml.sax.*;
 import org.xml.sax.helpers.*;
 
@@ -242,6 +243,10 @@ public class TestResponseReaderSax extends TestResponseReader
         } else if ("prefetch".equalsIgnoreCase (name)) {
           if (!StringUtils.isEmpty (value))
             setPrefetch (Integer.parseInt (value));
+        } else if ("pageDuration".equalsIgnoreCase(name)) {
+          if (!StringUtils.isEmpty(value)) {
+            setPageDuration(Float.parseFloat(value));
+          }
         }
       }
     }

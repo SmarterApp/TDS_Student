@@ -18,19 +18,18 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import tds.dll.common.performance.utils.LegacyDbNameUtility;
+import tds.dll.common.performance.utils.UuidAdapter;
 import tds.student.performance.IntegrationTest;
-import tds.student.performance.domain.InsertTesteeResponse;
-import tds.student.performance.domain.ItemForTesteeResponse;
-import tds.student.performance.domain.OpportunitySegment;
+import tds.student.performance.domain.*;
+import tds.student.performance.utils.InitializeSegmentsHelper;
 import tds.student.performance.utils.TesteeResponseHelper;
 
 import javax.sql.DataSource;
+import javax.validation.constraints.AssertTrue;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -46,11 +45,20 @@ public class OpportunitySegmentDaoTest extends IntegrationTest {
     private static final Character delimiter = '|';
     private static final UUID opportunityKey = UUID.fromString("25D23379-DD98-4A64-A663-6A11FFE24EAE");
 
+    private static final UUID oppKeyNonSegmented = UUID.fromString("13BC24BF-08CE-49E9-AE8D-2F495BECCEED");
+    private static final String testKeyNonSegmented = "(SBAC_PT)SBAC-IRP-Perf-MATH-3-Summer-2015-2016";
+
+    private static final UUID oppKeySegmented = UUID.fromString("7B7C83C6-D6C0-48D9-AE59-D0AD4292A408");
+    private static final String testKeySegmented = "(SBAC_PT)SBAC-IRP-Mathematics-7-Summer-2015-2016";
+
     @Autowired
     OpportunitySegmentDao opportunitySegmentDao;
 
     @Autowired
     DataSource dataSourceConnection;
+
+    @Autowired
+    LegacyDbNameUtility dbNameUtility;
 
     @Test
     public void should_Get_a_OpportunitySegment() {
@@ -252,6 +260,184 @@ public class OpportunitySegmentDaoTest extends IntegrationTest {
         logger.debug("Temp Table Name {} ", insertTable);
 
         opportunitySegmentDao.dropTempTable(connection, insertTable);
+    }
+
+    @Test
+    public void check_get_opp_seg() throws SQLException {
+
+        List<OpportunitySegmentProperties> propertiesList = opportunitySegmentDao.getOpportunitySegmentProperties(oppKeyNonSegmented, testKeyNonSegmented, 1);
+        Assert.assertNotNull(propertiesList);
+        assertTrue(propertiesList.size() == 1);
+    }
+
+    @Test
+    public void check_get_opp_seg_segmented() throws SQLException {
+
+        List<OpportunitySegmentProperties> propertiesList = opportunitySegmentDao.getOpportunitySegmentPropertiesSegmented(oppKeySegmented, testKeySegmented);
+        Assert.assertNotNull(propertiesList);
+        assertTrue(propertiesList.size() == 2);
+    }
+
+    @Test
+    public void check_get_opp_seg_insert_list() throws SQLException {
+
+        List<OpportunitySegmentProperties> propertiesList = opportunitySegmentDao.getOpportunitySegmentProperties(oppKeyNonSegmented, testKeyNonSegmented, 1);
+        Assert.assertNotNull(propertiesList);
+        List<OpportunitySegmentInsert> insertList = InitializeSegmentsHelper.createOpportunitySegmentInsertList(propertiesList);
+        Assert.assertNotNull(insertList);
+    }
+
+    @Test
+    public void check_opp_seg_min_max_segment_position() throws SQLException {
+
+        OpportunitySegmentInsert seg1 = new OpportunitySegmentInsert();
+        seg1.setSegmentPosition(5);
+        OpportunitySegmentInsert seg2 = new OpportunitySegmentInsert();
+        seg2.setSegmentPosition(3);
+        OpportunitySegmentInsert seg3 = new OpportunitySegmentInsert();
+        seg3.setSegmentPosition(10);
+
+
+        List<OpportunitySegmentInsert> insertList = new ArrayList<>();
+        insertList.add(seg1);
+        insertList.add(seg2);
+        insertList.add(seg3);
+
+        Integer min = InitializeSegmentsHelper.minimumSegmentPosition(insertList);
+        Integer max = InitializeSegmentsHelper.maximumSegmentPosition(insertList);
+
+        assertTrue(min == 3);
+        assertTrue(max == 10);
+    }
+
+    @Test
+    public void check_get_opp_seg_by_segmentPosition() throws SQLException {
+
+        OpportunitySegmentInsert seg1 = new OpportunitySegmentInsert();
+        seg1.setSegmentPosition(5);
+        OpportunitySegmentInsert seg2 = new OpportunitySegmentInsert();
+        seg2.setSegmentPosition(3);
+        OpportunitySegmentInsert seg3 = new OpportunitySegmentInsert();
+        seg3.setSegmentPosition(10);
+        OpportunitySegmentInsert seg4 = new OpportunitySegmentInsert();
+
+        List<OpportunitySegmentInsert> insertList = new ArrayList<>();
+        insertList.add(seg1);
+        insertList.add(seg2);
+        insertList.add(seg3);
+        insertList.add(seg4);
+
+        List<OpportunitySegmentInsert> resultList = InitializeSegmentsHelper.segmentPositionFiltered(insertList, 3);
+        assertTrue(resultList.size() == 1);
+        assertTrue(resultList.get(0).getSegmentPosition().equals(3));
+    }
+
+    @Test
+    public void check_get_opp_seg_by_segmentPosition_and_oppKey() throws SQLException {
+
+        OpportunitySegmentInsert seg1 = new OpportunitySegmentInsert();
+        seg1.setSegmentPosition(5);
+        seg1.set_fk_TestOpportunity(oppKeyNonSegmented);
+        OpportunitySegmentInsert seg2 = new OpportunitySegmentInsert();
+        seg2.set_fk_TestOpportunity(oppKeyNonSegmented);
+        seg2.setSegmentPosition(3);
+        OpportunitySegmentInsert seg3 = new OpportunitySegmentInsert();
+        seg2.set_fk_TestOpportunity(oppKeyNonSegmented);
+        seg3.setSegmentPosition(10);
+
+        OpportunitySegmentInsert seg4 = new OpportunitySegmentInsert();
+
+        List<OpportunitySegmentInsert> insertList = new ArrayList<>();
+        insertList.add(seg1);
+        insertList.add(seg2);
+        insertList.add(seg3);
+        insertList.add(seg4);
+
+        List<OpportunitySegmentInsert> resultList = InitializeSegmentsHelper.segmentPositionAndOppKeyFiltered(
+                insertList, 5, oppKeyNonSegmented);
+        assertTrue(resultList.size() == 1);
+        assertTrue(resultList.get(0).getSegmentPosition().equals(5));
+    }
+
+    @Test
+    public void check_filter_opp_seg_by_segmentPosition_oppKey_efk_segment() throws SQLException {
+
+        OpportunitySegmentInsert seg1 = new OpportunitySegmentInsert();
+        seg1.setSegmentPosition(5);
+        seg1.set_fk_TestOpportunity(oppKeyNonSegmented);
+        seg1.set_efk_Segment(testKeyNonSegmented);
+        OpportunitySegmentInsert seg2 = new OpportunitySegmentInsert();
+        seg2.set_fk_TestOpportunity(oppKeyNonSegmented);
+        seg2.setSegmentPosition(3);
+        seg2.set_efk_Segment(testKeyNonSegmented);
+        OpportunitySegmentInsert seg3 = new OpportunitySegmentInsert();
+        seg3.set_fk_TestOpportunity(oppKeyNonSegmented);
+        seg3.setSegmentPosition(10);
+        seg3.set_efk_Segment(testKeyNonSegmented);
+
+        OpportunitySegmentInsert seg4 = new OpportunitySegmentInsert();
+
+        List<OpportunitySegmentInsert> insertList = new ArrayList<>();
+        insertList.add(seg1);
+        insertList.add(seg2);
+        insertList.add(seg3);
+        insertList.add(seg4);
+
+        List<OpportunitySegmentInsert> resultList = InitializeSegmentsHelper.insertListFiltered(
+                insertList, 10, oppKeyNonSegmented, testKeyNonSegmented);
+        assertTrue(resultList.size() == 1);
+        assertTrue(resultList.get(0).getSegmentPosition().equals(10));
+        assertTrue(resultList.get(0).get_efk_Segment().equals(testKeyNonSegmented));
+    }
+
+    @Test
+    public void check_insert_List_Filtered_Items_In_Pool() throws SQLException {
+
+        OpportunitySegmentInsert seg1 = new OpportunitySegmentInsert();
+        seg1.set_fk_TestOpportunity(oppKeyNonSegmented);
+        seg1.setOpItemCnt(1);
+
+        OpportunitySegmentInsert seg2 = new OpportunitySegmentInsert();
+        seg2.set_fk_TestOpportunity(oppKeyNonSegmented);
+        seg2.setFtItemCnt(2);
+
+        OpportunitySegmentInsert seg3 = new OpportunitySegmentInsert();
+        seg3.set_fk_TestOpportunity(oppKeyNonSegmented);
+
+        OpportunitySegmentInsert seg4 = new OpportunitySegmentInsert();
+
+        List<OpportunitySegmentInsert> insertList = new ArrayList<>();
+        insertList.add(seg1);
+        insertList.add(seg2);
+        insertList.add(seg3);
+        insertList.add(seg4);
+
+        List<OpportunitySegmentInsert> resultList = InitializeSegmentsHelper.insertListFilteredItemsInPool(
+                insertList, oppKeyNonSegmented);
+
+        assertTrue(resultList.size() == 2);
+        assertFalse( InitializeSegmentsHelper.insertListFilteredItemsInPool( insertList, oppKeyNonSegmented).size() <= 0  );
+    }
+
+    @Test
+    public void check_insert_opp_seg() throws SQLException {
+
+       List<OpportunitySegmentProperties> propertiesList = opportunitySegmentDao.getOpportunitySegmentProperties(oppKeyNonSegmented, testKeyNonSegmented, 1);
+       List<OpportunitySegmentInsert> insertList = InitializeSegmentsHelper.createOpportunitySegmentInsertList(propertiesList);
+
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("oppKey", UuidAdapter.getBytesFromUUID(oppKeyNonSegmented));
+        final String SQL = "SELECT * FROM ${sessiondb}.testopportunitysegment WHERE _fk_testopportunity = :oppKey";
+        final String delete = "delete FROM ${sessiondb}.testopportunitysegment WHERE _fk_testopportunity = :oppKey";
+
+        namedParameterJdbcTemplate.update(dbNameUtility.setDatabaseNames(delete), parameters);
+
+        int[] bytes = opportunitySegmentDao.insertOpportunitySegments(insertList);
+
+        List<Map<String, Object>> mapList = namedParameterJdbcTemplate.queryForList(dbNameUtility.setDatabaseNames(SQL), parameters);
+
+        assertTrue(mapList.size() > 0);
+
     }
 
     // Debug Helper

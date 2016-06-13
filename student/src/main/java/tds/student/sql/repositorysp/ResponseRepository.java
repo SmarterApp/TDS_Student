@@ -178,7 +178,7 @@ public class ResponseRepository extends AbstractDAO implements IResponseReposito
   // / Conversion failed when converting the varchar value 'Responses out of
   // sequence: Position=1; Stored sequence =0; New sequence=' to data type int.
   // / </exception>
-  public ReturnStatus updateScoredResponse (OpportunityInstance oppInstance, IItemResponseUpdate responseUpdate, int score, String scoreStatus, String scoreRationale, long scoreLatency)
+  public ReturnStatus updateScoredResponse (OpportunityInstance oppInstance, IItemResponseUpdate responseUpdate, int score, String scoreStatus, String scoreRationale, long scoreLatency, Float itemDuration)
       throws ReturnStatusException {
     ReturnStatus returnStatus = null;
     final String CMD_GET_INSERT_ITEMS = "BEGIN; SET NOCOUNT ON; exec T_UpdateScoredResponse ${oppkey}, ${session}, ${browserID}, ${itemID}, ${page}, ${position}, ${dateCreated}, ${responseSequence}, ${score}, ${response},  ${isSelected},  ${isValid},  ${scoreLatency}, ${scorestatus}, ${scoreRationale}; end;";

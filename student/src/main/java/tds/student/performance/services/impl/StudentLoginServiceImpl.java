@@ -27,13 +27,14 @@ import org.springframework.stereotype.Service;
 import tds.dll.api.ICommonDLL;
 import tds.dll.api.IRtsDLL;
 import tds.dll.api.IStudentDLL;
+import tds.dll.common.performance.services.ConfigurationService;
+import tds.dll.common.performance.utils.DateUtility;
 import tds.student.performance.dao.ConfigurationDao;
 import tds.student.performance.domain.ConfigTestToolType;
 import tds.student.performance.domain.StudentLoginField;
-import tds.student.performance.services.ConfigurationService;
 import tds.student.performance.services.DbLatencyService;
 import tds.student.performance.services.StudentLoginService;
-import tds.student.performance.utils.DateUtility;
+import tds.student.securebrowser.enums.LoginKeys;
 
 import java.util.*;
 
@@ -45,7 +46,6 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
     private static final Logger logger = LoggerFactory.getLogger(StudentLoginServiceImpl.class);
 
     private static final String UNKNOWN_ATTRIBUTE_VALUE = "UNKNOWN";
-    private static final String ID_FIELD_NAME = "ID";
     private static final String LAST_NAME_FIELD_NAME = "LastName";
     private static final String FIRST_NAME_FIELD_NAME = "FirstName";
     private static final String AT_LOGIN_REQUIRE = "REQUIRE";
@@ -95,8 +95,9 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
         List<SingleDataResultSet> resultsSets = new ArrayList<>();
         Date startTime = dateUtility.getDbDate();
         Date dbLatencyTime = dateUtility.getLocalDate();
-        String ssId;
 
+        String ssId;
+        boolean isSBLaunchProtocolLogin = keyValues.containsKey(LoginKeys.SECURE_BROWSER_LAUNCH_PROTOCOL.getKeyName());
         // Accounting: how many open test opportunities currently for this client?
         logger.debug("Property performance.logMaxTestOpportunities.enabled {} ", logMaxTestOpportunities);
         if ( logMaxTestOpportunities ) {
@@ -115,8 +116,9 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
         }
 
         // Look for the field that is the ID
-        if (fieldValueMap.containsKey(ID_FIELD_NAME)) {
-            ssId = fieldValueMap.get(ID_FIELD_NAME).inValue;
+        if (fieldValueMap.containsKey(LoginKeys.STUDENTID.getKeyName())) {
+            ssId = fieldValueMap.get(LoginKeys.STUDENTID.getKeyName()).inValue;
+
         } else {
             resultsSets.add(_commonDll._ReturnError_SP(connection, clientName, "T_Login", "No match for student ID"));
             return (new MultiDataResultSet(resultsSets));
@@ -143,13 +145,12 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
 
         // Return a User login
         // The dbLatencyTime is passed in since the startTime in handleUserLogin is only used to record latency/performance metrics.
-        return handleUserLogin( connection,  clientName,  dbLatencyTime, fieldValueMap,  ssId,  sessionId);
+        return handleUserLogin( connection,  clientName,  dbLatencyTime, fieldValueMap,  ssId,  sessionId, isSBLaunchProtocolLogin);
     }
 
 
-    private MultiDataResultSet handleUserLogin(SQLConnection connection, String clientName, Date dbLatencyTime, Map<String, StudentFieldValue> fieldValueMap, String ssId, String sessionId)
+    private MultiDataResultSet handleUserLogin(SQLConnection connection, String clientName, Date dbLatencyTime, Map<String, StudentFieldValue> fieldValueMap, String ssId, String sessionId, boolean isSBLaunchProtocolLogin)
             throws ReturnStatusException {
-
         logger.debug("Handle a User Login");
 
         List<SingleDataResultSet> resultsSets = new ArrayList<>();
@@ -165,11 +166,11 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
         }
 
         // Student has been validated against the proctor and a valid RTS Key returned. Now check required attributes
-        if (fieldValueMap.containsKey(ID_FIELD_NAME)) {
-            fieldValueMap.get(ID_FIELD_NAME).outValue = fieldValueMap.get(ID_FIELD_NAME).inValue;
+        if (fieldValueMap.containsKey(LoginKeys.STUDENTID.getKeyName())) {
+            fieldValueMap.get(LoginKeys.STUDENTID.getKeyName()).outValue = fieldValueMap.get(LoginKeys.STUDENTID.getKeyName()).inValue;
         }
 
-        List<SingleDataResultSet> errorSets = collectAndVerifyFields(connection, studentKey, clientName, fieldValueMap);
+        List<SingleDataResultSet> errorSets = collectAndVerifyFields(connection, studentKey, clientName, fieldValueMap, isSBLaunchProtocolLogin);
         if ( errorSets != null ) {
             logger.error("Login error in collectAndVerifyFields");
             return (new MultiDataResultSet(errorSets));
@@ -208,7 +209,7 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
         }
 
         // Set the ID to the generated gKey.
-        StudentFieldValue guestIdField = fieldValueMap.get(ID_FIELD_NAME);
+        StudentFieldValue guestIdField = fieldValueMap.get(LoginKeys.STUDENTID.getKeyName());
         if (guestIdField != null) {
             guestIdField.outValue = String.format("GUEST %d", guestKey);
         }
@@ -373,9 +374,8 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
         return resultSet;
     }
 
-    private List<SingleDataResultSet> collectAndVerifyFields(SQLConnection connection, Long studentKey, String clientName, Map<String, StudentFieldValue> fieldValueMap)
-            throws ReturnStatusException {
-
+    private List<SingleDataResultSet> collectAndVerifyFields(SQLConnection connection, Long studentKey, String clientName, Map<String,
+            StudentFieldValue> fieldValueMap, boolean isSecureBrowserLaunchProtocol) throws ReturnStatusException {
         for (Map.Entry<String, StudentFieldValue> entry : fieldValueMap.entrySet()) {
             StudentFieldValue fieldValue = entry.getValue();
 
@@ -392,8 +392,10 @@ public class StudentLoginServiceImpl extends AbstractDLL implements StudentLogin
                 fieldValue.outValue = (valueRef.get() == null ? UNKNOWN_ATTRIBUTE_VALUE : valueRef.get());
             }
 
-            // Required fields (expect ID). Check that the in matches the out
-            if (fieldValue.loginField.getAtLogin().equals(AT_LOGIN_REQUIRE) && !fieldValue.loginField.getTdsId().equals(ID_FIELD_NAME)) {
+            // Required fields (expect ID). Check that the in matches the out. If this is SBLP, only sessionId and SSID need validation
+            if (!isSecureBrowserLaunchProtocol && fieldValue.loginField.getAtLogin().equals(AT_LOGIN_REQUIRE)
+                    && !fieldValue.loginField.getTdsId().equals(LoginKeys.STUDENTID.getKeyName())) {
+
                 // Replaces Logic:  select _key from ${valsTblName} where _key <> 'ID' and action = 'REQUIRE' and (outval is null or inval is null or inval <> outval ) limit 1
                 if (!fieldValue.inValue.equalsIgnoreCase(fieldValue.outValue)) {
                     List<SingleDataResultSet> errorSets = new ArrayList<>();

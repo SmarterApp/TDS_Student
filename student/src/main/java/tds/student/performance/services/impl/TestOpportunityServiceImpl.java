@@ -26,9 +26,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tds.dll.api.ICommonDLL;
 import tds.dll.api.IStudentDLL;
+import tds.dll.common.performance.domain.SetOfAdminSubject;
+import tds.dll.common.performance.exceptions.ReturnErrorException;
+import tds.dll.common.performance.services.ConfigurationService;
+import tds.dll.common.performance.utils.DateUtility;
+import tds.dll.common.performance.utils.HostNameHelper;
+import tds.dll.common.performance.utils.LegacyComparer;
+import tds.dll.common.performance.utils.LegacySqlConnection;
 import tds.student.performance.dao.*;
 import tds.student.performance.domain.*;
-import tds.student.performance.exceptions.ReturnErrorException;
 import tds.student.performance.services.*;
 import tds.student.performance.utils.*;
 import tds.student.sql.data.OpportunityInstance;
@@ -93,6 +99,9 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
 
     @Autowired
     LegacySqlConnection legacySqlConnection;
+
+    @Autowired
+    InitializeTestSegmentsService initializeTestSegmentsService;
 
     /**
      * Start a {@link TestOpportunity} for the requested {@code OpportunityInstance}.
@@ -423,7 +432,8 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
             Float initialAbility;
             _Ref<String> reason = new _Ref<>();
 
-            legacyStudentDll._InitializeTestSegments_SP(legacyConnection, testOpportunity.getKey(), reason, formKeyList);
+            initializeTestSegmentsService.initializeTestSegments(legacyConnection, testOpportunity, reason, formKeyList);
+            // legacyStudentDll._InitializeTestSegments_SP(legacyConnection, testOpportunity.getKey(), reason, formKeyList);
             //initializeTestSegments(testOpportunity, testSession, formKeyList);
 
             if (reason.get() != null) {

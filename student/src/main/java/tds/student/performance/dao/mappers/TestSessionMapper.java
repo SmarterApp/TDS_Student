@@ -13,7 +13,7 @@
 package tds.student.performance.dao.mappers;
 
 import org.springframework.jdbc.core.RowMapper;
-import tds.student.performance.utils.UuidAdapter;
+import tds.dll.common.performance.utils.UuidAdapter;
 import tds.student.performance.domain.TestSession;
 
 import java.sql.ResultSet;

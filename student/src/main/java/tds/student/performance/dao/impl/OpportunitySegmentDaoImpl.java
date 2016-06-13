@@ -24,13 +24,12 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.stereotype.Repository;
-import tds.student.performance.caching.CacheType;
+import tds.dll.common.performance.caching.CacheType;
+import tds.dll.common.performance.utils.LegacyDbNameUtility;
+import tds.dll.common.performance.utils.UuidAdapter;
 import tds.student.performance.dao.OpportunitySegmentDao;
-import tds.student.performance.domain.InsertTesteeResponse;
-import tds.student.performance.domain.ItemForTesteeResponse;
-import tds.student.performance.domain.OpportunitySegment;
-import tds.student.performance.utils.LegacyDbNameUtility;
-import tds.student.performance.utils.UuidAdapter;
+import tds.student.performance.dao.mappers.OpportunitySegmentPropertiesMapper;
+import tds.student.performance.domain.*;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -255,6 +254,159 @@ public class OpportunitySegmentDaoImpl implements OpportunitySegmentDao {
         singleTemplate.execute(SQL);
         logger.debug("Dropped temp table {}", tableName);
     }
+
+
+
+    @Override
+    public List<Map<String, Object>> dumpTable(Connection connection, String tableName) {
+
+        SingleConnectionDataSource singleDataSource = new SingleConnectionDataSource(connection, false);
+        JdbcTemplate singleTemplate = new JdbcTemplate(singleDataSource);
+
+        String sqlQuery = "select * from " + tableName;
+        List<Map<String, Object>> mapList =  singleTemplate.queryForList(sqlQuery);
+
+        return mapList;
+    }
+
+    @Override
+    public List<OpportunitySegmentProperties> getOpportunitySegmentPropertiesSegmented(UUID oppKey, String testKey) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("oppKey", UuidAdapter.getBytesFromUUID(oppKey));
+        parameters.put("testKey", testKey);
+
+        final String SQL = "SELECT \n" +
+                "    :oppKey AS _fk_TestOpportunity,\n" +
+                "    _key AS _efk_Segment,\n" +
+                "    s.testid AS segmentId,\n" +
+                "    testposition AS segmentPosition,\n" +
+                "    s.selectionAlgorithm AS algorithm,\n" +
+                "    s.maxItems AS opItemCnt,\n" +
+                "    -1 AS isPermeable,\n" +
+                "    false AS isSatisfied,\n" +
+                "    now(3) AS _date\n" +
+                "FROM\n" +
+                "    ${itembankdb}.tblsetofadminsubjects s\n" +
+                "WHERE\n" +
+                "    s.virtualtest = :testKey;";
+
+        return namedParameterJdbcTemplate.query(dbNameUtility.setDatabaseNames(SQL), parameters, new OpportunitySegmentPropertiesMapper());
+
+    }
+
+    @Override
+    public List<OpportunitySegmentProperties> getOpportunitySegmentProperties(UUID oppKey, String testKey, Integer segmentPosition) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("oppKey", UuidAdapter.getBytesFromUUID(oppKey));
+        parameters.put("testKey", testKey);
+        parameters.put("segmentPosition", segmentPosition);
+
+        final String SQL = "SELECT \n" +
+                "    :oppKey AS _fk_TestOpportunity,\n" +
+                "    :testKey AS _efk_Segment,\n" +
+                "    s.testid AS segmentId,\n" +
+                "    :segmentPosition AS segmentPosition,\n" +
+                "    s.selectionAlgorithm AS algorithm,\n" +
+                "    s.maxItems AS opItemCnt,\n" +
+                "    -1 AS isPermeable,\n" +
+                "    false AS isSatisfied,\n" +
+                "    now(3) AS _date\n" +
+                "FROM\n" +
+                "    ${itembankdb}.tblsetofadminsubjects s\n" +
+                "WHERE\n" +
+                "    s._key = :testKey;";
+
+        return namedParameterJdbcTemplate.query(dbNameUtility.setDatabaseNames(SQL), parameters, new OpportunitySegmentPropertiesMapper());
+
+    }
+
+
+    @Override
+    public int[] insertOpportunitySegments(List<OpportunitySegmentInsert> segmentList) {
+
+        List<SqlParameterSource> parameters = new ArrayList<>();
+
+        for (OpportunitySegmentInsert segment : segmentList) {
+            parameters.add(new MapSqlParameterSource()
+                    .addValue("_fk_testopportunity", UuidAdapter.getBytesFromUUID(segment.get_fk_TestOpportunity()))
+                    .addValue("_efk_segment", segment.get_efk_Segment())
+                    .addValue("segmentposition", segment.getSegmentPosition())
+                    .addValue("formkey", segment.getFormKey())
+                    .addValue("formid", segment.getFormId())
+                    .addValue("algorithm", segment.getAlgorithm())
+                    .addValue("opitemcnt", segment.getOpItemCnt())
+                    .addValue("ftitemcnt", segment.getFtItemCnt())
+                    .addValue("ftitems", segment.getFtItems())
+                    .addValue("ispermeable", segment.getIsPermeable())
+                    .addValue("restorepermon", segment.getRestorePermOn())
+                    .addValue("segmentid", segment.getSegmentId())
+                    .addValue("entryapproved", segment.getEntryApproved())
+                    .addValue("exitapproved", segment.getExitApproved())
+                    .addValue("formcohort", segment.getFormCohort())
+                    .addValue("issatisfied", segment.getSatisfied())
+                    .addValue("initialability", segment.getInitialAbility())
+                    .addValue("currentability", segment.getCurrentAbility())
+                    .addValue("_date", segment.get_date())
+                    .addValue("dateexited", segment.getDateExited())
+                    .addValue("itempool", segment.getItemPool())
+                    .addValue("poolcount", segment.getPoolCount()));
+        }
+
+        String sqlInsert = "INSERT INTO ${sessiondb}.testopportunitysegment\n" +
+                        "(\n" +
+                        "_fk_testopportunity,\n" +
+                        "_efk_segment,\n" +
+                        "segmentposition,\n" +
+                        "formkey,\n" +
+                        "formid,\n" +
+                        "algorithm,\n" +
+                        "opitemcnt,\n" +
+                        "ftitemcnt,\n" +
+                        "ftitems,\n" +
+                        "ispermeable,\n" +
+                        "restorepermon,\n" +
+                        "segmentid,\n" +
+                        "entryapproved,\n" +
+                        "exitapproved,\n" +
+                        "formcohort,\n" +
+                        "issatisfied,\n" +
+                        "initialability,\n" +
+                        "currentability,\n" +
+                        "_date,\n" +
+                        "dateexited,\n" +
+                        "itempool,\n" +
+                        "poolcount\n" +
+                        ")\n" +
+                "VALUES\n" +
+                        "(\n" +
+                        ":_fk_testopportunity,\n" +
+                        ":_efk_segment,\n" +
+                        ":segmentposition,\n" +
+                        ":formkey,\n" +
+                        ":formid,\n" +
+                        ":algorithm,\n" +
+                        ":opitemcnt,\n" +
+                        ":ftitemcnt,\n" +
+                        ":ftitems,\n" +
+                        ":ispermeable,\n" +
+                        ":restorepermon,\n" +
+                        ":segmentid,\n" +
+                        ":entryapproved,\n" +
+                        ":exitapproved,\n" +
+                        ":formcohort,\n" +
+                        ":issatisfied,\n" +
+                        ":initialability,\n" +
+                        ":currentability,\n" +
+                        ":_date,\n" +
+                        ":dateexited,\n" +
+                        ":itempool,\n" +
+                        ":poolcount\n" +
+                        ");";
+
+        return namedParameterJdbcTemplate.batchUpdate(dbNameUtility.setDatabaseNames(sqlInsert), parameters.toArray(new SqlParameterSource[segmentList.size()]));
+
+    }
+
 
 
 }

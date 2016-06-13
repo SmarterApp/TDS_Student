@@ -21,9 +21,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tds.dll.api.ICommonDLL;
-import tds.student.performance.exceptions.ReturnErrorException;
+import tds.dll.common.performance.exceptions.ReturnErrorException;
+import tds.dll.common.performance.utils.LegacySqlConnection;
 import tds.student.performance.services.LegacyErrorHandlerService;
-import tds.student.performance.utils.LegacySqlConnection;
 
 import java.sql.SQLException;
 import java.util.Iterator;

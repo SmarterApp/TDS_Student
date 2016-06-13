@@ -239,14 +239,14 @@ public class ItemScoringService implements IItemScoringService
    * 
    * @throws ReturnStatusException
    */
-  protected ItemResponseUpdateStatus updateResponse (OpportunityInstance oppInstance, IItemResponseUpdate responseUpdated, ItemScore score) throws ReturnStatusException {
+  protected ItemResponseUpdateStatus updateResponse (OpportunityInstance oppInstance, IItemResponseUpdate responseUpdated, ItemScore score, Float itemDuration) throws ReturnStatusException {
     StopWatch dbTimer = new StopWatch ();
     dbTimer.start ();
 
     ItemScoreInfo scoreInfoObj = score.getScoreInfo ();
     ScoreRationale scoreRationaleObj = score.getScoreInfo ().getRationale ();
     ReturnStatus updateStatus = _responseRepository.updateScoredResponse (oppInstance, responseUpdated, scoreInfoObj.getPoints (), scoreInfoObj.getStatus ().toString (), scoreRationaleObj.getMsg (),
-        score.getScoreLatency ());
+        score.getScoreLatency (), itemDuration);
 
     dbTimer.stop ();
 
@@ -258,7 +258,7 @@ public class ItemScoringService implements IItemScoringService
   }
 
   @Override
-  public List<ItemResponseUpdateStatus> updateResponses (OpportunityInstance oppInstance, List<ItemResponseUpdate> responsesUpdated) throws ReturnStatusException {
+  public List<ItemResponseUpdateStatus> updateResponses (OpportunityInstance oppInstance, List<ItemResponseUpdate> responsesUpdated, Float pageDuration) throws ReturnStatusException {
     List<ItemResponseUpdateStatus> responseResults = new ArrayList<ItemResponseUpdateStatus> ();
 
     for (ItemResponseUpdate responseUpdate : responsesUpdated) {
@@ -279,7 +279,7 @@ public class ItemScoringService implements IItemScoringService
       // problem
       if (score != null) {
         // save response with error
-        updateStatus = updateResponse (oppInstance, responseUpdate, score);
+        updateStatus = updateResponse (oppInstance, responseUpdate, score, pageDuration);
       } else {
         // for asynchronous we need to save the score first indicating it
         // is machine scorable and then submit to the scoring web site
@@ -290,7 +290,7 @@ public class ItemScoringService implements IItemScoringService
               setMsg ("Waiting for machine score.");
             }
           }, new ArrayList<ItemScoreInfo> (), null);
-          updateStatus = updateResponse (oppInstance, responseUpdate, score);
+          updateStatus = updateResponse (oppInstance, responseUpdate, score, pageDuration);
 
           // TODO: if score returned here ends up being
           // ScoringStatus.ScoringError should we save this?
@@ -299,7 +299,7 @@ public class ItemScoringService implements IItemScoringService
         // for synchronous we need to score first and then save
         else {
           score = scoreResponse (oppInstance.getKey (), responseUpdate, itsDoc);
-          updateStatus = updateResponse (oppInstance, responseUpdate, score);
+          updateStatus = updateResponse (oppInstance, responseUpdate, score, pageDuration);
         }
       }
 

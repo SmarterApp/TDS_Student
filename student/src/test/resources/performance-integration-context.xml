@@ -17,6 +17,12 @@
            http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 
 
+    <context:component-scan base-package="tds.dll.common.performance">
+        <context:exclude-filter type="regex" expression="tds.dll.common.performance.services.impl.*" />
+        <!-- these 2 classes are base classes for extended methods in the local implemenation used in student -->
+        <context:exclude-filter type="regex" expression="tds.dll.common.performance.dao.impl.ConfigurationDaoImpl" />
+        <context:exclude-filter type="regex" expression="tds.dll.common.performance.services.impl.DbLatencyServiceImpl" />
+    </context:component-scan>
     <context:component-scan base-package="tds.student.performance">
         <context:exclude-filter type="regex" expression="tds.student.performance.services.impl.*" />
     </context:component-scan>
@@ -34,11 +40,11 @@
     </bean>
 
 
-    <bean id="cachingService" class="tds.student.performance.caching.impl.CachingServiceImpl" >
+    <bean id="cachingService" class="tds.dll.common.performance.caching.impl.CachingServiceImpl" >
         <property name="enabled" value="true" />
     </bean>
 
-    <bean id="cacheKeyGenerator" class="tds.student.performance.caching.CacheKeyGenerator" />
+    <bean id="cacheKeyGenerator" class="tds.dll.common.performance.caching.CacheKeyGenerator" />
 
     <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" p:cacheManager-ref="ehcache" />
 

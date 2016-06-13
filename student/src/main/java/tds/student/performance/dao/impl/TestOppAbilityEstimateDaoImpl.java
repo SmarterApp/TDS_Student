@@ -18,10 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
+import tds.dll.common.performance.utils.LegacyDbNameUtility;
+import tds.dll.common.performance.utils.UuidAdapter;
 import tds.student.performance.dao.TestOppAbilityEstimateDao;
 import tds.student.performance.domain.TestOppAbilityEstimate;
-import tds.student.performance.utils.LegacyDbNameUtility;
-import tds.student.performance.utils.UuidAdapter;
 
 import javax.sql.DataSource;
 import java.sql.Timestamp;
@@ -29,9 +29,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-/**
- * Created by emunoz on 1/4/16.
- */
 @Repository
 public class TestOppAbilityEstimateDaoImpl implements TestOppAbilityEstimateDao {
     private static final Logger logger = LoggerFactory.getLogger(TestOppAbilityEstimateDaoImpl.class);

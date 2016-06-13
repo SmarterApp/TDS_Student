@@ -15,14 +15,13 @@ package tds.student.performance.dao;
 import org.junit.Assert;;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import tds.dll.common.performance.domain.ClientSystemFlag;
+import tds.dll.common.performance.domain.Externs;
 import tds.student.performance.IntegrationTest;
 import tds.student.performance.domain.*;
 
 import java.util.List;
 
-/**
- * Created by jjohnson on 12/25/15.
- */
 public class ConfigurationDaoTest extends IntegrationTest {
     @Autowired
     ConfigurationDao configurationDao;
