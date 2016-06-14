@@ -17,7 +17,7 @@
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>student</artifactId>
-			<version>R02.00.02</version>
+			<version>2.1.0</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.opentestsystem.shared</groupId>
