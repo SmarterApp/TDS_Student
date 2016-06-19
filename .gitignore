@@ -133,3 +133,8 @@ local.properties
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+## Custom for Student project ##
+# ignore he overlay from shared-blackbox
+overlays/
+student/.idea/
