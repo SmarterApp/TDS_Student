@@ -141,3 +141,5 @@ hs_err_pid*
 # ignore he overlay from shared-blackbox
 overlays/
 student/.idea/
+student.library/.idea
+*.iml
