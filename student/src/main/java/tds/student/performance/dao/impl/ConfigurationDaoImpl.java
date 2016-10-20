@@ -224,4 +224,33 @@ public class ConfigurationDaoImpl extends tds.dll.common.performance.dao.impl.Co
         return recordCount > 0;
     }
 
+    /**
+     * Determine if a {@code TestConfig} should have its {@code isMsb} property set.
+     *
+     * @param clientName The client name.
+     * @param testId The test ID (i.e. the name of the test).
+     * @return {@code true} if the {@code isMsb} should be set; otherwise {@code false}.
+     */
+    @Override
+    public Boolean isMsb(String clientName, String testId) {
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("clientName", clientName);
+        parameters.put("testId", testId);
+
+        final String SQL =
+                "SELECT\n" +
+                        "COUNT(clientname)\n" +
+                        "FROM\n" +
+                        "${configdb}.client_testproperties\n" +
+                        "WHERE\n" +
+                        "clientname = :clientName\n" +
+                        "AND TestID = :testId\n" +
+                        "AND msb = 1\n" +
+                        "LIMIT 1";
+
+        Integer recordCount = namedParameterJdbcTemplate.queryForInt(dbNameUtility.setDatabaseNames(SQL), parameters);
+
+        return recordCount > 0;
+    }
+
 }

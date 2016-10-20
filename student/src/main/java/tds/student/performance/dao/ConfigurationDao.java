@@ -21,4 +21,5 @@ public interface ConfigurationDao extends tds.dll.common.performance.dao.Configu
     List<StudentLoginField> getStudentLoginFields(String clientName);
     ConfigTestToolType getTestToolType(String clientName, String toolName, String contextType, String context);
     Boolean isSetForScoreByTDS(String clientName, String testId);
+    Boolean isMsb(String clientName, String testId);
 }

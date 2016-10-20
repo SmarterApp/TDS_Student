@@ -235,6 +235,8 @@ public class StudentContext
     StudentCookie.setCookieData ("TC_P", testConfig.getPrefetch ());
     StudentCookie.setCookieData ("TC_SBT", testConfig.isScoreByTDS ());
     StudentCookie.setCookieData ("TC_VC", testConfig.isValidateCompleteness ());
+
+    StudentCookie.setCookieData("TC_MSB", testConfig.isMsb());
   }
 
   public static TestConfig getTestConfig () {
@@ -248,6 +250,7 @@ public class StudentContext
     testConfig.setPrefetch (StudentCookie.getCookieDataInt ("TC_P"));
     testConfig.setScoreByTDS (StudentCookie.getCookieDataBoolean ("TC_SBT"));
     testConfig.setValidateCompleteness (StudentCookie.getCookieDataBoolean ("TC_VC"));
+    testConfig.setIsMsb(StudentCookie.getCookieDataBoolean("TC_MSB"));
 
     // check if test config exists
     return (testConfig.getTestLength () != 0) ? testConfig : null;

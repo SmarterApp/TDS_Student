@@ -161,10 +161,14 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                     testOpportunity.getClientName(),
                     testOpportunity.getTestId());
 
+            Boolean isMsb = configurationDao.isMsb(
+                    testOpportunity.getClientName(),
+                    testOpportunity.getTestId());
+
             if (testOpportunity.getDateStarted() == null) { // Emulate logic to call legacy method (StudentDLL._InitializeOpportunity_SP) on line 5358 of StudentDLL.T_StartTestOpportunity_SP.
                 Integer testLength = initializeStudentOpportunity(testOpportunity, clientTestProperty, formKeyList);
 
-                config = TestConfigHelper.getNew(clientTestProperty, timelimitConfiguration, testLength, scoreByTds);
+                config = TestConfigHelper.getNew(clientTestProperty, timelimitConfiguration, testLength, scoreByTds, isMsb);
             } else {         // Restart the most recent test opportunity, starting @ line 5405 of StudentDLL.T_StartTestOpportunity_SP.
                 Date lastActivity = testOpportunityDao.getLastActivity(opportunityInstance.getKey());
                 Integer gracePeriodRestarts = testOpportunity.getGracePeriodRestarts();
@@ -223,7 +227,8 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                         testOpportunity.getMaxItems(),
                         restartCount,
                         resumeItemPosition,
-                        scoreByTds);
+                        scoreByTds,
+                        isMsb);
             }
 
             dbLatencyService.logLatency("T_StartTestOpportunity", dbLatencyTime, null, testOpportunity);
