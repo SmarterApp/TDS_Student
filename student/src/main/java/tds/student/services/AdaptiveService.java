@@ -23,6 +23,7 @@ import tds.student.services.abstractions.IAdaptiveService;
 import tds.student.services.abstractions.IResponseService;
 import tds.student.services.data.ItemResponse;
 import tds.student.services.data.PageGroup;
+import tds.student.services.data.TestOpportunity;
 import tds.student.sql.data.AdaptiveGroup;
 import tds.student.sql.data.AdaptiveItem;
 import tds.student.sql.data.OpportunityInstance;
@@ -86,7 +87,7 @@ public class AdaptiveService extends AbstractDAO implements IAdaptiveService
     return adaptiveItem;
   }
 
-  public PageGroup createNextItemGroup (OpportunityInstance oppInstance, int lastPage, int lastPosition) throws ReturnStatusException {
+  public PageGroup createNextItemGroup (TestOpportunity testOpportunity, int lastPage, int lastPosition) throws ReturnStatusException {
     PageGroup pageGroup = null;
     try {
       // generate next item group
@@ -95,7 +96,7 @@ public class AdaptiveService extends AbstractDAO implements IAdaptiveService
 
         // this is main command! error is referenced String
       _Ref<String> errorRef = new _Ref<>();
-        itemGroup = _aironline.getNextItemGroup (connection, oppInstance.getKey (), errorRef);
+        itemGroup = _aironline.getNextItemGroup (connection, testOpportunity.getOppInstance().getKey (), errorRef);
           
         if(errorRef.get() != null  && !errorRef.get().isEmpty())
         {
@@ -122,7 +123,7 @@ public class AdaptiveService extends AbstractDAO implements IAdaptiveService
         adaptiveGroup.getItems ().add (adaptiveItem);
       }
       try {
-        pageGroup = _responseService.insertItems (oppInstance, adaptiveGroup);
+        pageGroup = _responseService.insertItems (testOpportunity.getOppInstance(), adaptiveGroup);
       } catch (Exception e) {
         _logger.error (e.getMessage (),e);
         throw new ReturnStatusException (e);
