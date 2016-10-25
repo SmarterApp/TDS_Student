@@ -96,7 +96,7 @@ public class AdaptiveService extends AbstractDAO implements IAdaptiveService
 
         // this is main command! error is referenced String
       _Ref<String> errorRef = new _Ref<>();
-        itemGroup = _aironline.getNextItemGroup (connection, testOpportunity.getOppInstance().getKey (), errorRef);
+        itemGroup = _aironline.getNextItemGroup (connection, testOpportunity.getOppInstance().getKey (), testOpportunity.getTestConfig().isMsb(), errorRef);
           
         if(errorRef.get() != null  && !errorRef.get().isEmpty())
         {
