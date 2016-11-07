@@ -232,7 +232,7 @@ public class ConfigurationDaoImpl extends tds.dll.common.performance.dao.impl.Co
      * @return {@code true} if the {@code isMsb} should be set; otherwise {@code false}.
      */
     @Override
-    public Boolean isMsb(String clientName, String testId) {
+    public boolean isMsb(String clientName, String testId) {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("clientName", clientName);
         parameters.put("testId", testId);

@@ -161,7 +161,7 @@ public class TestOpportunityServiceImpl implements TestOpportunityService {
                     testOpportunity.getClientName(),
                     testOpportunity.getTestId());
 
-            Boolean isMsb = configurationDao.isMsb(
+            boolean isMsb = configurationDao.isMsb(
                     testOpportunity.getClientName(),
                     testOpportunity.getTestId());
 
