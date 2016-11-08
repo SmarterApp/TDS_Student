@@ -1,11 +1,12 @@
 /*Session 2014 Font */
-@font-face{
-	font-family:'inconsolata';
-	src:url('../shared/fonts/inconsolata.otf');
-	src: url('../shared/fonts/inconsolata.eot?#iefix') format('embedded-opentype'),
-         url('../shared/fonts/inconsolata.woff') format('woff'),
-         url('../shared/fonts/inconsolata.ttf') format('truetype'),
-         url('../shared/fonts/inconsolata.svg#inconsolatamedium') format('svg');
+@font-face {
+	font-family: 'inconsolata';
+	src: url('../shared/fonts/inconsolata.otf');
+	src: url('../shared/fonts/inconsolata.eot?#iefix')
+		format('embedded-opentype'), url('../shared/fonts/inconsolata.woff')
+		format('woff'), url('../shared/fonts/inconsolata.ttf')
+		format('truetype'),
+		url('../shared/fonts/inconsolata.svg#inconsolatamedium') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -24,7 +25,6 @@
 	text-indent: -9999px;
 }
 /* @group preloader */
-
 .preloader {
 	display: block;
 	height: 1px;
@@ -36,67 +36,90 @@
 	z-index: 0;
 	overflow: hidden;
 }
+
 .preloader span {
 	display: block;
 }
+
 .preloader .recorder {
 	background-image: url(../Shared/Images/controls/audio2013.png);
 }
+
 .preloader .selectTest {
 	background-image: url(../Shared/Images/icons/select.gif);
 }
+
 .preloader .loading {
 	background-image: url(../Shared/Images/loadingAnimation.gif);
 }
+
 .preloader .spinner {
 	background-image: url(../Shared/Images/saved.gif);
 }
+
 .preloader .sprites_yui {
 	background-image: url(../Shared/Images/controls/context.gif);
 }
+
 .preloader .sprites_buttons {
 	background-image: url(../Shared/Images/controls/sprites_student.png);
 }
+
 .preloader .buttons_back {
 	background-image: url(../Shared/Images/controls/buttons_base.png);
 }
+
 .preloader .masking {
 	background-image: url(../Shared/Images/white.png);
 }
 /* @end */
-
 body {
 	font-family: Arial, Helvetica, sans-serif;
 }
+
 em {
 	font-style: italic;
 }
+
 strong {
 	font-weight: bold;
 }
+
 .clear {
 	clear: both;
 	display: block;
 }
+
 .tds-ot-wrapper {
 	font-size: 68%;
 }
+
 .tds-ot-section {
 	padding: 1em;
 	font-size: 1.2em;
 	line-height: 1.1em;
 }
-.ot-shadowBox {
+
+.ot-shadowBox, .browserDeniedOptions .optionLink {
 	margin-left: auto;
 	margin-right: auto;
 	width: 70em;
+	max-width: 100%;
+}
+
+.browserDeniedOptions .optionLink {
+	display: block;
+	font-size: 1.2em;
+	text-shadow: #fff 0px 0px 3px;
 }
 /* fakes drop shadow for Firefox 2 */
-.browserVer_2.browser_firefox .ot-shadowBox, .browserVer_3.browser_firefox .ot-shadowBox {
+.browserVer_2.browser_firefox .ot-shadowBox, .browserVer_3.browser_firefox .ot-shadowBox
+	{
 	border: 3px solid #eaeaea;
 	-moz-border-radius: 12px;
 	-webkit-border-radius: 12px;
 }
+
 .ot-innerShadow {
 	border: solid 2px #d3eabb;
 	-moz-box-shadow: 0em 0em 5px #666;
@@ -107,81 +130,172 @@ strong {
 	border-radius: 10px;
 	padding: 1em;
 }
-#sectionDiagnostics .ot-innerShadow div{
+
+#sectionDiagnostics .ot-innerShadow div {
 	line-height: 1.5em;
 }
 
-.TDS_PS_L2 .ot-innerShadow{
+.TDS_PS_L2 .ot-innerShadow {
 	padding: 1em 1em 2em 1em;
 }
-.ot-innerShadow{
+
+.ot-innerShadow {
 	background-color: #fff;
 }
 
 .ot-shadowBox h1 {
-    border-bottom: 1px solid #04A033;
-    font-size: 2.5em;
-    line-height: 1em;
-    margin-bottom: .5em;
+	font-size: 2.7em;
+	line-height: 1em;
+	margin-bottom: 0.1em;
+}
+
+.ot-shadowBox .instructions-top {
+	font-size: 1.5em;
+	line-height: 1.1em;
+	margin-bottom: 0.5em;
 }
 
 .ot-shadowBox .instructions {
-    border-bottom: 1px solid #CDE7B2;
-    border-top: 1px solid #CDE7B2;
-    font-size: 1.5em;
-    line-height: 1.2em;
-    margin-bottom: 0.5em;
-    padding: 1em 0;
+	font-size: 1.5em;
+	line-height: 1.2em;
+	margin-bottom: 0.5em;
+	padding: 1em 0;
+}
+
+/*grey box for instruction areas*/
+.ot-infoConfirm, #testSelections, #segments.accommodations,
+	#ot-infoConfirm, #summary-segments, #quickGuide, #sectionSoundCheck .instructions,
+	#sectionTTSCheck .instructions, #loginError .browserDenied,
+	#sectionTestResults .instructions, #sectionTestResults .identity,
+	#testApprovalProgress {
+	background: rgba(220, 220, 220, 0.2);
+	border-top: 1px solid;
+	border-bottom: 1px solid;
+	border-color: #049f33;
+	margin: 0 -0.5em;
+	padding: 0.5em;
+}
+
+#testSelections {
+	margin: 0 -1em;
+	padding: 1em;
+}
+
+#testApprovalProgress {
+	margin: 0 -1em;
+}
+
+#segments.accommodations, #sectionSoundCheck .instructions,
+	#sectionTTSCheck .instructions {
+	margin: 0 -0.7em;
+	padding: 0.7em;
+}
+
+#ot-infoConfirm, #sectionTestResults .identity {
+	border-bottom: none;
+	margin: 0 -0.8em;
+	padding: 0.8em 0.8em 0 0.8em;
+}
+
+#summary-segments {
+	border-top: none;
+	margin: 0 -1em;
+	padding: 0 1em 1em 1em;
+}
+
+#sectionTestResults .instructions {
+	border-top: none;
+	margin: 0 -0.5em;
+	padding: 0.5em;
+}
+
+#loginError .browserDenied {
+	margin: 0 -1em;
+	padding: 1em;
+}
+
+#quickGuide {
+	border: 1px solid #049f33;
+	border-left: none;
+	border-right: none;
+	margin: 0 -1em;
+	padding: 0;
+}
+
+#sectionTTSCheck #TTS_Adjustments .instructions {
+	margin: 0 -0.65em;
 }
 
 .practiceTest .forOperational, .forPractice, .practiceTest .goPractice {
 	display: none;
 }
+
 .practiceTest .forPractice {
 	display: inherit;
 }
 
-/* @group End of test survery */
+/* @group instructions bottom */
+.actions h3 {
+	font-size: 1em;
+	font-weight: bold;
+	line-height: 1.1em;
+	margin-bottom: 0.2em;
+}
 
-#dialogTestSurvey{
+.actions .instructions-bottom {
+	font-size: 1em;
+	line-height: 1.1em;
+	margin-bottom: 1em;
+}
+/* @end */
+
+/* @group End of test survery */
+#dialogTestSurvey {
 	height: 400px !important;
 }
-#dialogTestSurvey h2{
+
+#dialogTestSurvey h2 {
 	padding: 0.5em;
 }
+
 #dialogTestSurvey .bd {
 	line-height: 1em;
 	height: 290px;
 	overflow: auto;
 }
+
 #dialogTestSurvey .bd form {
 	padding-bottom: 10px;
 }
 
 /* @end */
-
 .element-invisible {
-  position: absolute !important;
-  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
-  clip: rect(1px, 1px, 1px, 1px);
+	position: absolute !important;
+	clip: rect(1px, 1px, 1px, 1px); /* IE6, IE7 */
+	clip: rect(1px, 1px, 1px, 1px);
 }
+
 .hidden {
 	display: none;
 	visibility: hidden;
 }
+
 select option {
-    padding-right: 1em;
+	padding-right: 1em;
 }
 
 .tool-help {
 	width: 720px !important;
 }
+
 .TDS_PS_L1 .tool-help {
 	width: 820px !important;
 }
+
 .TDS_PS_L2 .tool-help, .TDS_PS_L3 .tool-help, .TDS_PS_L4 .tool-help {
 	width: 900px !important;
 }
+
 .ot-innerShadow h2:focus {
 	outline: none;
 }
@@ -189,28 +303,58 @@ select option {
 
 /* resizing header of dialogs to match up with inside of test*/
 .TDS_PS_L0.yui-skin-sam .yui-panel .hd {
-    font-size: 1.2em !important;
-    line-height: 1.3em;
+	font-size: 1.2em !important;
+	line-height: 1.3em;
 }
 
 /* @group zooming */
+.TDS_PS_L1 #sections {
+	font-size: 1.2em;
+}
 
-.TDS_PS_L1 #sections { 
-	font-size: 1.2em; 
+.TDS_PS_L2 #sections {
+	font-size: 1.5em;
 }
-.TDS_PS_L2 #sections { 
-	font-size: 1.5em; 
+
+.TDS_PS_L3 #sections {
+	font-size: 2em;
 }
-.TDS_PS_L3 #sections { 
-	font-size: 2em; 
-}
-.TDS_PS_L4 #sections { 
+
+.TDS_PS_L4 #sections {
 	font-size: 2.4em;
-	line-height: 1em; 
+	line-height: 1em;
 }
 
-.TDS_PS_L1 #sections input, .TDS_PS_L2 #sections input, .TDS_PS_L3 #sections input, .TDS_PS_L4 #sections input, .TDS_PS_L1 #sections select, .TDS_PS_L2 #sections select, .TDS_PS_L3 #sections select, .TDS_PS_L4 #sections select { 
+.TDS_PS_L1 #sections input, .TDS_PS_L2 #sections input, .TDS_PS_L3 #sections input,
+	.TDS_PS_L4 #sections input, .TDS_PS_L1 #sections select, .TDS_PS_L2 #sections select,
+	.TDS_PS_L3 #sections select, .TDS_PS_L4 #sections select {
 	font-size: 1em;
+}
+
+/*resize radio buttons & checkboxes with zoom levels*/
+#sections #dialogTestSurvey input[type="radio"] {
+	margin: 0.5em;
+	vertical-align: middle;
+}
+
+.TDS_PS_L1 #sections input[type="radio"], .TDS_PS_L1 #sections input[type="checkbox"]
+	{
+	transform: scale(1.2);
+}
+
+.TDS_PS_L2 #sections input[type="radio"], .TDS_PS_L2 #sections input[type="checkbox"]
+	{
+	transform: scale(1.5);
+}
+
+.TDS_PS_L3 #sections input[type="radio"], .TDS_PS_L3 #sections input[type="checkbox"]
+	{
+	transform: scale(2);
+}
+
+.TDS_PS_L4 #sections input[type="radio"], .TDS_PS_L4 #sections input[type="checkbox"]
+	{
+	transform: scale(2.4);
 }
 
 /*This attempted fix is causing Bug 147712.  New fix needs to be persued*/
@@ -218,126 +362,160 @@ select option {
 .TDS_PS_L1 #sectionLogin input, .TDS_PS_L2 #sectionLogin input .TDS_PS_L3 #sectionLogin input, .TDS_PS_L4 #sectionLogin input  {  At the higher zoom levels this is causing bug 103648 
 	margin-top: -.2em;
 }*/
-
-.TDS_PS_L1 #sections input[type=checkbox], .TDS_PS_L2 #sections input[type=checkbox], .TDS_PS_L3 #sections input[type=checkbox], .TDS_PS_L4 #sections input[type=checkbox] {
+.TDS_PS_L1 #sections input[type=checkbox], .TDS_PS_L2 #sections input[type=checkbox],
+	.TDS_PS_L3 #sections input[type=checkbox], .TDS_PS_L4 #sections input[type=checkbox]
+	{
 	height: 1em !important;
 	width: 1em !important;
-} 
-.TDS_PS_L2 .ot-shadowBox, .TDS_PS_L3 .ot-shadowBox, .TDS_PS_L4 .ot-shadowBox, .TDS_PS_L3 #sectionTestApproval .ot-shadowBox, .TDS_PS_L4 #sectionTestApproval .ot-shadowBox, .TDS_PS_L2 #loginWrap, .TDS_PS_L3 #loginWrap, .TDS_PS_L4 #loginWrap, .TDS_PS_L1.practiceTest #sectionLogin .ot-shadowBox, .TDS_PS_L2.practiceTest #sectionLogin .ot-shadowBox, .TDS_PS_L3.practiceTest #sectionLogin .ot-shadowBox, .TDS_PS_L4.practiceTest #sectionLogin .ot-shadowBox, .TDS_PS_L1 #ot-blurbs, .TDS_PS_L2 #ot-blurbs, .TDS_PS_L3 #ot-blurbs, .TDS_PS_L4 #ot-blurbs {
-    width: auto;
-    margin-left: 40px;
-    margin-right: 40px;
-    float: none;
 }
-.TDS_PS_L1 .blurb, .TDS_PS_L2 .blurb, .TDS_PS_L3 .blurb, .TDS_PS_L4 .blurb {
+
+.TDS_PS_L2 .ot-shadowBox, .TDS_PS_L3 .ot-shadowBox, .TDS_PS_L4 .ot-shadowBox,
+	.TDS_PS_L3 #sectionTestApproval .ot-shadowBox, .TDS_PS_L4 #sectionTestApproval .ot-shadowBox,
+	.TDS_PS_L2 #loginWrap, .TDS_PS_L3 #loginWrap, .TDS_PS_L4 #loginWrap,
+	.TDS_PS_L1.practiceTest #sectionLogin .ot-shadowBox, .TDS_PS_L2.practiceTest #sectionLogin .ot-shadowBox,
+	.TDS_PS_L3.practiceTest #sectionLogin .ot-shadowBox, .TDS_PS_L4.practiceTest #sectionLogin .ot-shadowBox,
+	.TDS_PS_L1 #ot-blurbs, .TDS_PS_L2 #ot-blurbs, .TDS_PS_L3 #ot-blurbs,
+	.TDS_PS_L4 #ot-blurbs {
+	width: auto;
+	margin-left: 40px;
+	margin-right: 40px;
+	float: none;
+}
+
+.TDS_PS_L1 .blurb, .TDS_PS_L2 .blurb, .TDS_PS_L3 .blurb, .TDS_PS_L4 .blurb
+	{
 	margin-left: 0px;
 	margin-top: .5em;
 }
+
 .TDS_PS_L4 .loginForm label, .TDS_PS_L4.HAW .loginForm label {
-   width: 7em;
-   max-width: inherit;
-   min-width: inherit;
+	width: 7em;
+	max-width: inherit;
+	min-width: inherit;
 }
-.platform_ios.TDS_PS_L4 .loginForm label, .platofrm_ios.TDS_PS_L4.HAW .loginForm label{
+
+.platform_ios.TDS_PS_L4 .loginForm label, .platofrm_ios.TDS_PS_L4.HAW .loginForm label
+	{
 	width: 6em;
 	margin-left: 0.5em;
 }
-.TDS_PS_L1 #sectionLogin .ot-shadowBox, .TDS_PS_L2 #sectionLogin .ot-shadowBox, .TDS_PS_L3 #sectionLogin .ot-shadowBox, .TDS_PS_L4 #sectionLogin .ot-shadowBox {
+
+.TDS_PS_L1 #sectionLogin .ot-shadowBox, .TDS_PS_L2 #sectionLogin .ot-shadowBox,
+	.TDS_PS_L3 #sectionLogin .ot-shadowBox, .TDS_PS_L4 #sectionLogin .ot-shadowBox
+	{
 	width: auto;
 }
-.TDS_PS_L1.practiceTest #loginWrap, .TDS_PS_L2.practiceTest #loginWrap, .TDS_PS_L3.practiceTest #loginWrap, .TDS_PS_L4.practiceTest #loginWrap {
+
+.TDS_PS_L1.practiceTest #loginWrap, .TDS_PS_L2.practiceTest #loginWrap,
+	.TDS_PS_L3.practiceTest #loginWrap, .TDS_PS_L4.practiceTest #loginWrap
+	{
 	width: auto;
 }
-.TDS_PS_L1 #sectionTestApproval .ot-shadowBox, .TDS_PS_L2 #sectionTestApproval .ot-shadowBox {
+
+.TDS_PS_L1 #sectionTestApproval .ot-shadowBox, .TDS_PS_L2 #sectionTestApproval .ot-shadowBox
+	{
 	margin-left: auto;
 	margin-right: auto;
 }
+
 .TDS_PS_L3 #sectionTestSelection table {
 	font-size: .9em;
-} 
+}
+
 .TDS_PS_L4 #sectionTestSelection table {
 	font-size: .8em;
 }
+
 .TDS_PS_L4 #sectionTestSelection table a {
 	font-size: .9em;
 }
+
 .TDS_PS_L4.ESN #sectionTestSelection table a {
 	width: 9.5em;
 	font-size: .85em;
 }
+
 .TDS_PS_L1 .accommodations select {
-    max-width: 30em;
+	max-width: 30em;
 }
+
 .TDS_PS_L2 .accommodations select {
-    max-width: 24em;
+	max-width: 24em;
 }
+
 .TDS_PS_L3 .accommodations select {
-    max-width: 16em;
+	max-width: 16em;
 }
+
 .TDS_PS_L4 .accommodations select {
-    max-width: 12em;
+	max-width: 12em;
 }
 
 /* @end */
 
-
 /* @group header and footer */
 #ot-topBar {
-    background-color: #175283;
-    color: #FFFFFF;
-    height: 25px;
-    padding-right: 5px;
-    border-bottom-width: 1px;
+	background-color: #175283;
+	color: #FFFFFF;
+	height: 25px;
+	padding-right: 5px;
+	border-bottom-width: 1px;
 	border-bottom-style: solid;
 	border-bottom-color: #fff;
 }
+
 #ot-studentInfo {
 	background-color: #0E4878;
-    border-right: 1px solid #5092C8;
-    display: block;
-    float: left;
-    height: 25px;
-    line-height: 25px;
-    padding-left: 5px;
-    padding-right: 5px;
+	border-right: 1px solid #5092C8;
+	display: block;
+	float: left;
+	height: 25px;
+	line-height: 25px;
+	padding-left: 5px;
+	padding-right: 5px;
 }
+
 #ot-topBar .sessionID {
-    /*border-right: 1px solid #5092C8;*/
-    display: block;
-    float: right;
-    height: 25px;
-    line-height: 25px;
-    padding-right: 5px;
-	text-transform:uppercase;
+	/*border-right: 1px solid #5092C8;*/
+	display: block;
+	float: right;
+	height: 25px;
+	line-height: 25px;
+	padding-right: 5px;
+	text-transform: uppercase;
 	font-family: inconsolata;
 }
-#lblVerifySessionID{
-	text-transform:uppercase;
+
+#lblVerifySessionID {
+	text-transform: uppercase;
 	font-family: inconsolata;
 }
+
 .languages {
-    display: block;
-    float: left;
-    padding-left: 5px;
-    padding-top: 3px;
+	display: block;
+	float: left;
+	padding-left: 5px;
+	padding-top: 3px;
 }
+
 .ot-smallButtons a {
 	background-color: #DBEDFB;
-    color: #000000;
-    display: block;
-    float: right;
-    line-height: 1em;
-    margin-left: 5px;
-    margin-top: 4px;
-    padding: 1px 5px;
-    text-decoration: none;
-    text-transform: uppercase;
-	 -moz-transition: background-color .2s ease-in, color .2s ease-in;
-    -webkit-transition: background-color .2s ease-in, color .2s ease-in;
-    transition: background-color .2s ease-in, color .2s ease-in; 
+	color: #000000;
+	display: block;
+	float: right;
+	line-height: 1em;
+	margin-left: 5px;
+	margin-top: 4px;
+	padding: 1px 5px;
+	text-decoration: none;
+	text-transform: uppercase;
+	-moz-transition: background-color .2s ease-in, color .2s ease-in;
+	-webkit-transition: background-color .2s ease-in, color .2s ease-in;
+	transition: background-color .2s ease-in, color .2s ease-in;
 	border: 2px solid #c2c2c2;
 	border-radius: 50%;
 }
+
 .ot-smallButtons a:hover {
 	/*background-color: #04A033;
     color: #fff; 
@@ -345,32 +523,36 @@ select option {
     -webkit-transition: background-color .2s ease-in, color .2s ease-in;
     transition: background-color .2s ease-in, color .2s ease-in;*/
 	background-color: #00aeef;
-    border-color: #fff;
-    box-shadow: 0 0 2px #b4b4b4;
+	border-color: #fff;
+	box-shadow: 0 0 2px #b4b4b4;
 	color: white;
 }
 /*for mobile devices */
 #btnHelp {
 	/*min-width: 2.5em;*/
+	
 }
 /*Fix for 96774 - SB seems to be ignoring above's min-width and treating it as width*/
-.HAW #btnHelp{
+.HAW #btnHelp {
 	/*min-width: 5.3em;
 	width: auto;*/
+	
 }
 
 #logOut {
 	display: none;
 }
+
 #btnAccGlobal {
 	background-image: url(../Shared/Images/universal/universal_shell.png);
 	background-position: center -3832px;
 	width: 0px;
 	height: 0px;
-	padding: 7px;/* was 14px 14px 0 0; changed for bug 144193*/
+	padding: 7px; /* was 14px 14px 0 0; changed for bug 144193*/
 	font-size: 0em;
 	overflow: hidden;
 }
+
 #btnAccGlobal:hover, #btnAccGlobal:focus {
 	background-position: center -3856px;
 	/*in response to bug 102689 - focus outline being caused by text-indent*/
@@ -378,32 +560,38 @@ select option {
 	height: 0px;
 	overflow: hidden;
 }
-#btnHelp{
+
+#btnHelp {
 	background-image: url(../Shared/Images/universal/universal_shell.png);
 	background-position: center -748px;
 	width: 0px;
 	height: 0px;
-	padding: 7px;/* was 14px 14px 0 0; changed for bug 144193*/
+	padding: 7px; /* was 14px 14px 0 0; changed for bug 144193*/
 	font-size: 0em;
 	overflow: hidden;
 }
-#btnHelp:hover, #btnHelp:focus{
+
+#btnHelp:hover, #btnHelp:focus {
 	background-position: center -777px;
 	text-indent: 0px;
 	height: 0px;
 	overflow: hidden;
 }
-#logOut, #proctorLogout{
+
+#logOut, #proctorLogout {
 	/* revert back to text instead of image*/
 	background-image: none;
 	border-radius: 5px;
 }
-#logOut:hover, #logOut:focus,
-#proctorLogout:hover, #proctorLogout:focus{
+
+#logOut:hover, #logOut:focus, #proctorLogout:hover, #proctorLogout:focus
+	{
 	/* do nothing - hiding previous icon */
+	
 }
-.browser_airsecurebrowser #logOut, 
-.browser_airmobilesecurebrowser #logOut {
+
+.browser_airsecurebrowser #logOut, .browser_airmobilesecurebrowser #logOut
+	{
 	display: block;
 }
 /* keep the close button from displaying on mobile device */
@@ -412,14 +600,13 @@ select option {
 }
 
 /* launchpad button*/
-#btnLaunchpad{
-	border-radius:3px;
+#btnLaunchpad {
+	border-radius: 3px;
 }
 
-.platform_ios #btnLaunchpad, 
-.platform_android #btnLaunchpad, 
-.platform_chrome.browser_airsecurebrowser #btnLaunchpad, 
-.platform_chrome.browser_airmobilesecurebrowser #btnLaunchpad {
+.platform_ios #btnLaunchpad, .platform_android #btnLaunchpad,
+	.platform_chrome.browser_airsecurebrowser #btnLaunchpad,
+	.platform_chrome.browser_airmobilesecurebrowser #btnLaunchpad {
 	display: block !important;
 	background: url(../Images/launchpad.png) no-repeat center 2px;
 	float: left;
@@ -430,10 +617,12 @@ select option {
 	overflow: hidden;
 	border: none;
 }
+
 #btnLaunchpad:active, #btnLaunchpad:hover {
 	background-color: transparent !important;
 	background-position: center -42px;
 }
+
 #ot-brand1 {
 	display: block;
 	height: 60px;
@@ -442,27 +631,32 @@ select option {
 	border-bottom-style: solid;
 	border-bottom-color: #04A033;
 }
+
 #ot-logo_spot1 {
 	display: block;
 	height: 60px;
 	width: 325px;
-	background: url(../Images/masterShell/logo_default_big.gif) no-repeat left bottom;
+	background: url(../Images/masterShell/logo_default_big.gif) no-repeat
+		left bottom;
 	float: left;
 }
-#ot-brand1 span.hiddenHeader
-{   /*was h1, removing h1 in favor of span*/
-    display: block;
-    overflow: hidden;
-    height: 0px;
-    width: 0px;
+
+#ot-brand1 span.hiddenHeader { /*was h1, removing h1 in favor of span*/
+	display: block;
+	overflow: hidden;
+	height: 0px;
+	width: 0px;
 }
+
 #ot-logo_spot2 {
 	display: block;
 	height: 60px;
 	width: 255px;
-	background: url(../Images/masterShell/bigMountain.gif) no-repeat left bottom;
+	background: url(../Images/masterShell/bigMountain.gif) no-repeat left
+		bottom;
 	float: right;
 }
+
 #ot-brand2 {
 	display: block;
 	height: 45px;
@@ -471,6 +665,7 @@ select option {
 	border-bottom-style: solid;
 	border-bottom-color: #04A033;
 }
+
 #ot-brand2 strong {
 	display: inline-block;
 	height: 45px;
@@ -485,42 +680,45 @@ select option {
 	padding-left: 45px;
 	background-position: 5px center;
 }
-.practiceTest #ot-brand2{
+
+.practiceTest #ot-brand2 {
 	background: #9c0f17;
 	height: 75px;
 	border-color: #fff;
 }
+
 .practiceTest #ot-brand2 strong {
 	/*background: #d3eabb url(../Images/masterShell/bike/bikeTop.gif) no-repeat 100% 50%;*/
-	background: url(../Images/masterShell/trike/trike_white.png) 10px center no-repeat;
+	background: url(../Images/masterShell/trike/trike_white.png) 10px center
+		no-repeat;
 	border-right: 3px solid transparent;
 	border-left: none;
 	color: #fff;
 	font-weight: lighter;
 	font-size: 2.5em;
-	 padding-left: 100px;
+	padding-left: 100px;
 	height: 75px;
 	line-height: 75px;
 	display: block;
 }
-
-/* SB-1346:Eliminating tricycle in student UI
-.practiceTest #sections{
+/* SB-1346 Eliminating tricycle
+ .practiceTest #sections{
 	background: url(../Images/masterShell/trike/trike_bg.png) right center no-repeat;
 	min-height: 500px;
 } */
 #tds-ot-footer {
 	color: #555555;
-    padding-bottom: 2em;
-    padding-right: 2em;
-    padding-top: 1em;
-    text-align: right;
+	padding-bottom: 2em;
+	padding-right: 2em;
+	padding-top: 1em;
+	text-align: right;
 }
+
 #tds-ot-footer span, #tds-ot-footer a {
-    color: #9DBF73;
-    font-size: 1.2em;
-    font-weight: bold;
-    text-decoration: none;
+	color: #9DBF73;
+	font-size: 1.2em;
+	font-weight: bold;
+	text-decoration: none;
 }
 
 /* @end */
@@ -566,19 +764,20 @@ select option {
 	color: #fff;
 }*/
 .actions {
-    display: block;
-    font-size: 1.5em;
-    /*height: 2.2em;*/
-    margin-top: 0.5em;
+	display: block;
+	font-size: 1.5em;
+	/*height: 2.2em;*/
+	margin-top: 0.5em;
 }
-.actions:after {  
-	content: "";  
-	display: block;  
-	clear: both;  
-	visibility: hidden;  
-	font-size: 0;  
-	height: 0;  
-}  
+
+.actions:after {
+	content: "";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	font-size: 0;
+	height: 0;
+}
 
 .actions span {
 	display: block;
@@ -593,12 +792,15 @@ select option {
 	padding: 0px;
 	margin-right: 1em;
 }
-.TDS_PS_L4 .actions span{
+
+.TDS_PS_L4 .actions span {
 	margin-right: 0.5em;
 }
-.TDS_PS_L4 .actions span span{
+
+.TDS_PS_L4 .actions span span {
 	margin-right: 0em;
 }
+
 .actions span span {
 	display: block;
 	float: left;
@@ -607,38 +809,43 @@ select option {
 	padding: 0px;
 	margin-right: 0px;
 }
+
 .actions button, .actions input {
 	border: none;
-    display: block;
-    margin: 0px;
-    background-color: transparent;
-    cursor: pointer;
-    color: #000000;
-    font-size: 93%;
-    /*line-height: 2;*/
-    min-height: 2em;
-    padding: 0px 1em;
-    -moz-transition: background-color .2s ease-in, color .2s ease-in;
-    -webkit-transition: background-color .2s ease-in, color .2s ease-in;
-    transition: background-color .2s ease-in, color .2s ease-in;
+	display: block;
+	margin: 0px;
+	background-color: transparent;
+	cursor: pointer;
+	color: #000000;
+	font-size: 93%;
+	/*line-height: 2;*/
+	min-height: 2em;
+	padding: 0px 1em;
+	-moz-transition: background-color .2s ease-in, color .2s ease-in;
+	-webkit-transition: background-color .2s ease-in, color .2s ease-in;
+	transition: background-color .2s ease-in, color .2s ease-in;
 }
-.actions button:hover, .action input:hover, 
-.actions button:active, .action input:active, 
-.actions button:focus, .action input:focus {
+
+.actions button:hover, .action input:hover, .actions button:active,
+	.action input:active, .actions button:focus, .action input:focus {
 	background-color: #0E4878 !important;
 	color: #fff;
 	-moz-transition: background-color .2s ease-in, color .2s ease-in;
-    -webkit-transition: background-color .2s ease-in, color .2s ease-in;
-    transition: background-color .2s ease-in, color .2s ease-in;
+	-webkit-transition: background-color .2s ease-in, color .2s ease-in;
+	transition: background-color .2s ease-in, color .2s ease-in;
 }
-.TDS_PS_L1 .actions button, .TDS_PS_L2 .actions button, .TDS_PS_L3 .actions button{
+
+.TDS_PS_L1 .actions button, .TDS_PS_L2 .actions button, .TDS_PS_L3 .actions button
+	{
 	max-width: 250px;
 	line-height: 1em;
 }
-.TDS_PS_L4 .actions button{
+
+.TDS_PS_L4 .actions button {
 	max-width: 300px;
 }
-.TDS_PS_L3 .actions button{
+
+.TDS_PS_L3 .actions button {
 	max-width: 240px;
 	line-height: 1em;
 }
@@ -651,32 +858,34 @@ select option {
 .TDS_PS_L3 .actions, .TDS_PS_L4 .actions{
 	height: 4em;
 }*/
-
 .actions .positive {
 	border-color: #02601F;
 	color: #02601F;
-
 }
+
 .actions .positive button, .actions .positive input {
 	color: #02601F;
-
 }
-.actions .positive button:hover, .actions .positive input:hover, 
-.actions .positive button:active, .actions .positive input:active, 
-.actions .positive button:focus, .actions .positive input:focus {
+
+.actions .positive button:hover, .actions .positive input:hover,
+	.actions .positive button:active, .actions .positive input:active,
+	.actions .positive button:focus, .actions .positive input:focus {
 	background-color: #04A033 !important;
 	color: #fff;
 }
-.actions .negative{
+
+.actions .negative {
 	border-color: #990000;
 	color: #990000;
 }
+
 .actions .negative button, .actions .negative input {
 	color: #990000;
 }
-.actions .negative button:hover, .actions .negative input:hover, 
-.actions .negative button:active, .actions .negative input:active, 
-.actions .negative button:focus, .actions .negative input:focus {
+
+.actions .negative button:hover, .actions .negative input:hover,
+	.actions .negative button:active, .actions .negative input:active,
+	.actions .negative button:focus, .actions .negative input:focus {
 	background-color: #990000 !important;
 	color: #fff;
 }
@@ -685,14 +894,16 @@ select option {
 	background-color: #DBDBDB !important;
 	color: #666666 !important;
 }
+
 .actions .disabled button, .actions .disabled input {
 	background-color: #DBDBDB transparent !important;
 	color: #666666 !important;
-	cursor:default;
+	cursor: default;
 }
-.actions .disabled button:hover, .actions .disabled input:hover, 
-.actions .disabled button:active, .actions .disabled input:active, 
-.actions .disabled button:focus, .actions .disabled input:focus {
+
+.actions .disabled button:hover, .actions .disabled input:hover,
+	.actions .disabled button:active, .actions .disabled input:active,
+	.actions .disabled button:focus, .actions .disabled input:focus {
 	background-color: transparent !important;
 	color: #666666 !important;
 }
@@ -700,62 +911,72 @@ select option {
 /* @end */
 
 /* @group Section Login */
-
 #loginWrap {
 	width: 45em;
 	margin-left: auto;
 	margin-right: auto;
 	padding-top: 2em;
 }
-#sectionLogin .ot-shadowBox,
-#sectionLoginProctor .ot-shadowBox {
+
+#sectionLogin .ot-shadowBox, #sectionLoginProctor .ot-shadowBox {
 	width: 45em;
 }
+
 #ot-brand2 strong .forPractice {
 	display: none;
 }
+
 .practiceTest #ot-brand2 strong .forPractice {
 	display: inline;
 }
+
 .practiceTest #loginWrap {
 	width: 70em;
 	margin-left: auto;
 	margin-right: auto;
 	padding-top: 2em;
 }
+
 .practiceTest #sectionLogin .ot-shadowBox {
 	width: 45em;
 	float: left;
 }
-#sectionLogin .ot-innerShadow,
-#sectionLoginProctor .ot-innerShadow {
-	background: url("../Images/masterShell/greenGradient.gif") repeat-x scroll left top #C8E5AB !important;
-    border: solid 3px #FFFFFF;
+
+#sectionLogin .ot-innerShadow, #sectionLoginProctor .ot-innerShadow {
+	background: url("../Images/masterShell/greenGradient.gif") repeat-x
+		scroll left top #C8E5AB !important;
+	border: solid 3px #FFFFFF;
 }
+
 .practiceTest #sectionLogin .ot-shadowBox h1 {
-   /* padding-right: 50px;
+	/* padding-right: 50px;
 	background: url("../Images/masterShell/bike/bikeTitle.gif") no-repeat 100% 100%; */
+	
 }
-#sectionLogin .actions .tds-button,
-#sectionLoginProctor .actions .tds-button {
+
+#sectionLogin .actions .tds-button, #sectionLoginProctor .actions .tds-button
+	{
 	float: right;
 	margin: 0px;
 }
-#sectionLogin .actions,
-#sectionLoginProctor .actions {
+
+#sectionLogin .actions, #sectionLoginProctor .actions {
 	padding-right: 20%;
 }
+
 .practiceTest #sectionLogin .actions {
 	padding-right: 0em;
 }
-#sectionLogin .actions span,
-#sectionLoginProctor .actions span {
+
+#sectionLogin .actions span, #sectionLoginProctor .actions span {
 	background-color: #fff;
 }
+
 .loginForm {
 	font-size: 1.4em;
 	line-height: 1em;
 }
+
 .practiceTest .loginForm {
 	border: solid 1px #9cba7b;
 	-moz-border-radius: 5px;
@@ -763,12 +984,15 @@ select option {
 	font-size: 1.4em;
 	line-height: 1em;
 }
+
 .practiceTest #loginForm2 {
 	margin-top: 1em;
 }
+
 .checkHolder {
 	display: none;
 }
+
 .practiceTest .checkHolder {
 	display: block;
 	background-color: #9cba7b;
@@ -776,6 +1000,7 @@ select option {
 	padding: .2em 0em;
 	margin-bottom: 1em;
 }
+
 .practiceTest .loginForm .checkHolder label {
 	margin: 0px;
 	float: none;
@@ -786,6 +1011,7 @@ select option {
 	text-align: left;
 	line-height: 1.2em;
 }
+
 .practiceTest .loginForm .checkHolder input {
 	margin-left: .5em;
 	margin-bottom: 0px;
@@ -794,10 +1020,12 @@ select option {
 	width: inherit;
 	text-align: left;
 }
-.loginRow{
+
+.loginRow {
 	display: block;
 	overflow: hidden;
 }
+
 .loginForm label {
 	margin-left: 1em;
 	display: block;
@@ -807,12 +1035,15 @@ select option {
 	max-width: 40%;
 	line-height: 1.3em; /*Bug 147712*/
 }
-.app_scoreentry .loginForm label, .app_responseentry .loginForm label{
+
+.app_scoreentry .loginForm label, .app_responseentry .loginForm label {
 	min-width: 9.5em;
 }
+
 .HAW .loginForm label {
 	width: 40%;
 }
+
 .loginForm input {
 	margin-left: 1em;
 	margin-bottom: 1em;
@@ -820,44 +1051,59 @@ select option {
 	float: left;
 	width: 50%;
 	font-family: 'inconsolata';
-	text-transform:uppercase;
+	text-transform: uppercase;
 	font-size: 0.8em;
-	
 }
 /* for android */
 .loginForm input {
 	-webkit-user-modify: read-write-plaintext-only;
 }
+
 .loginForm br {
 	display: block;
 	clear: both;
 }
+
 #diagnostics {
 	font-size: 0.9em;
-	height: 1.5em;
+	min-height: 1.5em;
 	border-top: solid 1px #fff;
 	margin-top: 1em;
 	line-height: 2em;
 }
+
+#loginError #diagnostics {
+	height: auto;
+	min-height: 1.5em;
+}
+
 #diagnostics .browserVersion {
-    color: #345034;
-    display: block;
-    text-decoration: none;
-    float: right;
+	color: #345034;
+	display: block;
+	text-decoration: none;
+	float: right;
 }
+
+#loginError #diagnostics .browserVersion {
+	float: none;
+	text-align: right;
+}
+
 #diagnostics a {
-    color: #1E4E26;
-    display: none;
-    float: left;
-    text-decoration: underline;
+	color: #1E4E26;
+	display: none;
+	float: left;
+	text-decoration: underline;
 }
-    #diagnostics a:hover
-    {
-        text-decoration: none;
-    }
+
+#diagnostics a:hover {
+	text-decoration: none;
+}
+
 .practiceTest #diagnostics a {
-    display: block;
+	display: block;
 }
+
 #loginLinks {
 	font-size: 0.9em;
 	height: 1.5em;
@@ -866,13 +1112,14 @@ select option {
 	line-height: 2em;
 	display: none;
 }
+
 #loginLinks a {
-    color: #04A033;
-    float: left;
-    text-decoration: none;
+	color: #04A033;
+	float: left;
+	text-decoration: none;
 }
-#sectionLogin .instructions,
-#sectionLoginProctor .instructions {
+
+#sectionLogin .instructions, #sectionLoginProctor .instructions {
 	font-size: inherit;
 	line-height: inherit;
 	border-top: solid 1px #fff;
@@ -881,6 +1128,7 @@ select option {
 	margin-bottom: 0em;
 	padding: 1em 0 0;
 }
+
 #sectionLogin .instructions ul li {
 	list-style-type: disc;
 	margin-top: .5em;
@@ -888,6 +1136,7 @@ select option {
 	margin-bottom: .5em;
 	margin-left: 1.5em;
 }
+
 #sectionLogin .instructions ol {
 	list-style-type: decimal;
 	list-style-position: outside;
@@ -897,34 +1146,37 @@ select option {
 	padding-left: 30px;
 	margin-top: -1em;
 }
+
 #sectionLogin .instructions ol li {
 	padding-bottom: .3em;
 	padding-top: .3em;
 }
+
 #sectionLogin .instructions u {
 	line-height: 1.5em;
 }
+
 #sectionLogin #btnLogout {
-    display: none;
+	display: none;
 }
-.app_ScoreEntry #sectionLogin #btnLogout,
-.app_ResponseEntry #sectionLogin #btnLogout,
-.app_scoreentry #sectionLogin #btnLogout,
-.app_responseentry #sectionLogin #btnLogout
- {
-    display: block;
+
+.app_ScoreEntry #sectionLogin #btnLogout, .app_ResponseEntry #sectionLogin #btnLogout,
+	.app_scoreentry #sectionLogin #btnLogout, .app_responseentry #sectionLogin #btnLogout
+	{
+	display: block;
 }
 /* @group blurbs */
-
 #ot-blurbs {
 	display: block;
 	width: 24em;
 	float: right;
 	display: none;
 }
+
 .practiceTest #ot-blurbs {
 	display: block;
 }
+
 .blurb {
 	border: solid 3px #fff;
 	-moz-box-shadow: 0em 0em 5px #666;
@@ -933,7 +1185,7 @@ select option {
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
-	margin-bottom:20px;
+	margin-bottom: 20px;
 	margin-left: 20px;
 	text-align: left;
 	background-color: #c8e5ac;
@@ -941,9 +1193,11 @@ select option {
 	font-size: 1.2em;
 	line-height: 1.2em;
 }
-.browserVer_2.browser_firefox .blurb{
+
+.browserVer_2.browser_firefox .blurb {
 	border-color: #eaeaea;
 }
+
 .linkbox {
 	display: block;
 	text-decoration: none;
@@ -955,6 +1209,7 @@ select option {
 	margin-right: -.3em;
 	margin-left: -.3em;
 }
+
 .gridlink {
 	display: block;
 	text-decoration: none;
@@ -963,34 +1218,37 @@ select option {
 	margin-top: .3em;
 	margin-right: -.3em;
 	margin-left: -.3em;
-	background: #b2ce96 url(../Images/masterShell/grid.gif) no-repeat .3em center;
+	background: #b2ce96 url(../Images/masterShell/grid.gif) no-repeat .3em
+		center;
 	padding: .3em .3em .3em 40px;
 	font-size: 1.2em;
 	line-height: 1.1em;
 }
+
 .linkbox:hover, .gridlink:hover {
 	background-color: #fff;
 }
+
 .goPractice {
-    background-image: url("../Images/masterShell/trike/goPractice.png");
-    background-position: 100% 0;
-    background-repeat: no-repeat;
-    color: #000000;
-    display: block;
-    font-size: 1.4em;
-    font-weight: bold;
-    height: 50px;
-    line-height: 49px;
-    padding-right: 90px;
-    text-align: right;
-    text-decoration: none;
-    margin-top: 1em;
+	background-image: url("../Images/masterShell/trike/goPractice.png");
+	background-position: 100% 0;
+	background-repeat: no-repeat;
+	color: #000000;
+	display: block;
+	font-size: 1.4em;
+	font-weight: bold;
+	height: 50px;
+	line-height: 49px;
+	padding-right: 90px;
+	text-align: right;
+	text-decoration: none;
+	margin-top: 1em;
 }
+
 /* @end */
 /* @group error messages */
-
 .notificationError, .notificationNotice, .notificationSuccess {
-	border:1px solid #DDDDDD;
+	border: 1px solid #DDDDDD;
 	margin: 1em;
 	background-repeat: no-repeat;
 	background-position: left center;
@@ -1000,6 +1258,7 @@ select option {
 	padding-left: 2em;
 	font-size: 1.4em;
 }
+
 .notificationError {
 	background-color: #FBE3E4;
 	background-image: url(../Images/masterShell/notifyWarn.gif);
@@ -1008,6 +1267,7 @@ select option {
 	border-bottom-color: #9D0A0E;
 	border-left-color: #9D0A0E;
 }
+
 .notificationNotice {
 	background-color: #F7F7F7;
 	background-image: url(../Images/masterShell/notifyNotice.gif);
@@ -1016,6 +1276,7 @@ select option {
 	border-bottom-color: #FFCC00;
 	border-left-color: #FFCC00;
 }
+
 .notificationSuccess {
 	background-color: #F7F7F7;
 	background-image: url(../Images/masterShell/notifyGood.gif);
@@ -1024,56 +1285,69 @@ select option {
 	border-bottom-color: #197A30;
 	border-left-color: #197A30;
 }
+
 .notificationError a, .notificationNotice a, .notificationSuccess a {
-    color:#000000;
+	color: #000000;
 }
 
 /* @end */
-
 
 /* @end */
 
 /* @group Section Verify Login */
-
 .ot-infoConfirm {
 	font-size: 1.8em;
 	line-height: 2em;
 }
+
 .practiceTest #verifyGradeSelector {
-    background-color: #D2EAB9;
-    border-bottom: 1px solid #049F33;
-    border-top: 1px solid #049F33;
-    display: inherit;
-    margin-left: -0.6em;
-    margin-right: -.6em;
-    padding: 0 0 0 0.5em;
+	background-color: #D2EAB9;
+	border-bottom: 1px solid #049F33;
+	border-top: 1px solid #049F33;
+	display: inherit;
+	margin-left: -0.6em;
+	margin-right: -.6em;
+	padding: 0 0 0 0.5em;
 }
+
 .practiceTest #verifyGradeSelector select {
-   	margin-left: 0.5em;
-   	line-height: 1em;
+	margin-left: 0.5em;
+	line-height: 1em;
 }
 /* keep drop-down from going off the screen */
 .practiceTest.TDS_PS_L2 #verifyGradeSelector select {
-   	font-size: .8em;
+	font-size: .8em;
 }
+
 .practiceTest.TDS_PS_L3 #verifyGradeSelector select {
-   	font-size: .7em;
+	font-size: .7em;
 }
+
 .practiceTest.TDS_PS_L4 #verifyGradeSelector select {
-   	font-size: .6em;
+	font-size: .6em;
 }
+
 .ot-infoConfirm .labeled {
 	color: #646565;
+}
+
+.TDS_CCInvert .ot-infoConfirm .labeled, .TDS_CCWhiteN .ot-infoConfirm .labeled
+	{
+	color: #ccc;
+}
+
+.TDS_CCYellowB .ot-infoConfirm .labeled {
+	color: #ca0;
 }
 
 /* @end */
 
 /* @group Section Test Selection */
-
 #sectionTestSelection .instructions {
 	padding: .5em;
 	border: none;
 }
+
 .noMore {
 	color: #999999;
 	font-size: 0.9em;
@@ -1082,25 +1356,30 @@ select option {
 	font-style: italic;
 	font-weight: normal;
 }
+
 #testSelections:after {
-	content: "";  
-	display: block;  
-	clear: both;  
-	visibility: hidden;  
-	font-size: 0;  
+	content: "";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	font-size: 0;
 	height: 0;
 }
+
 #sectionTestSelection .testSelection {
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
 	margin-bottom: 1em;
-	background: url(../Images/masterShell/test_sprites.png) no-repeat 16px 12px;
+	background: url(../Images/masterShell/test_sprites.png) no-repeat 16px
+		12px;
 	background-color: #e5f4e4; /* for older browsers*/
 	background-color: rgba(218, 239, 216, .7);
-	-moz-transition: background-color .2s ease-in, -moz-box-shadow .6s linear;
-    -webkit-transition: background-color .2s ease-in, -webkit-box-shadow .6s linear;
-    transition: background-color .2s ease-in, box-shadow .6s linear;
+	-moz-transition: background-color .2s ease-in, -moz-box-shadow .6s
+		linear;
+	-webkit-transition: background-color .2s ease-in, -webkit-box-shadow .6s
+		linear;
+	transition: background-color .2s ease-in, box-shadow .6s linear;
 	padding: 1em 1em 1em 70px;
 	cursor: pointer;
 	-webkit-box-sizing: border-box;
@@ -1115,52 +1394,63 @@ select option {
 #sectionTestSelection .testSelection.odd {
 	clear: both;
 }
-.TDS_PS_L2 #sectionTestSelection .testSelection, .TDS_PS_L3 #sectionTestSelection .testSelection, .TDS_PS_L4 #sectionTestSelection .testSelection {
+
+.TDS_PS_L2 #sectionTestSelection .testSelection, .TDS_PS_L3 #sectionTestSelection .testSelection,
+	.TDS_PS_L4 #sectionTestSelection .testSelection {
 	width: inherit;
 	float: none;
 	margin-right: 0em;
 	min-height: 2em;
 }
+
 .TDS_PS_L1 #sectionTestSelection .testSelection {
 	background-position: 16px 21px;
 	min-height: 4.5em;
 }
+
 .TDS_PS_L2 #sectionTestSelection .testSelection {
 	background-position: 16px 31px;
 }
+
 .TDS_PS_L3 #sectionTestSelection .testSelection {
 	background-position: 16px 44px;
 }
+
 .TDS_PS_L4 #sectionTestSelection .testSelection {
 	background-position: 16px 56px;
 }
-#sectionTestSelection .testSelection:hover, 
-#sectionTestSelection .testSelection:hover:focus, 
-#sectionTestSelection .testSelection:focus {
+
+#sectionTestSelection .testSelection:hover, #sectionTestSelection .testSelection:hover:focus,
+	#sectionTestSelection .testSelection:focus {
 	background-color: #cadfc6;
 	-webkit-box-shadow: 0em 0em .5em #666;
 	-moz-box-shadow: 0em 0em .5em #666;
 	box-shadow: 0em 0em .5em #666;
 }
+
 #sectionTestSelection .testSelection.resume {
 	background-position: 16px -578px;
 }
+
 .TDS_PS_L1 #sectionTestSelection .testSelection.resume {
 	background-position: 16px -580px;
 }
+
 .TDS_PS_L2 #sectionTestSelection .testSelection.resume {
 	background-position: 16px -570px;
 }
+
 .TDS_PS_L3 #sectionTestSelection .testSelection.resume {
 	background-position: 16px -555px;
 }
+
 .TDS_PS_L4 #sectionTestSelection .testSelection.resume {
 	background-position: 16px -545px;
 }
-#sectionTestSelection .testSelection.inactive, 
-#sectionTestSelection .testSelection.inactive:hover, 
-#sectionTestSelection .testSelection.inactive:active, 
-#sectionTestSelection .testSelection.inactive:focus {
+
+#sectionTestSelection .testSelection.inactive, #sectionTestSelection .testSelection.inactive:hover,
+	#sectionTestSelection .testSelection.inactive:active,
+	#sectionTestSelection .testSelection.inactive:focus {
 	background-position: 16px -1176px;
 	background-color: #fafafa; /* for older browsers*/
 	background-color: rgba(235, 235, 235, .2);
@@ -1170,34 +1460,36 @@ select option {
 	-webkit-box-shadow: inherit;
 	box-shadow: inherit;
 }
-.TDS_PS_L1 #sectionTestSelection .testSelection.inactive, 
-.TDS_PS_L1 #sectionTestSelection .testSelection.inactive:hover, 
-.TDS_PS_L1 #sectionTestSelection .testSelection.inactive:active, 
-.TDS_PS_L1 #sectionTestSelection .testSelection.inactive:focus {
+
+.TDS_PS_L1 #sectionTestSelection .testSelection.inactive, .TDS_PS_L1 #sectionTestSelection .testSelection.inactive:hover,
+	.TDS_PS_L1 #sectionTestSelection .testSelection.inactive:active,
+	.TDS_PS_L1 #sectionTestSelection .testSelection.inactive:focus {
 	background-position: 16px -1180px;
 }
-.TDS_PS_L2 #sectionTestSelection .testSelection.inactive, 
-.TDS_PS_L2 #sectionTestSelection .testSelection.inactive:hover, 
-.TDS_PS_L2 #sectionTestSelection .testSelection.inactive:active, 
-.TDS_PS_L2 #sectionTestSelection .testSelection.inactive:focus {
+
+.TDS_PS_L2 #sectionTestSelection .testSelection.inactive, .TDS_PS_L2 #sectionTestSelection .testSelection.inactive:hover,
+	.TDS_PS_L2 #sectionTestSelection .testSelection.inactive:active,
+	.TDS_PS_L2 #sectionTestSelection .testSelection.inactive:focus {
 	background-position: 16px -1169px;
 }
-.TDS_PS_L3 #sectionTestSelection .testSelection.inactive, 
-.TDS_PS_L3 #sectionTestSelection .testSelection.inactive:hover, 
-.TDS_PS_L3 #sectionTestSelection .testSelection.inactive:active, 
-.TDS_PS_L3 #sectionTestSelection .testSelection.inactive:focus {
+
+.TDS_PS_L3 #sectionTestSelection .testSelection.inactive, .TDS_PS_L3 #sectionTestSelection .testSelection.inactive:hover,
+	.TDS_PS_L3 #sectionTestSelection .testSelection.inactive:active,
+	.TDS_PS_L3 #sectionTestSelection .testSelection.inactive:focus {
 	background-position: 16px -1156px;
 }
-.TDS_PS_L4 #sectionTestSelection .testSelection.inactive, 
-.TDS_PS_L4 #sectionTestSelection .testSelection.inactive:hover, 
-.TDS_PS_L4 #sectionTestSelection .testSelection.inactive:active, 
-.TDS_PS_L4 #sectionTestSelection .testSelection.inactive:focus {
+
+.TDS_PS_L4 #sectionTestSelection .testSelection.inactive, .TDS_PS_L4 #sectionTestSelection .testSelection.inactive:hover,
+	.TDS_PS_L4 #sectionTestSelection .testSelection.inactive:active,
+	.TDS_PS_L4 #sectionTestSelection .testSelection.inactive:focus {
 	background-position: 16px -1144px;
 }
+
 #sectionTestSelection .testSelection.inactive:focus {
 	background-color: #efefef; /* for older browsers*/
 	background-color: rgba(235, 235, 235, .5);
 }
+
 #sectionTestSelection .testSelection strong {
 	font-weight: bold;
 	font-size: 1.2em;
@@ -1206,21 +1498,23 @@ select option {
 	line-height: 1.1em;
 	margin-bottom: .1em;
 }
+
 #sectionTestSelection .testSelection strong:after {
-	content: "";  
-	display: block;  
-	clear: both;  
-	visibility: hidden;  
-	font-size: 0;  
+	content: "";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	font-size: 0;
 	height: 0;
 }
+
 #sectionTestSelection .testSelection p {
 	display: block;
 	clear: both;
 	padding-bottom: 0px;
 	line-height: 1.5em;
-	
 }
+
 #sectionTestSelection .testSelection em {
 	font-style: normal;
 	/*font-weight: bold;
@@ -1238,151 +1532,233 @@ select option {
 }*/
 /* @end */
 
-
 /* @group Section Accommodations */
-
 .accommodations {
 	font-size: 1.4em;
 	line-height: 1em;
 }
+
 .accommodations h2, .summary-segment h2 {
 	font-weight: bold;
 	font-size: 1.1em;
 	border-bottom: solid 1px #ccc;
 	margin-bottom: .5em;
 }
-.accommodations .multiselect, .accommodations .singleselect, .accommodations .checkbox {
+
+.accommodations .multiselect, .accommodations .singleselect,
+	.accommodations .checkbox, .accommodations .uneditable_accs {
 	margin-bottom: 1em;
 }
-.accommodations label.label,
-.summary-segment label.label,
-.summary-segment span.label,
-.accommodations .multiselect .label,
-.summary-segment .multiselect .label  {
-    text-align: right;
-    width: 14em;
+
+.accommodations label.label, .summary-segment label.label,
+	.summary-segment span.label, .accommodations .multiselect .label,
+	.summary-segment .multiselect .label {
+	text-align: right;
+	width: 14em;
 	display: inline-block;
-    float: none;
+	float: none;
 	vertical-align: middle;
 }
- .accommodations .multiselect legend,
-    .summary-segment .multiselect legend
-    {
-        float: left;
-    }
-    .accommodations .multiselect fieldset,
-    .summary-segment .multiselect fieldset
-    {
-        overflow: hidden;
-        position: relative;
-        display: block;
-    }
-/*
-.platform_ios .accommodations label{
-	width: 7em;
-}*/
-.accommodations select,
-.summary-segment select{
-   margin-left: 1em;
-   vertical-align: middle;
+/* for size 18 fonts sizes, don't float labels */
+.TDS_F_S18 .accommodations label.label, .TDS_F_S18 .summary-segment label.label,
+	.TDS_F_S18 .summary-segment span.label, .TDS_F_S18 .accommodations .multiselect .label,
+	.TDS_F_S18 .summary-segment .multiselect .label {
+	text-align: left;
+	width: 100%;
+	clear: both;
+	display: block;
 }
-.accommodations .checkbox .control,
-.summary-segment .checkbox .control,
-.summary-segment span.control{
+
+.TDS_F_S18 .accommodations .multiselect legend, .TDS_F_S18 .summary-segment .multiselect legend
+	{
+	float: none;
+}
+
+/* BUG 163876 - need to make this fix more responsive */
+@media screen and (max-width:1300px) {
+	.TDS_PS_L1 .accommodations label.label, .TDS_PS_L1 .summary-segment label.label,
+		.TDS_PS_L1 .summary-segment span.label, .TDS_PS_L1 .accommodations .multiselect .label,
+		.TDS_PS_L1 .summary-segment .multiselect .label {
+		text-align: left;
+		width: 100%;
+		clear: both;
+		display: block;
+	}
+	.TDS_PS_L1 .accommodations .multiselect legend, .TDS_PS_L1 .summary-segment .multiselect legend
+		{
+		float: none;
+	}
+}
+
+@media screen and (max-width:1460px) {
+	.TDS_PS_L2 .accommodations label.label, .TDS_PS_L2 .summary-segment label.label,
+		.TDS_PS_L2 .summary-segment span.label, .TDS_PS_L2 .accommodations .multiselect .label,
+		.TDS_PS_L2 .summary-segment .multiselect .label {
+		text-align: left;
+		width: 100%;
+		clear: both;
+		display: block;
+	}
+	.TDS_PS_L2 .accommodations .multiselect legend, .TDS_PS_L2 .summary-segment .multiselect legend
+		{
+		float: none;
+	}
+}
+
+@media screen and (max-width:2000px) {
+	.TDS_PS_L3 .accommodations label.label, .TDS_PS_L3 .summary-segment label.label,
+		.TDS_PS_L3 .summary-segment span.label, .TDS_PS_L3 .accommodations .multiselect .label,
+		.TDS_PS_L3 .summary-segment .multiselect .label {
+		text-align: left;
+		width: 100%;
+		clear: both;
+		display: block;
+	}
+	.TDS_PS_L3 .accommodations .multiselect legend, .TDS_PS_L3 .summary-segment .multiselect legend
+		{
+		float: none;
+	}
+}
+
+@media screen and (max-width:2200px) {
+	.TDS_PS_L4 .accommodations label.label, .TDS_PS_L4 .summary-segment label.label,
+		.TDS_PS_L4 .summary-segment span.label, .TDS_PS_L4 .accommodations .multiselect .label,
+		.TDS_PS_L4 .summary-segment .multiselect .label {
+		text-align: left;
+		width: 100%;
+		clear: both;
+		display: block;
+	}
+	.TDS_PS_L4 .accommodations .multiselect legend, .TDS_PS_L4 .summary-segment .multiselect legend
+		{
+		float: none;
+	}
+}
+
+.accommodations .multiselect legend, .summary-segment .multiselect legend
+	{
+	float: left;
+}
+
+.accommodations .multiselect fieldset, .summary-segment .multiselect fieldset
+	{
+	overflow: hidden;
+	position: relative;
+	display: block;
+}
+
+.accommodations select, .summary-segment select {
 	margin-left: 1em;
 	vertical-align: middle;
 }
-.summary-segment .dependency .control{
+
+.accommodations .checkbox .control, .summary-segment .checkbox .control,
+	.summary-segment span.control {
+	display: inline-block;
+	margin-left: 1em;
+	vertical-align: middle;
+	width: auto; /*was 30em responding to BUG 184227*/
+}
+
+.accommodations .checkbox .control {
+	width: auto;
+}
+
+.summary-segment .dependency .control {
 	color: #666;
 }
-.accommodations label input {
-    
-}
-.accommodations .values label {
-	
-}
-.accommodations .multiselect .values,
-.summary-segment .multiselect .values{
+
+.accommodations .multiselect .values, .summary-segment .multiselect .values
+	{
 	vertical-align: top;
 	display: inline-block;
 }
-.accommodations .multiselect .values label,
-.summary-segment .multiselect .values label {
+
+.accommodations .multiselect .values label, .summary-segment .multiselect .values label
+	{
 	display: inline;
 	padding-left: 0.5em;
 }
-.accommodations .multiselect .values input,
-.summary-segment .multiselect .values input {
+
+.accommodations .multiselect .values input, .summary-segment .multiselect .values input
+	{
 	float: none;
 	margin-right: .5em;
-    margin-left: 1em;
-    display: inline;
+	margin-left: 1em;
+	display: inline;
 }
 
-.accommodations li.value-option,
-.summary-segment li.value-option
-{
-    min-height: 1.5em;
+.accommodations li.value-option, .summary-segment li.value-option {
+	min-height: 1.5em;
 }
 
-/*.unproctored #accPrintonRequest {
-    display: none;
-}*/
+/* new accomodation input disabled styles */
+.accommodations .uneditable_accs .label {
+	display: inline-block;
+	width: 14em;
+	text-align: right;
+}
 
+.accommodations .uneditable_accs .control {
+	margin-left: 1em;
+}
 /* @end */
 
-
 /* @group Section Verify Settings */
-
 #ot-infoConfirm, #accSummary {
 	font-size: 1.3em;
 	line-height: 2em;
 }
-#ot-infoConfirm {
-	margin-bottom: 1em;
-}
+
 #sectionTestVerify .instructions {
 	margin-top: 1em;
 }
+
 .summary-segment {
 	margin-bottom: 2em;
 	font-size: 1.4em;
 	line-height: 1em;
 }
+
 .summary-segment h3 {
 	font-weight: bold;
 	font-size: 1.1em;
 	border-bottom: solid 1px #ccc;
 	margin-bottom: .5em;
 }
-.summary-segment-type, 
-.dependency {
+
+.summary-segment-type, .dependency {
 	line-height: 1.5em;
 	margin-bottom: 1em;
 }
+
 .summary-segment-type-label {
-  	/*padding-right: .5em;*/
+	/*padding-right: .5em;*/
+	
 }
+
 .summary-segment-type-values {
 	color: #666;
 }
+
 select.summary-segment-type-values {
 	color: #000;
 }
 /* @end */
 
 /* @group Section Instructions */
-
 #speakHelp {
 	display: none;
 	/*height: 18px;  this is causing problems at higher zoom levels*/
 	min-height: 20px;
 	height: auto;
 }
-.browser_airsecurebrowser #speakHelp, 
-.browser_airmobilesecurebrowser #speakHelp {
+
+.browser_airsecurebrowser #speakHelp, .browser_airmobilesecurebrowser #speakHelp
+	{
 	display: block;
 }
+
 .startSpeak, .stopSpeak {
 	display: none;
 	float: left;
@@ -1394,57 +1770,66 @@ select.summary-segment-type-values {
 	background: url(../Shared/Images/controls/audio2013.png) no-repeat;
 	margin-left: 2px;
 }
+
 #audioRecorder .elicitedaround {
-    background-image: url("../Shared/Images/controls/audio2013.png") !important;
+	background-image: url("../Shared/Images/controls/audio2013.png")
+		!important;
 }
 
-.browser_airsecurebrowser .startSpeak, 
-.browser_airmobilesecurebrowser .startSpeak {
+.browser_airsecurebrowser .startSpeak, .browser_airmobilesecurebrowser .startSpeak
+	{
 	background-position: -422px -416px;
 	display: block;
 }
+
 .startSpeak:hover {
 	background-position: -441px -416px;
 }
+
 .startSpeak.disabled, .startSpeak.disabled:hover {
 	background-position: -508px -443px !important;
 	background-color: transparent !important;
 	cursor: default;
 }
-.browser_airsecurebrowser .stopSpeak, 
-.browser_airmobilesecurebrowser .stopSpeak {
+
+.browser_airsecurebrowser .stopSpeak, .browser_airmobilesecurebrowser .stopSpeak
+	{
 	background-position: -459px -416px;
 	display: block;
 }
+
 .stopSpeak:hover {
 	background-position: -477px -416px;
 }
+
 .stopSpeak.disabled, .stopSpeak.disabled:hover {
 	background-position: -569px -443px !important;
 	background-color: transparent !important;
 	cursor: default;
 }
+
 .checker:focus {
 	border: solid 3px #7da7d9;
 	outline: none !important;
 }
-#quickQuide.yui-panel-loading {
-	background: url(../Shared/Images/loadingAnimation.gif) no-repeat center center;
+
+#quickGuide.yui-panel-loading {
+	background: url(../Shared/Images/loadingAnimation.gif) no-repeat center
+		center;
 	height: 300px;
 	border: solid 1px #ccc;
 }
-#quickQuide.yui-panel-loading iframe {
+
+#quickGuide.yui-panel-loading iframe {
 	display: none;
 }
-.platform_android #quickQuide,
-.platform_ios #quickQuide{
+
+.platform_android #quickGuide, .platform_ios #quickGuide {
 	max-height: 300px;
 	overflow: auto;
-	-webkit-overflow-scrolling:touch;
+	-webkit-overflow-scrolling: touch;
 }
 /* @end */
-
-
 
 /* @group pop-ups */
 #help, #keyNav, #writingInstructions {
@@ -1460,22 +1845,27 @@ select.summary-segment-type-values {
 	-webkit-box-shadow: 0em 0em 1em #000;
 	box-shadow: 0em 0em 1em #000;
 }
+
 #keyNav {
 	right: 50px;
 	top: 45px;
 	border: 2px solid #d2b338;
 }
+
 #writingInstructions {
 	right: 60px;
 	top: 30px;
 	border: 2px solid #d2b338;
 }
+
 .TDS_PS_Larger #help {
 	width: 800px;
 }
+
 .TDS_PS_Largest #help {
 	width: 900px;
 }
+
 #help iframe {
 	width: 100%;
 	height: 465px;
@@ -1483,9 +1873,11 @@ select.summary-segment-type-values {
 	border-bottom-style: solid;
 	border-bottom-color: #f6c501;
 }
+
 #help {
 	background-color: #fdfac2;
 }
+
 .popupHeader {
 	background-color: #fdfac2;
 	display: block;
@@ -1495,8 +1887,10 @@ select.summary-segment-type-values {
 	border-bottom-color: #f6c501;
 	line-height: 18px;
 	height: 18px;
-	font-family: "Lucida Grande", "Lucida Sans", Arial, Helvetica, sans-serif;
+	font-family: "Lucida Grande", "Lucida Sans", Arial, Helvetica,
+		sans-serif;
 }
+
 .popupTitle {
 	display: block;
 	float: left;
@@ -1504,6 +1898,7 @@ select.summary-segment-type-values {
 	line-height: 18px;
 	padding-left: 10px;
 }
+
 .popupClose a {
 	background-color: #faf5a2;
 	display: block;
@@ -1521,26 +1916,29 @@ select.summary-segment-type-values {
 	border-left-style: solid;
 	border-left-color: #f6c501;
 }
+
 .popupClose a:hover {
 	background-color: #990000;
-	text-decoration:underline;
+	text-decoration: underline;
 	color: #FFFFFF;
 }
 /* @end */
 
 /* @group Section Results */
-
 .identity {
 	font-size: 1.3em;
 }
+
 .identity ul li, .identity ol li {
 	line-height: 2em;
 }
+
 #scorePolling {
 	line-height: 2em;
 	padding-bottom: .5em;
 	margin-bottom: .5em;
 }
+
 #scorePolling .spinner {
 	background: url(../Shared/Images/saved.gif) no-repeat;
 	width: 25px;
@@ -1550,12 +1948,15 @@ select.summary-segment-type-values {
 	margin-top: .2em;
 	margin-right: .3em;
 }
+
 .ferpa {
 	font-size: .9em;
 	margin-top: 1em;
 }
-#markedWarning {
-	background: url(../Shared/Images/controls/marked.gif) no-repeat 1em 1em;
+
+.markedWarning, .unansweredWarning {
+	background: url(../Shared/Images/Universal/marked.svg) no-repeat 1em
+		center;
 	border: solid 1px #666;
 	font-size: 1.3em;
 	padding-left: 4em;
@@ -1564,21 +1965,15 @@ select.summary-segment-type-values {
 	padding-top: 1em;
 	margin-bottom: 1em;
 }
-.TDS_PS_L1 #markedWarning {
-	background-image: url(../Shared/Images/controls/marked_1.gif);
+
+.unansweredWarning {
+	background-image: url(../Shared/Images/Universal/unanswered.svg);
 }
-.TDS_PS_L2 #markedWarning {
-	background-image: url(../Shared/Images/controls/marked_2.gif);
-}
-.TDS_PS_L3 #markedWarning {
-	background-image: url(../Shared/Images/controls/marked_3.gif);
-}
-.TDS_PS_L4 #markedWarning {
-	background-image: url(../Shared/Images/controls/marked_4.gif);
-}
+
 #sectionTestResults #scoreSummary {
 	display: none;
 }
+
 #sectionTestResults.scoreAvailable #scoreSummary {
 	display: block;
 }
@@ -1586,6 +1981,7 @@ select.summary-segment-type-values {
 #sectionTestResults #scorePolling {
 	display: none;
 }
+
 #sectionTestResults.scoreWaiting #scorePolling {
 	display: block;
 }
@@ -1593,6 +1989,7 @@ select.summary-segment-type-values {
 #sectionTestResults #scoreNone {
 	display: none;
 }
+
 #sectionTestResults.scoreUnavailable #scoreNone {
 	display: block;
 }
@@ -1600,25 +1997,31 @@ select.summary-segment-type-values {
 #sectionTestResults .ptShow {
 	display: none;
 }
+
 #sectionTestResults.scoreUnavailableInPT .ptShow {
 	display: inline;
 }
+
 #sectionTestResults.scoreUnavailableInPT .yourScore {
 	display: none;
 }
 
 /* TODO: logic for when to show this button */
-#sectionTestResults #btnEnterMoreScores,
-#sectionTestResults #btnChangeStudent {
+#sectionTestResults #btnEnterMoreScores, #sectionTestResults #btnChangeStudent
+	{
 	display: none;
 }
-.app_ScoreEntry #sectionTestResults #btnEnterMoreScores, .app_ResponseEntry #sectionTestResults #btnEnterMoreScores,
-.app_ScoreEntry #sectionTestResults #btnChangeStudent, .app_ResponseEntry #sectionTestResults #btnChangeStudent,
-.app_scoreentry #sectionTestResults #btnEnterMoreScores, .app_responseentry #sectionTestResults #btnEnterMoreScores,
-.app_scoreentry #sectionTestResults #btnChangeStudent, .app_responseentry #sectionTestResults #btnChangeStudent {
+
+.app_ScoreEntry #sectionTestResults #btnEnterMoreScores,
+	.app_ResponseEntry #sectionTestResults #btnEnterMoreScores,
+	.app_ScoreEntry #sectionTestResults #btnChangeStudent,
+	.app_ResponseEntry #sectionTestResults #btnChangeStudent,
+	.app_scoreentry #sectionTestResults #btnEnterMoreScores,
+	.app_responseentry #sectionTestResults #btnEnterMoreScores,
+	.app_scoreentry #sectionTestResults #btnChangeStudent,
+	.app_responseentry #sectionTestResults #btnChangeStudent {
 	display: block;
 }
-
 
 #scoreList {
 	font-size: 1.3em;
@@ -1628,104 +2031,140 @@ select.summary-segment-type-values {
 
 #itemScores td, #itemScores th {
 	border: solid 1px #CCC;
-	text-align:center;
-	padding:5px
+	text-align: center;
+	padding: 5px
 }
+
 #itemScores th {
-	font-weight:bold;
+	font-weight: bold;
 }
+
 #itemScores td.answerWrong {
-	color:#790000;
-	font-weight:bold;
-	background-color:#ffebec;
+	color: #790000;
+	font-weight: bold;
+	background-color: #ffebec;
 }
+
 #itemScores td.answerPartial {
-	color:#666;
-	background-color:#f7f7f7;
+	color: #666;
+	background-color: #f7f7f7;
 }
+
 #sectionTestResults table {
 	max-width: 100%;
 	overflow: auto;
-} 
+}
 /* @end */
 
 /* @group Section Approval */
-
 #sectionTestApproval .ot-shadowBox {
-	width: 35em;
+	width: 45em;
 }
+
 #sectionTestApproval .ot-innerShadow {
-	background: #C8E5AB url(../Images/masterShell/greenGradient.gif) repeat-x scroll left top;
-    border: solid 3px #FFFFFF;
+	position: relative;
 }
-#lblApprovalMessage {
+
+#testApprovalProgress {
+	background-image: none;
+	padding: 0;
+	margin: 0 -1em;
+	min-height: 80px;
 	display: block;
-	background: url(../Shared/Images/loadingAnimation.gif) no-repeat left top;
-	padding-top: 2em;
 }
+
+span#testApprovalProgress:before {
+	content: ' ';
+	position: relative;
+	margin-top: 0.7em;
+	background-color: rgba(110, 110, 110, 0.7);
+}
+
+.TDS_PS_L2 span#testApprovalProgress:before, .TDS_PS_L3 span#testApprovalProgress:before,
+	.TDS_PS_L4 span#testApprovalProgress:before {
+	margin-top: 0em;
+}
+
 #sectionTestApproval .actions .tds-button {
 	font-size: .7em;
 	background-color: #fff;
 }
 
+.TDS_PS_L1 #testApprovalProgress:before, .TDS_PS_L2 #testApprovalProgress:before,
+	.TDS_PS_L3 #testApprovalProgress:before, .TDS_PS_L4 #testApprovalProgress:before
+	{
+	height: 3em;
+	width: 3em;
+}
+
 /* @end */
 
 /* @group Section Diagnostics */
-
 .nugget {
 	display: block;
 	border-bottom: solid 1px #ccc;
 	font-size: 1.4em;
 	margin-bottom: 1em;
 }
+
 .nugget .actions {
 	font-size: 1em;
 }
+
 #connSpeed {
 	float: left;
 	/*line-height: 2em;*/
 	margin-right: .5em;
 }
+
 .inline {
 	float: left;
 	display: inline;
 	margin-top: -.5em;
 }
-.resultsWrapper{
+
+.resultsWrapper {
 	display: inline-block;
 	padding-right: 0.5em;
 	font-weight: bold;
 }
+
 #downloadResults, #uploadResults, #bandwidthSummary {
 	font-weight: normal;
 	float: left;
 	margin-right: .5em;
 	margin-bottom: 1em;
 }
-#downloadResultsLabel, #uploadResultsLabel{
+
+#downloadResultsLabel, #uploadResultsLabel {
 	padding-bottom: 0.5em;
 }
+
 #btnDiagELPA {
 	display: none;
 }
-#sectionDiagnostics .actions .tds-button, #sectionTTSCheck .actions .tds-button {
+
+#sectionDiagnostics .actions .tds-button, #sectionTTSCheck .actions .tds-button
+	{
 	margin-bottom: .5em;
 }
-#sectionDiagnostics ul{
+
+#sectionDiagnostics ul {
 	list-style-type: disc;
 	margin-left: 1em;
 	margin-bottom: 1em;
 }
-#sectionDiagnostics ul li{
+
+#sectionDiagnostics ul li {
 	padding-left: 0.5em;
 }
-#sectionDiagnostics p, #sectionDiagnostics li, #sectionDiagnostics dl{
+
+#sectionDiagnostics p, #sectionDiagnostics li, #sectionDiagnostics dl {
 	line-height: 1.2em;
 }
 /* @end */
 
 /* @group Section Notifications */
-
 .proctorMessage {
 	background-color: #FFFFFF;
 	border: 1px solid #B7DA8C;
@@ -1733,23 +2172,27 @@ select.summary-segment-type-values {
 	padding: 5px;
 	overflow: auto;
 }
+
 .proctorMessage h3 {
 	font-size: 1.5em;
 	font-style: italic;
 	font-weight: normal;
 }
+
 .proctorMessage p {
 	margin-top: .5em;
 	margin-right: 0px;
 	margin-bottom: .5em;
 	margin-left: 0px;
 }
+
 .errorNumber {
 	text-align: right;
 	font-weight: bold;
 	display: block;
 	margin-top: .5em;
 }
+
 #sectionsNotification .actions a {
 	display: block;
 	float: left;
@@ -1763,7 +2206,9 @@ select.summary-segment-type-values {
 	padding: 0px 10px;
 	margin-right: 1em;
 }
-#sectionsNotification .actions a:hover, #sectionsNotification .actions a:focus {
+
+#sectionsNotification .actions a:hover, #sectionsNotification .actions a:focus
+	{
 	background-color: #0E4878 !important;
 	color: #fff;
 }
@@ -1781,6 +2226,7 @@ select.summary-segment-type-values {
 	background-color: #FFFFFF;
 	font-size: 1.2em;
 }
+
 #browserDenied, #browserDeniedOSXIncompatible, #browserDeniedOSXLatest {
 	background-image: url(../Images/alerts/stopWhite.gif);
 	background-repeat: no-repeat;
@@ -1792,60 +2238,106 @@ select.summary-segment-type-values {
 	background-color: #FFFFFF;
 	font-size: 1.2em;
 }
-*:first-child+html #browserWrong, *:first-child+html #browserDenied, *:first-child+html #browserDeniedOSXIncompatible, *:first-child+html #browserDeniedOSXLatest {
+
+*:first-child+html #browserWrong, *:first-child+html #browserDenied, *:first-child+html #browserDeniedOSXIncompatible,
+	*:first-child+html #browserDeniedOSXLatest {
 	height: 1%;
 }
-*html #browserWrong, *html #browserDenied, *html #browserDeniedOSXIncompatible, *html #browserDeniedOSXLatest {
+
+* html #browserWrong, * html #browserDenied, * html #browserDeniedOSXIncompatible,
+	* html #browserDeniedOSXLatest {
 	height: 1%;
+}
+
+/* 2016 updates to Browser Denied */
+.browserDeniedOptions .optionLink a {
+	background-image: url("../Images/goPractice-blank.png");
+	background-position: right -4px;
+	background-repeat: no-repeat;
+	color: #000000;
+	display: block;
+	font-size: 1.4em;
+	font-weight: bold;
+	height: 50px;
+	line-height: 50px;
+	padding-right: 90px;
+	text-align: right;
+	text-decoration: none;
+	margin-top: 1em;
+}
+
+.browserDeniedOptions .optionLink a:hover, .browserDeniedOptions .optionLink a:active,
+	.browserDeniedOptions .optionLink a:focus {
+	background-position: right -50px;
+	backgrond-color: rgba(220, 230, 250, 0.7);
+}
+
+.browserDenied ul li {
+	font-size: 1.4em;
+	line-height: 1.5em;
+}
+
+.browserDenied ul li .label {
+	font-weight: bold;
 }
 
 /* @end */
 
-
 /* @group Firefox 2.0 Hacks */
-.browser_firefox.browserVer_2.showingDialog, .browser_firefox.browserVer_2.masked, 
-.browser_airsecurebrowser.browserVer_3_5.showingDialog, .browser_airsecurebrowser.browserVer_3_5.masked, 
-.browser_airsecurebrowser.browserVer_3_6.showingDialog, .browser_airsecurebrowser.browserVer_3_6.masked, 
-.browser_airmobilesecurebrowser.browserVer_3_5.showingDialog, .browser_airmobilesecurebrowser.browserVer_3_5.masked, 
-.browser_airmobilesecurebrowser.browserVer_3_6.showingDialog, .browser_airmobilesecurebrowser.browserVer_3_6.masked {
+.browser_firefox.browserVer_2.showingDialog, .browser_firefox.browserVer_2.masked,
+	.browser_airsecurebrowser.browserVer_3_5.showingDialog,
+	.browser_airsecurebrowser.browserVer_3_5.masked,
+	.browser_airsecurebrowser.browserVer_3_6.showingDialog,
+	.browser_airsecurebrowser.browserVer_3_6.masked,
+	.browser_airmobilesecurebrowser.browserVer_3_5.showingDialog,
+	.browser_airmobilesecurebrowser.browserVer_3_5.masked,
+	.browser_airmobilesecurebrowser.browserVer_3_6.showingDialog,
+	.browser_airmobilesecurebrowser.browserVer_3_6.masked {
 	overflow: hidden;
 }
 
-.browser_firefox.browserVer_2.showingDialog #sections select, .browser_firefox.browserVer_2.masked #sections select, 
-.browser_airsecurebrowser.browserVer_3_5.showingDialog #sections select, .browser_airsecurebrowser.browserVer_3_5.masked #sections select, 
-.browser_airsecurebrowser.browserVer_3_6.showingDialog  #sections select, .browser_airsecurebrowser.browserVer_3_6.masked  #sections select, 
-.browser_airsecurebrowser.browserVer_3_5.showingDialog #sections select, .browser_airsecurebrowser.browserVer_3_5.masked #sections select, 
-.browser_airsecurebrowser.browserVer_3_6.showingDialog  #sections select, .browser_airsecurebrowser.browserVer_3_6.masked  #sections select {
+.browser_firefox.browserVer_2.showingDialog #sections select,
+	.browser_firefox.browserVer_2.masked #sections select,
+	.browser_airsecurebrowser.browserVer_3_5.showingDialog #sections select,
+	.browser_airsecurebrowser.browserVer_3_5.masked #sections select,
+	.browser_airsecurebrowser.browserVer_3_6.showingDialog  #sections select,
+	.browser_airsecurebrowser.browserVer_3_6.masked  #sections select,
+	.browser_airsecurebrowser.browserVer_3_5.showingDialog #sections select,
+	.browser_airsecurebrowser.browserVer_3_5.masked #sections select,
+	.browser_airsecurebrowser.browserVer_3_6.showingDialog  #sections select,
+	.browser_airsecurebrowser.browserVer_3_6.masked  #sections select {
 	display: none;
 }
-.browser_firefox.browserVer_2.platform_mac.showingDialog #tools .bd, 
-.browser_airsecurebrowser.browserVer_3_5.platform_mac.showingDialog #tools .bd, 
-.browser_airsecurebrowser.browserVer_3_6.platform_mac.showingDialog #tools .bd {
+
+.browser_firefox.browserVer_2.platform_mac.showingDialog #tools .bd,
+	.browser_airsecurebrowser.browserVer_3_5.platform_mac.showingDialog #tools .bd,
+	.browser_airsecurebrowser.browserVer_3_6.platform_mac.showingDialog #tools .bd
+	{
 	overflow: hidden;
 }
-.browser_firefox.browserVer_2.platform_mac.showingDialog #tools iframe, 
-.browser_airsecurebrowser.browserVer_3_5.platform_mac.showingDialog #tools iframe, 
-.browser_airsecurebrowser.browserVer_3_6.platform_mac.showingDialog #tools iframe {
+
+.browser_firefox.browserVer_2.platform_mac.showingDialog #tools iframe,
+	.browser_airsecurebrowser.browserVer_3_5.platform_mac.showingDialog #tools iframe,
+	.browser_airsecurebrowser.browserVer_3_6.platform_mac.showingDialog #tools iframe
+	{
 	height: 10000px;
 }
-.browser_firefox.browserVer_2.platform_mac #sectionDiagnostics .actions button, 
-.browser_firefox.browserVer_2.platform_mac #sectionTTSCheck .actions button, 
-.browser_airsecurebrowser.browserVer_3_5.platform_mac #sectionDiagnostics .actions button, 
-.browser_airsecurebrowser.browserVer_3_5.platform_mac #sectionTTSCheck .actions button, 
-.browser_airsecurebrowser.browserVer_3_6.platform_mac #sectionDiagnostics .actions button, 
-.browser_airsecurebrowser.browserVer_3_6.platform_mac #sectionTTSCheck .actions button
- {
+
+.browser_firefox.browserVer_2.platform_mac #sectionDiagnostics .actions button,
+	.browser_firefox.browserVer_2.platform_mac #sectionTTSCheck .actions button,
+	.browser_airsecurebrowser.browserVer_3_5.platform_mac #sectionDiagnostics .actions button,
+	.browser_airsecurebrowser.browserVer_3_5.platform_mac #sectionTTSCheck .actions button,
+	.browser_airsecurebrowser.browserVer_3_6.platform_mac #sectionDiagnostics .actions button,
+	.browser_airsecurebrowser.browserVer_3_6.platform_mac #sectionTTSCheck .actions button
+	{
 	max-width: inherit;
 }
-/* @end */ 
-
-
-
+/* @end */
 
 /* @group Review New List View */
-.TDS_RSL_ListView #markedWarning, 
-.TDS_RSL_ListView #unansweredWarning {
-	background: url(../Shared/Images/Universal/marked.png) no-repeat 1em center;
+.TDS_RSL_ListView .markedWarning, .TDS_RSL_ListView .unansweredWarning {
+	background: url(../Shared/Images/Universal/marked.svg) no-repeat 1em
+		center;
 	border: solid 1px #666;
 	font-size: 1.3em;
 	padding-left: 4em;
@@ -1853,58 +2345,85 @@ select.summary-segment-type-values {
 	padding-bottom: 1em;
 	padding-top: 1em;
 	margin-bottom: 1em;
+	background-size: 2em;
 }
-.TDS_RSL_ListView #unansweredWarning {
-	background-image: url(../Shared/Images/Universal/unanswered.png);
+
+.TDS_RSL_ListView .unansweredWarning {
+	background-image: url(../Shared/Images/Universal/unanswered.svg);
 }
-.TDS_CCYellowB.TDS_RSL_ListView #markedWarning, 
-.TDS_CCWhiteN.TDS_RSL_ListView #markedWarning, 
-.TDS_CCInvert.TDS_RSL_ListView #markedWarning {
-	background-image: url(../Shared/Images/Universal/marked_acc.png);
+
+.TDS_PS_L1.TDS_RSL_ListView .markedWarning, .TDS_PS_L2.TDS_RSL_ListView .markedWarning,
+	.TDS_PS_L1.TDS_RSL_ListView .unansweredWarning, .TDS_PS_L2.TDS_RSL_ListView .unansweredWarning
+	{
+	background-size: 40px;
 }
-.TDS_CCYellowB.TDS_RSL_ListView #unansweredWarning, 
-.TDS_CCWhiteN.TDS_RSL_ListView #unansweredWarning, 
-.TDS_CCInvert.TDS_RSL_ListView #unansweredWarning {
-	background-image: url(../Shared/Images/Universal/unanswered_acc.png);
+
+.TDS_PS_L3 .markedWarning, .TDS_PS_L3 .unansweredWarning {
+	background-size: 60px;
 }
+
+.TDS_PS_L4 .markedWarning {
+	background-size: 80px;
+}
+
+.TDS_PS_L4 .unansweredWarning {
+	background-size: 60px;
+}
+
+.TDS_CCYellowB .markedWarning, .TDS_CCWhiteN .markedWarning,
+	.TDS_CCInvert .markedWarning {
+	background-image: url(../Shared/Images/Universal/marked_white.svg);
+}
+
+.TDS_CCYellowB .unansweredWarning, .TDS_CCWhiteN .unansweredWarning,
+	.TDS_CCInvert .unansweredWarning {
+	background-image: url(../Shared/Images/Universal/unanswered_white.svg);
+}
+
 .TDS_RSL_ListView .pages {
 	border-right: none;
 	float: none;
 	padding: 0px;
 	width: inherit;
 }
+
 .TDS_RSL_ListView .pages ul {
-	-webkit-column-count: 8; 
-    -moz-column-count: 8; 
-    column-count: 8;
-    -webkit-column-gap: 5px; 
-    -moz-column-gap: 5px;
-    column-gap: 5px;
-    display: block;
-    max-width: 900px;
+	-webkit-column-count: 8;
+	-moz-column-count: 8;
+	column-count: 8;
+	-webkit-column-gap: 5px;
+	-moz-column-gap: 5px;
+	column-gap: 5px;
+	display: block;
+	max-width: 900px;
 }
+
 .TDS_PS_L2.TDS_RSL_ListView .pages ul {
-	-webkit-column-count: 7; 
-    -moz-column-count: 7; 
-    column-count: 7;
+	-webkit-column-count: 7;
+	-moz-column-count: 7;
+	column-count: 7;
 }
+
 .TDS_PS_L3.TDS_RSL_ListView .pages ul {
-	-webkit-column-count: 6; 
-    -moz-column-count: 6; 
-    column-count: 6;
+	-webkit-column-count: 6;
+	-moz-column-count: 6;
+	column-count: 6;
 }
+
 .TDS_PS_L4.TDS_RSL_ListView .pages ul {
-	-webkit-column-count: 6; 
-    -moz-column-count: 6; 
-    column-count: 6;
+	-webkit-column-count: 6;
+	-moz-column-count: 6;
+	column-count: 6;
 }
+
 .TDS_RSL_ListView .pages h3 {
-    border: none;
-    margin-bottom: 15px;
+	border: none;
+	margin-bottom: 15px;
 	margin-top: 10px;
 	font-size: 1.5em;
 	font-weight: bold;
 }
+
 .TDS_RSL_ListView .pages a {
 	color: #000;
 	text-decoration: none;
@@ -1914,36 +2433,39 @@ select.summary-segment-type-values {
 	height: 30px;
 	padding: 0px 0px 0px 5px;
 	margin: 0px 0px 10px;
-	-moz-box-shadow: 0 0 3px 1px rgba(0,0,0,.2);
-   	-webkit-box-shadow: 0 0 3px 1px rgba(0,0,0,.2);
-	box-shadow: 0 0 3px 1px rgba(0,0,0,.2);
+	-moz-box-shadow: 0 0 3px 1px rgba(0, 0, 0, .2);
+	-webkit-box-shadow: 0 0 3px 1px rgba(0, 0, 0, .2);
+	box-shadow: 0 0 3px 1px rgba(0, 0, 0, .2);
 	-moz-border-radius: 0px;
 	-webkit-border-radius: 0px;
 	border-radius: 0px;
 }
-.TDS_RSL_ListView .pages a:hover, 
-.TDS_RSL_ListView .pages a:focus, 
-.TDS_RSL_ListView .pages a:active {
+
+.TDS_RSL_ListView .pages a:hover, .TDS_RSL_ListView .pages a:focus,
+	.TDS_RSL_ListView .pages a:active {
 	text-decoration: none;
 	background-color: #00aeef;
 	color: #fff;
 }
+
 .TDS_RSL_ListView .pages li {
 	display: block;
 	padding: 5px;
 	border: solid 1px transparent;
-	-webkit-column-break-inside:avoid;
-	-moz-column-break-inside:avoid;
-	-o-column-break-inside:avoid;
-	-ms-column-break-inside:avoid;
-	column-break-inside:avoid;
+	-webkit-column-break-inside: avoid;
+	-moz-column-break-inside: avoid;
+	-o-column-break-inside: avoid;
+	-ms-column-break-inside: avoid;
+	column-break-inside: avoid;
 	break-inside: avoid-column;
 	page-break-inside: avoid;
 }
+
 .platform_android.TDS_RSL_ListView .pages li {
 	display: inline-block;
 	width: 100%;
 }
+
 .platform_android.TDS_RSL_ListView .pages li a {
 	margin-right: 10px;
 }
@@ -1953,94 +2475,140 @@ select.summary-segment-type-values {
 	line-height: 36px;
 	height: 36px;
 }
+
 .TDS_PS_L3.TDS_RSL_ListView .pages a {
 	font-size: 28px;
 	line-height: 40px;
 	height: 40px;
 }
+
 .TDS_PS_L4.TDS_RSL_ListView .pages a {
 	font-size: 32px;
 	line-height: 44px;
 	height: 44px;
 }
+
 .TDS_RSL_ListView #sectionTestReview .pages a.marked {
-	background: url(../Shared/Images/Universal/marked.png) no-repeat right center;
-	-moz-box-shadow: 0 0 5px 2px rgba(0,174,239,.1);
-   	-webkit-box-shadow: 0 0 5px 2px rgba(0,174,239,.1);
-	box-shadow: 0 0 5px 2px rgba(0,174,239,.4);
+	background: url(../Shared/Images/Universal/marked.svg) no-repeat right
+		center;
+	-moz-box-shadow: 0 0 5px 2px rgba(0, 174, 239, .1);
+	-webkit-box-shadow: 0 0 5px 2px rgba(0, 174, 239, .1);
+	box-shadow: 0 0 5px 2px rgba(0, 174, 239, .4);
+	background-size: 1.5em;
 }
+
 .TDS_RSL_ListView #sectionTestReview .pages a.unanswered {
-	background: url(../Shared/Images/Universal/unanswered.png) no-repeat right center;
+	background: url(../Shared/Images/Universal/unanswered.svg) no-repeat
+		right center;
+	background-size: 1.5em;
 }
+
 .TDS_RSL_ListView #sectionTestReview .pages a.marked.unanswered {
-	background-image: url(../Shared/Images/Universal/marked_unanswered.png);
+	background-image: url(../Shared/Images/Universal/marked_unanswered.svg);
+	background-size: 3em;
 }
-.TDS_RSL_ListView #sectionTestReview .pages a.marked:hover, 
-.TDS_RSL_ListView #sectionTestReview .pages a.marked:focus, 
-.TDS_RSL_ListView #sectionTestReview .pages a.marked:active, 
-.TDS_RSL_ListView #sectionTestReview .pages a.unanswered:hover, 
-.TDS_RSL_ListView #sectionTestReview .pages a.unanswered:focus, 
-.TDS_RSL_ListView #sectionTestReview .pages a.unanswered:active {
+
+.TDS_PS_L4.TDS_RSL_ListView #sectionTestReview .pages a.marked.unanswered
+	{
+	background-size: 2em;
+}
+
+.TDS_RSL_ListView #sectionTestReview .pages a.marked:hover,
+	.TDS_RSL_ListView #sectionTestReview .pages a.marked:focus,
+	.TDS_RSL_ListView #sectionTestReview .pages a.marked:active,
+	.TDS_RSL_ListView #sectionTestReview .pages a.unanswered:hover,
+	.TDS_RSL_ListView #sectionTestReview .pages a.unanswered:focus,
+	.TDS_RSL_ListView #sectionTestReview .pages a.unanswered:active {
 	background-color: #00aeef;
 }
-.TDS_CCBlue.TDS_RSL_ListView #sectionTestReview .pages a.marked, 
-.TDS_CCBlue2 #sectionTestReview .pages a.marked {
-	-moz-box-shadow: 0 0 3px 1px rgba(237,85,62,.6);
-   	-webkit-box-shadow: 0 0 3px 1px rgba(237,85,62,.6);
-	box-shadow: 0 0 3px 1px rgba(237,85,62,.6);
+
+.TDS_CCBlue.TDS_RSL_ListView #sectionTestReview .pages a.marked,
+	.TDS_CCBlue2.TDS_RSL_ListView #sectionTestReview .pages a.marked {
+	-moz-box-shadow: 0 0 3px 1px rgba(237, 85, 62, .6);
+	-webkit-box-shadow: 0 0 3px 1px rgba(237, 85, 62, .6);
+	box-shadow: 0 0 3px 1px rgba(237, 85, 62, .6);
 }
-.TDS_CCYellowB.TDS_RSL_ListView #sectionTestReview .pages a.marked, 
-.TDS_CCInvert.TDS_RSL_ListView #sectionTestReview .pages a.marked, 
-.TDS_CCWhiteN.TDS_RSL_ListView #sectionTestReview .pages a.marked {
-	background-image: url(../Shared/Images/Universal/marked_acc.png);
+
+.TDS_CCYellowB.TDS_RSL_ListView #sectionTestReview .pages a.marked,
+	.TDS_CCInvert.TDS_RSL_ListView #sectionTestReview .pages a.marked,
+	.TDS_CCWhiteN.TDS_RSL_ListView #sectionTestReview .pages a.marked {
+	background-image: url(../Shared/Images/Universal/marked_white.svg);
+	background-size: 1.5em;
 }
-.TDS_CCYellowB.TDS_RSL_ListView #sectionTestReview .pages a.unanswered, 
-.TDS_CCInvert.TDS_RSL_ListView #sectionTestReview .pages a.unanswered, 
-.TDS_CCWhiteN.TDS_RSL_ListView #sectionTestReview .pages a.unanswered {
-	background-image: url(../Shared/Images/Universal/unanswered_acc.png);
+
+.TDS_CCYellowB.TDS_RSL_ListView #sectionTestReview .pages a.unanswered,
+	.TDS_CCInvert.TDS_RSL_ListView #sectionTestReview .pages a.unanswered,
+	.TDS_CCWhiteN.TDS_RSL_ListView #sectionTestReview .pages a.unanswered {
+	background-image: url(../Shared/Images/Universal/unanswered_white.svg);
+	background-size: 1.5em;
 }
-.TDS_CCYellowB.TDS_RSL_ListView #sectionTestReview .pages a.marked.unanswered, 
-.TDS_CCInvert.TDS_RSL_ListView #sectionTestReview .pages a.marked.unanswered, 
-.TDS_CCWhiteN.TDS_RSL_ListView #sectionTestReview .pages a.marked.unanswered {
-	background-image: url(../Shared/Images/Universal/marked_unanswered_acc.png);
+
+.TDS_CCYellowB.TDS_RSL_ListView #sectionTestReview .pages a.marked.unanswered,
+	.TDS_CCInvert.TDS_RSL_ListView #sectionTestReview .pages a.marked.unanswered,
+	.TDS_CCWhiteN.TDS_RSL_ListView #sectionTestReview .pages a.marked.unanswered
+	{
+	background-image:
+		url(../Shared/Images/Universal/marked_unanswered_white.svg);
+	background-size: 3em;
 }
-.TDS_CCYellowB.TDS_RSL_ListView #sectionTestReview .pages a.marked:hover, 
-.TDS_CCYellowB.TDS_RSL_ListView #sectionTestReview .pages a.marked:focus, 
-.TDS_CCYellowB.TDS_RSL_ListView #sectionTestReview .pages a.marked:active, 
-.TDS_CCWhiteN.TDS_RSL_ListView #sectionTestReview .pages a.marked:hover, 
-.TDS_CCWhiteN.TDS_RSL_ListView #sectionTestReview .pages a.marked:focus, 
-.TDS_CCWhiteN.TDS_RSL_ListView #sectionTestReview .pages a.marked:active, 
-.TDS_CCInvert.TDS_RSL_ListView #sectionTestReview .pages a.marked:hover, 
-.TDS_CCInvert.TDS_RSL_ListView #sectionTestReview .pages a.marked:focus, 
-.TDS_CCInvert.TDS_RSL_ListView #sectionTestReview .pages a.marked:active {
+
+.TDS_CCYellowB.TDS_RSL_ListView #sectionTestReview .pages a.marked:hover,
+	.TDS_CCYellowB.TDS_RSL_ListView #sectionTestReview .pages a.marked:focus,
+	.TDS_CCYellowB.TDS_RSL_ListView #sectionTestReview .pages a.marked:active,
+	.TDS_CCWhiteN.TDS_RSL_ListView #sectionTestReview .pages a.marked:hover,
+	.TDS_CCWhiteN.TDS_RSL_ListView #sectionTestReview .pages a.marked:focus,
+	.TDS_CCWhiteN.TDS_RSL_ListView #sectionTestReview .pages a.marked:active,
+	.TDS_CCInvert.TDS_RSL_ListView #sectionTestReview .pages a.marked:hover,
+	.TDS_CCInvert.TDS_RSL_ListView #sectionTestReview .pages a.marked:focus,
+	.TDS_CCInvert.TDS_RSL_ListView #sectionTestReview .pages a.marked:active
+	{
 	background-color: #00aeef;
 }
-.TDS_CCInvert.TDS_RSL_ListView .pages a {
-	-moz-box-shadow: 0 0 3px 1px rgba(0,0,0,.2);
-   	-webkit-box-shadow: 0 0 3px 1px rgba(0,0,0,.2);
-	box-shadow: 0 0 3px 1px rgba(255,255,255,.2);
+
+.TDS_CCInvert.TDS_RSL_ListView .pages a, .TDS_CCYellowB.TDS_RSL_ListView .pages a,
+	.TDS_CCWhiteN.TDS_RSL_ListView .pages a {
+	-moz-box-shadow: 0 0 3px 1px rgba(0, 0, 0, .2);
+	-webkit-box-shadow: 0 0 3px 1px rgba(0, 0, 0, .2);
+	box-shadow: 0 0 3px 1px rgba(255, 255, 255, .2);
 	color: #fff;
 }
+
 .TDS_CCYellowB.TDS_RSL_ListView .pages a {
 	color: #ffcc00;
 }
+
 .TDS_CCWhiteN.TDS_RSL_ListView .pages a {
 	color: #fff;
 }
-/* @end */
 
-#sectionLoginVerify .instructions, #sectionTestSelection .instructions, #sectionTestVerify .instructions {
+.TDS_RSL_ListView.platform_ios .pages a {
+	-webkit-box-shadow: inherit;
+	box-shadow: inherit;
+	border: 1px solid #e8e7ea;
+}
+
+.TDS_CCBlue.TDS_RSL_ListView.platform_ios #sectionTestReview .pages a.marked,
+	.TDS_CCBlue2.TDS_RSL_ListView.platform_ios #sectionTestReview .pages a.marked
+	{
+	border-color: #ed553e;
+}
+
+/* @end */
+#sectionLoginVerify .instructions, #sectionTestSelection .instructions,
+	#sectionTestVerify .instructions {
 	background-color: rgba(235, 235, 235, .2);
 	color: #616262;
+	margin: 0.5em 0;
 }
 
 /* @group Network Test */
-#connSpeed, #chooseStudentCount{
+#connSpeed, #chooseStudentCount {
 	padding-bottom: 0.5em;
 	display: block;
 	float: none;
 }
-#chooseTest, #chooseStudentCount{
+
+#chooseTest, #chooseStudentCount {
 	padding-left: 15px;
 	display: block;
 	padding-bottom: 0.5em;
@@ -2048,32 +2616,39 @@ select.summary-segment-type-values {
 	position: relative;
 	font-size: 0.9em;
 }
-.error, #chooseStudentCountError, #chooseTestError /*Extras for older browsers*/{
+
+.error, #chooseStudentCountError, #chooseTestError
+	/*Extras for older browsers*/ {
 	color: #AD1A00;
 	font-size: 0.9em;
 	font-weight: bold;
 }
-#bandwidthSummary{
+
+#bandwidthSummary {
 	padding: 1em;
 	font-weight: normal;
 	line-height: 1.2em;
 	font-size: 0.9em;
 }
-.speedBad{
+
+.speedBad {
 	border: 2px solid #df4242;
 	background-color: #ffd1d1;
 	border-radius: 6px;
 }
-.speedOK{
+
+.speedOK {
 	border: 2px solid #d8c817;
 	background-color: #efefdc;
 	border-radius: 6px;
 }
-.speedGreat{
+
+.speedGreat {
 	border: 2px solid #68d014;
 	background-color: #cadfc6;
 	border-radius: 6px;
 }
+
 .loadingAnimation {
 	display: block;
 	width: 208px;
@@ -2086,7 +2661,8 @@ select.summary-segment-type-values {
 .touch.platform_android input, .touch.platform_android select {
 	font-family: "Lucida Grande", Lucida, Verdana, sans-serif !important;
 }
-.platform_android select{
+
+.platform_android select {
 	border: 1px solid #aaa;
 }
 
@@ -2095,13 +2671,14 @@ select.summary-segment-type-values {
 	height: 100%;
 	width: 100%;
 }
-.browser_chrome .choices #ddlNavigation{
+
+.browser_chrome .choices #ddlNavigation {
 	min-width: 100%;
 }
 
 /* for iOS help */
 .platform_ios .tool-helpguide .bd {
-	-webkit-overflow-scrolling:touch;
+	-webkit-overflow-scrolling: touch;
 	overflow: auto;
 }
 
@@ -2110,22 +2687,20 @@ body.platform_ios {
 	padding-bottom: 300px !important;
 }
 
-
 /*for bug 88470 - styling the new dropdown on Test Review Page for desktop*/
-
-
-#sectionTestReview #ddlNavigation{
+#sectionTestReview #ddlNavigation {
 	width: auto;
 	min-width: 25%;
 	font-size: 1.3em;
 }
-.touch #sectionTestReview #ddlNavigation{
+
+.touch #sectionTestReview #ddlNavigation {
 	width: auto;
-	font-size: 1em;	
+	font-size: 1em;
 }
 
 .hidden {
-  display: none;
+	display: none;
 }
 
 /* Bug 151834 */
@@ -2137,183 +2712,178 @@ body.platform_ios {
 
 /*Level 0 - sound icon*/
 #checkSound .audioControls .sound_repeat {
-    background: transparent url(../Shared/Images/modern/newSound.png) no-repeat scroll center -925px;
-    height: 40px;
-    width: 40px;
+	background: transparent url(../Shared/Images/modern/newSound.png)
+		no-repeat scroll center -925px;
+	height: 40px;
+	width: 40px;
 }
+
 #checkSound .audioControls .sound_repeat:focus {
-    background-color: transparent !important;
+	background-color: transparent !important;
 	border: none;
-	-moz-box-shadow: 0 0 5px 2px rgba(0,174,239,.5);
-   	-webkit-box-shadow: 0 0 5px 2px rgba(0,174,239,.5);
-	box-shadow: 0 0 5px 2px rgba(0,174,239,.5);
+	-moz-box-shadow: 0 0 5px 2px rgba(0, 174, 239, .5);
+	-webkit-box-shadow: 0 0 5px 2px rgba(0, 174, 239, .5);
+	box-shadow: 0 0 5px 2px rgba(0, 174, 239, .5);
 }
 /*Level 0 - sound icon hover*/
 #checkSound .audioControls .sound_repeat:hover {
-    background-position: center -992px;
+	background-position: center -992px;
 }
 /*Level 0 - disabled sound icon*/
-#checkSound .audioControls.load_incomplete .sound_repeat, 
-#checkSound .audioControls.disabled .sound_repeat,
-#checkSound #checkSound .audioControls.load_incomplete .sound_repeat:hover, 
-#checkSound #checkSound .audioControls.disabled .sound_repeat:hover {
+#checkSound .audioControls.load_incomplete .sound_repeat, #checkSound .audioControls.disabled .sound_repeat,
+	#checkSound #checkSound .audioControls.load_incomplete .sound_repeat:hover,
+	#checkSound #checkSound .audioControls.disabled .sound_repeat:hover {
 	background-position: center -1059px;
 }
 /*Level 0 - crossed out sound icon*/
-#checkSound .audioControls.load_fail .sound_repeat, 
-#checkSound .audioControls.load_fail .sound_repeat:hover, 
-#checkSound .audioControls.playing_fail .sound_repeat, 
-#checkSound .audioControls.playing_fail .sound_repeat:hover, 
-#checkSound .audioControls.decode_fail .sound_repeat, 
-#checkSound .audioControls.decode_fail .sound_repeat:hover {
+#checkSound .audioControls.load_fail .sound_repeat, #checkSound .audioControls.load_fail .sound_repeat:hover,
+	#checkSound .audioControls.playing_fail .sound_repeat, #checkSound .audioControls.playing_fail .sound_repeat:hover,
+	#checkSound .audioControls.decode_fail .sound_repeat, #checkSound .audioControls.decode_fail .sound_repeat:hover
+	{
 	background-position: center -2200px;
 }
 /*Level 0 - stop sound icon */
-#checkSound .audioControls.playing_start .sound_repeat, 
-#checkSound .audioControls.playing_paused .sound_repeat {
+#checkSound .audioControls.playing_start .sound_repeat, #checkSound .audioControls.playing_paused .sound_repeat
+	{
 	background-position: center -1126px;
 }
 /*Level 0 - stop sound icon hover */
-#checkSound .audioControls.playing_start .sound_repeat:hover, 
-#checkSound .audioControls.playing_paused .sound_repeat:hover {
+#checkSound .audioControls.playing_start .sound_repeat:hover,
+	#checkSound .audioControls.playing_paused .sound_repeat:hover {
 	background-position: center -1194px;
 }
-.audioControls.load_start a, 
-.audioControls.load_complete a, 
-.audioControls.decode_start a {
+
+.audioControls.load_start a, .audioControls.load_complete a,
+	.audioControls.decode_start a {
 	cursor: default;
 	background: none;
 	visibility: hidden;
 }
 /*level 0 - loading icons*/
-.audioControls.load_start, 
-.audioControls.load_complete, 
-.audioControls.decode_start {
-	background: #fff url(../Shared/Images/controls/loader29.gif) no-repeat center center;
+.audioControls.load_start, .audioControls.load_complete, .audioControls.decode_start
+	{
+	background: #fff url(../Shared/Images/controls/loader29.gif) no-repeat
+		center center;
 }
 /*Level 1 - sound icon*/
 .TDS_PS_L1 #checkSound .audioControls .sound_repeat {
-    height: 50px;
-    width: 50px;
-    background-position: center -505px;
+	height: 50px;
+	width: 50px;
+	background-position: center -505px;
 }
+
 .TDS_PS_L1 #checkSound .audioControls {
-    height: 50px;
+	height: 50px;
 }
 /*Level 1 - sound icon hover*/
 .TDS_PS_L1 #checkSound .audioControls .sound_repeat:hover {
-    background-position: center -588px;
+	background-position: center -588px;
 }
 /*Level 1 - disabled sound icon*/
-.TDS_PS_L1 #checkSound .audioControls.load_incomplete .sound_repeat, 
-.TDS_PS_L1 #checkSound .audioControls.disabled .sound_repeat,
-
-.TDS_PS_L1 #checkSound .audioControls.load_incomplete .sound_repeat:hover, 
-.TDS_PS_L1 #checkSound .audioControls.disabled .sound_repeat:hover {
+.TDS_PS_L1 #checkSound .audioControls.load_incomplete .sound_repeat,
+	.TDS_PS_L1 #checkSound .audioControls.disabled .sound_repeat,
+	.TDS_PS_L1 #checkSound .audioControls.load_incomplete .sound_repeat:hover,
+	.TDS_PS_L1 #checkSound .audioControls.disabled .sound_repeat:hover {
 	background-position: center -672px;
 }
 /*Level 1 - crossed out sound icon*/
-.TDS_PS_L1 #checkSound .audioControls.load_fail .sound_repeat, 
-.TDS_PS_L1 #checkSound .audioControls.load_fail .sound_repeat:hover, 
-.TDS_PS_L1 #checkSound .audioControls.playing_fail .sound_repeat, 
-.TDS_PS_L1 #checkSound .audioControls.playing_fail .sound_repeat:hover, 
-.TDS_PS_L1 #checkSound .audioControls.decode_fail .sound_repeat, 
-.TDS_PS_L1 #checkSound .audioControls.decode_fail .sound_repeat:hover {
+.TDS_PS_L1 #checkSound .audioControls.load_fail .sound_repeat,
+	.TDS_PS_L1 #checkSound .audioControls.load_fail .sound_repeat:hover,
+	.TDS_PS_L1 #checkSound .audioControls.playing_fail .sound_repeat,
+	.TDS_PS_L1 #checkSound .audioControls.playing_fail .sound_repeat:hover,
+	.TDS_PS_L1 #checkSound .audioControls.decode_fail .sound_repeat,
+	.TDS_PS_L1 #checkSound .audioControls.decode_fail .sound_repeat:hover {
 	background-position: center -2100px;
 }
 /*Level 1 - stop sound icon */
-.TDS_PS_L1 #checkSound .audioControls.playing_start .sound_repeat, 
-.TDS_PS_L1 #checkSound .audioControls.playing_paused .sound_repeat {
+.TDS_PS_L1 #checkSound .audioControls.playing_start .sound_repeat,
+	.TDS_PS_L1 #checkSound .audioControls.playing_paused .sound_repeat {
 	background-position: center -755px;
 }
 /*Level 1 - stop sound icon hover */
-
-.TDS_PS_L1 #checkSound .audioControls.playing_start .sound_repeat:hover, 
-.TDS_PS_L1 #checkSound .audioControls.playing_paused .sound_repeat:hover {
+.TDS_PS_L1 #checkSound .audioControls.playing_start .sound_repeat:hover,
+	.TDS_PS_L1 #checkSound .audioControls.playing_paused .sound_repeat:hover
+	{
 	background-position: center -839px;
 }
 /*Levels 2-4 - sound icon*/
-.TDS_PS_L2 #checkSound .audioControls .sound_repeat, 
-.TDS_PS_L3 #checkSound .audioControls .sound_repeat, 
-.TDS_PS_L4 #checkSound .audioControls .sound_repeat {
-    height: 60px;
-    width: 60px;
-    background-position: center -5px;
+.TDS_PS_L2 #checkSound .audioControls .sound_repeat, .TDS_PS_L3 #checkSound .audioControls .sound_repeat,
+	.TDS_PS_L4 #checkSound .audioControls .sound_repeat {
+	height: 60px;
+	width: 60px;
+	background-position: center -5px;
 }
-.TDS_PS_L2 #checkSound .audioControls, 
-.TDS_PS_L3 #checkSound .audioControls, 
-.TDS_PS_L4 #checkSound .audioControls {
-    height: 60px;
+
+.TDS_PS_L2 #checkSound .audioControls, .TDS_PS_L3 #checkSound .audioControls,
+	.TDS_PS_L4 #checkSound .audioControls {
+	height: 60px;
 }
 /*Levels 2-4 - sound icon hover*/
-.TDS_PS_L2 #checkSound .audioControls .sound_repeat:hover, 
-.TDS_PS_L3 #checkSound .audioControls .sound_repeat:hover, 
-.TDS_PS_L4 #checkSound .audioControls .sound_repeat:hover {
-    background-position: center -105px;
+.TDS_PS_L2 #checkSound .audioControls .sound_repeat:hover, .TDS_PS_L3 #checkSound .audioControls .sound_repeat:hover,
+	.TDS_PS_L4 #checkSound .audioControls .sound_repeat:hover {
+	background-position: center -105px;
 }
 /*Levels 2-4 - disabled sound icon*/
-.TDS_PS_L2 #checkSound .audioControls.load_incomplete .sound_repeat, 
-.TDS_PS_L2 #checkSound .audioControls.disabled .sound_repeat,
-
-.TDS_PS_L2 #checkSound .audioControls.load_incomplete .sound_repeat:hover, 
-.TDS_PS_L2 #checkSound .audioControls.disabled .sound_repeat:hover, 
-.TDS_PS_L3 #checkSound .audioControls.load_incomplete .sound_repeat, 
-.TDS_PS_L3 #checkSound .audioControls.disabled .sound_repeat,
-
-.TDS_PS_L3 #checkSound .audioControls.load_incomplete .sound_repeat:hover, 
-.TDS_PS_L3 #checkSound .audioControls.disabled .sound_repeat:hover, 
-.TDS_PS_L4 #checkSound .audioControls.load_incomplete .sound_repeat, 
-.TDS_PS_L4 #checkSound .audioControls.disabled .sound_repeat,
-
-.TDS_PS_L4 #checkSound .audioControls.load_incomplete .sound_repeat:hover, 
-.TDS_PS_L4 #checkSound .audioControls.disabled .sound_repeat:hover {
+.TDS_PS_L2 #checkSound .audioControls.load_incomplete .sound_repeat,
+	.TDS_PS_L2 #checkSound .audioControls.disabled .sound_repeat,
+	.TDS_PS_L2 #checkSound .audioControls.load_incomplete .sound_repeat:hover,
+	.TDS_PS_L2 #checkSound .audioControls.disabled .sound_repeat:hover,
+	.TDS_PS_L3 #checkSound .audioControls.load_incomplete .sound_repeat,
+	.TDS_PS_L3 #checkSound .audioControls.disabled .sound_repeat,
+	.TDS_PS_L3 #checkSound .audioControls.load_incomplete .sound_repeat:hover,
+	.TDS_PS_L3 #checkSound .audioControls.disabled .sound_repeat:hover,
+	.TDS_PS_L4 #checkSound .audioControls.load_incomplete .sound_repeat,
+	.TDS_PS_L4 #checkSound .audioControls.disabled .sound_repeat,
+	.TDS_PS_L4 #checkSound .audioControls.load_incomplete .sound_repeat:hover,
+	.TDS_PS_L4 #checkSound .audioControls.disabled .sound_repeat:hover {
 	background-position: center -205px;
 }
 /*Levels 2-4 - crossed out sound icon*/
-.TDS_PS_L2 #checkSound .audioControls.load_fail .sound_repeat, 
-.TDS_PS_L2 #checkSound .audioControls.load_fail .sound_repeat:hover, 
-.TDS_PS_L2 #checkSound .audioControls.playing_fail .sound_repeat, 
-.TDS_PS_L2 #checkSound .audioControls.playing_fail .sound_repeat:hover, 
-.TDS_PS_L2 #checkSound .audioControls.decode_fail .sound_repeat, 
-.TDS_PS_L2 #checkSound .audioControls.decode_fail .sound_repeat:hover, 
-.TDS_PS_L3 #checkSound .audioControls.load_fail .sound_repeat, 
-.TDS_PS_L3 #checkSound .audioControls.load_fail .sound_repeat:hover, 
-.TDS_PS_L3 #checkSound .audioControls.playing_fail .sound_repeat, 
-.TDS_PS_L3 #checkSound .audioControls.playing_fail .sound_repeat:hover, 
-.TDS_PS_L3 #checkSound .audioControls.decode_fail .sound_repeat, 
-.TDS_PS_L3 #checkSound .audioControls.decode_fail .sound_repeat:hover, 
-.TDS_PS_L4 #checkSound .audioControls.load_fail .sound_repeat, 
-.TDS_PS_L4 #checkSound .audioControls.load_fail .sound_repeat:hover, 
-.TDS_PS_L4 #checkSound .audioControls.playing_fail .sound_repeat, 
-.TDS_PS_L4 #checkSound .audioControls.playing_fail .sound_repeat:hover, 
-.TDS_PS_L4 #checkSound .audioControls.decode_fail .sound_repeat, 
-.TDS_PS_L4 #checkSound .audioControls.decode_fail .sound_repeat:hover {
+.TDS_PS_L2 #checkSound .audioControls.load_fail .sound_repeat,
+	.TDS_PS_L2 #checkSound .audioControls.load_fail .sound_repeat:hover,
+	.TDS_PS_L2 #checkSound .audioControls.playing_fail .sound_repeat,
+	.TDS_PS_L2 #checkSound .audioControls.playing_fail .sound_repeat:hover,
+	.TDS_PS_L2 #checkSound .audioControls.decode_fail .sound_repeat,
+	.TDS_PS_L2 #checkSound .audioControls.decode_fail .sound_repeat:hover,
+	.TDS_PS_L3 #checkSound .audioControls.load_fail .sound_repeat,
+	.TDS_PS_L3 #checkSound .audioControls.load_fail .sound_repeat:hover,
+	.TDS_PS_L3 #checkSound .audioControls.playing_fail .sound_repeat,
+	.TDS_PS_L3 #checkSound .audioControls.playing_fail .sound_repeat:hover,
+	.TDS_PS_L3 #checkSound .audioControls.decode_fail .sound_repeat,
+	.TDS_PS_L3 #checkSound .audioControls.decode_fail .sound_repeat:hover,
+	.TDS_PS_L4 #checkSound .audioControls.load_fail .sound_repeat,
+	.TDS_PS_L4 #checkSound .audioControls.load_fail .sound_repeat:hover,
+	.TDS_PS_L4 #checkSound .audioControls.playing_fail .sound_repeat,
+	.TDS_PS_L4 #checkSound .audioControls.playing_fail .sound_repeat:hover,
+	.TDS_PS_L4 #checkSound .audioControls.decode_fail .sound_repeat,
+	.TDS_PS_L4 #checkSound .audioControls.decode_fail .sound_repeat:hover {
 	background-position: center -2000px;
 }
 /*Levels 2-4 - stop sound icon */
-.TDS_PS_L2 #checkSound .audioControls.playing_start .sound_repeat, 
-.TDS_PS_L2 #checkSound .audioControls.playing_paused .sound_repeat, 
-.TDS_PS_L3 #checkSound .audioControls.playing_start .sound_repeat, 
-.TDS_PS_L3 #checkSound .audioControls.playing_paused .sound_repeat, 
-.TDS_PS_L4 #checkSound .audioControls.playing_start .sound_repeat, 
-.TDS_PS_L4 #checkSound .audioControls.playing_paused .sound_repeat {
+.TDS_PS_L2 #checkSound .audioControls.playing_start .sound_repeat,
+	.TDS_PS_L2 #checkSound .audioControls.playing_paused .sound_repeat,
+	.TDS_PS_L3 #checkSound .audioControls.playing_start .sound_repeat,
+	.TDS_PS_L3 #checkSound .audioControls.playing_paused .sound_repeat,
+	.TDS_PS_L4 #checkSound .audioControls.playing_start .sound_repeat,
+	.TDS_PS_L4 #checkSound .audioControls.playing_paused .sound_repeat {
 	background-position: center -305px;
 }
 /*Levels 2-4 - stop sound icon hover */
-.TDS_PS_L2 #checkSound .audioControls.playing_start .sound_repeat:hover, 
-.TDS_PS_L2 #checkSound .audioControls.playing_paused .sound_repeat:hover, 
-.TDS_PS_L3 #checkSound .audioControls.playing_start .sound_repeat:hover, 
-.TDS_PS_L3 #checkSound .audioControls.playing_paused .sound_repeat:hover, 
-.TDS_PS_L4 #checkSound .audioControls.playing_start .sound_repeat:hover, 
-.TDS_PS_L4 #checkSound .audioControls.playing_paused .sound_repeat:hover {
+.TDS_PS_L2 #checkSound .audioControls.playing_start .sound_repeat:hover,
+	.TDS_PS_L2 #checkSound .audioControls.playing_paused .sound_repeat:hover,
+	.TDS_PS_L3 #checkSound .audioControls.playing_start .sound_repeat:hover,
+	.TDS_PS_L3 #checkSound .audioControls.playing_paused .sound_repeat:hover,
+	.TDS_PS_L4 #checkSound .audioControls.playing_start .sound_repeat:hover,
+	.TDS_PS_L4 #checkSound .audioControls.playing_paused .sound_repeat:hover
+	{
 	background-position: center -405px;
 }
-
 
 /* fb-91091, making sure help guide stays hidden despite z-index */
 #tools  .yui-dialog.yui-overlay-hidden {
 	z-index: -1 !important;
 }
+
 #tools .yui-dialog.yui-overlay-hidden .tool-helpguide iframe {
 	visibility: hidden !important;
 	height: 1px !important;
@@ -2327,107 +2897,111 @@ body.platform_ios {
 }
 
 /*bug 103648*/
-.TDS_PS_L3 .loginForm label, .TDS_PS_L4 .loginForm label{
-	height:1.2em;
+.TDS_PS_L3 .loginForm label, .TDS_PS_L4 .loginForm label {
+	height: 1.2em;
 }
 
 /*bug 104832*/
-#bandwidthSummaryLabel{
+#bandwidthSummaryLabel {
 	line-height: 1.2em;
 }
 
 /*Bug 137477 - Change Session ID into a three field input*/
-fieldset.sessionID{
-    display: block;
-    float: none;
-    position: relative;
+fieldset.sessionID {
+	display: block;
+	float: none;
+	position: relative;
 	background: none;
 	border: none;
 }
-fieldset.sessionID legend{
-    display: block;
-    margin-left: 1.1em;
-    max-width: 44%;
-    min-width: 7.5em;
-    text-align: right;
-    float: left;
+
+fieldset.sessionID legend {
+	display: block;
+	margin-left: 1.1em;
+	max-width: 44%;
+	min-width: 7.5em;
+	text-align: right;
+	float: left;
 	color: #000;
 	line-height: 1.3em; /* Bug 147712 */
 }
-#loginSessionID1{
+
+#loginSessionID1 {
 	margin-left: 0.9em;
 }
-.platform_linux .loginForm fieldset.sessionID input{
+
+.platform_linux .loginForm fieldset.sessionID input {
 	max-width: 5em;
 }
-.TDS_PS_L3.platform_linux .loginForm fieldset.sessionID input{
+
+.TDS_PS_L3.platform_linux .loginForm fieldset.sessionID input {
 	max-width: 4.5em;
 }
-.TDS_PS_L4.platform_linux .loginForm fieldset.sessionID input{
+
+.TDS_PS_L4.platform_linux .loginForm fieldset.sessionID input {
 	max-width: 3.5em;
 }
 
-.loginForm fieldset.sessionID input{
-    width: auto;
-    display: inline-block;
-	font-family:'inconsolata';
-	text-transform:uppercase;
+.loginForm fieldset.sessionID input {
+	width: auto;
+	display: inline-block;
+	font-family: 'inconsolata';
+	text-transform: uppercase;
 	font-size: 0.8em;
 	margin-bottom: 0;
 	float: none;
 	margin-left: 0.5em;
 }
-.loginForm fieldset.sessionID label{
-    max-width: 0;
-    max-height: 0;
-    overflow: hidden;
-    display: inline-block;
+
+.loginForm fieldset.sessionID label {
+	max-width: 0;
+	max-height: 0;
+	overflow: hidden;
+	display: inline-block;
 	line-height: 1.3em; /*Bug 147712 */
 }
-.loginForm fieldset.sessionID span{
-    float: none;
-    display: inline-block;
-    margin-left: 0.5em;
+
+.loginForm fieldset.sessionID span {
+	float: none;
+	display: inline-block;
+	margin-left: 0.5em;
 }
 
 /* 2014 Accessability updates*/
-.hiddenLink
-{
-    display: block;
-    overflow: hidden;
-    width: 0px;
-    height: 0px;
+.hiddenLink {
+	display: block;
+	overflow: hidden;
+	width: 0px;
+	height: 0px;
 }
-.hiddenLink:focus, 
-.hiddenLink:active
-{
-    overflow: inherit;
-    width: auto;
-    height: auto;
-    position: absolute;
-    z-index: 1;
-    padding: 5px;
-    font-size: 1.5em;
-    -webkit-box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, .9);
+
+.hiddenLink:focus, .hiddenLink:active {
+	overflow: inherit;
+	width: auto;
+	height: auto;
+	position: absolute;
+	z-index: 1;
+	padding: 5px;
+	font-size: 1.5em;
+	-webkit-box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, .9);
 	-moz-box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, .9);
 	box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, .9);
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
-    border-radius: 3px;
-    color: #fff;
-    background-color: #0082ab;
-    border: solid 1px #fff;
-    text-decoration: none;
-    font-weight: bold;
-   	margin-top: 5px;
-   	margin-left: 5px;
-}
-label.labelTestReview
-{
-    font-weight:bold; 
-    padding-right:1em;
+	border-radius: 3px;
+	color: #fff;
+	background-color: #0082ab;
+	border: solid 1px #fff;
+	text-decoration: none;
+	font-weight: bold;
+	margin-top: 5px;
+	margin-left: 5px;
 }
 
+label.labelTestReview {
+	font-weight: bold;
+	padding-right: 1em;
+}
 
 /*Score Entry custom styles *
 /*hide border around login form*/
@@ -2440,183 +3014,169 @@ label.labelTestReview
 TDS_Glogin_User_Disable: #loginForm1 disable
 TDS_Glogin_Session_Hide: #loginForm2 hide
 TDS_Glogin_Session_Disable: #loginForm2 disable*/
-
 .TDS_Glogin_User_Hide #loginForm1, .TDS_Glogin_Session_Hide #loginForm2
-{
-    display: none;
-    visibility: hidden;
+	{
+	display: none;
+	visibility: hidden;
 }
-.TDS_Glogin_User_Hide.TDS_Glogin_Session_Hide #sectionLoginHeader
-{
-    display: none;
-    visibility: hidden;
+
+.TDS_Glogin_User_Hide.TDS_Glogin_Session_Hide #sectionLoginHeader {
+	display: none;
+	visibility: hidden;
 }
 
 .TDS_Glogin_User_Hide.TDS_Glogin_Session_Hide.practiceTest #sectionLogin .ot-shadowBox,
-.TDS_Glogin_User_Hide.TDS_Glogin_Session_Hide.practiceTest #ot-blurbs
-{
-    float: none !important;
-    width: auto !important;
+	.TDS_Glogin_User_Hide.TDS_Glogin_Session_Hide.practiceTest #ot-blurbs {
+	float: none !important;
+	width: auto !important;
 }
+
 .TDS_Glogin_User_Hide.TDS_Glogin_Session_Hide #sectionLogin .ot-innerShadow,
-.TDS_Glogin_User_Hide.TDS_Glogin_Session_Hide #sectionLoginProctor .ot-innerShadow
-{
-    background: none !important;
-    border: none !important;
-    box-shadow: none !important;
-    padding: 1em 0;
+	.TDS_Glogin_User_Hide.TDS_Glogin_Session_Hide #sectionLoginProctor .ot-innerShadow
+	{
+	background: none !important;
+	border: none !important;
+	box-shadow: none !important;
+	padding: 1em 0;
 }
+
 .TDS_Glogin_User_Hide.TDS_Glogin_Session_Hide .tds-button.positive,
-.TDS_Glogin_User_Hide.TDS_Glogin_Session_Hide .tds-button.positive span,
+	.TDS_Glogin_User_Hide.TDS_Glogin_Session_Hide .tds-button.positive span,
+	.TDS_Glogin_User_Hide.TDS_Glogin_Session_Hide .tds-button.positive button
+	{
+	font-size: 1.2em;
+	width: 100%;
+}
+
+.TDS_Glogin_User_Hide.TDS_Glogin_Session_Hide .tds-button.positive {
+	box-shadow: 0 0 5px #666;
+	border: 3px solid;
+}
+
 .TDS_Glogin_User_Hide.TDS_Glogin_Session_Hide .tds-button.positive button
-{
-    font-size: 1.2em;
-    width: 100%;
-}
-.TDS_Glogin_User_Hide.TDS_Glogin_Session_Hide .tds-button.positive
-{
-    box-shadow: 0 0 5px #666;
-    border: 3px solid;
-}
-.TDS_Glogin_User_Hide.TDS_Glogin_Session_Hide .tds-button.positive button
-{
-    border: none;
-}
-.TDS_Glogin_User_Hide.TDS_Glogin_Session_Hide #diagnostics
-{
-    border-bottom: 1px solid #000;
-    border-top: 1px solid #000;
-    height: 3em;
-    line-height: 3em;
-    background: #fff;
-    padding: 0 10px;
-}
-.TDS_Glogin_User_Hide.TDS_Glogin_Session_Hide .blurb
-{
-    background: #fff !important;
-    border: none !important;
-    box-shadow: none !important;
-    margin: 0;
+	{
+	border: none;
 }
 
+.TDS_Glogin_User_Hide.TDS_Glogin_Session_Hide #diagnostics {
+	border-bottom: 1px solid #000;
+	border-top: 1px solid #000;
+	height: 3em;
+	line-height: 3em;
+	background: #fff;
+	padding: 0 10px;
+}
 
+.TDS_Glogin_User_Hide.TDS_Glogin_Session_Hide .blurb {
+	background: #fff !important;
+	border: none !important;
+	box-shadow: none !important;
+	margin: 0;
+}
 
-.TDS_Glogin_User_Disable #loginForm1,
-.TDS_Glogin_Session_Disable #loginForm2{
+.TDS_Glogin_User_Disable #loginForm1, .TDS_Glogin_Session_Disable #loginForm2
+	{
 	opacity: .3;
-	pointer-events:none;
+	pointer-events: none;
 	-moz-user-select: none;
-	-webkit-user-select:none;
+	-webkit-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
 }
+
 .TDS_Glogin_User_Disable #loginForm1 .checkHolder input,
-.TDS_Glogin_Session_Disable #loginForm2 .checkHolder input
- {
+	.TDS_Glogin_Session_Disable #loginForm2 .checkHolder input {
 	display: none !important;
 }
+
 .TDS_Glogin_User_Disable #loginForm1 .checkHolder label,
-.TDS_Glogin_Session_Disable #loginForm2 .checkHolder label {
+	.TDS_Glogin_Session_Disable #loginForm2 .checkHolder label {
 	padding-left: .5em;
 }
+
 .TDS_Glogin_User_Disable #loginForm1 .checkHolder,
-.TDS_Glogin_Session_Disable #loginForm2  .checkHolder {
-    background-color: #ccc;
+	.TDS_Glogin_Session_Disable #loginForm2  .checkHolder {
+	background-color: #ccc;
 }
-.TDS_Glogin_User_Disable #loginForm1,
-.TDS_Glogin_Session_Disable #loginForm2
-{
-    border-color: #ccc !important;
+
+.TDS_Glogin_User_Disable #loginForm1, .TDS_Glogin_Session_Disable #loginForm2
+	{
+	border-color: #ccc !important;
 }
 
 /*Hide Bikes & Tricycles when Score Entry OR Response Entry is active.   */
-.app_ScoreEntry.practiceTest #sections,
-.app_ResponseEntry.practiceTest #sections,
-.app_ScoreEntry #sections,
-.app_ResponseEntry #sections,
-.app_scoreentry.practiceTest #sections,
-.app_responseentry.practiceTest #sections,
-.app_scoreentry #sections,
-.app_responseentry #sections
-{
-    background: none;
+.app_ScoreEntry.practiceTest #sections, .app_ResponseEntry.practiceTest #sections,
+	.app_ScoreEntry #sections, .app_ResponseEntry #sections,
+	.app_scoreentry.practiceTest #sections, .app_responseentry.practiceTest #sections,
+	.app_scoreentry #sections, .app_responseentry #sections {
+	background: none;
 }
 /* Do not display practice/non-practice test banner bar while in Score Entry OR Response Entry modes*/
-.app_ScoreEntry.practiceTest #ot-brand2,
-.app_ResponseEntry.practiceTest #ot-brand2,
-.app_ScoreEntry #ot-brand2,
-.app_ResponseEntry #ot-brand2,
-.app_scoreentry.practiceTest #ot-brand2,
-.app_responseentry.practiceTest #ot-brand2,
-.app_scoreentry #ot-brand2,
-.app_responseentry #ot-brand2
-{
-    display: none;
+.app_ScoreEntry.practiceTest #ot-brand2, .app_ResponseEntry.practiceTest #ot-brand2,
+	.app_ScoreEntry #ot-brand2, .app_ResponseEntry #ot-brand2,
+	.app_scoreentry.practiceTest #ot-brand2, .app_responseentry.practiceTest #ot-brand2,
+	.app_scoreentry #ot-brand2, .app_responseentry #ot-brand2 {
+	display: none;
 }
 
 /* Hide Summary Segments on Score or Response Entry modes */
 .app_ScoreEntry.practiceTest #sectionTestVerify #summary-segments,
-.app_ResponseEntry.practiceTest #sectionTestVerify #summary-segments,
-.app_scoreentry #sectionTestVerify #summary-segments,
-.app_responseentry #sectionTestVerify #summary-segments{
+	.app_ResponseEntry.practiceTest #sectionTestVerify #summary-segments,
+	.app_scoreentry #sectionTestVerify #summary-segments,
+	.app_responseentry #sectionTestVerify #summary-segments {
 	display: none;
 }
 
 /* Hide Help button in Score & Response Entry modes */
-.app_ScoreEntry.practiceTest a#btnHelp,
-.app_ResponseEntry.practiceTest a#btnHelp,
-.app_ScoreEntry a#btnHelp,
-.app_ResponseEntry a#btnHelp,
-.app_scoreentry.practiceTest a#btnHelp,
-.app_responseentry.practiceTest a#btnHelp,
-.app_scoreentry a#btnHelp,
-.app_responseentry a#btnHelp{
+.app_ScoreEntry.practiceTest a#btnHelp, .app_ResponseEntry.practiceTest a#btnHelp,
+	.app_ScoreEntry a#btnHelp, .app_ResponseEntry a#btnHelp,
+	.app_scoreentry.practiceTest a#btnHelp, .app_responseentry.practiceTest a#btnHelp,
+	.app_scoreentry a#btnHelp, .app_responseentry a#btnHelp {
 	display: none;
 }
 /* Hide more buttons after test submitting in Score & Response Entry modes WHILE in Practice tests */
 .app_ScoreEntry.practiceTest #sectionTestResults #btnEnterMoreScores,
-.app_ResponseEntry.practiceTest #sectionTestResults #btnEnterMoreScores,
-.app_ScoreEntry.practiceTest #sectionTestResults #btnChangeStudent,
-.app_ResponseEntry.practiceTest #sectionTestResults #btnChangeStudent,
-.app_scoreentry.practiceTest #sectionTestResults #btnEnterMoreScores,
-.app_responseentry.practiceTest #sectionTestResults #btnEnterMoreScores,
-.app_scoreentry.practiceTest #sectionTestResults #btnChangeStudent,
-.app_responseentry.practiceTest #sectionTestResults #btnChangeStudent{
+	.app_ResponseEntry.practiceTest #sectionTestResults #btnEnterMoreScores,
+	.app_ScoreEntry.practiceTest #sectionTestResults #btnChangeStudent,
+	.app_ResponseEntry.practiceTest #sectionTestResults #btnChangeStudent,
+	.app_scoreentry.practiceTest #sectionTestResults #btnEnterMoreScores,
+	.app_responseentry.practiceTest #sectionTestResults #btnEnterMoreScores,
+	.app_scoreentry.practiceTest #sectionTestResults #btnChangeStudent,
+	.app_responseentry.practiceTest #sectionTestResults #btnChangeStudent {
 	display: none;
 }
 
 /*Hide large chunks of the grade selection screen in practice test Score & Response Entry Modes */
 .mode_ResponseEntry.practiceTest  #sectionLoginVerify ul.ot-infoConfirm li,
-.mode_ScoreEntry.practiceTest  #sectionLoginVerify ul.ot-infoConfirm li,
-.mode_responseentry.practiceTest  #sectionLoginVerify ul.ot-infoConfirm li,
-.mode_scoreentry.practiceTest  #sectionLoginVerify ul.ot-infoConfirm li
-{
-	 display: none;
- }
+	.mode_ScoreEntry.practiceTest  #sectionLoginVerify ul.ot-infoConfirm li,
+	.mode_responseentry.practiceTest  #sectionLoginVerify ul.ot-infoConfirm li,
+	.mode_scoreentry.practiceTest  #sectionLoginVerify ul.ot-infoConfirm li
+	{
+	display: none;
+}
 
 .mode_ResponseEntry.practiceTest  #sectionLoginVerify .ot-infoConfirm li#verifyGradeSelector,
-.mode_ScoreEntry.practiceTest  #sectionLoginVerify .ot-infoConfirm li#verifyGradeSelector,
-.mode_responseentry.practiceTest  #sectionLoginVerify .ot-infoConfirm li#verifyGradeSelector,
-.mode_scoreentry.practiceTest  #sectionLoginVerify .ot-infoConfirm li#verifyGradeSelector{
+	.mode_ScoreEntry.practiceTest  #sectionLoginVerify .ot-infoConfirm li#verifyGradeSelector,
+	.mode_responseentry.practiceTest  #sectionLoginVerify .ot-infoConfirm li#verifyGradeSelector,
+	.mode_scoreentry.practiceTest  #sectionLoginVerify .ot-infoConfirm li#verifyGradeSelector
+	{
 	display: block;
 }
 /* @end */
 
 /* @group input focus styles */
-
-.accommodations input:focus, 
-.accommodations select:focus, 
-#verifyGradeSelector select:focus, 
-.loginRow input:focus, 
-.sessionID input:focus {
-	-moz-box-shadow: 0 0 5px 2px rgba(0,174,239,.8);
-   	-webkit-box-shadow: 0 0 5px 2px rgba(0,174,239,.8);
-	box-shadow: 0 0 5px 2px rgba(0,174,239,.8);
+.accommodations input:focus, .accommodations select:focus,
+	#verifyGradeSelector select:focus, .loginRow input:focus, .sessionID input:focus
+	{
+	-moz-box-shadow: 0 0 5px 2px rgba(0, 174, 239, .8);
+	-webkit-box-shadow: 0 0 5px 2px rgba(0, 174, 239, .8);
+	box-shadow: 0 0 5px 2px rgba(0, 174, 239, .8);
 }
 /*make room room for focus shadow */
 .loginRow {
-    padding-top: 5px;
+	padding-top: 5px;
 }
+
 .checkHolder input:focus {
 	outline: solid 2px #ff6600;
 }
@@ -2630,26 +3190,22 @@ body.showingLoading {
 }*/
 
 /* Hide Opprotunities Accomodation*/
-.TDS_TOI_Hide #sectionTestSelection .testSelection p{
+.TDS_TOI_Hide #sectionTestSelection .testSelection p {
 	display: none;
 }
-.TDS_TOI_Hide #testSelections .testSelection strong{
+
+.TDS_TOI_Hide #testSelections .testSelection strong {
 	margin: 0.2em 0 0.7em;
 }
 
 /* Hide Pages for Data Entry and Response Entry */
-.mode_ResponseEntry.practiceTest #sectionLogin,
-.mode_ScoreEntry.practiceTest #secitonLogin,
-.mode_ResponseEntry.practiceTest #sectionTestApproval,
-.mode_ScoreEntry.practiceTest #sectionTestApproval,
-.mode_ResponseEntry.practiceTest #sectionInstructions,
-.mode_ScoreEntry.practiceTest #sectionInstructions,
-.mode_responseentry.practiceTest #sectionLogin,
-.mode_scoreentry.practiceTest #secitonLogin,
-.mode_responseentry.practiceTest #sectionTestApproval,
-.mode_scoreentry.practiceTest #sectionTestApproval,
-.mode_responseentry.practiceTest #sectionInstructions,
-.mode_scoreentry.practiceTest #sectionInstructions{
+.mode_ResponseEntry.practiceTest #sectionLogin, .mode_ScoreEntry.practiceTest #secitonLogin,
+	.mode_ResponseEntry.practiceTest #sectionTestApproval, .mode_ScoreEntry.practiceTest #sectionTestApproval,
+	.mode_ResponseEntry.practiceTest #sectionInstructions, .mode_ScoreEntry.practiceTest #sectionInstructions,
+	.mode_responseentry.practiceTest #sectionLogin, .mode_scoreentry.practiceTest #secitonLogin,
+	.mode_responseentry.practiceTest #sectionTestApproval, .mode_scoreentry.practiceTest #sectionTestApproval,
+	.mode_responseentry.practiceTest #sectionInstructions, .mode_scoreentry.practiceTest #sectionInstructions
+	{
 	display: none !important;
 	visibility: hidden !important;
 }
@@ -2664,23 +3220,313 @@ a.yui-panel-bottom {
 	left: -9999px;
 	text-indent: -9999px;
 }
-a.yui-panel-bottom:focus, 
-a.yui-panel-bottom:active
-{
-    width: 24px;
-    height: 24px;
-    z-index: 1;
-    -webkit-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, .9);
+
+a.yui-panel-bottom:focus, a.yui-panel-bottom:active {
+	width: 24px;
+	height: 24px;
+	z-index: 1;
+	-webkit-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, .9);
 	-moz-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, .9);
 	box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, .9);
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
-    border-radius: 2px;
-    color: #fff;
-    border: solid 1px #fff;
-    left: 100%;
-    margin-left: -30px;
-    margin-top: -18px;
-    outline: none;
+	border-radius: 2px;
+	color: #fff;
+	border: solid 1px #fff;
+	left: 100%;
+	margin-left: -30px;
+	margin-top: -18px;
+	outline: none;
 	background-color: #9e0b0f;
+}
+
+/* GROUP TEST CATEGORY SUPPORT */
+
+/* Test Category Colors*/
+.TDS_TestCat_Colors #sectionTestSelection .testSelection {
+	/*background: #666666 url(../Images/masterShell/color_cat_arrow.svg) no-repeat 0.2em center;*/
+	background-color: rgba(248, 248, 248, 0.5);
+	background-image: none;
+	border-radius: 0;
+	padding: 0;
+	-moz-transition: background-color .3s ease-in;
+	-webkit-transition: background-color .3s ease-in;
+	transition: background-color .3s ease-in;
+	position: relative;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .testSelection::before {
+	background: #666666 url(../Images/masterShell/color_cat_arrow.svg)
+		no-repeat 0.2em center;
+	display: block;
+	content: ' ';
+	width: 4em;
+	min-height: 4em;
+	position: absolute;
+	height: 100%;
+}
+
+.TDS_PS_L0.TDS_TestCat_Colors #sectionTestSelection .testSelection:before
+	{
+	background-position: 0.0em center;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .testSelection.resume {
+	background-image: url(../Images/masterShell/color_cat_resume.svg);
+	background-size: 3.5em;
+	background-position: 0.2em center;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .testSelection div {
+	border-left: 2px solid #fff;
+	display: block;
+	min-height: 80px;
+	margin-left: 4em;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .testSelection strong {
+	float: none;
+	display: inline-block;
+	padding: 1em 1em 0 0;
+	margin-left: 1em;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .testSelection p {
+	float: none;
+	display: block;
+	margin-left: 1.2em;
+	padding: 0 1em 1em 0;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .testSelection:hover div,
+	.TDS_TestCat_Colors #sectionTestSelection .testSelection:focus div,
+	.TDS_TestCat_Colors #sectionTestSelection .testSelection:active div {
+	/*background-color: rgba(102,102,102,0.7);*/
+	background-color: #676767;
+	color: #fff;
+	-moz-transition: background-color .3s ease-in;
+	-webkit-transition: background-color .3s ease-in;
+	transition: background-color .3s ease-in;
+}
+/*Colors*/
+.TDS_TestCat_Colors #sectionTestSelection .testSelection {
+	background-color: #d9d9d9;
+}
+
+.TDS_CC0.TDS_TestCat_Colors #sectionTestSelection .testSelection:hover div,
+	.TDS_CC0.TDS_TestCat_Colors #sectionTestSelection .testSelection:focus div,
+	.TDS_CC0.TDS_TestCat_Colors #sectionTestSelection .testSelection:active div
+	{
+	background-color: #676767;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .testSelection.ta-adminBlue::before,
+	.TDS_TestCat_Colors #sectionTestSelection .ta-adminBlue.testSelection:hover div,
+	.TDS_TestCat_Colors #sectionTestSelection .ta-adminBlue.testSelection:focus div,
+	.TDS_TestCat_Colors #sectionTestSelection .ta-adminBlue.testSelection:active div
+	{
+	background-color: #1b5391;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .testSelection.ta-adminBlue {
+	background-color: #daeafc;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .testSelection.ta-adminYellow::before
+	{
+	background-color: #fdd833;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .testSelection.ta-adminYellow
+	{
+	background-color: #ebe8aa;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .ta-adminYellow.testSelection:hover div,
+	.TDS_TestCat_Colors #sectionTestSelection .ta-adminYellow.testSelection:focus div,
+	.TDS_TestCat_Colors #sectionTestSelection .ta-adminYellow.testSelection:active div
+	{
+	background-color: #887626;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .testSelection.ta-adminOrange::before
+	{
+	background-color: #ff9312;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .testSelection.ta-adminOrange
+	{
+	background-color: #fee2c6;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .ta-adminOrange.testSelection:hover div,
+	.TDS_TestCat_Colors #sectionTestSelection .ta-adminOrange.testSelection:focus div,
+	.TDS_TestCat_Colors #sectionTestSelection .ta-adminOrange.testSelection:active div
+	{
+	background-color: #cb4800;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .testSelection.ta-adminPink::before,
+	.TDS_TestCat_Colors #sectionTestSelection .ta-adminPink.testSelection:hover div,
+	.TDS_TestCat_Colors #sectionTestSelection .ta-adminPink.testSelection:focus div,
+	.TDS_TestCat_Colors #sectionTestSelection .ta-adminPink.testSelection:active div
+	{
+	background-color: #d1387c;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .testSelection.ta-adminPink {
+	background-color: #fde2ee;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .testSelection.ta-adminPurple::before,
+	.TDS_TestCat_Colors #sectionTestSelection .ta-adminPurple.testSelection:hover div,
+	.TDS_TestCat_Colors #sectionTestSelection .ta-adminPurple.testSelection:focus div,
+	.TDS_TestCat_Colors #sectionTestSelection .ta-adminPurple.testSelection:active div
+	{
+	background-color: #92278f;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .testSelection.ta-adminPurple
+	{
+	background-color: #fff8ff;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .testSelection.ta-adminGreen::before,
+	.TDS_TestCat_Colors #sectionTestSelection .ta-adminGreen.testSelection:hover div,
+	.TDS_TestCat_Colors #sectionTestSelection .ta-adminGreen.testSelection:focus div,
+	.TDS_TestCat_Colors #sectionTestSelection .ta-adminGreen.testSelection:active div
+	{
+	background-color: #4c7608;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .testSelection.ta-adminGreen {
+	background-color: #e4f2cf;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .testSelection.ta-adminRed::before,
+	.TDS_TestCat_Colors #sectionTestSelection .ta-adminRed.testSelection:hover div,
+	.TDS_TestCat_Colors #sectionTestSelection .ta-adminRed.testSelection:focus div,
+	.TDS_TestCat_Colors #sectionTestSelection .ta-adminRed.testSelection:active div
+	{
+	background-color: #ce0000;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .testSelection.ta-adminRed {
+	background-color: #f0d8d8;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .testSelection.ta-adminBrown::before
+	{
+	background-color: #814c00;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .ta-adminBrown.testSelection:hover div,
+	.TDS_TestCat_Colors #sectionTestSelection .ta-adminBrown.testSelection:focus div,
+	.TDS_TestCat_Colors #sectionTestSelection .ta-adminBrown.testSelection:active div
+	{
+	background-color: #5d2700;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .testSelection.ta-adminBrown {
+	background-color: #e8dcd4;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .testSelection.ta-adminIndigo::before,
+	.TDS_TestCat_Colors #sectionTestSelection .ta-adminIndigo.testSelection:hover div,
+	.TDS_TestCat_Colors #sectionTestSelection .ta-adminIndigo.testSelection:focus div,
+	.TDS_TestCat_Colors #sectionTestSelection .ta-adminIndigo.testSelection:active div
+	{
+	background-color: #4b0082;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .testSelection.ta-adminIndigo
+	{
+	background-color: #ebdef5;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .testSelection.ta-adminMint::before
+	{
+	background-color: #1ba558;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .ta-adminMint.testSelection:hover div,
+	.TDS_TestCat_Colors #sectionTestSelection .ta-adminMint.testSelection:focus div,
+	.TDS_TestCat_Colors #sectionTestSelection .ta-adminMint.testSelection:active div
+	{
+	background-color: #378353;
+}
+
+.TDS_CC0.TDS_TestCat_Colors #sectionTestSelection .testSelection.ta-adminMint
+	{
+	background-color: #dcf9dc;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .testSelection.ta-adminTeal::before
+	{
+	background-color: #3fe2e4;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .ta-adminTeal.testSelection:hover div,
+	.TDS_TestCat_Colors #sectionTestSelection .ta-adminTeal.testSelection:focus div,
+	.TDS_TestCat_Colors #sectionTestSelection .ta-adminTeal.testSelection:active div
+	{
+	background-color: #00636c;
+}
+
+.TDS_TestCat_Colors #sectionTestSelection .testSelection.ta-adminTeal {
+	background-color: #d9f9f6;
+}
+
+/*Colors while Accomodations are Active*/
+.TDS_CCBlue.TDS_TestCat_Colors #sectionTestSelection .testSelection,
+	.TDS_CCBlue2.TDS_TestCat_Colors #sectionTestSelection .testSelection,
+	.TDS_CCGray.TDS_TestCat_Colors #sectionTestSelection .testSelection,
+	.TDS_CCGray2.TDS_TestCat_Colors #sectionTestSelection .testSelection,
+	.TDS_CCGreen.TDS_TestCat_Colors #sectionTestSelection .testSelection,
+	.TDS_CCGreen2.TDS_TestCat_Colors #sectionTestSelection .testSelection,
+	.TDS_CCYellow.TDS_TestCat_Colors #sectionTestSelection .testSelection,
+	.TDS_CCYellow2.TDS_TestCat_Colors #sectionTestSelection .testSelection,
+	.TDS_CCInvert.TDS_TestCat_Colors #sectionTestSelection .testSelection,
+	.TDS_CCWhiteN.TDS_TestCat_Colors #sectionTestSelection .testSelection,
+	.TDS_CCYellowB.TDS_TestCat_Colors #sectionTestSelection .testSelection
+	{
+	background-color: rgba(248, 248, 248, 0.5);
+}
+
+/* Test Category Sections*/
+.TDS_TestCat_Groups div#testSelections .testGroup h2 {
+	font-size: 1.7em;
+	display: block;
+	line-height: 2em;
+	padding: 0;
+}
+
+.TDS_TestCat_Groups #testSelections .testGroup {
+	background-color: rgba(200, 200, 200, 0.1);
+	border: 1px solid #ddd;
+	padding: 0.5em 2em;
+	margin-bottom: 1em;
+}
+
+.TDS_TestCat_Groups #testSelections .testGroup ul {
+	display: block;
+	overflow: hidden;
+}
+
+.TDS_TestCat_Groups #sectionTestSelection .testSelection.even {
+	float: right;
+	margin-right: 0;
+}
+
+/* @End */
+
+/* @Group modern browser Color Code select box fix */
+.TDS_CCInvert #segments select, .TDS_CCWhiteN #segments select,
+	.TDS_CCYellowB #segments select {
+	-moz-appearance: tab-scroll-arrow-back;
+}
+
+/* @new Login Sound Recorder Adjustment*/
+#checkRecorder .instructions div ol {
+	margin: 0 3em 0 0;
 }

@@ -5,3 +5,6 @@
 	display: none !important;
 }
 */
+.cke_combo.cke_combo__languages {
+	display: none;
+}
