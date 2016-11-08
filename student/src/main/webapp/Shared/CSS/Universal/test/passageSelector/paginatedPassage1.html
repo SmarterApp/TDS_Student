@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=no">
+<title>Tab 5 Active</title><
+
+<!-- Shell Styles -->
+<link href="../../../normalize.css" media="screen" type="text/css" rel="stylesheet">
+<link href="../../shell.css" rel="stylesheet" type="text/css">
+<link href="../../../dialogs.css" media="screen" type="text/css" rel="stylesheet">
+<link href="../../../accommodations.css" media="screen" type="text/css" rel="stylesheet">
+<link href="../../../frames.css" media="screen" type="text/css" rel="stylesheet">
+
+<!-- Content Styles -->
+<link href="../../../items.css" media="screen" type="text/css" rel="stylesheet">
+<link href="../../../elpa.css" media="screen" type="text/css" rel="stylesheet">
+<link href="../../items.css" media="screen" type="text/css" rel="stylesheet">
+<link href="../../../../../Scripts/Libraries/yahoo/yui2/build/menu/assets/menu.css" rel="stylesheet" type="text/css">
+
+<link href="passageTabs.css" media="screen" type="text/css" rel="stylesheet">
+
+<!-- ================================
+Mike, I referenced http://accessibility.athena-ict.com/aria/examples/tabpanel2.shtml for basic structure and how to indicate what tab controls which panel
+================================ -->
+
+
+</head>
+
+<body id="htmlBody" role="application" class="yui-skin-sam TDS_PS_L0 no-touch ENU TDS_TTX_0 TDS_CCYellow TDS_ASL1 TDS_ClosedCap0 TDS_ItmNum1 TDS_FT_San-Serif TDS_F_S12 TDS_TTS_Item TDS_TTS_Stim TDS_TTS_Inst TDS_TTSPause1 TDS_TTSTracking1 TDS_Masking1 TDS_Highlight1 TDS_HighPer_Stim TDS_HighPer_Item TDS_ExpandablePassages1 TDS_ExpandableItems1 TDS_ITM1 TDS_ItemReset1 TDS_PoD_Item TDS_PoD_Stim TDS_Emboss_Item TDS_Emboss_Stim TDS_GfR1 TDS_MfR1 TDS_SC0 TDS_T1 TDS_ST1 TDS_LR1 LPN_FB1 TDS_WL_Glossary TDS_WL_ArabicGloss TDS_WL_CantoneseGloss TDS_WL_TagalGloss TDS_WL_KoreanGloss TDS_WL_MandarinGloss TDS_WL_PunjabiGloss TDS_WL_RussianGloss TDS_WL_ESNGlossary TDS_WL_UkrainianGloss TDS_WL_VietnameseGloss TDS_Compass1 TDS_StraightLine1 TDS_Ruler0 TDS_Protractor0 TDS_ASIGuide1 TDS_APC_PSP TDS_VPC_OFF TDS_SLM0 TDS_PIG1 TDS_GR0 TDS_ItemSecurity0 TDS_InfoBar_None TDS_HEBG_None TDS_AW0 TDS_HRR_Exists TDS_PTabs1 fs-enabledz">
+
+
+
+
+<div id="topBar">
+	<a href="#contents" class="contentHidden" id="skipNav">Skip navigation</a>
+	<div id="infoBar" role="banner">
+    	<div id="jumpQuestions">
+        	<label i18n-content="TestShellModern.Label.Items" id="jumpLabel">Questions:</label>
+            <select aria-labelledby="jumpLabel" name="ddlNavigation" id="ddlNavigation"><option value="I-187-1702" class="">1</option><option value="G-187-3710-0" disabled="" class="disabled hidden" style="display: none; visibility: hidden;">2</option><option value="G-187-3711-0" disabled="" class="disabled hidden" style="display: none; visibility: hidden;">3</option></select>
+    	    <input type="button" style="" aria-label="Press enter to jump to question" value="Go" id="jumpGo">
+        </div>
+        <h1>Test Name</h1>
+        <h2>Student Name</h2>
+        <div id="smallButtons">
+        	<a href="#" id="btnHelp" aria-haspopup="true">Help</a>
+            <a href="#" id="btnSettings" aria-haspopup="true">Settings</a>
+            <a href="#" id="proctorLogout">Log Out</a>
+        </div>
+    </div>
+    <nav id="navigation" role="navigation">
+    	<ul id="studentControls">
+        	<!-- example of disabled, but visible nav button -->
+            <li><a tabindex="-1" disabled="disabled" aria-disabled="true" id="btnBack" class="inactive" href="#"><span class="icon"></span>Back</a></li>
+            <li><a id="btnNext" href="#"><span class="icon"></span>Next</a></li>
+            <li><a id="btnPause" href="#"><span class="icon"></span>Pause</a></li>
+						<li><a id="btnFullScreen" href="#"><span class="icon"></span>Full Screen</a></li>
+    	</ul>
+
+    	<ul id="studentTools">
+            <li><a id="btnZoomIn" href="#"><span class="icon"></span>Zoom In</a></li>
+            <li><a id="btnZoomOut" href="#"><span class="icon"></span>Zoom Out</a></li>
+            <li><a id="btnFormula" href="#" aria-haspopup="true" style="display:block !important"><span class="icon"></span>Formula</a></li>
+            <li><a id="btnGlobalNotes" href="#" aria-haspopup="true" style="display:block !important"><span class="icon"></span>Notes</a></li>
+            <li><a id="btnCalculator" href="#" aria-haspopup="true" style="display:block !important"><span class="icon"></span>Calculator</a></li>
+            <li><a id="btnContext" href="#" aria-haspopup="true"><span class="icon"></span>Menu</a></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="alertBar" aria-hidden="true" role="alertdialog">
+	<a href="#" class="alertClose">Dismiss Message</a>
+    <div class="alertContent">You've reached the end of the test!</div>
+</div>
+
+<div id="contents" role="main">
+	<div class="pageWrapper showing" aria-hidden="false">
+		<div class="itemcount_2 layout_34 browser_firefox browserVer_47 platform_osx passageShowing" id="Page_G-234-16-1" xmlns="http://www.w3.org/1999/xhtml" data-zoom="0">
+
+<div class="bigTable layoutPaginatedPassage">
+	<div class="tds-pageTabs">
+		<ul class="tablist">
+			<li id="page-tab-G-234-16-1-G-234-16"><a href="#" tabindex="0" class="tab passage active">Passage</a></li>
+			<li id="page-tab-G-234-16-1-I-234-100"><a href="#" tabindex="0" class="tab">2</a></li>
+			<li id="page-tab-G-234-16-1-I-234-102"><a href="#" tabindex="0" class="tab">3</a></li>
+		</ul>
+	</div>
+	<div class="toolsContainer passageTools"><a class="toolButton passageMenu" href="#" tabindex="0" aria-label="Menu" role="button" aria-haspopup="true"></a></div>
+
+<div class="thePassage contextArea qti-content showing activePassage" data-menu-prefix="TDSTTS.Label.SpeakPassage" id="Passage_G-234-16-1" aria-hidden="false" touch-action="pan-y" tabindex="0">
+	<div class="padding passageContent">
+	<div id="VH196251">
+		<div>
+			<p id="VH196251_lead_in_4" class="lead_in ">Listen to two students speaking in a school hallway. They are talking about a math assignment.</p>
+		</div>
+		<div>
+			<div>
+				<img width="900" height="550" src="/Test_Student_Sat1/V513/Pages/API/Resources.axd?path=6CZ6YZ0KJrr0cGlSp_W-tTreucYkXQqpJ7KOloHzBfncWcD0CS8zSXA85a_5pVtHZ-l7OOyB5ewfa6IoC86AWL16kD6UITFxWhNtyYH2Jbu08WN6cJtOrk0DPUENgWZcDwhEpR5XPSCC8u66TAW1eHpSPiGD4DvLUTxs8EscXVVTnwRs3j0AhDGbaJsVL7kGfvtdNFG1GDCUHBbWHV_ojA2&amp;file=VH196251.g04.svg" alt="Two students are walking in a school hallway." data-width="900" data-height="550">
+			</div>
+		</div>
+		<div class="audioControls audio-layout-scrubber playing_pause" id="sound-3" data-audio-event="playing_pause"><a class="playPause audio-controls-btn tds-tabbable-component contextAreaFocus" href="#" title="Play or pause recorded audio." tabindex="0" aria-disabled="false"></a><div class="slide_controls_slider yui-h-slider" style="width: 195px;"><div id="slider_bg_sound-3_slider" class="slide_controls_slider_bg" style="width: 195px;" tabindex="0" touch-action="none"><span id="slider_image_sound-3_slider" class="slide_controls_img" style="position: absolute; left: 85.56px; top: 0px;" touch-action="none"></span></div><div id="slider_timeline_sound-3_slider" class="slide_controls_slider_timeline" style="width: 172px; margin-left: 11.5px; margin-right: 11.5px;"></div></div></div>
+		<div class="audioControls audio-layout-scrubber" id="sound-4"><a class="playPause audio-controls-btn tds-tabbable-component" href="#" title="Play or pause recorded audio." tabindex="0" aria-disabled="false"></a><div class="slide_controls_slider yui-h-slider" style="width: 195px;"><div id="slider_bg_sound-4_slider" class="slide_controls_slider_bg" style="width: 195px;" tabindex="0" touch-action="none"><span id="slider_image_sound-4_slider" class="slide_controls_img" style="position: absolute; left: 0px; top: 0px;" touch-action="none"></span></div><div id="slider_timeline_sound-4_slider" class="slide_controls_slider_timeline" style="width: 172px; margin-left: 11.5px; margin-right: 11.5px;"></div></div></div>
+		<div class="audioControls audio-layout-scrubber" id="sound-5"><a class="playPause audio-controls-btn tds-tabbable-component" href="#" title="Play or pause recorded audio." tabindex="0" aria-disabled="false"></a><div class="slide_controls_slider yui-h-slider" style="width: 195px;"><div id="slider_bg_sound-5_slider" class="slide_controls_slider_bg" style="width: 195px;" tabindex="0" touch-action="none"><span id="slider_image_sound-5_slider" class="slide_controls_img" style="position: absolute; left: 0px; top: 0px;" touch-action="none"></span></div><div id="slider_timeline_sound-5_slider" class="slide_controls_slider_timeline" style="width: 172px; margin-left: 11.5px; margin-right: 11.5px;"></div></div></div>
+	</div>
+</div>
+</div>
+
+<div class="theQuestions">
+	<div class="padding">
+
+
+		<div class="questionAnswerGroup itemContainer format_iat response_qti firstItem  qti-content hiding" id="Item_2" data-response-type-legacy="Vertical" aria-hidden="true" touch-action="pan-y" tabindex="0">
+
+			<div class="questionContainer">
+				<div class="toolsContainer itemTools"><a class="toolButton itemMenu" href="#" tabindex="0" aria-label="Menu" role="button" aria-haspopup="true"></a></div>
+
+
+<h2 class="questionNumber" id="QuestionNumber_2">2</h2>
+
+<div class="stemContainer" id="Stem_2">
+	<div id="item_stem_HTMLEditor">
+		<div id="VH196290_item_stem">
+			<p class="stem_paragraph ">
+				<strong>What are the boy and girl mainly discussing?</strong>
+			</p>
+			<p class="stem_paragraph ">&nbsp;</p>
+			<div class="audioControls audio-layout-scrubber" id="sound-6"><a class="playPause audio-controls-btn tds-tabbable-component" href="#" title="Play or pause recorded audio." tabindex="0" aria-disabled="false"></a><div class="slide_controls_slider yui-h-slider" style="width: 195px;"><div id="slider_bg_sound-6_slider" class="slide_controls_slider_bg" style="width: 195px;" tabindex="0" touch-action="none"><span id="slider_image_sound-6_slider" class="slide_controls_img" style="position: absolute; left: 0px; top: 0px;" touch-action="none"></span></div><div id="slider_timeline_sound-6_slider" class="slide_controls_slider_timeline" style="width: 172px; margin-left: 11.5px; margin-right: 11.5px;"></div></div></div>
+		</div>
+	</div>
+
+</div>
+
+			</div>
+
+			<div class="answerContainer">
+
+			<div id="VH196290_choice_list_15" class="iat-interaction-container">
+		<div data-scoring-type="QTI" data-response-type="QTI" data-response-identifier="RESPONSE" class="qti-interaction choice_list " data-interaction-name="choiceInteraction" role="group" aria-label="Multiple select - choose one or more response."><script type="application/xml">&lt;choiceInteraction id="VH196290_choice_list " class="choice_list " maxChoices="1" minChoices="1" orientation="vertical" shuffle="false" responseIdentifier="RESPONSE" data-response-type="QTI" data-scoring-type="QTI"&gt;
+			&lt;simpleChoice class="block_choice " id="VH196290_block_choice_16" identifier="i1"&gt;
+				&lt;div id="VH196290_item_stem_ph3"&gt;
+					&lt;p class="choice_paragraph " id="VH196290_choice_paragraph_17"&gt;a math project they are working on&lt;/p&gt;
+					&lt;div autoplay="true" controls="true" preload="metadata" class="tds-audio"&gt;&lt;source xmlns="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0" src="/Test_Student_Sat1/V513/Pages/API/Resources.axd?path=6CZ6YZ0KJrr0cGlSp_W-tTreucYkXQqpJ7KOloHzBfncWcD0CS8zSXA85a_5pVtHZ-l7OOyB5ewfa6IoC86AWL16kD6UITFxWhNtyYH2Jbu08WN6cJtOrk0DPUENgWZcDwhEpR5XPSCC8u66TAW1eJPknu2x5hOJzEPwQc6Kl_B3eQ_0B8dsk73iiU6d4e-Ibkb6rPbvvPVCLoeofKWR2g2&amp;amp;file=VH196290.a02.ogg" type="audio/ogg; codecs='vorbis'"&gt;&lt;/source&gt;&lt;source xmlns="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0" src="/Test_Student_Sat1/V513/Pages/API/Resources.axd?path=6CZ6YZ0KJrr0cGlSp_W-tTreucYkXQqpJ7KOloHzBfncWcD0CS8zSXA85a_5pVtHZ-l7OOyB5ewfa6IoC86AWL16kD6UITFxWhNtyYH2Jbu08WN6cJtOrk0DPUENgWZcDwhEpR5XPSCC8u66TAW1eJPknu2x5hOJzEPwQc6Kl_B3eQ_0B8dsk73iiU6d4e-Ibkb6rPbvvPVCLoeofKWR2g2&amp;amp;file=VH196290.a02.m4a" type="audio/mp4; codecs='mp4a.40.2'"&gt;&lt;/source&gt;&lt;/div&gt;
+				&lt;/div&gt;
+			&lt;/simpleChoice&gt;
+			&lt;simpleChoice class="block_choice " id="VH196290_block_choice_24" identifier="i2"&gt;
+				&lt;div id="VH196290_item_stem_ph4"&gt;
+					&lt;p class="choice_paragraph " id="VH196290_choice_paragraph_25"&gt;sports teams that they want to join&lt;/p&gt;
+					&lt;div autoplay="true" controls="true" preload="metadata" class="tds-audio"&gt;&lt;source xmlns="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0" src="/Test_Student_Sat1/V513/Pages/API/Resources.axd?path=6CZ6YZ0KJrr0cGlSp_W-tTreucYkXQqpJ7KOloHzBfncWcD0CS8zSXA85a_5pVtHZ-l7OOyB5ewfa6IoC86AWL16kD6UITFxWhNtyYH2Jbu08WN6cJtOrk0DPUENgWZcDwhEpR5XPSCC8u66TAW1eJPknu2x5hOJzEPwQc6Kl_B3eQ_0B8dsk73iiU6d4e-Ibkb6rPbvvPVCLoeofKWR2g2&amp;amp;file=VH196290.a03.ogg" type="audio/ogg; codecs='vorbis'"&gt;&lt;/source&gt;&lt;source xmlns="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0" src="/Test_Student_Sat1/V513/Pages/API/Resources.axd?path=6CZ6YZ0KJrr0cGlSp_W-tTreucYkXQqpJ7KOloHzBfncWcD0CS8zSXA85a_5pVtHZ-l7OOyB5ewfa6IoC86AWL16kD6UITFxWhNtyYH2Jbu08WN6cJtOrk0DPUENgWZcDwhEpR5XPSCC8u66TAW1eJPknu2x5hOJzEPwQc6Kl_B3eQ_0B8dsk73iiU6d4e-Ibkb6rPbvvPVCLoeofKWR2g2&amp;amp;file=VH196290.a03.m4a" type="audio/mp4; codecs='mp4a.40.2'"&gt;&lt;/source&gt;&lt;/div&gt;
+				&lt;/div&gt;
+			&lt;/simpleChoice&gt;
+			&lt;simpleChoice class="block_choice " id="VH196290_block_choice_32" identifier="i3"&gt;
+				&lt;div id="VH196290_item_stem_ph5"&gt;
+					&lt;p class="choice_paragraph " id="VH196290_choice_paragraph_33"&gt;how to answer a difficult math problem&lt;/p&gt;
+					&lt;div autoplay="true" controls="true" preload="metadata" class="tds-audio"&gt;&lt;source xmlns="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0" src="/Test_Student_Sat1/V513/Pages/API/Resources.axd?path=6CZ6YZ0KJrr0cGlSp_W-tTreucYkXQqpJ7KOloHzBfncWcD0CS8zSXA85a_5pVtHZ-l7OOyB5ewfa6IoC86AWL16kD6UITFxWhNtyYH2Jbu08WN6cJtOrk0DPUENgWZcDwhEpR5XPSCC8u66TAW1eJPknu2x5hOJzEPwQc6Kl_B3eQ_0B8dsk73iiU6d4e-Ibkb6rPbvvPVCLoeofKWR2g2&amp;amp;file=VH196290.a04.ogg" type="audio/ogg; codecs='vorbis'"&gt;&lt;/source&gt;&lt;source xmlns="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0" src="/Test_Student_Sat1/V513/Pages/API/Resources.axd?path=6CZ6YZ0KJrr0cGlSp_W-tTreucYkXQqpJ7KOloHzBfncWcD0CS8zSXA85a_5pVtHZ-l7OOyB5ewfa6IoC86AWL16kD6UITFxWhNtyYH2Jbu08WN6cJtOrk0DPUENgWZcDwhEpR5XPSCC8u66TAW1eJPknu2x5hOJzEPwQc6Kl_B3eQ_0B8dsk73iiU6d4e-Ibkb6rPbvvPVCLoeofKWR2g2&amp;amp;file=VH196290.a04.m4a" type="audio/mp4; codecs='mp4a.40.2'"&gt;&lt;/source&gt;&lt;/div&gt;
+				&lt;/div&gt;
+			&lt;/simpleChoice&gt;
+			&lt;simpleChoice class="block_choice " id="VH196290_block_choice_40" identifier="i4"&gt;
+				&lt;div id="VH196290_item_stem_ph6"&gt;
+					&lt;p class="choice_paragraph " id="VH196290_choice_paragraph_41"&gt;a new sports field that is being added to the school&lt;/p&gt;
+					&lt;div autoplay="true" controls="true" preload="metadata" class="tds-audio"&gt;&lt;source xmlns="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0" src="/Test_Student_Sat1/V513/Pages/API/Resources.axd?path=6CZ6YZ0KJrr0cGlSp_W-tTreucYkXQqpJ7KOloHzBfncWcD0CS8zSXA85a_5pVtHZ-l7OOyB5ewfa6IoC86AWL16kD6UITFxWhNtyYH2Jbu08WN6cJtOrk0DPUENgWZcDwhEpR5XPSCC8u66TAW1eJPknu2x5hOJzEPwQc6Kl_B3eQ_0B8dsk73iiU6d4e-Ibkb6rPbvvPVCLoeofKWR2g2&amp;amp;file=VH196290.a05.ogg" type="audio/ogg; codecs='vorbis'"&gt;&lt;/source&gt;&lt;source xmlns="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0" src="/Test_Student_Sat1/V513/Pages/API/Resources.axd?path=6CZ6YZ0KJrr0cGlSp_W-tTreucYkXQqpJ7KOloHzBfncWcD0CS8zSXA85a_5pVtHZ-l7OOyB5ewfa6IoC86AWL16kD6UITFxWhNtyYH2Jbu08WN6cJtOrk0DPUENgWZcDwhEpR5XPSCC8u66TAW1eJPknu2x5hOJzEPwQc6Kl_B3eQ_0B8dsk73iiU6d4e-Ibkb6rPbvvPVCLoeofKWR2g2&amp;amp;file=VH196290.a05.m4a" type="audio/mp4; codecs='mp4a.40.2'"&gt;&lt;/source&gt;&lt;/div&gt;
+				&lt;/div&gt;
+			&lt;/simpleChoice&gt;
+		&lt;/choiceInteraction&gt;</script><div class="optionsContainer format_mc" role="radiogroup" data-orientation="vertical" data-template="vertical" data-columns="0" data-min="1" data-max="1"><div class="optionsGroup"><div class="optionSound"><div class="audioControls audio-layout-single" id="sound-7"><a class="sound_repeat audio-controls-btn tds-tabbable-component" href="#" title="Play or stop recorded audio." tabindex="0" aria-disabled="false"></a></div></div><div data-menu-prefix="TDSTTS.Label.SpeakOptionA" aria-label="Option A" role="radio" tabindex="0" class="optionContainer contextArea optionA withSound" id="qti-4">    <div class="optionAction"></div>    <span class="striked"></span>    <span style="text-indent:-9999px;overflow:hidden;" class="optionClicker TTS speakAs" ssml="sub" ssml_alias="{silence}Option A.{silence}">&nbsp;</span>    <div class="optionContent">
+				<div id="VH196290_item_stem_ph3">
+					<p id="VH196290_choice_paragraph_17" class="choice_paragraph ">a math project they are working on</p>
+
+				</div>
+			</div></div></div><div class="optionsGroup"><div class="optionSound"><div class="audioControls audio-layout-single" id="sound-8"><a class="sound_repeat audio-controls-btn tds-tabbable-component" href="#" title="Play or stop recorded audio." tabindex="0" aria-disabled="false"></a></div></div><div data-menu-prefix="TDSTTS.Label.SpeakOptionB" aria-label="Option B" role="radio" tabindex="0" class="optionContainer contextArea optionB withSound" id="qti-5">    <div class="optionAction"></div>    <span class="striked"></span>    <span style="text-indent:-9999px;overflow:hidden;" class="optionClicker TTS speakAs" ssml="sub" ssml_alias="{silence}Option B.{silence}">&nbsp;</span>    <div class="optionContent">
+				<div id="VH196290_item_stem_ph4">
+					<p id="VH196290_choice_paragraph_25" class="choice_paragraph ">sports teams that they want to join</p>
+
+				</div>
+			</div></div></div><div class="optionsGroup"><div class="optionSound"><div class="audioControls audio-layout-single" id="sound-9"><a class="sound_repeat audio-controls-btn tds-tabbable-component" href="#" title="Play or stop recorded audio." tabindex="0" aria-disabled="false"></a></div></div><div data-menu-prefix="TDSTTS.Label.SpeakOptionC" aria-label="Option C" role="radio" tabindex="0" class="optionContainer contextArea optionC withSound" id="qti-6">    <div class="optionAction"></div>    <span class="striked"></span>    <span style="text-indent:-9999px;overflow:hidden;" class="optionClicker TTS speakAs" ssml="sub" ssml_alias="{silence}Option C.{silence}">&nbsp;</span>    <div class="optionContent">
+				<div id="VH196290_item_stem_ph5">
+					<p id="VH196290_choice_paragraph_33" class="choice_paragraph ">how to answer a difficult math problem</p>
+
+				</div>
+			</div></div></div><div class="optionsGroup"><div class="optionSound"><div class="audioControls audio-layout-single" id="sound-10"><a class="sound_repeat audio-controls-btn tds-tabbable-component" href="#" title="Play or stop recorded audio." tabindex="0" aria-disabled="false"></a></div></div><div data-menu-prefix="TDSTTS.Label.SpeakOptionD" aria-label="Option D" role="radio" tabindex="0" class="optionContainer contextArea optionD withSound" id="qti-7">    <div class="optionAction"></div>    <span class="striked"></span>    <span style="text-indent:-9999px;overflow:hidden;" class="optionClicker TTS speakAs" ssml="sub" ssml_alias="{silence}Option D.{silence}">&nbsp;</span>    <div class="optionContent">
+				<div id="VH196290_item_stem_ph6">
+					<p id="VH196290_choice_paragraph_41" class="choice_paragraph ">a new sports field that is being added to the school</p>
+
+				</div>
+			</div></div></div></div></div>
+	</div></div>
+
+		</div>
+
+		<div class="questionAnswerGroup itemContainer format_iat response_qti  lastItem qti-content hiding" id="Item_3" data-response-type-legacy="Vertical" aria-hidden="true" touch-action="pan-y" tabindex="0">
+
+			<div class="questionContainer">
+				<div class="toolsContainer itemTools"><a class="toolButton itemMenu" href="#" tabindex="0" aria-label="Menu" role="button" aria-haspopup="true"></a></div>
+
+
+<h2 class="questionNumber" id="QuestionNumber_3">3</h2>
+
+<div class="stemContainer" id="Stem_3">
+	<div id="item_stem_HTMLEditor">
+		<div id="VH196304_item_stem">
+			<p class="stem_paragraph ">
+				<strong>What will the girl probably do next?</strong>
+			</p>
+			<p class="stem_paragraph ">&nbsp;</p>
+			<div class="audioControls audio-layout-scrubber" id="sound-11"><a class="playPause audio-controls-btn tds-tabbable-component" href="#" title="Play or pause recorded audio." tabindex="0" aria-disabled="false"></a><div class="slide_controls_slider yui-h-slider" style="width: 195px;"><div id="slider_bg_sound-11_slider" class="slide_controls_slider_bg" style="width: 195px;" tabindex="0" touch-action="none"><span id="slider_image_sound-11_slider" class="slide_controls_img" style="position: absolute; left: 0px; top: 0px;" touch-action="none"></span></div><div id="slider_timeline_sound-11_slider" class="slide_controls_slider_timeline" style="width: 172px; margin-left: 11.5px; margin-right: 11.5px;"></div></div></div>
+		</div>
+	</div>
+
+</div>
+
+			</div>
+
+			<div class="answerContainer">
+
+			<div id="VH196304_choice_list_15" class="iat-interaction-container">
+		<div data-scoring-type="QTI" data-response-type="QTI" data-response-identifier="RESPONSE" class="qti-interaction choice_list " data-interaction-name="choiceInteraction" role="group" aria-label="Multiple select - choose one or more response."><script type="application/xml">&lt;choiceInteraction id="VH196304_choice_list " class="choice_list " maxChoices="1" minChoices="1" orientation="vertical" shuffle="false" responseIdentifier="RESPONSE" data-response-type="QTI" data-scoring-type="QTI"&gt;
+			&lt;simpleChoice class="block_choice " id="VH196304_block_choice_16" identifier="i1"&gt;
+				&lt;div id="VH196304_item_stem_ph3"&gt;
+					&lt;p class="choice_paragraph " id="VH196304_choice_paragraph_17"&gt;take a math test&lt;/p&gt;
+					&lt;div autoplay="true" controls="true" preload="metadata" class="tds-audio"&gt;&lt;source xmlns="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0" src="/Test_Student_Sat1/V513/Pages/API/Resources.axd?path=6CZ6YZ0KJrr0cGlSp_W-tTreucYkXQqpJ7KOloHzBfncWcD0CS8zSXA85a_5pVtHZ-l7OOyB5ewfa6IoC86AWL16kD6UITFxWhNtyYH2Jbu08WN6cJtOrk0DPUENgWZcDwhEpR5XPSCC8u66TAW1eJPknu2x5hOJzEPwQc6Kl_B3eQ_0B8dsk73iiU6d4e-Id_nJlpSwz5AhD7ABWt5rog2&amp;amp;file=VH196304.a02.ogg" type="audio/ogg; codecs='vorbis'"&gt;&lt;/source&gt;&lt;source xmlns="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0" src="/Test_Student_Sat1/V513/Pages/API/Resources.axd?path=6CZ6YZ0KJrr0cGlSp_W-tTreucYkXQqpJ7KOloHzBfncWcD0CS8zSXA85a_5pVtHZ-l7OOyB5ewfa6IoC86AWL16kD6UITFxWhNtyYH2Jbu08WN6cJtOrk0DPUENgWZcDwhEpR5XPSCC8u66TAW1eJPknu2x5hOJzEPwQc6Kl_B3eQ_0B8dsk73iiU6d4e-Id_nJlpSwz5AhD7ABWt5rog2&amp;amp;file=VH196304.a02.m4a" type="audio/mp4; codecs='mp4a.40.2'"&gt;&lt;/source&gt;&lt;/div&gt;
+				&lt;/div&gt;
+			&lt;/simpleChoice&gt;
+			&lt;simpleChoice class="block_choice " id="VH196304_block_choice_24" identifier="i2"&gt;
+				&lt;div id="VH196304_item_stem_ph4"&gt;
+					&lt;p class="choice_paragraph " id="VH196304_choice_paragraph_25"&gt;do a project in the library&lt;/p&gt;
+					&lt;div autoplay="true" controls="true" preload="metadata" class="tds-audio"&gt;&lt;source xmlns="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0" src="/Test_Student_Sat1/V513/Pages/API/Resources.axd?path=6CZ6YZ0KJrr0cGlSp_W-tTreucYkXQqpJ7KOloHzBfncWcD0CS8zSXA85a_5pVtHZ-l7OOyB5ewfa6IoC86AWL16kD6UITFxWhNtyYH2Jbu08WN6cJtOrk0DPUENgWZcDwhEpR5XPSCC8u66TAW1eJPknu2x5hOJzEPwQc6Kl_B3eQ_0B8dsk73iiU6d4e-Id_nJlpSwz5AhD7ABWt5rog2&amp;amp;file=VH196304.a03.ogg" type="audio/ogg; codecs='vorbis'"&gt;&lt;/source&gt;&lt;source xmlns="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0" src="/Test_Student_Sat1/V513/Pages/API/Resources.axd?path=6CZ6YZ0KJrr0cGlSp_W-tTreucYkXQqpJ7KOloHzBfncWcD0CS8zSXA85a_5pVtHZ-l7OOyB5ewfa6IoC86AWL16kD6UITFxWhNtyYH2Jbu08WN6cJtOrk0DPUENgWZcDwhEpR5XPSCC8u66TAW1eJPknu2x5hOJzEPwQc6Kl_B3eQ_0B8dsk73iiU6d4e-Id_nJlpSwz5AhD7ABWt5rog2&amp;amp;file=VH196304.a03.m4a" type="audio/mp4; codecs='mp4a.40.2'"&gt;&lt;/source&gt;&lt;/div&gt;
+				&lt;/div&gt;
+			&lt;/simpleChoice&gt;
+			&lt;simpleChoice class="block_choice " id="VH196304_block_choice_32" identifier="i3"&gt;
+				&lt;div id="VH196304_item_stem_ph5"&gt;
+					&lt;p class="choice_paragraph " id="VH196304_choice_paragraph_33"&gt;get a tape measure from the math classroom&lt;/p&gt;
+					&lt;div autoplay="true" controls="true" preload="metadata" class="tds-audio"&gt;&lt;source xmlns="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0" src="/Test_Student_Sat1/V513/Pages/API/Resources.axd?path=6CZ6YZ0KJrr0cGlSp_W-tTreucYkXQqpJ7KOloHzBfncWcD0CS8zSXA85a_5pVtHZ-l7OOyB5ewfa6IoC86AWL16kD6UITFxWhNtyYH2Jbu08WN6cJtOrk0DPUENgWZcDwhEpR5XPSCC8u66TAW1eJPknu2x5hOJzEPwQc6Kl_B3eQ_0B8dsk73iiU6d4e-Id_nJlpSwz5AhD7ABWt5rog2&amp;amp;file=VH196304.a04.ogg" type="audio/ogg; codecs='vorbis'"&gt;&lt;/source&gt;&lt;source xmlns="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0" src="/Test_Student_Sat1/V513/Pages/API/Resources.axd?path=6CZ6YZ0KJrr0cGlSp_W-tTreucYkXQqpJ7KOloHzBfncWcD0CS8zSXA85a_5pVtHZ-l7OOyB5ewfa6IoC86AWL16kD6UITFxWhNtyYH2Jbu08WN6cJtOrk0DPUENgWZcDwhEpR5XPSCC8u66TAW1eJPknu2x5hOJzEPwQc6Kl_B3eQ_0B8dsk73iiU6d4e-Id_nJlpSwz5AhD7ABWt5rog2&amp;amp;file=VH196304.a04.m4a" type="audio/mp4; codecs='mp4a.40.2'"&gt;&lt;/source&gt;&lt;/div&gt;
+				&lt;/div&gt;
+			&lt;/simpleChoice&gt;
+			&lt;simpleChoice class="block_choice " id="VH196304_block_choice_40" identifier="i4"&gt;
+				&lt;div id="VH196304_item_stem_ph6"&gt;
+					&lt;p class="choice_paragraph " id="VH196304_choice_paragraph_41"&gt;use a ruler to measure the history classroom&lt;/p&gt;
+					&lt;div autoplay="true" controls="true" preload="metadata" class="tds-audio"&gt;&lt;source xmlns="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0" src="/Test_Student_Sat1/V513/Pages/API/Resources.axd?path=6CZ6YZ0KJrr0cGlSp_W-tTreucYkXQqpJ7KOloHzBfncWcD0CS8zSXA85a_5pVtHZ-l7OOyB5ewfa6IoC86AWL16kD6UITFxWhNtyYH2Jbu08WN6cJtOrk0DPUENgWZcDwhEpR5XPSCC8u66TAW1eJPknu2x5hOJzEPwQc6Kl_B3eQ_0B8dsk73iiU6d4e-Id_nJlpSwz5AhD7ABWt5rog2&amp;amp;file=VH196304.a05.ogg" type="audio/ogg; codecs='vorbis'"&gt;&lt;/source&gt;&lt;source xmlns="http://www.imsglobal.org/xsd/imsqtiv2p2_html5_v1p0" src="/Test_Student_Sat1/V513/Pages/API/Resources.axd?path=6CZ6YZ0KJrr0cGlSp_W-tTreucYkXQqpJ7KOloHzBfncWcD0CS8zSXA85a_5pVtHZ-l7OOyB5ewfa6IoC86AWL16kD6UITFxWhNtyYH2Jbu08WN6cJtOrk0DPUENgWZcDwhEpR5XPSCC8u66TAW1eJPknu2x5hOJzEPwQc6Kl_B3eQ_0B8dsk73iiU6d4e-Id_nJlpSwz5AhD7ABWt5rog2&amp;amp;file=VH196304.a05.m4a" type="audio/mp4; codecs='mp4a.40.2'"&gt;&lt;/source&gt;&lt;/div&gt;
+				&lt;/div&gt;
+			&lt;/simpleChoice&gt;
+		&lt;/choiceInteraction&gt;</script><div class="optionsContainer format_mc" role="radiogroup" data-orientation="vertical" data-template="vertical" data-columns="0" data-min="1" data-max="1"><div class="optionsGroup"><div class="optionSound"><div class="audioControls audio-layout-single" id="sound-12"><a class="sound_repeat audio-controls-btn tds-tabbable-component" href="#" title="Play or stop recorded audio." tabindex="0" aria-disabled="false"></a></div></div><div data-menu-prefix="TDSTTS.Label.SpeakOptionA" aria-label="Option A" role="radio" tabindex="0" class="optionContainer contextArea optionA withSound" id="qti-8">    <div class="optionAction"></div>    <span class="striked"></span>    <span style="text-indent:-9999px;overflow:hidden;" class="optionClicker TTS speakAs" ssml="sub" ssml_alias="{silence}Option A.{silence}">&nbsp;</span>    <div class="optionContent">
+				<div id="VH196304_item_stem_ph3">
+					<p id="VH196304_choice_paragraph_17" class="choice_paragraph ">take a math test</p>
+
+				</div>
+			</div></div></div><div class="optionsGroup"><div class="optionSound"><div class="audioControls audio-layout-single" id="sound-13"><a class="sound_repeat audio-controls-btn tds-tabbable-component" href="#" title="Play or stop recorded audio." tabindex="0" aria-disabled="false"></a></div></div><div data-menu-prefix="TDSTTS.Label.SpeakOptionB" aria-label="Option B" role="radio" tabindex="0" class="optionContainer contextArea optionB withSound" id="qti-9">    <div class="optionAction"></div>    <span class="striked"></span>    <span style="text-indent:-9999px;overflow:hidden;" class="optionClicker TTS speakAs" ssml="sub" ssml_alias="{silence}Option B.{silence}">&nbsp;</span>    <div class="optionContent">
+				<div id="VH196304_item_stem_ph4">
+					<p id="VH196304_choice_paragraph_25" class="choice_paragraph ">do a project in the library</p>
+
+				</div>
+			</div></div></div><div class="optionsGroup"><div class="optionSound"><div class="audioControls audio-layout-single" id="sound-14"><a class="sound_repeat audio-controls-btn tds-tabbable-component" href="#" title="Play or stop recorded audio." tabindex="0" aria-disabled="false"></a></div></div><div data-menu-prefix="TDSTTS.Label.SpeakOptionC" aria-label="Option C" role="radio" tabindex="0" class="optionContainer contextArea optionC withSound" id="qti-10">    <div class="optionAction"></div>    <span class="striked"></span>    <span style="text-indent:-9999px;overflow:hidden;" class="optionClicker TTS speakAs" ssml="sub" ssml_alias="{silence}Option C.{silence}">&nbsp;</span>    <div class="optionContent">
+				<div id="VH196304_item_stem_ph5">
+					<p id="VH196304_choice_paragraph_33" class="choice_paragraph ">get a tape measure from the math classroom</p>
+
+				</div>
+			</div></div></div><div class="optionsGroup"><div class="optionSound"><div class="audioControls audio-layout-single" id="sound-15"><a class="sound_repeat audio-controls-btn tds-tabbable-component" href="#" title="Play or stop recorded audio." tabindex="0" aria-disabled="false"></a></div></div><div data-menu-prefix="TDSTTS.Label.SpeakOptionD" aria-label="Option D" role="radio" tabindex="0" class="optionContainer contextArea optionD withSound" id="qti-11">    <div class="optionAction"></div>    <span class="striked"></span>    <span style="text-indent:-9999px;overflow:hidden;" class="optionClicker TTS speakAs" ssml="sub" ssml_alias="{silence}Option D.{silence}">&nbsp;</span>    <div class="optionContent">
+				<div id="VH196304_item_stem_ph6">
+					<p id="VH196304_choice_paragraph_41" class="choice_paragraph ">use a ruler to measure the history classroom</p>
+
+				</div>
+			</div></div></div></div></div>
+	</div></div>
+
+		</div>
+
+
+	</div>
+</div>
+
+</div>
+</div>
+    </div><!-- end pagewrapper-->
+
+
+
+</div><!-- end contents-->
+
+
+</body>
+</html>

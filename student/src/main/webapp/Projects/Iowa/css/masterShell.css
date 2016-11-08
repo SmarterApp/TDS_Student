@@ -1,0 +1,38 @@
+﻿@charset "UTF-8";
+
+/* Iowa's logos */
+
+#ot-logo_spot1 {
+    background-image:  url(../images/logo.png);
+}
+#ot-brand1{
+	background: url(../images/bannerBG.png) no-repeat right #295294; 
+}
+
+.languages {
+	display: none;
+}
+.loginForm label {
+   width: 33%;
+   max-width: inherit;
+   min-width: inherit;
+}
+.TDS_PS_L3 .loginForm label, .TDS_PS_L4 .loginForm label{
+   width: 35%;
+}
+#quickQuide {
+	border: solid 1px #ccc;
+}
+#sectionTestApproval h2 {
+    font-size: 2.35em;
+}
+
+/* hide TTS check button */
+#btnDiagTTS {
+	display: none !important;
+}
+
+/*ELPA Checkbox hidden?*/
+#btnDiagELPA {
+  	display: block;
+}

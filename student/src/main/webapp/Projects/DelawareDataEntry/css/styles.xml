@@ -1,0 +1,27 @@
+<resources name="delaware-dataentry">
+  <fileSet name="project-modern">
+    <input>../../../Themes/lighthouse/css/modernShell.css</input>
+  </fileSet>
+
+  <fileSet name="project-master">
+    <input>../../../Themes/lighthouse/css/masterShell.css</input>
+    <input>masterShell.css</input>
+  </fileSet>
+
+  <fileSet name="project-content">
+    <input>items.css</input>
+    <input>elpa.css</input>
+    <input>modernItems.css</input>
+  </fileSet>
+
+  <import>../../../Shared/styles_blackbox.xml</import>
+  <import>../../../Shared/styles_student.xml</import>
+
+  <fileSet name="testshell" output="..\..\combined\delaware-dataentry-testshell.css">
+    <reference set="testshell-base" />
+  </fileSet>
+
+  <fileSet name="mastershell" output="..\..\combined\delaware-dataentry-mastershell.css">
+      <reference set="mastershell-base" />
+  </fileSet>
+</resources>
