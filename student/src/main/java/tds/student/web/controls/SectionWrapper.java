@@ -16,157 +16,214 @@ import javax.faces.context.ResponseWriter;
 
 import org.apache.commons.lang.StringUtils;
 
-@FacesComponent (value = "SectionWrapper")
-public final class SectionWrapper extends TDSGenericControl
-{
-  private boolean _aria;
-  private boolean _shadow;
-  private String  _headerID;
-  private String  _describedBy;
-  private String  _headerKey;
-  private String  _headerText;
-  private boolean _show;
+@FacesComponent(value = "SectionWrapper")
+public final class SectionWrapper extends TDSGenericControl {
+	private boolean _aria;
+	private boolean _shadow;
+	private String _headerID;
+	private String _describedBy;
+	private String _headerKey;
+	private String _headerText;
+	private boolean _show;
 
-  public String getDescribedBy () {
-    return _describedBy;
-  }
+	// SB-1505: Added following fields to sync with Proprietary Release 9.0
+	// version
+	private String _headerName;
+	private String _topInstructionsKey;
+	private String _topInstructionsText;
 
-  public void setDescribedBy (String value) {
-    this._describedBy = value;
-  }
+	public String getTopInstructionsKey() {
+		return "Sections.TopInstructions." + _headerName;
+	}
 
-  public boolean getAria () {
-    return _aria;
-  }
+	public void setTopInstructionsKey(String topInstructionsKey) {
+		this._topInstructionsKey = topInstructionsKey;
+	}
 
-  public void setAria (boolean value) {
-    this._aria = value;
-  }
+	public String getTopInstructionsText() {
+		return _topInstructionsText;
+	}
 
-  public boolean getShadow () {
-    return _shadow;
-  }
+	public void setTopInstructionsText(String topInstructionsText) {
+		this._topInstructionsText = topInstructionsText;
+	}
 
-  public void setShadow (boolean value) {
-    this._shadow = value;
-  }
+	public String getDescribedBy() {
+		return _describedBy;
+	}
 
-  public String getHeaderKey () {
-    return _headerKey;
-  }
+	public void setDescribedBy(String value) {
+		this._describedBy = value;
+	}
 
-  public void setHeaderKey (String value) {
-    this._headerKey = value;
-  }
+	public boolean getAria() {
+		return _aria;
+	}
 
-  public String getHeaderText () {
-    return _headerText;
-  }
+	public void setAria(boolean value) {
+		this._aria = value;
+	}
 
-  public void setHeaderText (String value) {
-    this._headerText = value;
-  }
+	public boolean getShadow() {
+		return _shadow;
+	}
 
-  public boolean getShow () {
-    return _show;
-  }
+	public void setShadow(boolean value) {
+		this._shadow = value;
+	}
 
-  public void setShow (boolean value) {
-    this._show = value;
-  }
+	public String getHeaderKey() {
+		return "Sections.TopHeader." + _headerName;
+	}
 
-  public String getHeaderID () {
-    return getId () + "Header";
-  }
+	public void setHeaderKey(String value) {
+		this._headerKey = value;
+	}
 
-  @Override
-  public String getFamily () {
-    return "SectionWrapper";
-  }
+	public String getHeaderName() {
+		return _headerName;
+	}
 
-  // TODO Shajib/Shiva: tag parameter obstructs SectionWrapper working as it is
-  // not passed from custom tag declaration
-  public SectionWrapper (/* String tag */) {
-    // In .NET HtmlGenericControl class's constructor called from
-    // TDSGenericControl with tag as parameter. UIComponentBase has no such
-    // constructor
-    setAria (false);
-    setShadow (true);
-    /* setTag (tag); */
-  }
+	public void setHeaderName(String headerName) {
+		this._headerName = headerName;
+	}
 
-  @Override
-  public void encodeBegin (FacesContext context) throws IOException {
+	public String getHeaderText() {
+		return _headerText;
+	}
 
-    ResponseWriter writer = context.getResponseWriter ();
-    // tds-ot-section
-    writer.startElement ("div", null);
-    writer.writeAttribute ("id", this.getId (), null);
-    writer.writeAttribute ("class", "tds-ot-section", null);
-    writer.writeAttribute ("style", this.getShow () ? "display:block;" : "display:none;", null);
-    writer.writeAttribute ("aria-hidden", this.getShow () ? "false" : "true", null);
+	public void setHeaderText(String value) {
+		this._headerText = value;
+	}
 
-    // ot-shadowBox
-    renderBeginShadow (writer);
+	public boolean getShow() {
+		return _show;
+	}
 
-    // header h2
-    renderHeader (writer);
+	public void setShow(boolean value) {
+		this._show = value;
+	}
 
-    // this encodeChildren is in conforming with JSF flow - it was not there in
-    // the .NET code here.
+	public String getHeaderID() {
+		return getId() + "Header";
+	}
 
-    // TODO Shajib/Shiva : following line incurs duplicate of inner html
-    // this.encodeChildren (context);
+	@Override
+	public String getFamily() {
+		return "SectionWrapper";
+	}
 
-  }
+	// TODO Shajib/Shiva: tag parameter obstructs SectionWrapper working as it
+	// is
+	// not passed from custom tag declaration
+	public SectionWrapper(/* String tag */) {
+		// In .NET HtmlGenericControl class's constructor called from
+		// TDSGenericControl with tag as parameter. UIComponentBase has no such
+		// constructor
+		setAria(false);
+		setShadow(true);
+		/* setTag (tag); */
+	}
 
-  @Override
-  public void encodeEnd (FacesContext context) throws IOException {
-    this.renderEndTag (context.getResponseWriter ());
-  }
+	@Override
+	public void encodeBegin(FacesContext context) throws IOException {
 
-  public void renderBeginShadow (ResponseWriter writer) throws IOException {
-    if (this.getShadow ()) {
-      writer.startElement ("div", null);
-      writer.writeAttribute ("class", "ot-shadowBox", null);
-      // writer.endElement ("div");
+		ResponseWriter writer = context.getResponseWriter();
+		// tds-ot-section
+		writer.startElement("div", null);
+		writer.writeAttribute("id", this.getId(), null);
+		writer.writeAttribute("class", "tds-ot-section", null);
+		writer.writeAttribute("style", this.getShow() ? "display:block;" : "display:none;", null);
+		writer.writeAttribute("aria-hidden", this.getShow() ? "false" : "true", null);
 
-      // ot-innerShadow
-      writer.startElement ("div", null);
-      writer.writeAttribute ("class", "ot-innerShadow", null);
-      // writer.endElement ("div");
-    }
-  }
+		// ot-shadowBox
+		renderBeginShadow(writer);
 
-  public void renderHeader (ResponseWriter writer) throws IOException {
+		// header h2
+		renderHeader(writer);
 
-    if (StringUtils.isEmpty (this.getHeaderKey ()) && StringUtils.isEmpty (this.getHeaderText ()))
-      return;
+		// SB-1505: Added following method call to sync with Proprietary Release
+		// 9.0
+		// version
+		renderInstructionsTop(writer);
 
-    if (StringUtils.isEmpty (this.getHeaderText ())) {
-      this.setHeaderText (getHeaderKey ());
-    }
+		// this encodeChildren is in conforming with JSF flow - it was not there
+		// in
+		// the .NET code here.
 
-    // h2
-    writer.startElement ("h1", null);
-    writer.writeAttribute ("id", this.getHeaderID (), null);
+		// TODO Shajib/Shiva : following line incurs duplicate of inner html
+		// this.encodeChildren (context);
 
-    if (!StringUtils.isEmpty (this.getHeaderKey ())) {
-      writer.writeAttribute ("i18n-content", this.getHeaderKey (), null);
-    }
-    writer.write (this.getHeaderText ());
-    writer.endElement ("h1");
-  }
+	}
 
-  public void renderEndTag (ResponseWriter writer) throws IOException {
-    renderEndShadow (writer);
-    writer.endElement ("div"); // tds-ot-section
-  }
+	@Override
+	public void encodeEnd(FacesContext context) throws IOException {
+		this.renderEndTag(context.getResponseWriter());
+	}
 
-  private void renderEndShadow (ResponseWriter writer) throws IOException {
-    if (this.getShadow ()) {
-      writer.endElement ("div"); // ot-innerShadow
-      writer.endElement ("div"); // ot-shadowBox
-    }
-  }
+	public void renderBeginShadow(ResponseWriter writer) throws IOException {
+		if (this.getShadow()) {
+			writer.startElement("div", null);
+			writer.writeAttribute("class", "ot-shadowBox", null);
+			// writer.endElement ("div");
+
+			// ot-innerShadow
+			writer.startElement("div", null);
+			writer.writeAttribute("class", "ot-innerShadow", null);
+			// writer.endElement ("div");
+		}
+	}
+
+	public void renderHeader(ResponseWriter writer) throws IOException {
+
+		if (StringUtils.isEmpty(this.getHeaderName()) && StringUtils.isEmpty(this.getHeaderText()))
+			return;
+
+		if (StringUtils.isEmpty(this.getHeaderText())) {
+			this.setHeaderText(getHeaderKey());
+		}
+
+		// h2
+		writer.startElement("h1", null);
+		writer.writeAttribute("id", this.getHeaderID(), null);
+
+		if (!StringUtils.isEmpty(this.getHeaderKey())) {
+			writer.writeAttribute("i18n-content", this.getHeaderKey(), null);
+		}
+		writer.write(this.getHeaderText());
+		writer.endElement("h1");
+	}
+
+	public void renderEndTag(ResponseWriter writer) throws IOException {
+		renderEndShadow(writer);
+		writer.endElement("div"); // tds-ot-section
+	}
+
+	private void renderEndShadow(ResponseWriter writer) throws IOException {
+		if (this.getShadow()) {
+			writer.endElement("div"); // ot-innerShadow
+			writer.endElement("div"); // ot-shadowBox
+		}
+	}
+
+	// SB-1505: Added following method to sync with Proprietary Release 9.0
+	// version
+	private void renderInstructionsTop(ResponseWriter writer) throws IOException {
+		if (StringUtils.isEmpty(_headerName) && StringUtils.isEmpty(_topInstructionsText))
+			return;
+
+		if (StringUtils.isEmpty(_topInstructionsText)) {
+			_topInstructionsText = _topInstructionsKey;
+		}
+
+		writer.startElement("div", null);
+		writer.writeAttribute("class", "instructions-top", null);
+
+		if (!StringUtils.isEmpty(_topInstructionsKey)) {
+			writer.writeAttribute("i18n-content", _topInstructionsKey, null);
+		}
+
+		writer.write(_topInstructionsText);
+		writer.endElement("div");
+	}
 }
