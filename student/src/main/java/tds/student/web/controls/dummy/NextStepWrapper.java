@@ -147,12 +147,12 @@ public class NextStepWrapper extends TDSGenericControl {
 		}
 
 		// writer.write(HtmlTextWriter.TagRightChar); // >
-		writer.write(
-				"If the information is correct, choose <strong>Yes</strong>. If not, choose <strong>No</strong>."/*
-																													 * getBottomInstructionsText
-																													 * (
-																													 * )
-																													 */);
+		/*
+		 * writer.write(
+		 * "If the information is correct, choose <strong>Yes</strong>. If not, choose <strong>No</strong>."
+		 * getBottomInstructionsText ( ) );
+		 */
+		writer.write(getBottomInstructionsText());
 		writer.endElement("div"); // </div>
 	}
 

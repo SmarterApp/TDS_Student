@@ -213,14 +213,14 @@ public final class SectionWrapper extends TDSGenericControl {
 			return;
 
 		if (StringUtils.isEmpty(_topInstructionsText)) {
-			_topInstructionsText = _topInstructionsKey;
+			_topInstructionsText = getTopInstructionsKey();
 		}
 
 		writer.startElement("div", null);
 		writer.writeAttribute("class", "instructions-top", null);
 
-		if (!StringUtils.isEmpty(_topInstructionsKey)) {
-			writer.writeAttribute("i18n-content", _topInstructionsKey, null);
+		if (!StringUtils.isEmpty(getTopInstructionsKey())) {
+			writer.writeAttribute("i18n-content", getTopInstructionsKey(), null);
 		}
 
 		writer.write(_topInstructionsText);
