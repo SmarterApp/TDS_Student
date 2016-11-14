@@ -51,7 +51,7 @@ public class ResponseRepositoryTest extends AbstractTest
       adaptiveGroup.setSegmentPosition (1);
       adaptiveGroup.setPage (1);
       OpportunityItems opportunityItemsValue = responseRepository.insertItems
-          (opportunityInstance, adaptiveGroup);
+          (opportunityInstance, adaptiveGroup, false);
 //      _logger.info ("Opportunity Items Value::" + opportunityItemsValue.getItems
 //          ().size ());
     } catch (Exception exp) {

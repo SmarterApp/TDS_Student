@@ -76,7 +76,7 @@ public class ResponseRepository extends AbstractDAO implements IResponseReposito
     _studentDll = _dll;
   }
 
-  public OpportunityItems insertItems (OpportunityInstance oppInstance, AdaptiveGroup adaptiveGroup) throws ReturnStatusException {
+  public OpportunityItems insertItems (OpportunityInstance oppInstance, AdaptiveGroup adaptiveGroup, boolean isMsb) throws ReturnStatusException {
     // create item keys delimited string
     OpportunityItems opportunityItems = new OpportunityItem ().new OpportunityItems ();
 
@@ -91,7 +91,7 @@ public class ResponseRepository extends AbstractDAO implements IResponseReposito
 
       // New insert items method to improve performance.  See comments in module for further details.
       MultiDataResultSet resultSets = studentInsertItemsService.insertItems (connection, oppInstance.getKey (), oppInstance.getSessionKey (), oppInstance.getBrowserKey (), adaptiveGroup.getSegmentPosition (),
-              adaptiveGroup.getSegmentID (), adaptiveGroup.getPage (), adaptiveGroup.getGroupID (), itemKeys, '|', adaptiveGroup.getNumItemsRequired (), 0f);
+              adaptiveGroup.getSegmentID (), adaptiveGroup.getPage (), adaptiveGroup.getGroupID (), itemKeys, '|', adaptiveGroup.getNumItemsRequired (), 0f, isMsb);
 
       Iterator<SingleDataResultSet> results = resultSets.getResultSets ();
       // first expected result set
