@@ -23,6 +23,6 @@ public interface StudentInsertItemsService {
     MultiDataResultSet insertItems(SQLConnection connection, UUID oppKey, UUID sessionKey, UUID browserId,
                                         Integer segment, String segmentId, Integer page, String groupId,
                                         String itemKeys, Character delimiter,
-                                        Integer groupItemsRequired, Float groupB) throws ReturnStatusException;
+                                        Integer groupItemsRequired, Float groupB, boolean isMsb) throws ReturnStatusException;
 
 }

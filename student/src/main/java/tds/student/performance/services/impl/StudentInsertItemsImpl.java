@@ -93,7 +93,8 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
                                           String itemKeys,
                                           Character delimiter,
                                           Integer groupItemsRequired,
-                                          Float groupB)
+                                          Float groupB,
+                                          boolean isMsb)
             throws ReturnStatusException {
 
         List<SingleDataResultSet> resultsSets = new ArrayList<>();
@@ -140,14 +141,16 @@ public class StudentInsertItemsImpl extends AbstractDLL implements StudentInsert
             return (new MultiDataResultSet(resultsSets));
         }
 
-        _Ref<String> msgRef = new _Ref<>();
-        _studentDll._ValidateItemInsert_SP(connection, oppKey, page, segment, segmentId, groupId, msgRef);
-        if (msgRef.get() != null) {
-            _commonDll._LogDBError_SP(connection, "T_InsertItems", msgRef.get(), null, null, null, oppKey, oppSeg.getClientName(), sessionKey);
-            resultsSets.add(_commonDll._ReturnError_SP(connection, oppSeg.getClientName(), "T_InsertItems", "Database record insertion failed for new test items: ", msgRef.get(), oppKey, null));
-            logger.debug("_ValidateItemInsert_SP: oppKey = " + oppKey);
-            logger.debug("Message: " + msgRef.get());
-            return (new MultiDataResultSet(resultsSets));
+        if(!isMsb) {
+            _Ref<String> msgRef = new _Ref<>();
+            _studentDll._ValidateItemInsert_SP(connection, oppKey, page, segment, segmentId, groupId, msgRef);
+            if (msgRef.get() != null) {
+                _commonDll._LogDBError_SP(connection, "T_InsertItems", msgRef.get(), null, null, null, oppKey, oppSeg.getClientName(), sessionKey);
+                resultsSets.add(_commonDll._ReturnError_SP(connection, oppSeg.getClientName(), "T_InsertItems", "Database record insertion failed for new test items: ", msgRef.get(), oppKey, null));
+                logger.debug("_ValidateItemInsert_SP: oppKey = " + oppKey);
+                logger.debug("Message: " + msgRef.get());
+                return (new MultiDataResultSet(resultsSets));
+            }
         }
 
         // Get the new item insert list from the database

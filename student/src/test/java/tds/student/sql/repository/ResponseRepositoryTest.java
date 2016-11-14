@@ -125,7 +125,7 @@ public class ResponseRepositoryTest   extends AbstractTest  {
 		    adaptiveGroup.setNumItemsRequired (0);
 		    
 		    try{
-		    	OpportunityItems oppItems = responseRepository.insertItems(oppInstance, adaptiveGroup);
+		    	OpportunityItems oppItems = responseRepository.insertItems(oppInstance, adaptiveGroup, false);
 		    	
 		        
 		        final String SQL_QUERY1 = "select *  from ${ArchiveDB}.systemerrors "

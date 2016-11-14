@@ -43,7 +43,7 @@ public class ResponseServiceTest extends AbstractTest
     try {
       OpportunityInstance oppInstance = null;
       AdaptiveGroup adaptiveGroup = null;
-      PageGroup pageGroup = responseService.insertItems (oppInstance, adaptiveGroup);
+      PageGroup pageGroup = responseService.insertItems (oppInstance, adaptiveGroup, false);
       Assert.assertTrue (pageGroup != null);
       if (pageGroup != null) {
         _logger.info ("File path::" + pageGroup.getFilePath ());
@@ -78,7 +78,7 @@ public class ResponseServiceTest extends AbstractTest
     try {
       OpportunityInstance oppInstance = null;
       AdaptiveGroup adaptiveGroup = null;
-      PageGroup pageGroup = responseService.insertItems (oppInstance, adaptiveGroup);
+      PageGroup pageGroup = responseService.insertItems (oppInstance, adaptiveGroup, false);
       Assert.assertTrue (pageGroup == null);
     } catch (ReturnStatusException exp) {
       ReturnStatus returnStatus = exp.getReturnStatus ();

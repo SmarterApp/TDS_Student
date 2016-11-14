@@ -32,8 +32,21 @@ public class TestConfig
   private int                   _prefetch;
   private boolean               _scoreByTDS;
   private boolean               _validateCompleteness;
-  private ReturnStatus _returnStatus = null;
-  
+  private ReturnStatus          _returnStatus = null;
+  private boolean               _isMsb;
+
+  /**
+   * @return whether or not this assessment is Multi-Stage Braille
+   */
+  @JsonProperty("isMsb")
+  public boolean isMsb() {
+    return _isMsb;
+  }
+
+  public void setIsMsb(boolean isMsb) {
+    this._isMsb = isMsb;
+  }
+
   /**
    * @return the returnStatus
    */

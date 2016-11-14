@@ -65,7 +65,7 @@ public class ResponseRepository extends AbstractDAO implements IResponseReposito
     // return Join (itemKeys);
   }
 
-  public OpportunityItems insertItems (OpportunityInstance oppInstance, AdaptiveGroup adaptiveGroup) throws ReturnStatusException {
+  public OpportunityItems insertItems (OpportunityInstance oppInstance, AdaptiveGroup adaptiveGroup, boolean isMsb) throws ReturnStatusException {
     // create item keys delimited string
     OpportunityItems opportunityItems = new OpportunityItem ().new OpportunityItems ();
 
