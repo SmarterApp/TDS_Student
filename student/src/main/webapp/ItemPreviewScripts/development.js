@@ -143,8 +143,10 @@ function getScreenshot(element, type /* image/png, image/jpeg */)
     type = type || 'image/png';
 
     // about:config - 'signed.applets.codebase_principal_support' needs to equal true
-    netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
-
+    
+    //SB-1506-Intelligent-Muting.  Use enableComponents to support both SB 8.1 and 9.0 
+    Mozilla.enableComponents();
+    
     var doc = element.ownerDocument;
     var win = doc.defaultView;
 
