@@ -34,7 +34,7 @@ public class SoundCheckWrapper extends TDSGenericControl
   private String headerText ;
   private String topInstructionsText ;
   private String topInstructionsKey;
-  private Boolean show;
+  private boolean show;
   
   
   /**
