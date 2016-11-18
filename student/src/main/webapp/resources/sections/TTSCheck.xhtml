@@ -168,13 +168,17 @@
 			<div class="instructions">
 				<p i18n-content="TTSCheck.Label.NoAudioAdminMessage"></p>
 			</div>
-			<span class="actions">
-				<h3 id="sectionTTSNotAvailableNextSteps"
-					i18n-content="Sections.BottomHeader.TTSNotAvailable"></h3> <tds:Button
+			
+			<tds:NextStepWrapper id="sectionTTSNotAvailableNextSteps"
+				headerName="TTSNotAvailable">
+				 <tds:Button
 					id="continueNoAudio" sytleClass="positive"
-					key="TTSCheck.Label.Continue" /> <tds:Button id="noAudioLogout"
+					key="TTSCheck.Label.Continue" /> 
+					<tds:Button id="noAudioLogout"
 					styleClass="negative" key="TTSCheck.Label.LogoutOnAudioError" />
-			</span> <span class="clear"></span>
+			</tds:NextStepWrapper>
+			
+			<span class="clear"></span>
 		</div>
 	</tds:SectionWrapper>
 
