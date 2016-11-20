@@ -57,7 +57,8 @@ public class TestConfigHelper {
             ClientTestProperty clientTestProperty,
             TestSessionTimeLimitConfiguration timeLimitConfiguration,
             Integer testLength,
-            Boolean scoreByTds) {
+            Boolean scoreByTds,
+            Boolean isMsb) {
 
         TestConfig config = new TestConfig();
         config.setContentLoadTimeout(CONTENT_LOAD_TIMEOUT);
@@ -71,6 +72,7 @@ public class TestConfigHelper {
         config.setStatus(OpportunityStatusType.parse(STARTED_STATUS));
         config.setTestLength(testLength);
         config.setValidateCompleteness(clientTestProperty.getValidateCompleteness());
+        config.setIsMsb(isMsb);
 
         ReturnStatus startStatus = new ReturnStatus();
         startStatus.setStatus(STARTED_STATUS);
@@ -96,7 +98,8 @@ public class TestConfigHelper {
             Integer testLength,
             Integer restartCount,
             Integer restartPosition,
-            Boolean scoreByTds) {
+            Boolean scoreByTds,
+            Boolean isMsb) {
         TestConfig config = new TestConfig();
         config.setContentLoadTimeout(CONTENT_LOAD_TIMEOUT);
         config.setInterfaceTimeout(timeLimitConfiguration.getInterfaceTimeoutMinutes());
@@ -109,6 +112,7 @@ public class TestConfigHelper {
         config.setStatus(OpportunityStatusType.parse(STARTED_STATUS));
         config.setTestLength(testLength);
         config.setValidateCompleteness(clientTestProperty.getValidateCompleteness());
+        config.setIsMsb(isMsb);
 
         ReturnStatus startStatus = new ReturnStatus();
         startStatus.setStatus(STARTED_STATUS);

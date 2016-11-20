@@ -35,7 +35,7 @@ public interface IResponseRepository
 
 {
 
-  OpportunityItems insertItems (OpportunityInstance oppInstance, AdaptiveGroup adaptiveGroup) throws ReturnStatusException;
+  OpportunityItems insertItems (OpportunityInstance oppInstance, AdaptiveGroup adaptiveGroup, boolean isMsb) throws ReturnStatusException;
 
   ReturnStatus updateScoredResponse (OpportunityInstance oppInstance, IItemResponseUpdate responseUpdate, int score, String scoreStatus, String scoreRationale, long scoreLatency, Float pageDuration) throws ReturnStatusException;
 

@@ -170,7 +170,7 @@ public class TestManager
     // if (IsTestLengthMet) return null;
 
     // get next item group from adaptive algorithm
-    PageGroup pageGroup = _adaptiveService.createNextItemGroup (_testOpp.getOppInstance (), getLastPage (), getLastPosition ());
+    PageGroup pageGroup = _adaptiveService.createNextItemGroup (_testOpp, getLastPage (), getLastPosition ());
 
     // check if we got any items back from our request
     if (pageGroup == null || pageGroup.size () == 0)
