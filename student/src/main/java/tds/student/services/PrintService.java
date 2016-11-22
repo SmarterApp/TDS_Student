@@ -27,6 +27,7 @@ import tds.student.sql.data.OpportunityInstance;
 import AIR.Common.TDSLogger.ITDSLogger;
 import TDS.Shared.Exceptions.ReturnStatusException;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -54,7 +55,12 @@ public class PrintService
   }
 
   private String getPassageLabel (PageGroup group, boolean isTranscript) throws ReturnStatusException {
-    StringBuilder label = new StringBuilder (isTranscript ? "Transcript" : "Passage");
+    StringBuilder label = new StringBuilder ("Passage");
+
+    if (isTranscript) {
+      label.append(" and Transcript");
+    }
+
     if (group.size () > 0) {
       label.append (" for ");
 
@@ -164,22 +170,24 @@ public class PrintService
                     "PrintPassageBraille: Invalid xml file path for group %1$s.",
                     pageGroupToPrint.getId ())));
       }
+
       // try and load document if it isn't already loaded
       if (pageGroupToPrint.getDocument () == null) {
         pageGroupToPrint.setDocument (_contentService.getContent (
             xmlPath, accLookup));
       }
+
       // check if document is loaded
       if (pageGroupToPrint.getDocument () == null)
         return false;
+
       // get content
       ITSContent content = pageGroupToPrint.getDocument ().getContent (
           testOpp.getLanguage ());
       if (content == null)
         return false;
 
-      // get attachemnt for the accommodations braille type
-      // TODO: pass in flag to only return transcript if Braille Transcript accommodation, or possibly can look at accLookup within the method.  not sure.
+      // get attachments for the accommodations braille type
       List<ITSAttachment> brailleAttachments = content.GetBrailleTypeAttachment (accLookup);
 
       // check if any attachments
@@ -193,23 +201,29 @@ public class PrintService
         return false;
       }
 
-      for (ITSAttachment brailleAttachment : brailleAttachments) {
-        // final String requestType = "EMBOSSPASSAGE";
-        String requestValue = brailleAttachment.getFile ();
-        String requestParameters = "FileFormat:" + brailleAttachment.getType ().toUpperCase (); // name:value;name:value
-        String subType = brailleAttachment.getSubType();
+      ITSAttachment mainBrailleAttachment = brailleAttachments.get(0);
 
-        // HACK: need to find a better way
-        boolean isTranscript = subType.endsWith("_transcript");
+      // final String requestType = "EMBOSSPASSAGE";
+      String requestValue = mainBrailleAttachment.getFile ();
+      String requestParameters = "FileFormat:" + mainBrailleAttachment.getType ().toUpperCase (); // name:value;name:value
 
-        String requestDesc = String.format ("%1$s (%2$s)",
-                getPassageLabel (pageGroupToPrint, isTranscript),
-                brailleAttachment.getType ()
-        );
-        _oppRepository.submitRequest (testOpp.getOppInstance (),
-                pageGroupToPrint.getNumber (), 0, requestType, requestDesc,
-                requestValue.replace ("\\", "\\\\"), requestParameters);
+      // the subType in the Item Metadata attachmentList is the only way to determine if there is a Braille Transcript file
+      //  it will follow the convention of being named with an _transcript suffix according to the specification
+      boolean isTranscript = brailleAttachments.size() == 2 && brailleAttachments.get(1).getSubType().endsWith("_transcript");
+
+      String requestDesc = String.format ("%1$s (%2$s)",
+              getPassageLabel (pageGroupToPrint, isTranscript),
+              mainBrailleAttachment.getType ()
+      );
+
+      if (isTranscript) {
+        requestValue += ";" + brailleAttachments.get(1).getFile();
       }
+
+      _oppRepository.submitRequest (testOpp.getOppInstance (),
+              pageGroupToPrint.getNumber (), 0, requestType, requestDesc,
+              requestValue.replace ("\\", "\\\\"), requestParameters);
+
     } catch (ReturnStatusException e) {
       _logger.error (e.getMessage ());
       throw new ReturnStatusException (e);
