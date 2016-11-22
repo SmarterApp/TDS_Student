@@ -50,8 +50,11 @@ public class PrintService
   @Autowired
   private ITDSLogger             _tdsLogger;
 
-  private String getItemLabel (ItemResponse response) {
-    return String.format ("Item %1$d", response.getPosition ());
+  private String getItemLabel (ItemResponse response, boolean isTranscript) {
+    return String.format ("%1$s %2$d",
+            isTranscript ? "Item and Transcript" : "Item",
+            response.getPosition ()
+    );
   }
 
   private String getPassageLabel (PageGroup group, boolean isTranscript) throws ReturnStatusException {
@@ -134,7 +137,7 @@ public class PrintService
       if (StringUtils.isEmpty (requestValue))
         return false;
       // send request to session DB
-      String requestDesc = getItemLabel (responseToPrint);
+      String requestDesc = getItemLabel (responseToPrint, false);
       _oppRepository.submitRequest (oppInstance,
           responseToPrint.getPage (), responseToPrint.getPosition (),
           "PRINTITEM", requestDesc, requestValue.replace ("\\", "\\\\"), requestParameters);
@@ -276,18 +279,29 @@ public class PrintService
         return false;
       }
 
-      for (ITSAttachment brailleAttachment : brailleAttachments) {
-        final String requestType = "EMBOSSITEM";
-        String requestValue = brailleAttachment.getFile();
-        String requestParameters = "FileFormat:"
-                + brailleAttachment.getType().toUpperCase();
-        String requestDesc = getItemLabel(responseToPrint);
-        requestDesc = String.format("%1$s (%2$s)", requestDesc,
-                brailleAttachment.getType());
-        _oppRepository.submitRequest(testOpp.getOppInstance(),
-                responseToPrint.getPage(), responseToPrint.getPosition(),
-                requestType, requestDesc, requestValue.replace("\\", "\\\\"), requestParameters);
+      ITSAttachment mainBrailleAttachment = brailleAttachments.get(0);
+
+      // the subType in the Item Metadata attachmentList is the only way to determine if there is a Braille Transcript file
+      //  it will follow the convention of being named with an _transcript suffix according to the specification
+      boolean isTranscript = brailleAttachments.size() == 2 && brailleAttachments.get(1).getSubType().endsWith("_transcript");
+
+
+      final String requestType = "EMBOSSITEM";
+      String requestValue = mainBrailleAttachment.getFile();
+      String requestParameters = "FileFormat:" + mainBrailleAttachment.getType().toUpperCase();
+      String requestDesc = String.format("%1$s (%2$s)",
+              getItemLabel(responseToPrint, isTranscript),
+              mainBrailleAttachment.getType()
+      );
+
+      if (isTranscript) {
+        requestValue += ";" + brailleAttachments.get(1).getFile();
       }
+
+      _oppRepository.submitRequest(testOpp.getOppInstance(),
+              responseToPrint.getPage(), responseToPrint.getPosition(),
+              requestType, requestDesc, requestValue.replace("\\", "\\\\"), requestParameters);
+
       responseToPrint.setPrinted (true);
     } catch (ReturnStatusException e) {
       _logger.error (e.getMessage ());
