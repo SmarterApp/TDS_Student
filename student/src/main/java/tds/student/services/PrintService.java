@@ -93,6 +93,16 @@ public class PrintService
 
   }
 
+  /**
+   * Determines if the list of attachments means that this is a Braille Transcript embossing request
+   *
+   * @param brailleAttachments List of braille attachments for this request
+   * @return
+     */
+  private static boolean isTranscriptRequest(List<ITSAttachment> brailleAttachments) {
+    return brailleAttachments.size() == 2 && brailleAttachments.get(1).getSubType().endsWith("_transcript");
+  }
+
   public boolean printPassage (OpportunityInstance oppInstance, PageGroup pageGroupToPrint, String requestParameters) throws ReturnStatusException {
     return printPassage ("PRINTPASSAGE", oppInstance, pageGroupToPrint, requestParameters);
   }
@@ -194,7 +204,7 @@ public class PrintService
       List<ITSAttachment> brailleAttachments = content.GetBrailleTypeAttachment (accLookup);
 
       // check if any attachments
-      if (brailleAttachments == null || brailleAttachments.size() == 0) {
+      if (brailleAttachments == null || brailleAttachments.isEmpty()) {
         // log attachments are missing
         String testKey = testOpp.getTestKey ();
         String groupID = pageGroupToPrint.getId ();
@@ -210,9 +220,7 @@ public class PrintService
       String requestValue = mainBrailleAttachment.getFile ();
       String requestParameters = "FileFormat:" + mainBrailleAttachment.getType ().toUpperCase (); // name:value;name:value
 
-      // the subType in the Item Metadata attachmentList is the only way to determine if there is a Braille Transcript file
-      //  it will follow the convention of being named with an _transcript suffix according to the specification
-      boolean isTranscript = brailleAttachments.size() == 2 && brailleAttachments.get(1).getSubType().endsWith("_transcript");
+      boolean isTranscript = isTranscriptRequest(brailleAttachments);
 
       String requestDesc = String.format ("%1$s (%2$s)",
               getPassageLabel (pageGroupToPrint, isTranscript),
@@ -269,7 +277,7 @@ public class PrintService
       List<ITSAttachment> brailleAttachments = content.GetBrailleTypeAttachment (accLookup);
 
       // check if any attachments
-      if (brailleAttachments == null || brailleAttachments.size() == 0) {
+      if (brailleAttachments == null || brailleAttachments.isEmpty()) {
         // log attachments are missing
         String testKey = testOpp.getTestKey ();
         String itemID = responseToPrint.getItemID ();
@@ -281,10 +289,7 @@ public class PrintService
 
       ITSAttachment mainBrailleAttachment = brailleAttachments.get(0);
 
-      // the subType in the Item Metadata attachmentList is the only way to determine if there is a Braille Transcript file
-      //  it will follow the convention of being named with an _transcript suffix according to the specification
-      boolean isTranscript = brailleAttachments.size() == 2 && brailleAttachments.get(1).getSubType().endsWith("_transcript");
-
+      boolean isTranscript = isTranscriptRequest(brailleAttachments);
 
       final String requestType = "EMBOSSITEM";
       String requestValue = mainBrailleAttachment.getFile();
