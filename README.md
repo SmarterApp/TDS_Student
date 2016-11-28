@@ -289,3 +289,4 @@ Student has a number of direct dependencies that are necessary for it to functio
 ### Runtime Dependencies
 * Servlet API
 * Persistence API
+* MySQL Connector/J ( version 5.1.26 + ) need to be added in common.loader lib folder of server
