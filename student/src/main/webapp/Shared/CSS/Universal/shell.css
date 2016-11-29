@@ -527,6 +527,7 @@ ul#studentTools {
     outline: none;
     background-color: rgba(211, 242, 254, 0.3);
     border: solid 1px #00aeef;
+    position: fixed;
 }
 .TDS_SLM1 #btnNextBottom:focus .icon, 
 .TDS_SLM1 #btnNextBottom:active .icon {
