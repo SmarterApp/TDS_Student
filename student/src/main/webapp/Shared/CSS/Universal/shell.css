@@ -4086,3 +4086,3489 @@ body.tds-VideoFullScreen #contents .pageWrapper.showing .platform_ios .video-js.
     overflow: auto;
 }
 /* @end */
+=======
+/*Session ID 2014 Font */
+@font-face{
+	font-family:'inconsolata';
+	src:url('../../../shared/fonts/inconsolata.otf');
+	src: url('../../../shared/fonts/inconsolata.eot?#iefix') format('embedded-opentype'),
+         url('../../../shared/fonts/inconsolata.woff') format('woff'),
+         url('../../../shared/fonts/inconsolata.ttf') format('truetype'),
+         url('../../../shared/fonts/inconsolata.svg#inconsolatamedium') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+/* @end */
+
+html {
+	height:100%;
+	max-height:100%;
+	padding:0;
+	margin:0;
+	border:0;
+	background:#fff;
+	font-family: "Lucida Grande", "Lucida Sans", Arial, Helvetica, sans-serif;
+	overflow: hidden;
+}
+body {
+	height:100%;
+	max-height:100%;
+	overflow:hidden;
+}
+/* prevent tablets from getting copy/paste options*/
+.mobile #topBar, 
+.mobile #dialogs, 
+.mobile #content{
+	-webkit-touch-callout:none;
+	-webkit-user-select:none;
+	-khtml-user-select:none;
+	-moz-user-select:none;
+	-ms-user-select:none;
+	user-select:none;
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+
+/* @group Hiding/Showing */
+.contentHidden {
+	visibility: hidden !important;
+	height: 0px !important;
+	width: 0px !important;
+	overflow: hidden !important;
+	margin: 0px !important;
+	padding: 0px !important;
+}
+#topBar .contentHidden {
+	display: none;
+}
+#skipNav {
+	display: block;
+	position: absolute;
+	visibility: visible;
+	height: 0px;
+	width: 0px;
+	overflow: hidden;
+	left: -900px;
+}
+#skipNav:focus, 
+#skipNav:active
+{
+    overflow: inherit;
+    width: auto;
+    height: auto;
+    z-index: 1;
+    padding: 5px;
+    font-size: 2em;
+    -webkit-box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, .9);
+	-moz-box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, .9);
+	box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, .9);
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #0099d4;
+    border: solid 1px #fff;
+    text-decoration: none;
+    font-weight: bold;
+    top: 3px;
+    left: 3px;
+    outline: none;
+}
+.contentHidden object, 
+.contentHidden embed, 
+.contentHidden video {
+	overflow: hidden !important;
+	visibility: hidden !important;
+	margin-left: -9999px;
+}
+/* RENDERER: Direct */
+#contents div.pageWrapper {
+	display: block;
+	visibility: visible;
+}
+#contents div.pageWrapper.hiding {
+	visibility: hidden;
+	height: 0px;
+	width: 0px;
+}
+/* fb-85688 prevents overlapping of Grid SVG objects in IE9/10 */
+#contents div.pageWrapper.hiding object {
+	overflow: hidden;
+	margin-left: -9999px;
+}
+/* make each page aboslutely positioned, with a default z-index of 0*/
+.browser_ie #contents div.pageWrapper, 
+.browser_chrome #contents div.pageWrapper {
+	position: absolute;
+	z-index: 0;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+}
+/* move each hidden page below the shims that are drawn */
+.browser_ie #contents div.pageWrapper.hiding, 
+.browser_chrome #contents div.pageWrapper.hiding {
+	height: 0px;
+	width: 0px;
+	left: -9999px;
+	z-index: -1 !important;
+}
+/* NOTE: if <object> is set to 'none' it will get reloaded */
+#contents div.pageWrapper object, 
+#contents div.pageWrapper embed, 
+#contents div.pageWrapper video {
+	display: block !important; 
+}
+#contents div.pageWrapper.hiding object, 
+#contents div.pageWrapper.hiding embed, 
+#contents div.pageWrapper.hiding video {
+	visibility: hidden !important;
+}
+
+/* keeps scroll bar from peeking through in latest versions of chrome */
+#contents div.pageWrapper.hiding .thePassage, 
+#contents div.pageWrapper.hiding .theQuestions {
+	visibility: hidden;
+	overflow:hidden;
+}
+/* changing visiblity of containing elements prevents certain MathML symobls fromshowing up in iOS*/
+/* Bug #170272 making exclusive to standard, UI, not streamlined */
+.platform_ios.TDS_SLM0 #contents div.pageWrapper.hiding, 
+.platform_ios.TDS_SLM0 #contents div.pageWrapper.hiding .thePassage, 
+.platform_ios.TDS_SLM0 #contents div.pageWrapper.hiding .theQuestions {
+	visibility: inherit;
+	position: relative;
+	overflow: hidden;
+}
+
+/* @end */
+
+/* @group Hide items */
+/* 
+NOTE: 
+I can't hide passages because when they show they 
+have a scrolling motion. I think it is because of 
+the expand/collapse styles we applied.
+*/
+div.pageWrapper div.itemContainer.hiding {
+	overflow: hidden !important;
+	height: 0px !important;
+	width: 0px !important;
+	border: none !important;
+	margin: 0px !important;
+	left: -9999px !important;
+	z-index: -1 !important;
+	padding: 0px !important;
+}
+
+/* 
+Hide passage if it is hidden and has no content.
+Read note from above why we don't always hide passages. 
+*/
+div.pageWrapper div.thePassage.hiding.contentEmpty {
+	display: none !important;
+}
+
+/* @end */
+
+/* @group Context Area */
+
+.contextArea {
+ 	background-color: transparent;
+ 	-moz-transition: background-color .2s ease-in;
+    -webkit-transition: background-color .2s ease-in;
+    transition: background-color .2s ease-in;
+}
+.contextAreaMode .contextArea {
+	background-color: rgba(0, 174, 239, .1);
+	border: solid 1px #c6eefd;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box; 
+	
+}
+.contextAreaMode .contextArea.optionContainer {
+ 	margin-bottom: .1em;
+}
+.contextAreaMode .contextArea:hover, .contextAreaMode .contextArea:focus {
+	background-color: rgba(0, 174, 239, .3);
+	border-color: #00aeef;
+}
+.contextAreaMode .stemContainer.contextArea {
+	border-top-color: #c6eefd;
+}
+
+/* @end */
+
+
+
+#topBar {
+	position: fixed;
+	z-index: 1;
+	top: 0px;
+	left: 0px;
+	height: 74px;
+	width: 100%;
+	font: 62.5% "Lucida Grande", Lucida, Verdana, sans-serif;
+	background-color: #fff;
+}
+.platform_chrome #topBar {
+	z-index: inherit;
+}
+
+.platform_chrome.fs-enabled #topBar {
+	z-index: 1;
+}
+#tobBar * {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+#topBar a {
+	display: block;
+	float: left;
+	text-decoration: none;
+	color: #000;
+	background-color: transparent;
+ 	-moz-transition: background-color .2s ease-in;
+    -webkit-transition: background-color .2s ease-in;
+ 	-ms-transition: background-color .2s ease-in;
+    transition: background-color .2s ease-in;
+}
+
+/* @group Small Bar */
+
+#infoBar {
+	background-color: rgba(211,242,254,0.3);
+	height: 21px;
+	border-bottom: solid 1px #c2c2c2;
+	font-size: 11px;
+	line-height: 21px;
+	padding: 0px 121px 0px 10px;
+	position: relative;
+	overflow:auto;
+}
+#jumpQuestions, #jumpQuestions label {
+	float: left;
+	line-height: 15px;
+}
+#jumpQuestions label {
+	padding-top: 2px;
+}
+#jumpQuestions #ddlNavigation {
+	margin-top: 2px;
+	margin-left: 3px;
+	float: left;
+}
+.platform_linux #jumpQuestions #ddlNavigation, 
+.platform_unix #jumpQuestions #ddlNavigation {
+	margin-top: 0px;
+	font-size: 9px;
+	height: 20px;
+}
+.platform_linux.TDS_PS_L1 #jumpQuestions #ddlNavigation, 
+.platform_unix.TDS_PS_L1 #jumpQuestions #ddlNavigation, 
+.platform_linux.TDS_PS_L2 #jumpQuestions #ddlNavigation, 
+.platform_unix.TDS_PS_L2 #jumpQuestions #ddlNavigation {
+	font-size: 12px;
+	height: 24px;
+}
+.platform_linux.TDS_PS_L3 #jumpQuestions #ddlNavigation, 
+.platform_unix.TDS_PS_L3 #jumpQuestions #ddlNavigation, 
+.platform_linux.TDS_PS_L4 #jumpQuestions #ddlNavigation, 
+.platform_unix.TDS_PS_L4 #jumpQuestions #ddlNavigation {
+	font-size: 16px;
+	height: 28px;
+}
+.platform_ios.TDS_PS_L1 #jumpQuestions #ddlNavigation, 
+.platform_ios.TDS_PS_L2 #jumpQuestions #ddlNavigation, 
+.platform_android.TDS_PS_L1 #jumpQuestions #ddlNavigation, 
+.platform_android.TDS_PS_L2 #jumpQuestions #ddlNavigation {
+	font-size: 12px;
+	height: 22px;
+}
+.platform_ios.TDS_PS_L3 #jumpQuestions #ddlNavigation, 
+.platform_ios.TDS_PS_L4 #jumpQuestions #ddlNavigation, 
+.platform_android.TDS_PS_L3 #jumpQuestions #ddlNavigation, 
+.platform_android.TDS_PS_L4 #jumpQuestions #ddlNavigation {
+	font-size: 16px;
+	height: 26px;
+}
+#jumpGo {
+	height: 17px;
+	width: 17px;
+	text-align: center;
+	border: solid 2px #c2c2c2;
+	-moz-border-radius:  50%;
+	-webkit-border-radius:  50%;
+    border-radius: 50%;
+    margin-top: 2px;
+    margin-left: 3px;
+    font-size: 10px;
+    overflow: hidden;
+    text-indent: -9999px;
+    display: block;
+    float: right;
+    -moz-transition: background-color .2s ease-in;
+    -webkit-transition: background-color .2s ease-in;
+ 	-ms-transition: background-color .2s ease-in;
+    transition: background-color .2s ease-in;
+    background: #fff url(../../Images/universal/universal_shell.png) no-repeat center -7px;
+    padding: 0px;
+}
+#jumpGo:active,
+#jumpGo:focus, 
+#jumpGo:hover {
+	background-color: #00aeef;
+	border-color: #fff;
+	-webkit-box-shadow: 0px 0px 2px #b4b4b4;
+	-moz-box-shadow: 0px 0px 2px #b4b4b4;
+	box-shadow: 0px 0px 2px #b4b4b4;
+	color: #fff;
+	background-position: center -47px;
+}
+#smallButtons {
+	position: fixed;
+	top: 0px;
+	right: 20px;
+}
+#smallButtons a {
+	overflow: hidden;
+	text-align: center;
+	text-indent: -9999px;
+	height: 14px;
+	width: 14px;
+	margin-right: 0px;
+	margin-left: 15px;
+	border: solid 2px #c2c2c2;
+	-moz-border-radius:  50%;
+	-webkit-border-radius:  50%;
+    border-radius: 50%;
+    margin-top: 2px;
+    position: relative;
+}
+#smallButtons a:active,
+#smallButtons a:focus, 
+#smallButtons a:hover {
+	background-color: #00aeef;
+	border-color: #fff;
+	-webkit-box-shadow: 0px 0px 2px #b4b4b4;
+	-moz-box-shadow: 0px 0px 2px #b4b4b4;
+	box-shadow: 0px 0px 2px #b4b4b4;
+}
+#infoBar h1, 
+#infoBar h2 {
+	float: left;
+	margin-left: 10px;
+}
+
+#infoBar .sessionID {
+	margin-left: 10px;
+	font-family: inconsolata;
+	text-transform: uppercase;
+	font-size: 1.1em;
+	display: inline-block;
+	max-height: 18px;
+}
+
+.platform_android #infoBar .sessionID{
+	min-width: 7em;
+}
+
+
+/* @end */
+
+/* @group Nav Icons */
+
+#navigation {
+	height: 53px;
+	border-bottom: solid 1px #c2c2c2;
+	font-size: 9px;
+}
+#navigation ul {
+	display: block;
+	float: left;
+}
+ul#studentTools {
+	float: right;
+}
+#navigation li {
+	display: inline-block;
+	height: 53px;
+}
+#navigation a {
+	min-width: 44px;
+	position: relative;
+	text-align: center;
+	padding: 39px 3px 0;
+	white-space: nowrap;
+}
+#navigation a:active .icon,
+#navigation a:focus .icon,
+#navigation a:hover .icon {
+	background-color: #00aeef;
+	border-color: #fff;
+	-webkit-box-shadow: 0px 0px 3px #b4b4b4;
+	-moz-box-shadow: 0px 0px 3px #b4b4b4;
+	box-shadow: 0px 0px 3px #b4b4b4;
+}
+#navigation .inactive {
+	color: #ccc;
+	cursor: default;
+}
+#navigation .inactive .icon, 
+#navigation .inactive a:active .icon,
+#navigation .inactive a:focus .icon,
+#navigation .inactive a:hover .icon {
+	background-color: transparent;
+	-webkit-box-shadow: inherit;
+	-moz-box-shadow: inherit;
+	box-shadow: inherit;
+	opacity: .3;
+	border-color: #ccc;
+}
+#navigation .icon {
+	display: block;
+	height: 30px;
+	width: 30px;
+	position: absolute;
+	top: 4px;
+	left: 50%;
+	margin-left: -16px;
+	border: solid 2px #c2c2c2;
+	-moz-border-radius:  50%;
+	-webkit-border-radius:  50%;
+    border-radius: 50%;
+ 	-moz-transition: background-color .2s ease-in;
+    -webkit-transition: background-color .2s ease-in;
+ 	-ms-transition: background-color .2s ease-in;
+    transition: background-color .2s ease-in;
+    text-align: center;
+}
+/* hide Print Page unless bith Item and Passage printing are enabled */
+#studentTools #btnPagePrint {
+	display: none;
+}
+.TDS_PoD_Item.TDS_PoD_Stim #studentTools #btnPagePrint {
+	display: block;
+}
+#studentTools .printer, 
+#studentTools .printerPractice {
+	display:none;
+}
+/* hide print passage button when print page is available */
+.TDS_PoD_Item.TDS_PoD_Stim #studentTools #btnPrint {
+	display: none !important;
+}
+
+#topBar a#btnContext {
+	display: none;
+}
+/* still need to show menu button in nav bar for tablets when we use the inidividial item tool buttons */
+.mobile #topBar a#btnContext {
+	display: block;
+}
+.mobile.TDS_ITM1 #topBar a#btnContext {
+	display: none;
+}
+
+#navigation .math, 
+#navigation .periodic, 
+#navigation .calculator, 
+#btnLineReader, 
+#navigation .inactive .endTest, 
+#navigation .inactive .startTest, 
+#navigation .inactive .pause {
+	display: none !important;
+}
+#navigation #btnSave, 
+#navigation #btnGlobalNotes, 
+#navigation #btnRubric {
+	display:none;
+}
+#navigation #btnSave.enable {
+	display:block;
+}
+
+/* @end */
+
+/* @group Next shortcut */
+
+#btnNextBottom {
+	display: none;
+}
+.TDS_SLM1 #btnNextBottom {
+	display: block;
+	position: absolute;
+	visibility: visible;
+	height: 0px;
+	width: 0px;
+	overflow: hidden;
+	left: -9999px;
+}
+.TDS_SLM1 a#btnNextBottom:focus, 
+.TDS_SLM1 a#btnNextBottom:active {
+	width: 50px;
+    height: 42px;
+    z-index: 1;
+    bottom: 10px;
+    left: 20px;
+    outline: none;
+    background-color: rgba(211, 242, 254, 0.3);
+    border: solid 1px #00aeef;
+    /* SB-1504: Bottom Next Button moves up on space bar */
+    position: fixed;
+}
+.TDS_SLM1 #btnNextBottom:focus .icon, 
+.TDS_SLM1 #btnNextBottom:active .icon {
+	display: block;
+	height: 30px;
+	width: 30px;
+	position: absolute;
+	top: 4px;
+	left: 50%;
+	margin-left: -16px;
+	border: solid 2px #fff;
+	-moz-border-radius:  50%;
+	-webkit-border-radius:  50%;
+    border-radius: 50%;
+ 	-moz-transition: background-color .2s ease-in;
+    -webkit-transition: background-color .2s ease-in;
+ 	-ms-transition: background-color .2s ease-in;
+    transition: background-color .2s ease-in;
+    text-align: center;
+	background: #00aeef url(../../Images/universal/universal_shell.png) no-repeat center -1066px;
+	-webkit-box-shadow: 0px 0px 3px #b4b4b4;
+	-moz-box-shadow: 0px 0px 3px #b4b4b4;
+	box-shadow: 0px 0px 3px #b4b4b4;
+}
+.TDS_SLM1 #btnNextBottom:focus .label, 
+.TDS_SLM1 #btnNextBottom:active .label {
+	height: 0px;
+	width: 0px;
+	position: absolute;
+	left: -9999px;
+	overflow: hidden;
+}
+
+/* @end */
+/* @group Alert Bar */
+
+.alertBar {
+	display: none;
+	font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
+	top: -50px;
+	-moz-transition: all .2s ease-in;
+    -webkit-transition: all .2s ease-in;
+ 	-ms-transition: all .2s ease-in;
+    transition: all .2s ease-in;
+
+}
+.TDS_TN0 .alertBar, 
+.TDS_TN0 .alertBar.alertActive, 
+.TDS_TN0 .alertBar.alertActive.alertClosed {
+	display: none;
+}
+.alertBar.alertActive {
+	display: block; 
+	position: fixed;
+	top: 5px;
+	left: 50%;
+	width: 300px;
+	min-height: 30px;
+	margin-left: -150px;
+	background-color: rgba(248,253,211,0.7);
+	border: solid 1px #ccc;
+	z-index: 10;
+	line-height: 1.5em;
+}
+.alertBar .alertDismiss {
+	display: block;
+	background: transparent url(../../Images/universal/universal_shell.png) no-repeat center -3233px;
+	height: 30px;
+	width: 30px;
+	overflow: hidden;
+	text-indent: -9999px;
+	float: right;
+	-moz-transition: background-color .2s ease-in;
+    -webkit-transition: background-color .2s ease-in;
+ 	-ms-transition: background-color .2s ease-in;
+    transition: background-color .2s ease-in;
+}
+.alertBar .alertDismiss:active, 
+.alertBar .alertDismiss:focus, 
+.alertBar .alertDismiss:hover {
+	background-position: center -3338px;
+}
+.alertBar.alertActive.alertClosed {
+	top: 0px;
+	left: 50%;
+	width: 30px;
+	height: 10px;
+	margin-left: -15px;
+	border-top: none;
+	-webkit-box-shadow: 0px 0px 3px #b4b4b4;
+	-moz-box-shadow: 0px 0px 3px #b4b4b4;
+	box-shadow: 0px 0px 3px #b4b4b4;
+}
+.alertBar.alertActive .alertDismiss .alertDismissOpen,
+.alertBar.alertActive.alertClosed .alertDismiss .alertDismissClose {
+    display: none;
+}
+.alertBar.alertActive.alertClosed .alertDismiss .alertDismissOpen,
+.alertBar.alertActive .alertDismiss .alertDismissClose {
+    display: inline;
+}
+.alertBar.alertActive.alertClosed .alertContent {
+	display: none;
+}
+.alertBar.alertActive.alertClosed {
+	top: 0px;
+	left: 50%;
+	width: 30px;
+	height: 15px;
+	min-height: 15px;
+	margin-left: -15px;
+	border-top: none;
+}
+.alertBar.alertActive.alertClosed .alertDismiss {
+	background-position: center -87px;
+	height: 15px;
+}
+.alertBar.alertActive.alertClosed .alertDismiss:active, 
+.alertBar.alertActive.alertClosed .alertDismiss:focus,
+.alertBar.alertActive.alertClosed .alertDismiss:hover {
+	background-position: center -127px;
+	background-color: #00aeef;
+}
+.alertBar .alertContent {
+	list-style: none;
+}
+.alertBar .alertContent li {
+	border-top: solid 1px #ccc;
+	padding: 6px;
+}
+.alertBar .alertContent li:nth-child(1) {
+	border-top: none;
+}
+
+/* @end */
+#contents {
+	position: absolute;
+	top: 75px;
+	left: 0px;
+	width: 100%;
+	bottom: 0px;
+	z-index: 0;
+}
+
+/* @group Context Menu */
+
+.yui-skin-sam .yuimenu {
+	background-color: #fff !important;
+	-moz-border-radius:  5px;
+	-webkit-border-radius:  5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0em 0em .4em #666;
+	-moz-box-shadow: 0em 0em .4em #666;
+	box-shadow: 0em 0em .4em #666;
+	font-size: 10px;
+	line-height: 16px;
+	font-family: "Lucida Grande", "Lucida Sans", Arial, Helvetica, sans-serif;
+}
+.yui-skin-sam .yuimenu .bd {
+	background-color: transparent;
+	border: none !important;
+}
+.yui-skin-sam .yuimenu ul {
+	padding: 0px !important;
+}
+.yui-skin-sam .yuimenu li  {
+    display: block;
+    border: none !important;
+    background-color: transparent !important;
+}
+.yuimenuitemlabel:focus {
+    outline: none;
+}
+.yui-skin-sam .yuimenu li a {
+    border-bottom: solid 1px #ccc;
+	padding: 5px 10px 5px 40px;
+}
+.yui-skin-sam .yuimenu li:nth-child(1) a {
+   	-moz-border-radius: 5px 5px 0 0;
+   	-webkit-border-radius: 5px 5px 0 0;
+	border-radius: 5px 5px 0 0;
+}
+.yui-skin-sam .yuimenu li:nth-last-child(1) a {
+   -moz-border-radius: 0 0 5px 5px;
+   	-webkit-border-radius: 0 0 5px 5px;
+	border-radius: 0 0 5px 5px;
+	border-bottom: none;
+}
+.yui-skin-sam .yuimenu li.first-of-type:nth-last-child(1) a {
+   -moz-border-radius: 5px;
+   	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	border-bottom: none;
+}
+.yui-skin-sam .yuimenu li a::-moz-selection {
+   background-color: transparent;
+}
+.yui-skin-sam .yuimenu li a::-selection {
+   border-color: transparent;
+}
+.yuimenu li a:hover, .yuimenu li a:focus, .yuimenu li a:active {
+	background-color: #00aeef;
+	color: #fff !important;
+}
+.yuimenu .yuimenuitemlabel-disabled, 
+.yuimenu .yuimenuitemlabel-disabled:hover  {
+    color: #A6A6A6 !important;
+    background-color: #cccbce !important;
+}
+.yui-skin-sam .yuimenu .yuimenuitem-selected {
+	background-color: transparent;
+	border: none !important;
+}
+.mobile .yuimenu li {
+	position: static !important;
+}
+.mobile .yuimenu li a:focus {
+	outline: none;
+}
+.yuimenu .changePrompt, 
+.TDS_PS_L1 .yuimenu .changePrompt, 
+.TDS_PS_L2 .yuimenu .changePrompt, 
+.TDS_PS_L3 .yuimenu .changePrompt, 
+.TDS_PS_L4 .yuimenu .changePrompt {
+	font-size: 1em;
+	height: inherit;
+	font-family: "Lucida Grande", "Lucida Sans", Arial, Helvetica, sans-serif;
+}
+
+/* @end */
+
+/* @group dialog tweaks */
+
+.yui-skin-sam .yui-dialog .ft span.default button {
+	color: inherit;
+}
+.yui-skin-sam .yui-dialog .ft span.default button:hover {
+	color: #fff;
+}
+
+
+#dialogPrompt, #dialogAlert, #dialogProgress, #dialogPracticePrint {
+	position: fixed;
+	z-index: 500;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	display:none;
+}
+#logOut {
+	display:none;
+}
+.yui-panel td.incorrect {
+	background-image: url(../../Images/RedX.png);
+	background-repeat: no-repeat;
+	background-position: center center;	
+}
+.yui-panel td.correct {
+	background-image: url(../../Images/GreenCheck.png);
+	background-repeat: no-repeat;
+	background-position: center center;	
+}
+.yui-panel td.na {
+	background-image: url(../../Images/YellowDash.png);
+	background-repeat: no-repeat;
+	background-position: center center;	
+}
+.yui-panel-container .comment-selectbox {
+	margin: 8px;
+}
+/* ensure that dialog messages are always on top */
+#yuiSimpleDialog_c {
+	z-index: 2010 !important;
+}
+#yuiSimpleDialog_mask {
+	z-index: 2000 !important;
+	background: url(../../Images/universal/mask_zigzag.png) repeat;
+	opacity: 1;
+}
+
+/* @group ASL video window */
+/* need to explicitly set dimensions or OS X will not correctly calculate sizes when zoomed */
+.TDS_PS_L0 .tool.tool-video {
+	width: 420px !important;
+	height: 285px !important;
+}
+.TDS_PS_L1 .tool.tool-video {
+	width: 520px !important;
+	height: 340px !important;
+}
+.TDS_PS_L2 .tool.tool-video {
+	width: 620px !important;
+	height: 400px !important;
+}
+.TDS_PS_L3 .tool.tool-video {
+	width: 720px !important;
+	height: 455px !important;
+}
+.TDS_PS_L4 .tool.tool-video {
+	width: 820px !important;
+	height: 510px !important;
+}
+
+/* @end */
+
+/* @group tutorials, etc... */
+#dialogContent {
+	display:none;
+}
+#dialogContent.enable {
+	position: fixed;
+	z-index: 500;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	display:block;
+}
+#dialogContent .dialogWrapper {
+	height: 610px;
+    margin-left: 10px;
+    margin-top: 10px;
+    position: relative;
+    width: 900px;
+    -moz-border-radius:  5px;
+	-webkit-border-radius:  5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0em 0em .4em #666;
+	-moz-box-shadow: 0em 0em .4em #666;
+	box-shadow: 0em 0em .4em #666;
+	background-color:#FFFFFF;
+	border:2px solid #fff;
+}
+#dialogContentHeader{
+	background-color: #ecebed;
+	text-align: left;
+	margin-left: auto;
+	margin-right: auto;
+	height: 25px;
+	line-height: 25px;
+	font-family:"Lucida Grande","Lucida Sans",Arial,Helvetica,sans-serif;
+}
+/* when a content iframe is hidden it is assigned this class, display none is needed to prevent audio from playing when it shouldn't with flash files */
+#dialogContentFrames .contentFrameHide {
+	width: 0px !important;
+	height: 0px !important;
+	visibility: hidden;
+	display: none;
+	overflow: hidden;
+}
+
+#dialogContentTitle {
+	display: block;
+	padding-left: 10px;
+	font-weight: bold;
+	-moz-border-radius: 5px 5px 0px 0px;
+	-webkit-border-radius: 5px 5px 0px 0px;
+	border-radius: 5px 5px 0px 0px; 
+}
+#dialogContentHeader a {
+    color: #000000;
+    display: block;
+    float: right;
+    height: 25px;
+    width: 25px;
+    overflow: hidden;
+    text-indent: -9999px;
+    line-height: 25px;
+    /* SB-622: commenting following line for tutorial close button
+	margin-top: -25px; */
+    text-decoration: none;
+	background: url(../../Images/modern/sprites_mobile_0.png) center -2730px no-repeat;
+}
+#dialogContentHeader a:hover {
+	background-position: center -2831px;
+	text-decoration:underline;
+	color: #FFFFFF;
+}
+#dialogContentControls {
+	display: none;
+}
+#dialogContentControls.enable {
+	background-color: #F6C501;
+	width: 700px;
+	text-align: left;
+	margin-left: auto;
+	margin-right: auto;
+	height: 40px;
+	line-height: 40px;
+	padding-left: 2px;
+	padding-right: 2px;
+	font-family:"Lucida Grande","Lucida Sans",Arial,Helvetica,sans-serif;
+	display: block;
+}
+#dialogContentFrames iframe {
+	width: 100%;
+	height: 585px;
+	-moz-border-radius: 0px 0px 5px 5px;
+	-webkit-border-radius: 0px 0px 5px 5px;
+	border-radius: 0px 0px 5px 5px;
+}
+.platform_ios #dialogContentFrames {
+	overflow: auto;
+	height: 585px;
+}
+/* @end */
+
+a.yui-panel-bottom {
+	display: block;
+	position: absolute;
+	visibility: visible;
+	height: 0px;
+	width: 0px;
+	overflow: hidden;
+	left: -9999px;
+	text-indent: -9999px;
+}
+a.yui-panel-bottom:focus, 
+a.yui-panel-bottom:active
+{
+    width: 24px;
+    height: 24px;
+    z-index: 1;
+    -webkit-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, .9);
+	-moz-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, .9);
+	box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, .9);
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+    border-radius: 2px;
+    color: #fff;
+    border: solid 1px #fff;
+    left: 100%;
+    margin-left: -30px;
+    margin-top: -18px;
+    outline: none;
+	background-color: #9e0b0f;
+}
+
+
+/* @end */
+#tools iframe {
+	overflow: auto;
+}
+
+/* @group formulas */
+
+.tool-formula, 
+.mobile .tool-rubric {
+	height: 510px !important;
+	width: 630px !important;
+}
+/* lets tablets scroll iframes */
+.touch .tool-formula .bd, 
+.touch .tool-rubric .bd {
+	-webkit-overflow-scrolling:touch; 
+	overflow: auto;
+}
+.TDS_PS_L1 .tool-formula, 
+.TDS_PS_L1 .tool-rubric {
+	width: 772px !important;
+}
+.TDS_PS_L2 .tool-formula, .TDS_PS_L3 .tool-formula, .TDS_PS_L4 .tool-formula, 
+.TDS_PS_L2 .tool-rubric, .TDS_PS_L3 .tool-rubric, .TDS_PS_L4 .tool-rubric {
+	width: 915px !important;
+}
+
+/* @end */
+
+/* @group MN formulas */
+
+.TDS_F_MN_6Math .tool-formula, .TDS_F_MN_7Math .tool-formula {
+	height: 540px !important;
+	width: 390px !important;
+}
+.TDS_F_MN_6Math.TDS_PS_L1 .tool-formula, .TDS_F_MN_7Math.TDS_PS_L1 .tool-formula {
+	width: 470px !important;
+}
+.TDS_F_MN_6Math.TDS_PS_L2 .tool-formula, .TDS_F_MN_6Math.TDS_PS_L3 .tool-formula, .TDS_F_MN_6Math.TDS_PS_L4 .tool-formula, .TDS_F_MN_7Math.TDS_PS_L2 .tool-formula, .TDS_F_MN_7Math.TDS_PS_L3 .tool-formula, .TDS_F_MN_7Math.TDS_PS_L4 .tool-formula {
+	width: 580px !important;
+}
+.TDS_F_MN_8Math .tool-formula {
+	width: 430px !important;
+}
+.TDS_F_MN_8Math.TDS_PS_L1 .tool-formula {
+	width: 528px !important;
+}
+.TDS_F_MN_8Math.TDS_PS_L2 .tool-formula, .TDS_F_MN_8Math.TDS_PS_L3 .tool-formula, .TDS_F_MN_8Math.TDS_PS_L4 .tool-formula {
+	width: 625px !important;
+}
+.TDS_F_MN_5Math .tool-formula {
+	width: 370px !important;
+	height: 300px !important;
+}
+.TDS_F_MN_5Math.TDS_PS_L1 .tool-formula {
+	width: 470px !important;
+	height: 400px !important;
+}
+.TDS_F_MN_5Math.TDS_PS_L2 .tool-formula, .TDS_F_MN_5Math.TDS_PS_L3 .tool-formula, .TDS_F_MN_5Math.TDS_PS_L4 .tool-formula {
+	width: 570px !important;
+	height: 500px !important;
+}
+
+/* @end */
+
+/* @group periodic table */
+
+.tool-periodictable {
+	height: 570px !important;
+	width: 680px !important;
+}
+#tool-TDS_PT_HTMLv2 {
+	height: 720px !important;
+	width: 830px !important;
+}
+/* lets tablets scroll iframes */
+.tool-periodictable .bd {
+	overflow: hidden;
+}
+.touch .tool-periodictable .bd {
+	-webkit-overflow-scrolling:touch; 
+	overflow: auto;
+}
+.TDS_PS_L1.TDS_PT_HTML .tool-periodictable {
+	width: 725px !important;
+}
+.TDS_PS_L2.TDS_PT_HTML .tool-periodictable, .TDS_PS_L3.TDS_PT_HTML .tool-periodictable, .TDS_PS_L4.TDS_PT_HTML .tool-periodictable {
+	width: 830px !important;
+}
+.TDS_PT_Expanded .tool-periodictable, .TDS_PT_Basic .tool-periodictable {
+	height: 442px !important;
+}
+.TDS_PT_Expanded #toolPeriodicTable iframe, .TDS_PT_Basic #toolPeriodicTable iframe {
+	height: 402px;
+}
+.TDS_PS_L1.TDS_PT_Expanded .tool-periodictable, .TDS_PS_L1.TDS_PT_Basic .tool-periodictable {
+	width: 766px !important;
+}
+.TDS_PS_L2.TDS_PT_Expanded .tool-periodictable, .TDS_PS_L2.TDS_PT_Basic .tool-periodictable, .TDS_PS_L3.TDS_PT_Expanded .tool-periodictable, .TDS_PS_L3.TDS_PT_Basic .tool-periodictable, .TDS_PS_L4.TDS_PT_Expanded .tool-periodictable, .TDS_PS_L4.TDS_PT_Basic .tool-periodictable {
+	width: 912px !important;
+}
+
+/* @end */
+/* @group calculator */
+.tool-calculator {
+	height: 530px !important;
+	width: 740px !important;
+	max-height: inherit !important;
+}
+.TDS_CalcBasic .tool-calculator,
+.TDS_CalcBasic .tool-calculator  {
+	height: 364px !important;
+	width: 265px !important;
+}
+.TDS_PS_L1.TDS_CalcBasic .tool-calculator {
+	height: 364px !important;
+	width: 297px !important;
+}
+.TDS_PS_L2.TDS_CalcBasic .tool-calculator, .TDS_PS_L3.TDS_CalcBasic .tool-calculator, .TDS_PS_L4.TDS_CalcBasic .tool-calculator {
+	width: 390px !important;
+	height: 360px !important;
+}
+.TDS_CalcStd .tool-calculator, .TDS_CalcStdMem .tool-calculator {
+	height: 340px !important;
+	width: 304px !important;
+}
+.TDS_PS_L1.TDS_CalcStd .tool-calculator, .TDS_PS_L1.TDS_CalcStdMem .tool-calculator {
+	height: 340px !important;
+	width: 366px !important;
+}
+.TDS_PS_L2.TDS_CalcStd .tool-calculator, .TDS_PS_L3.TDS_CalcStd .tool-calculator, .TDS_PS_L4.TDS_CalcStd .tool-calculator, 
+.TDS_PS_L2.TDS_CalcStdMem .tool-calculator, .TDS_PS_L3.TDS_CalcStdMem .tool-calculator, .TDS_PS_L4.TDS_CalcStdMem .tool-calculator {
+	height: 344px !important;
+	width: 390px !important;
+}
+/* scientific with just one or fewer other modes available */
+#tools .TDS_CalcSci .tool-calculator,
+#tools .TDS_CalcSciInv .tool-calculator  {
+	height: 445px !important;
+	width: 447px !important;
+}
+.TDS_PS_L1 #tools .TDS_CalcSci .tool-calculator,
+.TDS_PS_L1 #tools .TDS_CalcSciInv .tool-calculator {
+	width: 524px !important;
+	height: 445px !important;
+}
+.TDS_PS_L2 #tools .TDS_CalcSci .tool-calculator, 
+.TDS_PS_L3 #tools .TDS_CalcSci .tool-calculator, 
+.TDS_PS_L4 #tools .TDS_CalcSci .tool-calculator,
+
+.TDS_PS_L2 #tools .TDS_CalcSciInv .tool-calculator, 
+.TDS_PS_L3 #tools .TDS_CalcSciInv .tool-calculator, 
+.TDS_PS_L4 #tools .TDS_CalcSciInv .tool-calculator {
+	width: 590px !important;
+	height: 450px !important;
+}
+
+
+/* scientific with two other modes available */
+.TDS_CalcMatrices.TDS_CalcRegress #tools .TDS_CalcSci .tool-calculator,
+.TDS_CalcMatrices.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator
+.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator,
+
+.TDS_CalcMatrices.TDS_CalcRegress #tools .TDS_CalcSciInv .tool-calculator,
+.TDS_CalcMatrices.TDS_CalcGraphing #tools .TDS_CalcSciInv .tool-calculator
+.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSciInv .tool-calculator  
+ {
+	height: 443px !important;
+	width: 504px !important;
+}
+.TDS_PS_L1.TDS_CalcMatrices.TDS_CalcRegress #tools .TDS_CalcSci .tool-calculator,
+.TDS_PS_L1.TDS_CalcMatrices.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator,
+.TDS_PS_L1.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator,
+
+.TDS_PS_L1.TDS_CalcMatrices.TDS_CalcRegress #tools .TDS_CalcSciInv .tool-calculator,
+.TDS_PS_L1.TDS_CalcMatrices.TDS_CalcGraphing #tools .TDS_CalcSciInv .tool-calculator,
+.TDS_PS_L1.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSciInv .tool-calculator {
+	width: 535px !important;
+	height: 450px !important;
+}
+.TDS_PS_L2.TDS_CalcMatrices.TDS_CalcRegress #tools .TDS_CalcSci .tool-calculator,
+.TDS_PS_L2.TDS_CalcMatrices.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator
+.TDS_PS_L2.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator, 
+
+.TDS_PS_L3.TDS_CalcMatrices.TDS_CalcRegress #tools .TDS_CalcSci .tool-calculator,
+.TDS_PS_L3.TDS_CalcMatrices.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator
+.TDS_PS_L3.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator, 
+
+.TDS_PS_L4.TDS_CalcMatrices.TDS_CalcRegress #tools .TDS_CalcSci .tool-calculator,
+.TDS_PS_L4.TDS_CalcMatrices.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator
+.TDS_PS_L4.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator,
+
+.TDS_PS_L2.TDS_CalcMatrices.TDS_CalcRegress #tools .TDS_CalcSciInv .tool-calculator,
+.TDS_PS_L2.TDS_CalcMatrices.TDS_CalcGraphing #tools .TDS_CalcSciInv .tool-calculator
+.TDS_PS_L2.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSciInv .tool-calculator, 
+
+.TDS_PS_L3.TDS_CalcMatrices.TDS_CalcRegress #tools .TDS_CalcSciInv .tool-calculator,
+.TDS_PS_L3.TDS_CalcMatrices.TDS_CalcGraphing #tools .TDS_CalcSciInv .tool-calculator
+.TDS_PS_L3.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSciInv .tool-calculator, 
+
+.TDS_PS_L4.TDS_CalcMatrices.TDS_CalcRegress #tools .TDS_CalcSciInv .tool-calculator,
+.TDS_PS_L4.TDS_CalcMatrices.TDS_CalcGraphing #tools .TDS_CalcSciInv .tool-calculator
+.TDS_PS_L4.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSciInv .tool-calculator  {
+	width: 760px !important;
+	height: 450px !important;
+}
+
+/* scientific with three other modes available */
+.TDS_CalcMatrices.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator,
+.TDS_CalcMatrices.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSciInv .tool-calculator {
+	height: 450px !important;
+	width: 505px !important;
+}
+.TDS_PS_L1.TDS_CalcMatrices.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator,
+.TDS_PS_L1.TDS_CalcMatrices.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSciInv .tool-calculator  {
+	width: 720px !important;
+	height: 430px !important;
+}
+
+.TDS_PS_L2.TDS_CalcMatrices.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator, 
+.TDS_PS_L3.TDS_CalcMatrices.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator, 
+.TDS_PS_L4.TDS_CalcMatrices.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSci .tool-calculator,
+
+.TDS_PS_L2.TDS_CalcMatrices.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSciInv .tool-calculator, 
+.TDS_PS_L3.TDS_CalcMatrices.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSciInv .tool-calculator, 
+.TDS_PS_L4.TDS_CalcMatrices.TDS_CalcRegress.TDS_CalcGraphing #tools .TDS_CalcSciInv .tool-calculator  {
+	width: 760px !important;
+	height: 460px !important;
+}
+
+
+
+#tools .TDS_CalcMatrices .tool-calculator {
+	height: 503px !important;
+	width: 700px !important;
+}
+.TDS_PS_L1 #tools .TDS_CalcMatrices .tool-calculator {
+	height: 503px !important;
+	width: 710px !important;
+}
+.TDS_PS_L2 #tools .TDS_CalcMatrices .tool-calculator, 
+.TDS_PS_L3 #tools .TDS_CalcMatrices .tool-calculator, 
+.TDS_PS_L4 #tools .TDS_CalcMatrices .tool-calculator {
+	height: 505px !important;
+	width: 758px !important;
+}
+
+
+#tools .TDS_CalcRegress .tool-calculator {
+	height: 520px !important;
+	width: 700px !important;
+}
+.TDS_PS_L1 #tools .TDS_CalcRegress .tool-calculator {
+	height: 540px !important;
+	width: 740px !important;
+}
+.TDS_PS_L2 #tools .TDS_CalcRegress .tool-calculator, 
+.TDS_PS_L3 #tools .TDS_CalcRegress .tool-calculator, 
+.TDS_PS_L4 #tools .TDS_CalcRegress .tool-calculator {
+	height: 555px !important;
+	width: 760px !important;
+}
+
+
+#tools .TDS_CalcGraphing .tool-calculator,
+#tools .TDS_CalcGraphingInv .tool-calculator  {
+	height: 530px !important;
+	width: 700px !important;
+}
+.TDS_PS_L1 #tools .TDS_CalcGraphing .tool-calculator,
+.TDS_PS_L1 #tools .TDS_CalcGraphingInv .tool-calculator {
+	width: 800px !important;
+	height: 550px !important;
+}
+.TDS_PS_L2 #tools .TDS_CalcGraphing .tool-calculator, 
+.TDS_PS_L3 #tools .TDS_CalcGraphing .tool-calculator, 
+.TDS_PS_L4 #tools .TDS_CalcGraphing .tool-calculator,
+
+.TDS_PS_L2 #tools .TDS_CalcGraphingInv .tool-calculator, 
+.TDS_PS_L3 #tools .TDS_CalcGraphingInv .tool-calculator, 
+.TDS_PS_L4 #tools .TDS_CalcGraphingInv .tool-calculator  {
+	width: 824px !important;
+	height: 560px !important;
+}
+
+/* @end */
+
+/* @group help guide */
+
+.tool-help {
+	height: 530px !important;
+	width: 720px !important;
+}
+.TDS_PS_L1 .tool-help {
+	width: 820px !important;
+}
+.TDS_PS_L2 .tool-help, .TDS_PS_L3 .tool-help, .TDS_PS_L4 .tool-help {
+	width: 900px !important;
+}
+.platform_ios .tool-helpguide .bd {
+	overflow: auto !important;
+	-webkit-overflow-scrolling:touch;
+}
+.showingTools.TDS_ClosedCap1 .tool-helpguide-container {
+	z-index: 16 !important;
+}
+/* @end */
+/* @group sound cues */
+
+#soundCues {
+	display: block;
+	float: right;
+	height: 52px;
+	position: relative;
+	overflow: hidden;
+	z-index: 1;
+	max-width: 55px;
+}
+#soundCues .audioControls.audio-layout-single a {
+	display:block;
+	height: 52px;
+	padding: 0px;
+	width: 38px;
+	min-width: inherit;
+	text-decoration: none;
+	background: url(../../Images/universal/soundCue.png) no-repeat center 10px;
+	background-color: rgba(243,243,243,0.3);
+	border-left: solid 1px #e6e6e6;
+	border-right: solid 1px #e6e6e6;
+	margin: 0px 5px 0 10px;
+}
+#soundCues .audioControls.audio-layout-single a:active, 
+#soundCues .audioControls.audio-layout-single a:focus {
+	background-position: center -50px !important;
+	outline: none;
+}
+#soundCues .audioControls.audio-layout-single a:hover {
+	background-position: center -50px !important;
+}
+#soundCues .audioControls.audio-layout-single.load_incomplete a, 
+#soundCues .audioControls.audio-layout-single.disabled a, 
+#soundCues .audioControls.audio-layout-single.load_incomplete a:active, 
+#soundCues .audioControls.audio-layout-single.disabled a:active {
+	background-position: center -109px !important;
+	cursor: default;
+}
+#soundCues .audioControls.audio-layout-single.playing_start, 
+#soundCues .audioControls.audio-layout-single.playing_start a:active {
+	background: url(../../Images/universal/animatedSpeaker.gif) no-repeat center 8px !important;
+}
+#soundCues .audioControls.audio-layout-single.load_fail a, 
+#soundCues .audioControls.audio-layout-single.decode_fail a, 
+#soundCues .audioControls.audio-layout-single.playing_fail a, 
+#soundCues .audioControls.audio-layout-single.load_fail a:active, 
+#soundCues .audioControls.audio-layout-single.decode_fail a:active, 
+#soundCues .audioControls.audio-layout-single.playing_fail a:active {
+	background-position: center -169px !important;
+	cursor: default;
+}
+#soundCues .audioControls.audio-layout-single.load_start a, 
+#soundCues .audioControls.audio-layout-single.load_complete a, 
+#soundCues .audioControls.audio-layout-single.decode_start a, 
+#soundCues .audioControls.audio-layout-single.load_start a:active, 
+#soundCues .audioControls.audio-layout-single.load_complete a:active, 
+#soundCues .audioControls.audio-layout-single.decode_start a:active {
+	cursor: default;
+	background: url(../../Images/controls/loader15.gif) no-repeat center 15px !important;
+}
+/* @end */
+
+/* @group TTS */
+
+.startSpeak, .stopSpeak {
+	display: block;
+	float: left;
+	color: #000;
+	text-decoration: none;
+	width: 18px;
+	height: 18px;
+	text-indent: -9999px;
+	background: url(../../Images/controls/audio2013.png) no-repeat;
+	margin-left: 2px;
+}
+.startSpeak {
+	background-position: -422px -416px;
+	display: block;
+}
+.startSpeak:hover {
+	background-position: -441px -416px;
+}
+.stopSpeak {
+	background-position: -459px -416px;
+	display: block;
+}
+.stopSpeak:hover {
+	background-position: -477px -416px;
+}
+.startSpeak.disabled, .startSpeak.disabled:hover {
+	background-position: -422px -416px;
+	cursor: default;
+	-khtml-opacity: 0.3;
+	-moz-opacity: 0.3;
+	opacity: 0.3;
+}
+.stopSpeak.disabled, .disableSpeak.disabled:hover {
+	background-position: -459px -416px;
+	cursor: default;
+	-khtml-opacity: 0.3;
+	-moz-opacity: 0.3;
+	opacity: 0.3;
+}
+#ttsHelp {
+	height: 18px;
+	line-height: 18px;
+	background-color: #fdf5e0;
+	padding: 2px;
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
+	border-bottom-color: #f6c501;
+}
+.ttsText {
+	margin-left: 5px;
+}
+.tts-highlight {
+	background-color: rgba(236,143,179,0.76) !important;
+}
+.TDS_CCMagenta .tts-highlight, .TDS_CCMagenta2 .tts-highlight {
+	background-color: rgba(236,127,25,0.76) !important;
+}
+.tts-highlight img {
+	border: 3px solid #ec8fb3;
+}
+.TDS_CCMagenta .tts-highlight img, .TDS_CCMagenta2 .tts-highlight img {
+	border-color: #ec7f19;
+}
+/* keeps highlighting visible when dealing with interaction items*/
+.tts-highlight.interaction.selected, 
+.interaction.selected .tts-highlight.highlight {
+	background-color: rgba(236,143,179,0.76) !important;
+}
+.TDS_CCMagenta .tts-highlight.interaction.selected, 
+.TDS_CCMagenta .interaction.selected .tts-highlight.highlight,  
+.TDS_CCMagenta2 .tts-highlight.interaction.selected, 
+.TDS_CCMagenta2 .interaction.selected .tts-highlight.highlight {
+	background-color: rgba(236,127,25,0.76) !important;
+}
+
+
+/* @end */
+/* @group Review page */
+.Content_No #studentTools {
+	display: none;
+}
+.TDS_PS_L1 .reviewContainer {
+	font-size: 1.5em;
+}
+.TDS_PS_L2 .reviewContainer {
+	font-size: 2em;
+}
+.TDS_PS_L3 .reviewContainer {
+	font-size: 2.5em;
+}
+.TDS_PS_L4 .reviewContainer {
+	font-size: 3em;
+}
+#contents #reviews div.review {
+	display: none;
+	visibility: hidden;
+	height: 0px;
+	width: 0px;	
+}
+#contents #reviews div.review.showing {
+	display: block;
+	visibility: visible;
+	height: 100%;
+	width: 100%;
+	overflow: auto;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	text-align: center;
+}
+.reviewContainer {
+	width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: left;
+	padding: 40px;
+}
+.reviewInstructions {
+	float: right;
+	width: 570px;
+}
+.TDS_PS_L2 .reviewInstructions {
+	width: 545px;
+}
+.TDS_PS_L3 .reviewInstructions {
+	width: 505px;
+}
+.TDS_PS_L4 .reviewInstructions {
+	width: 475px;
+}
+.reviewContainer p {
+	font-size: 1.4em;
+	line-height: 1.2em;
+}
+.review h2, .review h3 {
+	border-bottom: solid 1px #ccc;
+	font-size: 1.6em;
+	line-height: 1.7em;
+	margin-bottom: 1em;
+	font-weight: bold;
+}
+.review h3 {
+	font-size: 1.5em;
+}
+.TDS_IF_S14 .reviewContainer p {
+	font-size: 1.5em;
+}
+.review .pages {
+	border-right: solid 1px #ccc;
+	float: left;
+	padding-right: 40px;
+	width: 150px;
+}
+.review .pages a, .review .pages li {
+	display: block;
+}
+.review .pages ul {
+	display: block;
+	line-height: 1.9em;
+}
+.TDS_PS_L2 .review .pages {
+	width: 180px;
+}
+.TDS_PS_L3 .review .pages {
+	width: 215px;
+}
+.TDS_PS_L4 .review .pages {
+	width: 245px;
+}
+.review .pages a {
+	color: #000;
+	text-decoration: none;
+	border: solid 1px #000;
+	margin-bottom: 1em;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	padding: .3em 35px .3em .3em;
+}
+.TDS_CCYellowB .review .pages a {
+	color: #FC0;
+	border-color: #FC0;
+}
+.TDS_CCInvert .review .pages a, .TDS_CCWhiteN .review .pages a {
+	color: #FFF;
+	border-color: #FFF;
+}
+.TDS_CCYellowB .review .pages a:hover {
+	color: #FFF;
+	border-color: #FFF;
+}
+.TDS_CCInvert .review .pages a:hover, .TDS_CCWhiteN .review .pages a:hover {
+	color: #FC0;
+	border-color: #FC0;
+}
+.review .pages a:hover, .review .pages a:focus {
+	color: #336699;
+	text-decoration: underline;
+	background: url(../../Images/lightGrey.png) repeat;
+}
+.review .pages a:visited {
+	color: #666;
+}
+.review .pages a:active {
+	font-style: italic;
+	border-color: #336699;
+}
+.pages a.marked {
+	background: url(../../Images/controls/review.gif) no-repeat 100% 3px;
+	border-color: #3b90fc;
+	border-width: 3px;
+}
+.TDS_PS_L1 .pages a.marked {
+	background-position: 100% 9px;
+}
+.TDS_PS_L2 .pages a.marked {
+	background-position: 100% 17px;
+}
+.TDS_PS_L3 .pages a.marked {
+	background-position: 100% 26px;
+}
+.TDS_PS_L4 .pages a.marked {
+	background-position: 100% 35px;
+}
+.pages a.marked:hover {
+	background: url(../../Images/controls/review.gif) no-repeat 100% -67px;
+	border-color: #148a0c;
+}
+.TDS_PS_L1 .pages a.marked:hover {
+	background-position: 100% -61px;
+}
+.TDS_PS_L2 .pages a.marked:hover {
+	background-position: 100% -53px;
+}
+.TDS_PS_L3 .pages a.marked:hover {
+	background-position: 100% -44px;
+}
+.TDS_PS_L4 .pages a.marked:hover {
+	background-position: 100% -35px;
+}
+/* @end */
+
+/* @group review old */
+
+#markedWarning, 
+#unansweredWarning {
+	background: rgba(0, 0, 0, 0) url("../../Images/Universal/marked.png") no-repeat scroll 0 center;
+    border: 1px solid #ccc;
+    font-size: 1.3em;
+    margin-bottom: 1em;
+    padding: 0.5em 0.5em 0.5em 35px;
+    width: 147px;
+}
+#markedWarning {
+	margin-top: 1em;
+}
+#unansweredWarning {
+	background-image: url(../../Images/Universal/unanswered.png);
+}
+
+.review .pages a.marked {
+	background: url(../../Images/Universal/marked.png) no-repeat right center;
+	-moz-box-shadow: 0 0 5px 2px rgba(0,174,239,.1);
+   	-webkit-box-shadow: 0 0 5px 2px rgba(0,174,239,.1);
+	box-shadow: 0 0 5px 2px rgba(0,174,239,.4);
+}
+.review .pages a.marked:hover, 
+.review .pages a.marked:focus, 
+.review .pages a.marked:active, 
+.review .pages a.unanswered:hover, 
+.review .pages a.unanswered:focus, 
+.review .pages a.unanswered:active {
+	background-color: #00aeef;
+	color: #fff;
+	font-style: normal;
+	text-decoration: none;
+	border-color: #fff;
+}
+.review .pages a.unanswered {
+	background: url(../../Images/Universal/unanswered.png) no-repeat right center;
+}
+.review .pages a.marked.unanswered {
+	background-image: url(../../Images/Universal/marked_unanswered.png);
+}
+
+/* @end */
+
+
+/* @group Review New List View */
+.TDS_RSL_ListView #markedWarning, 
+.TDS_RSL_ListView #unansweredWarning {
+	background: url(../../Images/Universal/marked.png) no-repeat 1em center;
+	border: solid 1px #666;
+	font-size: 1.3em;
+	padding-left: 4em;
+	padding-right: 1em;
+	padding-bottom: 1em;
+	padding-top: 1em;
+	margin-bottom: 1em;
+	width: auto;
+}
+.TDS_RSL_ListView #markedWarning {
+	margin-top: 1em;
+}
+.TDS_RSL_ListView #unansweredWarning {
+	background-image: url(../../Images/Universal/unanswered.png);
+}
+.reviewListView {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	bottom: 0px;
+	width: 100%;
+	overflow: auto;
+}
+.TDS_RSL_ListView .reviewContainer {
+	width: 900px;
+}
+.TDS_RSL_ListView .reviewInstructions {
+	float: none;
+	width: inherit;
+}
+.TDS_RSL_ListView .review .pages {
+	border-right: none;
+	float: none;
+	padding: 0px;
+	width: inherit;
+}
+.TDS_RSL_ListView .review .pages ul {
+	-webkit-column-count: 8; 
+    -moz-column-count: 8; 
+    column-count: 8;
+    -webkit-column-gap: 5px; 
+    -moz-column-gap: 5px;
+    column-gap: 5px;
+}
+.TDS_RSL_ListView .review h3 {
+    border: none;
+    margin-bottom: 0px;
+	margin-top: 10px;
+}
+
+.TDS_RSL_ListView .review .pages a {
+	font-size: 20px;
+	line-height: 30px;
+	height: 30px;
+	padding: 0px 0px 0px 5px;
+	border: none;
+	-moz-box-shadow: 0 0 3px 1px rgba(0,0,0,.2);
+   	-webkit-box-shadow: 0 0 3px 1px rgba(0,0,0,.2);
+	box-shadow: 0 0 3px 1px rgba(0,0,0,.2);
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+	margin: 0px;
+	-webkit-column-span: 1; /* Chrome, Safari, Opera */
+    column-span: 1;
+}
+.TDS_RSL_ListView .review .pages a:hover, 
+.TDS_RSL_ListView .review .pages a:focus, 
+.TDS_RSL_ListView .review .pages a:active {
+	text-decoration: none;
+	background-color: #00aeef;
+	color: #fff;
+}
+.TDS_RSL_ListView .review .pages li {
+	display: block;
+	padding: 5px;
+	border: solid 1px transparent;
+	-webkit-column-break-inside:avoid;
+	-moz-column-break-inside:avoid;
+	-o-column-break-inside:avoid;
+	-ms-column-break-inside:avoid;
+	column-break-inside:avoid; 
+	break-inside: avoid-column;
+}
+.platform_android.TDS_RSL_ListView .review .pages li, 
+.browser_ie.TDS_RSL_ListView .review .pages li {
+	display: inline-block;
+	width: 100%;
+}
+.platform_android.TDS_RSL_ListView .review .pages li a, 
+.browser_ie.TDS_RSL_ListView .review .pages li a {
+	margin-right: 10px;
+}
+.TDS_PS_L2.TDS_RSL_ListView .review .pages a {
+	font-size: 24px;
+	line-height: 36px;
+	height: 36px;
+}
+.TDS_PS_L2.TDS_RSL_ListView .review .pages ul {
+	-webkit-column-count: 7; 
+    -moz-column-count: 7; 
+    column-count: 7;
+}
+.TDS_PS_L3.TDS_RSL_ListView .review .pages a {
+	font-size: 28px;
+	line-height: 40px;
+	height: 40px;
+}
+.TDS_PS_L3.TDS_RSL_ListView .review .pages ul {
+	-webkit-column-count: 6; 
+    -moz-column-count: 6; 
+    column-count: 6;
+}
+.TDS_PS_L4.TDS_RSL_ListView .review .pages a {
+	font-size: 32px;
+	line-height: 44px;
+	height: 44px;
+}
+.TDS_PS_L4.TDS_RSL_ListView .review .pages ul {
+	-webkit-column-count: 6; 
+    -moz-column-count: 6; 
+    column-count: 6;
+}
+.TDS_RSL_ListView .review .pages a.marked {
+	background: url(../../Images/Universal/marked.png) no-repeat right center;
+	-moz-box-shadow: 0 0 5px 2px rgba(0,174,239,.1);
+   	-webkit-box-shadow: 0 0 5px 2px rgba(0,174,239,.1);
+	box-shadow: 0 0 5px 2px rgba(0,174,239,.4);
+}
+.TDS_RSL_ListView .review .pages a.marked:hover, 
+.TDS_RSL_ListView .review .pages a.marked:focus, 
+.TDS_RSL_ListView .review .pages a.marked:active, 
+.TDS_RSL_ListView .review .pages a.unanswered:hover, 
+.TDS_RSL_ListView .review .pages a.unanswered:focus, 
+.TDS_RSL_ListView .review .pages a.unanswered:active {
+	background-color: #00aeef;
+}
+.TDS_RSL_ListView .review .pages a.unanswered {
+	background: url(../../Images/Universal/unanswered.png) no-repeat right center;
+}
+.TDS_RSL_ListView .review .pages a.marked.unanswered {
+	background-image: url(../../Images/Universal/marked_unanswered.png);
+}
+.TDS_RSL_ListView.TDS_PS_L2 .review .pages, 
+.TDS_RSL_ListView.TDS_PS_L3 .review .pages, 
+.TDS_RSL_ListView.TDS_PS_L4 .review .pages {
+	width: inherit;
+}
+.TDS_CCYellowB.TDS_RSL_ListView .review .pages a.marked, 
+.TDS_CCInvert.TDS_RSL_ListView .review .pages a.marked, 
+.TDS_CCWhiteN.TDS_RSL_ListView .review .pages a.marked {
+	background-image: url(../../Images/Universal/marked_acc.png);
+}
+.TDS_CCYellowB.TDS_RSL_ListView .review .pages a.unanswered, 
+.TDS_CCInvert.TDS_RSL_ListView .review .pages a.unanswered, 
+.TDS_CCWhiteN.TDS_RSL_ListView .review .pages a.unanswered {
+	background-image: url(../../Images/Universal/unanswered_acc.png);
+}
+.TDS_CCYellowB.TDS_RSL_ListView .review .pages a.marked.unanswered, 
+.TDS_CCInvert.TDS_RSL_ListView .review .pages a.marked.unanswered, 
+.TDS_CCWhiteN.TDS_RSL_ListView .review .pages a.marked.unanswered {
+	background-image: url(../../Images/Universal/marked_unanswered_acc.png);
+}
+.TDS_CCYellowB.TDS_RSL_ListView .review .pages a.marked:hover, 
+.TDS_CCYellowB.TDS_RSL_ListView .review .pages a.marked:focus, 
+.TDS_CCYellowB.TDS_RSL_ListView .review .pages a.marked:active, 
+.TDS_CCWhiteN.TDS_RSL_ListView .review .pages a.marked:hover, 
+.TDS_CCWhiteN.TDS_RSL_ListView .review .pages a.marked:focus, 
+.TDS_CCWhiteN.TDS_RSL_ListView .review .pages a.marked:active, 
+.TDS_CCInvert.TDS_RSL_ListView .review .pages a.marked:hover, 
+.TDS_CCInvert.TDS_RSL_ListView .review .pages a.marked:focus, 
+.TDS_CCInvert.TDS_RSL_ListView .review .pages a.marked:active {
+	background-color: #00aeef;
+}
+.TDS_CCInvert.TDS_RSL_ListView .pages a {
+	-moz-box-shadow: 0 0 3px 1px rgba(0,0,0,.2);
+   	-webkit-box-shadow: 0 0 3px 1px rgba(0,0,0,.2);
+	box-shadow: 0 0 3px 1px rgba(255,255,255,.2);
+}
+.TDS_CCBlue.TDS_RSL_ListView .review .pages a.marked, 
+.TDS_CCBlue2.TDS_RSL_ListView.review .pages a.marked {
+	-moz-box-shadow: 0 0 3px 1px rgba(237,85,62,.6);
+   	-webkit-box-shadow: 0 0 3px 1px rgba(237,85,62,.6);
+	box-shadow: 0 0 3px 1px rgba(237,85,62,.6);
+}
+/* @end */
+
+
+
+/* @group new comments */
+/* remove inline height from the bd panel */
+.yui-panel.comment .bd.comment-body {
+	height: auto !important;
+}
+/* smaller header sizes */
+.yui-skin-sam .yui-panel .hd {
+	font-size: 1.5em !important;
+}
+
+/* lets comment form elements scale*/
+.yui-skin-sam .yui-panel.comment .bd select, 
+.yui-skin-sam .yui-panel.comment .bd textarea {
+	font-size: .9em;
+	width: 100%;
+}
+.yui-skin-sam .yui-panel.comment .bd textarea {
+	overflow: auto;
+	margin: 0px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	border: solid 1px #ccc;
+}
+.TDS_CCMedGrayLtGray.yui-skin-sam .yui-panel.comment .bd textarea, 
+.TDS_CCGray.yui-skin-sam .yui-panel.comment .bd textarea, 
+.TDS_CCGray2.yui-skin-sam .yui-panel.comment .bd textarea {
+	border: solid 1px #fff;
+}
+
+/*sets default height of comments container for desktops*/
+.TDS_SCNotepad .yui-panel.comment#comment_note, 
+#global.comment, 
+#Global.comment {
+	height: 430px !important;
+}
+.yui-panel.comment {
+	min-height: 165px;
+}
+/*notepad mobile height*/
+.mobile.TDS_SCNotepad .yui-panel.comment#comment_note{
+	height: 240px !important;
+}
+
+/* set dimensions of textarea */
+.TDS_SCNotepad .yui-panel.comment textarea, 
+#global.comment textarea, 
+#Global_c textarea, 
+#yuiSimpleDialog_c textarea {
+	height: 310px;
+}
+
+.TDS_SCTextArea .yui-panel.comment#comment_textarea {
+	height: 210px !important;
+}
+
+.TDS_SCTextArea .yui-panel.comment#comment_textarea textarea {
+	height: 110px;
+}
+
+.TDS_SCDropDown .yui-panel.comment#comment_dropdown {
+	height: 120px !important;
+}
+
+.TDS_PS_L1 #comments textarea, 
+.TDS_PS_L1 .notes_dialog_container textarea, 
+.TDS_PS_L1 #comments select {
+	font-size: 1.25em;
+}
+.TDS_PS_L2 #comments textarea, 
+.TDS_PS_L2 .notes_dialog_container textarea, 
+.TDS_PS_L2 #comments select {
+	font-size: 1.5em;
+}
+.TDS_PS_L3 #comments textarea, 
+.TDS_PS_L3 .notes_dialog_container textarea, 
+.TDS_PS_L3 #comments select {
+	font-size: 2em;
+}
+.TDS_PS_L4 #comments textarea, 
+.TDS_PS_L4 .notes_dialog_container textarea, 
+.TDS_PS_L4 #comments select {
+	font-size: 2.5em;
+}
+
+/* @end */
+
+/* @group Data Entry */
+.app_ResponseEntry .startSpeak, .app_ResponseEntry .stopSpeak, .app_ResponseEntry .speakHelp {
+	visibility: hidden;
+	overflow: hidden;
+	height: 0px;
+	width: 0px;
+}
+.app_ResponseEntry .NotForScoreEntry, .app_ResponseEntry .ForScoreEntry {
+	display: none;
+}
+.app_ResponseEntry .NotForScoreEntry {
+	display: inline;
+}
+.app_ResponseEntry .topBar {
+	background-image: url(../../Images/logo_delaware_alt_small.gif);
+	padding-right:375px;
+}
+.app_ResponseEntry .ForScoreEntry {
+	display: inline;
+}
+/* @end */
+
+/* @group Full Screen Mode */
+#navigation #btnFullScreen {
+	display: none;
+}
+.TDS_FS_On #navigation #btnFullScreen, 
+.TDS_FS_Pass #navigation #btnFullScreen {
+	display: block;
+}
+#btnFullScreen .icon {
+	background-position: center -3029px;
+}
+#btnFullScreen:active .icon, 
+#btnFullScreen:focus .icon, 
+#btnFullScreen:hover .icon {
+	background-position: center -3079px;
+}
+/*resize top navigation so it's the same size as the button*/
+.fs-enabled #topBar {
+	position: fixed;
+	background: none;
+	width: 60px;
+	height: 60px;
+	border: none;
+	margin: 0px;
+	padding: 0px;
+}
+.fs-enabled #navigation {
+	border: none;
+	width: 60px;
+	height: 60px;
+	padding: 0px;
+}
+/*hide navigation elements not needed in the top bar*/
+.fs-enabled #infoBar, .fs-enabled #studentTools {
+	visibility: hidden;
+	height: 0px;
+	width: 0px;
+	overflow: hidden;
+	position: absolute;
+	top: -200px;
+	left: -200px;
+}
+.fs-enabled #studentControls {
+	height: 60px;
+	width: 60px;
+	float: none;
+}
+.fs-enabled #studentControls li {
+	margin: 0px;
+}
+/* shift content up to take advantange of extra space*/
+.fs-enabled #contents {
+    top: 0px;
+}
+/*hide all buttons except for toggle*/
+.fs-enabled #studentControls a {
+	display: none !important;
+}
+.fs-enabled #studentControls #btnFullScreen {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	text-indent: -9999px;
+	overflow: hidden;
+	width: 60px;
+	height: 60px;
+	max-width: 60px;
+	min-width: 60px;
+	padding: 0px;
+	display: block !important;
+}
+.fs-enabled ul#studentControls a#btnFullScreen .icon {
+	border: none !important;
+	background-position: center -3122px;
+	width: 60px;
+	height: 60px;
+	max-width: 60px;
+	min-width: 60px;
+	margin: 0px;
+	-moz-border-radius: inherit;
+	-webkit-border-radius: inherit;
+    border-radius: inherit;
+    position: absolute;
+    top: 0px;
+	left: 0px;
+}
+/* @end */
+
+/* @group pagination widget */
+
+.multi-page {
+	list-style: none;
+	position: fixed;
+	right: 0px;
+	top: 76px;
+	z-index: 5;
+	padding-right: 25px;
+	float: right;
+}
+.fs-enabled .multi-page {
+	top: 0px;
+}
+.layout_11 .multi-page, 
+.layout_17 .multi-page {
+	max-width: 35%;
+}
+.layout_21 .multi-page, 
+.layout_24 .multi-page, 
+.layout_29 .multi-page {
+	max-width: 55%;
+}
+.layout25 .multi-page {
+	max-width: 65%;
+}
+.layout26 .multi-page {
+	max-width: 45%;
+}
+.layout27 .multi-page, 
+.layout28 .multi-page {
+	max-width: 25%;
+}
+.platform_ios .layoutSingleMulti .multi-page{
+	position: -webkit-sticky;
+}
+.platform_android .multi-page {
+	z-index: 6;
+}
+.platform_android .passage-expanded .multi-page {
+	z-index: 5;
+}
+.pageWrapper.hiding .multi-page, 
+.TDS_PIG1.TDS_PIG_HIDE .multi-page {
+	display: none;
+}
+.multi-page li {
+	margin-bottom: 6px;
+	margin-left: 5px;
+	border: solid 1px #fff;
+	-moz-box-shadow: 0 0 3px 2px rgba(209,209,209,.3);
+   	-webkit-box-shadow: 0 0 3px 2px rgba(209,209,209,.3);
+	box-shadow: 0 0 3px 2px rgba(209,209,209,.3);
+	position: relative;
+	float: left;
+	border-top-style: none;
+}
+.multi-page a {
+	color: #000;
+    display: block;
+    font-family: "Lucida Grande","Lucida Sans",Arial,Helvetica,sans-serif;
+    font-size: 10px;
+    line-height: 25px;
+    min-width: 12px;
+    padding: 8px 5px 0px;
+    text-align: center;
+    text-decoration: none;
+	-moz-transition: background-color .2s ease-in;
+    -webkit-transition: background-color .2s ease-in;
+    transition: background-color .2s ease-in;
+}
+.TDS_CC0 .multi-page a {
+	background-color: rgba(252,252,252,0.9);
+}
+.TDS_CCYellow .multi-page a {
+	background-color: rgba(255,255,206,0.9);
+}
+.TDS_CCYellow2 .multi-page a {
+	background-color: rgba(252,252,226,0.9);
+}
+.TDS_CCCream .multi-page a {
+	background-color: rgba(237,224,206,0.9);
+}
+.TDS_CCGreen .multi-page a {
+	background-color: rgba(207,247,153,0.9);
+}
+.TDS_CCGreen2 .multi-page a {
+	background-color: rgba(224,246,193,0.9);
+}
+.TDS_CCBlue .multi-page a {
+	background-color: rgba(153,255,255,0.9);
+}
+.TDS_CCBlue2 .multi-page a {
+	background-color: rgba(207,255,255,0.9);
+}
+.TDS_CCMagenta .multi-page a {
+	background-color: rgba(255,208,255,0.9);
+}
+.TDS_CCMagenta2 .multi-page a {
+	background-color: rgba(253,227,253,0.9);
+}
+.TDS_CCGray .multi-page a {
+	background-color: rgba(206,207,206,0.9);
+}
+.TDS_CCGray2 .multi-page a, 
+.TDS_CCMedGrayLtGray .multi-page a {
+	background-color: rgba(229,229,229,0.9);
+}
+.TDS_CCInvert .multi-page a {
+	background-color: rgba(0,0,0,0.9);
+}
+.TDS_CCWhiteN .multi-page a {
+	background-color: rgba(0,51,102,0.9);
+}
+.TDS_CCYellowB .multi-page a {
+	background-color: rgba(0,51,153,0.9);
+}
+.multi-page a:active, 
+.multi-page a:focus, 
+.multi-page a:hover {
+	color: #fff;
+	background-color: #00aeef;
+	outline: none;
+}
+/*.multi-page li:after {
+	content: "";  
+	display:block !important;
+	height: 12px;
+	width: 12px;
+	background: url(../../Images/universal/universal_content.png) no-repeat -9999px -200px;
+	position: absolute;
+	z-index: 1;
+	left: 50%;
+	top: 2px;
+	margin-left: -6px;
+}
+.multi-page li.page-answered:after {
+	background-position: center -200px;
+}*/
+li.page-active {
+	border-color: #0085ad;
+	-webkit-box-shadow: 0px 0px 3px #b4b4b4;
+	-moz-box-shadow: 0px 0px 3px #b4b4b4;
+	box-shadow: 0px 0px 3px #b4b4b4;
+}
+li.page-active a {
+	background-color: rgba(255,255,255,0.9);
+}
+
+.questionAnswerGroup.page-item-hidden {
+	overflow:hidden;
+	height:0px;
+	width: 0px;
+	border: none !important;
+	margin: 0px !important;
+	left: -9999px;
+	z-index: -1 !important;
+	padding: 0px !important;
+}
+/* make room for widget 
+.thePassage .padding, 
+.layoutSingleMulti .layoutColumnLeft .questionAnswerGroup {
+	padding-left: 30px !important;
+}*/
+
+/* @end */
+
+.TDS_CCYellow #topBar {
+	background-color: #ffffce;
+}
+.TDS_CCYellow2 #topBar {
+	background-color: #fcfce2;
+}
+.TDS_CCCream #topBar {
+	background-color: #ede0ce;
+}
+.TDS_CCGreen #topBar {
+	background-color: #cff799;
+}
+.TDS_CCGreen2 #topBar {
+	background-color: #e0f6c1;
+}
+.TDS_CCBlue #topBar {
+	background-color: #99ffff;
+}
+.TDS_CCBlue2 #topBar {
+	background-color: #cfffff;
+}
+.TDS_CCMagenta #topBar {
+	background-color: #ffd0ff;
+}
+.TDS_CCMagenta2 #topBar {
+	background-color: #fde3fd;
+}
+.TDS_CCGray #topBar {
+	background-color: #cecfce;
+}
+.TDS_CCGray2 #topBar, 
+.TDS_CCMedGrayLtGray #topBar {
+	background-color: #e5e5e5;
+}
+.TDS_CCInvert #topBar {
+	background-color: #000;
+}
+.TDS_CCWhiteN #topBar {
+	background-color: #003366;
+}
+.TDS_CCYellowB #topBar {
+	background-color: #003399;
+}
+
+.TDS_CCInvert #jumpGo:active, 
+.TDS_CCInvert #jumpGo:focus, 
+.TDS_CCInvert #jumpGo:hover, 
+.TDS_CCWhiteN #jumpGo:active, 
+.TDS_CCWhiteN #jumpGo:focus, 
+.TDS_CCWhiteN #jumpGo:hover
+.TDS_CCYellowB #jumpGo:active, 
+.TDS_CCYellowB #jumpGo:focus, 
+.TDS_CCYellowB #jumpGo:hover 
+.TDS_CCYellow #jumpGo:active, 
+.TDS_CCYellow #jumpGo:focus, 
+.TDS_CCYellow #jumpGo:hover, 
+.TDS_CCYellow2 #jumpGo:active, 
+.TDS_CCYellow2 #jumpGo:focus, 
+.TDS_CCYellow2 #jumpGo:hover,
+.TDS_CCCream #jumpGo:active, 
+.TDS_CCCream #jumpGo:focus, 
+.TDS_CCCream #jumpGo:hover, 
+.TDS_CCGreen #jumpGo:active, 
+.TDS_CCGreen #jumpGo:focus, 
+.TDS_CCGreen #jumpGo:hover, 
+.TDS_CCGreen2 #jumpGo:active, 
+.TDS_CCGreen2 #jumpGo:focus, 
+.TDS_CCGreen2 #jumpGo:hover, 
+.TDS_CCBlue #jumpGo:active, 
+.TDS_CCBlue #jumpGo:focus, 
+.TDS_CCBlue #jumpGo:hover, 
+.TDS_CCBlue2 #jumpGo:active, 
+.TDS_CCBlue2 #jumpGo:focus, 
+.TDS_CCBlue2 #jumpGo:hover, 
+.TDS_CCMagenta #jumpGo:active, 
+.TDS_CCMagenta #jumpGo:focus, 
+.TDS_CCMagenta #jumpGo:hover, 
+.TDS_CCMagenta2 #jumpGo:active, 
+.TDS_CCMagenta2 #jumpGo:focus, 
+.TDS_CCMagenta2 #jumpGo:hover, 
+.TDS_CCGray #jumpGo:active, 
+.TDS_CCGray #jumpGo:focus, 
+.TDS_CCGray #jumpGo:hover, 
+.TDS_CCGray2 #jumpGo:active, 
+.TDS_CCGray2 #jumpGo:focus, 
+.TDS_CCGray2 #jumpGo:hover, 
+.TDS_CCMedGrayLtGray #jumpGo:active, 
+.TDS_CCMedGrayLtGray #jumpGo:focus, 
+.TDS_CCMedGrayLtGray #jumpGo:hover {
+	background-color: #00aeef !important;
+}
+
+
+.TDS_CCInvert #navigation .inactive {
+    color: #909090;
+}
+.TDS_CCInvert #topBar a {
+    color: #fff;
+}
+.TDS_CCInvert .alertBar.alertActive {
+    background-color: rgba(103,105,86,0.7);
+}
+.TDS_CCWhiteN #navigation .inactive {
+    color: #909090;
+}
+.TDS_CCWhiteN #topBar a {
+    color: #fff;
+}
+.TDS_CCWhiteN .alertBar.alertActive {
+    background-color: rgba(103,105,86,0.7);
+}
+.TDS_CCYellowB #navigation .inactive {
+    color: #a48200;
+}
+.TDS_CCYellowB #topBar a {
+    color: #ffcc00;
+}
+.TDS_CCYellowB .alertBar.alertActive {
+    background-color: rgba(39,90,105,0.7);
+}
+
+/* keeps the spinner from sliding */
+.touch .mask, .touch .yui-panel-container {
+	max-height: 1000px !important;
+	max-width: 3000px !important;
+}
+/* shrinks comment dialog to fit on screen while keyboard is visible */
+.mobile.TDS_SCNotepad .yui-panel.comment#comment_note, 
+.mobile.TDS_SCTextArea .yui-panel.comment,  
+.mobile.TDS_SCDropDown .yui-panel.comment#comment_dropdown,
+.mobile #global.comment{
+	height: 240px !important;
+	margin-top: 0px !important;
+	top: 20px;
+	left: 50%;
+	margin-left: -200px;
+}
+
+.mobile #yuiSimpleDialog_c{
+	top: 20px !important;
+	position: fixed !important;
+}
+.mobile .comment{
+	top: 20px !important;
+	position: fixed !important;
+}
+.mobile .TDS_SCDropDown #1_notes_c{
+	top: 20px !important;
+	position: fixed !important;
+}
+/*.platform_ios #global.comment, 
+.touch.platform_ios.TDS_SCNotepad .yui-panel.comment, 
+.touch.platform_ios.TDS_SCTextArea .yui-panel.comment {
+	left: 0%;
+}*/
+/* keep global notes centered for Android*/
+.platform_android #global.comment {
+	left: 50%;
+}
+/* keep comments notes centered for Android*/
+.platform_android .yui-panel.comment {
+	left: 33%;
+}
+.mobile.TDS_SCNotepad .yui-panel.comment textarea, 
+.mobile.TDS_SCTextArea .yui-panel.comment textarea, 
+.mobile #global.comment textarea{
+	height: 120px;
+}
+.mobile #yuiSimpleDialog_mask, 
+.mobile #comment_mask, 
+.mobile #global_mask{
+	min-width: 100.05% !important;
+	min-height: 150% !important;
+	position: fixed;
+}
+/*lets comments be editiable in iOS */
+.platform_ios.touch.TDS_SCNotepad #comments #comment_c .comment, 
+.platform_ios.touch.TDS_SCTextArea #comments #comment_c .comment, 
+.platform_ios.touch #comments #global_c .comment {
+	top: -320px !important;
+	position: absolute !important;
+}
+.touch.platform_android input, .touch.platform_android select {
+	font-family: "Lucida Grande", Lucida, Verdana, sans-serif !important;
+}
+.showingDialog.mobile #contents {
+	overflow: hidden;
+	position: fixed;
+}
+/* prevents duplicate android text boxes */
+.touch.platform_android #comment-input.comment-textbox, .touch.platform_android .answerCell textarea, .touch.platform_android .answerContainer textarea, 
+.touch.platform_android .stemContainer input {
+	-webkit-user-modify: read-write-plaintext-only;
+}
+
+/*This needs to no longer apply to ALL touch devices - we have touch laptops, like the Acer Chromebook, to worry about */
+.mobile .yui-module.yui-overlay.yuimenu.visible{
+	position: fixed !important;
+}
+/*Above position fixed is breaking menus on streamlined mode for all touch devices.  Disabling*/
+.TDS_SLM1.touch .yui-module.yui-overlay.yuimenu.visible{
+	position: absolute !important;
+}
+
+#landscapePlease {
+	display:none;
+	width:0px;
+	height:0px;
+	overflow: hidden;
+}
+@media screen and (orientation:portrait) {
+	
+	.touch.browser_safari.platform_ios #landscapePlease, 
+	.touch.browser_chrome.platform_android #landscapePlease, 
+	.platform_chrome #landscapePlease {
+		display:block !important;
+		position:absolute;
+		z-index:3000;
+		background-color: rgba(0, 0, 0, .3);
+		top:0;
+		left:0;
+		width:100%;
+		height:100%;
+	}
+	.orientationMessage {
+		padding: 20px 20px 105px;
+		margin-left:auto;
+		margin-right:auto;
+		margin-top:150px;
+		width:50%;
+		-webkit-box-shadow: 0px 0px 5px 0px ;
+		box-shadow: 0px 0px 5px 0px ; 
+		border: solid 1px #ccc;
+		-webkit-border-radius: 5px;
+		border-radius: 5px;
+		background: #fff url(../../Images/modern/rotate_please.png) no-repeat center bottom;
+	}
+	.orientationMessage h3 {
+		border-bottom:solid 1px #ccc;
+		font-weight:bold;
+		font-size:1.4em;
+		margin-bottom:10px;
+	}
+}
+/* When an input has focus on a touch device hide the nav bar - this method does away with the transfrom on the body to help make sure the nav becomes visible again after inputFocus gets removed*/
+body.platform_ios.inputFocus #topBar {
+    height: 0px;
+	overflow: hidden;
+	top:-200px;
+}
+body.platform_ios.inputFocus #contents {
+    top: 0px;
+}
+body.platform_ios.inputFocus {
+	border-bottom: solid 1px transparent;
+}
+
+body.platform_windows.browser_chrome #contents, 
+body.platform_windows.browser_safari #contents, 
+body.platform_chrome.browser_chrome #contents, 
+body.platform_chrome.browser_airsecurebrowser #contents
+ {
+    position: fixed;
+}
+/* helps keep calculator from shifting above the top of the window in android */
+body.platform_android.showingTools #tools .TDS_CalcSci, 
+body.platform_android.showingTools #tools .TDS_CalcBasic, 
+body.platform_android.showingTools #tools .TDS_CalcStd, 
+body.platform_android.showingTools #tools .TDS_CalcMatrices, 
+body.platform_android.showingTools #tools .TDS_CalcGraphing, 
+body.platform_android.showingTools #tools .TDS_CalcRegress {
+	bottom: 20px !important;
+}
+
+/* keeps the calculator hidden when closed for tablets/chromebooks*/
+#tools .yui-panel-container.yui-overlay-hidden {
+	z-index: -1 !important;
+	opacity: 0 !important;
+	pointer-events:none;
+}
+
+/* Nexus 10 troubleshooting */
+/*fb-90461, masking element is 100% opaque instead of transparent */
+#htmlBody.touch.platform_android.yui-skin-sam .mask, 
+#htmlBody.touch.platform_android.yui-skin-sam #yuiSimpleDialog, 
+#htmlBody.touch.platform_android.yui-skin-sam #Global_mask {
+	 background-color: rgba(0,0,0,0.3) !important;
+	 opacity: 1 !important;
+}
+/*fb-74479, masking flashes red when tools get dragged*/
+.platform_android #yui-ddm-shim {
+	background-color: transparent !important;
+}
+
+/*adding class name to page scale tools (Ruler/Protractor) to contain some general sytles for them*/
+.mtPageScaleTools {
+    position: absolute;
+    z-index: 7;
+}
+
+/* adjusting ckeditor styles in 4.3 */
+.cke_dialog_footer .cke_resizer {
+	position: absolute;
+	right: 2px;
+	bottom: 0px;
+}
+.cke_dialog_footer .cke_dialog_footer_buttons {
+	margin-right: 20px;
+}
+.cke_dialog_close_button {
+    right: 4px;
+}
+/* Bug #147458 Safari doesn't always correctly calculate the dimensions of the body, so the Contents div was rendering heigher than it should have been */
+body.browser_safari.platform_osx.showingLoading {
+	-webkit-transform: scale(1);
+}
+/*This is used for ARIA contentFocuser*/
+.element-invisible {
+  position: absolute !important;
+  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+/* Hide Help button in Score & Response Entry modes */
+.app_ScoreEntry.practiceTest a#btnHelp,
+.app_ResponseEntry.practiceTest a#btnHelp,
+.app_scoreEntry a#btnHelp,
+.app_responseEntry a#btnHelp{
+	display: none;
+}
+/* @end */
+
+/* Bug #160134 Safari 8 in OSX was calculating the height of #contents at 0px in some situations */
+/* Possible fix for Bugs #166154 and #165318 where SB on iOS loses the scroll bar */
+.platform_osx.browser_safari.tds-contentRedraw #contents, 
+.platform_ios.browser_airsecurebrowser.tds-contentRedraw #contents, 
+.platform_ios.browser_airmobilesecurebrowser.tds-contentRedraw #contents {
+	border-bottom: solid 1px transparent;
+}
+
+/* @group Fonts */
+
+@font-face {
+	font-family: 'icomoon';
+	src:url('../../Fonts/icomoon.eot?6tk58v');
+	src:url('../../Fonts/icomoon.eot?#iefix6tk58v') format('embedded-opentype'),
+		url('../../Fonts/icomoon.ttf?6tk58v') format('truetype'),
+		url('../../Fonts/icomoon.woff?6tk58v') format('woff'),
+		url('../../Fonts/icomoon.svg?6tk58v#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+#topBar .icon, 
+#smallButtons a, 
+.yuimenu li a:before, 
+.multi-page li.page-answered a:after {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+#navigation a:hover .icon:before, 
+#topBar #smallButtons a:hover:before, 
+#navigation a:active .icon:before, 
+#topBar #smallButtons a:active:before, 
+#navigation a:focus .icon:before, 
+#topBar #smallButtons a:focus:before {
+	color: #fff;
+}
+#smallButtons a:before {
+	position: absolute;
+	height: 10px;
+	width: 10px;
+	top: 50%;
+	left: 50%;
+	margin-top: -6px;
+	margin-left: -6px;
+	text-indent: 0px;
+	color: #7b7b7b;
+	font-size: 12px;
+}
+.TDS_CCInvert #smallButtons a:before, 
+.TDS_CCWhiteN #smallButtons a:before {
+	color: #fff;
+}
+.TDS_CCYellowB #smallButtons a:before {
+	color: #ffcc00;
+}
+#btnHelp:before {
+	content: "\e600";
+}
+#btnSettings:before {
+	content: "\e618";
+}
+a#proctorLogout:before {
+	content: "\e61f";
+	margin-left: -5px;
+}
+
+/* @group navigation */
+
+#topBar .icon:before {
+	font-size: 18px;
+    line-height: 28px;
+    text-align: center;
+    color: #00a651;
+}
+.TDS_CCInvert #topBar .icon:before, 
+.TDS_CCWhiteN #topBar .icon:before {
+	color: #fff;
+}
+.TDS_CCYellowB #topBar .icon:before {
+	color: #ffcc00;
+}
+#topBar li.inactive a .icon:before {
+	color: #00a651;
+}
+#btnPause .icon:before {
+	content: "\e601";
+	color: #f7941d;
+}
+#btnSave .icon:before {
+	content: "\e602";
+}
+#btnNext .icon:before {
+	content: "\e603";
+}
+#btnBack .icon:before {
+	content: "\e604";
+}
+#btnZoomOut .icon:before {
+	content: "\e606";
+}
+#btnZoomIn .icon:before {
+	content: "\e607";
+}
+#btnFullScreen .icon:before {
+	content: "\e615";
+}
+.fs-enabled a#btnFullScreen .icon {
+	text-indent: 0px;
+}
+.fs-enabled a#btnFullScreen .icon:before {
+	content: "\e616";
+	color: #ccc;
+	font-size: 40px;
+	line-height: 60px;
+	opacity: .3;
+}
+.fs-enabled a#btnFullScreen .icon:hover:before, 
+.fs-enabled a#btnFullScreen .icon:active:before, 
+.fs-enabled a#btnFullScreen .icon:focus:before {
+	color: #fff;
+	opacity: 1;
+}
+#htmlBody.fs-enabled #studentControls::after {
+    display: none;
+}
+#btnEnd .icon:before {
+	content: "\e60c";
+	color: #9e0b0f;
+}
+#btnFormula .icon:before {
+	content: "\e621";
+	font-size: 24px;
+  	line-height: 30px;
+}
+.TDS_PS_L1 #topBar #btnFormula .icon:before, 
+.TDS_PS_L2 #topBar #btnFormula .icon:before {
+	font-size: 31px;
+  	line-height: 39px;
+}
+.TDS_PS_L3 #topBar #btnFormula .icon:before, 
+.TDS_PS_L4 #topBar #btnFormula .icon:before {
+	font-size: 44px;
+  	line-height: 55px;
+}
+#btnPeriodic .icon:before {
+	content: "\e61d";
+	font-size: 26px;
+  	line-height: 32px;
+}
+.TDS_PS_L1 #topBar #btnPeriodic .icon:before, 
+.TDS_PS_L2 #topBar #btnPeriodic .icon:before {
+	font-size: 33px;
+  	line-height: 42px;
+}
+.TDS_PS_L3 #topBar #btnPeriodic .icon:before, 
+.TDS_PS_L4 #topBar #btnPeriodic .icon:before {
+	font-size: 49px;
+  	line-height: 57px;
+}
+#btnItemScore .icon:before {
+	content: "\e617";
+}
+#btnCompass .icon:before {
+	content: "\e624";
+	font-size: 26px;
+  	line-height: 30px;
+}
+.TDS_PS_L1 #topBar #btnCompass .icon:before, 
+.TDS_PS_L2 #topBar #btnCompass .icon:before {
+	font-size: 33px;
+  	line-height: 42px;
+}
+.TDS_PS_L3 #topBar #btnCompass .icon:before, 
+.TDS_PS_L4 #topBar #btnCompass .icon:before {
+	font-size: 44px;
+  	line-height: 55px;
+}
+#btnProtractor .icon:before {
+	content: "\e619";
+	font-size: 24px;
+  	line-height: 28px;
+}
+.TDS_PS_L1 #topBar #btnProtractor .icon:before, 
+.TDS_PS_L2 #topBar #btnProtractor .icon:before {
+	font-size: 33px;
+  	line-height: 38px;
+}
+.TDS_PS_L3 #topBar #btnProtractor .icon:before, 
+.TDS_PS_L4 #topBar #btnProtractor .icon:before {
+	font-size: 49px;
+  	line-height: 52px;
+}
+#btnRuler .icon:before {
+	content: "\e61b";
+	font-size: 24px;
+  	line-height: 30px;
+}
+.TDS_PS_L1 #topBar #btnRuler .icon:before, 
+.TDS_PS_L2 #topBar #btnRuler .icon:before {
+	font-size: 33px;
+  	line-height: 42px;
+}
+.TDS_PS_L3 #topBar #btnRuler .icon:before, 
+.TDS_PS_L4 #topBar #btnRuler .icon:before {
+	font-size: 49px;
+  	line-height: 57px;
+}
+#btnGlobalNotes .icon:before {
+	content: "\e620";
+}
+#btnLineReader .icon:before {
+	content: "\e614";
+	font-size: 26px;
+  	line-height: 30px;
+}
+.TDS_PS_L1 #topBar #btnLineReader .icon:before, 
+.TDS_PS_L2 #topBar #btnLineReader .icon:before {
+	font-size: 33px;
+  	line-height: 42px;
+}
+.TDS_PS_L3 #topBar #btnLineReader .icon:before, 
+.TDS_PS_L4 #topBar #btnLineReader .icon:before {
+	font-size: 49px;
+  	line-height: 57px;
+}
+#btnMask .icon:before {
+	content: "\e62b";
+	font-size: 22px;
+}
+.TDS_PS_L1 #topBar #btnMask .icon:before, 
+.TDS_PS_L2 #topBar #btnMask .icon:before {
+	font-size: 29px;
+  	line-height: 40px;
+}
+.TDS_PS_L3 #topBar #btnMask .icon:before, 
+.TDS_PS_L4 #topBar #btnMask .icon:before {
+	font-size: 42px;
+  	line-height: 57px;
+}
+.lr-enabled #btnLineReader .icon:before, 
+.TDS_Masking1.msk-enabled #btnMasking .icon:before, 
+.TDS_Masking1.msk-enabled #btnMask .icon:before {
+	color: #fff;
+}
+#btnRubric .icon:before {
+	content: "\e61a";
+}
+#btnDictionary .icon:before {
+	content: "\e623";
+}
+#btnCalculator .icon:before {
+	content: "\e626";
+}
+#btnContext .icon:before {
+	content: "\e61e";
+}
+#btnPagePrint .icon:before, 
+#btnPrint .icon:before {
+	content: "\e61c";
+}
+
+/* @end */
+
+
+
+
+
+
+/* @group menus */
+.yui-skin-sam .yuimenu li a {
+    background-image: none;
+    position: relative;
+}
+.yuimenu li a:before {
+    position: absolute;
+  	height: 20px;
+  	width: 30px;
+  	top: 2px;
+  	left: 2px;
+  	text-indent: 0px;
+  	color: #525252;
+  	content: " ";
+  	font-size: 16px;
+  	line-height: 20px;
+  	text-align: center;
+}
+.yuimenu .bd ul li a:active:before, 
+.yuimenu .bd ul li a:hover:before, 
+.yuimenu .bd ul li a:focus:before {
+    color: #fff;
+}
+.TDS_CCYellowB .yuimenu li a:before {
+    color: #ffcc00;
+}
+.TDS_CCInvert .yuimenu li a:before, 
+.TDS_CCWhiteN .yuimenu li a:before {
+    color: #fff;
+}
+.TDS_CCInvert .yuimenu .bd ul li a:hover:before, 
+.TDS_CCWhiteN .yuimenu .bd ul li a:hover:before, 
+.TDS_CCInvert .yuimenu .bd ul li a:active:before, 
+.TDS_CCWhiteN .yuimenu .bd ul li a:active:before, 
+.TDS_CCInvert .yuimenu .bd ul li a:focus:before, 
+.TDS_CCWhiteN .yuimenu .bd ul li a:focus:before {
+    color: #000;
+}
+.yuimenu .bd ul li a.yuimenuitemlabel-disabled:before, 
+.yuimenu .bd ul li a.yuimenuitemlabel-disabled:hover:before, 
+.yuimenu .bd ul li a.yuimenuitemlabel-disabled:active:before, 
+.yuimenu .bd ul li a.yuimenuitemlabel-disabled:focus:before {
+	color: #b1b0b2;
+}
+.yuimenu .bd ul li a.yuimenuitemlabel-disabled, 
+.yuimenu .bd ul li a.yuimenuitemlabel-disabled:hover, 
+.yuimenu .bd ul li a.yuimenuitemlabel-disabled:active, 
+.yuimenu .bd ul li a.yuimenuitemlabel-disabled:focus {
+	color: #313131 !important;
+	opacity: .5;
+}
+.yuimenu .speaksection a:before, 
+.yuimenu .speaktext a:before {
+	content: "\e62f";
+}
+.yuimenu .playquestion a:before, 
+.yuimenu .playrecording a:before, 
+.yuimenu .sound_instructions a:before, 
+.yuimenu .resumespeaking a:before {
+	content: "\e629";
+}
+.yuimenu .speakstop a:before, 
+.yuimenu .stopspeaking a:before, 
+.yuimenu .stoprecording a:before, 
+.yuimenu .stopquestion a:before, 
+.yuimenu .endTest a:before {
+	content: "\e60c";
+}
+.yuimenu .highlight a:before, 
+.yuimenu .highlighttext a:before {
+	content: "\e60f";
+	font-size: 14px;
+}
+.yuimenu .removehighlight a:before, 
+.yuimenu .highlightclear a:before, 
+.yuimenu .removehighlighttext a:before, 
+.yuimenu .highlighttextclear a:before, 
+.yuimenu .highlightremove a:before {
+	content: "\e60e";
+}
+.yuimenu .strikethrough a:before {
+	content: "\e611";
+	font-size: 12px;
+}
+.yuimenu .pause a:before, 
+.yuimenu .pausespeaking a:before {
+	content: "\e601";
+}
+.yuimenu .next a:before {
+	content: "\e603";
+}
+.yuimenu .back a:before {
+	content: "\e604";
+}
+.yuimenu .zoomIn a:before {
+	content: "\e607";
+}
+.yuimenu .zoomOut a:before {
+	content: "\e606";
+}
+.yuimenu .calculator a:before {
+	content: "\e626";
+}
+.yuimenu .math a:before {
+	content: "\e621";
+	font-size: 20px;
+}
+.yuimenu .periodic a:before {
+	content: "\e61d";
+	font-size: 26px;
+}
+.yuimenu .printerPractice a:before, 
+.yuimenu .printer a:before, 
+.yuimenu .printItem a:before, 
+.yuimenu .printPassage a:before, 
+.yuimenu .printPage a:before, 
+.yuimenu .printerPage a:before {
+	content: "\e61c";
+}
+.yuimenu .tutorial a:before, 
+.yuimenu .helpItem a:before {
+	content: "\e631";
+}
+.yuimenu .help a:before {
+	content: "\e627";
+}
+.yuimenu .markReview a:before {
+	content: "\e62a";
+	font-size: 20px;
+}
+.yuimenu .comment a:before {
+	content: "\e62e";
+	font-size: 20px;
+}
+.yuimenu .comment.Notepad a:before
+{
+    content: "\e633";
+    font-size: 16px;
+}
+.yuimenu .save a:before {
+	content: "\e602";
+}
+.yuimenu .caretMode a:before {
+	content: "\e60d";
+}
+.yuimenu .startrecording a:before {
+	content: "\e62d";
+}
+.yuimenu .gtrItem a:before {
+	content: "\e62c";
+}
+.yuimenu .changePrompt a:before {
+	content: "\e630";
+}
+.yuimenu .lineReader a:before {
+	content: "\e614";
+	font-size: 20px;
+}
+.yuimenu .globalNotes a:before {
+	content: "\e620";
+}
+.yuimenu .ASL a:before {
+	content: "\e608";
+	font-size: 28px;
+}
+.yuimenu .maskingtool a:before {
+	content: "\e62b";
+	font-size: 20px;
+}
+.yuimenu .rubric a:before {
+	content: "\e61a";
+}
+.yuimenu .fullscreen a:before {
+	content: "\e616";
+}
+.yuimenu .dictionary a:before {
+	content: "\e623";
+}
+.yuimenu .systemdialog a:before {
+	content: "\e618";
+}
+.yuimenu .mt_ruler a:before {
+	content: "\e61b";
+}
+.yuimenu .mt_compass a:before {
+	content: "\e624";
+	font-size: 20px;
+}
+.yuimenu .mt_protractor a:before {
+	content: "\e619";
+}
+.yuimenu .resetItem a:before {
+	content: "\e609";
+}
+.yuimenu .response-recovery a:before {
+	content: "\e632";
+}
+.TDS_PS_L1 .yuimenuitem .yuimenuitemlabel, 
+.TDS_PS_L2 .yuimenuitem .yuimenuitemlabel {
+	font-size: 18px;
+	padding: 10px 10px 10px 50px;
+}
+.TDS_PS_L1 .yuimenuitem .yuimenuitemlabel:before, 
+.TDS_PS_L2 .yuimenuitem .yuimenuitemlabel:before {
+	height: 30px;
+  	width: 40px;
+   	font-size: 20px;
+  	line-height: 30px;
+}
+.TDS_PS_L1 .yuimenu .ASL a.yuimenuitemlabel:before, 
+.TDS_PS_L2 .yuimenu .ASL a.yuimenuitemlabel:before {
+	font-size: 34px;
+}
+.TDS_PS_L1 .yuimenu .strikethrough a.yuimenuitemlabel:before, 
+.TDS_PS_L2 .yuimenu .strikethrough a.yuimenuitemlabel:before {
+	font-size: 16px;
+}
+.TDS_PS_L1 .yuimenu .markReview a.yuimenuitemlabel:before, 
+.TDS_PS_L2 .yuimenu .markReview a.yuimenuitemlabel:before, 
+.TDS_PS_L1 .yuimenu .math a.yuimenuitemlabel:before, 
+.TDS_PS_L2 .yuimenu .math a.yuimenuitemlabel:before, 
+.TDS_PS_L1 .yuimenu .comment a.yuimenuitemlabel:before, 
+.TDS_PS_L2 .yuimenu .comment a.yuimenuitemlabel:before, 
+.TDS_PS_L1 .yuimenu .lineReader a.yuimenuitemlabel:before, 
+.TDS_PS_L2 .yuimenu .lineReader a.yuimenuitemlabel:before {
+	font-size: 24px;
+}
+.TDS_PS_L1 .yuimenu .periodic a.yuimenuitemlabel:before, 
+.TDS_PS_L2 .yuimenu .periodic a.yuimenuitemlabel:before {
+	font-size: 30px;
+}
+
+
+.TDS_PS_L3 .yuimenuitem .yuimenuitemlabel, 
+.TDS_PS_L4 .yuimenuitem .yuimenuitemlabel {
+	font-size: 24px;
+	padding: 13px 13px 13px 55px;
+}
+.TDS_PS_L3 .yuimenuitem .yuimenuitemlabel:before, 
+.TDS_PS_L4 .yuimenuitem .yuimenuitemlabel:before {
+	height: 36px;
+  	width: 50px;
+   	font-size: 24px;
+  	line-height: 36px;
+}
+
+.TDS_PS_L3 .yuimenu .ASL a.yuimenuitemlabel:before, 
+.TDS_PS_L4 .yuimenu .ASL a.yuimenuitemlabel:before {
+	font-size: 40px;
+}
+.TDS_PS_L3 .yuimenu .strikethrough a.yuimenuitemlabel:before, 
+.TDS_PS_L4 .yuimenu .strikethrough a.yuimenuitemlabel:before {
+	font-size: 20px;
+}
+.TDS_PS_L3 .yuimenu .markReview a.yuimenuitemlabel:before, 
+.TDS_PS_L4 .yuimenu .markReview a.yuimenuitemlabel:before, 
+.TDS_PS_L3 .yuimenu .math a.yuimenuitemlabel:before, 
+.TDS_PS_L4 .yuimenu .math a.yuimenuitemlabel:before, 
+.TDS_PS_L3 .yuimenu .comment a.yuimenuitemlabel:before, 
+.TDS_PS_L4 .yuimenu .comment a.yuimenuitemlabel:before, 
+.TDS_PS_L3 .yuimenu .lineReader a.yuimenuitemlabel:before, 
+.TDS_PS_L4 .yuimenu .lineReader a.yuimenuitemlabel:before {
+	font-size: 30px;
+}
+.TDS_PS_L3 .yuimenu .periodic a.yuimenuitemlabel:before, 
+.TDS_PS_L4 .yuimenu .periodic a.yuimenuitemlabel:before {
+	font-size: 34px;
+}
+/* @end */
+
+body.platform_chrome.TDS_PS_L0 #contents {
+	top: 76px;
+}
+/* keeps passage and questions from running into each other */
+.touch.platform_android .theQuestions, 
+.touch.platform_android .thePassage {
+	position: fixed;
+	top: 76px;
+}
+.TDS_SLM1.touch.platform_android #contents {
+	overflow: auto;
+}
+/* @group Level 1-2 */
+
+.TDS_PS_L1 #topBar .icon:before, 
+.TDS_PS_L2 #topBar .icon:before {
+	font-size: 26px;
+    line-height: 39px;
+}
+.TDS_PS_L1 #smallButtons a:before, 
+.TDS_PS_L2 #smallButtons a:before {
+	font-size: 16px;
+    height: 16px;
+    margin-left: -8px;
+    margin-top: -8px;
+    width: 16px;
+}
+.TDS_PS_L1 #infoBar, 
+.TDS_PS_L2 #infoBar {
+	font-size: 20px;
+	line-height: 25px;
+	height: 25px;
+	overflow: auto;
+	padding-right: 128px;
+} 
+.TDS_PS_L1 #jumpQuestions label, 
+.TDS_PS_L2 #jumpQuestions label {
+    line-height: 20px;
+} 
+.TDS_PS_L1 #jumpQuestions .ddlNavigation, 
+.TDS_PS_L2 #jumpQuestions .ddlNavigation {
+    margin-top: 0px;
+} 
+.TDS_PS_L1 #smallButtons a, 
+.TDS_PS_L2 #smallButtons a {
+	height: 20px;
+	width: 20px; 
+	margin-top: 0px;
+}
+.TDS_PS_L1 #topBar, 
+.TDS_PS_L2 #topBar {
+	height: 95px;
+} 
+.TDS_PS_L1 #navigation, 
+.TDS_PS_L2 #navigation {
+    font-size: 16px;
+    height: 68px;
+} 
+.TDS_PS_L1 #studentControls:after, 
+.TDS_PS_L2 #studentControls:after {
+	font-size: 0;
+	content: " ";
+	display: block;
+	height: 0px;
+	width: 100%;
+	border-bottom: solid 1px #c2c2c2;
+	position: absolute;
+	top: 94px;
+	left: 0px;
+}
+.TDS_PS_L1 #navigation ul,  
+.TDS_PS_L1 #navigation li, 
+.TDS_PS_L2 #navigation ul,  
+.TDS_PS_L2 #navigation li {
+    height: 68px;
+} 
+.TDS_PS_L1 #navigation a, 
+.TDS_PS_L2 #navigation a {
+    min-width: 50px;
+    padding: 46px 6px 0;
+} 
+.TDS_PS_L1 #navigation .icon, 
+.TDS_PS_L2 #navigation .icon {
+    height: 40px;
+    margin-left: -21px;
+    top: 3px;
+    width: 40px;
+}
+.TDS_PS_L1 #contents, 
+.TDS_PS_L2 #contents, 
+.TDS_PS_L1.touch.platform_android .theQuestions, 
+.TDS_PS_L1.touch.platform_android .thePassage, 
+.TDS_PS_L2.touch.platform_android .theQuestions, 
+.TDS_PS_L2.touch.platform_android .thePassage {
+	top: 96px;
+}
+.TDS_PS_L1 .passageTools.toolsContainer, 
+.TDS_PS_L2 .passageTools.toolsContainer {
+    top: 115px;
+}
+/*.TDS_PS_L1 .multi-page, 
+.TDS_PS_L2 .multi-page {
+    top: 95px;
+}*/
+
+/* @end */
+
+/* @group Level 3-4 */
+
+.TDS_PS_L3 #topBar .icon:before, 
+.TDS_PS_L4 #topBar .icon:before {
+	font-size: 32px;
+    line-height: 53px;
+}
+.TDS_PS_L3 #smallButtons a:before, 
+.TDS_PS_L4 #smallButtons a:before {
+	font-size: 18px;
+	height: 20px;
+	width: 20px;
+	margin-top: -10px;
+	margin-left: -10px;
+}
+.TDS_PS_L3 #infoBar, 
+.TDS_PS_L4 #infoBar {
+	font-size: 24px;
+	line-height: 30px;
+	height: 30px;
+	overflow: auto;
+	padding-right: 153px;
+} 
+.TDS_PS_L3 #jumpQuestions label, 
+.TDS_PS_L4 #jumpQuestions label {
+    line-height: 23px;
+} 
+.TDS_PS_L3 #jumpQuestions .ddlNavigation, 
+.TDS_PS_L4 #jumpQuestions .ddlNavigation {
+    margin-top: 0px;
+} 
+.TDS_PS_L3 #smallButtons a, 
+.TDS_PS_L4 #smallButtons a {
+	height: 25px;
+	width: 25px; 
+	margin-top: 0px;
+}
+.TDS_PS_L3 #topBar, 
+.TDS_PS_L4 #topBar {
+	height: 119px;
+} 
+.TDS_PS_L3 #navigation, 
+.TDS_PS_L4 #navigation {
+    font-size: 22px;
+    height: 88px;
+} 
+.TDS_PS_L3 #studentControls:after, 
+.TDS_PS_L4 #studentControls:after {
+	font-size: 0;
+	content: " ";
+	display: block;
+	height: 0px;
+	width: 100%;
+	border-bottom: solid 1px #c2c2c2;
+	position: absolute;
+	top: 119px;
+	left: 0px;
+}
+.TDS_PS_L3 #navigation ul,  
+.TDS_PS_L3 #navigation li, 
+.TDS_PS_L4 #navigation ul,  
+.TDS_PS_L4 #navigation li {
+    height: 88px;
+} 
+.TDS_PS_L3 #navigation a, 
+.TDS_PS_L4 #navigation a {
+    min-width: 60px;
+    padding: 60px 6px 0;
+} 
+.TDS_PS_L3 #navigation .icon, 
+.TDS_PS_L4 #navigation .icon {
+    height: 56px;
+    margin-left: -29px;
+    top: 2px;
+    width: 56px;
+}
+.TDS_PS_L3 #contents, 
+.TDS_PS_L4 #contents, 
+.TDS_PS_L3.touch.platform_android .theQuestions, 
+.TDS_PS_L3.touch.platform_android .thePassage, 
+.TDS_PS_L4.touch.platform_android .theQuestions, 
+.TDS_PS_L4.touch.platform_android .thePassage {
+	top: 120px;
+}
+.TDS_PS_L3 .passageTools.toolsContainer, 
+.TDS_PS_L4 .passageTools.toolsContainer {
+    top: 130px;
+}
+/*.TDS_PS_L3 .multi-page, 
+.TDS_PS_L4 .multi-page {
+    top: 120px;
+}*/
+
+/* @end */
+
+/* @group pagination widget */
+.multi-page {
+	position: absolute;
+	top: 0px;
+}
+.multi-page li.page-answered a::after {
+    content: "\e628";
+    background-image: none;
+    display: block !important;
+    height: 12px;
+    left: 50%;
+    margin-left: -6px;
+    position: absolute;
+    top: 2px;
+    width: 12px;
+    z-index: 1;
+    color: #00a651;
+    font-size: 10px;
+    text-align: center;
+}
+.multi-page li.page-answered a:hover::after, 
+.multi-page li.page-answered a:active::after, 
+.multi-page li.page-answered a:focus::after {
+    color: #fff;
+}
+.TDS_PS_L1 .multi-page a, 
+.TDS_PS_L2 .multi-page a {
+	font-size: 16px;
+  	min-width: 12px;
+  	padding: 10px 7px 2px;
+}
+.TDS_PS_L1 .multi-page li.page-answered a::after, 
+.TDS_PS_L2 .multi-page li.page-answered a::after {
+    top: 1px;
+    font-size: 12px;
+}
+.TDS_PS_L3 .multi-page a, 
+.TDS_PS_L4 .multi-page a {
+	font-size: 20px;
+  	line-height: 30px;
+  	min-width: 12px;
+  	padding: 12px 10px 2px;
+}
+.TDS_PS_L3 .multi-page li.page-answered a::after, 
+.TDS_PS_L4 .multi-page li.page-answered a::after {
+    top: 0;
+    font-size: 14px;
+}
+/* @end */
+/* @end */
+
+
+
+/* @group bacon */
+	.bacon {
+        display: block;
+    	float: right;
+	    height: 3px;
+    	line-height: 0;
+    	margin-bottom: -3px;
+    }
+	.bacon span {
+        display: block;
+        width: 5px;
+        height: 3px;
+        float: left;
+    }
+    .baconItem span {
+        width: 3px;
+        height: 3px;
+        margin-left: 2px;
+    }
+    .bacon span.reference {
+        background-color: orange;
+    }
+    .bacon span.A {
+        background-color: red;
+    }
+    .bacon span.B {
+        background-color: blue;
+    }
+
+	.bacon.baconPage {
+	position: fixed;
+	top: 73px;
+	z-index: 99;
+	left: 0px;
+	width: 100%;
+	height: 3px;
+	display: block;
+	background-color: #c2c2c2;
+	overflow: hidden; 
+}
+.baconPage span {
+	display: block;
+	height: 3px;
+	width: 3px;
+	margin-left: 3px;
+	float: left;
+}
+
+.baconStripes .bacon.baconPage {
+	top: 72px;
+	height: 4px;
+	background-color: #fff;
+}
+.baconStripes .bacon span {
+	height: 4px;
+	width: 5px;
+	margin-left: 0px;
+	border-right: solid 2px #fff;
+}
+.baconStripes .bacon span.A {
+	background-color: #38c3de;
+}
+.baconStripes .bacon span.B {
+	background-color: #026282;
+}
+.baconStripes .bacon.baconItem {
+	max-width: 100%;
+	overflow: visible;
+}
+.baconStripes .bacon.baconItem span {
+	margin-bottom: 1px;
+	
+}
+.baconStripes .bacon span.reference {
+        background-color: #fff;
+        border: solid 1px orange;
+        height: 2px;
+        width: 10px;
+        margin-right: 3px !important;
+    }
+
+/* @end */
+	
+/* @group segment hard stop */	
+	
+.endSegment div {
+	display: none;
+	border: 1px solid #676767;
+	padding: 1em 1em;
+	margin: 1em 0;
+}
+
+/* show the pause segment button */
+body.segmentHardStopPauseEnabled .endSegment .pauseSegment {
+	display: block;
+}
+
+/* show the exit segment button */
+body.segmentHardStopExitEnabled .endSegment .submitSegment {
+	display: block;
+}
+
+/* hide the next button */
+body.segmentHardStopPauseEnabled a#btnNext,
+body.segmentHardStopExitEnabled a#btnNext {
+	display: none;
+	visibility: hidden;
+}
+
+.endSegment div span {
+	display: inline-block;
+	margin-left: 2%;
+	font-size: 1.4em;
+	width: 72%;
+	vertical-align: middle;
+}
+
+.endSegment div span strong {
+	color: #f00;
+	font-weight: bold;
+}
+
+.endSegment em {
+	font-style: italic;
+}
+
+.endSegment button {
+	background-color: transparent;
+	border: 1px solid #034577;
+	color: #034577;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 1.4em;
+	margin: 0;
+	min-height: 2em;
+	padding: 0 1em;
+	transition: background-color 0.2s ease-in 0s, color 0.2s ease-in 0s;
+	border-radius: 5px;
+	width: 25%;
+	vertical-align: middle;
+}
+
+.TDS_PS_L3 .endSegment button {
+	width: 30%;
+}
+.TDS_PS_L3 .endSegment div span {
+	width: 67%;
+	margin-left: 2%;
+}
+.TDS_PS_L4 .endSegment button {
+	width: 35%;
+}
+.TDS_PS_L4 .endSegment div span {
+	width: 60%;
+	margin-left: 2%;
+}
+
+.endSegment button:hover, 
+.endSegment button:active {
+	background-color: #034577;
+	color: #fff;
+}
+
+/* @end */
