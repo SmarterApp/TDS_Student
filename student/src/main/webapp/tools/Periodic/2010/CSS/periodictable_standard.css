@@ -1,0 +1,170 @@
+@import url(reset.css);
+
+.container {
+    -moz-user-select: none; 
+	-moz-user-input: enabled !important; 
+	-moz-user-focus: ignore !important;
+	cursor: default;
+	display: block;
+	height: 100%;
+	/*overflow: auto;*/
+	font-size: .6em;
+	/*width: 100%;*/
+	padding: .5em;
+	text-align: center;
+}
+.TDS_PS_L1.TDS_PT_HTML {
+	font-size: .8em;
+}
+.TDS_PS_L1.TDS_PT_HTML .container {
+    width: 675px;
+}
+.TDS_PS_L2.TDS_PT_HTML, .TDS_PS_L3.TDS_PT_HTML, .TDS_PS_L4.TDS_PT_HTML {
+	font-size: 1em;
+}
+.TDS_PS_L2.TDS_PT_HTML .container, .TDS_PS_L3.TDS_PT_HTML .container, .TDS_PS_L4.TDS_PT_HTML .container {
+    width: 780px;
+}
+table {
+	margin-left: auto;
+	margin-right: auto;
+}
+td {
+	border:1px solid #000;
+	padding: 0.2em;
+}
+.rdcell {
+	border-bottom: 3px solid red;
+	border-left:3px solid red;
+}
+.rdcellleft {
+	border-left: 3px solid red;
+}
+td.hideme {
+	border:none!important;
+}
+.grcell {
+	border: 1px solid #666666;
+	color: #666666
+}
+.grycellleft {
+	border-left: 4px solid #666666;
+}
+.grycellleft2 {
+	border-left: 4px solid #666666;
+	border-right: none;
+}
+.grycellright {
+	border-right: 4px solid #666666;
+	border-left: none;
+}
+.grycelllb {
+	border-bottom: 4px solid #666666;
+	border-left: 4px solid #666666;
+	border-top: none;
+	border-right: none;
+}
+.grycellTh {
+	border-bottom: 4px solid #666666;
+	border-left: 4px solid #666666;
+}
+.grycelllt {
+	border-top: 4px solid #666666;
+	border-left: 4px solid #666666;
+}
+.grycelltop {
+	border-top: 4px solid #666666;}
+
+.grycellrt {
+	border-top: 4px solid #666666;
+	border-right: 4px solid #666666;
+}
+.grycellrb {
+	border-right: 4px solid #666666;
+	border-bottom: 4px solid #666666;
+}
+.grycellb {
+	border-bottom: 4px solid #666666;
+}
+.blue {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1.5em;
+	font-style: italic;
+	font-weight: bold;
+	font-variant: normal;
+	text-transform: none;
+	color: #198DDF;
+	text-align: center;
+}
+.red {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1.5em;
+	font-weight: bold;
+	font-variant: normal;
+	text-transform: none;
+	color: #C60B1D;
+	text-align: center;
+}
+.smblk {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1em;
+	font-style: normal;
+	font-weight: bold;
+	color: #000000;
+	text-align: center;
+}
+.smgry {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1em;
+	font-style: normal;
+	font-weight: bold;
+	color: #666666;
+	text-align: center;
+}
+.medblk {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1.2em;
+	font-weight: bolder;
+	color: #000000;
+	text-align: center;
+	text-align: center;
+}
+.lgblk {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1.5em;
+	font-weight: bold;
+	color: #000000;
+	text-align: center;
+}
+.lggry {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1.5em;
+	font-weight: bold;
+	color: #666666;
+	text-align: center;
+}
+.element_cell {
+	width: 5%;
+	height: 8em;
+	/*font-size: .8em; BUG 178953 this makes font too small to be read on low res display. */
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+	padding: 0px;
+}
+.element_cell span {
+	display: block;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.element_number {
+	
+}
+.element_symbol {
+	font-size: 2.5em;
+	font-weight: bold;
+}
+.element_name {
+	
+}
+.element_weight {
+	
+}

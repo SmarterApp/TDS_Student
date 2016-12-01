@@ -290,6 +290,13 @@ a.contexthelp {
 .TDS_IF_S14.TDS_PS_L4 .keyboard {
 	font-size: 1.25em;
 }
+/*BUG 188909: zoom level 3 & 4 some letters are too big*/
+.TDS_PS_L3 .keyboard .keydisplay a{
+	font-size: 0.7em;
+}
+.TDS_PS_L4 .keyboard .keydisplay a{
+	font-size: 0.75em;
+}
 
 /* @end */
 
@@ -334,16 +341,16 @@ a.contexthelp {
 }
 /* @group loading and failed */
 /* @group all */
-.load_fail .btnRecord, .load_fail .btnRestart, .load_fail .btnPlayPause, .load_fail .soundlevelindicator, 
-.decode_fail .btnRecord, .decode_fail .btnRestart, .decode_fail .btnPlayPause, .decode_fail .soundlevelindicator, 
-.recording_fail .btnRecord, .recording_fail .btnRestart, .recording_fail .btnPlayPause, .recording_fail .soundlevelindicator, 
-.playing_fail .btnRecord, .playing_fail .btnRestart, .playing_fail .btnPlayPause, .playing_fail .soundlevelindicator, 
+.load_fail .btnRecord, .load_fail .btnRestart, .load_fail .btnPlayPause, .load_fail .soundlevelindicator,
+.decode_fail .btnRecord, .decode_fail .btnRestart, .decode_fail .btnPlayPause, .decode_fail .soundlevelindicator,
+.recording_fail .btnRecord, .recording_fail .btnRestart, .recording_fail .btnPlayPause, .recording_fail .soundlevelindicator,
+.playing_fail .btnRecord, .playing_fail .btnRestart, .playing_fail .btnPlayPause, .playing_fail .soundlevelindicator,
 
-.load_start .btnRecord, .load_start .btnRestart, .load_start .btnPlayPause, .load_start .soundlevelindicator, 
-.load_complete .btnRecord, .load_complete .btnRestart, .load_complete .btnPlayPause, .load_complete .soundlevelindicator, 
-.decode_start .btnRecord, .decode_start .btnRestart, .decode_start .btnPlayPause, .decode_start .soundlevelindicator, 
+.load_start .btnRecord, .load_start .btnRestart, .load_start .btnPlayPause, .load_start .soundlevelindicator,
+.load_complete .btnRecord, .load_complete .btnRestart, .load_complete .btnPlayPause, .load_complete .soundlevelindicator,
+.decode_start .btnRecord, .decode_start .btnRestart, .decode_start .btnPlayPause, .decode_start .soundlevelindicator,
 
-.disabled .btnRecord, .disabled .btnRestart, .disabled .btnPlayPause,  .disabled .soundlevelindicator, 
+.disabled .btnRecord, .disabled .btnRestart, .disabled .btnPlayPause,  .disabled .soundlevelindicator,
 .recording_stopping .btnRecord, .recording_stopping .btnRestart, .recording_stopping .btnPlayPause,  .recording_stopping .soundlevelindicator {
 	display: none !important;
 }
@@ -351,7 +358,7 @@ a.contexthelp {
 .load_start .elicitedaround, .load_complete .elicitedaround, .decode_start .elicitedaround, .recording_stopping .elicitedaround {
 	background-image: none !important;
 }
-.load_fail.elicitedwrap, .decode_fail.elicitedwrap, .recording_fail.elicitedwrap, .playing_fail.elicitedwrap, 
+.load_fail.elicitedwrap, .decode_fail.elicitedwrap, .recording_fail.elicitedwrap, .playing_fail.elicitedwrap,
 .load_start.elicitedwrap, .load_complete.elicitedwrap, .decode_start.elicitedwrap, .recording_stopping.elicitedwrap {
 	height: 144px;
 	width: 64px;
@@ -360,7 +367,7 @@ a.contexthelp {
 	background-position: -594px -41px;
 	display: block;
 }
-.TDS_PS_L1 .load_fail.elicitedwrap, .TDS_PS_L1 .decode_fail.elicitedwrap, .TDS_PS_L1 .recording_fail.elicitedwrap, .TDS_PS_L1 .playing_fail.elicitedwrap, 
+.TDS_PS_L1 .load_fail.elicitedwrap, .TDS_PS_L1 .decode_fail.elicitedwrap, .TDS_PS_L1 .recording_fail.elicitedwrap, .TDS_PS_L1 .playing_fail.elicitedwrap,
 .TDS_PS_L1 .load_start.elicitedwrap, .TDS_PS_L1 .load_complete.elicitedwrap, .TDS_PS_L1 .decode_start.elicitedwrap, .TDS_PS_L1 .recording_stopping.elicitedwrap {
 	background-image: url(../images/controls/avcontrols.gif);
 	background-repeat: no-repeat;
@@ -368,9 +375,9 @@ a.contexthelp {
 	height: 181px;
 	width: 79px;
 }
-.TDS_PS_L2 .load_fail.elicitedwrap, .TDS_PS_L2 .decode_fail.elicitedwrap, .TDS_PS_L2 .recording_fail.elicitedwrap, .TDS_PS_L2 .playing_fail.elicitedwrap, 
-.TDS_PS_L2 .load_start.elicitedwrap, .TDS_PS_L2 .load_complete.elicitedwrap, .TDS_PS_L2 .decode_start.elicitedwrap, .TDS_PS_L2 .recording_stopping.elicitedwrap, .TDS_PS_L3 .load_fail.elicitedwrap, .TDS_PS_L3 .decode_fail.elicitedwrap, .TDS_PS_L3 .recording_fail.elicitedwrap, .TDS_PS_L3 .playing_fail.elicitedwrap, 
-.TDS_PS_L3 .load_start.elicitedwrap, .TDS_PS_L3 .load_complete.elicitedwrap, .TDS_PS_L3 .decode_start.elicitedwrap, .TDS_PS_L3 .recording_stopping.elicitedwrap, .TDS_PS_L4 .load_fail.elicitedwrap, .TDS_PS_L4 .decode_fail.elicitedwrap, .TDS_PS_L4 .recording_fail.elicitedwrap, .TDS_PS_L4 .playing_fail.elicitedwrap, 
+.TDS_PS_L2 .load_fail.elicitedwrap, .TDS_PS_L2 .decode_fail.elicitedwrap, .TDS_PS_L2 .recording_fail.elicitedwrap, .TDS_PS_L2 .playing_fail.elicitedwrap,
+.TDS_PS_L2 .load_start.elicitedwrap, .TDS_PS_L2 .load_complete.elicitedwrap, .TDS_PS_L2 .decode_start.elicitedwrap, .TDS_PS_L2 .recording_stopping.elicitedwrap, .TDS_PS_L3 .load_fail.elicitedwrap, .TDS_PS_L3 .decode_fail.elicitedwrap, .TDS_PS_L3 .recording_fail.elicitedwrap, .TDS_PS_L3 .playing_fail.elicitedwrap,
+.TDS_PS_L3 .load_start.elicitedwrap, .TDS_PS_L3 .load_complete.elicitedwrap, .TDS_PS_L3 .decode_start.elicitedwrap, .TDS_PS_L3 .recording_stopping.elicitedwrap, .TDS_PS_L4 .load_fail.elicitedwrap, .TDS_PS_L4 .decode_fail.elicitedwrap, .TDS_PS_L4 .recording_fail.elicitedwrap, .TDS_PS_L4 .playing_fail.elicitedwrap,
 .TDS_PS_L4 .load_start.elicitedwrap, .TDS_PS_L4 .load_complete.elicitedwrap, .TDS_PS_L4 .decode_start.elicitedwrap, .TDS_PS_L4 .recording_stopping.elicitedwrap {
 	background-image: url(../images/controls/avcontrols.gif);
 	background-repeat: no-repeat;
@@ -381,9 +388,9 @@ a.contexthelp {
 /* @end */
 
 /* @group fail */
-.TDS_PS_L1 .load_fail .elicitedcontrols, .TDS_PS_L1 .load_fail .elicitedcontrols:hover, 
-.TDS_PS_L1 .decode_fail .elicitedcontrols, .TDS_PS_L1 .decode_fail .elicitedcontrols:hover, 
-.TDS_PS_L1 .recording_fail .elicitedcontrols, .TDS_PS_L1 .recording_fail .elicitedcontrols:hover, 
+.TDS_PS_L1 .load_fail .elicitedcontrols, .TDS_PS_L1 .load_fail .elicitedcontrols:hover,
+.TDS_PS_L1 .decode_fail .elicitedcontrols, .TDS_PS_L1 .decode_fail .elicitedcontrols:hover,
+.TDS_PS_L1 .recording_fail .elicitedcontrols, .TDS_PS_L1 .recording_fail .elicitedcontrols:hover,
 .TDS_PS_L1 .playing_fail .elicitedcontrols, .TDS_PS_L1 .playing_fail .elicitedcontrols:hover {
 	height: 120px;
 	width: 50px;
@@ -395,17 +402,17 @@ a.contexthelp {
 	border-left: 10px solid #fff;
 	position: absolute;
 }
-.TDS_PS_L2 .load_fail .elicitedcontrols, .TDS_PS_L2 .load_fail .elicitedcontrols:hover, 
-.TDS_PS_L2 .decode_fail .elicitedcontrols, .TDS_PS_L2 .decode_fail .elicitedcontrols:hover, 
-.TDS_PS_L2 .recording_fail .elicitedcontrols, .TDS_PS_L2 .recording_fail .elicitedcontrols:hover, 
-.TDS_PS_L2 .playing_fail .elicitedcontrols, .TDS_PS_L2 .playing_fail .elicitedcontrols:hover, 
-.TDS_PS_L3 .load_fail .elicitedcontrols, .TDS_PS_L3 .load_fail .elicitedcontrols:hover, 
-.TDS_PS_L3 .decode_fail .elicitedcontrols, .TDS_PS_L3 .decode_fail .elicitedcontrols:hover, 
-.TDS_PS_L3 .recording_fail .elicitedcontrols, .TDS_PS_L3 .recording_fail .elicitedcontrols:hover, 
-.TDS_PS_L3 .playing_fail .elicitedcontrols, .TDS_PS_L3 .playing_fail .elicitedcontrols:hover, 
-.TDS_PS_L4 .load_fail .elicitedcontrols, .TDS_PS_L4 .load_fail .elicitedcontrols:hover, 
-.TDS_PS_L4 .decode_fail .elicitedcontrols, .TDS_PS_L4 .decode_fail .elicitedcontrols:hover, 
-.TDS_PS_L4 .recording_fail .elicitedcontrols, .TDS_PS_L4 .recording_fail .elicitedcontrols:hover, 
+.TDS_PS_L2 .load_fail .elicitedcontrols, .TDS_PS_L2 .load_fail .elicitedcontrols:hover,
+.TDS_PS_L2 .decode_fail .elicitedcontrols, .TDS_PS_L2 .decode_fail .elicitedcontrols:hover,
+.TDS_PS_L2 .recording_fail .elicitedcontrols, .TDS_PS_L2 .recording_fail .elicitedcontrols:hover,
+.TDS_PS_L2 .playing_fail .elicitedcontrols, .TDS_PS_L2 .playing_fail .elicitedcontrols:hover,
+.TDS_PS_L3 .load_fail .elicitedcontrols, .TDS_PS_L3 .load_fail .elicitedcontrols:hover,
+.TDS_PS_L3 .decode_fail .elicitedcontrols, .TDS_PS_L3 .decode_fail .elicitedcontrols:hover,
+.TDS_PS_L3 .recording_fail .elicitedcontrols, .TDS_PS_L3 .recording_fail .elicitedcontrols:hover,
+.TDS_PS_L3 .playing_fail .elicitedcontrols, .TDS_PS_L3 .playing_fail .elicitedcontrols:hover,
+.TDS_PS_L4 .load_fail .elicitedcontrols, .TDS_PS_L4 .load_fail .elicitedcontrols:hover,
+.TDS_PS_L4 .decode_fail .elicitedcontrols, .TDS_PS_L4 .decode_fail .elicitedcontrols:hover,
+.TDS_PS_L4 .recording_fail .elicitedcontrols, .TDS_PS_L4 .recording_fail .elicitedcontrols:hover,
 .TDS_PS_L4 .playing_fail .elicitedcontrols, .TDS_PS_L4 .playing_fail .elicitedcontrols:hover {
 	height: 135px;
 	width: 50px;
@@ -419,8 +426,8 @@ a.contexthelp {
 }
 /* @end */
 /* @group loading */
-.load_start .elicitedcontrols, .load_start .elicitedcontrols:hover, 
-.load_complete .elicitedcontrols, .load_complete .elicitedcontrols:hover, 
+.load_start .elicitedcontrols, .load_start .elicitedcontrols:hover,
+.load_complete .elicitedcontrols, .load_complete .elicitedcontrols:hover,
 .decode_start .elicitedcontrols, .decode_start .elicitedcontrols:hover {
 	height: 135px;
 	width: 54px;
@@ -444,9 +451,9 @@ a.contexthelp {
 	position: absolute;
 }
 
-.TDS_PS_L1 .load_start .elicitedcontrols, .TDS_PS_L1 .load_start .elicitedcontrols:hover, 
-.TDS_PS_L1 .load_complete .elicitedcontrols, .TDS_PS_L1 .load_complete .elicitedcontrols:hover, 
-.TDS_PS_L1 .decode_start .elicitedcontrols, .TDS_PS_L1 .decode_start .elicitedcontrols:hover, 
+.TDS_PS_L1 .load_start .elicitedcontrols, .TDS_PS_L1 .load_start .elicitedcontrols:hover,
+.TDS_PS_L1 .load_complete .elicitedcontrols, .TDS_PS_L1 .load_complete .elicitedcontrols:hover,
+.TDS_PS_L1 .decode_start .elicitedcontrols, .TDS_PS_L1 .decode_start .elicitedcontrols:hover,
 .TDS_PS_L1 .recording_stopping .elicitedcontrols, .TDS_PS_L1 .recording_stopping .elicitedcontrols:hover {
 	height: 120px;
 	width: 50px;
@@ -461,16 +468,16 @@ a.contexthelp {
 	background-repeat: no-repeat;
 	background-position: center center;
 }
-.TDS_PS_L2 .load_start .elicitedcontrols, .TDS_PS_L2 .load_start .elicitedcontrols:hover, 
-.TDS_PS_L2 .load_complete .elicitedcontrols, .TDS_PS_L2 .load_complete .elicitedcontrols:hover, 
+.TDS_PS_L2 .load_start .elicitedcontrols, .TDS_PS_L2 .load_start .elicitedcontrols:hover,
+.TDS_PS_L2 .load_complete .elicitedcontrols, .TDS_PS_L2 .load_complete .elicitedcontrols:hover,
 .TDS_PS_L2 .decode_start .elicitedcontrols, .TDS_PS_L2 .decode_start .elicitedcontrols:hover,
-.TDS_PS_L2 .recording_stopping .elicitedcontrols, .TDS_PS_L2 .recording_stopping .elicitedcontrols:hover, 
-.TDS_PS_L3 .load_start .elicitedcontrols, .TDS_PS_L3 .load_start .elicitedcontrols:hover, 
-.TDS_PS_L3 .load_complete .elicitedcontrols, .TDS_PS_L3 .load_complete .elicitedcontrols:hover, 
+.TDS_PS_L2 .recording_stopping .elicitedcontrols, .TDS_PS_L2 .recording_stopping .elicitedcontrols:hover,
+.TDS_PS_L3 .load_start .elicitedcontrols, .TDS_PS_L3 .load_start .elicitedcontrols:hover,
+.TDS_PS_L3 .load_complete .elicitedcontrols, .TDS_PS_L3 .load_complete .elicitedcontrols:hover,
 .TDS_PS_L3 .decode_start .elicitedcontrols, .TDS_PS_L3 .decode_start .elicitedcontrols:hover,
-.TDS_PS_L3 .recording_stopping .elicitedcontrols, .TDS_PS_L3 .recording_stopping .elicitedcontrols:hover, 
-.TDS_PS_L4 .load_start .elicitedcontrols, .TDS_PS_L4 .load_start .elicitedcontrols:hover, 
-.TDS_PS_L4 .load_complete .elicitedcontrols, .TDS_PS_L4 .load_complete .elicitedcontrols:hover, 
+.TDS_PS_L3 .recording_stopping .elicitedcontrols, .TDS_PS_L3 .recording_stopping .elicitedcontrols:hover,
+.TDS_PS_L4 .load_start .elicitedcontrols, .TDS_PS_L4 .load_start .elicitedcontrols:hover,
+.TDS_PS_L4 .load_complete .elicitedcontrols, .TDS_PS_L4 .load_complete .elicitedcontrols:hover,
 .TDS_PS_L4 .decode_start .elicitedcontrols, .TDS_PS_L4 .decode_start .elicitedcontrols:hover,
 .TDS_PS_L4 .recording_stopping .elicitedcontrols, .TDS_PS_L4 .recording_stopping .elicitedcontrols:hover {
 	height: 135px;
@@ -536,8 +543,8 @@ a.contexthelp {
 .TDS_PS_L1 .elicitedwrap.playing_done .btnRecord, .TDS_PS_L1 .elicitedwrap.playing_stopped .btnRecord, .TDS_PS_L1 .elicitedwrap.playing_paused .btnRecord, .TDS_PS_L1 .elicitedwrap.decode_complete .btnRecord {
 	background-position: 0px -416px;
 }
-.TDS_PS_L2 .elicitedwrap.recording_ready .btnRecord, .TDS_PS_L2 .elicitedwrap.playing_start .btnRecord, .TDS_PS_L2 .elicitedwrap.recording_done .btnRecord, .TDS_PS_L2 .elicitedwrap.playing_done .btnRecord, .TDS_PS_L2 .elicitedwrap.playing_stopped .btnRecord, .TDS_PS_L2 .elicitedwrap.playing_paused .btnRecord, .TDS_PS_L2 .elicitedwrap.decode_complete .btnRecord, 
-.TDS_PS_L3 .elicitedwrap.recording_ready .btnRecord, .TDS_PS_L3 .elicitedwrap.playing_start .btnRecord, .TDS_PS_L3 .elicitedwrap.recording_done .btnRecord, .TDS_PS_L3 .elicitedwrap.playing_done .btnRecord, .TDS_PS_L3 .elicitedwrap.playing_stopped .btnRecord, .TDS_PS_L3 .elicitedwrap.playing_paused .btnRecord, .TDS_PS_L3 .elicitedwrap.decode_complete .btnRecord, 
+.TDS_PS_L2 .elicitedwrap.recording_ready .btnRecord, .TDS_PS_L2 .elicitedwrap.playing_start .btnRecord, .TDS_PS_L2 .elicitedwrap.recording_done .btnRecord, .TDS_PS_L2 .elicitedwrap.playing_done .btnRecord, .TDS_PS_L2 .elicitedwrap.playing_stopped .btnRecord, .TDS_PS_L2 .elicitedwrap.playing_paused .btnRecord, .TDS_PS_L2 .elicitedwrap.decode_complete .btnRecord,
+.TDS_PS_L3 .elicitedwrap.recording_ready .btnRecord, .TDS_PS_L3 .elicitedwrap.playing_start .btnRecord, .TDS_PS_L3 .elicitedwrap.recording_done .btnRecord, .TDS_PS_L3 .elicitedwrap.playing_done .btnRecord, .TDS_PS_L3 .elicitedwrap.playing_stopped .btnRecord, .TDS_PS_L3 .elicitedwrap.playing_paused .btnRecord, .TDS_PS_L3 .elicitedwrap.decode_complete .btnRecord,
 .TDS_PS_L4 .elicitedwrap.recording_ready .btnRecord, .TDS_PS_L4 .elicitedwrap.playing_start .btnRecord, .TDS_PS_L4 .elicitedwrap.recording_done .btnRecord, .TDS_PS_L4 .elicitedwrap.playing_done .btnRecord, .TDS_PS_L4 .elicitedwrap.playing_stopped .btnRecord, .TDS_PS_L4 .elicitedwrap.playing_paused .btnRecord, .TDS_PS_L4 .elicitedwrap.decode_complete .btnRecord {
 	background-position: -412px -1px;
 }
@@ -549,8 +556,8 @@ a.contexthelp {
 .TDS_PS_L1 .elicitedwrap.recording_ready .btnRecord:hover, .TDS_PS_L1 .elicitedwrap.playing_start .btnRecord:hover, .TDS_PS_L1 .elicitedwrap.recording_done .btnRecord:hover, .TDS_PS_L1 .elicitedwrap.playing_done .btnRecord:hover, .TDS_PS_L1 .elicitedwrap.playing_stopped .btnRecord:hover, .TDS_PS_L1 .elicitedwrap.playing_paused .btnRecord:hover, .TDS_PS_L1 .elicitedwrap.decode_complete .btnRecord:hover {
 	background-position: -69px -416px;
 }
-.TDS_PS_L2 .elicitedwrap.recording_ready .btnRecord:hover, .TDS_PS_L2 .elicitedwrap.playing_start .btnRecord:hover, .TDS_PS_L2 .elicitedwrap.recording_done .btnRecord:hover, .TDS_PS_L2 .elicitedwrap.playing_done .btnRecord:hover, .TDS_PS_L2 .elicitedwrap.playing_stopped .btnRecord:hover, .TDS_PS_L2 .elicitedwrap.playing_paused .btnRecord:hover, .TDS_PS_L2 .elicitedwrap.decode_complete .btnRecord:hover, 
-.TDS_PS_L3 .elicitedwrap.recording_ready .btnRecord:hover, .TDS_PS_L3 .elicitedwrap.playing_start .btnRecord:hover, .TDS_PS_L3 .elicitedwrap.recording_done .btnRecord:hover, .TDS_PS_L3 .elicitedwrap.playing_done .btnRecord:hover, .TDS_PS_L3 .elicitedwrap.playing_stopped .btnRecord:hover, .TDS_PS_L3 .elicitedwrap.playing_paused .btnRecord:hover, .TDS_PS_L3 .elicitedwrap.decode_complete .btnRecord:hover, 
+.TDS_PS_L2 .elicitedwrap.recording_ready .btnRecord:hover, .TDS_PS_L2 .elicitedwrap.playing_start .btnRecord:hover, .TDS_PS_L2 .elicitedwrap.recording_done .btnRecord:hover, .TDS_PS_L2 .elicitedwrap.playing_done .btnRecord:hover, .TDS_PS_L2 .elicitedwrap.playing_stopped .btnRecord:hover, .TDS_PS_L2 .elicitedwrap.playing_paused .btnRecord:hover, .TDS_PS_L2 .elicitedwrap.decode_complete .btnRecord:hover,
+.TDS_PS_L3 .elicitedwrap.recording_ready .btnRecord:hover, .TDS_PS_L3 .elicitedwrap.playing_start .btnRecord:hover, .TDS_PS_L3 .elicitedwrap.recording_done .btnRecord:hover, .TDS_PS_L3 .elicitedwrap.playing_done .btnRecord:hover, .TDS_PS_L3 .elicitedwrap.playing_stopped .btnRecord:hover, .TDS_PS_L3 .elicitedwrap.playing_paused .btnRecord:hover, .TDS_PS_L3 .elicitedwrap.decode_complete .btnRecord:hover,
 .TDS_PS_L4 .elicitedwrap.recording_ready .btnRecord:hover, .TDS_PS_L4 .elicitedwrap.playing_start .btnRecord:hover, .TDS_PS_L4 .elicitedwrap.recording_done .btnRecord:hover, .TDS_PS_L4 .elicitedwrap.playing_done .btnRecord:hover, .TDS_PS_L4 .elicitedwrap.playing_stopped .btnRecord:hover, .TDS_PS_L4 .elicitedwrap.playing_paused .btnRecord:hover, .TDS_PS_L4 .elicitedwrap.decode_complete .btnRecord:hover {
 	background-position: -500px -1px;
 }
@@ -573,7 +580,7 @@ a.contexthelp {
 	top: 8px;
 	right: 8px;
 	background: url(../Images/controls/sound_record.gif) no-repeat center center !important;
-	
+
 }
 .TDS_PS_L1 .recording_start .elicitedaround {
 	background-position: -163px -230px;
@@ -744,8 +751,8 @@ a.contexthelp {
 	display: block;
 	background-position: -139px -416px;
 }
-.TDS_PS_L2 .elicitedwrap.recording_done .btnPlayPause, .TDS_PS_L2 .elicitedwrap.playing_done .btnPlayPause, .TDS_PS_L2 .elicitedwrap.playing_stopped .btnPlayPause, .TDS_PS_L2 .elicitedwrap.playing_paused .btnPlayPause, .TDS_PS_L2 .elicitedwrap.decode_complete .btnPlayPause, 
-.TDS_PS_L3 .elicitedwrap.recording_done .btnPlayPause, .TDS_PS_L3 .elicitedwrap.playing_done .btnPlayPause, .TDS_PS_L3 .elicitedwrap.playing_stopped .btnPlayPause, .TDS_PS_L3 .elicitedwrap.playing_paused .btnPlayPause, .TDS_PS_L3 .elicitedwrap.decode_complete .btnPlayPause, 
+.TDS_PS_L2 .elicitedwrap.recording_done .btnPlayPause, .TDS_PS_L2 .elicitedwrap.playing_done .btnPlayPause, .TDS_PS_L2 .elicitedwrap.playing_stopped .btnPlayPause, .TDS_PS_L2 .elicitedwrap.playing_paused .btnPlayPause, .TDS_PS_L2 .elicitedwrap.decode_complete .btnPlayPause,
+.TDS_PS_L3 .elicitedwrap.recording_done .btnPlayPause, .TDS_PS_L3 .elicitedwrap.playing_done .btnPlayPause, .TDS_PS_L3 .elicitedwrap.playing_stopped .btnPlayPause, .TDS_PS_L3 .elicitedwrap.playing_paused .btnPlayPause, .TDS_PS_L3 .elicitedwrap.decode_complete .btnPlayPause,
 .TDS_PS_L4 .elicitedwrap.recording_done .btnPlayPause, .TDS_PS_L4 .elicitedwrap.playing_done .btnPlayPause, .TDS_PS_L4 .elicitedwrap.playing_stopped .btnPlayPause, .TDS_PS_L4 .elicitedwrap.playing_paused .btnPlayPause, .TDS_PS_L4 .elicitedwrap.decode_complete .btnPlayPause {
 	display: block;
 	background-position: -412px -97px;
@@ -757,8 +764,8 @@ a.contexthelp {
 .TDS_PS_L1 .elicitedwrap.recording_done .btnPlayPause:hover, .TDS_PS_L1 .elicitedwrap.playing_done .btnPlayPause:hover, .TDS_PS_L1 .elicitedwrap.playing_stopped .btnPlayPause:hover, .TDS_PS_L1 .elicitedwrap.playing_paused .btnPlayPause:hover, .TDS_PS_L1 .elicitedwrap.decode_complete .btnPlayPause:hover {
 	background-position: -207px -416px;
 }
-.TDS_PS_L2 .elicitedwrap.recording_done .btnPlayPause:hover, .TDS_PS_L2 .elicitedwrap.playing_done .btnPlayPause:hover, .TDS_PS_L2 .elicitedwrap.playing_stopped .btnPlayPause:hover, .TDS_PS_L2 .elicitedwrap.playing_paused .btnPlayPause:hover, .TDS_PS_L2 .elicitedwrap.decode_complete .btnPlayPause:hover, 
-.TDS_PS_L3 .elicitedwrap.recording_done .btnPlayPause:hover, .TDS_PS_L3 .elicitedwrap.playing_done .btnPlayPause:hover, .TDS_PS_L3 .elicitedwrap.playing_stopped .btnPlayPause:hover, .TDS_PS_L3 .elicitedwrap.playing_paused .btnPlayPause:hover, .TDS_PS_L3 .elicitedwrap.decode_complete .btnPlayPause:hover, 
+.TDS_PS_L2 .elicitedwrap.recording_done .btnPlayPause:hover, .TDS_PS_L2 .elicitedwrap.playing_done .btnPlayPause:hover, .TDS_PS_L2 .elicitedwrap.playing_stopped .btnPlayPause:hover, .TDS_PS_L2 .elicitedwrap.playing_paused .btnPlayPause:hover, .TDS_PS_L2 .elicitedwrap.decode_complete .btnPlayPause:hover,
+.TDS_PS_L3 .elicitedwrap.recording_done .btnPlayPause:hover, .TDS_PS_L3 .elicitedwrap.playing_done .btnPlayPause:hover, .TDS_PS_L3 .elicitedwrap.playing_stopped .btnPlayPause:hover, .TDS_PS_L3 .elicitedwrap.playing_paused .btnPlayPause:hover, .TDS_PS_L3 .elicitedwrap.decode_complete .btnPlayPause:hover,
 .TDS_PS_L4 .elicitedwrap.recording_done .btnPlayPause:hover, .TDS_PS_L4 .elicitedwrap.playing_done .btnPlayPause:hover, .TDS_PS_L4 .elicitedwrap.playing_stopped .btnPlayPause:hover, .TDS_PS_L4 .elicitedwrap.playing_paused .btnPlayPause:hover, .TDS_PS_L4 .elicitedwrap.decode_complete .btnPlayPause:hover {
 	background-position: -500px -97px;
 }
@@ -778,7 +785,7 @@ a.contexthelp {
 .TDS_PS_L1 .cloze .questionCell .inputCloze, .TDS_PS_L1 .cloze .questionContainer .inputCloze, .TDS_PS_L1 .format_wb .questionCell .inputCloze, .TDS_PS_L1 .format_wb .questionContainer .inputCloze {
 	font-size: .7em;
 }
-.TDS_PS_L2 .cloze .questionCell .inputCloze, .TDS_PS_L2 .format_wb .questionCell .inputCloze, .TDS_PS_L3 .cloze .questionCell .inputCloze, .TDS_PS_L3 .format_wb .questionCell .inputCloze, .TDS_PS_L4 .cloze .questionCell .inputCloze, .TDS_PS_L4 .format_wb .questionCell .inputCloze, 
+.TDS_PS_L2 .cloze .questionCell .inputCloze, .TDS_PS_L2 .format_wb .questionCell .inputCloze, .TDS_PS_L3 .cloze .questionCell .inputCloze, .TDS_PS_L3 .format_wb .questionCell .inputCloze, .TDS_PS_L4 .cloze .questionCell .inputCloze, .TDS_PS_L4 .format_wb .questionCell .inputCloze,
 
 .TDS_PS_L2 .cloze .questionContainer .inputCloze, .TDS_PS_L2 .format_wb .questionContainer .inputCloze, .TDS_PS_L3 .cloze .questionContainer .inputCloze, .TDS_PS_L3 .format_wb .questionContainer .inputCloze, .TDS_PS_L4 .cloze .questionContainer .inputCloze, .TDS_PS_L4 .format_wb .questionContainer .inputCloze
  {
@@ -834,7 +841,7 @@ a.contexthelp {
 }
 .browserVer_1_3 .layout13 .answerCell applet {
 	display: block;
-} 
+}
 
 /* Resets zoom styles for zooming that interfere with applet */
 /* NOTE: All new grid layouts MUST have this code or the grid (java applet) will crash in secure browser or reload in regular browser */
@@ -851,15 +858,15 @@ a.contexthelp {
 	position: static !important;
 }
 /*keep flash from reloading with zoom*/
-.layout_17 .theQuestions .padding, .layout_17 .thePassage .padding, 
-.layout_21 .theQuestions .padding, .layout_21 .thePassage .padding, 
-.layout_23 .theQuestions .padding, .layout_23 .thePassage .padding, 
-.layout_24 .theQuestions .padding, .layout_24 .thePassage .padding, 
-.layout_25 .theQuestions .padding, .layout_25 .thePassage .padding, 
-.layout_26 .theQuestions .padding, .layout_26 .thePassage .padding, 
-.layout_27 .theQuestions .padding, .layout_27 .thePassage .padding, 
-.layout_28 .theQuestions .padding, .layout_28 .thePassage .padding, 
-.layout_29 .theQuestions .padding, .layout_29 .thePassage .padding, 
+.layout_17 .theQuestions .padding, .layout_17 .thePassage .padding,
+.layout_21 .theQuestions .padding, .layout_21 .thePassage .padding,
+.layout_23 .theQuestions .padding, .layout_23 .thePassage .padding,
+.layout_24 .theQuestions .padding, .layout_24 .thePassage .padding,
+.layout_25 .theQuestions .padding, .layout_25 .thePassage .padding,
+.layout_26 .theQuestions .padding, .layout_26 .thePassage .padding,
+.layout_27 .theQuestions .padding, .layout_27 .thePassage .padding,
+.layout_28 .theQuestions .padding, .layout_28 .thePassage .padding,
+.layout_29 .theQuestions .padding, .layout_29 .thePassage .padding,
 .layout_32 .theQuestions .padding {
 	position: static !important;
 }
@@ -899,7 +906,7 @@ a.contexthelp {
 
 /* active item stuff */
 .layout17 .questionAnswerGroup {
-	padding: .3em;	
+	padding: .3em;
 }
 /*.layout17  .activeItem {
 	border: 1px dashed #99CCFF !important;
@@ -924,7 +931,7 @@ a.contexthelp {
 	border-left-color: #FFFFFF;
 }
 .layout17 .questionContainer {
-	padding-bottom: 1em;	
+	padding-bottom: 1em;
 }
 .layout17 .optiondivider {
 	line-height: 50%;
@@ -936,7 +943,7 @@ a.contexthelp {
 .layout17 .multipleChoiceItem {
 	padding: .3em;
 	margin-bottom: 5px;
-	padding-bottom: 5px;	
+	padding-bottom: 5px;
 }
 /* @end */
 
@@ -998,7 +1005,7 @@ a.contexthelp {
 
 /* active item stuff */
 .layout21 .questionAnswerGroup {
-	padding: .3em;	
+	padding: .3em;
 }
 /*.layout21  .activeItem {
 	border: 1px dashed #99CCFF !important;
@@ -1023,7 +1030,7 @@ a.contexthelp {
 	border-left-color: #FFFFFF;
 }
 .layout21 .questionContainer {
-	padding-bottom: 1em;	
+	padding-bottom: 1em;
 }
 .layout21 .optiondivider {
 	line-height: 50%;
@@ -1035,7 +1042,7 @@ a.contexthelp {
 .layout21 .multipleChoiceItem {
 	padding: .3em;
 	margin-bottom: 5px;
-	padding-bottom: 5px;	
+	padding-bottom: 5px;
 }
 /* @end */
 
@@ -1047,11 +1054,11 @@ a.contexthelp {
 .platform_android .layout_22 .noColumns .theQuestions {
 	top:76px;
 }
-.TDS_PS_L1.platform_android .layout_22 .noColumns .theQuestions, 
+.TDS_PS_L1.platform_android .layout_22 .noColumns .theQuestions,
 .TDS_PS_L2.platform_android .layout_22 .noColumns .theQuestions {
 	top:96px;
 }
-.TDS_PS_L3.platform_android .layout_22 .noColumns .theQuestions, 
+.TDS_PS_L3.platform_android .layout_22 .noColumns .theQuestions,
 .TDS_PS_L4.platform_android .layout_22 .noColumns .theQuestions {
 	top:120px;
 }
@@ -1096,7 +1103,7 @@ a.contexthelp {
 }
 .browserVer_1_3 .layout22 .answerCell applet {
 	display: block;
-} 
+}
 /*resets zoom styles for zooming that interfere with applet */
 .TDS_PS_L0 .structure.layout22, .TDS_PS_L1 .structure.layout22, .TDS_PS_L2 .structure.layout22, .TDS_PS_L3 .structure.layout22, .TDS_PS_L4 .structure.layout22, .TDS_PS_L0 .structure.layout22 tbody, .TDS_PS_L1 .structure.layout22 tbody, .TDS_PS_L2 .structure.layout22 tbody, .TDS_PS_L3 .structure.layout22 tbody, .TDS_PS_L4 .structure.layout22 tbody, .layout_22 .theQuestions .padding {
 	position: static !important;
@@ -1127,7 +1134,7 @@ a.contexthelp {
 	width: 100%;
 	height: 60%;
 	border-top: solid 2px #999;
-	
+
 }
 /*.layout23 .padding {
 	padding-right: 10px;
@@ -1158,7 +1165,7 @@ a.contexthelp {
 
 /* active item stuff */
 .layout23 .questionAnswerGroup {
-	padding: .3em;	
+	padding: .3em;
 }
 .layout23 .questionAnswerGroup {
 	border-bottom-width: 1px;
@@ -1177,7 +1184,7 @@ a.contexthelp {
 	border-left-color: #FFFFFF;
 }
 .layout23 .questionContainer {
-	padding-bottom: 1em;	
+	padding-bottom: 1em;
 }
 .layout23 .optiondivider {
 	line-height: 50%;
@@ -1189,7 +1196,7 @@ a.contexthelp {
 .layout23 .multipleChoiceItem {
 	padding: .3em;
 	margin-bottom: 5px;
-	padding-bottom: 5px;	
+	padding-bottom: 5px;
 }
 /* @end */
 
@@ -1247,7 +1254,7 @@ a.contexthelp {
 
 /* active item stuff */
 .layout24 .questionAnswerGroup {
-	padding: .3em;	
+	padding: .3em;
 }
 .layout24 .questionAnswerGroup {
 	border-bottom-width: 1px;
@@ -1266,7 +1273,7 @@ a.contexthelp {
 	border-left-color: #FFFFFF;
 }
 .layout24 .questionContainer {
-	padding-bottom: 1em;	
+	padding-bottom: 1em;
 }
 .layout24 .optiondivider {
 	line-height: 50%;
@@ -1278,7 +1285,7 @@ a.contexthelp {
 .layout24 .multipleChoiceItem {
 	padding: .3em;
 	margin-bottom: 5px;
-	padding-bottom: 5px;	
+	padding-bottom: 5px;
 }
 /* @end */
 
@@ -1339,7 +1346,7 @@ a.contexthelp {
 
 /* active item stuff */
 .layout25 .questionAnswerGroup {
-	padding: .3em;	
+	padding: .3em;
 }
 .layout25 .questionAnswerGroup {
 	border-bottom-width: 1px;
@@ -1358,7 +1365,7 @@ a.contexthelp {
 	border-left-color: #FFFFFF;
 }
 .layout25 .questionContainer {
-	padding-bottom: 1em;	
+	padding-bottom: 1em;
 }
 .layout25 .optiondivider {
 	line-height: 50%;
@@ -1370,7 +1377,7 @@ a.contexthelp {
 .layout25 .multipleChoiceItem {
 	padding: .3em;
 	margin-bottom: 5px;
-	padding-bottom: 5px;	
+	padding-bottom: 5px;
 }
 /* @end */
 
@@ -1433,7 +1440,7 @@ a.contexthelp {
 
 /* active item stuff */
 .layout26 .questionAnswerGroup {
-	padding: .3em;	
+	padding: .3em;
 }
 .layout26 .questionAnswerGroup {
 	border-bottom-width: 1px;
@@ -1452,7 +1459,7 @@ a.contexthelp {
 	border-left-color: #FFFFFF;
 }
 .layout26 .questionContainer {
-	padding-bottom: 1em;	
+	padding-bottom: 1em;
 }
 .layout26 .optiondivider {
 	line-height: 50%;
@@ -1464,7 +1471,7 @@ a.contexthelp {
 .layout26 .multipleChoiceItem {
 	padding: .3em;
 	margin-bottom: 5px;
-	padding-bottom: 5px;	
+	padding-bottom: 5px;
 }
 /* @end */
 
@@ -1529,7 +1536,7 @@ a.contexthelp {
 
 /* active item stuff */
 .layout27 .questionAnswerGroup {
-	padding: .3em;	
+	padding: .3em;
 }
 .layout27 .questionAnswerGroup {
 	border-bottom-width: 1px;
@@ -1548,7 +1555,7 @@ a.contexthelp {
 	border-left-color: #FFFFFF;
 }
 .layout27 .questionContainer {
-	padding-bottom: 1em;	
+	padding-bottom: 1em;
 }
 .layout27 .optiondivider {
 	line-height: 50%;
@@ -1560,7 +1567,7 @@ a.contexthelp {
 .layout27 .multipleChoiceItem {
 	padding: .3em;
 	margin-bottom: 5px;
-	padding-bottom: 5px;	
+	padding-bottom: 5px;
 }
 /* @end */
 
@@ -1607,7 +1614,7 @@ a.contexthelp {
 	height: 100%;
 }
 .layout32 .questionAnswerGroup {
-	padding: .3em;	
+	padding: .3em;
 }
 .layout32 .questionAnswerGroup {
 	border-bottom-width: 1px;
@@ -1626,7 +1633,7 @@ a.contexthelp {
 	border-left-color: #FFFFFF;
 }
 .layout32 .questionContainer {
-	padding-bottom: 1em;	
+	padding-bottom: 1em;
 }
 .layout32 .optiondivider {
 	line-height: 50%;
@@ -1638,7 +1645,7 @@ a.contexthelp {
 .layout32 .multipleChoiceItem {
 	padding: .3em;
 	margin-bottom: 5px;
-	padding-bottom: 5px;	
+	padding-bottom: 5px;
 }
 
 /* @end */
@@ -1656,7 +1663,7 @@ a.contexthelp {
 	overflow:auto;
 	width: 100%;
 	height: 100%;
-	
+
 }
 .TDS_PS_L0 .layout33 .GridContainer applet {
 	height: 465px !important;
@@ -1683,7 +1690,7 @@ a.contexthelp {
 
 /* active item stuff */
 .layout33 .questionAnswerGroup {
-	padding: .3em;	
+	padding: .3em;
 }
 .layout33 .questionAnswerGroup {
 	border-bottom-width: 1px;
@@ -1702,7 +1709,7 @@ a.contexthelp {
 	border-left-color: #FFFFFF;
 }
 .layout33 .questionContainer {
-	padding-bottom: 1em;	
+	padding-bottom: 1em;
 }
 .layout33 .optiondivider {
 	line-height: 50%;
@@ -1714,7 +1721,7 @@ a.contexthelp {
 .layout33 .multipleChoiceItem {
 	padding: .3em;
 	margin-bottom: 5px;
-	padding-bottom: 5px;	
+	padding-bottom: 5px;
 }
 /* @end */
 
@@ -1810,9 +1817,9 @@ a.contexthelp {
 	background-position: -528px -86px;
 	cursor: default;
 }
-.TDS_PS_L2 .sound_repeat.load_start, .TDS_PS_L2 .sound_repeat.load_complete, .TDS_PS_L2 .sound_repeat.decode_start, 
-.TDS_PS_L2 .sound_repeat.load_start:hover, .TDS_PS_L2 .sound_repeat.load_complete:hover, .TDS_PS_L2 .sound_repeat.decode_start:hover, .TDS_PS_L3 .sound_repeat.load_start, .TDS_PS_L3 .sound_repeat.load_complete, .TDS_PS_L3 .sound_repeat.decode_start, 
-.TDS_PS_L3 .sound_repeat.load_start:hover, .TDS_PS_L3 .sound_repeat.load_complete:hover, .TDS_PS_L3 .sound_repeat.decode_start:hover, .TDS_PS_L4 .sound_repeat.load_start, .TDS_PS_L4 .sound_repeat.load_complete, .TDS_PS_L4 .sound_repeat.decode_start, 
+.TDS_PS_L2 .sound_repeat.load_start, .TDS_PS_L2 .sound_repeat.load_complete, .TDS_PS_L2 .sound_repeat.decode_start,
+.TDS_PS_L2 .sound_repeat.load_start:hover, .TDS_PS_L2 .sound_repeat.load_complete:hover, .TDS_PS_L2 .sound_repeat.decode_start:hover, .TDS_PS_L3 .sound_repeat.load_start, .TDS_PS_L3 .sound_repeat.load_complete, .TDS_PS_L3 .sound_repeat.decode_start,
+.TDS_PS_L3 .sound_repeat.load_start:hover, .TDS_PS_L3 .sound_repeat.load_complete:hover, .TDS_PS_L3 .sound_repeat.decode_start:hover, .TDS_PS_L4 .sound_repeat.load_start, .TDS_PS_L4 .sound_repeat.load_complete, .TDS_PS_L4 .sound_repeat.decode_start,
 .TDS_PS_L4 .sound_repeat.load_start:hover, .TDS_PS_L4 .sound_repeat.load_complete:hover, .TDS_PS_L4 .sound_repeat.decode_start:hover {
 	cursor: default;
 	background: url(../images/controls/loader32.gif) no-repeat center center;
@@ -1865,7 +1872,7 @@ a.contexthelp {
 	background-position: -124px -86px;
 	cursor: default;
 }
-.optionSound a.load_start, .optionSound a.load_complete, .optionSound a.decode_start, 
+.optionSound a.load_start, .optionSound a.load_complete, .optionSound a.decode_start,
 .optionSound a.load_start:hover, .optionSound a.load_complete:hover, .optionSound a.decode_start:hover {
 	cursor: default;
 	background: url(../images/controls/loader13.gif) no-repeat center center;
@@ -1899,7 +1906,7 @@ a.contexthelp {
 	background-position: -305px -107px;
 	cursor: default;
 }
-.TDS_PS_L1 .optionSound a.load_start, .TDS_PS_L1 .optionSound a.load_complete, .TDS_PS_L1 .optionSound a.decode_start, 
+.TDS_PS_L1 .optionSound a.load_start, .TDS_PS_L1 .optionSound a.load_complete, .TDS_PS_L1 .optionSound a.decode_start,
 .TDS_PS_L1 .optionSound a.load_start:hover, .TDS_PS_L1 .optionSound a.load_complete:hover, .TDS_PS_L1 .optionSound a.decode_start:hover {
 	cursor: default;
 	background: url(../images/controls/loader15.gif) no-repeat center center;
@@ -1942,9 +1949,9 @@ a.contexthelp {
 	background-position: -534px -135px;
 	cursor: default;
 }
-.TDS_PS_L2 .optionSound a.load_start, .TDS_PS_L2 .optionSound a.load_complete, .TDS_PS_L2 .optionSound a.decode_start, 
-.TDS_PS_L2 .optionSound a.load_start:hover, .TDS_PS_L2 .optionSound a.load_complete:hover, .TDS_PS_L2 .optionSound a.decode_start:hover, .TDS_PS_L3 .optionSound a.load_start, .TDS_PS_L3 .optionSound a.load_complete, .TDS_PS_L3 .optionSound a.decode_start, 
-.TDS_PS_L3 .optionSound a.load_start:hover, .TDS_PS_L3 .optionSound a.load_complete:hover, .TDS_PS_L3 .optionSound a.decode_start:hover, .TDS_PS_L4 .optionSound a.load_start, .TDS_PS_L4 .optionSound a.load_complete, .TDS_PS_L4 .optionSound a.decode_start, 
+.TDS_PS_L2 .optionSound a.load_start, .TDS_PS_L2 .optionSound a.load_complete, .TDS_PS_L2 .optionSound a.decode_start,
+.TDS_PS_L2 .optionSound a.load_start:hover, .TDS_PS_L2 .optionSound a.load_complete:hover, .TDS_PS_L2 .optionSound a.decode_start:hover, .TDS_PS_L3 .optionSound a.load_start, .TDS_PS_L3 .optionSound a.load_complete, .TDS_PS_L3 .optionSound a.decode_start,
+.TDS_PS_L3 .optionSound a.load_start:hover, .TDS_PS_L3 .optionSound a.load_complete:hover, .TDS_PS_L3 .optionSound a.decode_start:hover, .TDS_PS_L4 .optionSound a.load_start, .TDS_PS_L4 .optionSound a.load_complete, .TDS_PS_L4 .optionSound a.decode_start,
 .TDS_PS_L4 .optionSound a.load_start:hover, .TDS_PS_L4 .optionSound a.load_complete:hover, .TDS_PS_L4 .optionSound a.decode_start:hover {
 	cursor: default;
 	background: url(../images/controls/loader19.gif) no-repeat center center;
@@ -1971,147 +1978,147 @@ a.contexthelp {
 	height: 8em;
 	width: 30em;
 }
-.layout11 .format_WER textarea, 
+.layout11 .format_WER textarea,
 .layout11 .format_WSR textarea,
-.layout11 .format_ER textarea, 
-.layout11 .format_SR textarea, 
-.layout11 .format_OE textarea, 
-.layout11 .format_CR4 textarea, 
-.layout11 .format_CR5 textarea, 
-.layout11 .format_RW textarea, 
-.layout11 .format_NL textarea, 
-.layout11 .format_SA textarea,  
- 
-
-.layout17 .format_WER textarea, 
-.layout17 .format_WSR textarea, 
-.layout17 .format_ER textarea, 
-.layout17 .format_SR textarea, 
-.layout17 .format_OE textarea, 
-.layout17 .format_CR4 textarea, 
-.layout17 .format_CR5 textarea, 
-.layout17 .format_RW textarea, 
-.layout17 .format_NL textarea, 
-.layout17 .format_SA textarea,  
+.layout11 .format_ER textarea,
+.layout11 .format_SR textarea,
+.layout11 .format_OE textarea,
+.layout11 .format_CR4 textarea,
+.layout11 .format_CR5 textarea,
+.layout11 .format_RW textarea,
+.layout11 .format_NL textarea,
+.layout11 .format_SA textarea,
 
 
-.layout21 .format_WER textarea, 
-.layout21 .format_WSR textarea, 
-.layout21 .format_ER textarea, 
-.layout21 .format_SR textarea, 
-.layout21 .format_OE textarea, 
-.layout21 .format_CR4 textarea, 
-.layout21 .format_CR5 textarea, 
-.layout21 .format_RW textarea, 
-.layout21 .format_NL textarea, 
-.layout21 .format_SA textarea, 
+.layout17 .format_WER textarea,
+.layout17 .format_WSR textarea,
+.layout17 .format_ER textarea,
+.layout17 .format_SR textarea,
+.layout17 .format_OE textarea,
+.layout17 .format_CR4 textarea,
+.layout17 .format_CR5 textarea,
+.layout17 .format_RW textarea,
+.layout17 .format_NL textarea,
+.layout17 .format_SA textarea,
 
-.layout24 .format_WER textarea, 
-.layout24 .format_WSR textarea, 
-.layout24 .format_ER textarea, 
-.layout24 .format_SR textarea, 
-.layout24 .format_OE textarea, 
-.layout24 .format_CR4 textarea, 
-.layout24 .format_CR5 textarea, 
-.layout24 .format_RW textarea, 
-.layout24 .format_NL textarea, 
-.layout24 .format_SA textarea, 
 
-.layout25 .format_WER textarea, 
-.layout25 .format_WSR textarea, 
-.layout25 .format_ER textarea, 
-.layout25 .format_SR textarea, 
-.layout25 .format_OE textarea, 
-.layout25 .format_CR4 textarea, 
-.layout25 .format_CR5 textarea, 
-.layout25 .format_RW textarea, 
-.layout25 .format_NL textarea, 
-.layout25 .format_SA textarea, 
+.layout21 .format_WER textarea,
+.layout21 .format_WSR textarea,
+.layout21 .format_ER textarea,
+.layout21 .format_SR textarea,
+.layout21 .format_OE textarea,
+.layout21 .format_CR4 textarea,
+.layout21 .format_CR5 textarea,
+.layout21 .format_RW textarea,
+.layout21 .format_NL textarea,
+.layout21 .format_SA textarea,
 
-.layout26 .format_WER textarea, 
-.layout26 .format_WSR textarea, 
-.layout26 .format_ER textarea, 
-.layout26 .format_SR textarea, 
-.layout26 .format_OE textarea, 
-.layout26 .format_CR4 textarea, 
-.layout26 .format_CR5 textarea, 
-.layout26 .format_RW textarea, 
-.layout26 .format_NL textarea, 
-.layout26 .format_SA textarea, 
+.layout24 .format_WER textarea,
+.layout24 .format_WSR textarea,
+.layout24 .format_ER textarea,
+.layout24 .format_SR textarea,
+.layout24 .format_OE textarea,
+.layout24 .format_CR4 textarea,
+.layout24 .format_CR5 textarea,
+.layout24 .format_RW textarea,
+.layout24 .format_NL textarea,
+.layout24 .format_SA textarea,
 
-.layout27 .format_WER textarea, 
-.layout27 .format_WSR textarea, 
-.layout27 .format_ER textarea, 
-.layout27 .format_SR textarea, 
-.layout27 .format_OE textarea, 
-.layout27 .format_CR4 textarea, 
-.layout27 .format_CR5 textarea, 
-.layout27 .format_RW textarea, 
-.layout27 .format_NL textarea, 
-.layout27 .format_SA textarea, 
+.layout25 .format_WER textarea,
+.layout25 .format_WSR textarea,
+.layout25 .format_ER textarea,
+.layout25 .format_SR textarea,
+.layout25 .format_OE textarea,
+.layout25 .format_CR4 textarea,
+.layout25 .format_CR5 textarea,
+.layout25 .format_RW textarea,
+.layout25 .format_NL textarea,
+.layout25 .format_SA textarea,
 
-.layout28 .format_WER textarea, 
-.layout28 .format_WSR textarea, 
-.layout28 .format_ER textarea, 
-.layout28 .format_SR textarea, 
-.layout28 .format_OE textarea, 
-.layout28 .format_CR4 textarea, 
-.layout28 .format_CR5 textarea, 
-.layout28 .format_RW textarea, 
-.layout28 .format_NL textarea, 
-.layout28 .format_SA textarea, 
+.layout26 .format_WER textarea,
+.layout26 .format_WSR textarea,
+.layout26 .format_ER textarea,
+.layout26 .format_SR textarea,
+.layout26 .format_OE textarea,
+.layout26 .format_CR4 textarea,
+.layout26 .format_CR5 textarea,
+.layout26 .format_RW textarea,
+.layout26 .format_NL textarea,
+.layout26 .format_SA textarea,
 
-.layout29 .format_WER textarea, 
-.layout29 .format_WSR textarea, 
-.layout29 .format_ER textarea, 
-.layout29 .format_SR textarea, 
-.layout29 .format_OE textarea, 
-.layout29 .format_CR4 textarea, 
-.layout29 .format_CR5 textarea, 
-.layout29 .format_RW textarea, 
-.layout29 .format_NL textarea, 
-.layout29 .format_SA textarea, 
+.layout27 .format_WER textarea,
+.layout27 .format_WSR textarea,
+.layout27 .format_ER textarea,
+.layout27 .format_SR textarea,
+.layout27 .format_OE textarea,
+.layout27 .format_CR4 textarea,
+.layout27 .format_CR5 textarea,
+.layout27 .format_RW textarea,
+.layout27 .format_NL textarea,
+.layout27 .format_SA textarea,
 
-.layout31 .format_WER textarea, 
-.layout31 .format_WSR textarea, 
-.layout31 .format_ER textarea, 
-.layout31 .format_SR textarea, 
-.layout31 .format_OE textarea, 
-.layout31 .format_CR4 textarea, 
-.layout31 .format_CR5 textarea, 
-.layout31 .format_RW textarea, 
-.layout31 .format_NL textarea, 
-.layout31 .format_SA textarea, 
+.layout28 .format_WER textarea,
+.layout28 .format_WSR textarea,
+.layout28 .format_ER textarea,
+.layout28 .format_SR textarea,
+.layout28 .format_OE textarea,
+.layout28 .format_CR4 textarea,
+.layout28 .format_CR5 textarea,
+.layout28 .format_RW textarea,
+.layout28 .format_NL textarea,
+.layout28 .format_SA textarea,
 
-.layout32 .format_WER textarea, 
-.layout32 .format_WSR textarea, 
-.layout32 .format_ER textarea, 
-.layout32 .format_SR textarea, 
-.layout32 .format_OE textarea, 
-.layout32 .format_CR4 textarea, 
-.layout32 .format_CR5 textarea, 
-.layout32 .format_RW textarea, 
-.layout32 .format_NL textarea, 
-.layout32 .format_SA textarea, 
+.layout29 .format_WER textarea,
+.layout29 .format_WSR textarea,
+.layout29 .format_ER textarea,
+.layout29 .format_SR textarea,
+.layout29 .format_OE textarea,
+.layout29 .format_CR4 textarea,
+.layout29 .format_CR5 textarea,
+.layout29 .format_RW textarea,
+.layout29 .format_NL textarea,
+.layout29 .format_SA textarea,
 
-.layout33 .format_WER textarea, 
-.layout33 .format_WSR textarea, 
-.layout33 .format_ER textarea, 
-.layout33 .format_SR textarea, 
-.layout33 .format_OE textarea, 
-.layout33 .format_CR4 textarea, 
-.layout33 .format_CR5 textarea, 
-.layout33 .format_RW textarea, 
-.layout33 .format_NL textarea, 
-.layout33 .format_SA textarea, 
+.layout31 .format_WER textarea,
+.layout31 .format_WSR textarea,
+.layout31 .format_ER textarea,
+.layout31 .format_SR textarea,
+.layout31 .format_OE textarea,
+.layout31 .format_CR4 textarea,
+.layout31 .format_CR5 textarea,
+.layout31 .format_RW textarea,
+.layout31 .format_NL textarea,
+.layout31 .format_SA textarea,
 
-.layoutSingleMulti .format_ER textarea, 
-.layoutSingleMulti .format_SR textarea, 
-.layoutSingleMulti .format_OE textarea, 
-.layoutSingleMulti .format_CR4 textarea, 
-.layoutSingleMulti .format_CR5 textarea, 
-.layoutSingleMulti .format_RW textarea, 
-.layoutSingleMulti .format_NL textarea, 
+.layout32 .format_WER textarea,
+.layout32 .format_WSR textarea,
+.layout32 .format_ER textarea,
+.layout32 .format_SR textarea,
+.layout32 .format_OE textarea,
+.layout32 .format_CR4 textarea,
+.layout32 .format_CR5 textarea,
+.layout32 .format_RW textarea,
+.layout32 .format_NL textarea,
+.layout32 .format_SA textarea,
+
+.layout33 .format_WER textarea,
+.layout33 .format_WSR textarea,
+.layout33 .format_ER textarea,
+.layout33 .format_SR textarea,
+.layout33 .format_OE textarea,
+.layout33 .format_CR4 textarea,
+.layout33 .format_CR5 textarea,
+.layout33 .format_RW textarea,
+.layout33 .format_NL textarea,
+.layout33 .format_SA textarea,
+
+.layoutSingleMulti .format_ER textarea,
+.layoutSingleMulti .format_SR textarea,
+.layoutSingleMulti .format_OE textarea,
+.layoutSingleMulti .format_CR4 textarea,
+.layoutSingleMulti .format_CR5 textarea,
+.layoutSingleMulti .format_RW textarea,
+.layoutSingleMulti .format_NL textarea,
 .layoutSingleMulti .format_SA textarea {
 	width: 100%;
 }
@@ -2206,8 +2213,8 @@ a.contexthelp {
 	padding-top:0px;
 	padding-bottom:0px
 }
-/* keeps android from distorting tutorial text */ 
-.platform_android.TDS_PS_L3 .tutorial #stimulusCell, 
+/* keeps android from distorting tutorial text */
+.platform_android.TDS_PS_L3 .tutorial #stimulusCell,
 .platform_android.TDS_PS_L4 .tutorial #stimulusCell {
 	position: relative;
 }
@@ -2216,7 +2223,8 @@ a.contexthelp {
 	background: url(../images/controls/loader32.gif) no-repeat center center;
 }*/
 
-.tutorial .stimulusCell p {
+.tutorial .stimulusCell p, 
+.tutorial .stemContainer .iat-interaction-container p {
 	text-align:center;
 }
 .tutorial .stimulusCell p div {
@@ -2327,7 +2335,7 @@ a.contexthelp {
 .TDS_PS_L2 .browser_firefox.browserVer_2 .optionContainer.withSound, .TDS_PS_L2 .browser_airsecurebrowser.browserVer_3_5 .optionContainer.withSound, .TDS_PS_L2 .browser_airsecurebrowser.browserVer_3_6 .optionContainer.withSound, .TDS_PS_L3 .browser_firefox.browserVer_2 .optionContainer.withSound, .TDS_PS_L3 .browser_airsecurebrowser.browserVer_3_5 .optionContainer.withSound, .TDS_PS_L3 .browser_airsecurebrowser.browserVer_3_6 .optionContainer.withSound, .TDS_PS_L4 .browser_firefox.browserVer_2 .optionContainer.withSound, .TDS_PS_L4 .browser_airsecurebrowser.browserVer_3_5 .optionContainer.withSound, .TDS_PS_L4 .browser_airsecurebrowser.browserVer_3_6 .optionContainer.withSound {
 	margin-left: 29px;
 }
-/* @group guide to revision */
+/*
 .guide_revision {
 	padding: 20px;
 	overflow: auto;
@@ -2366,7 +2374,7 @@ a.contexthelp {
 	margin-bottom: .5em;
 	font-weight: bold;
 }
-/* @end */
+*/
 
 /* @group Single Multi Layout (for use with simulator item) */
 .layoutSingleMulti .thePassage {
@@ -2432,6 +2440,7 @@ a.contexthelp {
 	margin-left: -3px;
 	margin-right: -3px;
 	padding-top: 5px;
+	margin-bottom: 3em;
 }
 .SimContainer.simV1 iframe {
    	width: 100%;
@@ -2525,27 +2534,65 @@ a.contexthelp {
 }
 /* @end */
 
+.layout_itemsOnly,
+.layoutPaginatedPassage {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	bottom: 0px;
+	overflow: auto;
+}
+.layout_itemsOnly .theQuestions,
+.layoutPaginatedPassage .thePassage,
+.layoutPaginatedPassage .theQuestions {
+	padding: 40px 20px;
+}
+.layoutPaginatedPassage .thePassage {
+	width: 100% !important;
+	padding: 0;
+}
+.layoutPaginatedPassage .thePassage.contextAreaFocus,
+.layoutPaginatedPassage .theQuestions .itemContainer.contextAreaFocus {
+    -webkit-box-shadow: inherit;
+	-moz-box-shadow: inherit;
+	box-shadow: inherit;
+
+}
+.touch.platform_android .layout_34 .theQuestions,
+.touch.platform_android .layout_34 .thePassage {
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+}
+.touch.platform_android .layout_34 .thePassage.showing {
+	z-index: 6;
+}
+
+
+
 /* @group Science Simulator (frame.css)
 
 .SimContainer {
-    position: absolute; 
+    position: absolute;
     display: block;
-    height: 100%; 
-    border: none; 
-    padding:0px; 
-    margin:0px; 
+    height: 100%;
+    border: none;
+    padding:0px;
+    margin:0px;
     overflow:hidden;
 	left:5px;
 	right:5px;
 }
 .SimContainer iframe {
-    position: absolute; 
-    display: block; 
-    width: 100%; 
-    height: 100%; 
-    border: none; 
-    padding:0px; 
-    margin:0px; 
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: none;
+    padding:0px;
+    margin:0px;
     overflow:hidden;
 }
 
@@ -2560,12 +2607,12 @@ a.contexthelp {
 	float:left;
 }
 .measuring:after {
-	content: "";  
-	display: block;  
-	clear: both;  
-	visibility: hidden;  
-	font-size: 0;  
-	height: 0; 
+	content: "";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	font-size: 0;
+	height: 0;
 }
 .measuring .illustrationContainer {
 	float: left;
@@ -2588,7 +2635,7 @@ a.contexthelp {
 	margin: 0 0 .3em;
 	background: transparent url(../Images/controls/geometry_sprites.png) no-repeat center 0;
 }
-.TDS_CCInvert .measuring .tools_measure button, 
+.TDS_CCInvert .measuring .tools_measure button,
 .TDS_CCWhiteN .measuring .tools_measure button {
 	background-image: url(../Images/controls/geometry_sprites_white.png);
 	border-color: #FFF;
@@ -2597,8 +2644,8 @@ a.contexthelp {
 	background-image: url(../Images/controls/geometry_sprites_yellow.png);
 	border-color: #FFCC00;
 }
-.TDS_CCInvert .measuring .tools_measure button:hover, 
-.TDS_CCWhiteN .measuring .tools_measure button:hover, 
+.TDS_CCInvert .measuring .tools_measure button:hover,
+.TDS_CCWhiteN .measuring .tools_measure button:hover,
 .TDS_CCYellowB .measuring .tools_measure button:hover {
 	background-color: rgba(255,255,255,0.3);
 }
@@ -2612,7 +2659,7 @@ a.contexthelp {
 .TDS_PS_L2 .tools_measure {
 	margin-right: -50px;
 }
-.TDS_PS_L3 .tools_measure, 
+.TDS_PS_L3 .tools_measure,
 .TDS_PS_L4 .tools_measure {
 	margin-right: -60px;
 }
@@ -2681,7 +2728,7 @@ a.contexthelp {
     left: -9999px;
 	pointer-events: none;
 }
-.hideMeasuring, 
+.hideMeasuring,
 .pageWrapper.hiding .mtPageScaleTools {
 	position: absolute;
 	left: -9999px !important;

@@ -12,7 +12,7 @@
  ******************************************************************************/
 package tds.student.performance.dao;
 
-import org.junit.Assert;;
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import tds.dll.common.performance.domain.ClientSystemFlag;
