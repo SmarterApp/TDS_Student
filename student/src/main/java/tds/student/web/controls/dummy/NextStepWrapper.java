@@ -16,10 +16,16 @@ import javax.faces.context.ResponseWriter;
 import org.apache.commons.lang3.StringUtils;
 import tds.student.web.controls.TDSGenericControl;
 
+/// <summary>
+/// An JSF control for wrapping an action buttons.
+/// </summary>
+/// <remarks>
+/// This contents of this tag should contain a collection of <tds:Button> tags.
+/// </remarks>
 @FacesComponent(value = "NextStepWrapper")
 public class NextStepWrapper extends TDSGenericControl {
 	/// <summary>
-	/// An ASP.NET control for wrapping an action buttons.
+	/// A JSF control for wrapping an action buttons.
 	/// </summary>
 	/// <remarks>
 	/// This contents of this tag should contain a collection of <tds:Button>
