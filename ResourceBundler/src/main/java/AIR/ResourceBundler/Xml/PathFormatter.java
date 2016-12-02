@@ -1,11 +1,11 @@
-/*************************************************************************
+/*******************************************************************************************************
  * Educational Online Test Delivery System
  * Copyright (c) 2016 American Institutes for Research
  *
  * Distributed under the AIR Open Source License, Version 1.0
  * See accompanying file AIR-License-1_0.txt or at 
- * https://bitbucket.org/sbacoss/eotds/wiki/AIR_Open_Source_License
- *************************************************************************/
+ * http://www.smarterapp.org/documents/American_Institutes_for_Research_Open_Source_Software_License.pdf
+ *******************************************************************************************************/
 
 package AIR.ResourceBundler.Xml;
 
@@ -13,7 +13,7 @@ import java.io.File;
 
 import AIR.Common.Web.Session.Server;
 
-/*This class provides method to format file path with client name and handles paths starting with '~'. In .net ResourcesLink, ResourcesSingleton and FileSetInput uses funtion pointer for this format methed, since Java has nothing equivalent, we put that funtion inside this methed*/
+/*This class provides a method to format a file path with client name, and handles paths starting with '~'. In .net ResourcesLink, ResourcesSingleton and FileSetInput use a function pointer for this format method, but since Java has no equivalent, we put that function inside this class.*/
 public class PathFormatter {
 
 	private static final String _defaultClientStylePath = "AIR";
