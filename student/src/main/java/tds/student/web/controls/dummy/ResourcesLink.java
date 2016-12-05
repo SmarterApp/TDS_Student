@@ -5,7 +5,8 @@
  * Distributed under the AIR Open Source License, Version 1.0
  * See accompanying file AIR-License-1_0.txt or at 
  * http://www.smarterapp.org/documents/American_Institutes_for_Research_Open_Source_Software_License.pdf
- *******************************************************************************************************/package tds.student.web.controls.dummy;
+ *******************************************************************************************************/
+package tds.student.web.controls.dummy;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -65,11 +66,10 @@ public class ResourcesLink extends UIComponentBase {
 		}
 	}
 
-	/*public String getFile() {
-		return _file;
-	}
-	*/
-	
+	/*
+	 * public String getFile() { return _file; }
+	 */
+
 	private StudentSettings _studentSettings;
 
 	public ResourcesLink() {
@@ -171,7 +171,7 @@ public class ResourcesLink extends UIComponentBase {
 
 		encodeChildren(context);
 	}
-	
+
 	private void init() {
 		_studentSettings = FacesContextHelper.getBean("studentSettings", StudentSettings.class);
 	}
