@@ -1,11 +1,11 @@
-/*************************************************************************
+/*******************************************************************************************************
  * Educational Online Test Delivery System
  * Copyright (c) 2016 American Institutes for Research
  *
  * Distributed under the AIR Open Source License, Version 1.0
  * See accompanying file AIR-License-1_0.txt or at 
- * https://bitbucket.org/sbacoss/eotds/wiki/AIR_Open_Source_License
- *************************************************************************/
+ * http://www.smarterapp.org/documents/American_Institutes_for_Research_Open_Source_Software_License.pdf
+ *******************************************************************************************************/
 
 package tds.student.web.controls.dummy;
 
@@ -16,10 +16,16 @@ import javax.faces.context.ResponseWriter;
 import org.apache.commons.lang3.StringUtils;
 import tds.student.web.controls.TDSGenericControl;
 
+/// <summary>
+/// An JSF control for wrapping an action buttons.
+/// </summary>
+/// <remarks>
+/// This contents of this tag should contain a collection of <tds:Button> tags.
+/// </remarks>
 @FacesComponent(value = "NextStepWrapper")
 public class NextStepWrapper extends TDSGenericControl {
 	/// <summary>
-	/// An ASP.NET control for wrapping an action buttons.
+	/// A JSF control for wrapping an action buttons.
 	/// </summary>
 	/// <remarks>
 	/// This contents of this tag should contain a collection of <tds:Button>

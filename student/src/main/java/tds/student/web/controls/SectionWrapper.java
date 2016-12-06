@@ -1,11 +1,12 @@
-/*******************************************************************************
- * Educational Online Test Delivery System 
- * Copyright (c) 2014 American Institutes for Research
- *     
- * Distributed under the AIR Open Source License, Version 1.0 
- * See accompanying file AIR-License-1_0.txt or at
+/*******************************************************************************************************
+ * Educational Online Test Delivery System
+ * Copyright (c) 2016 American Institutes for Research
+ *
+ * Distributed under the AIR Open Source License, Version 1.0
+ * See accompanying file AIR-License-1_0.txt or at 
  * http://www.smarterapp.org/documents/American_Institutes_for_Research_Open_Source_Software_License.pdf
- ******************************************************************************/
+ *******************************************************************************************************/
+
 package tds.student.web.controls;
 
 import java.io.IOException;
@@ -16,6 +17,9 @@ import javax.faces.context.ResponseWriter;
 
 import org.apache.commons.lang.StringUtils;
 
+/// <summary>
+/// A JSF control for wrapping a sections HTML.
+/// </summary>
 @FacesComponent(value = "SectionWrapper")
 public final class SectionWrapper extends TDSGenericControl {
 	private boolean _aria;
@@ -113,16 +117,9 @@ public final class SectionWrapper extends TDSGenericControl {
 		return "SectionWrapper";
 	}
 
-	// TODO Shajib/Shiva: tag parameter obstructs SectionWrapper working as it
-	// is
-	// not passed from custom tag declaration
-	public SectionWrapper(/* String tag */) {
-		// In .NET HtmlGenericControl class's constructor called from
-		// TDSGenericControl with tag as parameter. UIComponentBase has no such
-		// constructor
+	public SectionWrapper() {
 		setAria(false);
 		setShadow(true);
-		/* setTag (tag); */
 	}
 
 	@Override
@@ -146,13 +143,6 @@ public final class SectionWrapper extends TDSGenericControl {
 		// 9.0
 		// version
 		renderInstructionsTop(writer);
-
-		// this encodeChildren is in conforming with JSF flow - it was not there
-		// in
-		// the .NET code here.
-
-		// TODO Shajib/Shiva : following line incurs duplicate of inner html
-		// this.encodeChildren (context);
 
 	}
 
