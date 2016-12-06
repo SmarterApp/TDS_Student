@@ -120,7 +120,7 @@ public class ContentHandler extends BaseContentRendererController
       throw new ReturnStatusException (String.format ("An error occured getting the groupID '{%s}' passage file path.", groupId));
     }
 
-    if (prefetched && attempt == 1) {
+    if (attempt == 1) {
       autoEmbossing (testOpp, accLookup, pageGroup);
     }
 
