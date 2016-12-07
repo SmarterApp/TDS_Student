@@ -927,8 +927,8 @@ ul#studentTools {
     overflow: hidden;
     text-indent: -9999px;
     line-height: 25px;
-    /* SB-622:Commenting following line to fix tutorial close button position  
-    margin-top: -25px; */
+    /* SB-1505-UI-Consistency-Enhancements:Commenting following line to fix tutorial close button position. This was also reported in SB-622*/
+    /*margin-top: -25px; */
     text-decoration: none;
 	background: url(../../Images/modern/sprites_mobile_0.png) center -2730px no-repeat;
 }
