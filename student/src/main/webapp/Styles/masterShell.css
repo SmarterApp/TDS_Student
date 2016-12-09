@@ -2948,7 +2948,8 @@ fieldset.sessionID legend {
 	font-family: 'inconsolata';
 	text-transform: uppercase;
 	font-size: 0.8em;
-	margin-bottom: 0;
+	/* SB-1505: Making session input boxes in login page centered 
+	margin-bottom: 0; */
 	float: none;
 	margin-left: 0.5em;
 }
