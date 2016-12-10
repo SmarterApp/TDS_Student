@@ -138,7 +138,7 @@ public class ContentHandler extends BaseContentRendererController
       return;
 
     // check if passage allows auto embossing
-    if (pageGroup.getIitsDocument () != null && allowsAutoEmbossing (accProps, pageGroup.getIitsDocument ())) {
+    if (pageGroup.getDocument () != null && allowsAutoEmbossing (accProps, pageGroup.getDocument ())) {
 
       _printService.printPassageBraille (testOpp, pageGroup, accLookup);
     }
