@@ -1,30 +1,4 @@
-/* hacks for demo 
-
-#topBar {
-	background-image: none;
-	height: 73px;
-	background-color: #0785ab;
-	padding-top:23px;
+.yuimenu .rubric a:before, 
+#btnRubric .icon:before {
+    content: "\e902";
 }
-#contents {
-	top: 96px;
-}
-#studentTools {
-	background: url(../Images/logo_sbac2.png) no-repeat left top;
-	width: 200px;
-	height: 70px;
-}
-#btnAccessibility .icon {
-	background-position: center -818px;
-}
-#navigation {
-	background: url(../Images/navigation.png) repeat-x left top;
-	zoom:1;
-	font-size:10px;
-}
-#navigation button {
-	background: url(../Images/sprites_mobile_0_SBAC.png) center -5px;
-}
-#navigation .icon {
-	padding-top: 57px;
-}*/

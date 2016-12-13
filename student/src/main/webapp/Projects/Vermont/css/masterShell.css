@@ -1,5 +1,4 @@
-@charset "UTF-8";
-@import url(../../../Themes/vermont/css/masterShell.css);
+﻿@charset "UTF-8";
 
 /* Idaho's logo */
 #ot-logo_spot1 {
@@ -17,9 +16,7 @@
 .TDS_PS_L3 .loginForm label, .TDS_PS_L4 .loginForm label{
    width: 35%;
 }
-#quickQuide {
-	border: solid 1px #ccc;
-}
+
 #sectionTestApproval h2 {
     font-size: 2.35em;
 }

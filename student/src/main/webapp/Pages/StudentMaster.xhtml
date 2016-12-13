@@ -11,23 +11,7 @@
 	<title><ui:insert name="title"></ui:insert></title>
 	<meta name="format-detection" content="telephone=no" />
 
-	<tds:CSSLink href="~/Shared/CSS/reset.css" media="screen" type="text/css" rel="stylesheet" />
-	<tds:CSSLink href="~/Styles/masterShell.css" media="screen" type="text/css" rel="stylesheet" />
-	<tds:CSSLink href="~/Shared/CSS/elpa.css" media="screen" type="text/css" rel="stylesheet" />
-	<tds:CSSLink href="~/Styles/soundcheck.css" media="screen" type="text/css" rel="stylesheet" />
-	<tds:CSSLink href="~/Scripts/Libraries/yahoo/yui2/build/button/assets/skins/sam/button.css" type="text/css" rel="stylesheet" />
-	<tds:CSSLink href="~/Shared/CSS/dialogs.css" media="screen" type="text/css" rel="stylesheet" />
-	<tds:CSSLink href="~/Projects/%s/css/masterShell.css" rel="stylesheet" type="text/css" />
-	<tds:CSSLink href="~/Shared/CSS/accommodations.css" media="screen" type="text/css" rel="stylesheet" />
-	<tds:CSSLink href="~/Scripts/Libraries/yahoo/yui2/build/slider/assets/skins/sam/slider.css" type="text/css" rel="stylesheet" />
-
-
-	<style type="text/css">
-a:focus {
-	background-color: #069 !important;
-	color: #fff;
-}
-</style>
+	<tds:ResourcesLink file="~/Projects/%s/css/styles.xml" name="mastershell" type="css"/>
 
 	<tds:ResourcesLink file="~/Scripts/scripts_student.xml" name="base" />
 
@@ -133,7 +117,7 @@ a:focus {
 	<!-- accommodations dialog -->
 	<div id="globalAccDialog" style="visibility: hidden;">
 		<!-- style="" -->
-		<div class="hd" i18n-content="StudentMaster.Label.ChooseAccommodations"></div>
+		<div class="hd" i18n-content="Sections.TopInstructions.ChooseAccommodations"></div>
 		<div class="bd"></div>
 		<div class="ft"></div>
 	</div>
