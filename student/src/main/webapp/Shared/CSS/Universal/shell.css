@@ -108,6 +108,8 @@ body {
 }
 /* make each page aboslutely positioned, with a default z-index of 0*/
 .browser_ie #contents div.pageWrapper,
+/*SB-1505 : Code fix for Backlog Item 5.6, Safari9 Braille Test Display.*/
+.browser_safari #contents div.pageWrapper,
 .browser_chrome #contents div.pageWrapper {
 	position: absolute;
 	z-index: 0;
@@ -118,6 +120,8 @@ body {
 }
 /* move each hidden page below the shims that are drawn */
 .browser_ie #contents div.pageWrapper.hiding,
+/*SB-1505 : Code fix for Backlog Item 5.6, Safari9 Braille Test Display.*/
+.browser_safari #contents div.pageWrapper.hiding,
 .browser_chrome #contents div.pageWrapper.hiding {
 	height: 0px;
 	width: 0px;
