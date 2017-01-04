@@ -22,6 +22,7 @@
         <!-- these 2 classes are base classes for extended methods in the local implemenation used in student -->
         <context:exclude-filter type="regex" expression="tds.dll.common.performance.dao.impl.ConfigurationDaoImpl" />
         <context:exclude-filter type="regex" expression="tds.dll.common.performance.services.impl.DbLatencyServiceImpl" />
+        <context:exclude-filter type="regex" expression="tds.dll.common.performance.dao.impl.ItemBankDaoImpl" />
     </context:component-scan>
     <context:component-scan base-package="tds.student.performance">
         <context:exclude-filter type="regex" expression="tds.student.performance.services.impl.*" />
@@ -29,6 +30,8 @@
 
     <context:property-placeholder location="performance-integration-student.properties"/>
 
+    <bean id="tdsSettings" class="TDS.Shared.Configuration.TDSSettings" scope="prototype"/>
+    <bean id="appSettings" class="AIR.Common.Configuration.ConfigurationSection" scope="prototype"/>
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 

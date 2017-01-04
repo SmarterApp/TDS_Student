@@ -12,6 +12,7 @@ import static org.junit.Assert.fail;
 
 import java.sql.SQLException;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +38,7 @@ public class AdaptiveServiceTest extends AbstractTest
 
   // Suceess Test Case
   @Test
+  @Ignore("Not implemented")
   public void testCreateNextItemGroup () throws SQLException, ReturnStatusException, Exception {
     // TODO mpatel Fix it once ItemRenderer is complete
     throw new Exception ();
@@ -64,6 +66,7 @@ public class AdaptiveServiceTest extends AbstractTest
 
   // Failure Test Case
   @Test
+  @Ignore("Not implemented")
   public void testCreateNextItemGroupFailure () throws SQLException, ReturnStatusException, Exception {
     // TODO mpatel Fix it once ItemRenderer is complete
     fail ();

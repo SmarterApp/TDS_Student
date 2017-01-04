@@ -51,7 +51,7 @@ public class TestOpportunityDaoTest extends IntegrationTest {
     private final String expectedClientName = "SBAC_PT";
     private final Boolean expectedIsSegmented = false;
     private final String expectedAlgorithm = "fixedform";
-    private final String expectedEnvironment = "dev";
+    private final String expectedEnvironment = "Development";
     private final Long expectedSimulationSegmentCount = 0L;
     private final Integer version = 1;
 

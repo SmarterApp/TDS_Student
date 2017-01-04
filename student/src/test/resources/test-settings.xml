@@ -7,5 +7,9 @@
 	<entry key="ItembankDBName">itembank</entry>
 	<entry key="TDSArchiveDBName">archive</entry>
 	<entry key="TDSConfigsDBName">configs</entry>
-		
+
+	<entry key="EncryptionKey">Thisisanincrediblylongkeythatiscertainlylongerthantwentyfourcharacters</entry>
+	<entry key="datasource.jdbcUrl">jdbc:mysql://[URL]/session</entry>
+	<entry key="datasource.username">remoteuser</entry>
+	<entry key="datasource.password">[PASSWORD]</entry>
 </properties>

@@ -9,21 +9,33 @@
 
 
     <!-- Root Context: defines shared resources visible to all other web components -->
-	<context:component-scan base-package="tds.student.dll.test, tds.dll.mysql"/>
-	
+	<context:component-scan base-package="tds.student.dll.test, tds.dll.mysql, TDS.Shared.Configuration"/>
+
+	<context:component-scan base-package="tds.dll.common.performance">
+		<!-- these 3 classes are base classes for extended methods in the local implemenation used in student -->
+		<context:exclude-filter type="regex" expression="tds.dll.common.performance.dao.impl.ConfigurationDaoImpl" />
+		<context:exclude-filter type="regex" expression="tds.dll.common.performance.services.impl.DbLatencyServiceImpl" />
+		<context:exclude-filter type="regex" expression="tds.dll.common.performance.dao.impl.ItemBankDaoImpl" />
+	</context:component-scan>
+
+	<context:component-scan base-package="tds.dll.common.diagnostic">
+		<context:exclude-filter type="regex" expression="tds.dll.common.diagnostic.services.impl.DiagnosticConfigurationServiceImpl"/>
+	</context:component-scan>
+	<context:component-scan base-package="tds.student.performance"/>
+	<context:component-scan base-package="tds.student.diagnostic"/>
+
 	<context:property-placeholder location="classpath:test-settings.xml" ignore-unresolvable="true" order="900" local-override="true"/>
 	
 	<beans:import resource="classpath:opentestsystem.shared.test-db-context-module.xml"/>
 	<beans:import resource="classpath:opentestsystem.shared.tr-api-context-module.xml" />
 
-	
 	<!-- TDSSettings bean. This gives access to clientname and any other info such as session type etc. -->
-	<!--<beans:bean id="tdsSettings" class="TDS.Shared.Configuration.TDSSettings" scope="prototype"/>-->
+	<beans:bean id="tdsSettings" class="TDS.Shared.Configuration.TDSSettingsNoWeb" scope="prototype"/>
 
 	<!-- DLL -->	
 	<beans:bean id="iCommonDLL" class="tds.dll.mysql.CommonDLL"  scope="singleton"/>
 	<beans:bean id="iProctorDLL" class="tds.dll.mysql.ProctorDLL" scope="singleton"/>
-	
+
 	<!-- Default to "old" RTS scheme, override this variable to use new scheme -->
 	<!--  <beans:bean id="iRtsDLL" class="${rtsDllClass:tds.dll.mysql.RtsDLL}" /> -->
 	<beans:bean id="iRtsDLL" class="tds.dll.mysql.RtsPackageDLL" scope="singleton"/>
@@ -54,28 +66,42 @@
 	<beans:bean id="iTestScoringService" class="tds.student.services.TestScoringService"/> -->
 	<beans:bean id="iClientManager" class="tds.student.sql.singletons.ClientManager"/>
 
+	<beans:bean id="diagnosticConfigService" class="tds.student.performance.services.DiagnosticConfigurationServiceNullTestImpl"/>
 
-	
+	<beans:bean id="progmanClient" class="tds.student.performance.services.ProgManClientNullTestImpl"/>
+
 	<!-- 
 	<beans:bean id="iTestScoringService" class="tds.student.services.TestScoringService"/>	
 	<beans:bean id="applicationContextAware" class="tds.student.sql.singletons.ClientManager"/>
 	 -->
 		
 	<!--Start: c3p0 Datasource Configuration -->
-	<beans:bean id="applicationDataSource" destroy-method="close"
-		  class="com.mchange.v2.c3p0.ComboPooledDataSource" >
-		    <beans:property name="driverClass" value="com.mysql.jdbc.Driver"/>
-		    <beans:property name="jdbcUrl" value="jdbc:mysql://52.33.126.67:3306/session"/>
-		    <beans:property name="user" value="remoteuser"/>
-		    <beans:property name="password" value="change*me"/>
-		    <beans:property name="minPoolSize" value="1200"/>
-		<beans:property name="acquireIncrement" value="500" />
-		<beans:property name="maxPoolSize" value="1200" />
-		<beans:property name="checkoutTimeout" value="60000" />
-		<beans:property name="preferredTestQuery" value="SELECT 1" />
-		<beans:property name="maxConnectionAge" value="0"/>
-		<beans:property name="acquireRetryAttempts" value="30"/>
+	<beans:bean id="hikariAIRConfig" class="com.zaxxer.hikari.HikariConfig">
+		<beans:property name="dataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlDataSource" />
+		<beans:property name="dataSourceProperties" >
+			<beans:props>
+				<beans:prop key="url">${datasource.jdbcUrl}</beans:prop>
+				<beans:prop key="user">${datasource.username}</beans:prop>
+				<beans:prop key="password">${datasource.password}</beans:prop>
+			</beans:props>
+		</beans:property>
+
+		<beans:property name="poolName" value="AIRHikariCP" />
+		<beans:property name="maxLifetime" value="1800000" />
+		<beans:property name="minimumIdle" value="${datasource.minPoolSize:5}" />
+		<beans:property name="maximumPoolSize" value="${datasource.maxPoolSize:20}" />
+		<!-- <beans:property name="leakDetectionThreshold" value="15000" /> -->
+
+		<!-- The follow values are the defaults -->
+		<!--<beans:property name="autoCommit" value="true" />-->
+		<!--<beans:property name="connectionTimeout" value="30000" />-->
+		<!--<beans:property name="idleTimeout" value="30000" /> &lt;!&ndash; connect_timeout on MySQL is 60 seconds, and HikariCP recommends making this 30 seconds less than that value &ndash;&gt;-->
 	</beans:bean>
-	
+
+	<beans:bean id="applicationDataSource" class="com.zaxxer.hikari.HikariDataSource">
+		<beans:constructor-arg ref="hikariAIRConfig" />
+	</beans:bean>
+
+	<beans:bean id="itemBankService" class="tds.student.performance.services.impl.ItemBankServiceImpl" />
 	
 </beans:beans>
