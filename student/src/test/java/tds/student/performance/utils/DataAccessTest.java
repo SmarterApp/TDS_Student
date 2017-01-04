@@ -48,7 +48,8 @@ public class DataAccessTest extends IntegrationTest {
                 "FROM\n" +
                 "   ${sessiondb}.session\n" +
                 "WHERE\n" +
-                "   sessionid = :sessionId";
+                "   sessionid = :sessionId \n" +
+                "   AND clientname = 'SBAC_PT'";
 
         TestSession result = namedParameterJdbcTemplate.queryForObject(
                 dbNameUtility.setDatabaseNames(SQL),
