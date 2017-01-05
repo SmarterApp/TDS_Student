@@ -24,7 +24,7 @@
 	<context:component-scan base-package="tds.student.diagnostic"/>
 
 	<context:property-placeholder location="classpath:test-setting.properties" ignore-unresolvable="true" order="900" local-override="true"/>
-	<context:property-placeholder location="file:///opt/sbtds/db-settings.properties" order="901" ignore-unresolvable="true" local-override="true"/>
+	<context:property-placeholder location="file:///opt/sbtds/test-db-settings.properties" order="901" ignore-unresolvable="true" local-override="true"/>
 	
 	<beans:import resource="classpath:opentestsystem.shared.test-db-context-module.xml"/>
 	<beans:import resource="classpath:opentestsystem.shared.tr-api-context-module.xml" />
