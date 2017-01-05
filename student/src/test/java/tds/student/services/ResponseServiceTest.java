@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +39,8 @@ public class ResponseServiceTest extends AbstractTest
   ResponseService             responseService    = null;
 
   // Suceess Test Case
-  ////@Test
+  @Test
+  @Ignore("Never actually implemented")
   public void testLogin () throws SQLException, ReturnStatusException {
     try {
       OpportunityInstance oppInstance = null;
@@ -73,7 +75,8 @@ public class ResponseServiceTest extends AbstractTest
   }
 
   // Failure Test Case
-  //@Test
+  @Test
+  @Ignore("Never actually implemented")
   public void testLoginFailure () throws SQLException, ReturnStatusException {
     try {
       OpportunityInstance oppInstance = null;
@@ -92,7 +95,8 @@ public class ResponseServiceTest extends AbstractTest
   }
 
   // Sucess Test Case
-  //@Test
+  @Test
+  @Ignore("Never actually implemented")
   public void testOpportunityItems () throws SQLException, ReturnStatusException {
     /*try {
       OpportunityInstance oppInstance = null;
@@ -115,7 +119,8 @@ public class ResponseServiceTest extends AbstractTest
   }
 
   // Failure Test Case
-  //@Test
+  @Test
+  @Ignore("Never actually implemented")
   public void testOpportunityItemsFAilure () throws SQLException, ReturnStatusException {
     /*try {
       OpportunityInstance oppInstance = null;
@@ -134,7 +139,8 @@ public class ResponseServiceTest extends AbstractTest
   }
 
   // Sucess Test Case
-  //@Test
+  @Test
+  @Ignore("Never actually implemented")
   public void testGetItemGroup () throws SQLException, ReturnStatusException {
     try {
       OpportunityInstance oppInstance = null;
@@ -172,7 +178,8 @@ public class ResponseServiceTest extends AbstractTest
   }
 
   // Failure Test Case
-  //@Test
+  @Test
+  @Ignore("Never actually implemented")
   public void testGetItemGroupFailure () throws SQLException, ReturnStatusException {
     try {
       OpportunityInstance oppInstance = null;
@@ -195,7 +202,8 @@ public class ResponseServiceTest extends AbstractTest
   }
 
   // Sucess Test Case
-  //@Test
+  @Test
+  @Ignore("Never actually implemented")
   public void testisTestComplete () throws SQLException, ReturnStatusException {
     try {
       UUID uuid = null;
@@ -213,7 +221,8 @@ public class ResponseServiceTest extends AbstractTest
   }
 
   // Failure Test Case
-  //@Test
+  @Test
+  @Ignore("Never actually implemented")
   public void testisTestCompleteFailure () throws SQLException, ReturnStatusException {
     try {
       UUID uuid = null;
@@ -231,7 +240,8 @@ public class ResponseServiceTest extends AbstractTest
   }
 
   // Sucess Test Case
-  //@Test
+  @Test
+  @Ignore("Never actually implemented")
   public void testremoveResponse () throws SQLException, ReturnStatusException {
     try {
       OpportunityInstance oppInstance = null;
