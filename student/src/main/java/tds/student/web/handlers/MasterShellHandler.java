@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,6 +31,7 @@ import org.opentestsystem.shared.trapi.data.TestStatusType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -109,9 +111,6 @@ public class MasterShellHandler extends TDSHandler
   private static final Logger    _logger = LoggerFactory.getLogger (MasterShellHandler.class);
 
   @Autowired
-  private IOpportunityService    _oppService;
-
-  @Autowired
   private IAccommodationsService _accsService;
 
   @Autowired
@@ -140,6 +139,14 @@ public class MasterShellHandler extends TDSHandler
 
   @Autowired
   private ItemBankService         itemBankService;
+
+  @Autowired
+  @Qualifier("integrationOpportunityService")
+  private IOpportunityService integrationOpportunityService;
+
+  @Autowired
+  @Qualifier("legacyOpportunityService")
+  private IOpportunityService    _oppService;
 
   /***
    * 
@@ -354,6 +361,7 @@ public class MasterShellHandler extends TDSHandler
 
 
     OpportunityInfo oppInfo = _oppService.openTest (testee, session, testKey);
+    integrationOpportunityService.openTest(testee, session, testKey);
     OpportunityInstance oppInstance = oppInfo.createOpportunityInstance (session.getKey ());
 
     // if we are in PT mode and the session is proctorless then we need to
