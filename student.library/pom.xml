@@ -20,13 +20,20 @@
 		<item-renderer.version>0.0.1-SNAPSHOT</item-renderer.version>
 		<item-scoring.version>1.1.0-SNAPSHOT</item-scoring.version>
 		<item-selection.version>0.0.1-SNAPSHOT</item-selection.version>
+		<tds-exam-client.version>0.0.1-SNAPSHOT</tds-exam-client.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>2.6.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -45,6 +52,12 @@
 			<version>${item-scoring.version}</version>
 		</dependency>
 
+
+		<dependency>
+			<groupId>org.opentestsystem.exam</groupId>
+			<artifactId>tds-exam-client</artifactId>
+			<version>${tds-exam-client.version}</version>
+		</dependency>
 
 		<!-- Start Dependency shared project -->
 		<dependency>
