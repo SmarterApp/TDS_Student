@@ -4,6 +4,7 @@ import TDS.Shared.Browser.BrowserInfo;
 import TDS.Shared.Exceptions.ReturnStatusException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -35,12 +36,18 @@ import tds.student.sql.data.Testee;
 public class RemoteOpportunityService implements IOpportunityService {
   private final RestTemplate restTemplate;
 
-  private final String examUrl = "http://localhost:8080/exam";
+  private final String examUrl;
 
   @Autowired
   public RemoteOpportunityService(
     @Qualifier("integrationRestTemplate") RestTemplate restTemplate) {
     this.restTemplate = restTemplate;
+    this.examUrl = "http://localhost:8080/exam";
+  }
+
+  RemoteOpportunityService(RestTemplate restTemplate, String examUrl) {
+    this.restTemplate = restTemplate;
+    this.examUrl = examUrl;
   }
 
   @Override
