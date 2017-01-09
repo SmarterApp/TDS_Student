@@ -40,12 +40,8 @@ public class RemoteOpportunityService implements IOpportunityService {
 
   @Autowired
   public RemoteOpportunityService(
-    @Qualifier("integrationRestTemplate") RestTemplate restTemplate) {
-    this.restTemplate = restTemplate;
-    this.examUrl = "http://localhost:8080/exam";
-  }
-
-  RemoteOpportunityService(RestTemplate restTemplate, String examUrl) {
+    @Qualifier("integrationRestTemplate") RestTemplate restTemplate,
+    @Value("${tds.exam.remote.url}") String examUrl) {
     this.restTemplate = restTemplate;
     this.examUrl = examUrl;
   }
@@ -75,7 +71,11 @@ public class RemoteOpportunityService implements IOpportunityService {
 
     Response<Exam> response = res.getBody();
     if (response.hasErrors() || !response.getData().isPresent()) {
-      throw new RuntimeException("FAIL");
+      String errorMessage = "Failed to open exam";
+      if(response.hasErrors()) {
+        errorMessage = response.getErrors()[0].getMessage();
+      }
+      throw new ReturnStatusException(errorMessage);
     }
 
     Exam exam = response.getData().get();

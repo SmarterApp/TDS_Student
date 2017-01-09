@@ -1,14 +1,12 @@
 package tds.student.services.remote;
 
 import TDS.Shared.Exceptions.ReturnStatusException;
-import org.apache.xpath.Arg;
 import org.joda.time.Instant;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.ParameterizedTypeReference;
@@ -19,11 +17,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import tds.common.Response;
+import tds.common.ValidationError;
 import tds.exam.Exam;
 import tds.exam.ExamStatusCode;
 import tds.exam.ExamStatusStage;
-import tds.exam.OpenExamRequest;
-import tds.student.performance.domain.TestOpportunity;
 import tds.student.services.abstractions.IOpportunityService;
 import tds.student.sql.data.OpportunityInfo;
 import tds.student.sql.data.TestSession;
@@ -48,7 +45,7 @@ public class RemoteOpportunityServiceTest {
   }
 
   @After
-  public void tearDown(){
+  public void tearDown() {
   }
 
   @Test
@@ -69,8 +66,26 @@ public class RemoteOpportunityServiceTest {
     TestSession session = new TestSession();
     Testee testee = new Testee();
 
-    OpportunityInfo info  = service.openTest(testee, session, "testKey");
+    OpportunityInfo info = service.openTest(testee, session, "testKey");
 
     assertThat(info).isNotNull();
+  }
+
+  @Test(expected = ReturnStatusException.class)
+  public void shouldThrowExceptionWhenErrorsArePresent() throws ReturnStatusException {
+    ValidationError error = new ValidationError("TEST", "TEST");
+
+    Response<Exam> response = new Response<Exam>(error);
+    ResponseEntity<Response<Exam>> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
+    when(restTemplate.exchange(
+      isA(String.class),
+      isA(HttpMethod.class),
+      isA(HttpEntity.class),
+      isA(ParameterizedTypeReference.class))).thenReturn(responseEntity);
+
+    TestSession session = new TestSession();
+    Testee testee = new Testee();
+
+    OpportunityInfo info = service.openTest(testee, session, "testKey");
   }
 }
