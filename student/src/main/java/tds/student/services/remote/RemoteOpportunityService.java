@@ -10,6 +10,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -37,13 +38,16 @@ public class RemoteOpportunityService implements IOpportunityService {
   private final RestTemplate restTemplate;
 
   private final String examUrl;
+  private final boolean isRemoteExamCallsEnabled;
 
   @Autowired
   public RemoteOpportunityService(
     @Qualifier("integrationRestTemplate") RestTemplate restTemplate,
-    @Value("${tds.exam.remote.url}") String examUrl) {
+    @Value("${tds.exam.remote.url}") String examUrl,
+    @Value("${tds.exam.remote.enabled}") Boolean remoteExamCallsEnabled) {
     this.restTemplate = restTemplate;
     this.examUrl = examUrl;
+    this.isRemoteExamCallsEnabled = remoteExamCallsEnabled;
   }
 
   @Override
@@ -53,6 +57,11 @@ public class RemoteOpportunityService implements IOpportunityService {
 
   @Override
   public OpportunityInfo openTest(Testee testee, TestSession session, String testKey) throws ReturnStatusException {
+    //This isn't ideal, but due to the way the progman properties are loaded within the system this lives within the service rather than the callers.
+    if (!isRemoteExamCallsEnabled) {
+      return null;
+    }
+
     OpenExamRequest openExamRequest = new OpenExamRequest.Builder()
       .withAssessmentKey(testKey)
       .withSessionId(session.getKey())
@@ -61,13 +70,18 @@ public class RemoteOpportunityService implements IOpportunityService {
       .build();
 
     HttpEntity<OpenExamRequest> requestHttpEntity = new HttpEntity<>(openExamRequest);
+    ResponseEntity<Response<Exam>> res;
 
-    ResponseEntity<Response<Exam>> res = restTemplate.exchange(
-      examUrl,
-      HttpMethod.POST,
-      requestHttpEntity,
-      new ParameterizedTypeReference<Response<Exam>>() {
-      });
+    try {
+      res = restTemplate.exchange(
+        examUrl,
+        HttpMethod.POST,
+        requestHttpEntity,
+        new ParameterizedTypeReference<Response<Exam>>() {
+        });
+    } catch (RestClientException rce) {
+      throw new ReturnStatusException(rce);
+    }
 
     Response<Exam> response = res.getBody();
     if (response.hasErrors() || !response.getData().isPresent()) {

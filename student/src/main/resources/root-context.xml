@@ -43,6 +43,8 @@
 				<beans:entry key="itemscoring.qti.sympyTimeoutMillis" value="${itemscoring.qti.sympyTimeoutMillis}" />
 				<beans:entry key="itemScoring.callbackUrl" value="${itemScoring.callbackUrl}" />
 				<beans:entry key="tds.testshell.dictionaryUrl" value="${tds.testshell.dictionaryUrl:}" />
+				<beans:entry key="tds.exam.remote.enabled" value="${tds.exam.remote.enabled:false}" />
+				<beans:entry key="tds.exam.remote.url" value="${tds.exam.remote.url}" />
 			</util:map>
 
 		</beans:constructor-arg>

@@ -28,6 +28,7 @@ import tds.student.sql.data.Testee;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -41,7 +42,7 @@ public class RemoteOpportunityServiceTest {
 
   @Before
   public void setUp() {
-    service = new RemoteOpportunityService(restTemplate, examUrl);
+    service = new RemoteOpportunityService(restTemplate, examUrl, true);
   }
 
   @After
@@ -87,5 +88,14 @@ public class RemoteOpportunityServiceTest {
     Testee testee = new Testee();
 
     OpportunityInfo info = service.openTest(testee, session, "testKey");
+  }
+
+  @Test
+  public void shouldNotExecuteIfNotEnabled() throws ReturnStatusException {
+    service = new RemoteOpportunityService(restTemplate, examUrl, false);
+
+    service.openTest(new Testee(), new TestSession(), "");
+
+    verifyZeroInteractions(restTemplate);
   }
 }
