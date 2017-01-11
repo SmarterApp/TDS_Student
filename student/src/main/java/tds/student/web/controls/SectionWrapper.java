@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Educational Online Test Delivery System 
- * Copyright (c) 2014 American Institutes for Research
+ * Copyright (c) 2016 American Institutes for Research
  *     
  * Distributed under the AIR Open Source License, Version 1.0 
  * See accompanying file AIR-License-1_0.txt or at
@@ -16,6 +16,9 @@ import javax.faces.context.ResponseWriter;
 
 import org.apache.commons.lang.StringUtils;
 
+/// <summary>
+/// A JSF control for wrapping a sections HTML.
+/// </summary>
 @FacesComponent (value = "SectionWrapper")
 public final class SectionWrapper extends TDSGenericControl
 {
@@ -26,6 +29,28 @@ public final class SectionWrapper extends TDSGenericControl
   private String  _headerKey;
   private String  _headerText;
   private boolean _show;
+
+	// SB-1505: Added following fields to sync with Proprietary Release 9.0
+	// version
+	private String _headerName;
+	private String _topInstructionsKey;
+	private String _topInstructionsText;
+
+	public String getTopInstructionsKey() {
+		return "Sections.TopInstructions." + _headerName;
+	}
+
+	public void setTopInstructionsKey(String topInstructionsKey) {
+		this._topInstructionsKey = topInstructionsKey;
+	}
+
+	public String getTopInstructionsText() {
+		return _topInstructionsText;
+	}
+
+	public void setTopInstructionsText(String topInstructionsText) {
+		this._topInstructionsText = topInstructionsText;
+	}
 
   public String getDescribedBy () {
     return _describedBy;
@@ -52,11 +77,19 @@ public final class SectionWrapper extends TDSGenericControl
   }
 
   public String getHeaderKey () {
-    return _headerKey;
+		return "Sections.TopHeader." + _headerName;
   }
 
   public void setHeaderKey (String value) {
     this._headerKey = value;
+	}
+
+	public String getHeaderName() {
+		return _headerName;
+	}
+
+	public void setHeaderName(String headerName) {
+		this._headerName = headerName;
   }
 
   public String getHeaderText () {
@@ -86,7 +119,7 @@ public final class SectionWrapper extends TDSGenericControl
 
   // TODO Shajib/Shiva: tag parameter obstructs SectionWrapper working as it is
   // not passed from custom tag declaration
-  public SectionWrapper (/* String tag */) {
+	public SectionWrapper() {
     // In .NET HtmlGenericControl class's constructor called from
     // TDSGenericControl with tag as parameter. UIComponentBase has no such
     // constructor
@@ -112,11 +145,10 @@ public final class SectionWrapper extends TDSGenericControl
     // header h2
     renderHeader (writer);
 
-    // this encodeChildren is in conforming with JSF flow - it was not there in
-    // the .NET code here.
-
-    // TODO Shajib/Shiva : following line incurs duplicate of inner html
-    // this.encodeChildren (context);
+		// SB-1505: Added following method call to sync with Proprietary Release
+		// 9.0
+		// version
+		renderInstructionsTop(writer);
 
   }
 
@@ -140,8 +172,8 @@ public final class SectionWrapper extends TDSGenericControl
 
   public void renderHeader (ResponseWriter writer) throws IOException {
 
-    if (StringUtils.isEmpty (this.getHeaderKey ()) && StringUtils.isEmpty (this.getHeaderText ()))
-      return;
+		if (StringUtils.isEmpty(this.getHeaderName()) && StringUtils.isEmpty(this.getHeaderText()))
+			return;
 
     if (StringUtils.isEmpty (this.getHeaderText ())) {
       this.setHeaderText (getHeaderKey ());
@@ -169,4 +201,25 @@ public final class SectionWrapper extends TDSGenericControl
       writer.endElement ("div"); // ot-shadowBox
     }
   }
+
+	// SB-1505: Added following method to sync with Proprietary Release 9.0
+	// version
+	private void renderInstructionsTop(ResponseWriter writer) throws IOException {
+		if (StringUtils.isEmpty(_headerName) && StringUtils.isEmpty(_topInstructionsText))
+			return;
+
+		if (StringUtils.isEmpty(_topInstructionsText)) {
+			_topInstructionsText = getTopInstructionsKey();
+		}
+
+		writer.startElement("div", null);
+		writer.writeAttribute("class", "instructions-top", null);
+
+		if (!StringUtils.isEmpty(getTopInstructionsKey())) {
+			writer.writeAttribute("i18n-content", getTopInstructionsKey(), null);
+		}
+
+		writer.write(_topInstructionsText);
+		writer.endElement("div");
+	}
 }
