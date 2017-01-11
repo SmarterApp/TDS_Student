@@ -33,6 +33,8 @@ public class Resources
   private String               _configFile;
   private Map<String, FileSet> _fileSets = new HashMap<String, FileSet> ();
 
+	private String name;
+	private Resources _importer;
   // / <summary>
   // /
   // / </summary>
@@ -41,15 +43,16 @@ public class Resources
   // all relative paths are assumed
   // / to be relative to location of configuration file.
   // / </param>
-  public Resources (String configurationFile, String sourceDirectory) {
+	public Resources(String configurationFile, Resources importer) {
     _configFile = configurationFile;
 
     // save root path
     if (sourceDirectory != null) {
       _sourceDir = sourceDirectory;
     } else {
-      _sourceDir = configurationFile.replace (Path.getFileName (configurationFile), "");
+		_sourceDir = Path.getDirectoryName(configurationFile);
       this._sourceDir = this._sourceDir.substring (0, this._sourceDir.length () - 1);
+		_importer = importer;
     }
   }
 
@@ -66,16 +69,17 @@ public class Resources
     Document document = (Document) builder.build (xmlFile);
     Element rootElement = document.getRootElement ();
 
+		String attr = rootElement.getAttributeValue("name");
+		name = (attr != null) ? attr : null;
     for (Element childEl : rootElement.getChildren ()) {
       String childName = childEl.getName ();
-      if ("fileSet".equalsIgnoreCase (childName)) {
-        parseFileSet (childEl);
-      } else if ("import".equalsIgnoreCase (childName)) {
-        parseImport (childEl);
-      } else if ("remove".equalsIgnoreCase (childName))
-      {
-        parseRemove (childEl);
-      }
+			if ("import".equalsIgnoreCase(childName)) {
+				parseImport(childEl);
+			} else if ("fileSet".equalsIgnoreCase(childName)) {
+				parseFileSet(childEl);
+			} else if ("remove".equalsIgnoreCase(childName)) {
+				parseRemove(childEl);
+			}
 
     }
   }
@@ -91,7 +95,7 @@ public class Resources
     String importPath = resolveFile (importEl.getValue ());
 
     // parse external config file
-    Resources resources = new Resources (importPath, _sourceDir);
+		Resources resources = new Resources(importPath, this);
     resources.parse ();
 
     for (Iterator<FileSet> iterator = resources.getFileSets (); iterator.hasNext ();)
@@ -121,9 +125,13 @@ public class Resources
     // if (String.isNullOrEmpty(id))
     if (StringUtils.equals (id, null) || StringUtils.equals (id, StringUtils.EMPTY))
       return null;
-    return _fileSets.containsKey (id) ? _fileSets.get (id) : null;
+		FileSet fileSet = _fileSets.containsKey(id) ? _fileSets.get(id) : null;
+		if (fileSet == null && _importer != null) {
+			fileSet = _importer.getFileSet(id);
   }
 
+		return fileSet;
+	}
   public Iterator<FileSet> getFileSets () {
     return _fileSets.values ().iterator ();
   }
@@ -139,4 +147,11 @@ public class Resources
     return fileSet.getFileInputs ();
   }
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }
