@@ -27,130 +27,116 @@ import org.apache.commons.lang3.StringUtils;
 
 import AIR.Common.Utilities.Path;
 
-public class Resources {
-	private String _sourceDir;
-	private String _configFile;
-	private Map<String, FileSet> _fileSets = new HashMap<String, FileSet>();
+public class Resources
+{
+  private String               _sourceDir;
+  private String               _configFile;
+  private Map<String, FileSet> _fileSets = new HashMap<String, FileSet> ();
 
-	private String name;
+  // / <summary>
+  // /
+  // / </summary>
+  // / <param name="configurationFile">The configuration File.</param>
+  // / <param name="sourceDirectory">The source directory, if not supplied,
+  // all relative paths are assumed
+  // / to be relative to location of configuration file.
+  // / </param>
+  public Resources (String configurationFile, String sourceDirectory) {
+    _configFile = configurationFile;
 
-	private Resources _importer;
+    // save root path
+    if (sourceDirectory != null) {
+      _sourceDir = sourceDirectory;
+    } else {
+      _sourceDir = configurationFile.replace (Path.getFileName (configurationFile), "");
+      this._sourceDir = this._sourceDir.substring (0, this._sourceDir.length () - 1);
+    }
+  }
 
-	// / <summary>
-	// /
-	// / </summary>
-	// / <param name="configurationFile">The configuration File.</param>
-	// / <param name="sourceDirectory">The source directory, if not supplied,
-	// all relative paths are assumed
-	// / to be relative to location of configuration file.
-	// / </param>
-	public Resources(String configurationFile, Resources importer) {
-		_configFile = configurationFile;
+  public Resources (String configurationFile) {
+    _configFile = configurationFile;
+    _sourceDir = configurationFile.replace (Path.getFileName (configurationFile), "");
+    this._sourceDir = this._sourceDir.substring (0, this._sourceDir.length () - 1);
+  }
 
-		// save root path
-		_sourceDir = Path.getDirectoryName(configurationFile);
-		
-		_importer = importer;
+  public void parse () throws JDOMException, IOException, ResourcesException {
+    SAXBuilder builder = new SAXBuilder ();
+    // todo Shiva/Sajib: the config file may be a class path resource.
+    File xmlFile = new File (_configFile);
+    Document document = (Document) builder.build (xmlFile);
+    Element rootElement = document.getRootElement ();
 
-	}
+    for (Element childEl : rootElement.getChildren ()) {
+      String childName = childEl.getName ();
+      if ("fileSet".equalsIgnoreCase (childName)) {
+        parseFileSet (childEl);
+      } else if ("import".equalsIgnoreCase (childName)) {
+        parseImport (childEl);
+      } else if ("remove".equalsIgnoreCase (childName))
+      {
+        parseRemove (childEl);
+      }
 
-	public Resources(String configurationFile) {
-		_configFile = configurationFile;
-		_sourceDir = configurationFile.replace(Path.getFileName(configurationFile), "");
-		this._sourceDir = this._sourceDir.substring(0, this._sourceDir.length() - 1);
-	}
+    }
+  }
 
-	public void parse() throws JDOMException, IOException, ResourcesException {
-		SAXBuilder builder = new SAXBuilder();
-		// todo Shiva/Sajib: the config file may be a class path resource.
-		File xmlFile = new File(_configFile);
-		Document document = (Document) builder.build(xmlFile);
-		Element rootElement = document.getRootElement();
+  private void parseFileSet (Element fileSetEl) throws ResourcesException {
+    FileSet fileSet = new FileSet (this);
+    fileSet.parse (fileSetEl);
+    _fileSets.put (fileSet.getName (), fileSet);
+  }
 
-		String attr = rootElement.getAttributeValue("name");
-		name = (attr != null) ? attr : null;
+  private void parseImport (Element importEl) throws JDOMException, IOException, ResourcesException
+  {
+    String importPath = resolveFile (importEl.getValue ());
 
-		for (Element childEl : rootElement.getChildren()) {
-			String childName = childEl.getName();
-			if ("import".equalsIgnoreCase(childName)) {
-				parseImport(childEl);
-			} else if ("fileSet".equalsIgnoreCase(childName)) {
-				parseFileSet(childEl);
-			} else if ("remove".equalsIgnoreCase(childName)) {
-				parseRemove(childEl);
-			}
+    // parse external config file
+    Resources resources = new Resources (importPath, _sourceDir);
+    resources.parse ();
 
-		}
-	}
+    for (Iterator<FileSet> iterator = resources.getFileSets (); iterator.hasNext ();)
+    {
+      FileSet resource = iterator.next ();
+      _fileSets.put (resource.getName (), resource);
+    }
+  }
 
-	private void parseFileSet(Element fileSetEl) throws ResourcesException {
-		FileSet fileSet = new FileSet(this);
-		fileSet.parse(fileSetEl);
-		_fileSets.put(fileSet.getName(), fileSet);
-	}
+  private void parseRemove (Element excludeEl)
+  {
+    Attribute setAttrib = excludeEl.getAttribute ("set");
+    String setName = (setAttrib != null) ? setAttrib.getValue () : null;
 
-	private void parseImport(Element importEl) throws JDOMException, IOException, ResourcesException {
-		String importPath = resolveFile(importEl.getValue());
+    // remove fileset globally
+    if (!StringUtils.isEmpty (setName))
+    {
+      _fileSets.remove (setName);
+    }
+  }
 
-		// parse external config file
-		Resources resources = new Resources(importPath, this);
-		resources.parse();
+  public String resolveFile (String file) {
+    return Path.combine (_sourceDir, file);
+  }
 
-		for (Iterator<FileSet> iterator = resources.getFileSets(); iterator.hasNext();) {
-			FileSet resource = iterator.next();
-			_fileSets.put(resource.getName(), resource);
-		}
-	}
+  public FileSet getFileSet (String id) {
+    // if (String.isNullOrEmpty(id))
+    if (StringUtils.equals (id, null) || StringUtils.equals (id, StringUtils.EMPTY))
+      return null;
+    return _fileSets.containsKey (id) ? _fileSets.get (id) : null;
+  }
 
-	private void parseRemove(Element excludeEl) {
-		Attribute setAttrib = excludeEl.getAttribute("set");
-		String setName = (setAttrib != null) ? setAttrib.getValue() : null;
+  public Iterator<FileSet> getFileSets () {
+    return _fileSets.values ().iterator ();
+  }
 
-		// remove fileset globally
-		if (!StringUtils.isEmpty(setName)) {
-			_fileSets.remove(setName);
-		}
-	}
+  public Iterator<FileSetInput> getFileInputs (String name)
+      throws ResourcesException {
+    FileSet fileSet = getFileSet (name);
 
-	public String resolveFile(String file) {
-		return Path.combine(_sourceDir, file);
-	}
+    if (fileSet == null) {
+      throw new ResourcesException (String.format ("The fileset name \"{0}\" could not be found.", name));
+    }
 
-	public FileSet getFileSet(String id) {
-		// if (String.isNullOrEmpty(id))
-		if (StringUtils.equals(id, null) || StringUtils.equals(id, StringUtils.EMPTY))
-			return null;
-
-		FileSet fileSet = _fileSets.containsKey(id) ? _fileSets.get(id) : null;
-
-		if (fileSet == null && _importer != null) {
-			fileSet = _importer.getFileSet(id);
-		}
-
-		return fileSet;
-
-	}
-
-	public Iterator<FileSet> getFileSets() {
-		return _fileSets.values().iterator();
-	}
-
-	public Iterator<FileSetInput> getFileInputs(String name) throws ResourcesException {
-		FileSet fileSet = getFileSet(name);
-
-		if (fileSet == null) {
-			throw new ResourcesException(String.format("The fileset name \"{0}\" could not be found.", name));
-		}
-
-		return fileSet.getFileInputs();
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
+    return fileSet.getFileInputs ();
+  }
 
 }
