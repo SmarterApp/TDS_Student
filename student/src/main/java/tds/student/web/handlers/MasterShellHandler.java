@@ -139,10 +139,6 @@ public class MasterShellHandler extends TDSHandler
 
   @Autowired
   @Qualifier("integrationOpportunityService")
-  private IOpportunityService integrationOpportunityService;
-
-  @Autowired
-  @Qualifier("legacyOpportunityService")
   private IOpportunityService    _oppService;
 
   /***
@@ -357,10 +353,6 @@ public class MasterShellHandler extends TDSHandler
     }
 
     OpportunityInfo oppInfo = _oppService.openTest (testee, session, testKey);
-    OpportunityInfo remoteInfo = integrationOpportunityService.openTest(testee, session, testKey);
-    if (remoteInfo != null && oppInfo.getStatus() != remoteInfo.getStatus()) {
-      _logger.debug("Legacy oppInfo status not the same as remote info status.  \n legacy: {} \n remote: {}", oppInfo, remoteInfo);
-    }
 
     OpportunityInstance oppInstance = oppInfo.createOpportunityInstance (session.getKey ());
 

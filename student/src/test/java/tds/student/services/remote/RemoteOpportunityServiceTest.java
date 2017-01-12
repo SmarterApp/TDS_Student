@@ -21,6 +21,7 @@ import tds.common.ValidationError;
 import tds.exam.Exam;
 import tds.exam.ExamStatusCode;
 import tds.exam.ExamStatusStage;
+import tds.student.services.RemoteOpportunityService;
 import tds.student.services.abstractions.IOpportunityService;
 import tds.student.sql.data.OpportunityInfo;
 import tds.student.sql.data.TestSession;
@@ -28,6 +29,7 @@ import tds.student.sql.data.Testee;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
@@ -38,11 +40,14 @@ public class RemoteOpportunityServiceTest {
   @Mock
   private RestTemplate restTemplate;
 
+  @Mock
+  private IOpportunityService legacyOpportunityService;
+
   private IOpportunityService service;
 
   @Before
   public void setUp() {
-    service = new RemoteOpportunityService(restTemplate, examUrl, true);
+    service = new RemoteOpportunityService(restTemplate, legacyOpportunityService, examUrl, true);
   }
 
   @After
@@ -68,6 +73,7 @@ public class RemoteOpportunityServiceTest {
     Testee testee = new Testee();
 
     OpportunityInfo info = service.openTest(testee, session, "testKey");
+    verify(legacyOpportunityService).openTest(testee, session, "testKey");
 
     assertThat(info).isNotNull();
   }
@@ -88,13 +94,17 @@ public class RemoteOpportunityServiceTest {
     Testee testee = new Testee();
 
     OpportunityInfo info = service.openTest(testee, session, "testKey");
+    verify(legacyOpportunityService).openTest(testee, session, "testKey");
   }
 
   @Test
   public void shouldNotExecuteIfNotEnabled() throws ReturnStatusException {
-    service = new RemoteOpportunityService(restTemplate, examUrl, false);
+    service = new RemoteOpportunityService(restTemplate, legacyOpportunityService, examUrl, false);
 
-    service.openTest(new Testee(), new TestSession(), "");
+    Testee testee = new Testee();
+    TestSession testSession = new TestSession();
+    service.openTest(testee, testSession, "testKey");
+    verify(legacyOpportunityService).openTest(testee, testSession, "testKey");
 
     verifyZeroInteractions(restTemplate);
   }
