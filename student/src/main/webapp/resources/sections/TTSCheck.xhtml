@@ -1,111 +1,166 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://java.sun.com/jsf/passthrough"
-	xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:cc="http://java.sun.com/jsf/composite" xmlns:tds="http://airast.org/jsfcustom" xmlns:ui="http://java.sun.com/jsf/facelets"
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://java.sun.com/jsf/passthrough"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:cc="http://java.sun.com/jsf/composite"
+	xmlns:tds="http://airast.org/jsfcustom"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 <cc:interface componentType="tds.student.web.controls.SectionControl">
 </cc:interface>
 <cc:implementation>
+
 	<tds:SectionWrapper id="sectionTTSCheck">
 
 		<div id="englishTTSTest" class="hidden">
 			<div id="checkSoundEnglish">
-				<span i18n-content="TTSCheck.Label.TTSEnglish"></span>
-				<h1 id="sectionTTSCheckHeader" i18n-content="TTSCheck.Label.DidYouHear"></h1>
+				<h1 id="sectionTTSCheckHeader"
+					i18n-content="Sections.TopHeader.CheckSoundEnglish"></h1>
+				<div class="instructions-top"
+					i18n-content="Sections.TopInstructions.CheckSoundEnglish"></div>
 				<div class="instructions">
-					<p>
-						<a id="clickToHearEnglish" href="javascript:void(0);" tabindex="1" class="checker soundReady" i18n-content="TTSCheck.Label.ClickToHear"><span></span></a>
-					</p>
+					<a id="clickToHearEnglish" href="javascript:void(0);" tabindex="1"
+						class="checker soundReady"
+						i18n-content="TTSCheck.Label.ClickToHear"><span></span></a>
+
 					<div lang="en-us" id="englishMessageDiv">
-						<span lang="en-us" style="display: none" i18n-content="TTSCheck.Label.HearMessageEnglish"></span>
+						<span lang="en-us" style="display: none"
+							i18n-content="TTSCheck.Label.HearMessageEnglish"></span>
 					</div>
 					<p i18n-content="TTSCheck.Label.HeardYesOrNo"></p>
 				</div>
-				<span class="clear"></span> <span class="actions"> <tds:Button id="btnSoundEnglishNo" styleClass="negative" key="TTSCheck.Label.HeardNo" /> <tds:Button id="btnSoundEnglishYes"
-						styleClass="positive" key="TTSCheck.Label.HeardYes" /> <tds:Button id="skipEnglish" styleClass="positive" key="TTSCheck.Label.SkipEnglish" />
-				</span> <span class="clear"></span>
+				<span class="clear"></span>
+				<tds:NextStepWrapper headerID="sectionCheckSoundEnglishNextSteps"
+					headerName="CheckSoundEnglish">
+					<tds:Button id="btnSoundEnglishYes" styleClass="positive"
+						key="TTSCheck.Label.HeardYes" />
+					<tds:Button id="btnSoundEnglishNo" styleClass="negative"
+						key="TTSCheck.Label.HeardNo" />
+					<tds:Button id="skipEnglish" styleClass="positive"
+						key="TTSCheck.Label.SkipEnglish" />
+				</tds:NextStepWrapper>
+				<span class="clear"></span>
 			</div>
 		</div>
 
 		<div id="spanishTTSTest" class="hidden">
 			<div id="checkSoundSpanish">
-				<span i18n-content="TTSCheck.Label.TTSSpanish"></span>
-				<h1 i18n-content="TTSCheck.Label.DidYouHearSpanish"></h1>
+				<h1 i18n-content="Sections.TopHeader.CheckSoundSpanish"></h1>
+				<div class="instructions-top"
+					i18n-content="Sections.TopInstructions.CheckSoundSpanish"></div>
 				<div class="instructions">
-					<p>
-						<a id="clickToHearSpanish" href="javascript:void(0);" class="checker soundReady" tabindex="1" i18n-content="TTSCheck.Label.ClickToHearSpanish"><span></span></a>
-					</p>
+
+					<a id="clickToHearSpanish" href="javascript:void(0);"
+						class="checker soundReady" tabindex="1"
+						i18n-content="TTSCheck.Label.ClickToHearSpanish"><span></span></a>
+
 					<div lang="es-mx" id="spanishMessageDiv">
-						<span lang="es-mx" style="display: none" i18n-content="TTSCheck.Label.HearMessageSpanish"></span>
+						<span lang="es-mx" style="display: none"
+							i18n-content="TTSCheck.Label.HearMessageSpanish"></span>
 					</div>
 					<p i18n-content="TTSCheck.Label.HeardYesOrNoSpanish"></p>
 				</div>
-				<span class="clear"></span> <span class="actions"> <tds:Button id="btnSoundSpanishNo" styleClass="negative" key="TTSCheck.Label.HeardNoSpanish" /> <tds:Button id="btnSoundSpanishYes"
-						styleClass="positive" key="TTSCheck.Label.HeardYesSpanish" /> <tds:Button id="skipSpanish" styleClass="positive" key="TTSCheck.Label.SkipSpanish" />
-				</span> <span class="clear"></span>
+				<span class="clear"></span>
+				<tds:NextStepWrapper id="sectionCheckSoundSpanishNextSteps"
+					headerName="CheckSoundSpanish">
+					<tds:Button id="btnSoundSpanishYes" styleClass="positive"
+						key="TTSCheck.Label.HeardYesSpanish" />
+					<tds:Button id="btnSoundSpanishNo" styleClass="negative"
+						key="TTSCheck.Label.HeardNoSpanish" />
+					<tds:Button id="skipSpanish" styleClass="positive"
+						key="TTSCheck.Label.SkipSpanish" />
+				</tds:NextStepWrapper>
+				<span class="clear"></span>
 			</div>
 		</div>
 
 		<!-- Start TTS Adjustments -->
-		<div class="tds-ot-section hidden" id="TTS_Adjustments">
-			<h1 i18n-content="TTSCheck.Label.SoundSettingsHeading">Sound Settings</h1>
-			<div class="voicePacks">
-				<span i18n-content="TTSCheck.Label.CurrentVoicePack"> Current voice pack: </span> <span id="TTS_Voice_Name" class="hidden" tabindex="0"> </span> <select id="TTS_Select_VoicePack" class="hidden"
-					tabindex="0">
+		<div class="hidden" id="TTS_Adjustments">
+			<h1 i18n-content="TTSCheck.Label.SoundSettingsHeading">Sound
+				Settings</h1>
+			<div class="voicePacks instructions-top">
+				<span i18n-content="TTSCheck.Label.CurrentVoicePack"> Current
+					voice pack: </span> <span id="TTS_Voice_Name" class="hidden" tabindex="0">
+				</span> <select id="TTS_Select_VoicePack" class="hidden" tabindex="0">
 				</select>
 			</div>
 			<div class="instructions">
-				<p i18n-content="TTSCheck.Label.soundsettingsinstructions">Use the sliders to adjust pitch and volume. You will not be able to changes these settings once begin your test.</p>
+				<p i18n-content="TTSCheck.Label.soundsettingsinstructions">Use
+					the sliders to adjust pitch and volume. You will not be able to
+					changes these settings once begin your test.</p>
 			</div>
 
 
 			<div class="sliderWrap">
-				<div id="TTS_Adjust_Volume" class="yui-h-slider" tabIndex="0" touch-action="none">
+				<div id="TTS_Adjust_Volume" class="yui-h-slider" tabIndex="0"
+					touch-action="none">
 					<h2 i18n-content="TTSCheck.Label.SliderVolume"></h2>
 					<div id="volumeThumb" class="yui-slider-thumb">
-						<img src="#{request.contextPath}/Scripts/Libraries/yahoo/yui2/build/slider/assets/thumb-n.gif" touch-action="none" />
+						<img
+							src="../Scripts/Libraries/yahoo/yui2/build/slider/assets/thumb-n.gif"
+							touch-action="none" />
 					</div>
 				</div>
 				<div id="Volume_Value" class="sliderValue">0</div>
 			</div>
 
 			<div class="sliderWrap">
-				<div id="TTS_Adjust_Pitch" class="yui-h-slider" tabIndex="0" touch-action="none">
+				<div id="TTS_Adjust_Pitch" class="yui-h-slider" tabIndex="0"
+					touch-action="none">
 					<h2 i18n-content="TTSCheck.Label.SliderPitch"></h2>
 					<div id="pitchThumb" class="yui-slider-thumb">
-						<img src="#{request.contextPath}/Scripts/Libraries/yahoo/yui2/build/slider/assets/thumb-n.gif" touch-action="none" />
+						<img
+							src="../Scripts/Libraries/yahoo/yui2/build/slider/assets/thumb-n.gif"
+							touch-action="none" />
 					</div>
 				</div>
 				<div id="Pitch_Value" class="sliderValue">0</div>
 			</div>
 
 			<div class="sliderWrap">
-				<div id="TTS_Adjust_Rate" class="yui-h-slider" tabIndex="0" touch-action="none">
+				<div id="TTS_Adjust_Rate" class="yui-h-slider" tabIndex="0"
+					touch-action="none">
 					<h2 i18n-content="TTSCheck.Label.SliderRate"></h2>
 					<div id="rateThumb" class="yui-slider-thumb">
-						<img src="#{request.contextPath}/Scripts/Libraries/yahoo/yui2/build/slider/assets/thumb-n.gif" touch-action="none" />
+						<img
+							src="../Scripts/Libraries/yahoo/yui2/build/slider/assets/thumb-n.gif"
+							touch-action="none" />
 					</div>
 				</div>
 				<div id="Rate_Value" class="sliderValue">0</div>
 			</div>
 			<div class="TTSdefaultcheckbox">
-				<input type="checkbox" id="TTS_Set_Defaults" value="1" checked="checked" tabindex="0" /> <label for="TTS_Set_Defaults"><span i18n-content="TTSCheck.Label.SetSystemDefault">Use
-						System Defaults</span></label>
+				<input type="checkbox" id="TTS_Set_Defaults" value="1"
+					checked="checked" tabindex="0" /> <label for="TTS_Set_Defaults"><span
+					i18n-content="TTSCheck.Label.SetSystemDefault">Use System
+						Defaults</span></label>
 			</div>
 
 			<span class="clear"></span>
 
 		</div>
-		<!-- End TTS Adjustments -->
+
 		<div id="checkErrorDiv" class="hidden">
 			<h1 i18n-content="TTSCheck.Label.AudioProblem"></h1>
 			<div class="instructions">
 				<p i18n-content="TTSCheck.Label.TellAdminMessage"></p>
-				<div id="ESNVoicePack" class="hidden" i18n-content="TTSCheck.Label.NoSpanishVoicePack"></div>
-				<div id="ENUVoicePack" class="hidden" i18n-content="TTSCheck.Label.NoEnglishVoicePack"></div>
+				<div id="ESNVoicePack" class="hidden"
+					i18n-content="TTSCheck.Label.NoSpanishVoicePack"></div>
+				<div id="ENUVoicePack" class="hidden"
+					i18n-content="TTSCheck.Label.NoEnglishVoicePack"></div>
 			</div>
-			<span class="actions"> <tds:Button id="continueError" styleClass="positive" key="TTSCheck.Label.Continue" /> <tds:Button id="btnErrorTryAgain" styleClass="negative"
-					key="TTSCheck.Label.TryAgain" /> <tds:Button id="logoutOnErrorButton" styleClass="positive" key="TTSCheck.Label.LogoutOnAudioError" />
-			</span> <span class="clear"></span>
+			<tds:NextStepWrapper id="sectionCheckErrorDiv"
+				headerName="CheckErrorDiv">
+				<tds:Button id="btnErrorTryAgain" styleClass="negative"
+					key="TTSCheck.Label.TryAgain" />
+				<tds:Button id="logoutOnErrorButton" styleClass="positive"
+					key="TTSCheck.Label.LogoutOnAudioError" />
+				<tds:Button id="continueError" styleClass="positive"
+					key="TTSCheck.Label.Continue" />
+			</tds:NextStepWrapper>
+			<span class="clear"></span>
 		</div>
 
 		<div id="ttsNotAvailable" class="hidden">
@@ -113,10 +168,19 @@
 			<div class="instructions">
 				<p i18n-content="TTSCheck.Label.NoAudioAdminMessage"></p>
 			</div>
-			<span class="actions"> <tds:Button id="continueNoAudio" styleClass="positive" key="TTSCheck.Label.Continue" /> <tds:Button id="noAudioLogout" styleClass="positive"
-					key="TTSCheck.Label.LogoutOnAudioError" />
-			</span> <span class="clear"></span>
+			
+			<tds:NextStepWrapper id="sectionTTSNotAvailableNextSteps"
+				headerName="TTSNotAvailable">
+				 <tds:Button
+					id="continueNoAudio" sytleClass="positive"
+					key="TTSCheck.Label.Continue" /> 
+					<tds:Button id="noAudioLogout"
+					styleClass="negative" key="TTSCheck.Label.LogoutOnAudioError" />
+			</tds:NextStepWrapper>
+			
+			<span class="clear"></span>
 		</div>
 	</tds:SectionWrapper>
+
 </cc:implementation>
 </html>
