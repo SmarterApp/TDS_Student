@@ -1,43 +1,30 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://java.sun.com/jsf/passthrough"
-	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:cc="http://java.sun.com/jsf/composite"
-	xmlns:tds="http://airast.org/jsfcustom"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://java.sun.com/jsf/passthrough"
+	xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:cc="http://java.sun.com/jsf/composite" xmlns:tds="http://airast.org/jsfcustom" xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 <cc:interface componentType="tds.student.web.controls.SectionControl">
 </cc:interface>
 <cc:implementation>
-
-	<tds:SectionWrapper id="sectionTestVerify" headerName="IsYourTest">
+	<tds:SectionWrapper id="sectionTestVerify" headerKey="Approval.Label.IsYourTest">
 
 		<div id="ot-infoConfirm">
 			<p id="verifySessionID">
-				<span class="grey" i18n-content="Approval.Label.YourTestSessionId"></span>
-				<span id="lblVerifySessionID"></span>
+				<span class="grey" i18n-content="Approval.Label.YourTestSessionId"></span> <span id="lblVerifySessionID"></span>
 			</p>
 			<p id="verifyTestForm" style="display: none;">
-				<span class="grey" i18n-content="Approval.Label.YourTestForm"></span>
-				<select id="ddlTestForms"></select>
+				<span class="grey" i18n-content="Approval.Label.YourTestForm"></span> <select id="ddlTestForms"></select>
 			</p>
 		</div>
 
 		<div id="summary-segments"></div>
 
-		<tds:NextStepWrapper headerID="sectionTestVerifyNextSteps"
-			headerName="IsYourTest">
-			<tds:Button id="btnApproveAccommodations" styleClass="positive"
-				key="Approval.Button.ApproveAccomodation" />
-			<tds:Button id="btnWrongAccommodations" styleClass="negative"
-				key="Approval.Button.WrongAccomodation" />
-		</tds:NextStepWrapper>
+		<div class="instructions" i18n-content="StaticContent.Label.IsYourTest"></div>
+
+		<span class="actions"> <tds:Button id="btnWrongAccommodations" styleClass="negative" key="Approval.Button.WrongAccomodation" /> <tds:Button id="btnApproveAccommodations"
+				styleClass="positive" key="Approval.Button.ApproveAccomodation" />
+		</span>
 
 	</tds:SectionWrapper>
 </cc:implementation>
 </html>
-
-
 
