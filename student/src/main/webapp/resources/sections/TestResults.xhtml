@@ -1,36 +1,24 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://java.sun.com/jsf/passthrough"
-	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:cc="http://java.sun.com/jsf/composite"
-	xmlns:tds="http://airast.org/jsfcustom"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://java.sun.com/jsf/passthrough"
+	xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:cc="http://java.sun.com/jsf/composite" xmlns:tds="http://airast.org/jsfcustom" xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 <cc:interface componentType="tds.student.web.controls.SectionControl">
 </cc:interface>
 <cc:implementation>
 
-	<tds:SectionWrapper id="sectionTestResults" headerName="TestResults">
+	<tds:SectionWrapper id="sectionTestResults" headerKey="TestResults.Label.YourResults">
 
 		<div class="identity">
 			<ul>
-				<li><span i18n-content="TestResults.Label.StudentName"></span>
-					<span id="lblName">***FIRST NAME***</span> (<span
-					i18n-content="TestResults.Label.SSID"></span> <span id="lblSSID">***SSID***</span>)</li>
-				<li><span i18n-content="TestResults.Label.TestName"></span> <span
-					id="lblTestName">***DISPLAY NAME***</span></li>
-				<li><span i18n-content="TestResults.Label.TestCompletedDate"></span>
-					<span id="lblCompleted"> <h:outputText
-							value="#{cc.currentTime}">
-						</h:outputText>
+				<li><span i18n-content="TestResults.Label.StudentName"></span> <span id="lblName">***FIRST NAME***</span> (<span i18n-content="TestResults.Label.SSID"></span> <span id="lblSSID">***SSID***</span>)</li>
+				<li><span i18n-content="TestResults.Label.TestName"></span> <span id="lblTestName">***DISPLAY NAME***</span></li>
+				<li><span i18n-content="TestResults.Label.TestCompletedDate"></span> <span id="lblCompleted"> <h:outputText value="#{cc.currentTime}">
+						 </h:outputText>
 				</span></li>
 			</ul>
 
 			<div id="scorePolling">
-				<span class="spinner"></span> <span
-					i18n-content="TestResults.Label.Polling"></span>
+				<span class="spinner"></span> <span i18n-content="TestResults.Label.Polling"></span>
 			</div>
 
 			<div id="scoreSummary">
@@ -41,20 +29,15 @@
 
 		<div class="instructions">
 			<p>
-				<span class="ptShow"><span
-					i18n-content="StaticContent.Label.NoScoresForPT"></span></span> <span
-					i18n-content="StaticContent.Label.YoureComplete"></span>
+				<span class="ptShow"><span i18n-content="StaticContent.Label.NoScoresForPT"></span></span> <span i18n-content="StaticContent.Label.YoureComplete"></span>
 			</p>
 
 			<table id="itemScores" style="display: none;" border="0">
 				<thead>
 					<tr>
-						<th scope="col" i18n-content="ItemScores.Column.Position">Question
-							Number</th>
-						<th scope="col" i18n-content="ItemScores.Column.Response">Your
-							Answer</th>
-						<th scope="col" i18n-content="ItemScores.Column.Answer">Correct
-							Answer</th>
+						<th scope="col" i18n-content="ItemScores.Column.Position">Question Number</th>
+						<th scope="col" i18n-content="ItemScores.Column.Response">Your Answer</th>
+						<th scope="col" i18n-content="ItemScores.Column.Answer">Correct Answer</th>
 						<th scope="col" i18n-content="ItemScores.Column.Score">Score</th>
 					</tr>
 				</thead>
@@ -68,15 +51,9 @@
 			</div>
 		</div>
 
-		<tds:NextStepWrapper id="sectionTestSelectionNextSteps"
-			headerName="TestResults">
-			<tds:Button id="btnScoreLogout" styleClass="positive"
-				key="TestResults.Link.Logout" />
-			<tds:Button id="btnEnterMoreScores" styleClass="positive"
-				key="TestResults.Link.EnterMoreScores" />
-			<tds:Button id="btnChangeStudent" styleClass="positive"
-				key="TestResults.Link.ChangeStudent" />
-		</tds:NextStepWrapper>
+		<span class="actions"> <tds:Button id="btnScoreLogout" styleClass="positive" key="TestResults.Link.Logout" /> <tds:Button id="btnEnterMoreScores" styleClass="positive"
+				key="TestResults.Link.EnterMoreScores" /> <tds:Button id="btnChangeStudent" styleClass="positive" key="TestResults.Link.ChangeStudent" />
+		</span>
 
 		<p class="ferpa" i18n-content="StaticContent.Label.FERPA"></p>
 
