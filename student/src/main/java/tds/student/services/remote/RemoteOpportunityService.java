@@ -1,4 +1,4 @@
-package tds.student.services;
+package tds.student.services.remote;
 
 import TDS.Shared.Browser.BrowserInfo;
 import TDS.Shared.Exceptions.ReturnStatusException;

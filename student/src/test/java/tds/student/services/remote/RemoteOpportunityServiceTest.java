@@ -21,7 +21,6 @@ import tds.common.ValidationError;
 import tds.exam.Exam;
 import tds.exam.ExamStatusCode;
 import tds.exam.ExamStatusStage;
-import tds.student.services.RemoteOpportunityService;
 import tds.student.services.abstractions.IOpportunityService;
 import tds.student.sql.data.OpportunityInfo;
 import tds.student.sql.data.TestSession;
