@@ -21,6 +21,7 @@
 		<item-scoring.version>1.1.0-SNAPSHOT</item-scoring.version>
 		<item-selection.version>0.0.1-SNAPSHOT</item-selection.version>
 		<tds-exam-client.version>0.0.1-SNAPSHOT</tds-exam-client.version>
+		<tds-common-legacy.version>0.0.1-SNAPSHOT</tds-common-legacy.version>
 	</properties>
 
 	<dependencies>
@@ -52,6 +53,17 @@
 			<version>${item-scoring.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.opentestsystem.common</groupId>
+			<artifactId>tds-common-legacy</artifactId>
+			<version>${tds-common-legacy.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.auto.value</groupId>
+			<artifactId>auto-value</artifactId>
+			<version>1.3</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.opentestsystem.exam</groupId>
