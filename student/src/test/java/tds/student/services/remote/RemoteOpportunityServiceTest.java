@@ -21,7 +21,9 @@ import tds.common.ValidationError;
 import tds.exam.Exam;
 import tds.exam.ExamStatusCode;
 import tds.exam.ExamStatusStage;
+import tds.exam.OpenExamRequest;
 import tds.student.services.abstractions.IOpportunityService;
+import tds.student.sql.abstractions.ExamRepository;
 import tds.student.sql.data.OpportunityInfo;
 import tds.student.sql.data.TestSession;
 import tds.student.sql.data.Testee;
@@ -34,8 +36,6 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RemoteOpportunityServiceTest {
-  private static final String examUrl = "http://server:8080/exam";
-
   @Mock
   private RestTemplate restTemplate;
 
@@ -44,9 +44,12 @@ public class RemoteOpportunityServiceTest {
 
   private IOpportunityService service;
 
+  @Mock
+  private ExamRepository examRepository;
+
   @Before
   public void setUp() {
-    service = new RemoteOpportunityService(restTemplate, legacyOpportunityService, examUrl, true);
+    service = new RemoteOpportunityService(legacyOpportunityService, true, examRepository);
   }
 
   @After
@@ -63,10 +66,8 @@ public class RemoteOpportunityServiceTest {
       .withStatus(new ExamStatusCode(ExamStatusCode.STATUS_APPROVED, ExamStatusStage.IN_PROGRESS), Instant.now())
       .build();
     Response<Exam> response = new Response<>(exam);
-    ResponseEntity<Response<Exam>> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
-    when(restTemplate.exchange(
-      urlCaptor.capture(),
-      methodCaptor.capture(), entityCaptor.capture(), isA(ParameterizedTypeReference.class))).thenReturn(responseEntity);
+
+    when(examRepository.openExam(isA(OpenExamRequest.class))).thenReturn(response);
 
     TestSession session = new TestSession();
     Testee testee = new Testee();
@@ -81,13 +82,8 @@ public class RemoteOpportunityServiceTest {
   public void shouldThrowExceptionWhenErrorsArePresent() throws ReturnStatusException {
     ValidationError error = new ValidationError("TEST", "TEST");
 
-    Response<Exam> response = new Response<Exam>(error);
-    ResponseEntity<Response<Exam>> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
-    when(restTemplate.exchange(
-      isA(String.class),
-      isA(HttpMethod.class),
-      isA(HttpEntity.class),
-      isA(ParameterizedTypeReference.class))).thenReturn(responseEntity);
+    Response<Exam> response = new Response<>(error);
+    when(examRepository.openExam(isA(OpenExamRequest.class))).thenReturn(response);
 
     TestSession session = new TestSession();
     Testee testee = new Testee();
@@ -98,7 +94,7 @@ public class RemoteOpportunityServiceTest {
 
   @Test
   public void shouldNotExecuteIfNotEnabled() throws ReturnStatusException {
-    service = new RemoteOpportunityService(restTemplate, legacyOpportunityService, examUrl, false);
+    service = new RemoteOpportunityService(legacyOpportunityService, false, examRepository);
 
     Testee testee = new Testee();
     TestSession testSession = new TestSession();

@@ -6,22 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.UUID;
 
 import tds.common.Response;
+import tds.common.ValidationError;
 import tds.exam.Exam;
 import tds.exam.OpenExamRequest;
 import tds.student.services.abstractions.IOpportunityService;
 import tds.student.services.data.ApprovalInfo;
+import tds.student.sql.abstractions.ExamRepository;
 import tds.student.sql.data.OpportunityInfo;
 import tds.student.sql.data.OpportunityInstance;
 import tds.student.sql.data.OpportunitySegment;
@@ -37,21 +33,18 @@ import tds.student.sql.data.Testee;
 @Service("integrationOpportunityService")
 @Scope("prototype")
 public class RemoteOpportunityService implements IOpportunityService {
-  private final RestTemplate restTemplate;
   private final IOpportunityService legacyOpportunityService;
-  private final String examUrl;
   private final boolean isRemoteExamCallsEnabled;
+  private final ExamRepository examRepository;
 
   @Autowired
   public RemoteOpportunityService(
-    @Qualifier("integrationRestTemplate") RestTemplate restTemplate,
     @Qualifier("legacyOpportunityService") IOpportunityService legacyOpportunityService,
-    @Value("${tds.exam.remote.url}") String examUrl,
-    @Value("${tds.exam.remote.enabled}") Boolean remoteExamCallsEnabled) {
-    this.restTemplate = restTemplate;
-    this.examUrl = examUrl;
+    @Value("${tds.exam.remote.enabled}") Boolean remoteExamCallsEnabled,
+    ExamRepository examRepository) {
     this.isRemoteExamCallsEnabled = remoteExamCallsEnabled;
     this.legacyOpportunityService = legacyOpportunityService;
+    this.examRepository = examRepository;
   }
 
   @Override
@@ -75,30 +68,19 @@ public class RemoteOpportunityService implements IOpportunityService {
       .withStudentId(testee.getKey())
       .build();
 
-    HttpEntity<OpenExamRequest> requestHttpEntity = new HttpEntity<>(openExamRequest);
-    ResponseEntity<Response<Exam>> responseEntity;
+    Response<Exam> response = examRepository.openExam(openExamRequest);
 
-    try {
-      responseEntity = restTemplate.exchange(
-        examUrl,
-        HttpMethod.POST,
-        requestHttpEntity,
-        new ParameterizedTypeReference<Response<Exam>>() {
-        });
-    } catch (RestClientException rce) {
-      throw new ReturnStatusException(rce);
-    }
-
-    Response<Exam> response = responseEntity.getBody();
-
-    if (!response.hasErrors() && !response.getData().isPresent()) {
+    if (!response.hasError() && !response.getData().isPresent()) {
       throw new ReturnStatusException("Invalid response from the exam service");
-    } else if (response.hasErrors()) {
-      String errorMessage = "Failed to open exam";
-      if(response.hasErrors()) {
-        errorMessage = response.getErrors()[0].getMessage();
-      }
+    } else if (response.getError().isPresent()) {
+      ValidationError validationError = response.getError().get();
+      String errorMessage = validationError.getTranslatedMessage().isPresent()
+        ? validationError.getTranslatedMessage().get()
+        : validationError.getMessage();
+
       throw new ReturnStatusException(errorMessage);
+    } else if (!response.getData().isPresent()) {
+      throw new ReturnStatusException("Invalid response from the exam service");
     }
 
     //By the time we reach this point data will always be present
