@@ -117,15 +117,12 @@ public final class SectionWrapper extends TDSGenericControl
     return "SectionWrapper";
   }
 
-  // TODO Shajib/Shiva: tag parameter obstructs SectionWrapper working as it is
-  // not passed from custom tag declaration
+
 	public SectionWrapper() {
-    // In .NET HtmlGenericControl class's constructor called from
-    // TDSGenericControl with tag as parameter. UIComponentBase has no such
-    // constructor
+
     setAria (false);
     setShadow (true);
-    /* setTag (tag); */
+
   }
 
   @Override
@@ -161,12 +158,10 @@ public final class SectionWrapper extends TDSGenericControl
     if (this.getShadow ()) {
       writer.startElement ("div", null);
       writer.writeAttribute ("class", "ot-shadowBox", null);
-      // writer.endElement ("div");
 
       // ot-innerShadow
       writer.startElement ("div", null);
       writer.writeAttribute ("class", "ot-innerShadow", null);
-      // writer.endElement ("div");
     }
   }
 

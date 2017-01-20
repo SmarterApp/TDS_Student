@@ -39,7 +39,7 @@ public class Resources
   // /
   // / </summary>
   // / <param name="configurationFile">The configuration File.</param>
-  // / <param name="sourceDirectory">The source directory, if not supplied,
+  // / <param name="importer">The source directory, if not supplied,
   // all relative paths are assumed
   // / to be relative to location of configuration file.
   // / </param>
@@ -47,13 +47,8 @@ public class Resources
     _configFile = configurationFile;
 
     // save root path
-    if (sourceDirectory != null) {
-      _sourceDir = sourceDirectory;
-    } else {
-		_sourceDir = Path.getDirectoryName(configurationFile);
-      this._sourceDir = this._sourceDir.substring (0, this._sourceDir.length () - 1);
-		_importer = importer;
-    }
+    _sourceDir = Path.getDirectoryName(configurationFile);
+    _importer = importer;
   }
 
   public Resources (String configurationFile) {
@@ -64,7 +59,6 @@ public class Resources
 
   public void parse () throws JDOMException, IOException, ResourcesException {
     SAXBuilder builder = new SAXBuilder ();
-    // todo Shiva/Sajib: the config file may be a class path resource.
     File xmlFile = new File (_configFile);
     Document document = (Document) builder.build (xmlFile);
     Element rootElement = document.getRootElement ();
@@ -122,7 +116,7 @@ public class Resources
   }
 
   public FileSet getFileSet (String id) {
-    // if (String.isNullOrEmpty(id))
+
     if (StringUtils.equals (id, null) || StringUtils.equals (id, StringUtils.EMPTY))
       return null;
 		FileSet fileSet = _fileSets.containsKey(id) ? _fileSets.get(id) : null;

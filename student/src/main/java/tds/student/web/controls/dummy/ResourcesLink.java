@@ -67,10 +67,6 @@ public class ResourcesLink extends UIComponentBase
 		}
 	}
 
-	/*
-	 * public String getFile() { return _file; }
-	 */
-
 	private StudentSettings _studentSettings;
 
 	public ResourcesLink() {
@@ -110,17 +106,13 @@ public class ResourcesLink extends UIComponentBase
     if (resources == null)
       return;
     
-    //TODO Shiva/Sajib: This parse seems out of place. We could not figure out 
-    //where in the .NET code is the parse called.
     // parse the resource file
     try {
       resources.parse ();
     } catch (JDOMException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace ();
       _logger.error ("Error encoding all", e);
     } catch (ResourcesException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace ();
       _logger.error ("Error encoding all", e);
     }
@@ -137,18 +129,13 @@ public class ResourcesLink extends UIComponentBase
       // if we are debugging then add each resource file separately
       for (Iterator<FileSetInput> iterator = fileSet.getFileInputs (); iterator.hasNext ();) {
         FileSetInput fileInput = iterator.next ();
-        // ScriptLink used in .NET code
+
 				String path = fileInput.tryGetPathRelativeTo(rootVirtualPath, new PathFormatter());
 
 				if (path == null)
 					continue;
 
 				UIComponentBase control = createControl(path);
-				/*
-				 * ScriptLink scriptLink = new ScriptLink();
-				 * scriptLink.setSource(UrlHelper.buildUrl(scriptLinkUrl,
-				 * fileInput.getPath()));
-				 */
 				control.encodeAll(context);
       }
     }
@@ -158,11 +145,7 @@ public class ResourcesLink extends UIComponentBase
       if (fileSet != null && !StringUtils.isEmpty (fileSet.getOutput ())) {
 				String path = Path.combine(scriptLinkUrl, fileSet.getOutput());
 				UIComponentBase control = createControl(path);
-				/*
-				 * ScriptLink scriptLink = new ScriptLink();
-				 * scriptLink.setSource(UrlHelper.buildUrl(scriptLinkUrl,
-				 * fileSet.getOutput()));
-				 */ control.encodeAll(context);
+				control.encodeAll(context);
       }
     }
 
