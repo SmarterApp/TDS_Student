@@ -10,17 +10,14 @@
 
 package AIR.ResourceBundler.Xml;
 
-import AIR.Common.Utilities.Path;
-
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.net.URI;
-import java.nio.file.Paths;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.FilenameUtils;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
+
+import AIR.Common.Utilities.Path;
 
 public class FileSetInput implements IFileSetEntry
 {
