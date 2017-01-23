@@ -48,12 +48,12 @@ public class RemoteOpportunityService implements IOpportunityService {
   }
 
   @Override
-  public List<TestSelection> getEligibleTests(Testee testee, TestSession session, String grade, BrowserInfo browserInfo) throws ReturnStatusException {
+  public List<TestSelection> getEligibleTests(final Testee testee, final TestSession session, final String grade, final BrowserInfo browserInfo) throws ReturnStatusException {
     return legacyOpportunityService.getEligibleTests(testee, session, grade, browserInfo);
   }
 
   @Override
-  public OpportunityInfo openTest(Testee testee, TestSession session, String testKey) throws ReturnStatusException {
+  public OpportunityInfo openTest(final Testee testee, final TestSession session, final String testKey) throws ReturnStatusException {
     OpportunityInfo legacyOpportunityInfo = legacyOpportunityService.openTest(testee, session, testKey);
 
     //This isn't ideal, but due to the way the progman properties are loaded within the system this lives within the service rather than the callers.
@@ -95,47 +95,47 @@ public class RemoteOpportunityService implements IOpportunityService {
   }
 
   @Override
-  public OpportunityStatus getStatus(OpportunityInstance oppInstance) throws ReturnStatusException {
+  public OpportunityStatus getStatus(final OpportunityInstance oppInstance) throws ReturnStatusException {
     return legacyOpportunityService.getStatus(oppInstance);
   }
 
   @Override
-  public boolean setStatus(OpportunityInstance oppInstance, OpportunityStatusChange statusChange) throws ReturnStatusException {
+  public boolean setStatus(final OpportunityInstance oppInstance, final OpportunityStatusChange statusChange) throws ReturnStatusException {
     return legacyOpportunityService.setStatus(oppInstance, statusChange);
   }
 
   @Override
-  public ApprovalInfo checkTestApproval(OpportunityInstance oppInstance) throws ReturnStatusException {
+  public ApprovalInfo checkTestApproval(final OpportunityInstance oppInstance) throws ReturnStatusException {
     return legacyOpportunityService.checkTestApproval(oppInstance);
   }
 
   @Override
-  public ApprovalInfo checkSegmentApproval(OpportunityInstance oppInstance) throws ReturnStatusException {
+  public ApprovalInfo checkSegmentApproval(final OpportunityInstance oppInstance) throws ReturnStatusException {
     return legacyOpportunityService.checkSegmentApproval(oppInstance);
   }
 
   @Override
-  public void denyApproval(OpportunityInstance oppInstance) throws ReturnStatusException {
+  public void denyApproval(final OpportunityInstance oppInstance) throws ReturnStatusException {
     legacyOpportunityService.denyApproval(oppInstance);
   }
 
   @Override
-  public TestConfig startTest(OpportunityInstance oppInstance, String testKey, List<String> formKeys) throws ReturnStatusException {
+  public TestConfig startTest(final OpportunityInstance oppInstance, final String testKey, final List<String> formKeys) throws ReturnStatusException {
     return legacyOpportunityService.startTest(oppInstance, testKey, formKeys);
   }
 
   @Override
-  public OpportunitySegment.OpportunitySegments getSegments(OpportunityInstance oppInstance, boolean validate) throws ReturnStatusException {
+  public OpportunitySegment.OpportunitySegments getSegments(final OpportunityInstance oppInstance, final boolean validate) throws ReturnStatusException {
     return legacyOpportunityService.getSegments(oppInstance, validate);
   }
 
   @Override
-  public void waitForSegment(OpportunityInstance oppInstance, int segmentPosition, TestSegment.TestSegmentApproval segmentApproval) throws ReturnStatusException {
+  public void waitForSegment(final OpportunityInstance oppInstance, final int segmentPosition, final TestSegment.TestSegmentApproval segmentApproval) throws ReturnStatusException {
     legacyOpportunityService.waitForSegment(oppInstance, segmentPosition, segmentApproval);
   }
 
   @Override
-  public void exitSegment(OpportunityInstance oppInstance, int segmentPosition) throws ReturnStatusException {
+  public void exitSegment(final OpportunityInstance oppInstance, final int segmentPosition) throws ReturnStatusException {
     legacyOpportunityService.exitSegment(oppInstance, segmentPosition);
   }
 }

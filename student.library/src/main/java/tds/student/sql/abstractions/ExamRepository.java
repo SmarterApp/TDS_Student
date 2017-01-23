@@ -10,5 +10,5 @@ import tds.exam.OpenExamRequest;
  * Repository to interact with exam data
  */
 public interface ExamRepository {
-  Response<Exam> openExam(OpenExamRequest openExamRequest) throws ReturnStatusException;
+  Response<Exam> openExam(final OpenExamRequest openExamRequest) throws ReturnStatusException;
 }

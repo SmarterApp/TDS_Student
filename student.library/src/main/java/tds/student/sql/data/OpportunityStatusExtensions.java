@@ -17,7 +17,7 @@ import tds.exam.ExamStatusCode;
 
 public class OpportunityStatusExtensions
 {
-  private static final Map<String, OpportunityStatusType> _statuses = new HashMap<String, OpportunityStatusType> ();
+  private static final Map<String, OpportunityStatusType> _statuses = new HashMap<> ();
   private static final Map<String, OpportunityStatusType> examStatusToOpportunityStatus = new HashMap<>();
 
   public static OpportunityStatusType parse (String statusString) {
@@ -30,7 +30,7 @@ public class OpportunityStatusExtensions
     return parsedStatusType;
   }
 
-  public static OpportunityStatusType parseExamStatus(String examStatusCode) {
+  public static OpportunityStatusType parseExamStatus(final String examStatusCode) {
     OpportunityStatusType parsedStatusType = OpportunityStatusType.Unknown;
 
     if (StringUtils.isNotEmpty(examStatusCode)) {

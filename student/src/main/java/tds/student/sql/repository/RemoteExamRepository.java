@@ -23,14 +23,14 @@ public class RemoteExamRepository implements ExamRepository {
   private final String examUrl;
 
   @Autowired
-  public RemoteExamRepository(@Qualifier("integrationRestTemplate") RestTemplate restTemplate,
-                              @Value("${tds.exam.remote.url}") String examUrl) {
+  public RemoteExamRepository(@Qualifier("integrationRestTemplate") final RestTemplate restTemplate,
+                              @Value("${tds.exam.remote.url}") final String examUrl) {
     this.restTemplate = restTemplate;
     this.examUrl = examUrl;
   }
 
   @Override
-  public Response<Exam> openExam(OpenExamRequest openExamRequest) throws ReturnStatusException {
+  public Response<Exam> openExam(final OpenExamRequest openExamRequest) throws ReturnStatusException {
     HttpEntity<OpenExamRequest> requestHttpEntity = new HttpEntity<>(openExamRequest);
     ResponseEntity<Response<Exam>> responseEntity;
 
