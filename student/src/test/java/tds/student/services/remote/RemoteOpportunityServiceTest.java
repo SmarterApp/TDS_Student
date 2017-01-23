@@ -6,15 +6,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
 
 import tds.common.Response;
 import tds.common.ValidationError;
@@ -37,9 +30,6 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class RemoteOpportunityServiceTest {
   @Mock
-  private RestTemplate restTemplate;
-
-  @Mock
   private IOpportunityService legacyOpportunityService;
 
   private IOpportunityService service;
@@ -49,7 +39,7 @@ public class RemoteOpportunityServiceTest {
 
   @Before
   public void setUp() {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, examRepository);
+    service = new RemoteOpportunityService(legacyOpportunityService, true, true, examRepository);
   }
 
   @After
@@ -58,10 +48,6 @@ public class RemoteOpportunityServiceTest {
 
   @Test
   public void shouldReturnTestOpportunityBasedOnExam() throws ReturnStatusException {
-    ArgumentCaptor<HttpEntity> entityCaptor = ArgumentCaptor.forClass(HttpEntity.class);
-    ArgumentCaptor<HttpMethod> methodCaptor = ArgumentCaptor.forClass(HttpMethod.class);
-    ArgumentCaptor<String> urlCaptor = ArgumentCaptor.forClass(String.class);
-
     Exam exam = new Exam.Builder()
       .withStatus(new ExamStatusCode(ExamStatusCode.STATUS_APPROVED, ExamStatusStage.IN_PROGRESS), Instant.now())
       .build();
@@ -88,19 +74,43 @@ public class RemoteOpportunityServiceTest {
     TestSession session = new TestSession();
     Testee testee = new Testee();
 
-    OpportunityInfo info = service.openTest(testee, session, "testKey");
+    service.openTest(testee, session, "testKey");
     verify(legacyOpportunityService).openTest(testee, session, "testKey");
   }
 
   @Test
-  public void shouldNotExecuteIfNotEnabled() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, false, examRepository);
+  public void shouldNotExecuteRemoteCallIfNotEnabled() throws ReturnStatusException {
+    service = new RemoteOpportunityService(legacyOpportunityService, false, true, examRepository);
 
     Testee testee = new Testee();
     TestSession testSession = new TestSession();
     service.openTest(testee, testSession, "testKey");
     verify(legacyOpportunityService).openTest(testee, testSession, "testKey");
 
-    verifyZeroInteractions(restTemplate);
+    verifyZeroInteractions(examRepository);
+  }
+
+  @Test
+  public void shouldNotExecuteLegacyCallIfNotEnabled() throws ReturnStatusException {
+    Exam exam = new Exam.Builder()
+      .withStatus(new ExamStatusCode(ExamStatusCode.STATUS_APPROVED, ExamStatusStage.IN_PROGRESS), Instant.now())
+      .build();
+    Response<Exam> response = new Response<>(exam);
+
+    when(examRepository.openExam(isA(OpenExamRequest.class))).thenReturn(response);
+
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository);
+
+    Testee testee = new Testee();
+    TestSession testSession = new TestSession();
+    service.openTest(testee, testSession, "testKey");
+    verify(examRepository).openExam(isA(OpenExamRequest.class));
+
+    verifyZeroInteractions(legacyOpportunityService);
+  }
+
+  @Test(expected = IllegalStateException.class)
+  public void shouldThrowIfBothImplementationsAreDisabled() {
+    new RemoteOpportunityService(legacyOpportunityService, false, false, examRepository);
   }
 }

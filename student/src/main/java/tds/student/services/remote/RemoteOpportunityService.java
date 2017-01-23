@@ -35,15 +35,23 @@ import tds.student.sql.data.Testee;
 public class RemoteOpportunityService implements IOpportunityService {
   private final IOpportunityService legacyOpportunityService;
   private final boolean isRemoteExamCallsEnabled;
+  private final boolean isLegacyCallsEnabled;
   private final ExamRepository examRepository;
 
   @Autowired
   public RemoteOpportunityService(
     @Qualifier("legacyOpportunityService") IOpportunityService legacyOpportunityService,
     @Value("${tds.exam.remote.enabled}") Boolean remoteExamCallsEnabled,
+    @Value("${tds.exam.legacy.enabled}") Boolean legacyCallsEnabled,
     ExamRepository examRepository) {
+
+    if(!remoteExamCallsEnabled && !legacyCallsEnabled) {
+      throw new IllegalStateException("Remote and legacy calls are both disabled.  Please check progman configuration");
+    }
+
     this.isRemoteExamCallsEnabled = remoteExamCallsEnabled;
     this.legacyOpportunityService = legacyOpportunityService;
+    this.isLegacyCallsEnabled = legacyCallsEnabled;
     this.examRepository = examRepository;
   }
 
@@ -54,7 +62,11 @@ public class RemoteOpportunityService implements IOpportunityService {
 
   @Override
   public OpportunityInfo openTest(final Testee testee, final TestSession session, final String testKey) throws ReturnStatusException {
-    OpportunityInfo legacyOpportunityInfo = legacyOpportunityService.openTest(testee, session, testKey);
+    OpportunityInfo legacyOpportunityInfo = null;
+
+    if(isLegacyCallsEnabled) {
+      legacyOpportunityInfo = legacyOpportunityService.openTest(testee, session, testKey);
+    }
 
     //This isn't ideal, but due to the way the progman properties are loaded within the system this lives within the service rather than the callers.
     if (!isRemoteExamCallsEnabled) {
