@@ -13,12 +13,11 @@ import static tds.exam.ExamStatusCode.STATUS_INITIALIZING;
 import static tds.exam.ExamStatusCode.STATUS_PAUSED;
 import static tds.exam.ExamStatusCode.STATUS_PENDING;
 import static tds.exam.ExamStatusCode.STATUS_REVIEW;
+import static tds.exam.ExamStatusCode.STATUS_SCORED;
+import static tds.exam.ExamStatusCode.STATUS_SEGMENT_ENTRY;
 import static tds.exam.ExamStatusCode.STATUS_SEGMENT_EXIT;
 import static tds.exam.ExamStatusCode.STATUS_STARTED;
 import static tds.exam.ExamStatusCode.STATUS_SUSPENDED;
-import static tds.exam.ExamStatusCode.STAUTS_SEGMENT_ENTRY;
-import static tds.exam.ExamStatusCode.STATUS_SCORED;
-
 
 public class OpportunityStatusExtensionsTest {
 
@@ -34,7 +33,7 @@ public class OpportunityStatusExtensionsTest {
     assertThat(OpportunityStatusExtensions.parseExamStatus(STATUS_PENDING)).isEqualTo(OpportunityStatusType.Pending);
     assertThat(OpportunityStatusExtensions.parseExamStatus(STATUS_SUSPENDED)).isEqualTo(OpportunityStatusType.Suspended);
     assertThat(OpportunityStatusExtensions.parseExamStatus(STATUS_SEGMENT_EXIT)).isEqualTo(OpportunityStatusType.SegmentExit);
-    assertThat(OpportunityStatusExtensions.parseExamStatus(STAUTS_SEGMENT_ENTRY)).isEqualTo(OpportunityStatusType.SegmentEntry);
+    assertThat(OpportunityStatusExtensions.parseExamStatus(STATUS_SEGMENT_ENTRY)).isEqualTo(OpportunityStatusType.SegmentEntry);
     assertThat(OpportunityStatusExtensions.parseExamStatus(STATUS_STARTED)).isEqualTo(OpportunityStatusType.Started);
     assertThat(OpportunityStatusExtensions.parseExamStatus(STATUS_PAUSED)).isEqualTo(OpportunityStatusType.Paused);
     assertThat(OpportunityStatusExtensions.parseExamStatus(STATUS_SCORED)).isEqualTo(OpportunityStatusType.Scored);
