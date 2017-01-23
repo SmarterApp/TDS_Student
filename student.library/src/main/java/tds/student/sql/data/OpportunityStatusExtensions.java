@@ -67,7 +67,7 @@ public class OpportunityStatusExtensions
     examStatusToOpportunityStatus.put(ExamStatusCode.STATUS_DENIED, OpportunityStatusType.Denied);
     examStatusToOpportunityStatus.put(ExamStatusCode.STATUS_COMPLETED, OpportunityStatusType.Completed);
     examStatusToOpportunityStatus.put(ExamStatusCode.STATUS_SCORED, OpportunityStatusType.Scored);
-    examStatusToOpportunityStatus.put(ExamStatusCode.STAUTS_SEGMENT_ENTRY, OpportunityStatusType.SegmentEntry);
+    examStatusToOpportunityStatus.put(ExamStatusCode.STATUS_SEGMENT_ENTRY, OpportunityStatusType.SegmentEntry);
     examStatusToOpportunityStatus.put(ExamStatusCode.STATUS_SEGMENT_EXIT, OpportunityStatusType.SegmentExit);
     examStatusToOpportunityStatus.put(ExamStatusCode.STATUS_CLOSED, OpportunityStatusType.Closed);
     examStatusToOpportunityStatus.put(ExamStatusCode.STATUS_DISABLED, OpportunityStatusType.Disabled);
