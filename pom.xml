@@ -12,6 +12,8 @@
         <module>student</module>
         <module>student.library</module>
         <module>iris</module>
+        <module>ResourceBundler</module>
+        <module>spellcheck</module>
     </modules>
 
     <parent>
