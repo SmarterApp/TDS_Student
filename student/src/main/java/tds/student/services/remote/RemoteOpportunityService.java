@@ -84,14 +84,18 @@ public class RemoteOpportunityService implements IOpportunityService {
 
     if (!response.hasError() && !response.getData().isPresent()) {
       throw new ReturnStatusException("Invalid response from the exam service");
-    } else if (response.getError().isPresent()) {
+    }
+
+    if (response.getError().isPresent()) {
       ValidationError validationError = response.getError().get();
       String errorMessage = validationError.getTranslatedMessage().isPresent()
         ? validationError.getTranslatedMessage().get()
         : validationError.getMessage();
 
       throw new ReturnStatusException(errorMessage);
-    } else if (!response.getData().isPresent()) {
+    }
+
+    if (!response.getData().isPresent()) {
       throw new ReturnStatusException("Invalid response from the exam service");
     }
 
