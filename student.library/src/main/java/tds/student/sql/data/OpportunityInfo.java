@@ -62,4 +62,13 @@ public class OpportunityInfo
   public void setOppKey (UUID _oppKey) {
     this._oppKey = _oppKey;
   }
+
+  @Override
+  public String toString() {
+    return "OpportunityInfo{" +
+      "_status=" + _status +
+      ", _browserKey=" + _browserKey +
+      ", _oppKey=" + _oppKey +
+      '}';
+  }
 }

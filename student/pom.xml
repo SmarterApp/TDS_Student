@@ -31,6 +31,8 @@
 		<progman-client.version>0.0.4-SNAPSHOT</progman-client.version>
 		<sb11-mna-client.version>0.0.4-SNAPSHOT</sb11-mna-client.version>
 		<sb11-shared-code.version>0.0.6-SNAPSHOT</sb11-shared-code.version>
+		<tds-exam-client.version>0.0.1-SNAPSHOT</tds-exam-client.version>
+		<tds-common-legacy.version>0.0.1-SNAPSHOT</tds-common-legacy.version>
 	</properties>
 
 	<dependencies>
@@ -47,7 +49,17 @@
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>tds-dll-mysql</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.opentestsystem.exam</groupId>
+			<artifactId>tds-exam-client</artifactId>
+			<version>${tds-exam-client.version}</version>
+		</dependency>
 
+		<dependency>
+			<groupId>org.opentestsystem.common</groupId>
+			<artifactId>tds-common-legacy</artifactId>
+			<version>${tds-common-legacy.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
@@ -125,6 +137,18 @@
 			<artifactId>c3p0</artifactId>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>2.6.0</version>
+			<scope>test</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -158,6 +182,7 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 			<version>${spring.version}</version>
+			<scope>test</scope>
 		</dependency>
 
 		<dependency>
