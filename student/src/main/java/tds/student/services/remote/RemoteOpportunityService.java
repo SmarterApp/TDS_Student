@@ -62,15 +62,15 @@ public class RemoteOpportunityService implements IOpportunityService {
 
   @Override
   public OpportunityInfo openTest(final Testee testee, final TestSession session, final String testKey) throws ReturnStatusException {
-    OpportunityInfo legacyOpportunityInfo = null;
+    OpportunityInfo opportunityInfo = new OpportunityInfo();
 
     if(isLegacyCallsEnabled) {
-      legacyOpportunityInfo = legacyOpportunityService.openTest(testee, session, testKey);
+      opportunityInfo = legacyOpportunityService.openTest(testee, session, testKey);
     }
 
     //This isn't ideal, but due to the way the progman properties are loaded within the system this lives within the service rather than the callers.
     if (!isRemoteExamCallsEnabled) {
-      return legacyOpportunityInfo;
+      return opportunityInfo;
     }
 
     OpenExamRequest openExamRequest = new OpenExamRequest.Builder()
@@ -101,13 +101,11 @@ public class RemoteOpportunityService implements IOpportunityService {
 
     //By the time we reach this point data will always be present
     Exam exam = response.getData().get();
+    opportunityInfo.setExamBrowserKey(exam.getBrowserId());
+    opportunityInfo.setExamId(exam.getId());
+    opportunityInfo.setExamStatus(OpportunityStatusExtensions.parseExamStatus(exam.getStatus().getCode()));
 
-    OpportunityInfo remoteOpportunityInfo = new OpportunityInfo();
-    remoteOpportunityInfo.setBrowserKey(exam.getBrowserId());
-    remoteOpportunityInfo.setOppKey(exam.getId());
-    remoteOpportunityInfo.setStatus(OpportunityStatusExtensions.parseExamStatus(exam.getStatus().getCode()));
-
-    return remoteOpportunityInfo;
+    return opportunityInfo;
   }
 
   @Override
