@@ -13,7 +13,7 @@
         <module>student.library</module>
         <module>iris</module>
         <module>ResourceBundler</module>
-        <module>spellcheck</module>
+        <module>SpellCheck</module>
     </modules>
 
     <parent>
