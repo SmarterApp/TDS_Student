@@ -21,11 +21,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import tds.dll.common.diagnostic.domain.Level;
 import tds.dll.common.diagnostic.domain.Providers;
 import tds.dll.common.diagnostic.domain.Rating;
 import tds.dll.common.diagnostic.domain.Status;
 import tds.dll.common.diagnostic.services.impl.AbstractDiagnosticDependencyService;
+import tds.student.diagnostic.HealthIndicatorClient;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -47,12 +49,19 @@ public class StudentDiagnosticDependencyServiceImpl extends AbstractDiagnosticDe
     @Autowired
     private ITrClient _trClient;
 
+    @Autowired
+    private RestTemplate restTemplate;
+
+    @Value("${tds.exam.remote.url}")
+    private String examServiceURL;
+
     public Providers getProviders() {
         List<Status> statusList = new ArrayList<>();
 
         statusList.add(getArt());
         statusList.add(getProgman());
         statusList.add(getMathScoring());
+        statusList.add(getExamService());
         statusList.addAll(getStudentReportProcessor());
 
         return new Providers(statusList);
@@ -77,6 +86,11 @@ public class StudentDiagnosticDependencyServiceImpl extends AbstractDiagnosticDe
 
         return processes;
     }
+
+    private Status getExamService() {
+        return new HealthIndicatorClient(restTemplate).getStatus("Exam Service", examServiceURL);
+    }
+
 
     protected Status getArt() {
 
