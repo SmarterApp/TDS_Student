@@ -24,7 +24,6 @@
 
 
 	<properties>
-
 		<item-selection.version>0.0.1-SNAPSHOT</item-selection.version>
 		<testscoring.version>0.0.1-SNAPSHOT</testscoring.version>
 		<spellcheck.version>0.0.1-SNAPSHOT</spellcheck.version>
@@ -33,9 +32,39 @@
 		<sb11-shared-code.version>0.0.6-SNAPSHOT</sb11-shared-code.version>
 		<tds-exam-client.version>0.0.1-SNAPSHOT</tds-exam-client.version>
 		<tds-common-legacy.version>0.0.1-SNAPSHOT</tds-common-legacy.version>
+		<jackson.version>2.8.5</jackson.version>
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-guava</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-joda</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
