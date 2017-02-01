@@ -90,7 +90,7 @@ public class OpportunityInfo
   }
 
   public void setExamStatus(OpportunityStatusType _status) {
-    this._status = _status;
+    this.examStatus = _status;
   }
 
   @JsonProperty ("ExamStatus")
