@@ -9,6 +9,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.UUID;
+
 import tds.common.Response;
 import tds.common.ValidationError;
 import tds.exam.Exam;
@@ -18,6 +20,7 @@ import tds.exam.OpenExamRequest;
 import tds.student.services.abstractions.IOpportunityService;
 import tds.student.sql.abstractions.ExamRepository;
 import tds.student.sql.data.OpportunityInfo;
+import tds.student.sql.data.OpportunityStatusType;
 import tds.student.sql.data.TestSession;
 import tds.student.sql.data.Testee;
 
@@ -48,7 +51,11 @@ public class RemoteOpportunityServiceTest {
 
   @Test
   public void shouldReturnTestOpportunityBasedOnExam() throws ReturnStatusException {
+    UUID browserKey = UUID.randomUUID();
+    UUID examId = UUID.randomUUID();
     Exam exam = new Exam.Builder()
+      .withId(examId)
+      .withBrowserId(browserKey)
       .withStatus(new ExamStatusCode(ExamStatusCode.STATUS_APPROVED, ExamStatusStage.IN_PROGRESS), Instant.now())
       .build();
     Response<Exam> response = new Response<>(exam);
@@ -58,10 +65,14 @@ public class RemoteOpportunityServiceTest {
     TestSession session = new TestSession();
     Testee testee = new Testee();
 
+    when(legacyOpportunityService.openTest(testee, session, "testKey")).thenReturn(new OpportunityInfo());
+
     OpportunityInfo info = service.openTest(testee, session, "testKey");
     verify(legacyOpportunityService).openTest(testee, session, "testKey");
 
-    assertThat(info).isNotNull();
+    assertThat(info.getExamBrowserKey()).isEqualTo(browserKey);
+    assertThat(info.getExamId()).isEqualTo(examId);
+    assertThat(info.getExamStatus()).isEqualTo(OpportunityStatusType.Approved);
   }
 
   @Test(expected = ReturnStatusException.class)

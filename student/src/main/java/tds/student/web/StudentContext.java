@@ -51,6 +51,8 @@ public class StudentContext
 
   private final static String CACHE_PREFIX = "TDS_";
   private static final Logger _logger      = LoggerFactory.getLogger (StudentContext.class);
+  private static final String EXAM_ID_COOKIE_KEY = "EXAM_ID";
+  private static final String EXAM_BROWSER_KEY = "EXAM_BROWSER_KEY";
 
   public static void throwMissingException () throws StudentContextException {
     throw new StudentContextException ("Missing context info");
@@ -154,9 +156,12 @@ public class StudentContext
     TDSIdentity.getCurrentTDSIdentity ().setAuthCookieValue ("O_TKEY", testKey);
     TDSIdentity.getCurrentTDSIdentity ().setAuthCookieValue ("O_TID", testID);
     TDSIdentity.getCurrentTDSIdentity ().setAuthCookieValue ("O_KEY", oppInfo.getOppKey ().toString ());
+    TDSIdentity.getCurrentTDSIdentity().setAuthCookieValue(EXAM_ID_COOKIE_KEY, oppInfo.getExamId().toString());
+
     TDSIdentity.getCurrentTDSIdentity ().saveAuthCookie ();
 
     StudentCookie.setCookieData ("O_BKEY", oppInfo.getBrowserKey ().toString ());
+    StudentCookie.setCookieData(EXAM_BROWSER_KEY, oppInfo.getExamBrowserKey().toString());
   }
 
   // / <summary>
@@ -188,20 +193,24 @@ public class StudentContext
   }
 
   public static OpportunityInstance getOppInstance () {
-    if (!isAuthenticated ())
+    if (!isAuthenticated ()) {
       return null;
-    UUID oppKey = UUID.fromString (TDSIdentity.getCurrentTDSIdentity ().get ("O_KEY"));
+    }
+
+    TDSIdentity tdsIdentity = TDSIdentity.getCurrentTDSIdentity();
+    UUID oppKey = UUID.fromString (tdsIdentity.get ("O_KEY"));
     UUID sessionKey = UUID.fromString (StudentCookie.getCookieData ("S_KEY"));
     UUID browserKey = UUID.fromString (StudentCookie.getCookieData ("O_BKEY"));
 
-    // check if opp instance exists
-    // if (oppKey == Guid.Empty || sessionKey == Guid.Empty || browserKey ==
-    // Guid.Empty) return null;
-    if (oppKey == null || sessionKey == null || browserKey == null)
-      return null;
+    UUID examBrowserKey = StudentCookie.getCookieData(EXAM_BROWSER_KEY) == null
+      ? null
+      : UUID.fromString(StudentCookie.getCookieData(EXAM_BROWSER_KEY));
 
-    OpportunityInstance oppInstance = new OpportunityInstance (oppKey, sessionKey, browserKey);
-    return oppInstance;
+    UUID examId = tdsIdentity.get(EXAM_ID_COOKIE_KEY) == null
+      ? null
+      : UUID.fromString(tdsIdentity.get(EXAM_ID_COOKIE_KEY));
+
+    return new OpportunityInstance (oppKey, sessionKey, browserKey, examId, examBrowserKey);
   }
 
   /**
