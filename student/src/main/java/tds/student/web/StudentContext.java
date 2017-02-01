@@ -206,9 +206,9 @@ public class StudentContext
       ? null
       : UUID.fromString(StudentCookie.getCookieData(EXAM_BROWSER_KEY));
 
-    UUID examId = tdsIdentity.get(EXAM_BROWSER_KEY) == null
+    UUID examId = tdsIdentity.get(EXAM_ID_COOKIE_KEY) == null
       ? null
-      : UUID.fromString(tdsIdentity.get(EXAM_BROWSER_KEY));
+      : UUID.fromString(tdsIdentity.get(EXAM_ID_COOKIE_KEY));
 
     return new OpportunityInstance (oppKey, sessionKey, browserKey, examId, examBrowserKey);
   }
