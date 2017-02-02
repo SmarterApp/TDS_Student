@@ -41,7 +41,7 @@ public class OpportunityInfo
   }
 
   public OpportunityInstance createOpportunityInstance (UUID sessionKey) {
-    return new OpportunityInstance (_oppKey, sessionKey, _browserKey);
+    return new OpportunityInstance (_oppKey, sessionKey, _browserKey, examId, examBrowserKey);
   }
 
   @JsonProperty ("Status")
