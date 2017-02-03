@@ -23,6 +23,7 @@ public class OpportunityInstance
   private final UUID _browserKey;
   private final UUID examId;
   private final UUID examBrowserKey;
+  private final String examClientName;
 
   @JsonProperty ("Key")
   public UUID getKey () {
@@ -49,15 +50,21 @@ public class OpportunityInstance
     return examBrowserKey;
   }
 
-  public OpportunityInstance (UUID oppKey, UUID sessionKey, UUID browserKey) {
-    this(oppKey, sessionKey, browserKey, UUID.randomUUID(), UUID.randomUUID());
+  @JsonProperty("ExamClientName")
+  public String getExamClientName() {
+    return examClientName;
   }
 
-  public OpportunityInstance(UUID oppKey, UUID sessionKey, UUID browserKey, UUID examId, UUID examBrowserKey) {
+  public OpportunityInstance (UUID oppKey, UUID sessionKey, UUID browserKey) {
+    this(oppKey, sessionKey, browserKey, UUID.randomUUID(), UUID.randomUUID(), "");
+  }
+
+  public OpportunityInstance(UUID oppKey, UUID sessionKey, UUID browserKey, UUID examId, UUID examBrowserKey, String examClientName) {
     _oppKey = oppKey;
     _sessionKey = sessionKey;
     _browserKey = browserKey;
     this.examId = examId;
     this.examBrowserKey = examBrowserKey;
+    this.examClientName = examClientName;
   }
 }

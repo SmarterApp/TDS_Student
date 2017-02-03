@@ -53,6 +53,7 @@ public class StudentContext
   private static final Logger _logger      = LoggerFactory.getLogger (StudentContext.class);
   private static final String EXAM_ID_COOKIE_KEY = "EXAM_ID";
   private static final String EXAM_BROWSER_KEY = "EXAM_BROWSER_KEY";
+  private static final String EXAM_CLIENT_NAME = "EXAM_CLIENT_NAME";
 
   public static void throwMissingException () throws StudentContextException {
     throw new StudentContextException ("Missing context info");
@@ -156,6 +157,7 @@ public class StudentContext
     TDSIdentity.getCurrentTDSIdentity ().setAuthCookieValue ("O_TKEY", testKey);
     TDSIdentity.getCurrentTDSIdentity ().setAuthCookieValue ("O_TID", testID);
     TDSIdentity.getCurrentTDSIdentity ().setAuthCookieValue ("O_KEY", oppInfo.getOppKey ().toString ());
+    TDSIdentity.getCurrentTDSIdentity().setAuthCookieValue(EXAM_CLIENT_NAME, oppInfo.getExamClientName());
     TDSIdentity.getCurrentTDSIdentity().setAuthCookieValue(EXAM_ID_COOKIE_KEY, oppInfo.getExamId().toString());
 
     TDSIdentity.getCurrentTDSIdentity ().saveAuthCookie ();
@@ -210,7 +212,9 @@ public class StudentContext
       ? null
       : UUID.fromString(tdsIdentity.get(EXAM_ID_COOKIE_KEY));
 
-    return new OpportunityInstance (oppKey, sessionKey, browserKey, examId, examBrowserKey);
+    String examClientName = tdsIdentity.get(EXAM_CLIENT_NAME);
+
+    return new OpportunityInstance (oppKey, sessionKey, browserKey, examId, examBrowserKey, examClientName);
   }
 
   /**

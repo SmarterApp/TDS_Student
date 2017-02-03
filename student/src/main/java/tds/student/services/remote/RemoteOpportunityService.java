@@ -104,6 +104,7 @@ public class RemoteOpportunityService implements IOpportunityService {
     opportunityInfo.setExamBrowserKey(exam.getBrowserId());
     opportunityInfo.setExamId(exam.getId());
     opportunityInfo.setExamStatus(OpportunityStatusExtensions.parseExamStatus(exam.getStatus().getCode()));
+    opportunityInfo.setExamClientName(exam.getClientName());
 
     return opportunityInfo;
   }

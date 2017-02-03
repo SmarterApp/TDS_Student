@@ -1,4 +1,4 @@
-/*******************************************************************************
+/* ******************************************************************************
  * Educational Online Test Delivery System 
  * Copyright (c) 2014 American Institutes for Research
  *
@@ -8,8 +8,9 @@
  ******************************************************************************/
 package tds.student.sql.data;
 
-import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.UUID;
 
 
 /**
@@ -24,6 +25,7 @@ public class OpportunityInfo
   private UUID                  examBrowserKey;
   private UUID                  examId;
   private OpportunityStatusType examStatus;
+  private String examClientName;
 
   @JsonProperty ("IsOpen")
   public boolean getIsOpen () {
@@ -98,6 +100,15 @@ public class OpportunityInfo
     return examStatus;
   }
 
+  @JsonProperty ("ExamClientName")
+  public String getExamClientName() {
+    return examClientName;
+  }
+
+  public void setExamClientName(String examClientName) {
+    this.examClientName = examClientName;
+  }
+
   @Override
   public String toString() {
     return "OpportunityInfo{" +
@@ -107,6 +118,7 @@ public class OpportunityInfo
       ", examBrowserKey=" + examBrowserKey +
       ", examId=" + examId +
       ", examStatus=" + examStatus +
+      ", examClientName=" + examClientName +
       '}';
   }
 }
