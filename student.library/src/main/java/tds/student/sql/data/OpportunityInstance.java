@@ -12,9 +12,10 @@ package tds.student.sql.data;
  * @author temp_rreddy
  * 
  */
-import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.UUID;
 
 public class OpportunityInstance
 {
@@ -63,8 +64,8 @@ public class OpportunityInstance
     _oppKey = oppKey;
     _sessionKey = sessionKey;
     _browserKey = browserKey;
-    this.examId = examId;
-    this.examBrowserKey = examBrowserKey;
     this.examClientName = examClientName;
+    this.examId = examId != null ? examId : UUID.randomUUID();
+    this.examBrowserKey = examBrowserKey != null ? examBrowserKey : UUID.randomUUID();
   }
 }

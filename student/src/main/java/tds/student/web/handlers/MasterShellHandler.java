@@ -375,7 +375,9 @@ public class MasterShellHandler extends TDSHandler
     opportunityInfoJsonModel.setTesteeForms (new ArrayList<String> ());
     opportunityInfoJsonModel.setBrowserKey (oppInfo.getBrowserKey ());
     opportunityInfoJsonModel.setOppKey (oppInfo.getOppKey ());
-    return new ResponseData<OpportunityInfoJsonModel> (TDSReplyCode.OK.getCode (), "OK", opportunityInfoJsonModel);
+    opportunityInfoJsonModel.setExamBrowserKey(oppInfo.getExamId());
+    opportunityInfoJsonModel.setExamBrowserKey(oppInfo.getExamBrowserKey());
+    return new ResponseData<> (TDSReplyCode.OK.getCode (), "OK", opportunityInfoJsonModel);
   }
 
   /***
