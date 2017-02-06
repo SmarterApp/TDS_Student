@@ -17,7 +17,7 @@ public class WebConfiguration {
   @Bean(name = "integrationRestTemplate")
   public RestTemplate getRestTemplate() {
     MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-    converter.setObjectMapper(configureObjectMapper());
+    converter.setObjectMapper(getIntegrationObjectMapper());
     RestTemplate template = new RestTemplate();
     List<HttpMessageConverter<?>> converters = new ArrayList<>();
     converters.add(converter);
@@ -25,7 +25,8 @@ public class WebConfiguration {
     return template;
   }
 
-  private ObjectMapper configureObjectMapper() {
+  @Bean(name = "integrationObjectMapper")
+  public ObjectMapper getIntegrationObjectMapper() {
     return new ObjectMapper()
       .registerModule(new GuavaModule())
       .registerModule(new JodaModule());
