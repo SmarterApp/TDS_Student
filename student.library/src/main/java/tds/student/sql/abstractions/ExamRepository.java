@@ -14,5 +14,13 @@ import tds.exam.OpenExamRequest;
  */
 public interface ExamRepository {
   Response<Exam> openExam(final OpenExamRequest openExamRequest) throws ReturnStatusException;
+    
+  /**
+   * Creates a request for the exam service to approve {@link tds.exam.ExamAccommodation}s
+   *
+   * @param examId                       the id of the {@link tds.exam.Exam}
+   * @param approveAccommodationsRequest the {@link tds.exam.ApproveAccommodationsRequest} containing approval request data
+   * @throws ReturnStatusException
+   */
   void approveAccommodations(final UUID examId, final ApproveAccommodationsRequest approveAccommodationsRequest) throws ReturnStatusException;
 }

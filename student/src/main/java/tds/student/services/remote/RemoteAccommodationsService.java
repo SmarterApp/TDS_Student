@@ -53,11 +53,15 @@ public class RemoteAccommodationsService implements IAccommodationsService {
   @Override
   public void approve(OpportunityInstance oppInstance, List<String> segmentsAccommodationData) throws ReturnStatusException {
 
+    if (segmentsAccommodationData == null) {
+      return;
+    }
+    
     if (isLegacyCallsEnabled) {
       legacyAccommodationsService.approve(oppInstance, segmentsAccommodationData);
     }
 
-    if (!isRemoteExamCallsEnabled || segmentsAccommodationData == null) {
+    if (!isRemoteExamCallsEnabled) {
       return;
     }
 

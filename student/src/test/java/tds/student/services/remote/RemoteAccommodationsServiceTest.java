@@ -45,6 +45,24 @@ public class RemoteAccommodationsServiceTest {
         verify(mockExamRepository).approveAccommodations(eq(oppInstance.getExamId()), (ApproveAccommodationsRequest) any());
     }
     
+    @Test
+    public void shouldCallApproveAccommodationsWithSpacesBetweenCommas() throws ReturnStatusException {
+        OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+        List<String> segmentData = Arrays.asList("0#AccCode1, AccCode2", "1#AccCode3", "2#AccCode4");
+        service.approve(oppInstance, segmentData);
+        verify(legacyAccommodationsService).approve(oppInstance, segmentData);
+        verify(mockExamRepository).approveAccommodations(eq(oppInstance.getExamId()), (ApproveAccommodationsRequest) any());
+    }
+    
+    @Test(expected=NumberFormatException.class)
+    public void shouldFailToApproveAccommodationsForBadSegmentData2() throws ReturnStatusException {
+        OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+        List<String> segmentData = Arrays.asList("#AccCode1,AccCode2", "#AccCode3", "#AccCode4");
+        service.approve(oppInstance, segmentData);
+        verify(legacyAccommodationsService).approve(oppInstance, segmentData);
+        verify(mockExamRepository).approveAccommodations(eq(oppInstance.getExamId()), (ApproveAccommodationsRequest) any());
+    }
+    
     @Test(expected=NumberFormatException.class)
     public void shouldFailToApproveAccommodationsForBadSegmentData() throws ReturnStatusException {
         OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());

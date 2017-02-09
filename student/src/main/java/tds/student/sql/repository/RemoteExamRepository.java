@@ -68,7 +68,7 @@ public class RemoteExamRepository implements ExamRepository {
 
     try {
       restTemplate.exchange(
-        builder.build().encode().toUri(),
+        builder.build().toUri(),
         HttpMethod.POST,
         requestHttpEntity,
         new ParameterizedTypeReference<String>() {
