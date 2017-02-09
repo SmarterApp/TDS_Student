@@ -76,7 +76,7 @@ public class RemoteAccommodationsServiceTest {
     public void shouldDoNothingIfNullSegmentData() throws ReturnStatusException {
         OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
         service.approve(oppInstance, null);
-        verify(legacyAccommodationsService).approve(oppInstance, null);
+        verify(legacyAccommodationsService, never()).approve(oppInstance, null);
         verify(mockExamRepository, never()).approveAccommodations(eq(oppInstance.getExamId()), (ApproveAccommodationsRequest) any());
     }
 }
