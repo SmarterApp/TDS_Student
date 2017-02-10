@@ -14,6 +14,7 @@ import java.util.UUID;
 import tds.common.Response;
 import tds.common.ValidationError;
 import tds.exam.Exam;
+import tds.exam.ExamApproval;
 import tds.exam.OpenExamRequest;
 import tds.student.services.abstractions.IOpportunityService;
 import tds.student.services.data.ApprovalInfo;
@@ -111,7 +112,38 @@ public class RemoteOpportunityService implements IOpportunityService {
 
   @Override
   public OpportunityStatus getStatus(final OpportunityInstance oppInstance) throws ReturnStatusException {
-    return legacyOpportunityService.getStatus(oppInstance);
+    OpportunityStatus status = null;
+
+    if(isLegacyCallsEnabled) {
+      status = legacyOpportunityService.getStatus(oppInstance);
+    }
+
+    //This isn't ideal, but due to the way the progman properties are loaded within the system this lives within the service rather than the callers.
+    if (!isRemoteExamCallsEnabled) {
+      return status;
+    }
+
+    Response<ExamApproval> response = examRepository.getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(),
+        oppInstance.getExamBrowserKey());
+
+    if (!response.hasError() && !response.getData().isPresent()) {
+      throw new ReturnStatusException("Invalid response from the exam service");
+    }
+
+    if (response.getError().isPresent()) {
+      ValidationError validationError = response.getError().get();
+      String errorMessage = validationError.getTranslatedMessage().isPresent()
+          ? validationError.getTranslatedMessage().get()
+          : validationError.getMessage();
+
+      throw new ReturnStatusException(errorMessage);
+    }
+
+    ExamApproval examApproval = response.getData().get();
+    status = new OpportunityStatus();
+    status.setStatus(OpportunityStatusExtensions.parseExamStatus(examApproval.getExamApprovalStatus().getCode()));
+
+    return status;
   }
 
   @Override
@@ -121,7 +153,17 @@ public class RemoteOpportunityService implements IOpportunityService {
 
   @Override
   public ApprovalInfo checkTestApproval(final OpportunityInstance oppInstance) throws ReturnStatusException {
-    return legacyOpportunityService.checkTestApproval(oppInstance);
+    ApprovalInfo approvalInfo = null;
+
+    if(isLegacyCallsEnabled) {
+      approvalInfo = legacyOpportunityService.checkTestApproval(oppInstance);
+    }
+
+    if (!isRemoteExamCallsEnabled) {
+      return approvalInfo;
+    }
+
+    return new ApprovalInfo(getStatus(oppInstance));
   }
 
   @Override

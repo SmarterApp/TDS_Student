@@ -46,7 +46,7 @@ public class RemoteExamRepository implements ExamRepository {
     this.examUrl = examUrl;
     this.objectMapper = objectMapper;
   }
-
+  
   @Override
   public Response<Exam> openExam(final OpenExamRequest openExamRequest) throws ReturnStatusException {
     HttpEntity<OpenExamRequest> requestHttpEntity = new HttpEntity<>(openExamRequest);
@@ -86,16 +86,66 @@ public class RemoteExamRepository implements ExamRepository {
       throw new ReturnStatusException(e);
     }
   }
-
+  
+  @Override
+  public Response<ExamApproval> getApproval(final UUID examId, final UUID sessionId, final UUID browserId) throws ReturnStatusException {
+    HttpHeaders headers = new HttpHeaders();
+    headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+    headers.setContentType(MediaType.APPLICATION_JSON);
+    HttpEntity<?> requestHttpEntity = new HttpEntity<>(headers);
+    ResponseEntity<Response<ExamApproval>> responseEntity;
+    
+    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/%s/approval", examUrl, examId))
+        .queryParam("sessionId", sessionId)
+        .queryParam("browserId", browserId);
+    
+    try {
+      responseEntity = restTemplate.exchange(
+          builder.build().encode().toUri(),
+          HttpMethod.GET,
+          requestHttpEntity,
+          new ParameterizedTypeReference<Response<ExamApproval>>() {
+          });
+    } catch (RestClientException rce) {
+      throw new ReturnStatusException(rce);
+    }
+    
+    return responseEntity.getBody();
+  }
+  
+  @Override
+  public List<ExamAccommodation> findApprovedAccommodations(UUID examId) throws ReturnStatusException {
+    HttpHeaders headers = new HttpHeaders();
+    headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+    headers.setContentType(MediaType.APPLICATION_JSON);
+    HttpEntity<?> requestHttpEntity = new HttpEntity<>(headers);
+    ResponseEntity<List<ExamAccommodation>> responseEntity;
+    
+    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/%s/accommodations/approved", examUrl, examId));
+    
+    try {
+      responseEntity = restTemplate.exchange(
+          builder.build().encode().toUri(),
+          HttpMethod.GET,
+          requestHttpEntity,
+          new ParameterizedTypeReference<List<ExamAccommodation>>() {
+          });
+    } catch (RestClientException rce) {
+      throw new ReturnStatusException(rce);
+    }
+    
+    return responseEntity.getBody();
+  }
+  
   @Override
   public void approveAccommodations(UUID examId, ApproveAccommodationsRequest approveAccommodationsRequest) throws ReturnStatusException {
     HttpHeaders headers = new HttpHeaders();
     headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
     headers.setContentType(MediaType.APPLICATION_JSON);
     HttpEntity<?> requestHttpEntity = new HttpEntity<>(approveAccommodationsRequest, headers);
-
+    
     UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/%s/accommodations", examUrl, examId));
-
+    
     try {
       restTemplate.exchange(
         builder.build().toUri(),

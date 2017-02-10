@@ -108,6 +108,7 @@ public class MasterShellHandler extends TDSHandler
   private static final Logger    _logger = LoggerFactory.getLogger (MasterShellHandler.class);
 
   @Autowired
+  @Qualifier("integrationAccommodationsService")
   private IAccommodationsService _accsService;
 
   @Autowired
