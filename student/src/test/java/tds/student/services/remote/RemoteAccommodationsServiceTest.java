@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 import tds.accommodation.Accommodation;
-import tds.accommodation.Dependency;
+import tds.accommodation.AccommodationDependency;
 import tds.assessment.Algorithm;
 import tds.assessment.Assessment;
 import tds.assessment.Segment;
@@ -106,7 +106,7 @@ public class RemoteAccommodationsServiceTest {
         OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(),
           examId, UUID.randomUUID(), clientName);
     
-        Dependency dependency = new Dependency.Builder(assessmentId)
+        AccommodationDependency dependency = new AccommodationDependency.Builder(assessmentId)
           .withIfType("Language")
           .withIfValue("ELA")
           .withThenType("Masking")
@@ -167,7 +167,7 @@ public class RemoteAccommodationsServiceTest {
         OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(),
           examId, UUID.randomUUID(), clientName);
     
-        Dependency dependency = new Dependency.Builder(assessmentId)
+        AccommodationDependency dependency = new AccommodationDependency.Builder(assessmentId)
           .withIfType("Language")
           .withIfValue("ELA")
           .withThenType("Masking")
@@ -251,8 +251,8 @@ public class RemoteAccommodationsServiceTest {
         final UUID examId = UUID.randomUUID();
         OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(),
           examId, UUID.randomUUID(), clientName);
-        
-        Dependency dependency = new Dependency.Builder(assessmentId)
+    
+        AccommodationDependency dependency = new AccommodationDependency.Builder(assessmentId)
           .withIfType("Language")
           .withIfValue("ELA")
           .withThenType("Masking")

@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.Set;
 
 import tds.accommodation.Accommodation;
-import tds.accommodation.Dependency;
+import tds.accommodation.AccommodationDependency;
 import tds.assessment.Assessment;
 import tds.assessment.Segment;
 import tds.exam.ApproveAccommodationsRequest;
@@ -122,7 +122,7 @@ public class RemoteAccommodationsService implements IAccommodationsService {
       approvedExamAccommodationMap.put(examAccommodation.getCode(), examAccommodation);
     }
     
-    /* We need to filter only approve ExamAccommodations - although the Assessment acccommodations contain
+    /* We need to filter only approve ExamAccommodations - although the Assessment accommodations contain
        the majority of the accommodation metadata  */
     for (Accommodation accommodation : assessmentAccommodations) {
       // Filter only approved accommodations
@@ -141,7 +141,7 @@ public class RemoteAccommodationsService implements IAccommodationsService {
         }
       
         /* AccommodationService [399-400] - If this isn't a guest session, then no need to check isDisabledOnGuest flag */
-        if (!isGuestSession || (isGuestSession && !accommodation.isDisableOnGuestSession())) {
+        if (!isGuestSession || !accommodation.isDisableOnGuestSession()) {
           // Create accommodations type and value - these will be used by the UI between checkApproval and startTest
           retAccommodations.create(accommodation.getType(), accommodation.getCode(), accommodation.getValue(), accommodation.isVisible(),
             accommodation.isSelectable(), accommodation.isAllowChange(), accommodation.isStudentControl(), accommodation.getDependsOnToolType(),
@@ -154,7 +154,7 @@ public class RemoteAccommodationsService implements IAccommodationsService {
     if (!segmentPositionToAccommodations.isEmpty()) {
       Accommodations assessmentAccommodation = segmentPositionToAccommodations.get(ASSESSMENT_POSITION);
     
-      for (Dependency assessmentDependency : assessment.getAccommodationDependencies()) {
+      for (AccommodationDependency assessmentDependency : assessment.getAccommodationDependencies()) {
         assessmentAccommodation.AddDependency(assessmentDependency.getIfType(), assessmentDependency.getIfValue(),
           assessmentDependency.getThenType(), assessmentDependency.getThenValue(), assessmentDependency.isDefault());
       }
