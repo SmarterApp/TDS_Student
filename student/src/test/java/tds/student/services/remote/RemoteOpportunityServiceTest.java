@@ -14,12 +14,16 @@ import java.util.UUID;
 import tds.common.Response;
 import tds.common.ValidationError;
 import tds.exam.Exam;
+import tds.exam.ExamApproval;
 import tds.exam.ExamStatusCode;
 import tds.exam.ExamStatusStage;
 import tds.exam.OpenExamRequest;
 import tds.student.services.abstractions.IOpportunityService;
+import tds.student.services.data.ApprovalInfo;
 import tds.student.sql.abstractions.ExamRepository;
 import tds.student.sql.data.OpportunityInfo;
+import tds.student.sql.data.OpportunityInstance;
+import tds.student.sql.data.OpportunityStatus;
 import tds.student.sql.data.OpportunityStatusType;
 import tds.student.sql.data.TestSession;
 import tds.student.sql.data.Testee;
@@ -123,5 +127,55 @@ public class RemoteOpportunityServiceTest {
   @Test(expected = IllegalStateException.class)
   public void shouldThrowIfBothImplementationsAreDisabled() {
     new RemoteOpportunityService(legacyOpportunityService, false, false, examRepository);
+  }
+  
+  @Test
+  public void shouldGetApprovedStatusNoErrors() throws ReturnStatusException {
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository);
+    OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+    ExamApproval examApproval = new ExamApproval(oppInstance.getExamId(), new ExamStatusCode(ExamStatusCode.STATUS_APPROVED, ExamStatusStage.OPEN), null);
+      
+    when(examRepository.getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey())).thenReturn(
+      new Response(examApproval));
+    OpportunityStatus retStatus = service.getStatus(oppInstance);
+    assertThat(retStatus.getStatus().toString()).isEqualTo("Approved");
+    verify(examRepository).getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey());
+  }
+  
+  @Test
+  public void shouldGetDeniedStatusNoErrors() throws ReturnStatusException {
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository);
+    OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+    ExamApproval examApproval = new ExamApproval(oppInstance.getExamId(), new ExamStatusCode(ExamStatusCode.STATUS_DENIED, ExamStatusStage.OPEN), null);
+    
+    when(examRepository.getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey())).thenReturn(
+      new Response(examApproval));
+    OpportunityStatus retStatus = service.getStatus(oppInstance);
+    assertThat(retStatus.getStatus().toString()).isEqualTo("Denied");
+    verify(examRepository).getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey());
+  }
+  
+  @Test(expected = ReturnStatusException.class)
+  public void shouldThrowWithErrorsPresent() throws ReturnStatusException {
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository);
+    OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+    ExamApproval examApproval = new ExamApproval(oppInstance.getExamId(), new ExamStatusCode(ExamStatusCode.STATUS_DENIED, ExamStatusStage.OPEN), null);
+    
+    when(examRepository.getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey())).thenReturn(
+      new Response(examApproval, new ValidationError("Some Error", "ErrorCode")));
+    OpportunityStatus retStatus = service.getStatus(oppInstance);
+  }
+  
+  @Test
+  public void shouldReturnApprovalInfo() throws ReturnStatusException {
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository);
+    OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+    ExamApproval examApproval = new ExamApproval(oppInstance.getExamId(), new ExamStatusCode(ExamStatusCode.STATUS_APPROVED, ExamStatusStage.OPEN), null);
+  
+    when(examRepository.getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey())).thenReturn(
+      new Response(examApproval));
+    ApprovalInfo approvalInfo = service.checkTestApproval(oppInstance);
+    assertThat(approvalInfo.getStatus().toString()).isEqualTo("Approved");
+    verify(examRepository).getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey());
   }
 }
