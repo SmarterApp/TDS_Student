@@ -1,11 +1,13 @@
 package tds.student.sql.abstractions;
 
 import TDS.Shared.Exceptions.ReturnStatusException;
+import com.google.common.base.Optional;
 
 import java.util.List;
 import java.util.UUID;
 
 import tds.common.Response;
+import tds.common.ValidationError;
 import tds.exam.ApproveAccommodationsRequest;
 import tds.exam.Exam;
 import tds.exam.ExamAccommodation;
@@ -16,7 +18,7 @@ import tds.exam.OpenExamRequest;
  * Repository to interact with exam data
  */
 public interface ExamRepository {
-    
+  
   /**
    * Opens an exam
    *
@@ -25,7 +27,7 @@ public interface ExamRepository {
    * @throws ReturnStatusException if there is an unexpected response from the call
    */
   Response<Exam> openExam(final OpenExamRequest openExamRequest) throws ReturnStatusException;
-
+  
   /**
    * Fetches the approval status of the current exam
    *
@@ -36,7 +38,7 @@ public interface ExamRepository {
    * @throws ReturnStatusException
    */
   Response<ExamApproval> getApproval(final UUID examId, final UUID sessionId, final UUID browserId) throws ReturnStatusException;
-
+  
   /**
    * Fetches the collection of approved {@link tds.exam.ExamAccommodation}s for an exam
    *
@@ -45,7 +47,7 @@ public interface ExamRepository {
    * @throws ReturnStatusException
    */
   List<ExamAccommodation> findApprovedAccommodations(final UUID examId) throws ReturnStatusException;
-
+  
   /**
    * Creates a request for the exam service to approve {@link tds.exam.ExamAccommodation}s
    *
@@ -54,4 +56,15 @@ public interface ExamRepository {
    * @throws ReturnStatusException
    */
   void approveAccommodations(final UUID examId, final ApproveAccommodationsRequest approveAccommodationsRequest) throws ReturnStatusException;
+  
+  /**
+   * Creates a request to update the status of an exam
+   *
+   * @param examId the id of the {@link tds.exam.Exam}
+   * @param status the status to update the exam to
+   * @param reason the reason for the exam status update
+   * @return An optional {@link tds.common.ValidationError}, if one occurs during the processing of the request
+   * @throws ReturnStatusException
+   */
+  Optional<ValidationError> updateStatus(final UUID examId, final String status, final String reason) throws ReturnStatusException;
 }

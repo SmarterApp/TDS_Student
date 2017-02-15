@@ -1,7 +1,11 @@
 package tds.student.services.remote;
 
 import TDS.Shared.Browser.BrowserInfo;
+import TDS.Shared.Data.ReturnStatus;
 import TDS.Shared.Exceptions.ReturnStatusException;
+import com.google.common.base.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +19,7 @@ import tds.common.Response;
 import tds.common.ValidationError;
 import tds.exam.Exam;
 import tds.exam.ExamApproval;
+import tds.exam.ExamStatusCode;
 import tds.exam.OpenExamRequest;
 import tds.student.services.abstractions.IOpportunityService;
 import tds.student.services.data.ApprovalInfo;
@@ -25,6 +30,7 @@ import tds.student.sql.data.OpportunitySegment;
 import tds.student.sql.data.OpportunityStatus;
 import tds.student.sql.data.OpportunityStatusChange;
 import tds.student.sql.data.OpportunityStatusExtensions;
+import tds.student.sql.data.OpportunityStatusType;
 import tds.student.sql.data.TestConfig;
 import tds.student.sql.data.TestSegment;
 import tds.student.sql.data.TestSelection;
@@ -34,6 +40,7 @@ import tds.student.sql.data.Testee;
 @Service("integrationOpportunityService")
 @Scope("prototype")
 public class RemoteOpportunityService implements IOpportunityService {
+  private static final Logger log = LoggerFactory.getLogger(RemoteOpportunityService.class);
   private final IOpportunityService legacyOpportunityService;
   private final boolean isRemoteExamCallsEnabled;
   private final boolean isLegacyCallsEnabled;
@@ -148,7 +155,41 @@ public class RemoteOpportunityService implements IOpportunityService {
 
   @Override
   public boolean setStatus(final OpportunityInstance oppInstance, final OpportunityStatusChange statusChange) throws ReturnStatusException {
-    return legacyOpportunityService.setStatus(oppInstance, statusChange);
+    boolean isApproved = false;
+    ReturnStatus returnStatus = null;
+    
+    if (isLegacyCallsEnabled) {
+      isApproved = legacyOpportunityService.setStatus(oppInstance, statusChange);
+    }
+  
+    if (!isRemoteExamCallsEnabled) {
+      return isApproved;
+    }
+    
+    Optional<ValidationError> maybeError = examRepository.updateStatus(oppInstance.getExamId(), statusChange.getStatus().name(), statusChange.getReason());
+    
+    if (!statusChange.isCheckReturnStatus()) {
+      return true;
+    }
+  
+    if (maybeError.isPresent()) {
+      ValidationError error = maybeError.get();
+      returnStatus = new ReturnStatus(error.getCode(), error.getMessage());
+      
+      if (ExamStatusCode.STATUS_FAILED.equalsIgnoreCase (maybeError.get().getCode())) {
+        throw new ReturnStatusException (returnStatus);
+      }
+      /* We can skip line [234-237] as trying to update to an invalid status should result in a ValidationError generated
+         by the ExamService. */
+      
+      log.warn("Error setting exam status for exam id {}: Failed to set status to '{}' - {}",
+        oppInstance.getExamId(), statusChange.getStatus(), returnStatus.getReason());
+      isApproved = false;
+    } else {
+      isApproved = true;
+    }
+    
+    return isApproved;
   }
 
   @Override
@@ -173,7 +214,23 @@ public class RemoteOpportunityService implements IOpportunityService {
 
   @Override
   public void denyApproval(final OpportunityInstance oppInstance) throws ReturnStatusException {
-    legacyOpportunityService.denyApproval(oppInstance);
+  
+    if(isLegacyCallsEnabled) {
+      legacyOpportunityService.denyApproval(oppInstance);
+    }
+
+    if (!isRemoteExamCallsEnabled) {
+      return;
+    }
+    
+    OpportunityStatus opportunityStatus = getStatus(oppInstance);
+  
+    /* Conditional on line [257] */
+    if (opportunityStatus.getStatus() == OpportunityStatusType.Paused) {
+      return;
+    }
+    
+    setStatus (oppInstance, new OpportunityStatusChange (OpportunityStatusType.Pending, true, ExamStatusCode.STATUS_DENIED));
   }
 
   @Override

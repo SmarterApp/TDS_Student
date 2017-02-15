@@ -1,6 +1,7 @@
 package tds.student.services.remote;
 
 import TDS.Shared.Exceptions.ReturnStatusException;
+import com.google.common.base.Optional;
 import org.joda.time.Instant;
 import org.junit.After;
 import org.junit.Before;
@@ -24,12 +25,15 @@ import tds.student.sql.abstractions.ExamRepository;
 import tds.student.sql.data.OpportunityInfo;
 import tds.student.sql.data.OpportunityInstance;
 import tds.student.sql.data.OpportunityStatus;
+import tds.student.sql.data.OpportunityStatusChange;
 import tds.student.sql.data.OpportunityStatusType;
 import tds.student.sql.data.TestSession;
 import tds.student.sql.data.Testee;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
@@ -177,5 +181,106 @@ public class RemoteOpportunityServiceTest {
     ApprovalInfo approvalInfo = service.checkTestApproval(oppInstance);
     assertThat(approvalInfo.getStatus().toString()).isEqualTo("Approved");
     verify(examRepository).getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey());
+  }
+  
+  @Test
+  public void shouldDenyApproval() throws ReturnStatusException {
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository);
+    
+    OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+  
+    //mock getStatus
+    when(examRepository.getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey()))
+      .thenReturn(new Response<>(new ExamApproval(oppInstance.getExamId(), new ExamStatusCode(ExamStatusCode.STATUS_APPROVED), "reason")));
+  
+    final String deniedStatus = ExamStatusCode.STATUS_DENIED;
+    OpportunityStatusChange statusChange = new OpportunityStatusChange(OpportunityStatusType.Pending, true, deniedStatus);
+    when(examRepository.updateStatus(oppInstance.getExamId(), statusChange.getStatus().name(), deniedStatus)).thenReturn(Optional.<ValidationError>absent());
+    service.denyApproval(oppInstance);
+    
+    verify(examRepository).getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey());
+    verify(examRepository).updateStatus(oppInstance.getExamId(), statusChange.getStatus().name(), deniedStatus);
+  }
+  
+  @Test
+  public void shouldNotSetStatusIfStatusIsPaused() throws ReturnStatusException {
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository);
+    OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+    OpportunityStatus currentStatus = new OpportunityStatus();
+    currentStatus.setStatus(OpportunityStatusType.Paused);
+  
+    //mock getStatus
+    when(examRepository.getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey()))
+      .thenReturn(new Response<>(new ExamApproval(oppInstance.getExamId(), new ExamStatusCode(ExamStatusCode.STATUS_PAUSED), "reason")));
+    
+    service.denyApproval(oppInstance);
+  
+    verify(examRepository).getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey());
+    verify(examRepository, never()).updateStatus((UUID) any(), (String) any(), (String) any());
+  }
+  
+  @Test
+  public void shouldUpdateStatus() throws ReturnStatusException {
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository);
+    
+    OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+    OpportunityStatus currentStatus = new OpportunityStatus();
+    currentStatus.setStatus(OpportunityStatusType.Approved);
+    
+    final String deniedStatus = ExamStatusCode.STATUS_DENIED;
+    OpportunityStatusChange statusChange = new OpportunityStatusChange(OpportunityStatusType.Pending, true, deniedStatus);
+    when(examRepository.updateStatus(oppInstance.getExamId(), statusChange.getStatus().name(), deniedStatus)).thenReturn(Optional.<ValidationError>absent());
+    boolean isApproved = service.setStatus(oppInstance, statusChange);
+    assertThat(isApproved).isTrue();
+    verify(examRepository).updateStatus(oppInstance.getExamId(), statusChange.getStatus().name(), deniedStatus);
+  }
+  
+  @Test
+  public void shouldReturnTrueForErrorWithFalseCheckStatus() throws ReturnStatusException {
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository);
+    
+    OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+    OpportunityStatus currentStatus = new OpportunityStatus();
+    currentStatus.setStatus(OpportunityStatusType.Approved);
+    
+    final String deniedStatus = ExamStatusCode.STATUS_DENIED;
+    OpportunityStatusChange statusChange = new OpportunityStatusChange(OpportunityStatusType.Pending, false, deniedStatus);
+    when(examRepository.updateStatus(oppInstance.getExamId(), statusChange.getStatus().name(), deniedStatus))
+      .thenReturn(Optional.of(new ValidationError("Error", "Code")));
+    boolean isApproved = service.setStatus(oppInstance, statusChange);
+    assertThat(isApproved).isTrue();
+    verify(examRepository).updateStatus(oppInstance.getExamId(), statusChange.getStatus().name(), deniedStatus);
+  }
+  
+  @Test(expected = ReturnStatusException.class)
+  public void shouldThrowForReturnStatusFailed() throws ReturnStatusException {
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository);
+    
+    OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+    OpportunityStatus currentStatus = new OpportunityStatus();
+    currentStatus.setStatus(OpportunityStatusType.Approved);
+    
+    final String deniedStatus = ExamStatusCode.STATUS_DENIED;
+    OpportunityStatusChange statusChange = new OpportunityStatusChange(OpportunityStatusType.Pending, true, deniedStatus);
+    when(examRepository.updateStatus(oppInstance.getExamId(), statusChange.getStatus().name(), deniedStatus))
+      .thenReturn(Optional.of(new ValidationError(ExamStatusCode.STATUS_FAILED, "There was an error!")));
+    service.setStatus(oppInstance, statusChange);
+  }
+  
+  @Test
+  public void shouldReturnFalseForValidationErrorReturned() throws ReturnStatusException {
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository);
+  
+    OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+    OpportunityStatus currentStatus = new OpportunityStatus();
+    currentStatus.setStatus(OpportunityStatusType.Approved);
+  
+    final String deniedStatus = ExamStatusCode.STATUS_DENIED;
+    OpportunityStatusChange statusChange = new OpportunityStatusChange(OpportunityStatusType.Pending, true, deniedStatus);
+    when(examRepository.updateStatus(oppInstance.getExamId(), statusChange.getStatus().name(), deniedStatus))
+      .thenReturn(Optional.of(new ValidationError("Another Error", "There was an error!")));
+    boolean isApproved = service.setStatus(oppInstance, statusChange);
+    assertThat(isApproved).isFalse();
+    verify(examRepository).updateStatus(oppInstance.getExamId(), statusChange.getStatus().name(), deniedStatus);
   }
 }
