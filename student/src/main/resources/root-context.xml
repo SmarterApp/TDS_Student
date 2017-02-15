@@ -126,14 +126,6 @@
 	<!-- HTTP web helper -->
 	<beans:bean id="httpWebHelper" class="AIR.Common.Web.HttpWebHelper" />
 
-	<beans:bean id="clientRequestFactory" class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory"/>
-
-	<!-- a generic rest Template bean for invoking webservices can be injected into clients -->
-	<beans:bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
-		<beans:constructor-arg ref="clientRequestFactory"/>
-	</beans:bean>
-
-
 	<beans:bean id="hikariAIRConfig" class="com.zaxxer.hikari.HikariConfig">
 		<beans:property name="dataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlDataSource" />
 		<beans:property name="dataSourceProperties" >
