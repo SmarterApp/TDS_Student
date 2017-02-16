@@ -4,6 +4,7 @@ import TDS.Shared.Exceptions.ReturnStatusException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.guava.GuavaModule;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
+import com.google.common.base.Optional;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,16 +18,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponents;
 
+import java.net.URI;
 import java.util.UUID;
 
 import tds.common.Response;
 import tds.common.ValidationError;
 import tds.exam.Exam;
+import tds.exam.ExamStatusCode;
 import tds.exam.OpenExamRequest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -41,6 +46,13 @@ public class RemoteExamRepositoryTest {
     "    \"code\": \"sessionNotOpen\",\n" +
     "    \"message\": \"Session 549ed8e0-d1cd-4830-8ae5-c35e92abb282 is not open\"\n" +
     "  }\n" +
+    "}";
+  
+  private static final String NO_CONTENT_JSON = "{\n" +
+    "  \"errors\": [{\n" +
+    "    \"code\": \"sessionNotOpen\",\n" +
+    "    \"message\": \"Session 549ed8e0-d1cd-4830-8ae5-c35e92abb282 is not open\"\n" +
+    "  }]\n" +
     "}";
 
   @Before
@@ -95,5 +107,36 @@ public class RemoteExamRepositoryTest {
 
     assertThat(error.getCode()).isEqualTo("sessionNotOpen");
     assertThat(error.getMessage()).isEqualTo("Session 549ed8e0-d1cd-4830-8ae5-c35e92abb282 is not open");
+  }
+  
+  @Test
+  public void shouldUpdateStatusNoError() throws ReturnStatusException {
+    final UUID examId = UUID.randomUUID();
+    final String status = ExamStatusCode.STATUS_PENDING;
+    Optional<ValidationError> maybeError = remoteExamRepository.updateStatus(examId, status, "Some reason");
+    verify(mockRestTemplate).exchange(isA(URI.class), isA(HttpMethod.class), isA(HttpEntity.class), isA(ParameterizedTypeReference.class));
+    assertThat(maybeError.isPresent()).isFalse();
+  }
+  
+  @Test
+  public void shouldReturnValidationError() throws ReturnStatusException {
+    final UUID examId = UUID.randomUUID();
+    final String status = ExamStatusCode.STATUS_PENDING;
+    when(mockRestTemplate.exchange(isA(URI.class), isA(HttpMethod.class), isA(HttpEntity.class), isA(ParameterizedTypeReference.class)))
+      .thenThrow(new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Invalid", NO_CONTENT_JSON.getBytes(), null));
+    Optional<ValidationError> maybeError = remoteExamRepository.updateStatus(examId, status, "Some reason");
+    verify(mockRestTemplate).exchange(isA(URI.class), isA(HttpMethod.class), isA(HttpEntity.class), isA(ParameterizedTypeReference.class));
+    assertThat(maybeError.isPresent()).isTrue();
+  }
+  
+  @Test(expected = ReturnStatusException.class)
+  public void shouldThrowForInternalServerError() throws ReturnStatusException {
+    final UUID examId = UUID.randomUUID();
+    final String status = ExamStatusCode.STATUS_PENDING;
+    when(mockRestTemplate.exchange(isA(URI.class), isA(HttpMethod.class), isA(HttpEntity.class), isA(ParameterizedTypeReference.class)))
+      .thenThrow(new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Invalid", NO_CONTENT_JSON.getBytes(), null));
+    Optional<ValidationError> maybeError = remoteExamRepository.updateStatus(examId, status, "Some reason");
+    verify(mockRestTemplate).exchange(isA(URI.class), isA(HttpMethod.class), isA(HttpEntity.class), isA(ParameterizedTypeReference.class));
+    assertThat(maybeError.isPresent()).isTrue();
   }
 }

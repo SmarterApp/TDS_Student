@@ -171,23 +171,23 @@ public class RemoteOpportunityService implements IOpportunityService {
     if (!statusChange.isCheckReturnStatus()) {
       return true;
     }
-  
-    if (maybeError.isPresent()) {
-      ValidationError error = maybeError.get();
-      returnStatus = new ReturnStatus(error.getCode(), error.getMessage());
-      
-      if (ExamStatusCode.STATUS_FAILED.equalsIgnoreCase (maybeError.get().getCode())) {
-        throw new ReturnStatusException (returnStatus);
-      }
-      /* We can skip line [234-237] as trying to update to an invalid status should result in a ValidationError generated
-         by the ExamService. */
-      
-      log.warn("Error setting exam status for exam id {}: Failed to set status to '{}' - {}",
-        oppInstance.getExamId(), statusChange.getStatus(), returnStatus.getReason());
-      isApproved = false;
-    } else {
-      isApproved = true;
+    
+    if (!maybeError.isPresent()) {
+      return true;
     }
+  
+    ValidationError error = maybeError.get();
+    returnStatus = new ReturnStatus(error.getCode(), error.getMessage());
+    
+    if (ExamStatusCode.STATUS_FAILED.equalsIgnoreCase (maybeError.get().getCode())) {
+      throw new ReturnStatusException (returnStatus);
+    }
+    /* OpportunityService - We can skip line [234-237] as trying to update to an invalid status should result in a ValidationError generated
+       by the ExamService. */
+    
+    log.warn("Error setting exam status for exam id {}: Failed to set status to '{}' - {}",
+      oppInstance.getExamId(), statusChange.getStatus(), returnStatus.getReason());
+    isApproved = false;
     
     return isApproved;
   }
@@ -225,7 +225,7 @@ public class RemoteOpportunityService implements IOpportunityService {
     
     OpportunityStatus opportunityStatus = getStatus(oppInstance);
   
-    /* Conditional on line [257] */
+    /* OpportunityService - Conditional on line [257] */
     if (opportunityStatus.getStatus() == OpportunityStatusType.Paused) {
       return;
     }
