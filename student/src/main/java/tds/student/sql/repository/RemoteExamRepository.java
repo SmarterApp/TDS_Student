@@ -3,6 +3,7 @@ package tds.student.sql.repository;
 import TDS.Shared.Exceptions.ReturnStatusException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,8 +11,8 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.HttpClientErrorException;
@@ -19,12 +20,13 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
-import java.io.IOException;
-
 import tds.common.Response;
+import tds.common.ValidationError;
+import tds.common.web.resources.NoContentResponseResource;
 import tds.exam.ApproveAccommodationsRequest;
 import tds.exam.Exam;
 import tds.exam.ExamAccommodation;
@@ -37,7 +39,7 @@ public class RemoteExamRepository implements ExamRepository {
   private final RestTemplate restTemplate;
   private final String examUrl;
   private final ObjectMapper objectMapper;
-
+  
   @Autowired
   public RemoteExamRepository(@Qualifier("integrationRestTemplate") final RestTemplate restTemplate,
                               @Value("${tds.exam.remote.url}") final String examUrl,
@@ -51,7 +53,7 @@ public class RemoteExamRepository implements ExamRepository {
   public Response<Exam> openExam(final OpenExamRequest openExamRequest) throws ReturnStatusException {
     HttpEntity<OpenExamRequest> requestHttpEntity = new HttpEntity<>(openExamRequest);
     Response<Exam> response;
-
+    
     try {
       ResponseEntity<Response<Exam>> responseEntity = restTemplate.exchange(
         examUrl,
@@ -59,10 +61,10 @@ public class RemoteExamRepository implements ExamRepository {
         requestHttpEntity,
         new ParameterizedTypeReference<Response<Exam>>() {
         });
-
+      
       response = responseEntity.getBody();
     } catch (HttpClientErrorException hce) {
-      if(isClientError(hce.getStatusCode())) {
+      if (isClientError(hce.getStatusCode())) {
         response = handleErrorResponse(hce.getResponseBodyAsString());
       } else {
         throw new ReturnStatusException(hce);
@@ -70,17 +72,26 @@ public class RemoteExamRepository implements ExamRepository {
     } catch (RestClientException rce) {
       throw new ReturnStatusException(rce);
     }
-
+    
     return response;
   }
-
+  
   private static boolean isClientError(HttpStatus status) {
     return HttpStatus.Series.CLIENT_ERROR.equals(status.series());
   }
-
+  
   private Response<Exam> handleErrorResponse(String body) throws ReturnStatusException {
     try {
       JavaType type = objectMapper.getTypeFactory().constructParametricType(Response.class, Exam.class);
+      return objectMapper.readValue(body, type);
+    } catch (IOException e) {
+      throw new ReturnStatusException(e);
+    }
+  }
+  
+  private NoContentResponseResource handleErrorResponseNoContent(String body) throws ReturnStatusException {
+    try {
+      JavaType type = objectMapper.getTypeFactory().constructType(NoContentResponseResource.class);
       return objectMapper.readValue(body, type);
     } catch (IOException e) {
       throw new ReturnStatusException(e);
@@ -96,16 +107,16 @@ public class RemoteExamRepository implements ExamRepository {
     ResponseEntity<Response<ExamApproval>> responseEntity;
     
     UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/%s/approval", examUrl, examId))
-        .queryParam("sessionId", sessionId)
-        .queryParam("browserId", browserId);
+      .queryParam("sessionId", sessionId)
+      .queryParam("browserId", browserId);
     
     try {
       responseEntity = restTemplate.exchange(
-          builder.build().encode().toUri(),
-          HttpMethod.GET,
-          requestHttpEntity,
-          new ParameterizedTypeReference<Response<ExamApproval>>() {
-          });
+        builder.build().encode().toUri(),
+        HttpMethod.GET,
+        requestHttpEntity,
+        new ParameterizedTypeReference<Response<ExamApproval>>() {
+        });
     } catch (RestClientException rce) {
       throw new ReturnStatusException(rce);
     }
@@ -125,11 +136,11 @@ public class RemoteExamRepository implements ExamRepository {
     
     try {
       responseEntity = restTemplate.exchange(
-          builder.build().encode().toUri(),
-          HttpMethod.GET,
-          requestHttpEntity,
-          new ParameterizedTypeReference<List<ExamAccommodation>>() {
-          });
+        builder.build().encode().toUri(),
+        HttpMethod.GET,
+        requestHttpEntity,
+        new ParameterizedTypeReference<List<ExamAccommodation>>() {
+        });
     } catch (RestClientException rce) {
       throw new ReturnStatusException(rce);
     }
@@ -156,5 +167,40 @@ public class RemoteExamRepository implements ExamRepository {
     } catch (RestClientException rce) {
       throw new ReturnStatusException(rce);
     }
+  }
+  
+  @Override
+  public Optional<ValidationError> updateStatus(final UUID examId, final String status, final String reason) throws ReturnStatusException {
+    HttpHeaders headers = new HttpHeaders();
+    headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+    headers.setContentType(MediaType.APPLICATION_JSON);
+    HttpEntity<?> requestHttpEntity = new HttpEntity<>(headers);
+    
+    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/%s/status", examUrl, examId))
+      .queryParam("status", status)
+      .queryParam("reason", reason);
+    
+    try {
+      restTemplate.exchange(
+        builder.build().toUri(),
+        HttpMethod.PUT,
+        requestHttpEntity,
+        new ParameterizedTypeReference<NoContentResponseResource>() {
+        });
+    } catch (HttpClientErrorException hce) {
+      // No need to throw a ReturnStatusException if its a 4xx here - we'll leave it up to the service calling this method
+      if (isClientError(hce.getStatusCode())) {
+        NoContentResponseResource responseResource = handleErrorResponseNoContent(hce.getResponseBodyAsString());
+        if (responseResource.getErrors().length > 0) {
+          return Optional.of(responseResource.getErrors()[0]);
+        } else {
+          throw new ReturnStatusException(hce);
+        }
+      } else {
+        throw new ReturnStatusException(hce);
+      }
+    }
+    
+    return Optional.absent();
   }
 }
