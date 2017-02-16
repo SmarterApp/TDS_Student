@@ -67,7 +67,7 @@ public class TestShellScriptsBacking extends BasePage
     _request = getRequest ();
     _studentSettings = getBean ("studentSettings", StudentSettings.class);
     itemBankService = getBean ("itemBankService", ItemBankService.class);
-    _iOpportunityService = getBean ("opportunityService", OpportunityService.class);
+    _iOpportunityService = getBean ("integrationOpportunityService", OpportunityService.class);
 
     // get test opp
     _testOpportunity = StudentContext.getTestOpportunity ();
