@@ -31,6 +31,7 @@ import tds.exam.ApproveAccommodationsRequest;
 import tds.exam.Exam;
 import tds.exam.ExamAccommodation;
 import tds.exam.ExamApproval;
+import tds.exam.ExamConfiguration;
 import tds.exam.OpenExamRequest;
 import tds.student.sql.abstractions.ExamRepository;
 
@@ -92,6 +93,15 @@ public class RemoteExamRepository implements ExamRepository {
   private NoContentResponseResource handleErrorResponseNoContent(String body) throws ReturnStatusException {
     try {
       JavaType type = objectMapper.getTypeFactory().constructType(NoContentResponseResource.class);
+      return objectMapper.readValue(body, type);
+    } catch (IOException e) {
+      throw new ReturnStatusException(e);
+    }
+  }
+  
+  private Response<ExamConfiguration> handleErrorResponseExamConfig(String body) throws ReturnStatusException {
+    try {
+      JavaType type = objectMapper.getTypeFactory().constructParametricType(Response.class, Exam.class);
       return objectMapper.readValue(body, type);
     } catch (IOException e) {
       throw new ReturnStatusException(e);
@@ -202,5 +212,36 @@ public class RemoteExamRepository implements ExamRepository {
     }
     
     return Optional.absent();
+  }
+  
+  @Override
+  public Response<ExamConfiguration> startExam(UUID examId) throws ReturnStatusException {
+    HttpHeaders headers = new HttpHeaders();
+    headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+    headers.setContentType(MediaType.APPLICATION_JSON);
+    HttpEntity<?> requestHttpEntity = new HttpEntity<>(headers);
+    Response<ExamConfiguration> response;
+    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/%s/start", examUrl, examId));
+  
+    try {
+      ResponseEntity<Response<ExamConfiguration>> responseEntity = restTemplate.exchange(
+        builder.build().toUri(),
+        HttpMethod.PUT,
+        requestHttpEntity,
+        new ParameterizedTypeReference<Response<ExamConfiguration>>() {
+        });
+    
+      response = responseEntity.getBody();
+    } catch (HttpClientErrorException hce) {
+      if (isClientError(hce.getStatusCode())) {
+        response = handleErrorResponseExamConfig(hce.getResponseBodyAsString());
+      } else {
+        throw new ReturnStatusException(hce);
+      }
+    } catch (RestClientException rce) {
+      throw new ReturnStatusException(rce);
+    }
+  
+    return response;
   }
 }

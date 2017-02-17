@@ -26,6 +26,7 @@ import java.util.UUID;
 import tds.common.Response;
 import tds.common.ValidationError;
 import tds.exam.Exam;
+import tds.exam.ExamConfiguration;
 import tds.exam.ExamStatusCode;
 import tds.exam.OpenExamRequest;
 
@@ -138,5 +139,45 @@ public class RemoteExamRepositoryTest {
     Optional<ValidationError> maybeError = remoteExamRepository.updateStatus(examId, status, "Some reason");
     verify(mockRestTemplate).exchange(isA(URI.class), isA(HttpMethod.class), isA(HttpEntity.class), isA(ParameterizedTypeReference.class));
     assertThat(maybeError.isPresent()).isTrue();
+  }
+  
+  @Test
+  public void shouldReturnExamConfiguration() throws ReturnStatusException {
+    UUID examId = UUID.randomUUID();
+    Response<ExamConfiguration> mockResponse = new Response<>(
+      new ExamConfiguration.Builder()
+        .withStatus("test")
+        .build());
+    
+    when(mockRestTemplate.exchange(isA(URI.class), isA(HttpMethod.class), isA(HttpEntity.class), isA(ParameterizedTypeReference.class)))
+      .thenReturn(new ResponseEntity(mockResponse, HttpStatus.OK));
+  
+    Response<ExamConfiguration> response = remoteExamRepository.startExam(examId);
+    assertThat(response.getData().isPresent()).isTrue();
+    assertThat(response.getData().get().getStatus()).isEqualTo("test");
+  }
+  
+  @Test
+  public void shouldReturnResponseWithValidationErrorsForClientException() throws ReturnStatusException {
+    UUID examId = UUID.randomUUID();
+    Response<ExamConfiguration> mockResponse = new Response<>(
+      new ExamConfiguration.Builder()
+        .withStatus("test")
+        .build());
+  
+    when(mockRestTemplate.exchange(isA(URI.class), isA(HttpMethod.class), isA(HttpEntity.class), isA(ParameterizedTypeReference.class)))
+      .thenThrow(new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Invalid", ERROR_JSON.getBytes(), null));
+  
+    Response<ExamConfiguration> response = remoteExamRepository.startExam(examId);
+    
+    assertThat(response.getError().isPresent()).isTrue();
+  }
+  
+  @Test(expected = ReturnStatusException.class)
+  public void shouldThrowForInternalServerErrorStartExam() throws ReturnStatusException {
+    UUID examId = UUID.randomUUID();
+    when(mockRestTemplate.exchange(isA(URI.class), isA(HttpMethod.class), isA(HttpEntity.class), isA(ParameterizedTypeReference.class)))
+      .thenThrow(new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Invalid", ERROR_JSON.getBytes(), null));
+    remoteExamRepository.startExam(examId);
   }
 }

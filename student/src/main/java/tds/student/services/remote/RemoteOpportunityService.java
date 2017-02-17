@@ -19,6 +19,7 @@ import tds.common.Response;
 import tds.common.ValidationError;
 import tds.exam.Exam;
 import tds.exam.ExamApproval;
+import tds.exam.ExamConfiguration;
 import tds.exam.ExamStatusCode;
 import tds.exam.OpenExamRequest;
 import tds.student.services.abstractions.IOpportunityService;
@@ -235,7 +236,43 @@ public class RemoteOpportunityService implements IOpportunityService {
 
   @Override
   public TestConfig startTest(final OpportunityInstance oppInstance, final String testKey, final List<String> formKeys) throws ReturnStatusException {
-    return legacyOpportunityService.startTest(oppInstance, testKey, formKeys);
+    TestConfig testConfig = null;
+    
+    if(isLegacyCallsEnabled) {
+      testConfig = legacyOpportunityService.startTest(oppInstance, testKey, formKeys);
+    }
+  
+    if (!isRemoteExamCallsEnabled) {
+      return testConfig;
+    }
+  
+    
+    /* Note that the formKeys argument can be ignored - it is an unused functionality */
+    Response<ExamConfiguration> response = examRepository.startExam(oppInstance.getExamId());
+  
+    if (response.getError().isPresent()) {
+      ValidationError validationError = response.getError().get();
+      String errorMessage = validationError.getTranslatedMessage().isPresent()
+        ? validationError.getTranslatedMessage().get()
+        : validationError.getMessage();
+    
+      throw new ReturnStatusException(errorMessage);
+    }
+    
+    if (!response.getData().isPresent()) {
+      throw new ReturnStatusException(String.format("Invalid response from the exam service when trying to start exam %s", oppInstance.getExamId()));
+    }
+
+    ExamConfiguration examConfiguration = response.getData().get();
+    
+    /* OpportunityService - Conditional at line 288 */
+    if (!examConfiguration.getStatus().equals(ExamStatusCode.STATUS_STARTED)) {
+      throw new ReturnStatusException("Failed to start the exam.");
+    }
+  
+    testConfig = mapExamConfigurationToTestConfig(examConfiguration);
+    
+    return testConfig;
   }
 
   @Override
@@ -251,5 +288,23 @@ public class RemoteOpportunityService implements IOpportunityService {
   @Override
   public void exitSegment(final OpportunityInstance oppInstance, final int segmentPosition) throws ReturnStatusException {
     legacyOpportunityService.exitSegment(oppInstance, segmentPosition);
+  }
+  
+  private static TestConfig mapExamConfigurationToTestConfig(ExamConfiguration examConfiguration) {
+    Exam exam = examConfiguration.getExam();
+    TestConfig testConfig = new TestConfig();
+    testConfig.setStatus(OpportunityStatusExtensions.parseExamStatus(examConfiguration.getStatus()));
+    testConfig.setRestart(exam.getRestartsAndResumptions());
+    testConfig.setTestLength(examConfiguration.getTestLength());
+    testConfig.setStartPosition(examConfiguration.getStartPosition());
+    testConfig.setContentLoadTimeout(examConfiguration.getContentLoadTimeoutMinutes());
+    testConfig.setInterfaceTimeout(examConfiguration.getInterfaceTimeoutMinutes());
+    testConfig.setRequestInterfaceTimeout(examConfiguration.getRequestInterfaceTimeoutMinutes());
+    testConfig.setOppRestartMins(examConfiguration.getExamRestartWindowMinutes());
+    testConfig.setPrefetch(examConfiguration.getPrefetch());
+    testConfig.setScoreByTDS(false);
+    testConfig.setValidateCompleteness(examConfiguration.isValidateCompleteness());
+    //TODO: set MSB flag
+    return testConfig;
   }
 }

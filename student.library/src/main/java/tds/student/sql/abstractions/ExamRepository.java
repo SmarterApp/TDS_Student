@@ -12,6 +12,7 @@ import tds.exam.ApproveAccommodationsRequest;
 import tds.exam.Exam;
 import tds.exam.ExamAccommodation;
 import tds.exam.ExamApproval;
+import tds.exam.ExamConfiguration;
 import tds.exam.OpenExamRequest;
 
 /**
@@ -67,4 +68,13 @@ public interface ExamRepository {
    * @throws ReturnStatusException
    */
   Optional<ValidationError> updateStatus(final UUID examId, final String status, final String reason) throws ReturnStatusException;
+  
+  /**
+   * Creates a request to start an exam
+   *
+   * @param examId the id of the {@link tds.exam.Exam}
+   * @return the {@link tds.exam.ExamConfiguration} containing exam configuration metadata
+   * @throws ReturnStatusException
+   */
+  Response<ExamConfiguration> startExam(final UUID examId) throws ReturnStatusException;
 }

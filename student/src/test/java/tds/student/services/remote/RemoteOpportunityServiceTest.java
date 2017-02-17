@@ -16,6 +16,7 @@ import tds.common.Response;
 import tds.common.ValidationError;
 import tds.exam.Exam;
 import tds.exam.ExamApproval;
+import tds.exam.ExamConfiguration;
 import tds.exam.ExamStatusCode;
 import tds.exam.ExamStatusStage;
 import tds.exam.OpenExamRequest;
@@ -26,7 +27,9 @@ import tds.student.sql.data.OpportunityInfo;
 import tds.student.sql.data.OpportunityInstance;
 import tds.student.sql.data.OpportunityStatus;
 import tds.student.sql.data.OpportunityStatusChange;
+import tds.student.sql.data.OpportunityStatusExtensions;
 import tds.student.sql.data.OpportunityStatusType;
+import tds.student.sql.data.TestConfig;
 import tds.student.sql.data.TestSession;
 import tds.student.sql.data.Testee;
 
@@ -283,4 +286,88 @@ public class RemoteOpportunityServiceTest {
     assertThat(isApproved).isFalse();
     verify(examRepository).updateStatus(oppInstance.getExamId(), statusChange.getStatus().name(), deniedStatus);
   }
+  
+  @Test(expected = ReturnStatusException.class)
+  public void shouldThrowForErrorPresent() throws ReturnStatusException {
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository);
+    OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+    final String assessmentKey = "assessmentKey";
+    Response<ExamConfiguration> errorResponse = new Response<>(new ValidationError("uh", "oh!"));
+  
+    when(examRepository.startExam(oppInstance.getExamId())).thenReturn(errorResponse);
+    service.startTest(oppInstance, assessmentKey, null);
+  }
+  
+  @Test(expected = ReturnStatusException.class)
+  public void shouldThrowForReturnStatusNotStarted() throws ReturnStatusException {
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository);
+    OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+    final String assessmentKey = "assessmentKey";
+  
+    ExamConfiguration mockExamConfig = new ExamConfiguration.Builder()
+      .withExam(
+        new Exam.Builder()
+          .withId(oppInstance.getExamId())
+          .withRestartsAndResumptions(3)
+          .build())
+      .withExamRestartWindowMinutes(120)
+      .withContentLoadTimeout(10)
+      .withInterfaceTimeout(3)
+      .withRequestInterfaceTimeout(90)
+      .withPrefetch(2)
+      .withStatus(ExamStatusCode.STATUS_DENIED)
+      .withTestLength(10)
+      .withStartPosition(1)
+      .withExamRestartWindowMinutes(60)
+      .build();
+  
+    when(examRepository.startExam(oppInstance.getExamId())).thenReturn(new Response<>(mockExamConfig));
+    service.startTest(oppInstance, assessmentKey, null);
+  }
+  
+  @Test
+  public void shouldStartExamAndReturnTestConfig() throws ReturnStatusException {
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository);
+    OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+    final String assessmentKey = "assessmentKey";
+  
+    ExamConfiguration mockExamConfig = new ExamConfiguration.Builder()
+      .withExam(
+        new Exam.Builder()
+          .withId(oppInstance.getExamId())
+          .withRestartsAndResumptions(3)
+          .build())
+      .withExamRestartWindowMinutes(120)
+      .withContentLoadTimeout(10)
+      .withInterfaceTimeout(3)
+      .withRequestInterfaceTimeout(90)
+      .withPrefetch(2)
+      .withStatus(ExamStatusCode.STATUS_STARTED)
+      .withTestLength(10)
+      .withStartPosition(1)
+      .withExamRestartWindowMinutes(60)
+      .build();
+  
+    when(examRepository.startExam(oppInstance.getExamId())).thenReturn(new Response<>(mockExamConfig));
+    TestConfig testConfig = service.startTest(oppInstance, assessmentKey, null);
+    verify(examRepository).startExam(oppInstance.getExamId());
+    
+    assertThat(testConfig).isNotNull();
+    assertThat(testConfig.getStatus()).isEqualTo(OpportunityStatusExtensions.parseExamStatus(ExamStatusCode.STATUS_STARTED));
+    assertThat(testConfig.getPrefetch()).isEqualTo(mockExamConfig.getPrefetch());
+    assertThat(testConfig.getContentLoadTimeout()).isEqualTo(mockExamConfig.getContentLoadTimeoutMinutes());
+    assertThat(testConfig.getInterfaceTimeout()).isEqualTo(mockExamConfig.getInterfaceTimeoutMinutes());
+    assertThat(testConfig.getOppRestartMins()).isEqualTo(mockExamConfig.getExamRestartWindowMinutes());
+    assertThat(testConfig.getRequestInterfaceTimeout()).isEqualTo(mockExamConfig.getRequestInterfaceTimeoutMinutes());
+    assertThat(testConfig.getRestart()).isEqualTo(mockExamConfig.getExam().getRestartsAndResumptions());
+    assertThat(testConfig.getStartPosition()).isEqualTo(mockExamConfig.getStartPosition());
+  }
 }
+
+
+
+
+
+
+
+
