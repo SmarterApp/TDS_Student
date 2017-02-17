@@ -160,11 +160,6 @@ public class RemoteExamRepositoryTest {
   @Test
   public void shouldReturnResponseWithValidationErrorsForClientException() throws ReturnStatusException {
     UUID examId = UUID.randomUUID();
-    Response<ExamConfiguration> mockResponse = new Response<>(
-      new ExamConfiguration.Builder()
-        .withStatus("test")
-        .build());
-  
     when(mockRestTemplate.exchange(isA(URI.class), isA(HttpMethod.class), isA(HttpEntity.class), isA(ParameterizedTypeReference.class)))
       .thenThrow(new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Invalid", ERROR_JSON.getBytes(), null));
   
