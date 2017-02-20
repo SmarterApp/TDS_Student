@@ -246,7 +246,6 @@ public class RemoteExamRepository implements ExamRepository {
     return response;
   }
 
-
   @Override
   public Response<List<ExamSegment>> findExamSegments(UUID examId, UUID sessionId, UUID browserId) throws ReturnStatusException {
     HttpHeaders headers = new HttpHeaders();

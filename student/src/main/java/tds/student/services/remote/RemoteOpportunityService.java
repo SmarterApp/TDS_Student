@@ -247,13 +247,12 @@ public class RemoteOpportunityService implements IOpportunityService {
       return testConfig;
     }
   
-    
     /* Note that the formKeys argument can be ignored - it is an unused functionality */
     Response<ExamConfiguration> response = examRepository.startExam(oppInstance.getExamId());
 
     if (response.getError().isPresent()) {
-      ValidationError validationError = response.getError().get();
-      String errorMessage = validationError.getTranslatedMessage().isPresent()
+      final ValidationError validationError = response.getError().get();
+      final String errorMessage = validationError.getTranslatedMessage().isPresent()
         ? validationError.getTranslatedMessage().get()
         : validationError.getMessage();
 
@@ -264,11 +263,11 @@ public class RemoteOpportunityService implements IOpportunityService {
       throw new ReturnStatusException(String.format("Invalid response from the exam service when trying to start exam %s", oppInstance.getExamId()));
     }
 
-    ExamConfiguration examConfiguration = response.getData().get();
+    final ExamConfiguration examConfiguration = response.getData().get();
     
     /* OpportunityService - Conditional at line 288 */
     if (!examConfiguration.getStatus().equals(ExamStatusCode.STATUS_STARTED)) {
-      throw new ReturnStatusException("Failed to start the exam.");
+      throw new ReturnStatusException(String.format("Failed to start the exam."));
     }
 
     testConfig = mapExamConfigurationToTestConfig(examConfiguration);
@@ -292,15 +291,15 @@ public class RemoteOpportunityService implements IOpportunityService {
     Response<List<ExamSegment>> response = examRepository.findExamSegments(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey());
 
     if (response.getError().isPresent()) {
-      ValidationError validationError = response.getError().get();
-      String errorMessage = validationError.getTranslatedMessage().isPresent()
+      final ValidationError validationError = response.getError().get();
+      final String errorMessage = validationError.getTranslatedMessage().isPresent()
         ? validationError.getTranslatedMessage().get()
         : validationError.getMessage();
 
       throw new ReturnStatusException(errorMessage);
     }
 
-    List<ExamSegment> examSegments = response.getData().get();
+    final List<ExamSegment> examSegments = response.getData().get();
 
     opportunitySegments = mapExamSegmentsToOpportunitySegments(examSegments);
 
