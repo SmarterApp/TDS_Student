@@ -264,11 +264,6 @@ public class RemoteOpportunityService implements IOpportunityService {
     }
 
     final ExamConfiguration examConfiguration = response.getData().get();
-    
-    /* OpportunityService - Conditional at line 288 */
-    if (!examConfiguration.getStatus().equals(ExamStatusCode.STATUS_STARTED)) {
-      throw new ReturnStatusException(String.format("Failed to start the exam."));
-    }
 
     testConfig = mapExamConfigurationToTestConfig(examConfiguration);
 
