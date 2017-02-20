@@ -13,13 +13,14 @@ import tds.exam.Exam;
 import tds.exam.ExamAccommodation;
 import tds.exam.ExamApproval;
 import tds.exam.ExamConfiguration;
+import tds.exam.ExamSegment;
 import tds.exam.OpenExamRequest;
 
 /**
  * Repository to interact with exam data
  */
 public interface ExamRepository {
-  
+
   /**
    * Opens an exam
    *
@@ -28,7 +29,7 @@ public interface ExamRepository {
    * @throws ReturnStatusException if there is an unexpected response from the call
    */
   Response<Exam> openExam(final OpenExamRequest openExamRequest) throws ReturnStatusException;
-  
+
   /**
    * Fetches the approval status of the current exam
    *
@@ -39,7 +40,7 @@ public interface ExamRepository {
    * @throws ReturnStatusException
    */
   Response<ExamApproval> getApproval(final UUID examId, final UUID sessionId, final UUID browserId) throws ReturnStatusException;
-  
+
   /**
    * Fetches the collection of approved {@link tds.exam.ExamAccommodation}s for an exam
    *
@@ -48,7 +49,7 @@ public interface ExamRepository {
    * @throws ReturnStatusException
    */
   List<ExamAccommodation> findApprovedAccommodations(final UUID examId) throws ReturnStatusException;
-  
+
   /**
    * Creates a request for the exam service to approve {@link tds.exam.ExamAccommodation}s
    *
@@ -57,7 +58,7 @@ public interface ExamRepository {
    * @throws ReturnStatusException
    */
   void approveAccommodations(final UUID examId, final ApproveAccommodationsRequest approveAccommodationsRequest) throws ReturnStatusException;
-  
+
   /**
    * Creates a request to update the status of an exam
    *
@@ -68,7 +69,7 @@ public interface ExamRepository {
    * @throws ReturnStatusException
    */
   Optional<ValidationError> updateStatus(final UUID examId, final String status, final String reason) throws ReturnStatusException;
-  
+
   /**
    * Creates a request to start an exam
    *
@@ -77,4 +78,15 @@ public interface ExamRepository {
    * @throws ReturnStatusException
    */
   Response<ExamConfiguration> startExam(final UUID examId) throws ReturnStatusException;
+
+  /**
+   * Creates a request to fetch {@link tds.exam.ExamSegment}s for an exam
+   *
+   * @param examId    the id of the exam
+   * @param sessionId the id of the session the exam is a part of
+   * @param browserId the id of the browser of the current session
+   * @return a {@link tds.common.Response} containing the list of {@link tds.exam.ExamSegment}s for the exam
+   * @throws ReturnStatusException
+   */
+  Response<List<ExamSegment>> findExamSegments(final UUID examId, final UUID sessionId, final UUID browserId) throws ReturnStatusException;
 }

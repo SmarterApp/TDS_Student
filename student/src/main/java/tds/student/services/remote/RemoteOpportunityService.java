@@ -20,6 +20,7 @@ import tds.common.ValidationError;
 import tds.exam.Exam;
 import tds.exam.ExamApproval;
 import tds.exam.ExamConfiguration;
+import tds.exam.ExamSegment;
 import tds.exam.ExamStatusCode;
 import tds.exam.OpenExamRequest;
 import tds.student.services.abstractions.IOpportunityService;
@@ -54,7 +55,7 @@ public class RemoteOpportunityService implements IOpportunityService {
     @Value("${tds.exam.legacy.enabled}") Boolean legacyCallsEnabled,
     ExamRepository examRepository) {
 
-    if(!remoteExamCallsEnabled && !legacyCallsEnabled) {
+    if (!remoteExamCallsEnabled && !legacyCallsEnabled) {
       throw new IllegalStateException("Remote and legacy calls are both disabled.  Please check progman configuration");
     }
 
@@ -73,7 +74,7 @@ public class RemoteOpportunityService implements IOpportunityService {
   public OpportunityInfo openTest(final Testee testee, final TestSession session, final String testKey) throws ReturnStatusException {
     OpportunityInfo opportunityInfo = new OpportunityInfo();
 
-    if(isLegacyCallsEnabled) {
+    if (isLegacyCallsEnabled) {
       opportunityInfo = legacyOpportunityService.openTest(testee, session, testKey);
     }
 
@@ -122,7 +123,7 @@ public class RemoteOpportunityService implements IOpportunityService {
   public OpportunityStatus getStatus(final OpportunityInstance oppInstance) throws ReturnStatusException {
     OpportunityStatus status = null;
 
-    if(isLegacyCallsEnabled) {
+    if (isLegacyCallsEnabled) {
       status = legacyOpportunityService.getStatus(oppInstance);
     }
 
@@ -132,7 +133,7 @@ public class RemoteOpportunityService implements IOpportunityService {
     }
 
     Response<ExamApproval> response = examRepository.getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(),
-        oppInstance.getExamBrowserKey());
+      oppInstance.getExamBrowserKey());
 
     if (!response.hasError() && !response.getData().isPresent()) {
       throw new ReturnStatusException("Invalid response from the exam service");
@@ -141,8 +142,8 @@ public class RemoteOpportunityService implements IOpportunityService {
     if (response.getError().isPresent()) {
       ValidationError validationError = response.getError().get();
       String errorMessage = validationError.getTranslatedMessage().isPresent()
-          ? validationError.getTranslatedMessage().get()
-          : validationError.getMessage();
+        ? validationError.getTranslatedMessage().get()
+        : validationError.getMessage();
 
       throw new ReturnStatusException(errorMessage);
     }
@@ -158,38 +159,38 @@ public class RemoteOpportunityService implements IOpportunityService {
   public boolean setStatus(final OpportunityInstance oppInstance, final OpportunityStatusChange statusChange) throws ReturnStatusException {
     boolean isApproved = false;
     ReturnStatus returnStatus = null;
-    
+
     if (isLegacyCallsEnabled) {
       isApproved = legacyOpportunityService.setStatus(oppInstance, statusChange);
     }
-  
+
     if (!isRemoteExamCallsEnabled) {
       return isApproved;
     }
-    
+
     Optional<ValidationError> maybeError = examRepository.updateStatus(oppInstance.getExamId(), statusChange.getStatus().name(), statusChange.getReason());
-    
+
     if (!statusChange.isCheckReturnStatus()) {
       return true;
     }
-    
+
     if (!maybeError.isPresent()) {
       return true;
     }
-  
+
     ValidationError error = maybeError.get();
     returnStatus = new ReturnStatus(error.getCode(), error.getMessage());
-    
-    if (ExamStatusCode.STATUS_FAILED.equalsIgnoreCase (maybeError.get().getCode())) {
-      throw new ReturnStatusException (returnStatus);
+
+    if (ExamStatusCode.STATUS_FAILED.equalsIgnoreCase(maybeError.get().getCode())) {
+      throw new ReturnStatusException(returnStatus);
     }
     /* OpportunityService - We can skip line [234-237] as trying to update to an invalid status should result in a ValidationError generated
        by the ExamService. */
-    
+
     log.warn("Error setting exam status for exam id {}: Failed to set status to '{}' - {}",
       oppInstance.getExamId(), statusChange.getStatus(), returnStatus.getReason());
     isApproved = false;
-    
+
     return isApproved;
   }
 
@@ -197,7 +198,7 @@ public class RemoteOpportunityService implements IOpportunityService {
   public ApprovalInfo checkTestApproval(final OpportunityInstance oppInstance) throws ReturnStatusException {
     ApprovalInfo approvalInfo = null;
 
-    if(isLegacyCallsEnabled) {
+    if (isLegacyCallsEnabled) {
       approvalInfo = legacyOpportunityService.checkTestApproval(oppInstance);
     }
 
@@ -215,33 +216,33 @@ public class RemoteOpportunityService implements IOpportunityService {
 
   @Override
   public void denyApproval(final OpportunityInstance oppInstance) throws ReturnStatusException {
-  
-    if(isLegacyCallsEnabled) {
+
+    if (isLegacyCallsEnabled) {
       legacyOpportunityService.denyApproval(oppInstance);
     }
 
     if (!isRemoteExamCallsEnabled) {
       return;
     }
-    
+
     OpportunityStatus opportunityStatus = getStatus(oppInstance);
   
     /* OpportunityService - Conditional on line [257] */
     if (opportunityStatus.getStatus() == OpportunityStatusType.Paused) {
       return;
     }
-    
-    setStatus (oppInstance, new OpportunityStatusChange (OpportunityStatusType.Pending, true, ExamStatusCode.STATUS_DENIED));
+
+    setStatus(oppInstance, new OpportunityStatusChange(OpportunityStatusType.Pending, true, ExamStatusCode.STATUS_DENIED));
   }
 
   @Override
   public TestConfig startTest(final OpportunityInstance oppInstance, final String testKey, final List<String> formKeys) throws ReturnStatusException {
     TestConfig testConfig = null;
-    
-    if(isLegacyCallsEnabled) {
+
+    if (isLegacyCallsEnabled) {
       testConfig = legacyOpportunityService.startTest(oppInstance, testKey, formKeys);
     }
-  
+
     if (!isRemoteExamCallsEnabled) {
       return testConfig;
     }
@@ -249,16 +250,16 @@ public class RemoteOpportunityService implements IOpportunityService {
     
     /* Note that the formKeys argument can be ignored - it is an unused functionality */
     Response<ExamConfiguration> response = examRepository.startExam(oppInstance.getExamId());
-  
+
     if (response.getError().isPresent()) {
       ValidationError validationError = response.getError().get();
       String errorMessage = validationError.getTranslatedMessage().isPresent()
         ? validationError.getTranslatedMessage().get()
         : validationError.getMessage();
-    
+
       throw new ReturnStatusException(errorMessage);
     }
-    
+
     if (!response.getData().isPresent()) {
       throw new ReturnStatusException(String.format("Invalid response from the exam service when trying to start exam %s", oppInstance.getExamId()));
     }
@@ -269,15 +270,41 @@ public class RemoteOpportunityService implements IOpportunityService {
     if (!examConfiguration.getStatus().equals(ExamStatusCode.STATUS_STARTED)) {
       throw new ReturnStatusException("Failed to start the exam.");
     }
-  
+
     testConfig = mapExamConfigurationToTestConfig(examConfiguration);
-    
+
     return testConfig;
   }
 
   @Override
   public OpportunitySegment.OpportunitySegments getSegments(final OpportunityInstance oppInstance, final boolean validate) throws ReturnStatusException {
-    return legacyOpportunityService.getSegments(oppInstance, validate);
+    /* Note, the "validate" argument is not used and is always TRUE */
+    OpportunitySegment.OpportunitySegments opportunitySegments = null;
+
+    if (isLegacyCallsEnabled) {
+      opportunitySegments = legacyOpportunityService.getSegments(oppInstance, validate);
+    }
+
+    if (!isRemoteExamCallsEnabled) {
+      return opportunitySegments;
+    }
+
+    Response<List<ExamSegment>> response = examRepository.findExamSegments(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey());
+
+    if (response.getError().isPresent()) {
+      ValidationError validationError = response.getError().get();
+      String errorMessage = validationError.getTranslatedMessage().isPresent()
+        ? validationError.getTranslatedMessage().get()
+        : validationError.getMessage();
+
+      throw new ReturnStatusException(errorMessage);
+    }
+
+    List<ExamSegment> examSegments = response.getData().get();
+
+    opportunitySegments = mapExamSegmentsToOpportunitySegments(examSegments);
+
+    return opportunitySegments;
   }
 
   @Override
@@ -289,7 +316,7 @@ public class RemoteOpportunityService implements IOpportunityService {
   public void exitSegment(final OpportunityInstance oppInstance, final int segmentPosition) throws ReturnStatusException {
     legacyOpportunityService.exitSegment(oppInstance, segmentPosition);
   }
-  
+
   private static TestConfig mapExamConfigurationToTestConfig(ExamConfiguration examConfiguration) {
     Exam exam = examConfiguration.getExam();
     TestConfig testConfig = new TestConfig();
@@ -306,5 +333,24 @@ public class RemoteOpportunityService implements IOpportunityService {
     testConfig.setValidateCompleteness(examConfiguration.isValidateCompleteness());
     //TODO: set MSB flag
     return testConfig;
+  }
+
+  private OpportunitySegment.OpportunitySegments mapExamSegmentsToOpportunitySegments(List<ExamSegment> examSegments) {
+    OpportunitySegment.OpportunitySegments opportunitySegments = new OpportunitySegment().new OpportunitySegments();
+
+    for (ExamSegment examSegment : examSegments) {
+      OpportunitySegment oppSegment = new OpportunitySegment();
+      oppSegment.setFormID(examSegment.getFormId());
+      oppSegment.setFormKey(examSegment.getFormKey());
+      oppSegment.setFtItems(String.valueOf(examSegment.getFieldTestItemCount()));
+      oppSegment.setId(examSegment.getSegmentId());
+      oppSegment.setKey(examSegment.getSegmentKey());
+      oppSegment.setPosition(examSegment.getSegmentPosition());
+      oppSegment.setIsPermeable(examSegment.isPermeable() ? 1 : 0);
+      oppSegment.setRestorePermOn(examSegment.getRestorePermeableCondition());
+      opportunitySegments.add(oppSegment);
+    }
+
+    return opportunitySegments;
   }
 }

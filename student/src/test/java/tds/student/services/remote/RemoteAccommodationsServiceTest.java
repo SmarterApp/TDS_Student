@@ -14,9 +14,9 @@ import java.util.UUID;
 
 import tds.accommodation.Accommodation;
 import tds.accommodation.AccommodationDependency;
-import tds.assessment.Algorithm;
 import tds.assessment.Assessment;
 import tds.assessment.Segment;
+import tds.common.Algorithm;
 import tds.exam.ApproveAccommodationsRequest;
 import tds.exam.ExamAccommodation;
 import tds.student.services.abstractions.IAccommodationsService;
