@@ -302,33 +302,6 @@ public class RemoteOpportunityServiceTest {
     service.startTest(oppInstance, assessmentKey, null);
   }
 
-  @Test(expected = ReturnStatusException.class)
-  public void shouldThrowForReturnStatusNotStarted() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository);
-    OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
-    final String assessmentKey = "assessmentKey";
-
-    ExamConfiguration mockExamConfig = new ExamConfiguration.Builder()
-      .withExam(
-        new Exam.Builder()
-          .withId(oppInstance.getExamId())
-          .withRestartsAndResumptions(3)
-          .build())
-      .withExamRestartWindowMinutes(120)
-      .withContentLoadTimeout(10)
-      .withInterfaceTimeout(3)
-      .withRequestInterfaceTimeout(90)
-      .withPrefetch(2)
-      .withStatus(ExamStatusCode.STATUS_DENIED)
-      .withTestLength(10)
-      .withStartPosition(1)
-      .withExamRestartWindowMinutes(60)
-      .build();
-
-    when(examRepository.startExam(oppInstance.getExamId())).thenReturn(new Response<>(mockExamConfig));
-    service.startTest(oppInstance, assessmentKey, null);
-  }
-
   @Test
   public void shouldStartExamAndReturnTestConfig() throws ReturnStatusException {
     service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository);
