@@ -415,7 +415,7 @@ public class RemoteOpportunityServiceTest {
     assertThat(oppSeg1.getFormID()).isEqualTo(seg1.getFormId());
     assertThat(oppSeg1.getFormKey()).isEqualTo(seg1.getFormKey());
     assertThat(oppSeg1.getPosition()).isEqualTo(seg1.getSegmentPosition());
-    assertThat(oppSeg1.getIsPermeable()).isEqualTo(0);
+    assertThat(oppSeg1.getIsPermeable()).isEqualTo(-1);
     assertThat(oppSeg1.getRestorePermOn()).isEqualTo(seg1.getRestorePermeableCondition());
     assertThat(oppSeg1.getFtItems()).isEqualTo(String.valueOf(seg1.getFieldTestItemCount()));
 

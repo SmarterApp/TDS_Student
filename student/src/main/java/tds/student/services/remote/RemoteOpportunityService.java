@@ -329,7 +329,7 @@ public class RemoteOpportunityService implements IOpportunityService {
     return testConfig;
   }
 
-  private OpportunitySegment.OpportunitySegments mapExamSegmentsToOpportunitySegments(List<ExamSegment> examSegments) {
+  private static OpportunitySegment.OpportunitySegments mapExamSegmentsToOpportunitySegments(List<ExamSegment> examSegments) {
     OpportunitySegment.OpportunitySegments opportunitySegments = new OpportunitySegment().new OpportunitySegments();
 
     for (ExamSegment examSegment : examSegments) {
@@ -340,7 +340,7 @@ public class RemoteOpportunityService implements IOpportunityService {
       oppSegment.setId(examSegment.getSegmentId());
       oppSegment.setKey(examSegment.getSegmentKey());
       oppSegment.setPosition(examSegment.getSegmentPosition());
-      oppSegment.setIsPermeable(examSegment.isPermeable() ? 1 : 0);
+      oppSegment.setIsPermeable(examSegment.isPermeable() ? 1 : -1);
       oppSegment.setRestorePermOn(examSegment.getRestorePermeableCondition());
       opportunitySegments.add(oppSegment);
     }
