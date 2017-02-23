@@ -23,6 +23,7 @@ import tds.exam.ExamConfiguration;
 import tds.exam.ExamSegment;
 import tds.exam.ExamStatusCode;
 import tds.exam.OpenExamRequest;
+import tds.student.performance.dao.TestOpportunityExamMapDao;
 import tds.student.services.abstractions.IOpportunityService;
 import tds.student.services.data.ApprovalInfo;
 import tds.student.sql.abstractions.ExamRepository;
@@ -47,13 +48,15 @@ public class RemoteOpportunityService implements IOpportunityService {
   private final boolean isRemoteExamCallsEnabled;
   private final boolean isLegacyCallsEnabled;
   private final ExamRepository examRepository;
+  private final TestOpportunityExamMapDao testOpportunityExamMapDao;
 
   @Autowired
   public RemoteOpportunityService(
     @Qualifier("legacyOpportunityService") IOpportunityService legacyOpportunityService,
     @Value("${tds.exam.remote.enabled}") Boolean remoteExamCallsEnabled,
     @Value("${tds.exam.legacy.enabled}") Boolean legacyCallsEnabled,
-    ExamRepository examRepository) {
+    ExamRepository examRepository,
+    TestOpportunityExamMapDao testOpportunityExamMapDao) {
 
     if (!remoteExamCallsEnabled && !legacyCallsEnabled) {
       throw new IllegalStateException("Remote and legacy calls are both disabled.  Please check progman configuration");
@@ -63,6 +66,7 @@ public class RemoteOpportunityService implements IOpportunityService {
     this.legacyOpportunityService = legacyOpportunityService;
     this.isLegacyCallsEnabled = legacyCallsEnabled;
     this.examRepository = examRepository;
+    this.testOpportunityExamMapDao = testOpportunityExamMapDao;
   }
 
   @Override
@@ -115,6 +119,11 @@ public class RemoteOpportunityService implements IOpportunityService {
     opportunityInfo.setExamId(exam.getId());
     opportunityInfo.setExamStatus(OpportunityStatusExtensions.parseExamStatus(exam.getStatus().getCode()));
     opportunityInfo.setExamClientName(exam.getClientName());
+
+    //If we are calling both legacy and remote services, then we need to store a map from test opportunity id to exam id
+    if (isRemoteExamCallsEnabled && isLegacyCallsEnabled) {
+      testOpportunityExamMapDao.insert(opportunityInfo.getOppKey(), exam.getId());
+    }
 
     return opportunityInfo;
   }
