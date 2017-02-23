@@ -52,11 +52,11 @@ public class RemoteOpportunityService implements IOpportunityService {
 
   @Autowired
   public RemoteOpportunityService(
-    @Qualifier("legacyOpportunityService") IOpportunityService legacyOpportunityService,
-    @Value("${tds.exam.remote.enabled}") Boolean remoteExamCallsEnabled,
-    @Value("${tds.exam.legacy.enabled}") Boolean legacyCallsEnabled,
-    ExamRepository examRepository,
-    TestOpportunityExamMapDao testOpportunityExamMapDao) {
+    @Qualifier("legacyOpportunityService") final IOpportunityService legacyOpportunityService,
+    @Value("${tds.exam.remote.enabled}") final Boolean remoteExamCallsEnabled,
+    @Value("${tds.exam.legacy.enabled}") final Boolean legacyCallsEnabled,
+    final ExamRepository examRepository,
+    final TestOpportunityExamMapDao testOpportunityExamMapDao) {
 
     if (!remoteExamCallsEnabled && !legacyCallsEnabled) {
       throw new IllegalStateException("Remote and legacy calls are both disabled.  Please check progman configuration");

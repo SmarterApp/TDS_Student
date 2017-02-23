@@ -29,7 +29,7 @@ public class TestOpportunityExamMapDaoImpl implements TestOpportunityExamMapDao 
     }
 
     @Override
-    public void insert(UUID testOpportunityId, UUID examId) {
+    public void insert(final UUID testOpportunityId, final UUID examId) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("testopportunityId", testOpportunityId.toString());
         parameters.put("examId", examId.toString());
