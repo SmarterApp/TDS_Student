@@ -79,7 +79,7 @@
 			<artifactId>tds-dll-mysql</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.opentestsystem.exam</groupId>
+			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>tds-exam-client</artifactId>
 			<version>${tds-exam-client.version}</version>
 		</dependency>
