@@ -26,7 +26,7 @@ import tds.exam.OpenExamRequest;
 import tds.student.performance.dao.TestOpportunityExamMapDao;
 import tds.student.services.abstractions.IOpportunityService;
 import tds.student.services.data.ApprovalInfo;
-import tds.student.sql.abstractions.ExamRepository;
+import tds.student.sql.repository.ExamRepository;
 import tds.student.sql.data.OpportunityInfo;
 import tds.student.sql.data.OpportunityInstance;
 import tds.student.sql.data.OpportunitySegment;

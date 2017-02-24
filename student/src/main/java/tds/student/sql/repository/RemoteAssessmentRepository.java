@@ -19,7 +19,6 @@ import java.util.List;
 
 import tds.accommodation.Accommodation;
 import tds.assessment.Assessment;
-import tds.student.sql.abstractions.AssessmentRepository;
 
 @Repository
 public class RemoteAssessmentRepository implements AssessmentRepository {
