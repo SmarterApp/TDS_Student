@@ -15,14 +15,15 @@
 	<url>http://maven.apache.org</url>
 
 	<properties>
-		<resource-bundler.version>0.0.1-SNAPSHOT</resource-bundler.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<item-scoring.version>1.1.0-SNAPSHOT</item-scoring.version>
 		<item-selection.version>0.0.1-SNAPSHOT</item-selection.version>
+		<item-renderer.version>0.0.1-SNAPSHOT</item-renderer.version>
+
+
 		<tds-exam-client.version>0.0.1-SNAPSHOT</tds-exam-client.version>
 		<tds-assessment-client.version>0.0.1-SNAPSHOT</tds-assessment-client.version>
 		<tds-common-legacy.version>0.0.1-SNAPSHOT</tds-common-legacy.version>
-		<item-renderer.version>0.0.1-SNAPSHOT</item-renderer.version>
 	</properties>
 
 	<dependencies>
@@ -57,26 +58,12 @@
 		</dependency>
 
 		<!-- Start Dependency shared project -->
-		<dependency>
-			<groupId>org.opentestsystem.shared</groupId>
-			<artifactId>shared-web</artifactId>
-		</dependency>
+
 		<dependency>
 			<groupId>org.opentestsystem.shared</groupId>
 			<artifactId>shared-tr-api</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.opentestsystem.shared</groupId>
-			<artifactId>shared-logging</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.opentestsystem.shared</groupId>
-			<artifactId>shared-threading</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.opentestsystem.shared</groupId>
-			<artifactId>shared-test</artifactId>
-		</dependency>
+
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>item-renderer</artifactId>
@@ -90,54 +77,6 @@
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>item-scoring-api</artifactId>
 			<version>${item-scoring.version}</version>
-		</dependency>
-
-		<!-- End: Monitoring and Alerting integration dependency -->
-		<!-- Logging -->
-		<!-- <dependency> <groupId>log4j</groupId> <artifactId>log4j</artifactId> 
-			<scope>provided</scope> </dependency> <dependency> <groupId>org.slf4j</groupId> 
-			<artifactId>slf4j-log4j12</artifactId> <scope>compile</scope> </dependency> -->
-		<dependency>
-			<groupId>commons-primitives</groupId>
-			<artifactId>commons-primitives</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-collections</groupId>
-			<artifactId>commons-collections</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-configuration</groupId>
-			<artifactId>commons-configuration</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-digester</groupId>
-			<artifactId>commons-digester</artifactId>
-		</dependency>
-		<!-- @Inject -->
-		<dependency>
-			<groupId>javax.inject</groupId>
-			<artifactId>javax.inject</artifactId>
-		</dependency>
-		<!-- Servlet -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>jsp-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>AIR</groupId>
-			<artifactId>ResourceBundler</artifactId>
-			<version>${resource-bundler.version}</version>
 		</dependency>
     </dependencies>
 </project>
