@@ -19,11 +19,7 @@
 		<item-scoring.version>1.1.0-SNAPSHOT</item-scoring.version>
 		<item-selection.version>0.0.1-SNAPSHOT</item-selection.version>
 		<item-renderer.version>0.0.1-SNAPSHOT</item-renderer.version>
-
-
 		<tds-exam-client.version>0.0.1-SNAPSHOT</tds-exam-client.version>
-		<tds-assessment-client.version>0.0.1-SNAPSHOT</tds-assessment-client.version>
-		<tds-common-legacy.version>0.0.1-SNAPSHOT</tds-common-legacy.version>
 	</properties>
 
 	<dependencies>
@@ -41,20 +37,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.opentestsystem.common</groupId>
-			<artifactId>tds-common-legacy</artifactId>
-			<version>${tds-common-legacy.version}</version>
-		</dependency>
-
-		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>tds-exam-client</artifactId>
 			<version>${tds-exam-client.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.opentestsystem.assessment</groupId>
-			<artifactId>tds-assessment-client</artifactId>
-			<version>${tds-assessment-client.version}</version>
 		</dependency>
 
 		<!-- Start Dependency shared project -->
