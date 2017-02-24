@@ -17,12 +17,12 @@
 	<properties>
 		<resource-bundler.version>0.0.1-SNAPSHOT</resource-bundler.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<item-renderer.version>0.0.1-SNAPSHOT</item-renderer.version>
 		<item-scoring.version>1.1.0-SNAPSHOT</item-scoring.version>
 		<item-selection.version>0.0.1-SNAPSHOT</item-selection.version>
 		<tds-exam-client.version>0.0.1-SNAPSHOT</tds-exam-client.version>
 		<tds-assessment-client.version>0.0.1-SNAPSHOT</tds-assessment-client.version>
 		<tds-common-legacy.version>0.0.1-SNAPSHOT</tds-common-legacy.version>
+		<item-renderer.version>0.0.1-SNAPSHOT</item-renderer.version>
 	</properties>
 
 	<dependencies>
@@ -37,21 +37,6 @@
 			<artifactId>assertj-core</artifactId>
 			<version>2.6.0</version>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.opentestsystem.delivery</groupId>
-			<artifactId>tds-itemselection-aironline</artifactId>
-			<version>${item-selection.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.opentestsystem.delivery</groupId>
-			<artifactId>item-scoring-api</artifactId>
-			<version>${item-scoring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.opentestsystem.delivery</groupId>
-			<artifactId>item-scoring-engine</artifactId>
-			<version>${item-scoring.version}</version>
 		</dependency>
 
 		<dependency>
@@ -91,6 +76,20 @@
 		<dependency>
 			<groupId>org.opentestsystem.shared</groupId>
 			<artifactId>shared-test</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>item-renderer</artifactId>
+			<version>${item-renderer.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>tds-dll-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>item-scoring-api</artifactId>
+			<version>${item-scoring.version}</version>
 		</dependency>
 
 		<!-- End: Monitoring and Alerting integration dependency -->
@@ -133,11 +132,6 @@
 			<groupId>javax.servlet.jsp</groupId>
 			<artifactId>jsp-api</artifactId>
 			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.opentestsystem.delivery</groupId>
-			<artifactId>item-renderer</artifactId>
-			<version>${item-renderer.version}</version>
 		</dependency>
 
 		<dependency>

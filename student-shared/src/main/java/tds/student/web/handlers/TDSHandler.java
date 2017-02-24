@@ -8,8 +8,13 @@
  ******************************************************************************/
 package tds.student.web.handlers;
 
-import javax.servlet.http.HttpServletResponse;
-
+import AIR.Common.Web.HttpHandlerBase;
+import AIR.Common.Web.TDSReplyCode;
+import AIR.Common.data.ResponseData;
+import TDS.Shared.Configuration.TDSSettings;
+import TDS.Shared.Exceptions.TDSHttpException;
+import TDS.Shared.Exceptions.TDSSecurityException;
+import TDS.Shared.Security.TDSIdentity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,15 +22,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import AIR.Common.Web.HttpHandlerBase;
-import AIR.Common.Web.TDSReplyCode;
-import AIR.Common.data.ResponseData;
-import TDS.Shared.Configuration.TDSSettings;
-import TDS.Shared.Data.ReturnStatus;
-import TDS.Shared.Exceptions.ReturnStatusException;
-import TDS.Shared.Exceptions.TDSHttpException;
-import TDS.Shared.Exceptions.TDSSecurityException;
-import TDS.Shared.Security.TDSIdentity;
+import javax.servlet.http.HttpServletResponse;
 
 public class TDSHandler extends HttpHandlerBase
 {
