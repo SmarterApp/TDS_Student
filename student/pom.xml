@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>org.opentestsystem.shared</groupId>
-		<artifactId>shared-master</artifactId>
-		<version>1.0.1-BUILD-SNAPSHOT</version>
+		<groupId>org.opentestsystem.delivery</groupId>
+		<artifactId>student-parent</artifactId>
+		<version>2.1.2-SNAPSHOT</version>
 	</parent>
-	<groupId>org.opentestsystem.delivery</groupId>
+
 	<artifactId>student</artifactId>
 	<name>student</name>
 	<packaging>war</packaging>
@@ -34,7 +34,6 @@
 		<item-renderer.version>0.0.1-SNAPSHOT</item-renderer.version>
 		<item-scoring.version>1.1.0-SNAPSHOT</item-scoring.version>
 		<student-shared.version>0.0.1-SNAPSHOT</student-shared.version>
-		<tds-exam-client.version>0.0.1-SNAPSHOT</tds-exam-client.version>
 		<tds-assessment-client.version>0.0.1-SNAPSHOT</tds-assessment-client.version>
 		<tds-common-legacy.version>0.0.1-SNAPSHOT</tds-common-legacy.version>
 		<jackson.version>2.8.5</jackson.version>
@@ -60,7 +59,7 @@
 
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
-			<artifactId>student.shared</artifactId>
+			<artifactId>student-shared</artifactId>
 			<version>${student-shared.version}</version>
 		</dependency>
 		<dependency>
