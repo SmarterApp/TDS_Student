@@ -22,8 +22,8 @@ import tds.assessment.Segment;
 import tds.exam.ApproveAccommodationsRequest;
 import tds.exam.ExamAccommodation;
 import tds.student.services.abstractions.IAccommodationsService;
-import tds.student.sql.abstractions.AssessmentRepository;
-import tds.student.sql.abstractions.ExamRepository;
+import tds.student.sql.repository.AssessmentRepository;
+import tds.student.sql.repository.ExamRepository;
 import tds.student.sql.data.Accommodations;
 import tds.student.sql.data.OpportunityInstance;
 

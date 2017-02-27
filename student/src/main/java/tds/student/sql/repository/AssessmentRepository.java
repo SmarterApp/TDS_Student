@@ -1,4 +1,4 @@
-package tds.student.sql.abstractions;
+package tds.student.sql.repository;
 
 import TDS.Shared.Exceptions.ReturnStatusException;
 

@@ -22,7 +22,6 @@
 		</license>
 	</licenses>
 
-
 	<properties>
 		<item-selection.version>0.0.1-SNAPSHOT</item-selection.version>
 		<testscoring.version>0.0.1-SNAPSHOT</testscoring.version>
@@ -32,40 +31,38 @@
 		<sb11-shared-code.version>0.0.6-SNAPSHOT</sb11-shared-code.version>
 		<tds-exam-client.version>0.0.1-SNAPSHOT</tds-exam-client.version>
 		<tds-common-legacy.version>0.0.1-SNAPSHOT</tds-common-legacy.version>
+		<item-renderer.version>0.0.1-SNAPSHOT</item-renderer.version>
+		<item-scoring.version>1.1.0-SNAPSHOT</item-scoring.version>
+		<student-shared.version>0.0.1-SNAPSHOT</student-shared.version>
+		<tds-exam-client.version>0.0.1-SNAPSHOT</tds-exam-client.version>
+		<tds-assessment-client.version>0.0.1-SNAPSHOT</tds-assessment-client.version>
+		<tds-common-legacy.version>0.0.1-SNAPSHOT</tds-common-legacy.version>
 		<jackson.version>2.8.5</jackson.version>
+		<resource-bundler.version>0.0.1-SNAPSHOT</resource-bundler.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>${jackson.version}</version>
+			<groupId>org.opentestsystem.common</groupId>
+			<artifactId>tds-common-legacy</artifactId>
+			<version>${tds-common-legacy.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.opentestsystem.assessment</groupId>
+			<artifactId>tds-assessment-client</artifactId>
+			<version>${tds-assessment-client.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>tds-exam-client</artifactId>
+			<version>${tds-exam-client.version}</version>
 		</dependency>
 
 		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-annotations</artifactId>
-			<version>${jackson.version}</version>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>student.shared</artifactId>
+			<version>${student-shared.version}</version>
 		</dependency>
-
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
-			<version>${jackson.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.fasterxml.jackson.datatype</groupId>
-			<artifactId>jackson-datatype-guava</artifactId>
-			<version>${jackson.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.fasterxml.jackson.datatype</groupId>
-			<artifactId>jackson-datatype-joda</artifactId>
-			<version>${jackson.version}</version>
-		</dependency>
-
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>tds-dll-api</artifactId>
@@ -78,6 +75,25 @@
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>tds-dll-mysql</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>tds-itemselection-aironline</artifactId>
+			<version>${item-selection.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>item-scoring-api</artifactId>
+			<version>${item-scoring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>item-scoring-engine</artifactId>
+			<version>${item-scoring.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>tds-exam-client</artifactId>
@@ -167,6 +183,37 @@
 			<version>2.4.3</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-guava</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-joda</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+
 		<!-- Test -->
 		<dependency>
 			<groupId>com.mchange</groupId>
@@ -195,6 +242,12 @@
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>student.library</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.opentestsystem.exam</groupId>
+					<artifactId>tds-exam-client</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.opentestsystem.blackbox</groupId>
@@ -226,6 +279,61 @@
 			<artifactId>mockito-all</artifactId>
 			<version>1.10.19</version>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+		<groupId>org.opentestsystem.shared</groupId>
+		<artifactId>shared-logging</artifactId>
+		</dependency>
+		<dependency>
+		<groupId>org.opentestsystem.shared</groupId>
+		<artifactId>shared-threading</artifactId>
+		</dependency>
+		<dependency>
+		<groupId>org.opentestsystem.shared</groupId>
+		<artifactId>shared-test</artifactId>
+		</dependency>
+		<dependency>
+		<groupId>commons-primitives</groupId>
+		<artifactId>commons-primitives</artifactId>
+		</dependency>
+		<dependency>
+		<groupId>commons-collections</groupId>
+		<artifactId>commons-collections</artifactId>
+		</dependency>
+		<dependency>
+		<groupId>commons-lang</groupId>
+		<artifactId>commons-lang</artifactId>
+		</dependency>
+		<dependency>
+		<groupId>commons-configuration</groupId>
+		<artifactId>commons-configuration</artifactId>
+		</dependency>
+		<dependency>
+		<groupId>commons-digester</groupId>
+		<artifactId>commons-digester</artifactId>
+		</dependency>
+		 <!--@Inject-->
+		<dependency>
+		<groupId>javax.inject</groupId>
+		<artifactId>javax.inject</artifactId>
+		</dependency>
+		<!-- Servlet -->
+		<dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>servlet-api</artifactId>
+		<scope>provided</scope>
+		</dependency>
+		<dependency>
+		<groupId>javax.servlet.jsp</groupId>
+		<artifactId>jsp-api</artifactId>
+		<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+		<groupId>AIR</groupId>
+		<artifactId>ResourceBundler</artifactId>
+		<version>${resource-bundler.version}</version>
 		</dependency>
 
 		

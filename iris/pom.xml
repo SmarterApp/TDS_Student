@@ -7,13 +7,17 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>iris</name>
 
+	<properties>
+		<student-shared.version>0.0.1-SNAPSHOT</student-shared.version>
+	</properties>
+
 	<dependencies>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-			<scope>test</scope>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>student-shared</artifactId>
+			<version>${student-shared.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>student</artifactId>
@@ -157,6 +161,12 @@
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>student.library</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<build>

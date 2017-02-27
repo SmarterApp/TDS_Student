@@ -34,7 +34,6 @@ import tds.exam.ExamApproval;
 import tds.exam.ExamConfiguration;
 import tds.exam.ExamSegment;
 import tds.exam.OpenExamRequest;
-import tds.student.sql.abstractions.ExamRepository;
 
 @Repository
 public class RemoteExamRepository implements ExamRepository {
