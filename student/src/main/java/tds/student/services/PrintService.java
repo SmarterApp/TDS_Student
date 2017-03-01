@@ -178,10 +178,10 @@ public class PrintService
       String xmlPath = pageGroupToPrint.getFilePath ();
       if (StringUtils.isEmpty (xmlPath)) {
         throw new ReturnStatusException (
-            new Exception (
-                String.format (
-                    "PrintPassageBraille: Invalid xml file path for group %1$s.",
-                    pageGroupToPrint.getId ())));
+          new Exception (
+            String.format (
+              "PrintPassageBraille: Invalid xml file path for group %1$s.",
+              pageGroupToPrint.getId ())));
       }
 
       // try and load document if it isn't already loaded
