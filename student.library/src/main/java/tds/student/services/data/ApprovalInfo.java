@@ -81,6 +81,11 @@ public class ApprovalInfo
 
   public ApprovalInfo(OpportunityStatus oppStatus)
   {
+      if (oppStatus == null || oppStatus.getStatus() == null) {
+          _status = OpportunityApprovalStatus.Logout;
+          return;
+      }
+
       // map the opportunity status to what we understand as the approval status
       switch (oppStatus.getStatus ())
       {
