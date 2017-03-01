@@ -145,7 +145,7 @@ public class RemoteAccommodationsService implements IAccommodationsService {
           // Create accommodations type and value - these will be used by the UI between checkApproval and startTest
           retAccommodations.create(accommodation.getType(), accommodation.getCode(), accommodation.getValue(), accommodation.isVisible(),
             accommodation.isSelectable(), accommodation.isAllowChange(), accommodation.isStudentControl(), accommodation.getDependsOnToolType(),
-            accommodation.isDisableOnGuestSession(), accommodation.isDefaultAccommodation(), accommodation.isAllowCombine(), accommodation.isSelectable());
+            accommodation.isDisableOnGuestSession(), accommodation.isDefaultAccommodation(), accommodation.isAllowCombine(), true);
         }
       }
     }
