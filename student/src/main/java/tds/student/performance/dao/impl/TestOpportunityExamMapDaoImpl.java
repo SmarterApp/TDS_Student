@@ -41,7 +41,6 @@ public class TestOpportunityExamMapDaoImpl implements TestOpportunityExamMapDao 
             namedParameterJdbcTemplate.update(dbNameUtility.setDatabaseNames(sql), parameters);
         } catch (DataAccessException e) {
             logger.error(String.format("%s UPDATE threw exception", sql), e);
-            throw e;
         }
     }
 }
