@@ -28,7 +28,7 @@
 		<spellcheck.version>0.0.1-SNAPSHOT</spellcheck.version>
 		<progman-client.version>0.0.4-SNAPSHOT</progman-client.version>
 		<sb11-mna-client.version>0.0.4-SNAPSHOT</sb11-mna-client.version>
-		<sb11-shared-code.version>3.0.0</sb11-shared-code.version>
+		<sb11-shared-code.version>3.0.1-SNAPSHOT</sb11-shared-code.version>
 		<tds-exam-client.version>0.0.1-SNAPSHOT</tds-exam-client.version>
 		<tds-common-legacy.version>0.0.2</tds-common-legacy.version>
 		<item-renderer.version>0.0.1-SNAPSHOT</item-renderer.version>
