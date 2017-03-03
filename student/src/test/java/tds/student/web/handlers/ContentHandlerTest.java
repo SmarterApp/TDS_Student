@@ -25,7 +25,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import tds.itemrenderer.data.AccLookup;
-import tds.student.services.PrintService;
+import tds.student.services.PrintServiceImpl;
 import tds.student.services.abstractions.IContentService;
 import tds.student.services.abstractions.IResponseService;
 import tds.student.services.data.TestOpportunity;
@@ -53,7 +53,7 @@ public class ContentHandlerTest extends AbstractTest
   IContentService        _contentService;
 
   @Mock
-  PrintService           _printService;
+  PrintServiceImpl _printService;
 
   private MockMvc        _mockMvc;
 

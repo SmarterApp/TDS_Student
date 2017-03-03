@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,9 @@ import tds.itemrenderer.data.AccLookup;
 import tds.itemrenderer.data.IITSDocument;
 import tds.itemrenderer.data.ITSAttachment;
 import tds.itemrenderer.data.ITSContent;
-import tds.student.services.PrintService;
+import tds.student.services.PrintServiceImpl;
 import tds.student.services.abstractions.IContentService;
+import tds.student.services.abstractions.PrintService;
 import tds.student.services.data.ItemResponse;
 import tds.student.services.data.PageGroup;
 import tds.student.services.data.TestOpportunity;
@@ -27,7 +29,7 @@ import tds.student.sql.repository.ExamRepository;
 
 @Service("integrationPrintService")
 @Scope("prototype")
-public class RemotePrintService extends PrintService {
+public class RemotePrintService implements PrintService {
   private static final Logger LOG = LoggerFactory.getLogger(RemotePrintService.class);
   private static final int PASSAGE_PRINT_ITEM_POSITION_DEFAULT = 0;
 
@@ -35,9 +37,11 @@ public class RemotePrintService extends PrintService {
   private final boolean isLegacyCallsEnabled;
   private final ExamRepository examRepository;
   private final IContentService contentService;
+  private final PrintService legacyPrintService;
 
   @Autowired
   public RemotePrintService(
+    @Qualifier("legacyPrintService") final PrintService legacyPrintService,
     @Value("${tds.exam.remote.enabled}") final Boolean remoteExamCallsEnabled,
     @Value("${tds.exam.legacy.enabled}") final Boolean legacyCallsEnabled,
     final ExamRepository examRepository,
@@ -51,6 +55,7 @@ public class RemotePrintService extends PrintService {
     this.isLegacyCallsEnabled = legacyCallsEnabled;
     this.examRepository = examRepository;
     this.contentService = contentService;
+    this.legacyPrintService = legacyPrintService;
   }
 
   @Override
@@ -69,7 +74,7 @@ public class RemotePrintService extends PrintService {
     boolean isSuccessful = false;
 
     if (isLegacyCallsEnabled) {
-      isSuccessful = super.printPassage(requestType, oppInstance, pageGroupToPrint, requestParameters);
+      isSuccessful = legacyPrintService.printPassage(requestType, oppInstance, pageGroupToPrint, requestParameters);
     }
 
     //This isn't ideal, but due to the way the progman properties are loaded within the system this lives within the service rather than the callers.
@@ -108,7 +113,7 @@ public class RemotePrintService extends PrintService {
     boolean isSuccessful = false;
 
     if (isLegacyCallsEnabled) {
-      isSuccessful = super.printItem(opportunityInstance, responseToPrint, requestParameters);
+      isSuccessful = legacyPrintService.printItem(opportunityInstance, responseToPrint, requestParameters);
     }
 
     //This isn't ideal, but due to the way the progman properties are loaded within the system this lives within the service rather than the callers.
@@ -147,7 +152,7 @@ public class RemotePrintService extends PrintService {
     boolean isSuccessful = false;
 
     if (isLegacyCallsEnabled) {
-      isSuccessful = super.printPassageBraille(requestType, testOpp, pageGroupToPrint, accLookup);
+      isSuccessful = legacyPrintService.printPassageBraille(requestType, testOpp, pageGroupToPrint, accLookup);
     }
 
     //This isn't ideal, but due to the way the progman properties are loaded within the system this lives within the service rather than the callers.
@@ -227,11 +232,12 @@ public class RemotePrintService extends PrintService {
     return isSuccessful;
   }
 
+  @Override
   public boolean printItemBraille(TestOpportunity testOpp, ItemResponse responseToPrint, AccLookup accLookup) throws ReturnStatusException {
     boolean isSuccessful = false;
 
     if (isLegacyCallsEnabled) {
-      isSuccessful = super.printItemBraille(testOpp, responseToPrint, accLookup);
+      isSuccessful = legacyPrintService.printItemBraille(testOpp, responseToPrint, accLookup);
     }
 
     //This isn't ideal, but due to the way the progman properties are loaded within the system this lives within the service rather than the callers.

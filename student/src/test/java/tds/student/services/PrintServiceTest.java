@@ -25,7 +25,7 @@ import tds.student.services.data.ItemResponse;
 import tds.student.services.data.PageGroup;
 import tds.student.services.data.TestOpportunity;
 import tds.student.sql.data.OpportunityInstance;
-import tds.student.sql.repository.OpportunityRepository;
+
 import AIR.test.framework.AbstractTest;
 import TDS.Shared.Exceptions.ReturnStatusException;
 
@@ -41,7 +41,7 @@ public class PrintServiceTest extends AbstractTest
   private static final Logger _logger               = LoggerFactory.getLogger (PrintServiceTest.class);
 
   @Autowired
-  PrintService          printService ;
+  PrintServiceImpl printService ;
 
   // Suceess Test Case
   @Test

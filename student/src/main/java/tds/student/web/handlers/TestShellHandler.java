@@ -33,7 +33,7 @@ import org.springframework.web.util.HtmlUtils;
 
 import tds.itemrenderer.data.AccLookup;
 import tds.itemrenderer.data.AccProperties;
-import tds.student.services.PrintService;
+import tds.student.services.PrintServiceImpl;
 import tds.student.services.abstractions.IOpportunityService;
 import tds.student.services.abstractions.IResponseService;
 import tds.student.services.data.ApprovalInfo;
@@ -78,6 +78,7 @@ public class TestShellHandler extends TDSHandler
   @Autowired
   private IOpportunityRepository _oppRepository;
   @Autowired
+  @Qualifier("integrationOpportunityService")
   private IOpportunityService    _oppService;
   @Autowired
   private IResponseService       _responseService;
@@ -85,7 +86,7 @@ public class TestShellHandler extends TDSHandler
   private IResponseRepository    _responseRepository;
   @Autowired
   @Qualifier("integrationPrintService")
-  private PrintService           _printService;
+  private PrintServiceImpl _printService;
   @Autowired
   private ITDSLogger             _tdsLogger;
 

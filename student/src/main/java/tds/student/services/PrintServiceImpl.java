@@ -8,27 +8,28 @@
  ******************************************************************************/
 package tds.student.services;
 
+import AIR.Common.TDSLogger.ITDSLogger;
+import TDS.Shared.Exceptions.ReturnStatusException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 import tds.itemrenderer.data.AccLookup;
 import tds.itemrenderer.data.ITSAttachment;
 import tds.itemrenderer.data.ITSContent;
 import tds.student.services.abstractions.IContentService;
+import tds.student.services.abstractions.PrintService;
 import tds.student.services.data.ItemResponse;
 import tds.student.services.data.PageGroup;
 import tds.student.services.data.TestOpportunity;
 import tds.student.sql.abstractions.IOpportunityRepository;
 import tds.student.sql.data.OpportunityInstance;
-import AIR.Common.TDSLogger.ITDSLogger;
-import TDS.Shared.Exceptions.ReturnStatusException;
-
-import java.io.IOException;
-import java.util.List;
 
 /**
  * @author temp_rreddy
@@ -36,10 +37,11 @@ import java.util.List;
  */
 @Component
 @Scope ("prototype")
-public class PrintService
+@Service("legacyPrintService")
+public class PrintServiceImpl implements PrintService
 {
   private static final Logger    _logger = LoggerFactory
-                                             .getLogger (PrintService.class);
+                                             .getLogger (PrintServiceImpl.class);
 
   @Autowired
   IContentService                _contentService;
