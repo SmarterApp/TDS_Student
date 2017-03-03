@@ -95,12 +95,6 @@
 
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
-			<artifactId>tds-exam-client</artifactId>
-			<version>${tds-exam-client.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>tds-itemselection-common</artifactId>
 			<version>${item-selection.version}</version>
 		</dependency>
