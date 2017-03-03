@@ -33,6 +33,7 @@ import tds.itemrenderer.data.ItemRenderGroup;
 import tds.student.services.PrintServiceImpl;
 import tds.student.services.abstractions.IContentService;
 import tds.student.services.abstractions.IResponseService;
+import tds.student.services.abstractions.PrintService;
 import tds.student.services.data.ItemResponse;
 import tds.student.services.data.PageGroup;
 import tds.student.services.data.TestOpportunity;
@@ -60,7 +61,7 @@ public class ContentHandler extends BaseContentRendererController
 
   @Autowired
   @Qualifier("integrationPrintService")
-  PrintServiceImpl _printService;
+  PrintService _printService;
 
   @RequestMapping (value = "TestShell.axd/getPageContent", produces = "application/xml")
   @ResponseBody
