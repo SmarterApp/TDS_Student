@@ -25,6 +25,7 @@
 
 	<properties>
 
+		<tds-dll.version>0.0.1-SNAPSHOT</tds-dll.version>
 		<item-selection.version>0.0.1-SNAPSHOT</item-selection.version>
 		<testscoring.version>0.0.1-SNAPSHOT</testscoring.version>
 		<spellcheck.version>0.0.1-SNAPSHOT</spellcheck.version>
@@ -38,14 +39,17 @@
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>tds-dll-api</artifactId>
+			<version>${tds-dll.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>tds-dll-mssql</artifactId>
+			<version>${tds-dll.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>tds-dll-mysql</artifactId>
+			<version>${tds-dll.version}</version>
 		</dependency>
 
 
