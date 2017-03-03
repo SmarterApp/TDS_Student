@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.opentestsystem.shared</groupId>
         <artifactId>shared-master</artifactId>
-        <version>1.0.1-BUILD-SNAPSHOT</version>
+        <version>3.0.1</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
