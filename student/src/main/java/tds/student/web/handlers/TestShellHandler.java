@@ -29,6 +29,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.HtmlUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import tds.blackbox.web.handlers.TDSHandler;
 import tds.itemrenderer.data.AccLookup;
 import tds.itemrenderer.data.AccProperties;
@@ -51,15 +59,16 @@ import tds.student.sql.data.OpportunityStatusType;
 import tds.student.sql.data.TestSegment.TestSegmentApproval;
 import tds.student.sql.data.Testee;
 import tds.student.sql.data.ToolUsed;
+import tds.student.tdslogger.StudentEventLogger;
 import tds.student.web.StudentContext;
 import tds.student.web.TestManager;
 import tds.student.web.data.TestShellAudit;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import TDS.Shared.Data.ReturnStatus;
+import TDS.Shared.Exceptions.ReturnStatusException;
+import TDS.Shared.Exceptions.TDSSecurityException;
 import java.util.List;
-import java.util.Map;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Set;
 import java.util.UUID;
 
@@ -184,6 +193,7 @@ public class TestShellHandler extends TDSHandler
   public ResponseData<String> PauseTest (@RequestParam Map<String, String> formParams, @RequestParam (value = "reason", required = false) String reason, HttpServletRequest request)
       throws TDSSecurityException, ReturnStatusException {
     // check if authenticated
+    StudentEventLogger.info(StudentEventLogger.LogEvent.PAUSE_EXAM, request.getSession().getId(), "enter");
     if (isAuthenticated ()) {
       TestOpportunity testOpp = StudentContext.getTestOpportunity ();
 
@@ -196,6 +206,8 @@ public class TestShellHandler extends TDSHandler
             ObjectMapper mapper = new ObjectMapper ();
             testShellAudit = mapper.readValue (latencies, TestShellAudit.class);
           } catch (IOException e) {
+            StudentEventLogger.error(StudentEventLogger.LogEvent.PAUSE_EXAM, request.getSession().getId(),
+              "Problem mapping pause request to TestShellAudit", e);
             _logger.error (String.format ("Problem mapping pause request to TestShellAudit: %s", e.getMessage ()));
           }
           PerformTestShellAudit (testOpp, testShellAudit, request);
@@ -207,6 +219,7 @@ public class TestShellHandler extends TDSHandler
     }
 
     // success
+    StudentEventLogger.info(StudentEventLogger.LogEvent.PAUSE_EXAM, request.getSession().getId(), "exit");
     return new ResponseData<String> (TDSReplyCode.OK.getCode (), "OK", null);
   }
 
