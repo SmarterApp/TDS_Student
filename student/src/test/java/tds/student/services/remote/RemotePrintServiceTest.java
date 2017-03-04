@@ -73,7 +73,7 @@ public class RemotePrintServiceTest {
     pageGroup.add(new ItemResponse(opportunityItem1));
     pageGroup.add(new ItemResponse(opportunityItem2));
 
-    boolean isSuccessful = service.printPassage(ExamPrintRequest.REQUEST_TYPE_PRINT_PASSAGE, mockOpportunityInstance, pageGroup, requestParams);
+    boolean isSuccessful = service.printPassage(mockOpportunityInstance, pageGroup, requestParams);
     assertThat(isSuccessful).isTrue();
 
     verify(mockExamRepository).createPrintRequest(examPrintRequestCaptor.capture());
@@ -99,7 +99,7 @@ public class RemotePrintServiceTest {
     final OpportunityItem opportunityItem1 = new OpportunityItem();
     final PageGroup pageGroup = new PageGroup(opportunityItem1);
 
-    boolean isSuccessful = service.printPassage(ExamPrintRequest.REQUEST_TYPE_PRINT_PASSAGE, mockOpportunityInstance, pageGroup, requestParams);
+    boolean isSuccessful = service.printPassage(mockOpportunityInstance, pageGroup, requestParams);
     assertThat(isSuccessful).isFalse();
     verify(mockExamRepository, never()).createPrintRequest(isA(ExamPrintRequest.class));
   }
@@ -110,7 +110,7 @@ public class RemotePrintServiceTest {
     final PageGroup pageGroup = new PageGroup(opportunityItem1);
     pageGroup.add(new ItemResponse(opportunityItem1));
 
-    boolean isSuccessful = service.printPassage(ExamPrintRequest.REQUEST_TYPE_PRINT_PASSAGE, mockOpportunityInstance, pageGroup, StringUtils.EMPTY);
+    boolean isSuccessful = service.printPassage(mockOpportunityInstance, pageGroup, StringUtils.EMPTY);
     assertThat(isSuccessful).isFalse();
     verify(mockExamRepository, never()).createPrintRequest(isA(ExamPrintRequest.class));
   }
@@ -195,7 +195,7 @@ public class RemotePrintServiceTest {
     AccLookup accLookup = new AccLookup();
     accLookup.add("Braille Type", "TDS_BT_G1");
 
-    boolean isSuccessful = service.printPassageBraille(ExamPrintRequest.REQUEST_TYPE_EMBOSS_PASSAGE, testOpportunity, pageGroup, accLookup);
+    boolean isSuccessful = service.printPassageBraille(testOpportunity, pageGroup, accLookup);
     assertThat(isSuccessful).isTrue();
 
     verify(mockExamRepository).createPrintRequest(examPrintRequestCaptor.capture());
@@ -253,7 +253,7 @@ public class RemotePrintServiceTest {
     accLookup.add("Braille Type", "TDS_BT_G1");
     accLookup.add("Braille Transcript", "TDS_BrailleTrans1");
 
-    boolean isSuccessful = service.printPassageBraille(ExamPrintRequest.REQUEST_TYPE_EMBOSS_PASSAGE, testOpportunity, pageGroup, accLookup);
+    boolean isSuccessful = service.printPassageBraille(testOpportunity, pageGroup, accLookup);
     assertThat(isSuccessful).isTrue();
 
     verify(mockExamRepository).createPrintRequest(examPrintRequestCaptor.capture());
@@ -288,7 +288,7 @@ public class RemotePrintServiceTest {
 
     AccLookup accLookup = new AccLookup();
 
-    service.printPassageBraille(ExamPrintRequest.REQUEST_TYPE_EMBOSS_PASSAGE, testOpportunity, pageGroup, accLookup);
+    service.printPassageBraille(testOpportunity, pageGroup, accLookup);
   }
 
   @Test
@@ -321,7 +321,7 @@ public class RemotePrintServiceTest {
 
     when(mockContentService.getContent(passagePath, accLookup)).thenReturn(document);
 
-    boolean isSuccessful = service.printPassageBraille(ExamPrintRequest.REQUEST_TYPE_EMBOSS_PASSAGE, testOpportunity, pageGroup, accLookup);
+    boolean isSuccessful = service.printPassageBraille(testOpportunity, pageGroup, accLookup);
     assertThat(isSuccessful).isFalse();
 
     verify(mockContentService).getContent(passagePath, accLookup);
@@ -356,7 +356,7 @@ public class RemotePrintServiceTest {
 
     when(mockContentService.getContent(passagePath, accLookup)).thenReturn(document);
 
-    boolean isSuccessful = service.printPassageBraille(ExamPrintRequest.REQUEST_TYPE_EMBOSS_PASSAGE, testOpportunity, pageGroup, accLookup);
+    boolean isSuccessful = service.printPassageBraille(testOpportunity, pageGroup, accLookup);
     assertThat(isSuccessful).isFalse();
 
     verify(mockContentService).getContent(passagePath, accLookup);
@@ -396,7 +396,7 @@ public class RemotePrintServiceTest {
 
     when(mockContentService.getContent(passagePath, accLookup)).thenReturn(document);
 
-    boolean isSuccessful = service.printPassageBraille(ExamPrintRequest.REQUEST_TYPE_EMBOSS_PASSAGE, testOpportunity, pageGroup, accLookup);
+    boolean isSuccessful = service.printPassageBraille(testOpportunity, pageGroup, accLookup);
     assertThat(isSuccessful).isTrue();
 
     verify(mockContentService).getContent(passagePath, accLookup);

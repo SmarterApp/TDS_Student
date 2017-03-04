@@ -60,21 +60,10 @@ public class RemotePrintService implements PrintService {
 
   @Override
   public boolean printPassage(final OpportunityInstance oppInstance, final PageGroup pageGroupToPrint, final String requestParameters) throws ReturnStatusException {
-    return printPassage(ExamPrintRequest.REQUEST_TYPE_PRINT_PASSAGE, oppInstance, pageGroupToPrint, requestParameters);
-  }
-
-  @Override
-  public boolean printPage(final OpportunityInstance oppInstance, final PageGroup pageGroupToPrint, final String requestParameters) throws ReturnStatusException {
-    return printPassage(ExamPrintRequest.REQUEST_TYPE_PRINT_PAGE, oppInstance, pageGroupToPrint, requestParameters);
-  }
-
-  /* PrintService - printPassage() - line 117 */
-  @Override
-  public boolean printPassage(final String requestType, final OpportunityInstance oppInstance, final PageGroup pageGroupToPrint, final String requestParameters) throws ReturnStatusException {
     boolean isSuccessful = false;
 
     if (isLegacyCallsEnabled) {
-      isSuccessful = legacyPrintService.printPassage(requestType, oppInstance, pageGroupToPrint, requestParameters);
+      isSuccessful = legacyPrintService.printPassage(oppInstance, pageGroupToPrint, requestParameters);
     }
 
     //This isn't ideal, but due to the way the progman properties are loaded within the system this lives within the service rather than the callers.
@@ -82,30 +71,23 @@ public class RemotePrintService implements PrintService {
       return isSuccessful;
     }
 
-    if (pageGroupToPrint == null || pageGroupToPrint.size() == 0) {
-      return false;
+    return printPassage(ExamPrintRequest.REQUEST_TYPE_PRINT_PASSAGE, oppInstance, pageGroupToPrint, requestParameters);
+  }
+
+  @Override
+  public boolean printPage(final OpportunityInstance oppInstance, final PageGroup pageGroupToPrint, final String requestParameters) throws ReturnStatusException {
+    boolean isSuccessful = false;
+
+    if (isLegacyCallsEnabled) {
+      isSuccessful = legacyPrintService.printPage(oppInstance, pageGroupToPrint, requestParameters);
     }
 
-    final String requestValue = pageGroupToPrint.getFilePath();
-
-    if (StringUtils.isEmpty(requestValue)) {
-      return false;
+    //This isn't ideal, but due to the way the progman properties are loaded within the system this lives within the service rather than the callers.
+    if (!isRemoteExamCallsEnabled) {
+      return isSuccessful;
     }
 
-    final ExamPrintRequest request = new ExamPrintRequest.Builder(UUID.randomUUID())
-      .withExamId(oppInstance.getExamId())
-      .withSessionId(oppInstance.getSessionKey())
-      .withPagePosition(pageGroupToPrint.getNumber())
-      .withItemPosition(PASSAGE_PRINT_ITEM_POSITION_DEFAULT)
-      .withType(requestType)
-      .withDescription(getPassageLabel(pageGroupToPrint, false))
-      .withParameters(requestParameters)
-      .withValue(requestValue.replace("\\", "\\\\"))
-      .build();
-
-    examRepository.createPrintRequest(request);
-
-    return true;
+    return printPassage(ExamPrintRequest.REQUEST_TYPE_PRINT_PAGE, oppInstance, pageGroupToPrint, requestParameters);
   }
 
   @Override
@@ -145,91 +127,6 @@ public class RemotePrintService implements PrintService {
     examRepository.createPrintRequest(request);
 
     return true;
-  }
-
-  @Override
-  public boolean printPassageBraille(String requestType, TestOpportunity testOpp, PageGroup pageGroupToPrint, AccLookup accLookup) throws ReturnStatusException {
-    boolean isSuccessful = false;
-
-    if (isLegacyCallsEnabled) {
-      isSuccessful = legacyPrintService.printPassageBraille(requestType, testOpp, pageGroupToPrint, accLookup);
-    }
-
-    //This isn't ideal, but due to the way the progman properties are loaded within the system this lives within the service rather than the callers.
-    if (!isRemoteExamCallsEnabled) {
-      return isSuccessful;
-    }
-
-    if (pageGroupToPrint == null || pageGroupToPrint.size() == 0) {
-      return false;
-    }
-
-    String xmlPath = pageGroupToPrint.getFilePath();
-
-    if (StringUtils.isEmpty(xmlPath)) {
-      throw new ReturnStatusException(String.format("PrintPassageBraille: Invalid xml file path for group %1$s.", pageGroupToPrint.getId()));
-    }
-
-    IITSDocument document = pageGroupToPrint.getDocument();
-
-    // try and load document if it isn't already loaded
-    if (document == null) {
-      document = contentService.getContent(xmlPath, accLookup);
-
-      if (document == null) {
-        return false;
-      }
-
-      pageGroupToPrint.setDocument(document);
-    }
-
-    ITSContent content = document.getContent(testOpp.getLanguage());
-
-    if (content == null) {
-      return false;
-    }
-
-    // get attachments for the accommodations braille type
-    List<ITSAttachment> brailleAttachments = content.GetBrailleTypeAttachment(accLookup);
-
-    if (brailleAttachments.isEmpty()) { // no need for null check, this is initialized as an empty list
-      LOG.warn("PrintPassageBraille: Cannot find a matching braille attachment for the test {} and passage {}.",
-        testOpp.getTestKey(), pageGroupToPrint.getId());
-      return false;
-    }
-
-    ITSAttachment mainBrailleAttachment = brailleAttachments.get(0);
-    String requestValue = mainBrailleAttachment.getFile();
-    String requestParameters = "FileFormat:" + mainBrailleAttachment.getType().toUpperCase(); // name:value;name:value
-
-    boolean isTranscript = isTranscriptRequest(brailleAttachments);
-
-    if (isTranscript) {
-      requestValue += ";" + brailleAttachments.get(1).getFile();
-    }
-
-    String requestDescription = String.format("%1$s (%2$s)", getPassageLabel(pageGroupToPrint, isTranscript),
-      mainBrailleAttachment.getType());
-
-    OpportunityInstance opportunityInstance = testOpp.getOppInstance();
-
-    final ExamPrintRequest request = new ExamPrintRequest.Builder(UUID.randomUUID())
-      .withExamId(opportunityInstance.getExamId())
-      .withSessionId(opportunityInstance.getSessionKey())
-      .withPagePosition(pageGroupToPrint.getNumber())
-      .withItemPosition(PASSAGE_PRINT_ITEM_POSITION_DEFAULT)
-      .withType(requestType)
-      .withDescription(requestDescription)
-      .withParameters(requestParameters)
-      .withValue(requestValue.replace("\\", "\\\\"))
-      .build();
-
-    examRepository.createPrintRequest(request);
-
-    isSuccessful = true;
-    pageGroupToPrint.setPrinted(isSuccessful);
-
-    return isSuccessful;
   }
 
   @Override
@@ -306,21 +203,41 @@ public class RemotePrintService implements PrintService {
       .build();
 
     examRepository.createPrintRequest(request);
+    responseToPrint.setPrinted(true);
 
-    isSuccessful = true;
-    responseToPrint.setPrinted(isSuccessful);
-
-    return isSuccessful;
+    return true;
   }
 
   @Override
   public boolean printPassageBraille(TestOpportunity testOpp, PageGroup pageGroupToPrint, AccLookup accLookup) throws ReturnStatusException {
-    return printPassageBraille("EMBOSSPASSAGE", testOpp, pageGroupToPrint, accLookup);
+    boolean isSuccessful = false;
+
+    if (isLegacyCallsEnabled) {
+      isSuccessful = legacyPrintService.printPassageBraille(testOpp, pageGroupToPrint, accLookup);
+    }
+
+    //This isn't ideal, but due to the way the progman properties are loaded within the system this lives within the service rather than the callers.
+    if (!isRemoteExamCallsEnabled) {
+      return isSuccessful;
+    }
+
+    return printPassageBraille(ExamPrintRequest.REQUEST_TYPE_EMBOSS_PASSAGE, testOpp, pageGroupToPrint, accLookup);
   }
 
   @Override
   public boolean printPageBraille(TestOpportunity testOpp, PageGroup pageGroupToPrint, AccLookup accLookup) throws ReturnStatusException {
-    return printPassageBraille("EMBOSSPAGE", testOpp, pageGroupToPrint, accLookup);
+    boolean isSuccessful = false;
+
+    if (isLegacyCallsEnabled) {
+      isSuccessful = legacyPrintService.printPageBraille(testOpp, pageGroupToPrint, accLookup);
+    }
+
+    //This isn't ideal, but due to the way the progman properties are loaded within the system this lives within the service rather than the callers.
+    if (!isRemoteExamCallsEnabled) {
+      return isSuccessful;
+    }
+
+    return printPassageBraille(ExamPrintRequest.REQUEST_TYPE_EMBOSS_PAGE, testOpp, pageGroupToPrint, accLookup);
   }
 
   private String getPassageLabel(PageGroup group, boolean isTranscript) throws ReturnStatusException {
@@ -330,20 +247,20 @@ public class RemotePrintService implements PrintService {
       label.append(" and Transcript");
     }
 
-    if (group.size() > 0) {
+    if (!group.isEmpty()) {
       label.append(" for ");
 
       ItemResponse firstResponse = group.getFirst();
       if (group.size() == 1) {
         String postion = String.format("Item %1$d", firstResponse.getPosition());
         label.append(postion);
-
       } else {
         ItemResponse lastResponse = group.getLast();
         String postion = String.format("Items %1$d-%2$d", firstResponse.getPosition(), lastResponse.getPosition());
         label.append(postion);
       }
     }
+
     return label.toString();
   }
 
@@ -356,5 +273,105 @@ public class RemotePrintService implements PrintService {
    */
   private static boolean isTranscriptRequest(List<ITSAttachment> brailleAttachments) {
     return brailleAttachments.size() == 2 && brailleAttachments.get(1).getSubType().endsWith("_transcript");
+  }
+
+  private boolean printPassageBraille(String requestType, TestOpportunity testOpp, PageGroup pageGroupToPrint, AccLookup accLookup) throws ReturnStatusException {
+    if (pageGroupToPrint == null || pageGroupToPrint.size() == 0) {
+      return false;
+    }
+
+    String xmlPath = pageGroupToPrint.getFilePath();
+
+    if (StringUtils.isEmpty(xmlPath)) {
+      throw new ReturnStatusException(String.format("PrintPassageBraille: Invalid xml file path for group %1$s.", pageGroupToPrint.getId()));
+    }
+
+    IITSDocument document = pageGroupToPrint.getDocument();
+
+    // try and load document if it isn't already loaded
+    if (document == null) {
+      document = contentService.getContent(xmlPath, accLookup);
+
+      if (document == null) {
+        return false;
+      }
+
+      pageGroupToPrint.setDocument(document);
+    }
+
+    ITSContent content = document.getContent(testOpp.getLanguage());
+
+    if (content == null) {
+      return false;
+    }
+
+    // get attachments for the accommodations braille type
+    List<ITSAttachment> brailleAttachments = content.GetBrailleTypeAttachment(accLookup);
+
+    if (brailleAttachments.isEmpty()) { // no need for null check, this is initialized as an empty list
+      LOG.warn("PrintPassageBraille: Cannot find a matching braille attachment for the test {} and passage {}.",
+        testOpp.getTestKey(), pageGroupToPrint.getId());
+      return false;
+    }
+
+    ITSAttachment mainBrailleAttachment = brailleAttachments.get(0);
+    String requestValue = mainBrailleAttachment.getFile();
+    String requestParameters = "FileFormat:" + mainBrailleAttachment.getType().toUpperCase(); // name:value;name:value
+
+    boolean isTranscript = isTranscriptRequest(brailleAttachments);
+
+    if (isTranscript) {
+      requestValue += ";" + brailleAttachments.get(1).getFile();
+    }
+
+    String requestDescription = String.format("%1$s (%2$s)", getPassageLabel(pageGroupToPrint, isTranscript),
+      mainBrailleAttachment.getType());
+
+    OpportunityInstance opportunityInstance = testOpp.getOppInstance();
+
+    final ExamPrintRequest request = new ExamPrintRequest.Builder(UUID.randomUUID())
+      .withExamId(opportunityInstance.getExamId())
+      .withSessionId(opportunityInstance.getSessionKey())
+      .withPagePosition(pageGroupToPrint.getNumber())
+      .withItemPosition(PASSAGE_PRINT_ITEM_POSITION_DEFAULT)
+      .withType(requestType)
+      .withDescription(requestDescription)
+      .withParameters(requestParameters)
+      .withValue(requestValue.replace("\\", "\\\\"))
+      .build();
+
+    examRepository.createPrintRequest(request);
+
+    pageGroupToPrint.setPrinted(true);
+
+    return true;
+  }
+
+  /* PrintService - printPassage() - line 117 */
+  private boolean printPassage(final String requestType, final OpportunityInstance oppInstance, final PageGroup pageGroupToPrint, final String requestParameters) throws ReturnStatusException {
+    if (pageGroupToPrint == null || pageGroupToPrint.size() == 0) {
+      return false;
+    }
+
+    final String requestValue = pageGroupToPrint.getFilePath();
+
+    if (StringUtils.isEmpty(requestValue)) {
+      return false;
+    }
+
+    final ExamPrintRequest request = new ExamPrintRequest.Builder(UUID.randomUUID())
+      .withExamId(oppInstance.getExamId())
+      .withSessionId(oppInstance.getSessionKey())
+      .withPagePosition(pageGroupToPrint.getNumber())
+      .withItemPosition(PASSAGE_PRINT_ITEM_POSITION_DEFAULT)
+      .withType(requestType)
+      .withDescription(getPassageLabel(pageGroupToPrint, false))
+      .withParameters(requestParameters)
+      .withValue(requestValue.replace("\\", "\\\\"))
+      .build();
+
+    examRepository.createPrintRequest(request);
+
+    return true;
   }
 }

@@ -8,9 +8,7 @@
  ******************************************************************************/
 package tds.student.web.handlers;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import AIR.test.framework.AbstractTest;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -21,16 +19,19 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import tds.itemrenderer.data.AccLookup;
-import tds.student.services.PrintServiceImpl;
 import tds.student.services.abstractions.IContentService;
 import tds.student.services.abstractions.IResponseService;
+import tds.student.services.abstractions.PrintService;
 import tds.student.services.data.TestOpportunity;
 import tds.student.web.StudentSettings;
-import AIR.test.framework.AbstractTest;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * @author jmambo
@@ -53,7 +54,8 @@ public class ContentHandlerTest extends AbstractTest
   IContentService        _contentService;
 
   @Mock
-  PrintServiceImpl _printService;
+  @Qualifier("legacyPrintService")
+  PrintService _printService;
 
   private MockMvc        _mockMvc;
 

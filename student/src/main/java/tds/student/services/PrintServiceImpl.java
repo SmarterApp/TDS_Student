@@ -180,10 +180,9 @@ public class PrintServiceImpl implements PrintService
       String xmlPath = pageGroupToPrint.getFilePath ();
       if (StringUtils.isEmpty (xmlPath)) {
         throw new ReturnStatusException (
-          new Exception (
             String.format (
               "PrintPassageBraille: Invalid xml file path for group %1$s.",
-              pageGroupToPrint.getId ())));
+              pageGroupToPrint.getId ()));
       }
 
       // try and load document if it isn't already loaded
@@ -255,10 +254,9 @@ public class PrintServiceImpl implements PrintService
       String xmlPath = responseToPrint.getFilePath ();
       if (StringUtils.isEmpty (xmlPath)) {
         throw new ReturnStatusException (
-            new Exception (
                 String.format (
                     "PrintItemBraille: Invalid xml file path for item %1$s",
-                    responseToPrint.getItemID ())));
+                    responseToPrint.getItemID ()));
       }
       // try and load document if it isn't already loaded
       if (responseToPrint.getDocument () == null) {

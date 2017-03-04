@@ -91,5 +91,11 @@ public interface ExamRepository {
    */
   Response<List<ExamSegment>> findExamSegments(final UUID examId, final UUID sessionId, final UUID browserId) throws ReturnStatusException;
 
+  /**
+   * Creats an {@link tds.exam.ExamPrintRequest} to print or emboss an item, page, or passage
+   *
+   * @param examPrintRequest The {@link tds.exam.ExamPrintRequest} containing print data
+   * @throws ReturnStatusException
+   */
   void createPrintRequest(ExamPrintRequest examPrintRequest) throws ReturnStatusException;
 }

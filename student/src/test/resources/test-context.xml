@@ -56,7 +56,6 @@
 	<!-- For ResponseRepositoryTest -->	
 	<beans:bean id="iResponseRepository" class="tds.student.sql.repository.ResponseRepository"/>
 	<!-- For PrintServiceTest -->
-	<beans:bean id="printService" class="tds.student.services.PrintServiceImpl"/>
 	<beans:bean id="iContentService" class="tds.student.services.ContentService"/>
 	<beans:bean id="ibRepository" class="tds.student.sql.repository.ItemBankRepository"/>
 	<beans:bean id="iOppRepository" class="tds.student.sql.repository.OpportunityRepository"/>
