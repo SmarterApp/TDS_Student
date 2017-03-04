@@ -22,6 +22,7 @@ import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,9 +40,9 @@ import java.util.UUID;
 
 import tds.itemrenderer.data.AccLookup;
 import tds.itemrenderer.data.AccProperties;
-import tds.student.services.PrintService;
 import tds.student.services.abstractions.IOpportunityService;
 import tds.student.services.abstractions.IResponseService;
+import tds.student.services.abstractions.PrintService;
 import tds.student.services.data.ApprovalInfo;
 import tds.student.services.data.ApprovalInfo.OpportunityApprovalStatus;
 import tds.student.services.data.ItemResponse;
@@ -76,13 +77,15 @@ public class TestShellHandler extends TDSHandler
   @Autowired
   private IOpportunityRepository _oppRepository;
   @Autowired
+  @Qualifier("integrationOpportunityService")
   private IOpportunityService    _oppService;
   @Autowired
   private IResponseService       _responseService;
   @Autowired
   private IResponseRepository    _responseRepository;
   @Autowired
-  private PrintService           _printService;
+  @Qualifier("integrationPrintService")
+  private PrintService _printService;
   @Autowired
   private ITDSLogger             _tdsLogger;
 

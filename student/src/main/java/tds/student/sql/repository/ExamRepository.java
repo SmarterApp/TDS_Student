@@ -13,6 +13,7 @@ import tds.exam.Exam;
 import tds.exam.ExamAccommodation;
 import tds.exam.ExamApproval;
 import tds.exam.ExamConfiguration;
+import tds.exam.ExamPrintRequest;
 import tds.exam.ExamSegment;
 import tds.exam.OpenExamRequest;
 
@@ -89,4 +90,12 @@ public interface ExamRepository {
    * @throws ReturnStatusException
    */
   Response<List<ExamSegment>> findExamSegments(final UUID examId, final UUID sessionId, final UUID browserId) throws ReturnStatusException;
+
+  /**
+   * Creats an {@link tds.exam.ExamPrintRequest} to print or emboss an item, page, or passage
+   *
+   * @param examPrintRequest The {@link tds.exam.ExamPrintRequest} containing print data
+   * @throws ReturnStatusException
+   */
+  void createPrintRequest(ExamPrintRequest examPrintRequest) throws ReturnStatusException;
 }

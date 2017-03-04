@@ -28,6 +28,7 @@ import tds.common.Response;
 import tds.common.ValidationError;
 import tds.exam.Exam;
 import tds.exam.ExamConfiguration;
+import tds.exam.ExamPrintRequest;
 import tds.exam.ExamSegment;
 import tds.exam.ExamStatusCode;
 import tds.exam.OpenExamRequest;
@@ -201,5 +202,33 @@ public class RemoteExamRepositoryTest {
     when(mockRestTemplate.exchange(isA(URI.class), isA(HttpMethod.class), isA(HttpEntity.class), isA(ParameterizedTypeReference.class)))
       .thenThrow(new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Invalid", ERROR_JSON.getBytes(), null));
     remoteExamRepository.findExamSegments(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+  }
+
+  @Test
+  public void shouldCreatePrintRequest() throws Exception {
+    ExamPrintRequest examPrintRequest = new ExamPrintRequest.Builder(UUID.randomUUID())
+      .withExamId(UUID.randomUUID())
+      .withType(ExamPrintRequest.REQUEST_TYPE_PRINT_ITEM)
+      .withValue("Some value")
+      .build();
+
+    when(mockRestTemplate.exchange(isA(URI.class), isA(HttpMethod.class), isA(HttpEntity.class), isA(ParameterizedTypeReference.class)))
+      .thenReturn(new ResponseEntity(HttpStatus.OK));
+
+    remoteExamRepository.createPrintRequest(examPrintRequest);
+  }
+
+  @Test(expected = ReturnStatusException.class)
+  public void shouldThrowForFailedPrintRequest() throws Exception {
+    ExamPrintRequest examPrintRequest = new ExamPrintRequest.Builder(UUID.randomUUID())
+      .withExamId(UUID.randomUUID())
+      .withType(ExamPrintRequest.REQUEST_TYPE_PRINT_ITEM)
+      .withValue("Some value")
+      .build();
+
+    when(mockRestTemplate.exchange(isA(URI.class), isA(HttpMethod.class), isA(HttpEntity.class), isA(ParameterizedTypeReference.class)))
+      .thenThrow(new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Invalid", ERROR_JSON.getBytes(), null));
+
+    remoteExamRepository.createPrintRequest(examPrintRequest);
   }
 }
