@@ -8,21 +8,21 @@
  ******************************************************************************/
 package tds.student.web.handlers;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import AIR.Common.TDSLogger.ITDSLogger;
+import AIR.Common.Web.Session.HttpContext;
+import AIR.Common.Web.TDSReplyCode;
+import AIR.Common.data.ResponseData;
+import TDS.Shared.Data.ReturnStatus;
+import TDS.Shared.Exceptions.ReturnStatusException;
+import TDS.Shared.Exceptions.TDSSecurityException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,11 +30,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.HtmlUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+
 import tds.itemrenderer.data.AccLookup;
 import tds.itemrenderer.data.AccProperties;
-import tds.student.services.PrintService;
 import tds.student.services.abstractions.IOpportunityService;
 import tds.student.services.abstractions.IResponseService;
+import tds.student.services.abstractions.PrintService;
 import tds.student.services.data.ApprovalInfo;
 import tds.student.services.data.ApprovalInfo.OpportunityApprovalStatus;
 import tds.student.services.data.ItemResponse;
@@ -54,15 +62,6 @@ import tds.student.sql.data.ToolUsed;
 import tds.student.web.StudentContext;
 import tds.student.web.TestManager;
 import tds.student.web.data.TestShellAudit;
-import AIR.Common.TDSLogger.ITDSLogger;
-import AIR.Common.Web.TDSReplyCode;
-import AIR.Common.Web.Session.HttpContext;
-import AIR.Common.data.ResponseData;
-import TDS.Shared.Data.ReturnStatus;
-import TDS.Shared.Exceptions.ReturnStatusException;
-import TDS.Shared.Exceptions.TDSSecurityException;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author mpatel
@@ -77,13 +76,15 @@ public class TestShellHandler extends TDSHandler
   @Autowired
   private IOpportunityRepository _oppRepository;
   @Autowired
+  @Qualifier("integrationOpportunityService")
   private IOpportunityService    _oppService;
   @Autowired
   private IResponseService       _responseService;
   @Autowired
   private IResponseRepository    _responseRepository;
   @Autowired
-  private PrintService           _printService;
+  @Qualifier("integrationPrintService")
+  private PrintService _printService;
   @Autowired
   private ITDSLogger             _tdsLogger;
 

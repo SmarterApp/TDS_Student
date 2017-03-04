@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,22 +30,17 @@ import tds.itemrenderer.data.ITSTypes.ITSEntityType;
 import tds.itemrenderer.data.InvalidDataException;
 import tds.itemrenderer.data.ItemRender;
 import tds.itemrenderer.data.ItemRenderGroup;
-import tds.itemrenderer.web.ITSDocumentXmlSerializable;
-import tds.itemrenderer.web.XmlWriter;
-import tds.itemrenderer.webcontrols.ErrorCategories;
-import tds.itemrenderer.webcontrols.PageLayout;
-import tds.itemrenderer.webcontrols.rendererservlet.ContentRenderingException;
-import tds.itemrenderer.webcontrols.rendererservlet.RendererServlet;
-import tds.student.services.PrintService;
+import tds.student.services.PrintServiceImpl;
 import tds.student.services.abstractions.IContentService;
 import tds.student.services.abstractions.IResponseService;
+import tds.student.services.abstractions.PrintService;
 import tds.student.services.data.ItemResponse;
 import tds.student.services.data.PageGroup;
 import tds.student.services.data.TestOpportunity;
 import tds.student.web.StudentContext;
 import tds.student.web.StudentContextException;
 import tds.student.web.StudentSettings;
-import AIR.Common.Web.ContentType;
+
 import TDS.Shared.Exceptions.ReturnStatusException;
 
 @Scope ("prototype")
@@ -64,7 +60,8 @@ public class ContentHandler extends BaseContentRendererController
   private IContentService     _contentService;
 
   @Autowired
-  PrintService                _printService;
+  @Qualifier("integrationPrintService")
+  PrintService _printService;
 
   @RequestMapping (value = "TestShell.axd/getPageContent", produces = "application/xml")
   @ResponseBody

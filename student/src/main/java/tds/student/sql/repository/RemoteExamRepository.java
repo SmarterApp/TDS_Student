@@ -32,6 +32,7 @@ import tds.exam.Exam;
 import tds.exam.ExamAccommodation;
 import tds.exam.ExamApproval;
 import tds.exam.ExamConfiguration;
+import tds.exam.ExamPrintRequest;
 import tds.exam.ExamSegment;
 import tds.exam.OpenExamRequest;
 
@@ -269,5 +270,26 @@ public class RemoteExamRepository implements ExamRepository {
     }
 
     return responseEntity.getBody();
+  }
+
+  @Override
+  public void createPrintRequest(ExamPrintRequest examPrintRequest) throws ReturnStatusException {
+    HttpHeaders headers = new HttpHeaders();
+    headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+    headers.setContentType(MediaType.APPLICATION_JSON);
+    HttpEntity<?> requestHttpEntity = new HttpEntity<>(examPrintRequest, headers);
+
+    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/print", examUrl));
+
+    try {
+      restTemplate.exchange(
+        builder.build().toUri(),
+        HttpMethod.POST,
+        requestHttpEntity,
+        new ParameterizedTypeReference<String>() {
+        });
+    } catch (RestClientException rce) {
+      throw new ReturnStatusException(rce);
+    }
   }
 }
