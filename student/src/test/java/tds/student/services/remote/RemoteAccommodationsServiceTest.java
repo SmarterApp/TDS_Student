@@ -154,8 +154,10 @@ public class RemoteAccommodationsServiceTest {
         verify(mockAssessmentRepository).findAccommodations(clientName, assessmentKey);
         verify(mockAssessmentRepository).findAssessment(clientName, assessmentKey);
         verify(mockExamRepository).findApprovedAccommodations(examId);
-    
-        assertThat(retAccommodations).isEmpty();
+
+        for (Accommodations accommodations : retAccommodations) {
+            assertThat(accommodations.getTypes()).isEmpty();
+        }
     }
     
     @Test
@@ -239,8 +241,10 @@ public class RemoteAccommodationsServiceTest {
         verify(mockAssessmentRepository).findAccommodations(clientName, assessmentKey);
         verify(mockAssessmentRepository).findAssessment(clientName, assessmentKey);
         verify(mockExamRepository).findApprovedAccommodations(examId);
-    
-        assertThat(retAccommodations).isEmpty();
+        
+        for (Accommodations accommodations : retAccommodations) {
+            assertThat(accommodations.getTypes()).isEmpty();
+        }
     }
     
     @Test
