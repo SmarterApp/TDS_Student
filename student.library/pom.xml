@@ -18,7 +18,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<item-scoring.version>1.1.0-SNAPSHOT</item-scoring.version>
 		<item-selection.version>0.0.1-SNAPSHOT</item-selection.version>
-		<item-renderer.version>0.0.1-SNAPSHOT</item-renderer.version>
+		<item-renderer.version>3.0.0-SNAPSHOT</item-renderer.version>
 		<tds-exam-client.version>0.0.1-SNAPSHOT</tds-exam-client.version>
 	</properties>
 
