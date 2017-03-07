@@ -23,6 +23,7 @@ import tds.exam.ExamConfiguration;
 import tds.exam.ExamSegment;
 import tds.exam.ExamStatusCode;
 import tds.exam.OpenExamRequest;
+import tds.exam.SegmentApprovalRequest;
 import tds.student.performance.dao.TestOpportunityExamMapDao;
 import tds.student.services.abstractions.IOpportunityService;
 import tds.student.services.data.ApprovalInfo;
@@ -220,7 +221,23 @@ public class RemoteOpportunityService implements IOpportunityService {
 
   @Override
   public ApprovalInfo checkSegmentApproval(final OpportunityInstance oppInstance) throws ReturnStatusException {
-    return legacyOpportunityService.checkSegmentApproval(oppInstance);
+    ApprovalInfo approvalInfo = null;
+
+    if (isLegacyCallsEnabled) {
+      approvalInfo = legacyOpportunityService.checkSegmentApproval(oppInstance);
+    }
+
+    if (!isRemoteExamCallsEnabled) {
+      return approvalInfo;
+    }
+
+    approvalInfo = checkTestApproval(oppInstance);
+
+    if (ExamStatusCode.STATUS_APPROVED.equals(approvalInfo.getStatus())) {
+      examRepository.updateStatus(oppInstance.getExamId(), ExamStatusCode.STATUS_STARTED, "segment");
+    }
+
+    return approvalInfo;
   }
 
   @Override
@@ -311,13 +328,35 @@ public class RemoteOpportunityService implements IOpportunityService {
   }
 
   @Override
-  public void waitForSegment(final OpportunityInstance oppInstance, final int segmentPosition, final TestSegment.TestSegmentApproval segmentApproval) throws ReturnStatusException {
-    legacyOpportunityService.waitForSegment(oppInstance, segmentPosition, segmentApproval);
+  public void waitForSegment(final OpportunityInstance oppInstance, final int segmentPosition,
+                             final TestSegment.TestSegmentApproval segmentApproval) throws ReturnStatusException {
+    if (isLegacyCallsEnabled) {
+      legacyOpportunityService.waitForSegment(oppInstance, segmentPosition, segmentApproval);
+    }
+
+    if (!isRemoteExamCallsEnabled) {
+      return;
+    }
+
+    boolean isEntryApproval = (segmentApproval == TestSegment.TestSegmentApproval.Entry);
+
+    SegmentApprovalRequest request = new SegmentApprovalRequest(oppInstance.getSessionKey(), oppInstance.getExamBrowserKey(),
+      segmentPosition, isEntryApproval);
+
+    examRepository.waitForSegmentApproval(oppInstance.getExamId(), request);
   }
 
   @Override
   public void exitSegment(final OpportunityInstance oppInstance, final int segmentPosition) throws ReturnStatusException {
-    legacyOpportunityService.exitSegment(oppInstance, segmentPosition);
+    if (isLegacyCallsEnabled) {
+      legacyOpportunityService.exitSegment(oppInstance, segmentPosition);
+    }
+
+    if (!isRemoteExamCallsEnabled) {
+      return;
+    }
+
+    examRepository.exitSegment(oppInstance.getExamId(), segmentPosition);
   }
 
   private static TestConfig mapExamConfigurationToTestConfig(ExamConfiguration examConfiguration) {

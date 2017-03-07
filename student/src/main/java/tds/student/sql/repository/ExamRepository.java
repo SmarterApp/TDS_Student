@@ -16,6 +16,7 @@ import tds.exam.ExamConfiguration;
 import tds.exam.ExamPrintRequest;
 import tds.exam.ExamSegment;
 import tds.exam.OpenExamRequest;
+import tds.exam.SegmentApprovalRequest;
 
 /**
  * Repository to interact with exam data
@@ -97,5 +98,23 @@ public interface ExamRepository {
    * @param examPrintRequest The {@link tds.exam.ExamPrintRequest} containing print data
    * @throws ReturnStatusException
    */
-  void createPrintRequest(ExamPrintRequest examPrintRequest) throws ReturnStatusException;
+  void createPrintRequest(final ExamPrintRequest examPrintRequest) throws ReturnStatusException;
+
+  /**
+   * Creates a segment approval request for an exam segment
+   *
+   * @param examId The id of the exam
+   * @param segmentApprovalRequest A {@link tds.exam.SegmentApprovalRequest} containing request data
+   * @throws ReturnStatusException
+   */
+  void waitForSegmentApproval(final UUID examId, final SegmentApprovalRequest segmentApprovalRequest) throws ReturnStatusException;
+
+  /**
+   * Creates a request to exit a segment
+   *
+   * @param examId The exam id of the {@link tds.exam.ExamSegment} to exit
+   * @param segmentPosition The segment position of the {@link tds.exam.ExamSegment} to update
+   * @throws ReturnStatusException
+   */
+  void exitSegment(final UUID examId, final int segmentPosition) throws ReturnStatusException;
 }

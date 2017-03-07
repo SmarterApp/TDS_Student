@@ -7,6 +7,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -23,10 +25,10 @@ import tds.exam.ExamSegment;
 import tds.exam.ExamStatusCode;
 import tds.exam.ExamStatusStage;
 import tds.exam.OpenExamRequest;
+import tds.exam.SegmentApprovalRequest;
 import tds.student.performance.dao.TestOpportunityExamMapDao;
 import tds.student.services.abstractions.IOpportunityService;
 import tds.student.services.data.ApprovalInfo;
-import tds.student.sql.repository.ExamRepository;
 import tds.student.sql.data.OpportunityInfo;
 import tds.student.sql.data.OpportunityInstance;
 import tds.student.sql.data.OpportunitySegment;
@@ -35,11 +37,14 @@ import tds.student.sql.data.OpportunityStatusChange;
 import tds.student.sql.data.OpportunityStatusExtensions;
 import tds.student.sql.data.OpportunityStatusType;
 import tds.student.sql.data.TestConfig;
+import tds.student.sql.data.TestSegment;
 import tds.student.sql.data.TestSession;
 import tds.student.sql.data.Testee;
+import tds.student.sql.repository.ExamRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -58,6 +63,9 @@ public class RemoteOpportunityServiceTest {
 
   @Mock
   private TestOpportunityExamMapDao testOpportunityExamMapDao;
+
+  @Captor
+  ArgumentCaptor<SegmentApprovalRequest> segmentApprovalRequestArgumentCaptor;
 
   @Before
   public void setUp() {
@@ -412,6 +420,42 @@ public class RemoteOpportunityServiceTest {
     when(examRepository.findExamSegments(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey()))
       .thenReturn(new Response<List<ExamSegment>>(new ValidationError("why", "not")));
     service.getSegments(oppInstance, true);
+  }
+
+  @Test
+  public void shouldWaitForSegmentEntry() throws ReturnStatusException {
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, testOpportunityExamMapDao);
+    OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+    service.waitForSegment(oppInstance, 2, TestSegment.TestSegmentApproval.Entry);
+    verify(examRepository).waitForSegmentApproval(eq(oppInstance.getExamId()), segmentApprovalRequestArgumentCaptor.capture());
+    SegmentApprovalRequest request = segmentApprovalRequestArgumentCaptor.getValue();
+
+    assertThat(request.getSegmentPosition()).isEqualTo(2);
+    assertThat(request.getBrowserId()).isEqualTo(oppInstance.getExamBrowserKey());
+    assertThat(request.getSessionId()).isEqualTo(oppInstance.getSessionKey());
+    assertThat(request.isEntryApproval()).isTrue();
+  }
+
+  @Test
+  public void shouldWaitForSegmentExit() throws ReturnStatusException {
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, testOpportunityExamMapDao);
+    OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+    service.waitForSegment(oppInstance, 2, TestSegment.TestSegmentApproval.Exit);
+    verify(examRepository).waitForSegmentApproval(eq(oppInstance.getExamId()), segmentApprovalRequestArgumentCaptor.capture());
+    SegmentApprovalRequest request = segmentApprovalRequestArgumentCaptor.getValue();
+
+    assertThat(request.getSegmentPosition()).isEqualTo(2);
+    assertThat(request.getBrowserId()).isEqualTo(oppInstance.getExamBrowserKey());
+    assertThat(request.getSessionId()).isEqualTo(oppInstance.getSessionKey());
+    assertThat(request.isEntryApproval()).isFalse();
+  }
+
+  @Test
+  public void shouldExitSegment() throws ReturnStatusException {
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, testOpportunityExamMapDao);
+    OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+    service.exitSegment(oppInstance, 2);
+    verify(examRepository).exitSegment(oppInstance.getExamId(), 2);
   }
 }
 
