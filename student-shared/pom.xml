@@ -1,6 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <artifactId>student-shared</artifactId>
+    <packaging>jar</packaging>
+    <name>student-shared</name>
+    <description>Contains shared libraries across projects</description>
 
     <parent>
         <groupId>org.opentestsystem.delivery</groupId>
@@ -8,15 +12,7 @@
         <version>2.1.2-SNAPSHOT</version>
     </parent>
 
-    <artifactId>student-shared</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
-
-    <name>student-shared</name>
-    <description>Contains shared libraries across projects</description>
-
     <properties>
-        <resource-bundler.version>0.0.1-SNAPSHOT</resource-bundler.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <item-selection.version>0.0.1-SNAPSHOT</item-selection.version>
@@ -29,15 +25,18 @@
             <artifactId>item-renderer</artifactId>
             <version>${item-renderer.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.opentestsystem.delivery</groupId>
+            <artifactId>resource-bundler</artifactId>
+            <version>${item-renderer.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>AIR</groupId>
-            <artifactId>ResourceBundler</artifactId>
-            <version>${resource-bundler.version}</version>
-        </dependency>
+
     </dependencies>
 </project>
