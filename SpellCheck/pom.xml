@@ -1,23 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+	<artifactId>spellcheck</artifactId>
+	<name>spellcheck</name>
+
 	<parent>
 		<groupId>org.opentestsystem.delivery</groupId>
 		<artifactId>student-parent</artifactId>
 		<version>2.1.2-SNAPSHOT</version>
 	</parent>
-  <groupId>AIR.SpellCheck</groupId>
-  <artifactId>spellcheck</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>spellcheck</name>
-  
-	<repositories>
-	    <!--other repositories if any-->
-	    <repository>
-	        <id>project.local</id>
-	        <name>project</name>
-	        <url>file:${project.basedir}/repo</url>
-	    </repository>
-	</repositories>
+
   	<licenses>
 		<license>
 			<name>AIR-License-1.0</name>
@@ -26,6 +17,7 @@
 			<comments>Educational Online Test Delivery System Copyright (c) 2013 American Institutes for Research</comments>
 		</license>
 	</licenses>
+
 	<dependencies>
 		<!-- Start Dependency shared project -->
 		<dependency>
@@ -37,16 +29,6 @@
 			<artifactId>servlet-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		<!-- <dependency>
-		  <groupId>org.languagetool</groupId>
-		  <artifactId>language-all</artifactId>
-		  <version>2.5</version>
-		</dependency> -->
-		<!-- <dependency>
-			<groupId>antlr</groupId>
-			<artifactId>antlr</artifactId>
-			<version>2.7.7</version>
-		</dependency> -->
 		<dependency>
 	        <groupId>dk.dren</groupId>
 			<artifactId>hunspell</artifactId>
