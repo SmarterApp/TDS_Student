@@ -314,25 +314,4 @@ public class RemoteExamRepository implements ExamRepository {
       throw new ReturnStatusException(rce);
     }
   }
-
-  @Override
-  public void exitSegment(final UUID examId, final int segmentPosition) throws ReturnStatusException {
-    HttpHeaders headers = new HttpHeaders();
-    headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
-    headers.setContentType(MediaType.APPLICATION_JSON);
-    HttpEntity<?> requestHttpEntity = new HttpEntity<>(headers);
-
-    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/%s/exit/%s", examUrl, examId, segmentPosition));
-
-    try {
-      restTemplate.exchange(
-        builder.build().toUri(),
-        HttpMethod.PUT,
-        requestHttpEntity,
-        new ParameterizedTypeReference<NoContentResponseResource>() {
-        });
-    } catch (RestClientException rce) {
-      throw new ReturnStatusException(rce);
-    }
-  }
 }

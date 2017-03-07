@@ -41,6 +41,7 @@ import tds.student.sql.data.TestSegment;
 import tds.student.sql.data.TestSession;
 import tds.student.sql.data.Testee;
 import tds.student.sql.repository.ExamRepository;
+import tds.student.sql.repository.ExamSegmentRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
@@ -62,6 +63,9 @@ public class RemoteOpportunityServiceTest {
   private ExamRepository examRepository;
 
   @Mock
+  private ExamSegmentRepository examSegmentRepository;
+
+  @Mock
   private TestOpportunityExamMapDao testOpportunityExamMapDao;
 
   @Captor
@@ -69,7 +73,7 @@ public class RemoteOpportunityServiceTest {
 
   @Before
   public void setUp() {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, true, examRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(legacyOpportunityService, true, true, examRepository, examSegmentRepository, testOpportunityExamMapDao);
   }
 
   @After
@@ -118,7 +122,7 @@ public class RemoteOpportunityServiceTest {
 
   @Test
   public void shouldNotExecuteRemoteCallIfNotEnabled() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, false, true, examRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(legacyOpportunityService, false, true, examRepository, examSegmentRepository, testOpportunityExamMapDao);
 
     Testee testee = new Testee();
     TestSession testSession = new TestSession();
@@ -137,7 +141,7 @@ public class RemoteOpportunityServiceTest {
 
     when(examRepository.openExam(isA(OpenExamRequest.class))).thenReturn(response);
 
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
 
     Testee testee = new Testee();
     TestSession testSession = new TestSession();
@@ -149,12 +153,12 @@ public class RemoteOpportunityServiceTest {
 
   @Test(expected = IllegalStateException.class)
   public void shouldThrowIfBothImplementationsAreDisabled() {
-    new RemoteOpportunityService(legacyOpportunityService, false, false, examRepository, testOpportunityExamMapDao);
+    new RemoteOpportunityService(legacyOpportunityService, false, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
   }
 
   @Test
   public void shouldGetApprovedStatusNoErrors() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     ExamApproval examApproval = new ExamApproval(oppInstance.getExamId(), new ExamStatusCode(ExamStatusCode.STATUS_APPROVED, ExamStatusStage.OPEN), null);
 
@@ -167,7 +171,7 @@ public class RemoteOpportunityServiceTest {
 
   @Test
   public void shouldGetDeniedStatusNoErrors() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     ExamApproval examApproval = new ExamApproval(oppInstance.getExamId(), new ExamStatusCode(ExamStatusCode.STATUS_DENIED, ExamStatusStage.OPEN), null);
 
@@ -180,7 +184,7 @@ public class RemoteOpportunityServiceTest {
 
   @Test(expected = ReturnStatusException.class)
   public void shouldThrowWithErrorsPresent() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     ExamApproval examApproval = new ExamApproval(oppInstance.getExamId(), new ExamStatusCode(ExamStatusCode.STATUS_DENIED, ExamStatusStage.OPEN), null);
 
@@ -191,7 +195,7 @@ public class RemoteOpportunityServiceTest {
 
   @Test
   public void shouldReturnApprovalInfo() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     ExamApproval examApproval = new ExamApproval(oppInstance.getExamId(), new ExamStatusCode(ExamStatusCode.STATUS_APPROVED, ExamStatusStage.OPEN), null);
 
@@ -204,7 +208,7 @@ public class RemoteOpportunityServiceTest {
 
   @Test
   public void shouldDenyApproval() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
 
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
 
@@ -223,7 +227,7 @@ public class RemoteOpportunityServiceTest {
 
   @Test
   public void shouldNotSetStatusIfStatusIsPaused() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     OpportunityStatus currentStatus = new OpportunityStatus();
     currentStatus.setStatus(OpportunityStatusType.Paused);
@@ -240,7 +244,7 @@ public class RemoteOpportunityServiceTest {
 
   @Test
   public void shouldUpdateStatus() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
 
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     OpportunityStatus currentStatus = new OpportunityStatus();
@@ -256,7 +260,7 @@ public class RemoteOpportunityServiceTest {
 
   @Test
   public void shouldReturnTrueForErrorWithFalseCheckStatus() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
 
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     OpportunityStatus currentStatus = new OpportunityStatus();
@@ -273,7 +277,7 @@ public class RemoteOpportunityServiceTest {
 
   @Test(expected = ReturnStatusException.class)
   public void shouldThrowForReturnStatusFailed() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
 
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     OpportunityStatus currentStatus = new OpportunityStatus();
@@ -288,7 +292,7 @@ public class RemoteOpportunityServiceTest {
 
   @Test
   public void shouldReturnFalseForValidationErrorReturned() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
 
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     OpportunityStatus currentStatus = new OpportunityStatus();
@@ -305,7 +309,7 @@ public class RemoteOpportunityServiceTest {
 
   @Test(expected = ReturnStatusException.class)
   public void shouldThrowForErrorPresent() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     final String assessmentKey = "assessmentKey";
     Response<ExamConfiguration> errorResponse = new Response<>(new ValidationError("uh", "oh!"));
@@ -316,7 +320,7 @@ public class RemoteOpportunityServiceTest {
 
   @Test
   public void shouldStartExamAndReturnTestConfig() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     final String assessmentKey = "assessmentKey";
 
@@ -354,7 +358,7 @@ public class RemoteOpportunityServiceTest {
 
   @Test
   public void shouldFindExamSegmentsForExamIds() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     ExamSegment seg1 = new ExamSegment.Builder()
       .withSegmentKey("seg1")
@@ -415,7 +419,7 @@ public class RemoteOpportunityServiceTest {
 
   @Test(expected = ReturnStatusException.class)
   public void shouldThrowForErrorsPresentFindExamSegments() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     when(examRepository.findExamSegments(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey()))
       .thenReturn(new Response<List<ExamSegment>>(new ValidationError("why", "not")));
@@ -424,7 +428,7 @@ public class RemoteOpportunityServiceTest {
 
   @Test
   public void shouldWaitForSegmentEntry() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     service.waitForSegment(oppInstance, 2, TestSegment.TestSegmentApproval.Entry);
     verify(examRepository).waitForSegmentApproval(eq(oppInstance.getExamId()), segmentApprovalRequestArgumentCaptor.capture());
@@ -438,7 +442,7 @@ public class RemoteOpportunityServiceTest {
 
   @Test
   public void shouldWaitForSegmentExit() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     service.waitForSegment(oppInstance, 2, TestSegment.TestSegmentApproval.Exit);
     verify(examRepository).waitForSegmentApproval(eq(oppInstance.getExamId()), segmentApprovalRequestArgumentCaptor.capture());
@@ -452,10 +456,10 @@ public class RemoteOpportunityServiceTest {
 
   @Test
   public void shouldExitSegment() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     service.exitSegment(oppInstance, 2);
-    verify(examRepository).exitSegment(oppInstance.getExamId(), 2);
+    verify(examSegmentRepository).exitSegment(oppInstance.getExamId(), 2);
   }
 }
 

@@ -40,6 +40,7 @@ import tds.student.sql.data.TestSegment;
 import tds.student.sql.data.TestSelection;
 import tds.student.sql.data.TestSession;
 import tds.student.sql.data.Testee;
+import tds.student.sql.repository.ExamSegmentRepository;
 
 @Service("integrationOpportunityService")
 @Scope("prototype")
@@ -49,6 +50,7 @@ public class RemoteOpportunityService implements IOpportunityService {
   private final boolean isRemoteExamCallsEnabled;
   private final boolean isLegacyCallsEnabled;
   private final ExamRepository examRepository;
+  private final ExamSegmentRepository examSegmentRepository;
   private final TestOpportunityExamMapDao testOpportunityExamMapDao;
 
   @Autowired
@@ -57,6 +59,7 @@ public class RemoteOpportunityService implements IOpportunityService {
     @Value("${tds.exam.remote.enabled}") final Boolean remoteExamCallsEnabled,
     @Value("${tds.exam.legacy.enabled}") final Boolean legacyCallsEnabled,
     final ExamRepository examRepository,
+    final ExamSegmentRepository examSegmentRepository,
     final TestOpportunityExamMapDao testOpportunityExamMapDao) {
 
     if (!remoteExamCallsEnabled && !legacyCallsEnabled) {
@@ -68,6 +71,7 @@ public class RemoteOpportunityService implements IOpportunityService {
     this.isLegacyCallsEnabled = legacyCallsEnabled;
     this.examRepository = examRepository;
     this.testOpportunityExamMapDao = testOpportunityExamMapDao;
+    this.examSegmentRepository = examSegmentRepository;
   }
 
   @Override
@@ -356,7 +360,7 @@ public class RemoteOpportunityService implements IOpportunityService {
       return;
     }
 
-    examRepository.exitSegment(oppInstance.getExamId(), segmentPosition);
+    examSegmentRepository.exitSegment(oppInstance.getExamId(), segmentPosition);
   }
 
   private static TestConfig mapExamConfigurationToTestConfig(ExamConfiguration examConfiguration) {

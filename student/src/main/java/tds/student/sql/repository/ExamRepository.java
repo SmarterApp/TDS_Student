@@ -105,16 +105,8 @@ public interface ExamRepository {
    *
    * @param examId The id of the exam
    * @param segmentApprovalRequest A {@link tds.exam.SegmentApprovalRequest} containing request data
-   * @throws ReturnStatusException
+   * @throws TDS.Shared.Exceptions.ReturnStatusException
    */
   void waitForSegmentApproval(final UUID examId, final SegmentApprovalRequest segmentApprovalRequest) throws ReturnStatusException;
 
-  /**
-   * Creates a request to exit a segment
-   *
-   * @param examId The exam id of the {@link tds.exam.ExamSegment} to exit
-   * @param segmentPosition The segment position of the {@link tds.exam.ExamSegment} to update
-   * @throws ReturnStatusException
-   */
-  void exitSegment(final UUID examId, final int segmentPosition) throws ReturnStatusException;
 }
