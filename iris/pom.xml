@@ -12,8 +12,6 @@
 	</parent>
 
 	<properties>
-        <shared-master.version>3.0.1</shared-master.version>
-        <tds-dll.version>3.0.0</tds-dll.version>
         <item-renderer.version>3.0.0-SNAPSHOT</item-renderer.version>
     </properties>
 

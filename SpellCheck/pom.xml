@@ -9,6 +9,14 @@
 		<version>2.1.2-SNAPSHOT</version>
 	</parent>
 
+	<repositories>
+	    <!--other repositories if any-->
+	    <repository>
+	        <id>project.local</id>
+	        <name>project</name>
+	        <url>file:${project.basedir}/repo</url>
+	    </repository>
+	</repositories>
   	<licenses>
 		<license>
 			<name>AIR-License-1.0</name>
@@ -17,7 +25,6 @@
 			<comments>Educational Online Test Delivery System Copyright (c) 2013 American Institutes for Research</comments>
 		</license>
 	</licenses>
-
 	<dependencies>
 		<!-- Start Dependency shared project -->
 		<dependency>
