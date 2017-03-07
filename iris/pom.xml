@@ -10,6 +10,7 @@
 	<properties>
 		<shared-master.version>3.0.1</shared-master.version>
 		<tds-dll.version>3.0.0</tds-dll.version>
+		<item-renderer.version>3.0.0-SNAPSHOT</item-renderer.version>
 	</properties>
 
 	<dependencies>
@@ -51,7 +52,7 @@
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>item-renderer</artifactId>
-			<version>3.0.0-SNAPSHOT</version>
+			<version>${item-renderer.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
@@ -97,11 +98,6 @@
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>tds-dll-mysql</artifactId>
 			<version>${tds-dll.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>AIR</groupId>
-			<artifactId>ResourceBundler</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>

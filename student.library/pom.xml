@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.opentestsystem.shared</groupId>
 		<artifactId>shared-master</artifactId>
-		<version>1.0.1-BUILD-SNAPSHOT</version>
+		<version>3.0.1</version>
 	</parent>
 	<groupId>org.opentestsystem.delivery</groupId>
 	<artifactId>student.library</artifactId>
@@ -15,7 +15,6 @@
 	<url>http://maven.apache.org</url>
 
 	<properties>
-		<resource-bundler.version>0.0.1-SNAPSHOT</resource-bundler.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<item-renderer.version>3.0.0-SNAPSHOT</item-renderer.version>
 		<item-scoring.version>1.1.0-SNAPSHOT</item-scoring.version>
@@ -116,9 +115,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>AIR</groupId>
-			<artifactId>ResourceBundler</artifactId>
-			<version>${resource-bundler.version}</version>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>resource-bundler</artifactId>
+			<version>${item-renderer.version}</version>
 		</dependency>
 	</dependencies>
 </project>
