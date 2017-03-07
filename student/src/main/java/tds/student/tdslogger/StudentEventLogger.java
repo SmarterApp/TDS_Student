@@ -36,36 +36,42 @@ public class StudentEventLogger {
         EXAMS
     }
 
-    public static void info(final LogEvent logEvent, final String sessionId, String message) {
-        Map<String, Object> fields = new HashMap<>();
-        fields.put(EventData.SESSION_ID.name().toLowerCase(), sessionId);
-        EventLogger.log(APP, String.format("%s: %s", logEvent.name(), message), unmodifiableMap(fields));
+    public static void info(final LogEvent logEvent, final String sessionId, final String message) {
+        EventLogger.log(APP, formatMessage(logEvent, message), getFieldMap(sessionId, null));
     }
 
     public static void info(final LogEvent logEvent, final String sessionId, String message, Map<EventData, Object> data) {
-        Map<String, Object> fields = new HashMap<>();
-        fields.put(EventData.SESSION_ID.name().toLowerCase(), sessionId);
-        putAllEventData(fields, data);
-        EventLogger.log(APP, String.format("%s: %s", logEvent.name(), message), unmodifiableMap(fields));
+        EventLogger.log(APP, formatMessage(logEvent, message), getFieldMap(sessionId, data));
     }
 
     public static void error(final LogEvent logEvent, final String sessionId, String message, final Exception e) {
-        Map<String, Object> fields = new HashMap<>();
-        fields.put(EventData.SESSION_ID.name().toLowerCase(), sessionId);
-        EventLogger.error(APP, String.format("%s: %s", logEvent.name(), message), unmodifiableMap(fields), e);
+        EventLogger.error(APP, formatMessage(logEvent, message), getFieldMap(sessionId, null), e);
     }
 
     public static void error(final LogEvent logEvent, final String sessionId, String message, Map<EventData, Object> data, final Exception e) {
-        Map<String, Object> fields = new HashMap<>();
-        fields.put(EventData.SESSION_ID.name().toLowerCase(), sessionId);
-        putAllEventData(fields, data);
-        EventLogger.error(APP, String.format("%s: %s", logEvent.name(), message), unmodifiableMap(fields), e);
+        EventLogger.error(APP, formatMessage(logEvent, message), getFieldMap(sessionId, data), e);
     }
 
-    private static void putAllEventData(Map<String, Object> fields, Map<EventData, Object> eventData) {
-        for (Map.Entry<EventData, Object> entry : eventData.entrySet()) {
+    private static Map<String, Object> getFieldMap(String sessionId, Map<EventData, Object> data) {
+        Map<String, Object> fields = new HashMap<>();
+        if(null != sessionId && !sessionId.isEmpty()) {
+            fields.put(EventData.SESSION_ID.name().toLowerCase(), sessionId);
+        }
+        if(null == data) {
+            return unmodifiableMap(fields);
+        }
+        for (Map.Entry<EventData, Object> entry : data.entrySet()) {
             fields.put(entry.getKey().name().toLowerCase(), entry.getValue());
         }
+        return unmodifiableMap(fields);
+    }
+
+    private static String formatMessage(final LogEvent logEvent, final String message) {
+        String result = logEvent.name().toLowerCase();
+        if(null != message && !message.isEmpty()) {
+            result = result + " - " + message;
+        }
+        return result;
     }
 
 }
