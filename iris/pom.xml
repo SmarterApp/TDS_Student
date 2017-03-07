@@ -7,6 +7,11 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>iris</name>
 
+	<properties>
+		<shared-master.version>3.0.1</shared-master.version>
+		<tds-dll.version>3.0.0</tds-dll.version>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -49,11 +54,6 @@
 			<version>3.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>org.opentestsystem.shared</groupId>
-			<artifactId>shared-tr-api</artifactId>
-			<version>1.0.1-BUILD-SNAPSHOT</version>
-		</dependency>
-		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>tds-itemselection-aironline</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
@@ -61,37 +61,42 @@
 		<dependency>
 			<groupId>org.opentestsystem.shared</groupId>
 			<artifactId>shared-web</artifactId>
-			<version>1.0.1-BUILD-SNAPSHOT</version>
+			<version>${shared-master.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.opentestsystem.shared</groupId>
+			<artifactId>shared-tr-api</artifactId>
+			<version>${shared-master.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.opentestsystem.shared</groupId>
 			<artifactId>shared-logging</artifactId>
-			<version>1.0.1-BUILD-SNAPSHOT</version>
+			<version>${shared-master.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.opentestsystem.shared</groupId>
 			<artifactId>shared-threading</artifactId>
-			<version>1.0.1-BUILD-SNAPSHOT</version>
+			<version>${shared-master.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.opentestsystem.shared</groupId>
 			<artifactId>shared-test</artifactId>
-			<version>1.0.1-BUILD-SNAPSHOT</version>
+			<version>${shared-master.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>tds-dll-api</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${tds-dll.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>tds-dll-mssql</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${tds-dll.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>tds-dll-mysql</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${tds-dll.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>AIR</groupId>
