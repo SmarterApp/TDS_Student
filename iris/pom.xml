@@ -56,11 +56,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
-			<artifactId>resource-bundler</artifactId>
-			<version>${item-renderer.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>tds-itemselection-aironline</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
