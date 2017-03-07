@@ -53,4 +53,7 @@ public interface IItemResponseScorable
 
   @JsonProperty ("FilePath")
   public String getFilePath ();
+
+  @JsonProperty ("ClientName")
+  String getClientName();
 }

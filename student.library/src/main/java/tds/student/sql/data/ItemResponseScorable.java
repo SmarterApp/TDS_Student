@@ -32,22 +32,28 @@ public class ItemResponseScorable implements IItemResponseScorable
   private String _value;
   private UUID   _scoreMark;
   private String _filePath;
+  private String clientName;
 
   public ItemResponseScorable () {
   }
 
   public ItemResponseScorable (String testKey, String testID, String language, int position, int sequence, long bankKey, long itemKey, String segmentID, String value, UUID scoreMark, String itemFilePath) {
-    _testKey = testKey;
-    _testID = testID;
-    _language = language;
-    _position = position;
-    _sequence = sequence;
-    _bankKey = bankKey;
-    _itemKey = itemKey;
-    _segmentID = segmentID;
-    _value = value;
-    _scoreMark = scoreMark;
-    _filePath = itemFilePath;
+    this(testKey, testID, language, position, sequence, bankKey, itemKey, segmentID, value, scoreMark, itemFilePath, "");
+  }
+
+  public ItemResponseScorable(String _testKey, String _testID, String _language, int _position, int _sequence, long _bankKey, long _itemKey, String _segmentID, String _value, UUID _scoreMark, String _filePath, String clientName) {
+    this._testKey = _testKey;
+    this._testID = _testID;
+    this._language = _language;
+    this._position = _position;
+    this._sequence = _sequence;
+    this._bankKey = _bankKey;
+    this._itemKey = _itemKey;
+    this._segmentID = _segmentID;
+    this._value = _value;
+    this._scoreMark = _scoreMark;
+    this._filePath = _filePath;
+    this.clientName = clientName;
   }
 
   @Override
@@ -163,5 +169,10 @@ public class ItemResponseScorable implements IItemResponseScorable
 
   public void setTestID(String testID) {
 	  this._testID = testID;
+  }
+
+  @Override
+  public String getClientName() {
+    return clientName;
   }
 }
