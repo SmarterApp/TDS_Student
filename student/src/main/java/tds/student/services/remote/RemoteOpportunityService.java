@@ -182,7 +182,7 @@ public class RemoteOpportunityService implements IOpportunityService {
       return isApproved;
     }
 
-    Optional<ValidationError> maybeError = examRepository.updateStatus(oppInstance.getExamId(), statusChange.getStatus().name(), statusChange.getReason());
+    Optional<ValidationError> maybeError = examRepository.updateStatus(oppInstance.getExamId(), statusChange.getStatus().name().toLowerCase(), statusChange.getReason());
 
     if (!statusChange.isCheckReturnStatus()) {
       return true;
@@ -246,14 +246,8 @@ public class RemoteOpportunityService implements IOpportunityService {
 
   @Override
   public void denyApproval(final OpportunityInstance oppInstance) throws ReturnStatusException {
-
-    if (isLegacyCallsEnabled) {
-      legacyOpportunityService.denyApproval(oppInstance);
-    }
-
-    if (!isRemoteExamCallsEnabled) {
-      return;
-    }
+    // Since setStatus checks and calls the legacy and remote as needed, we don't need that logic here
+    //  otherwise the legacy service will be called twice
 
     OpportunityStatus opportunityStatus = getStatus(oppInstance);
   
