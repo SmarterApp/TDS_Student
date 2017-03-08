@@ -32,6 +32,7 @@ import tds.exam.ExamPrintRequest;
 import tds.exam.ExamSegment;
 import tds.exam.ExamStatusCode;
 import tds.exam.OpenExamRequest;
+import tds.exam.SegmentApprovalRequest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.isA;
@@ -231,4 +232,25 @@ public class RemoteExamRepositoryTest {
 
     remoteExamRepository.createPrintRequest(examPrintRequest);
   }
+
+  @Test
+  public void shouldWaitForSegmentApproval() throws Exception {
+    final UUID examId = UUID.randomUUID();
+    final SegmentApprovalRequest request = new SegmentApprovalRequest(UUID.randomUUID(), UUID.randomUUID(), 2, false);
+    when(mockRestTemplate.exchange(isA(URI.class), isA(HttpMethod.class), isA(HttpEntity.class), isA(ParameterizedTypeReference.class)))
+      .thenReturn(new ResponseEntity(HttpStatus.NO_CONTENT));
+    remoteExamRepository.waitForSegmentApproval(examId, request);
+    verify(mockRestTemplate).exchange(isA(URI.class), isA(HttpMethod.class), isA(HttpEntity.class), isA(ParameterizedTypeReference.class));
+  }
+
+  @Test(expected = ReturnStatusException.class)
+  public void shouldThrowForBadResponseWaitForSegmentApproval() throws Exception {
+    final UUID examId = UUID.randomUUID();
+    final SegmentApprovalRequest request = new SegmentApprovalRequest(UUID.randomUUID(), UUID.randomUUID(), 2, false);
+    when(mockRestTemplate.exchange(isA(URI.class), isA(HttpMethod.class), isA(HttpEntity.class), isA(ParameterizedTypeReference.class)))
+      .thenThrow(new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Invalid", ERROR_JSON.getBytes(), null));
+    remoteExamRepository.waitForSegmentApproval(examId, request);
+    verify(mockRestTemplate).exchange(isA(URI.class), isA(HttpMethod.class), isA(HttpEntity.class), isA(ParameterizedTypeReference.class));
+  }
+
 }

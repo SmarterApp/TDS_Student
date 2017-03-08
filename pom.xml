@@ -15,7 +15,7 @@
     <version>2.1.2-SNAPSHOT</version>
 
     <properties>
-        <tds-dll.version>0.0.1-SNAPSHOT</tds-dll.version>
+        <tds-dll.version>3.0.0</tds-dll.version>
     </properties>
 
     <modules>
@@ -23,7 +23,6 @@
         <module>student</module>
         <module>student.library</module>
         <module>iris</module>
-        <module>ResourceBundler</module>
         <module>SpellCheck</module>
     </modules>
 

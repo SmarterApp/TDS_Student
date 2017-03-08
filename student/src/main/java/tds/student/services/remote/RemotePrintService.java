@@ -348,7 +348,8 @@ public class RemotePrintService implements PrintService {
   }
 
   /* PrintService - printPassage() - line 117 */
-  private boolean printPassage(final String requestType, final OpportunityInstance oppInstance, final PageGroup pageGroupToPrint, final String requestParameters) throws ReturnStatusException {
+  private boolean printPassage(final String requestType, final OpportunityInstance oppInstance, final PageGroup pageGroupToPrint,
+                                   final String requestParameters) throws ReturnStatusException {
     if (pageGroupToPrint == null || pageGroupToPrint.size() == 0) {
       return false;
     }
