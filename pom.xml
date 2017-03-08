@@ -23,7 +23,6 @@
         <module>student</module>
         <module>student.library</module>
         <module>iris</module>
-        <module>ResourceBundler</module>
         <module>SpellCheck</module>
     </modules>
 

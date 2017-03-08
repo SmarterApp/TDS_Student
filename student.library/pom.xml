@@ -1,25 +1,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<artifactId>student.library</artifactId>
+	<packaging>jar</packaging>
+	<name>student.library</name>
+	<url>http://maven.apache.org</url>
+
 	<parent>
 		<groupId>org.opentestsystem.delivery</groupId>
 		<artifactId>student-parent</artifactId>
 		<version>2.1.2-SNAPSHOT</version>
 	</parent>
-	<groupId>org.opentestsystem.delivery</groupId>
-	<artifactId>student.library</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
-
-	<name>student.library</name>
-	<url>http://maven.apache.org</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<item-scoring.version>1.1.0-SNAPSHOT</item-scoring.version>
 		<item-selection.version>0.0.1-SNAPSHOT</item-selection.version>
 		<item-renderer.version>3.0.0-SNAPSHOT</item-renderer.version>
-		<tds-exam-client.version>0.0.1-SNAPSHOT</tds-exam-client.version>
+		<tds-exam-client.version>0.0.1</tds-exam-client.version>
 	</properties>
 
 	<dependencies>
