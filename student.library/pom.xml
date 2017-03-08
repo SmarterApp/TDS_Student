@@ -17,7 +17,7 @@
 		<item-scoring.version>1.1.0-SNAPSHOT</item-scoring.version>
 		<item-selection.version>0.0.1-SNAPSHOT</item-selection.version>
 		<item-renderer.version>3.0.0-SNAPSHOT</item-renderer.version>
-		<tds-exam-client.version>0.0.1-SNAPSHOT</tds-exam-client.version>
+		<tds-exam-client.version>0.0.1</tds-exam-client.version>
 	</properties>
 
 	<dependencies>
