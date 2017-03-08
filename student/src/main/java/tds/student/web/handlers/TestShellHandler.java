@@ -19,6 +19,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.http.HttpStatus;
+import org.opentestsystem.delivery.logging.EventLogger;
+import org.opentestsystem.delivery.logging.EventLogger.Checkpoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -193,7 +195,7 @@ public class TestShellHandler extends TDSHandler
   public ResponseData<String> PauseTest (@RequestParam Map<String, String> formParams, @RequestParam (value = "reason", required = false) String reason, HttpServletRequest request)
       throws TDSSecurityException, ReturnStatusException {
     // check if authenticated
-    StudentEventLogger.info(StudentEventLogger.LogEvent.PAUSE_EXAM, StudentEventLogger.Checkpoint.ENTER.name(),
+    EventLogger.info(StudentEventLogger.APP, StudentEventLogger.StudentLogEvent.PAUSE_EXAM, Checkpoint.ENTER.name(),
       request.getSession().getId(), null, null);
     if (isAuthenticated ()) {
       TestOpportunity testOpp = StudentContext.getTestOpportunity ();
@@ -206,23 +208,23 @@ public class TestShellHandler extends TDSHandler
             ObjectMapper mapper = new ObjectMapper ();
             testShellAudit = mapper.readValue (latencies, TestShellAudit.class);
           } catch (IOException e) {
-            StudentEventLogger.error( StudentEventLogger.LogEvent.PAUSE_EXAM, null,
+            EventLogger.error(StudentEventLogger.APP,  StudentEventLogger.StudentLogEvent.PAUSE_EXAM, null,
               request.getSession().getId(), "Problem mapping pause request to TestShellAudit", null, e);
             _logger.error (String.format ("Problem mapping pause request to TestShellAudit: %s", e.getMessage ()));
           }
           PerformTestShellAudit (testOpp, testShellAudit, request);
         }
-        StudentEventLogger.info(StudentEventLogger.LogEvent.PAUSE_EXAM, "pre-OpStatChg",
+        EventLogger.info(StudentEventLogger.APP, StudentEventLogger.StudentLogEvent.PAUSE_EXAM, "pre-OpStatChg",
           request.getSession().getId(), null, null);
         // change status of opp to paused
         OpportunityStatusChange statusChange = new OpportunityStatusChange (OpportunityStatusType.Paused, true, reason);
         _oppService.setStatus (testOpp.getOppInstance (), statusChange);
-        StudentEventLogger.info(StudentEventLogger.LogEvent.PAUSE_EXAM, "post-OpStatChg",
+        EventLogger.info(StudentEventLogger.APP, StudentEventLogger.StudentLogEvent.PAUSE_EXAM, "post-OpStatChg",
           request.getSession().getId(), null, null);
       }
     }
     // success
-    StudentEventLogger.info(StudentEventLogger.LogEvent.PAUSE_EXAM, StudentEventLogger.Checkpoint.EXIT.name(),
+    EventLogger.info(StudentEventLogger.APP, StudentEventLogger.StudentLogEvent.PAUSE_EXAM, Checkpoint.EXIT.name(),
       request.getSession().getId(), null, null);
     return new ResponseData<String> (TDSReplyCode.OK.getCode (), "OK", null);
   }
