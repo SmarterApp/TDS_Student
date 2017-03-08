@@ -218,11 +218,11 @@ public class RemoteOpportunityServiceTest {
 
     final String deniedStatus = ExamStatusCode.STATUS_DENIED;
     OpportunityStatusChange statusChange = new OpportunityStatusChange(OpportunityStatusType.Pending, true, deniedStatus);
-    when(examRepository.updateStatus(oppInstance.getExamId(), statusChange.getStatus().name(), deniedStatus)).thenReturn(Optional.<ValidationError>absent());
+    when(examRepository.updateStatus(oppInstance.getExamId(), statusChange.getStatus().name().toLowerCase(), deniedStatus)).thenReturn(Optional.<ValidationError>absent());
     service.denyApproval(oppInstance);
 
     verify(examRepository).getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey());
-    verify(examRepository).updateStatus(oppInstance.getExamId(), statusChange.getStatus().name(), deniedStatus);
+    verify(examRepository).updateStatus(oppInstance.getExamId(), statusChange.getStatus().name().toLowerCase(), deniedStatus);
   }
 
   @Test
@@ -252,10 +252,10 @@ public class RemoteOpportunityServiceTest {
 
     final String deniedStatus = ExamStatusCode.STATUS_DENIED;
     OpportunityStatusChange statusChange = new OpportunityStatusChange(OpportunityStatusType.Pending, true, deniedStatus);
-    when(examRepository.updateStatus(oppInstance.getExamId(), statusChange.getStatus().name(), deniedStatus)).thenReturn(Optional.<ValidationError>absent());
+    when(examRepository.updateStatus(oppInstance.getExamId(), statusChange.getStatus().name().toLowerCase(), deniedStatus)).thenReturn(Optional.<ValidationError>absent());
     boolean isApproved = service.setStatus(oppInstance, statusChange);
     assertThat(isApproved).isTrue();
-    verify(examRepository).updateStatus(oppInstance.getExamId(), statusChange.getStatus().name(), deniedStatus);
+    verify(examRepository).updateStatus(oppInstance.getExamId(), statusChange.getStatus().name().toLowerCase(), deniedStatus);
   }
 
   @Test
@@ -272,7 +272,7 @@ public class RemoteOpportunityServiceTest {
       .thenReturn(Optional.of(new ValidationError("Error", "Code")));
     boolean isApproved = service.setStatus(oppInstance, statusChange);
     assertThat(isApproved).isTrue();
-    verify(examRepository).updateStatus(oppInstance.getExamId(), statusChange.getStatus().name(), deniedStatus);
+    verify(examRepository).updateStatus(oppInstance.getExamId(), statusChange.getStatus().name().toLowerCase(), deniedStatus);
   }
 
   @Test(expected = ReturnStatusException.class)
@@ -285,7 +285,7 @@ public class RemoteOpportunityServiceTest {
 
     final String deniedStatus = ExamStatusCode.STATUS_DENIED;
     OpportunityStatusChange statusChange = new OpportunityStatusChange(OpportunityStatusType.Pending, true, deniedStatus);
-    when(examRepository.updateStatus(oppInstance.getExamId(), statusChange.getStatus().name(), deniedStatus))
+    when(examRepository.updateStatus(oppInstance.getExamId(), statusChange.getStatus().name().toLowerCase(), deniedStatus))
       .thenReturn(Optional.of(new ValidationError(ExamStatusCode.STATUS_FAILED, "There was an error!")));
     service.setStatus(oppInstance, statusChange);
   }
@@ -300,11 +300,11 @@ public class RemoteOpportunityServiceTest {
 
     final String deniedStatus = ExamStatusCode.STATUS_DENIED;
     OpportunityStatusChange statusChange = new OpportunityStatusChange(OpportunityStatusType.Pending, true, deniedStatus);
-    when(examRepository.updateStatus(oppInstance.getExamId(), statusChange.getStatus().name(), deniedStatus))
+    when(examRepository.updateStatus(oppInstance.getExamId(), statusChange.getStatus().name().toLowerCase(), deniedStatus))
       .thenReturn(Optional.of(new ValidationError("Another Error", "There was an error!")));
     boolean isApproved = service.setStatus(oppInstance, statusChange);
     assertThat(isApproved).isFalse();
-    verify(examRepository).updateStatus(oppInstance.getExamId(), statusChange.getStatus().name(), deniedStatus);
+    verify(examRepository).updateStatus(oppInstance.getExamId(), statusChange.getStatus().name().toLowerCase(), deniedStatus);
   }
 
   @Test(expected = ReturnStatusException.class)
