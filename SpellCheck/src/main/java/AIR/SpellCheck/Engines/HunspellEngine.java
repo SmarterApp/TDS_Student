@@ -11,6 +11,8 @@ package AIR.SpellCheck.Engines;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,44 +27,52 @@ import AIR.SpellCheck.SpellEngineFactory;
 @Component
 public class HunspellEngine implements ISpellEngine
 {
-  
+  private final static Logger LOG = LoggerFactory.getLogger(HunspellEngine.class);
+
+  private final SpellEngineFactory spellEngineFactory;
+
   @Autowired
-  SpellEngineFactory _spellEngine;
-  
+  public HunspellEngine(final SpellEngineFactory spellEngineFactory) {
+    this.spellEngineFactory = spellEngineFactory;
+  }
+
   @Override
-  public boolean CheckWord (String word) {
+  public boolean CheckWord (final String word) {
+    final String languageCode = getLanguage();
     boolean isCorrect = true;
     try {
-      String languageCode = WebHelper.getQueryString ("lang");
-      if (_spellEngine.getDictionary (languageCode).misspelled(word)) {
+      if (spellEngineFactory.getDictionary (languageCode).misspelled(word)) {
         isCorrect = false;
       }
-      if (_spellEngine.getDictionary (languageCode).misspelled(word)) {
-        isCorrect = false;
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
+    } catch (final Exception e) {
+      LOG.error("Unable to spell check word {} in language {}", word, languageCode);
     }
     return isCorrect;
   }
   
   
   @Override
-  public List<String> GetSuggestions (String word)  {
-    List<String> suggestions = new ArrayList<String> ();
+  public List<String> GetSuggestions(final String word)  {
+    final String languageCode = getLanguage();
+    final List<String> suggestions = new ArrayList<> ();
     try {
-      String languageCode = WebHelper.getQueryString ("lang");
-      if (_spellEngine.getDictionary (languageCode).misspelled(word)) {
-        suggestions.addAll (_spellEngine.getDictionary (languageCode).suggest(word));
+      if (spellEngineFactory.getDictionary (languageCode).misspelled(word)) {
+        suggestions.addAll (spellEngineFactory.getDictionary (languageCode).suggest(word));
       }
-      if (_spellEngine.getDictionary (languageCode).misspelled(word)) {
-        suggestions.addAll (_spellEngine.getDictionary (languageCode).suggest(word));
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
+    } catch (final Exception e) {
+      LOG.error("Unable to get spelling suggestions for word {} in language {}", word, languageCode);
     }
     
     return suggestions;
+  }
+
+  /**
+   * Retrieve the language parameter from the request.
+   *
+   * @return The language code for the request.
+   */
+  String getLanguage() {
+    return WebHelper.getQueryString ("lang");
   }
 
 }
