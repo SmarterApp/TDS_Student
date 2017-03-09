@@ -15,6 +15,7 @@ import java.util.Map;
 import java.net.URLDecoder;
 
 import dk.dren.hunspell.Hunspell;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,12 +37,17 @@ public class SpellEngineFactory
    */
   public SpellEngineFactory (final Map<String, String> dictLanguageMap) {
     _availableDictionaryLanguages = new ArrayList<> (dictLanguageMap.keySet ());
-    final Hunspell _hunSpell = Hunspell.getInstance();
+    final Hunspell hunspell = Hunspell.getInstance();
 
     try {
       for(final String languageCode:_availableDictionaryLanguages) {
-        final String dictLocation = getClass ().getClassLoader ().getResource  ("dictionary//"+dictLanguageMap.get (languageCode)+"//"+dictLanguageMap.get (languageCode)+".dic").getPath ();
-        _dictionaryMap.put (languageCode.toUpperCase (), _hunSpell.getDictionary (URLDecoder.decode(dictLocation.replace (".dic", ""), "UTF-8")));
+        final String dictLocation = getClass().getClassLoader()
+            .getResource("dictionary//" +
+                dictLanguageMap.get(languageCode) + "//" +
+                dictLanguageMap.get(languageCode) + ".dic")
+            .getPath();
+        final Hunspell.Dictionary dictionary = hunspell.getDictionary(URLDecoder.decode(dictLocation.replace(".dic", ""),"UTF-8"));
+        _dictionaryMap.put(languageCode.toUpperCase(), dictionary);
       }
     } catch (final Exception e) {
       LOG.error("Unable to initialize SpellEngineFactory", e);
@@ -57,13 +63,16 @@ public class SpellEngineFactory
    * @throws IllegalArgumentException if the languageCode is blank or the dictionary does not exist
    */
   public Hunspell.Dictionary getDictionary(final String languageCode) throws IllegalArgumentException{
-    if(languageCode == null || languageCode.isEmpty ()) {
+    if(StringUtils.isBlank(languageCode)) {
       throw new IllegalArgumentException("language parameter must be specified to get dictionary.");
     }
-    if(!_dictionaryMap.containsKey (languageCode.toUpperCase ())) {
-      throw new IllegalArgumentException("SpellCheck dictionary is not available for labguage "+languageCode +". Allowed Languages :"+_availableDictionaryLanguages);
+    if(!_dictionaryMap.containsKey(languageCode.toUpperCase())) {
+      throw new IllegalArgumentException("SpellCheck dictionary is not available for labguage " +
+          languageCode +
+          ". Allowed Languages :" +
+          _availableDictionaryLanguages);
     }
-    return _dictionaryMap.get (languageCode.toUpperCase ());
+    return _dictionaryMap.get(languageCode.toUpperCase());
   }
   /**
    * Always returns US English Dictionary
@@ -71,7 +80,7 @@ public class SpellEngineFactory
    * @throws IllegalArgumentException If the english dictionary does not exist
    */
   public Hunspell.Dictionary getDictionary() throws IllegalArgumentException {
-    return _dictionaryMap.get ("ENU");
+    return _dictionaryMap.get("ENU");
   }
   
 }

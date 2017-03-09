@@ -37,11 +37,11 @@ public class HunspellEngine implements ISpellEngine
   }
 
   @Override
-  public boolean CheckWord (final String word) {
+  public boolean CheckWord(final String word) {
     final String languageCode = getLanguage();
     boolean isCorrect = true;
     try {
-      if (spellEngineFactory.getDictionary (languageCode).misspelled(word)) {
+      if (spellEngineFactory.getDictionary(languageCode).misspelled(word)) {
         isCorrect = false;
       }
     } catch (final Exception e) {
@@ -56,8 +56,8 @@ public class HunspellEngine implements ISpellEngine
     final String languageCode = getLanguage();
     final List<String> suggestions = new ArrayList<> ();
     try {
-      if (spellEngineFactory.getDictionary (languageCode).misspelled(word)) {
-        suggestions.addAll (spellEngineFactory.getDictionary (languageCode).suggest(word));
+      if (spellEngineFactory.getDictionary(languageCode).misspelled(word)) {
+        suggestions.addAll(spellEngineFactory.getDictionary(languageCode).suggest(word));
       }
     } catch (final Exception e) {
       LOG.error("Unable to get spelling suggestions for word {} in language {}", word, languageCode);
@@ -72,7 +72,7 @@ public class HunspellEngine implements ISpellEngine
    * @return The language code for the request.
    */
   String getLanguage() {
-    return WebHelper.getQueryString ("lang");
+    return WebHelper.getQueryString("lang");
   }
 
 }
