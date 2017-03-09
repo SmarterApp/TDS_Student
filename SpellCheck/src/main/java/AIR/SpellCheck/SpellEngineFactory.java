@@ -8,16 +8,15 @@
  ******************************************************************************/
 package AIR.SpellCheck;
 
+import com.atlascopco.hunspell.Hunspell;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.net.URLDecoder;
-
-import dk.dren.hunspell.Hunspell;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author mpatel
@@ -27,7 +26,7 @@ public class SpellEngineFactory
 {
   private final static Logger LOG = LoggerFactory.getLogger(SpellEngineFactory.class);
 
-  private final Map<String, Hunspell.Dictionary> _dictionaryMap = new HashMap<String, Hunspell.Dictionary>();
+  private final Map<String, Hunspell> _dictionaryMap = new HashMap<>();
   
   private final List<String> _availableDictionaryLanguages;
   
@@ -37,16 +36,20 @@ public class SpellEngineFactory
    */
   public SpellEngineFactory (final Map<String, String> dictLanguageMap) {
     _availableDictionaryLanguages = new ArrayList<> (dictLanguageMap.keySet ());
-    final Hunspell hunspell = Hunspell.getInstance();
 
     try {
       for(final String languageCode:_availableDictionaryLanguages) {
+        final String baseLocation = "dictionary//" +
+            dictLanguageMap.get(languageCode) + "//" +
+            dictLanguageMap.get(languageCode);
+
         final String dictLocation = getClass().getClassLoader()
-            .getResource("dictionary//" +
-                dictLanguageMap.get(languageCode) + "//" +
-                dictLanguageMap.get(languageCode) + ".dic")
+            .getResource(baseLocation + ".dic")
             .getPath();
-        final Hunspell.Dictionary dictionary = hunspell.getDictionary(URLDecoder.decode(dictLocation.replace(".dic", ""),"UTF-8"));
+        final String affLocation = getClass().getClassLoader()
+            .getResource(baseLocation + ".aff")
+            .getPath();
+        final Hunspell dictionary = new Hunspell(dictLocation, affLocation);
         _dictionaryMap.put(languageCode.toUpperCase(), dictionary);
       }
     } catch (final Exception e) {
@@ -62,7 +65,7 @@ public class SpellEngineFactory
    * @return The Hunspell Dictionary for the given language
    * @throws IllegalArgumentException if the languageCode is blank or the dictionary does not exist
    */
-  public Hunspell.Dictionary getDictionary(final String languageCode) throws IllegalArgumentException{
+  public Hunspell getDictionary(final String languageCode) throws IllegalArgumentException{
     if(StringUtils.isBlank(languageCode)) {
       throw new IllegalArgumentException("language parameter must be specified to get dictionary.");
     }
@@ -79,7 +82,7 @@ public class SpellEngineFactory
    * @return The Hunspell dictionary for the english language
    * @throws IllegalArgumentException If the english dictionary does not exist
    */
-  public Hunspell.Dictionary getDictionary() throws IllegalArgumentException {
+  public Hunspell getDictionary() throws IllegalArgumentException {
     return _dictionaryMap.get("ENU");
   }
   

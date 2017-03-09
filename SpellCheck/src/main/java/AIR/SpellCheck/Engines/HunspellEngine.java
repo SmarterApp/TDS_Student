@@ -11,6 +11,7 @@ package AIR.SpellCheck.Engines;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.atlascopco.hunspell.Hunspell;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,23 +42,21 @@ public class HunspellEngine implements ISpellEngine
     final String languageCode = getLanguage();
     boolean isCorrect = true;
     try {
-      if (spellEngineFactory.getDictionary(languageCode).misspelled(word)) {
-        isCorrect = false;
-      }
+      isCorrect = spellEngineFactory.getDictionary(languageCode).isCorrect(word);
     } catch (final Exception e) {
       LOG.error("Unable to spell check word {} in language {}", word, languageCode, e);
     }
     return isCorrect;
   }
-  
-  
+
   @Override
   public List<String> GetSuggestions(final String word)  {
     final String languageCode = getLanguage();
     final List<String> suggestions = new ArrayList<> ();
     try {
-      if (spellEngineFactory.getDictionary(languageCode).misspelled(word)) {
-        suggestions.addAll(spellEngineFactory.getDictionary(languageCode).suggest(word));
+      final Hunspell dictionary = spellEngineFactory.getDictionary(languageCode);
+      if (!dictionary.isCorrect(word)) {
+        suggestions.addAll(dictionary.suggest(word));
       }
     } catch (final Exception e) {
       LOG.error("Unable to get spelling suggestions for word {} in language {}", word, languageCode, e);

@@ -1,9 +1,7 @@
 package AIR.SpellCheck;
 
-import dk.dren.hunspell.Hunspell;
-import org.junit.After;
+import com.atlascopco.hunspell.Hunspell;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -16,12 +14,11 @@ public class SpellEngineFactoryTest {
     private static final String EN_US = "ENU";
     private static final String ES_MX = "ESN";
 
-    private static Map<String, String> languages;
     private static SpellEngineFactory factory;
 
     @BeforeClass
     public static void setup() {
-        languages = new HashMap<>();
+        final Map<String, String> languages = new HashMap<>();
         languages.put(EN_US, "en_US");
         languages.put(ES_MX, "es_MX");
 
@@ -30,29 +27,33 @@ public class SpellEngineFactoryTest {
 
     @AfterClass
     public static void tearDown() {
-        factory.getDictionary(EN_US).destroy();
-        factory.getDictionary(ES_MX).destroy();
+        factory.getDictionary(EN_US).close();
+        factory.getDictionary(ES_MX).close();
     }
 
     @Test
     public void itShouldProvideAnEnUsDictionary() {
-        final Hunspell.Dictionary enUs = factory.getDictionary(EN_US);
-        assertThat(enUs.misspelled("happy")).isFalse();
-        assertThat(enUs.misspelled("hapy")).isTrue();
+        final Hunspell enUs = factory.getDictionary(EN_US);
+        assertThat(enUs.isCorrect("happy")).isTrue();
+        assertThat(enUs.isCorrect("hapy")).isFalse();
+
+        assertThat(enUs.suggest("hapy")).contains("happy");
     }
 
     @Test
     public void itShouldProvideAnEsMxDictionary() {
-        final Hunspell.Dictionary enUs = factory.getDictionary(ES_MX);
-        assertThat(enUs.misspelled("bien")).isFalse();
-        assertThat(enUs.misspelled("bein")).isTrue();
+        final Hunspell esMx = factory.getDictionary(ES_MX);
+        assertThat(esMx.isCorrect("bien")).isTrue();
+        assertThat(esMx.isCorrect("bein")).isFalse();
+
+        assertThat(esMx.suggest("bein")).contains("bien");
     }
 
     @Test
     public void itShouldDefaultToAnEnUsDictionary() {
-        final Hunspell.Dictionary enUs = factory.getDictionary();
-        assertThat(enUs.misspelled("happy")).isFalse();
-        assertThat(enUs.misspelled("bien")).isTrue();
+        final Hunspell enUs = factory.getDictionary();
+        assertThat(enUs.isCorrect("happy")).isTrue();
+        assertThat(enUs.isCorrect("bien")).isFalse();
     }
 
     @Test(expected = IllegalArgumentException.class)
