@@ -17,7 +17,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<item-renderer.version>3.0.0</item-renderer.version>
-		<item-scoring.version>1.1.0-SNAPSHOT</item-scoring.version>
+		<item-scoring.version>3.0.0</item-scoring.version>
 		<item-selection.version>0.0.1-SNAPSHOT</item-selection.version>
 	</properties>
 
