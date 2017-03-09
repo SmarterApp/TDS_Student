@@ -16,6 +16,7 @@
 
     <properties>
         <assertj.version>2.6.0</assertj.version>
+        <item-renderer.version>3.0.0</item-renderer.version>
         <junit.version>4.12</junit.version>
         <mockito.version>1.10.19</mockito.version>
         <tds-dll.version>3.0.0</tds-dll.version>
@@ -31,6 +32,26 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- TDS Item Renderer dependencies -->
+            <dependency>
+                <groupId>org.opentestsystem.delivery</groupId>
+                <artifactId>item-renderer</artifactId>
+                <version>${item-renderer.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.opentestsystem.delivery</groupId>
+                <artifactId>resource-bundler</artifactId>
+                <version>${item-renderer.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.opentestsystem.blackbox</groupId>
+                <artifactId>shared-blackbox</artifactId>
+                <version>${item-renderer.version}</version>
+                <type>war</type>
+            </dependency>
+
             <!-- TDS DLL dependencies -->
             <dependency>
                 <groupId>org.opentestsystem.delivery</groupId>

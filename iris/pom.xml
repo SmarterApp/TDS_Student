@@ -14,7 +14,6 @@
 	<properties>
 		<shared-master.version>3.0.1</shared-master.version>
 		<tds-dll.version>3.0.0</tds-dll.version>
-        <item-renderer.version>3.0.0</item-renderer.version>
 	</properties>
 
 	<dependencies>
@@ -68,7 +67,6 @@
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>item-renderer</artifactId>
-			<version>${item-renderer.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>

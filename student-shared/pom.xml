@@ -16,20 +16,17 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <item-selection.version>0.0.1-SNAPSHOT</item-selection.version>
-        <item-renderer.version>3.0.0-SNAPSHOT</item-renderer.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.opentestsystem.delivery</groupId>
             <artifactId>item-renderer</artifactId>
-            <version>${item-renderer.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.opentestsystem.delivery</groupId>
             <artifactId>resource-bundler</artifactId>
-            <version>${item-renderer.version}</version>
         </dependency>
 
         <dependency>
