@@ -22,7 +22,6 @@
 	</licenses>
 
 	<properties>
-		<item-scoring.version>1.1.0-SNAPSHOT</item-scoring.version>
 		<item-selection.version>0.0.1-SNAPSHOT</item-selection.version>
 		<testscoring.version>0.0.1-SNAPSHOT</testscoring.version>
 		<progman-client.version>3.0.0</progman-client.version>
@@ -97,13 +96,11 @@
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>item-scoring-api</artifactId>
-			<version>${item-scoring.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>item-scoring-engine</artifactId>
-			<version>${item-scoring.version}</version>
 		</dependency>
 
 		<dependency>
