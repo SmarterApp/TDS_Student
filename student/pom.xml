@@ -23,6 +23,7 @@
 
 	<properties>
 		<item-selection.version>0.0.1-SNAPSHOT</item-selection.version>
+		<item-renderer.version>3.0.0</item-renderer.version>
 		<testscoring.version>0.0.1-SNAPSHOT</testscoring.version>
 		<progman-client.version>3.0.0</progman-client.version>
 		<sb11-mna-client.version>0.0.4-SNAPSHOT</sb11-mna-client.version>
