@@ -45,7 +45,7 @@ public class HunspellEngine implements ISpellEngine
         isCorrect = false;
       }
     } catch (final Exception e) {
-      LOG.error("Unable to spell check word {} in language {}", word, languageCode);
+      LOG.error("Unable to spell check word {} in language {}", word, languageCode, e);
     }
     return isCorrect;
   }
@@ -60,7 +60,7 @@ public class HunspellEngine implements ISpellEngine
         suggestions.addAll(spellEngineFactory.getDictionary(languageCode).suggest(word));
       }
     } catch (final Exception e) {
-      LOG.error("Unable to get spelling suggestions for word {} in language {}", word, languageCode);
+      LOG.error("Unable to get spelling suggestions for word {} in language {}", word, languageCode, e);
     }
     
     return suggestions;

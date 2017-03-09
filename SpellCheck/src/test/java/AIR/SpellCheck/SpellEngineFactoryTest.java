@@ -1,6 +1,5 @@
 package AIR.SpellCheck;
 
-
 import dk.dren.hunspell.Hunspell;
 import org.junit.After;
 import org.junit.AfterClass;
