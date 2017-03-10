@@ -22,6 +22,7 @@
         <junit.version>4.12</junit.version>
         <mockito.version>1.10.19</mockito.version>
         <tds-dll.version>3.0.0</tds-dll.version>
+        <test-scoring.version>3.0.0</test-scoring.version>
     </properties>
 
     <modules>
@@ -97,6 +98,13 @@
                 <groupId>org.opentestsystem.delivery</groupId>
                 <artifactId>tds-dll-mysql</artifactId>
                 <version>${tds-dll.version}</version>
+            </dependency>
+
+            <!-- TDS Test Scoring dependency -->
+            <dependency>
+                <groupId>org.opentestsystem.delivery</groupId>
+                <artifactId>testscoring</artifactId>
+                <version>${test-scoring.version}</version>
             </dependency>
 
             <!-- Test dependencies -->

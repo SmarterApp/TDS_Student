@@ -119,7 +119,6 @@
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>testscoring</artifactId>
-			<version>3.0.0</version>
 		</dependency>
 
 		<dependency>
