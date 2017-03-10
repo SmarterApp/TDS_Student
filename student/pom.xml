@@ -22,7 +22,6 @@
 	</licenses>
 
 	<properties>
-		<item-selection.version>0.0.1-SNAPSHOT</item-selection.version>
 		<testscoring.version>0.0.1-SNAPSHOT</testscoring.version>
 		<progman-client.version>3.0.0</progman-client.version>
 		<sb11-mna-client.version>3.0.0</sb11-mna-client.version>
@@ -90,7 +89,6 @@
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>tds-itemselection-aironline</artifactId>
-			<version>${item-selection.version}</version>
 		</dependency>
 
 		<dependency>
@@ -106,7 +104,6 @@
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>tds-itemselection-common</artifactId>
-			<version>${item-selection.version}</version>
 		</dependency>
 
 		<dependency>
