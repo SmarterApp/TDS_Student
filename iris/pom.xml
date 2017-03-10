@@ -11,6 +11,7 @@
 		<shared-master.version>3.0.1</shared-master.version>
 		<tds-dll.version>3.0.0</tds-dll.version>
 		<item-renderer.version>3.0.0</item-renderer.version>
+		<item-selection.version>3.0.0</item-selection.version>
 	</properties>
 
 	<dependencies>
@@ -57,7 +58,7 @@
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>tds-itemselection-aironline</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${item-selection.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.opentestsystem.shared</groupId>
@@ -102,7 +103,7 @@
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>tds-itemselection-common</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${item-selection.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
