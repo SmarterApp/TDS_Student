@@ -26,7 +26,7 @@
 		<tds-dll.version>3.0.0</tds-dll.version>
 		<item-selection.version>3.0.0</item-selection.version>
 		<item-renderer.version>3.0.0</item-renderer.version>
-		<testscoring.version>0.0.1-SNAPSHOT</testscoring.version>
+		<testscoring.version>3.0.0</testscoring.version>
 		<spellcheck.version>0.0.1-SNAPSHOT</spellcheck.version>
 		<progman-client.version>3.0.0</progman-client.version>
 		<sb11-mna-client.version>3.0.0</sb11-mna-client.version>
