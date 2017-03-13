@@ -27,7 +27,7 @@
 		<testscoring.version>0.0.1-SNAPSHOT</testscoring.version>
 		<progman-client.version>3.0.0</progman-client.version>
 		<sb11-mna-client.version>3.0.0</sb11-mna-client.version>
-		<sb11-shared-code.version>3.0.1</sb11-shared-code.version>
+		<sb11-shared-code.version>3.0.0</sb11-shared-code.version>
 		<tds-exam-client.version>0.0.1</tds-exam-client.version>
 		<shared-spring.version>3.0.2</shared-spring.version>
 		<tds-common-legacy.version>0.0.2</tds-common-legacy.version>
