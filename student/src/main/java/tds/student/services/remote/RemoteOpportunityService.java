@@ -122,7 +122,7 @@ public class RemoteOpportunityService implements IOpportunityService {
     Exam exam = response.getData().get();
     opportunityInfo.setExamBrowserKey(exam.getBrowserId());
     opportunityInfo.setExamId(exam.getId());
-    opportunityInfo.setExamStatus(OpportunityStatusExtensions.parseExamStatus(exam.getStatus().getCode()));
+    opportunityInfo.setExamStatus(ExamStatusMapper.parseExamStatus(exam.getStatus().getCode()));
     opportunityInfo.setExamClientName(exam.getClientName());
 
     //If we are calling both legacy and remote services, then we need to store a map from test opportunity id to exam id
@@ -164,7 +164,7 @@ public class RemoteOpportunityService implements IOpportunityService {
 
     ExamApproval examApproval = response.getData().get();
     status = new OpportunityStatus();
-    status.setStatus(OpportunityStatusExtensions.parseExamStatus(examApproval.getExamStatusCode()));
+    status.setStatus(ExamStatusMapper.parseExamStatus(examApproval.getExamStatusCode()));
 
     return status;
   }
@@ -360,7 +360,7 @@ public class RemoteOpportunityService implements IOpportunityService {
   private static TestConfig mapExamConfigurationToTestConfig(ExamConfiguration examConfiguration) {
     Exam exam = examConfiguration.getExam();
     TestConfig testConfig = new TestConfig();
-    testConfig.setStatus(OpportunityStatusExtensions.parseExamStatus(examConfiguration.getStatus()));
+    testConfig.setStatus(ExamStatusMapper.parseExamStatus(examConfiguration.getStatus()));
     testConfig.setRestart(exam.getRestartsAndResumptions());
     testConfig.setTestLength(examConfiguration.getTestLength());
     testConfig.setStartPosition(examConfiguration.getStartPosition());
