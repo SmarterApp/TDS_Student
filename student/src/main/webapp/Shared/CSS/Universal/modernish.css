@@ -328,7 +328,7 @@
 body.platform_chrome #contents {
     top: 96px;
 }
-.multi-page {
+.page-tabs {
     top: 96px;
 }
 .touch.platform_android .theQuestions, 
@@ -338,7 +338,7 @@ body.platform_chrome #contents {
 .toolsContainer.passageTools {
     top: 115px;
 }
-.fs-enabled .multi-page {
+.fs-enabled .page-tabs {
 	top: 0px;
 }
 .fs-enabled .toolsContainer.passageTools {

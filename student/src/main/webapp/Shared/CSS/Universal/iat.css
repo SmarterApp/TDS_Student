@@ -1,6 +1,12 @@
 .iat-interaction-container {
 	margin: 1em 0 .5em;
 }
+.iat-interaction-container:nth-child(1) {
+   	margin-top: 0;
+}
+.iat-interaction-container:nth-last-child(1) {
+   	margin-bottom: 0;
+}
 .iat-interaction-name {
 	font-weight: bold;
 	font-size: 1em;
@@ -12,4 +18,725 @@
 	width: 0px;
 	left: -9999px;
 	overflow: hidden;
+}
+.qti-content sub {
+	font-size: .7em;
+	bottom: -.33em;
+}
+.qti-content sup {
+	font-size: .7em;
+	top: -.66em;
+}
+.iat-text-underline {
+	text-decoration: underline;
+}
+.iat-text-strikethrough {
+	text-decoration: line-through;
+}
+.iat-text-italic {
+	font-style: italic;
+}
+.iat-text-bold {
+	font-weight: bold;
+}
+.iat-align-center {
+	text-align: center;
+}
+.iat-align-center table {
+	margin-left: auto;
+	margin-right: auto;
+}
+.iat-align-right,
+.iat-table td.iat-align-right,
+.iat-table th.iat-align-right,
+.iat-table caption.iat-align-right {
+	text-align: right;
+}
+.iat-align-left,
+.iat-table td.iat-align-left,
+.iat-table th.iat-align-left,
+.iat-table caption.iat-align-left {
+	text-align: left;
+}
+.iat-align-justify,
+.iat-table td.iat-align-justify,
+.iat-table th.iat-align-justify,
+.iat-table caption.iat-align-justify {
+	text-align: justify;
+}
+.iat-caption-top {
+	caption-side: top;
+}
+.iat-caption-bottom {
+	caption-side: bottom;
+}
+
+/* center tables within page layout */
+.iat-table {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* all headers and table captions ('titles') slightly larger, centered and bold */
+.iat-table caption,
+.iat-table th {
+	font-size: 1.1em;
+	font-weight: bold;
+	text-align: center;
+}
+.iat-table th.iat-table-subHeader {
+	font-size: 1.05em;
+	font-weight: normal;
+}
+/* class to remove defualt bolding */
+.iat-text-weight-normal,
+.iat-table .iat-text-weight-normal {
+	font-weight: normal;
+}
+/* default style center aligns text, can be overidden selection from drop-down */
+.iat-table th,
+.iat-table td,
+.iat-table caption {
+	vertical-align: middle;
+	text-align: center;
+	padding: .3em;
+}
+
+.iat-l-thin { border-left: 1px solid #000; }
+.iat-l-thick { border-left: 3px solid #000; }
+.iat-l-none { border-left: none; }
+
+.iat-r-thin { border-right: 1px solid #000; }
+.iat-r-thick { border-right: 3px solid #000; }
+.iat-r-none { border-right: none; }
+
+.iat-t-thin { border-top: 1px solid #000; }
+.iat-t-thick { border-top: 3px solid #000; }
+.iat-t-none { border-top: none; }
+
+.iat-b-thin { border-bottom: 1px solid #000; }
+.iat-b-thick { border-bottom: 3px solid #000; }
+.iat-b-none { border-bottom: none; }
+
+.iat-table-shaded-headers th {
+	background-color: rgba(204,204,204,0.5);
+}
+
+.iat-indent-1 {
+	padding: 0 0 0 1.5em;
+}
+.iat-indent-2 {
+	padding: 0 0 0 2.5em;
+}
+.iat-indent-3 {
+	padding: 0 0 0 3.5em;
+}
+.iat-indent-4 {
+	padding: 0 0 0 4.5em;
+}
+
+.qti-content ul,
+.qti-content ol {
+	padding: 0 0 0 1em;
+	margin: 0px; /* prevents legacy styles from doubling indentation */
+}
+/* add defualt margins from Open Office content*/
+.qti-content .questionContainer ol,
+.qti-content .questionContainer ul {
+    margin-left: 2em;
+    margin-right: 2em;
+}
+/* remove defualt margins from Open Office content when IAT indentations are specified */
+.qti-content ol.iat-indent-1,
+.qti-content ul.iat-indent-1 {
+	padding: 0 0 0 2.5em;
+	margin: 0em;
+}
+.qti-content ol.iat-indent-2,
+.qti-content ul.iat-indent-2 {
+	padding: 0 0 0 3.5em;
+	margin: 0em;
+}
+.qti-content ol.iat-indent-3,
+.qti-content ul.iat-indent-3 {
+	padding: 0 0 0 4.5em;
+	margin: 0em;
+}
+.qti-content ol.iat-indent-4,
+.qti-content ul.iat-indent-4 {
+	padding: 0 0 0 5.5em;
+	margin: 0em;
+}
+
+/* @group Reset IAT list defaults for item widgets */
+.qti-content .keyboard ul,
+.qti-content .guide_revision ul {
+	padding: 0;
+	margin: 0;
+}
+/* @end */
+
+.iat-dl dt {
+	float: left;
+	margin-top: 1px;
+	margin-bottom: -1em;
+}
+.iat-dl dd {
+	padding-left:1.8000em;
+}
+
+ol.iat-list-upper-alpha {
+	list-style-type: upper-alpha;
+}
+ol.iat-list-lower-alpha {
+	list-style-type: lower-alpha;
+}
+ol.iat-list-lower-roman {
+	list-style-type: lower-roman;
+}
+ol.iat-list-upper-roman {
+	list-style-type: upper-roman;;
+}
+ol.iat-list-upper-latin {
+	list-style-type: upper-latin;
+}
+ol.iat-list-lower-latin {
+	list-style-type: lower-latin;
+}
+
+.iat-highlight {
+    background: rgba(254,238,62,0.5) url(../../Images/universal/highlight.png);
+}
+.TDS_CCYellowB .iat-highlight {
+	background: rgba(181,227,206,0.5);
+}
+.TDS_CCInvert .iat-highlight,
+.TDS_CCWhiteN .iat-highlight {
+	background: rgba(0,204,169,0.5);
+}
+
+.TDS_PS_L1 .qti-interaction .textEntry,
+.TDS_PS_L2 .qti-interaction .textEntry,
+.TDS_PS_L3 .qti-interaction .textEntry,
+.TDS_PS_L4 .qti-interaction .textEntry {
+	width: initial;
+	margin-right: 0.1em;
+}
+
+.qti-interaction .extText {
+	width: 100%;
+}
+/*
+.qti-interaction .extText:not([rows]) {
+	min-height: 20em;
+}*/
+
+.qti-interaction .extText:focus {
+	padding:  0.3em;
+}
+.iat-interaction-container .editTaskInteraction {
+	line-height: 1.4em;
+}
+.qti-interaction .inlineChoice {
+	margin-right: 0.1em;
+}
+/* interfers with Open Office styles
+.qti-interaction table.tableItem {
+	width: inherit;
+	margin-left: auto;
+	margin-right: auto;
+}
+.qti-interaction table.tableItem .ti-editable .ti-input {
+	width: initial;
+}*/
+.qti-interaction .tableItem th {
+	font-weight: bold;
+}
+
+.format_qti .stemContainer .audioControls {
+	margin-top: .3em;
+}
+
+.choice_list .optionContainer.withSound {
+	margin-left: 40px !important;
+	clear: none;
+}
+.choice_list .optionSound {
+    height: inherit;
+    margin: -6px 0 0 0px;
+    width: inherit;
+    display: inline-block;
+}
+.choice_list .optionSound .audio-layout-single {
+	background-color: transparent;
+	background-image: none !important;
+	position: relative;
+	height: 24px;
+	width: 24px;
+	-moz-border-radius:  0px;
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+}
+.choice_list .optionSound .audio-layout-single .sound_repeat {
+	background-image: none !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	-moz-border-radius:  50%;
+	-webkit-border-radius: 50%;
+	border-radius: 50%;
+	border: solid 2px #000;
+	margin: 0px;
+}
+.choice_list .optionSound .audio-layout-single .sound_repeat:after,
+.choice_list .optionSound .audio-layout-single .sound_repeat:before {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.choice_list .optionSound .audio-layout-single .sound_repeat:after {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	text-indent: 0px;
+	color: #000;
+	font-size: 14px;
+	text-align: center;
+	line-height: 24px;
+	content: "\e62f";
+}
+.choice_list .optionSound .audio-layout-single .sound_repeat:hover,
+.choice_list .optionSound .audio-layout-single .sound_repeat:active,
+.choice_list .optionSound .audio-layout-single .sound_repeat:focus {
+	border-color: #0785ab;
+	background-color: #0785ab;
+}
+.choice_list .optionSound .audio-layout-single .sound_repeat:hover:after,
+.choice_list .optionSound .audio-layout-single .sound_repeat:active:after,
+.choice_list .optionSound .audio-layout-single .sound_repeat:focus:after {
+	color: #fff;
+}
+
+/* show grayed out sound icon */
+.choice_list .optionSound .audio-layout-single.load_incomplete .sound_repeat,
+.choice_list .optionSound .audio-layout-single.load_incomplete .sound_repeat:active,
+.choice_list .optionSound .audio-layout-single.load_incomplete .sound_repeat:hover,
+.choice_list .optionSound .audio-layout-single.load_incomplete .sound_repeat:focus,
+.choice_list .optionSound .audio-layout-single.disabled .sound_repeat,
+.choice_list .optionSound .audio-layout-single.disabled .sound_repeat:active,
+.choice_list .optionSound .audio-layout-single.disabled .sound_repeat:hover,
+.choice_list .optionSound .audio-layout-single.disabled .sound_repeat:focus {
+	border-color: #ccc;
+	background-color: transparent;
+}
+.choice_list .optionSound .audio-layout-single.load_incomplete .sound_repeat:after,
+.choice_list .optionSound .audio-layout-single.disabled .sound_repeat:after {
+	color: #ccc;
+}
+
+/* show stop sign */
+.choice_list .optionSound .audio-layout-single.playing_start .sound_repeat,
+.choice_list .optionSound .audio-layout-single.playing_paused .sound_repeat {
+	border-color: #0785ab;
+	background-color: #0785ab;
+}
+.choice_list .optionSound .audio-layout-single.playing_start .sound_repeat:after,
+.choice_list .optionSound .audio-layout-single.playing_paused .sound_repeat:after {
+	content: "\e60c";
+	color: #fff;
+}
+/* show crossed out sound icon */
+.choice_list .optionSound .audio-layout-single.load_fail .sound_repeat,
+.choice_list .optionSound .audio-layout-single.playing_fail .sound_repeat,
+.choice_list .optionSound .audio-layout-single.decode_fail .sound_repeat,
+.choice_list .optionSound .audio-layout-single.load_fail .sound_repeat:hover,
+.choice_list .optionSound .audio-layout-single.playing_fail .sound_repeat:hover,
+.choice_list .optionSound .audio-layout-single.decode_fail .sound_repeat:hover,
+.choice_list .optionSound .audio-layout-single.load_fail .sound_repeat:active,
+.choice_list .optionSound .audio-layout-single.playing_fail .sound_repeat:active,
+.choice_list .optionSound .audio-layout-single.decode_fail .sound_repeat:active,
+.choice_list .optionSound .audio-layout-single.load_fail .sound_repeat:focus,
+.choice_list .optionSound .audio-layout-single.playing_fail .sound_repeat:focus,
+.choice_list .optionSound .audio-layout-single.decode_fail .sound_repeat:focus {
+	border-color: #ccc;
+	background-color: transparent;
+	pointer: defualt;
+}
+.choice_list .optionSound .audio-layout-single.load_fail .sound_repeat:after,
+.choice_list .optionSound .audio-layout-single.playing_fail .sound_repeat:after,
+.choice_list .optionSound .audio-layout-single.decode_fail .sound_repeat:after,
+.choice_list .optionSound .audio-layout-single.load_fail .sound_repeat:hover:after,
+.choice_list .optionSound .audio-layout-single.playing_fail .sound_repeat:hover:after,
+.choice_list .optionSound .audio-layout-single.decode_fail .sound_repeat:hover:after,
+.choice_list .optionSound .audio-layout-single.load_fail .sound_repeat:active:after,
+.choice_list .optionSound .audio-layout-single.playing_fail .sound_repeat:active:after,
+.choice_list .optionSound .audio-layout-single.decode_fail .sound_repeat:active:after,
+.choice_list .optionSound .audio-layout-single.load_fail .sound_repeat:focus:after,
+.choice_list .optionSound .audio-layout-single.playing_fail .sound_repeat:focus:after,
+.choice_list .optionSound .audio-layout-single.decode_fail .sound_repeat:focus:after {
+	color: #ccc;
+}
+.choice_list .optionSound .audio-layout-single.load_fail .sound_repeat:before,
+.choice_list .optionSound .audio-layout-single.playing_fail .sound_repeat:before,
+.choice_list .optionSound .audio-layout-single.decode_fail .sound_repeat:before {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	text-indent: 0px;
+	color: red;
+	font-size: 18px;
+	text-align: center;
+	line-height: 24px;
+	content: "\e61f";
+	z-index: 1;
+	opacity: .5;
+}
+
+.TDS_PS_L1 .choice_list .optionContainer.withSound {
+	margin-left: 44px !important;
+}
+.TDS_PS_L1 .choice_list .optionSound {
+    margin: 1px 0 0 0px;
+}
+.TDS_PS_L1 .choice_list .optionSound .audio-layout-single {
+	height: 30px;
+	width: 30px;
+}
+.TDS_PS_L1 .choice_list .optionSound .audio-layout-single .sound_repeat:after {
+	font-size: 18px;
+	line-height: 30px;
+}
+.TDS_PS_L1 .choice_list .optionSound .audio-layout-single.load_fail .sound_repeat:before,
+.TDS_PS_L1 .choice_list .optionSound .audio-layout-single.playing_fail .sound_repeat:before,
+.TDS_PS_L1 .choice_list .optionSound .audio-layout-single.decode_fail .sound_repeat:before {
+	font-size: 22px;
+	line-height: 30px;
+}
+.TDS_PS_L2 .choice_list .optionContainer.withSound {
+	margin-left: 52px !important;
+}
+.TDS_PS_L2 .choice_list .optionSound {
+    margin: 1px 0 0 0px;
+}
+.TDS_PS_L2 .choice_list .optionSound .audio-layout-single {
+	height: 38px;
+	width: 38px;
+}
+.TDS_PS_L2 .choice_list .optionSound .audio-layout-single .sound_repeat:after {
+	font-size: 21px;
+	line-height: 38px;
+}
+.TDS_PS_L2 .choice_list .optionSound .audio-layout-single.load_fail .sound_repeat:before,
+.TDS_PS_L2 .choice_list .optionSound .audio-layout-single.playing_fail .sound_repeat:before,
+.TDS_PS_L2 .choice_list .optionSound .audio-layout-single.decode_fail .sound_repeat:before {
+	font-size: 24px;
+	line-height: 38px;
+}
+.TDS_PS_L3 .choice_list .optionContainer.withSound {
+	margin-left: 66px !important;
+}
+.TDS_PS_L3 .choice_list .optionSound {
+    margin: 4px 0 0 0px;
+}
+.TDS_PS_L3 .choice_list .optionSound .audio-layout-single {
+	height: 55px;
+	width: 55px;
+}
+.TDS_PS_L3 .choice_list .optionSound .audio-layout-single .sound_repeat:after {
+	font-size: 30px;
+	line-height: 55px;
+}
+.TDS_PS_L3 .choice_list .optionSound .audio-layout-single.load_fail .sound_repeat:before,
+.TDS_PS_L3 .choice_list .optionSound .audio-layout-single.playing_fail .sound_repeat:before,
+.TDS_PS_L3 .choice_list .optionSound .audio-layout-single.decode_fail .sound_repeat:before {
+	font-size: 32px;
+	line-height: 55px;
+}
+.TDS_PS_L4 .choice_list .optionContainer.withSound {
+	margin-left: 80px !important;
+}
+.TDS_PS_L4 .choice_list .optionSound {
+    margin: 3px 0 0 0px;
+}
+.TDS_PS_L4 .choice_list .optionSound .audio-layout-single {
+	height: 66px;
+	width: 66px;
+}
+.TDS_PS_L4 .choice_list .optionSound .audio-layout-single .sound_repeat:after {
+	font-size: 38px;
+	line-height: 66px;
+}
+.TDS_PS_L4 .choice_list .optionSound .audio-layout-single.load_fail .sound_repeat:before,
+.TDS_PS_L4 .choice_list .optionSound .audio-layout-single.playing_fail .sound_repeat:before,
+.TDS_PS_L4 .choice_list .optionSound .audio-layout-single.decode_fail .sound_repeat:before {
+	font-size: 42px;
+	line-height: 66px;
+}
+
+.TDS_CCGray .choice_list .optionSound .audio-layout-single.load_incomplete .sound_repeat,
+.TDS_CCGray .choice_list .optionSound .audio-layout-single.disabled .sound_repeat,
+.TDS_CCGray2 .choice_list .optionSound .audio-layout-single.load_incomplete .sound_repeat,
+.TDS_CCGray2 .choice_list .optionSound .audio-layout-single.disabled .sound_repeat,
+.TDS_CCMedGrayLtGray .choice_list .optionSound .audio-layout-single.load_incomplete .sound_repeat,
+.TDS_CCMedGrayLtGray .choice_list .optionSound .audio-layout-single.disabled .sound_repeat {
+	border-color: #fff !important;
+}
+.TDS_CCGray .choice_list .optionSound .audio-layout-single.load_incomplete .sound_repeat:after,
+.TDS_CCGray .choice_list .optionSound .audio-layout-single.disabled .sound_repeat:after,
+.TDS_CCGray2 .choice_list .optionSound .audio-layout-single.load_incomplete .sound_repeat:after,
+.TDS_CCGray2 .choice_list .optionSound .audio-layout-single.disabled .sound_repeat:after,
+.TDS_CCMedGrayLtGray .choice_list .optionSound .audio-layout-single.load_incomplete .sound_repeat:after,
+.TDS_CCMedGrayLtGray .choice_list .optionSound .audio-layout-single.disabled .sound_repeat:after {
+	color: #fff;
+}
+.TDS_CCGray .choice_list .optionSound .audio-layout-single.load_fail .sound_repeat:after,
+.TDS_CCGray .choice_list .optionSound .audio-layout-single.playing_fail .sound_repeat:after,
+.TDS_CCGray .choice_list .optionSound .audio-layout-single.decode_fail .sound_repeat:after,
+.TDS_CCGray2 .choice_list .optionSound .audio-layout-single.load_fail .sound_repeat:after,
+.TDS_CCGray2 .choice_list .optionSound .audio-layout-single.playing_fail .sound_repeat:after,
+.TDS_CCGray2 .choice_list .optionSound .audio-layout-single.decode_fail .sound_repeat:after,
+.TDS_CCMedGrayLtGray .choice_list .optionSound .audio-layout-single.load_fail .sound_repeat:after,
+.TDS_CCMedGrayLtGray .choice_list .optionSound .audio-layout-single.playing_fail .sound_repeat:after,
+.TDS_CCMedGrayLtGray .choice_list .optionSound .audio-layout-single.decode_fail .sound_repeat:after {
+	color: #666;
+}
+.TDS_CCInvert .choice_list .optionSound .audio-layout-single .sound_repeat,
+.TDS_CCWhiteN .choice_list .optionSound .audio-layout-single .sound_repeat {
+	border-color: #fff;
+}
+.TDS_CCInvert .choice_list .optionSound .audio-layout-single .sound_repeat:after,
+.TDS_CCWhiteN .choice_list .optionSound .audio-layout-single .sound_repeat:after {
+	color: #fff;
+}
+.TDS_CCInvert .choice_list .optionSound .audio-layout-single.load_incomplete .sound_repeat,
+.TDS_CCInvert .choice_list .optionSound .audio-layout-single.disabled .sound_repeat,
+.TDS_CCInvert .choice_list .optionSound .audio-layout-single.load_fail .sound_repeat,
+.TDS_CCInvert .choice_list .optionSound .audio-layout-single.playing_fail .sound_repeat,
+.TDS_CCInvert .choice_list .optionSound .audio-layout-single.decode_fail .sound_repeat,
+.TDS_CCWhiteN .choice_list .optionSound .audio-layout-single.load_incomplete .sound_repeat,
+.TDS_CCWhiteN .choice_list .optionSound .audio-layout-single.disabled .sound_repeat,
+.TDS_CCWhiteN .choice_list .optionSound .audio-layout-single.load_fail .sound_repeat,
+.TDS_CCWhiteN .choice_list .optionSound .audio-layout-single.playing_fail .sound_repeat,
+.TDS_CCWhiteN .choice_list .optionSound .audio-layout-single.decode_fail .sound_repeat {
+	opacity: .5;
+}
+.TDS_CCYellowB .choice_list .optionSound .audio-layout-single .sound_repeat {
+	border-color: #fc0;
+}
+.TDS_CCYellowB .choice_list .optionSound .audio-layout-single .sound_repeat:after {
+	color: #fc0;
+}
+.TDS_CCYellowB .choice_list .optionSound .audio-layout-single.load_incomplete .sound_repeat,
+.TDS_CCYellowB .choice_list .optionSound .audio-layout-single.disabled .sound_repeat,
+.TDS_CCYellowB .choice_list .optionSound .audio-layout-single.load_fail .sound_repeat,
+.TDS_CCYellowB .choice_list .optionSound .audio-layout-single.playing_fail .sound_repeat,
+.TDS_CCYellowB .choice_list .optionSound .audio-layout-single.decode_fail .sound_repeat {
+	opacity: .5;
+}
+
+/* text box heights -------------------------*/
+/* default class, comes out to about 25 rows of text before scrolling */
+textarea.tds-textbox,
+.tds-textbox .cke_contents.cke_reset {
+	height: 24em;
+}
+
+/* comes out to about 8 rows. used in many legacy answer formats */
+textarea.tds-textbox.tds-textbox-small,
+.tds-textbox.tds-textbox-small .cke_contents.cke_reset {
+	height: 8em;
+}
+/* comes out to about 50 rows */
+textarea.tds-textbox.tds-textbox-large,
+.tds-textbox.tds-textbox-large .cke_contents.cke_reset {
+	height: 47em;
+}
+/* comes out to about 95 rows */
+textarea.tds-textbox.tds-textbox-extralarge,
+.tds-textbox.tds-textbox-extralarge .cke_contents.cke_reset {
+	height: 90em;
+}
+
+.tds-legacy-oo-cr textarea {
+	height: inherit !important;
+}
+.tds-legacy-oo-wer textarea {
+	height: 47em !important;
+}
+
+.qti-interaction[data-response-type="HotText"] {
+	line-height: 1.3em;
+}
+.qti-interaction p.interaction.drag-group {
+	clear: both;
+}
+
+/* @group accordian widgets */
+.iat-section-collapsible[data-expanded="false"] .iat-section-content {
+	display: none;
+}
+.iat-section.iat-section-collapsible {
+	margin-bottom: 1em;
+}
+.iat-section-collapsible .iat-section-header a {
+	display: block;
+	line-height: 1.5em;
+	text-decoration: none;
+	-webkit-box-shadow: 0px 0px 3px #b4b4b4;
+	-moz-box-shadow: 0px 0px 3px #b4b4b4;
+	box-shadow: 0px 0px 3px #b4b4b4;
+	line-height: 1.5em;
+	color: #000;
+	position: relative;
+	padding-left: 2em;
+}
+.iat-section-collapsible .iat-section-header a:active::before,
+.iat-section-collapsible .iat-section-header a:focus::before,
+.iat-section-collapsible .iat-section-header a:hover::before,
+.iat-section-collapsible[data-expanded="true"] .iat-section-header a:active::before,
+.iat-section-collapsible[data-expanded="true"] .iat-section-header a:focus::before,
+.iat-section-collapsible[data-expanded="true"] .iat-section-header a:hover::before {
+	background-color: #00aeef;
+	color: #fff;
+}
+.iat-section-collapsible .iat-section-header a::before {
+	font-family: 'icomoon' !important;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	display: inline-block;
+	font-size: 1.5em;
+	line-height: 1em;
+	background-color: #000;
+	color: #fff;
+	margin-right: 5px;
+	-moz-transition: background-color .2s ease-in;
+  -webkit-transition: background-color .2s ease-in;
+  transition: background-color .2s ease-in;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 1em;
+}
+.iat-section-collapsible[data-expanded="false"] .iat-section-header a::before  {
+	content: "\e905";
+}
+.iat-section-collapsible[data-expanded="true"] .iat-section-header a {
+	border: 1px solid #f5f5f5;
+	margin-bottom: -1px;
+	-webkit-box-shadow: inherit;
+	-moz-box-shadow: inherit;
+	box-shadow: inherit;
+}
+.iat-section-collapsible[data-expanded="true"] .iat-section-header a::before  {
+	content: "\e906";
+}
+.iat-section-collapsible .iat-section-content {
+	border: solid 1px #f5f5f5;
+	margin-bottom: 1em;
+	padding: 3px;
+}
+.TDS_CCYellowB .iat-section-collapsible .iat-section-header a {
+	color: #FC0;
+}
+.TDS_CCInvert .iat-section-collapsible .iat-section-header a,
+.TDS_CCWhiteN .iat-section-collapsible .iat-section-header a {
+	color: #fff;
+}
+/* @end */
+
+
+/* @group mulit-language */
+
+.iat-languagedivider,
+p.iat-languagedivider {
+	line-height: 60%;
+}
+/* hides strikethrough*/
+.iat-languagedivider {
+	text-indent: -9999px;
+}
+.thePassage .iat-title + .iat-languagedivider {
+	line-height: 20%;
+	font-size: 1.3em;
+}
+
+/* @end */
+
+/* @group illustration */
+
+.measuring .iat-illustrationContainer {
+	float: left;
+	border: 1px solid #0E4878;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
+.iat-illustrationContainer.contextAreaFocus {
+	-ms-user-select: element !important;
+}
+.iat-illustrationContainer.contextAreaFocus * {
+    -moz-user-select: text !important;
+    -webkit-user-select: text !important;
+    -ms-user-select: text !important;
+}
+.layout_wai .iat-illustration td,
+.layout_wai .iat-illustration th {
+	border: solid 1px #ccc;
+	padding: .4em;
+}
+.layout_wai .iat-illustration th {
+	font-weight: bold;
+}
+#contentDialogPages .layout_wai .iat-illustration {
+	display: none;
+}
+
+/* @end */
+
+/* Centers table captions for IAT content, since it's now a possiblity to have a caption */
+.tableItem caption {
+	text-align: center;
+	font-weight: bold;
+}
+
+/* EBSR styles */
+.iat-interaction-container .optionContainer.contextArea {
+    border: none;
+}
+
+/* Cloze/Wordbuilder */
+.qti-interaction[data-response-identifier*="wordBuilderInteraction"] .textEntry {
+    height: 1.8em;
+    line-height: 1.2em;
+		letter-spacing: 0.15em;
+		margin-bottom: 1em;
+}
+
+/* Hot Text / Edit Text */
+.edit-text .hd {
+    display: block;
+}
+.qti-content[data-response-type-legacy="HotText"] {
+	line-height: 1.3em;
 }

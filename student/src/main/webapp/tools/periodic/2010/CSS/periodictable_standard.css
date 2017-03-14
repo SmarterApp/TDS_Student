@@ -146,7 +146,7 @@ td.hideme {
 .element_cell {
 	width: 5%;
 	height: 8em;
-	font-size: .8em;
+	/*font-size: .8em; BUG 178953 this makes font too small to be read on low res display. */
 	-moz-box-sizing:border-box;
 	box-sizing:border-box;
 	padding: 0px;
