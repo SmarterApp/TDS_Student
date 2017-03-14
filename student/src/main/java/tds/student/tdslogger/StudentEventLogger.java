@@ -1,20 +1,20 @@
 package tds.student.tdslogger;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.opentestsystem.delivery.logging.EventLogger;
+import org.opentestsystem.delivery.logging.EventLoggerBase;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Logs events to logstash for tracking application events.
  */
-public class StudentEventLogger extends EventLogger {
-
-  public static String APP = "student";
-
-  public static String getApp() {
-    return APP;
+public class StudentEventLogger extends EventLoggerBase {
+  protected String getApp() {
+    return "student";
   }
 
-  public enum StudentLogEvent implements ILogEvent {
+  public enum StudentLogEvent implements EventLogger.ILogEvent {
     ANSWER_QUESTIONS,
     DETERMINE_NEXT_QUESTION,
     DISPLAY_PAGE_CONTENTS,
@@ -26,12 +26,21 @@ public class StudentEventLogger extends EventLogger {
     START_EXAM,
   }
 
-  public enum StudentEventData implements IEventData {
+  public enum StudentEventData implements EventLogger.IEventData {
     ACCOMMODATIONS,
     ASSESSMENTS,
     EXAMS,
     QUESTIONS,
     STUDENT_ID,
+  }
+
+  public StudentEventLogger() {
+    super(new ObjectMapper());
+  }
+
+  @Autowired
+  public StudentEventLogger(final ObjectMapper objectMapper) {
+    super(objectMapper);
   }
 }
 
