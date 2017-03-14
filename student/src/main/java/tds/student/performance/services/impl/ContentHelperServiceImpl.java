@@ -29,7 +29,6 @@ import tds.student.performance.services.ContentHelperService;
 @Component
 public class ContentHelperServiceImpl implements ContentHelperService {
     @Override
-    @Cacheable(CacheType.LongTerm)
     public IITSDocument getContent(String xmlFilePath, AccLookupWrapper accommodations) throws ReturnStatusException {
         if (StringUtils.isEmpty (xmlFilePath))
             return null;

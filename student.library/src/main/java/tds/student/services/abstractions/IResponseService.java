@@ -23,7 +23,7 @@ import tds.student.sql.data.OpportunityInstance;
  */
 public interface IResponseService
 {
-  PageGroup insertItems (OpportunityInstance oppInstance, AdaptiveGroup adaptiveGroup) throws ReturnStatusException;;
+  PageGroup insertItems (OpportunityInstance oppInstance, AdaptiveGroup adaptiveGroup, boolean isMsb) throws ReturnStatusException;;
 
   PageList getOpportunityItems (OpportunityInstance oppInstance, boolean validate) throws ReturnStatusException;;
 

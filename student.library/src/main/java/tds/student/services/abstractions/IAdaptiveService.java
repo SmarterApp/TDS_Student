@@ -10,7 +10,7 @@ package tds.student.services.abstractions;
 
 import TDS.Shared.Exceptions.ReturnStatusException;
 import tds.student.services.data.PageGroup;
-import tds.student.sql.data.OpportunityInstance;
+import tds.student.services.data.TestOpportunity;
 
 /**
  * @author temp_rreddy
@@ -18,5 +18,5 @@ import tds.student.sql.data.OpportunityInstance;
  */
 public interface IAdaptiveService
 {
-  PageGroup createNextItemGroup (OpportunityInstance oppInstance, int lastPage, int lastPosition) throws ReturnStatusException;
+  PageGroup createNextItemGroup (TestOpportunity testOpportunity, int lastPage, int lastPosition) throws ReturnStatusException;
 }

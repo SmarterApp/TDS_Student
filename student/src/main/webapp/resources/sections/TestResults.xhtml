@@ -6,7 +6,7 @@
 </cc:interface>
 <cc:implementation>
 
-	<tds:SectionWrapper id="sectionTestResults" headerKey="TestResults.Label.YourResults">
+	<tds:SectionWrapper id="sectionTestResults" headerName="TestResults">
 
 		<div class="identity">
 			<ul>
@@ -51,9 +51,15 @@
 			</div>
 		</div>
 
-		<span class="actions"> <tds:Button id="btnScoreLogout" styleClass="positive" key="TestResults.Link.Logout" /> <tds:Button id="btnEnterMoreScores" styleClass="positive"
-				key="TestResults.Link.EnterMoreScores" /> <tds:Button id="btnChangeStudent" styleClass="positive" key="TestResults.Link.ChangeStudent" />
-		</span>
+		<tds:NextStepWrapper id="sectionTestSelectionNextSteps"
+			headerName="TestResults">
+			<tds:Button id="btnScoreLogout" styleClass="positive"
+				key="TestResults.Link.Logout" />
+			<tds:Button id="btnEnterMoreScores" styleClass="positive"
+				key="TestResults.Link.EnterMoreScores" />
+			<tds:Button id="btnChangeStudent" styleClass="positive"
+				key="TestResults.Link.ChangeStudent" />
+		</tds:NextStepWrapper>
 
 		<p class="ferpa" i18n-content="StaticContent.Label.FERPA"></p>
 

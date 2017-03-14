@@ -202,6 +202,15 @@ The Diagnostic API has a few settings which can adjusted via ProgMan.  Logical d
 * `diagnostic.volume.minimumPercentFree: 5` - When the percent free space on disk is less than this value an error state is returned.
 * `diagnostic.volume.warningPercentFree: 15` - A warning state is returned when the percent available disk space is below this value.
 
+## Running Tests
+In order to run the unit and integration tests the database credentails must be set in a new file located at `/opt/sbtds/test-db-settings.properties` with the following format:
+
+```
+datasource.jdbcUrl=jdbc:mysql://[DB_HOST]/session
+datasource.username=[USERNAME]
+datasource.password=[PASSWORD]
+```
+
 
 ## Build Order
 These are the steps that should be taken in order to build all of the Student-related artifacts:
@@ -289,3 +298,4 @@ Student has a number of direct dependencies that are necessary for it to functio
 ### Runtime Dependencies
 * Servlet API
 * Persistence API
+* MySQL Connector/J ( version 5.1.26 + ) need to be added in "lib" folder of application server 

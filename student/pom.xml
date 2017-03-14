@@ -5,13 +5,13 @@
 	<parent>
 		<groupId>org.opentestsystem.shared</groupId>
 		<artifactId>shared-master</artifactId>
-		<version>1.0.1</version>
+		<version>3.0.1</version>
 	</parent>
 	<groupId>org.opentestsystem.delivery</groupId>
 	<artifactId>student</artifactId>
 	<name>student</name>
 	<packaging>war</packaging>
-	<version>2.1.1</version>
+	<version>2.1.2-SNAPSHOT</version>
 
 	<licenses>
 		<license>
@@ -22,15 +22,15 @@
 		</license>
 	</licenses>
 
-
 	<properties>
-
-		<item-selection.version>0.0.1</item-selection.version>
-		<testscoring.version>0.0.1</testscoring.version>
-		<spellcheck.version>0.0.1</spellcheck.version>
-		<progman-client.version>0.0.4</progman-client.version>
-		<sb11-mna-client.version>0.0.4</sb11-mna-client.version>
-		<sb11-shared-code.version>0.0.6</sb11-shared-code.version>
+		<tds-dll.version>3.0.0</tds-dll.version>
+		<item-selection.version>3.0.0</item-selection.version>
+		<item-renderer.version>3.0.0</item-renderer.version>
+		<testscoring.version>3.0.0</testscoring.version>
+		<spellcheck.version>0.0.1-SNAPSHOT</spellcheck.version>
+		<progman-client.version>3.0.0</progman-client.version>
+		<sb11-mna-client.version>3.0.0</sb11-mna-client.version>
+		<sb11-shared-code.version>3.0.0</sb11-shared-code.version>
 	</properties>
 
 	<dependencies>
@@ -38,16 +38,18 @@
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>tds-dll-api</artifactId>
+			<version>${tds-dll.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>tds-dll-mssql</artifactId>
+			<version>${tds-dll.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>tds-dll-mysql</artifactId>
+			<version>${tds-dll.version}</version>
 		</dependency>
-
 
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
@@ -92,7 +94,7 @@
 		<dependency>
 			<groupId>org.opentestsystem.shared</groupId>
 			<artifactId>monitoring-alerting.client</artifactId>
-			<version> ${sb11-mna-client.version}</version>
+			<version>${sb11-mna-client.version}</version>
 		</dependency>
 
 		<dependency>
@@ -134,20 +136,15 @@
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>student.library</artifactId>
-			<version>0.0.1</version>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.opentestsystem.blackbox</groupId>
 			<artifactId>shared-blackbox</artifactId>
-			<version>1.0.1</version>
+			<version>${item-renderer.version}</version>
 			<type>war</type>
 		</dependency>
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.26</version>
-		</dependency>
-
+		
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>

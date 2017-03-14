@@ -3,11 +3,11 @@
   <parent>
     <groupId>org.opentestsystem.shared</groupId>
     <artifactId>shared-master</artifactId>
-    <version>1.0.1</version>
+    <version>3.0.1</version>
   </parent>
   <groupId>AIR.SpellCheck</groupId>
   <artifactId>spellcheck</artifactId>
-  <version>0.0.1</version>
+  <version>0.0.1-SNAPSHOT</version>
   <name>spellcheck</name>
   
 	<repositories>

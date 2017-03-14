@@ -130,3 +130,15 @@ user-select-text * {
 	-ms-user-select: text !important;
 }
 
+/*IAT user select restoration - SEE BUG 186829*/
+.format_iat .answerContainer *{
+    -moz-user-select: text;
+    -webkit-user-select: text;
+    -ms-user-select: text;
+}
+.format_iat .answerContainer .iat-interaction-container *{
+    -moz-user-select: -moz-none; 
+    -webkit-user-select: none; 
+    -ms-user-select: none; 
+}
+

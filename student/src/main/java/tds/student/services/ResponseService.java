@@ -47,7 +47,7 @@ public class ResponseService implements IResponseService
   }
 
   // insert items we got from adaptive algorithm to the session db
-  public PageGroup insertItems (OpportunityInstance oppInstance, AdaptiveGroup adaptiveGroup) throws ReturnStatusException {
+  public PageGroup insertItems (OpportunityInstance oppInstance, AdaptiveGroup adaptiveGroup, boolean isMsb) throws ReturnStatusException {
     OpportunityItems sqlOppItems = null;
     if (adaptiveGroup == null)
       return null;
@@ -57,7 +57,7 @@ public class ResponseService implements IResponseService
       // nothing to do, return
       if (insertCount == 0)
         return null;
-      sqlOppItems = _responseRepository.insertItems (oppInstance, adaptiveGroup);
+      sqlOppItems = _responseRepository.insertItems (oppInstance, adaptiveGroup, isMsb);
       ReturnStatus returnedStatus = sqlOppItems.getReturnStatus ();
       // check if the return status is "inserted", otherwise it failed
       if (returnedStatus == null || !returnedStatus.getStatus ().equalsIgnoreCase ("inserted")) {

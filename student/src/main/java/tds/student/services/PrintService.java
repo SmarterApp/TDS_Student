@@ -27,6 +27,9 @@ import tds.student.sql.data.OpportunityInstance;
 import AIR.Common.TDSLogger.ITDSLogger;
 import TDS.Shared.Exceptions.ReturnStatusException;
 
+import java.io.IOException;
+import java.util.List;
+
 /**
  * @author temp_rreddy
  * 
@@ -47,12 +50,20 @@ public class PrintService
   @Autowired
   private ITDSLogger             _tdsLogger;
 
-  private String getItemLabel (ItemResponse response) {
-    return String.format ("Item %1$d", response.getPosition ());
+  private String getItemLabel (ItemResponse response, boolean isTranscript) {
+    return String.format ("%1$s %2$d",
+            isTranscript ? "Item and Transcript" : "Item",
+            response.getPosition ()
+    );
   }
 
-  private String getPassageLabel (PageGroup group) throws ReturnStatusException {
+  private String getPassageLabel (PageGroup group, boolean isTranscript) throws ReturnStatusException {
     StringBuilder label = new StringBuilder ("Passage");
+
+    if (isTranscript) {
+      label.append(" and Transcript");
+    }
+
     if (group.size () > 0) {
       label.append (" for ");
 
@@ -82,6 +93,16 @@ public class PrintService
 
   }
 
+  /**
+   * Determines if the list of attachments means that this is a Braille Transcript embossing request
+   *
+   * @param brailleAttachments List of braille attachments for this request
+   * @return
+     */
+  private static boolean isTranscriptRequest(List<ITSAttachment> brailleAttachments) {
+    return brailleAttachments.size() == 2 && brailleAttachments.get(1).getSubType().endsWith("_transcript");
+  }
+
   public boolean printPassage (OpportunityInstance oppInstance, PageGroup pageGroupToPrint, String requestParameters) throws ReturnStatusException {
     return printPassage ("PRINTPASSAGE", oppInstance, pageGroupToPrint, requestParameters);
   }
@@ -103,7 +124,7 @@ public class PrintService
         return false;
 
       // send request to session DB
-      String requestDesc = getPassageLabel (pageGroupToPrint);
+      String requestDesc = getPassageLabel (pageGroupToPrint, false);
       _oppRepository.submitRequest (oppInstance,
           pageGroupToPrint.getNumber (), 0, requestType,
           requestDesc, requestValue.replace ("\\", "\\\\"), requestParameters);
@@ -126,7 +147,7 @@ public class PrintService
       if (StringUtils.isEmpty (requestValue))
         return false;
       // send request to session DB
-      String requestDesc = getItemLabel (responseToPrint);
+      String requestDesc = getItemLabel (responseToPrint, false);
       _oppRepository.submitRequest (oppInstance,
           responseToPrint.getPage (), responseToPrint.getPosition (),
           "PRINTITEM", requestDesc, requestValue.replace ("\\", "\\\\"), requestParameters);
@@ -162,24 +183,28 @@ public class PrintService
                     "PrintPassageBraille: Invalid xml file path for group %1$s.",
                     pageGroupToPrint.getId ())));
       }
+
       // try and load document if it isn't already loaded
       if (pageGroupToPrint.getDocument () == null) {
         pageGroupToPrint.setDocument (_contentService.getContent (
             xmlPath, accLookup));
       }
+
       // check if document is loaded
       if (pageGroupToPrint.getDocument () == null)
         return false;
+
       // get content
       ITSContent content = pageGroupToPrint.getDocument ().getContent (
           testOpp.getLanguage ());
       if (content == null)
         return false;
-      // get attachemnt for the accommodations braille type
-      ITSAttachment brailleAttachment = content
-          .GetBrailleTypeAttachment (accLookup);
+
+      // get attachments for the accommodations braille type
+      List<ITSAttachment> brailleAttachments = content.GetBrailleTypeAttachment (accLookup);
+
       // check if any attachments
-      if (brailleAttachment == null) {
+      if (brailleAttachments == null || brailleAttachments.isEmpty()) {
         // log attachments are missing
         String testKey = testOpp.getTestKey ();
         String groupID = pageGroupToPrint.getId ();
@@ -188,16 +213,28 @@ public class PrintService
         _tdsLogger.rendererWarn (error, "printPassageBraille");
         return false;
       }
+
+      ITSAttachment mainBrailleAttachment = brailleAttachments.get(0);
+
       // final String requestType = "EMBOSSPASSAGE";
-      String requestValue = brailleAttachment.getFile ();
-      String requestParameters = "FileFormat:"
-          + brailleAttachment.getType ().toUpperCase (); // name:value;name:value
-      String requestDesc = getPassageLabel (pageGroupToPrint);
-      requestDesc = String.format ("%1$s (%2$s)", requestDesc,
-          brailleAttachment.getType ());
+      String requestValue = mainBrailleAttachment.getFile ();
+      String requestParameters = "FileFormat:" + mainBrailleAttachment.getType ().toUpperCase (); // name:value;name:value
+
+      boolean isTranscript = isTranscriptRequest(brailleAttachments);
+
+      String requestDesc = String.format ("%1$s (%2$s)",
+              getPassageLabel (pageGroupToPrint, isTranscript),
+              mainBrailleAttachment.getType ()
+      );
+
+      if (isTranscript) {
+        requestValue += ";" + brailleAttachments.get(1).getFile();
+      }
+
       _oppRepository.submitRequest (testOpp.getOppInstance (),
-          pageGroupToPrint.getNumber (), 0, requestType, requestDesc,
-          requestValue.replace ("\\", "\\\\"), requestParameters);
+              pageGroupToPrint.getNumber (), 0, requestType, requestDesc,
+              requestValue.replace ("\\", "\\\\"), requestParameters);
+
     } catch (ReturnStatusException e) {
       _logger.error (e.getMessage ());
       throw new ReturnStatusException (e);
@@ -235,11 +272,12 @@ public class PrintService
           testOpp.getLanguage ());
       if (content == null)
         return false;
+
       // get attachemnt for the accommodations braille type
-      ITSAttachment brailleAttachment = content
-          .GetBrailleTypeAttachment (accLookup);
+      List<ITSAttachment> brailleAttachments = content.GetBrailleTypeAttachment (accLookup);
+
       // check if any attachments
-      if (brailleAttachment == null) {
+      if (brailleAttachments == null || brailleAttachments.isEmpty()) {
         // log attachments are missing
         String testKey = testOpp.getTestKey ();
         String itemID = responseToPrint.getItemID ();
@@ -248,16 +286,27 @@ public class PrintService
         _tdsLogger.rendererWarn (error, "printItemBraille");
         return false;
       }
+
+      ITSAttachment mainBrailleAttachment = brailleAttachments.get(0);
+
+      boolean isTranscript = isTranscriptRequest(brailleAttachments);
+
       final String requestType = "EMBOSSITEM";
-      String requestValue = brailleAttachment.getFile ();
-      String requestParameters = "FileFormat:"
-          + brailleAttachment.getType ().toUpperCase ();
-      String requestDesc = getItemLabel (responseToPrint);
-      requestDesc = String.format ("%1$s (%2$s)", requestDesc,
-          brailleAttachment.getType ());
-      _oppRepository.submitRequest (testOpp.getOppInstance (),
-          responseToPrint.getPage (), responseToPrint.getPosition (),
-          requestType, requestDesc, requestValue.replace ("\\", "\\\\"), requestParameters);
+      String requestValue = mainBrailleAttachment.getFile();
+      String requestParameters = "FileFormat:" + mainBrailleAttachment.getType().toUpperCase();
+      String requestDesc = String.format("%1$s (%2$s)",
+              getItemLabel(responseToPrint, isTranscript),
+              mainBrailleAttachment.getType()
+      );
+
+      if (isTranscript) {
+        requestValue += ";" + brailleAttachments.get(1).getFile();
+      }
+
+      _oppRepository.submitRequest(testOpp.getOppInstance(),
+              responseToPrint.getPage(), responseToPrint.getPosition(),
+              requestType, requestDesc, requestValue.replace("\\", "\\\\"), requestParameters);
+
       responseToPrint.setPrinted (true);
     } catch (ReturnStatusException e) {
       _logger.error (e.getMessage ());
