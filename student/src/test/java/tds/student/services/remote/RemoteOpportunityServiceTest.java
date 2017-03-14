@@ -34,7 +34,6 @@ import tds.student.sql.data.OpportunityInstance;
 import tds.student.sql.data.OpportunitySegment;
 import tds.student.sql.data.OpportunityStatus;
 import tds.student.sql.data.OpportunityStatusChange;
-import tds.student.sql.data.OpportunityStatusExtensions;
 import tds.student.sql.data.OpportunityStatusType;
 import tds.student.sql.data.TestConfig;
 import tds.student.sql.data.TestSegment;
@@ -346,7 +345,7 @@ public class RemoteOpportunityServiceTest {
     verify(examRepository).startExam(oppInstance.getExamId());
 
     assertThat(testConfig).isNotNull();
-    assertThat(testConfig.getStatus()).isEqualTo(OpportunityStatusExtensions.parseExamStatus(ExamStatusCode.STATUS_STARTED));
+    assertThat(testConfig.getStatus()).isEqualTo(ExamStatusMapper.parseExamStatus(ExamStatusCode.STATUS_STARTED));
     assertThat(testConfig.getPrefetch()).isEqualTo(mockExamConfig.getPrefetch());
     assertThat(testConfig.getContentLoadTimeout()).isEqualTo(mockExamConfig.getContentLoadTimeoutMinutes());
     assertThat(testConfig.getInterfaceTimeout()).isEqualTo(mockExamConfig.getInterfaceTimeoutMinutes());

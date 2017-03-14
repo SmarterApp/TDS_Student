@@ -14,7 +14,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<tds-exam-client.version>0.0.1</tds-exam-client.version>
+
 	</properties>
 
 	<dependencies>
@@ -27,12 +27,6 @@
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
 			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.opentestsystem.delivery</groupId>
-			<artifactId>tds-exam-client</artifactId>
-			<version>${tds-exam-client.version}</version>
 		</dependency>
 
 		<!-- Start Dependency shared project -->

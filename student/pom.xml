@@ -49,12 +49,6 @@
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>student.library</artifactId>
 			<version>${project.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.opentestsystem.exam</groupId>
-					<artifactId>tds-exam-client</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 
 		<dependency>
