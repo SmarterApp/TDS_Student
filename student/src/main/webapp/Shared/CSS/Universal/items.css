@@ -1,13 +1,19 @@
 .highlight {
     background-color: rgba(246,255,0,0.5);
 }
+::-moz-selection {
+  background: rgba(52,173,216,0.3);
+}
+::selection {
+  background: rgba(52,173,216,0.3);
+}
 #contents *:focus {
 	outline: none;
 }
 .layout_compound_1 .compound.contextAreaFocus {
 	border: none;
 }
-a.itemMenu, 
+a.itemMenu,
 a.passageMenu {
 	display: block;
 	width: 40px;
@@ -17,34 +23,39 @@ a.passageMenu {
 	float: right;
 	margin-top: -35px;
 }
-.TDS_ITM1 .toolsContainer a.itemMenu, 
+.TDS_ITM1 .toolsContainer a.itemMenu {
+	display: block;
+}
 .TDS_ITM1 .toolsContainer a.passageMenu {
+	display: none;
+}
+.TDS_ITM1 .passageShowing .toolsContainer a.passageMenu {
 	display: block;
 }
 div.toolsContainer a.itemMenu {
 	margin-top: 0px;
 }
-.TDS_PS_L2 div.toolsContainer a.itemMenu, 
-.TDS_PS_L3 div.toolsContainer a.itemMenu, 
-.TDS_PS_L2 div.toolsContainer a.passageMenu, 
+.TDS_PS_L2 div.toolsContainer a.itemMenu,
+.TDS_PS_L3 div.toolsContainer a.itemMenu,
+.TDS_PS_L2 div.toolsContainer a.passageMenu,
 .TDS_PS_L3 div.toolsContainer a.passageMenu {
 	height: 34px;
     width: 45px;
 }
-.TDS_PS_L4 div.toolsContainer a.itemMenu,  
+.TDS_PS_L4 div.toolsContainer a.itemMenu,
 .TDS_PS_L4 div.toolsContainer.passageTools a.passageMenu {
 	height: 45px;
     width: 60px;
 }
-.layout11 .theQuestions, 
-.layout17 .theQuestions, 
-.layout21 .theQuestions, 
-.layout23 .theQuestions, 
-.layout24 .theQuestions, 
-.layout25 .theQuestions, 
-.layout26 .theQuestions, 
-.layout27 .theQuestions, 
-.layout28 .theQuestions, 
+.layout11 .theQuestions,
+.layout17 .theQuestions,
+.layout21 .theQuestions,
+.layout23 .theQuestions,
+.layout24 .theQuestions,
+.layout25 .theQuestions,
+.layout26 .theQuestions,
+.layout27 .theQuestions,
+.layout28 .theQuestions,
 .layout29 .theQuestions {
     background: url(../../Images/universal/universal_passage_devider.png) repeat-y scroll left top;
 }
@@ -68,6 +79,7 @@ div.toolsContainer a.itemMenu {
 .questionAnswerGroup.lastItem {
 	margin-bottom: 0em;
 }
+
 .contextArea, .stimulusCell {
 	border: dotted 1px transparent;
 	margin: 0px;
@@ -75,7 +87,7 @@ div.toolsContainer a.itemMenu {
 .contextArea.thePassage {
 	border: none;
 }
-.theQuestions .contextAreaFocus, 
+.theQuestions .contextAreaFocus,
 .compound .questionContainer .contextAreaFocus{
 	-moz-box-shadow: 0 0 5px 2px rgba(0,174,239,.1);
    	-webkit-box-shadow: 0 0 5px 2px rgba(0,174,239,.1);
@@ -86,17 +98,17 @@ div.toolsContainer a.itemMenu {
    margin-top: -1.6em;
    font-size: 1.2em;
 }
-.TDS_PS_L1 .bigTable .questionCell h2, 
+.TDS_PS_L1 .bigTable .questionCell h2,
 .TDS_PS_L1 .bigTable .questionContainer h2 {
    font-size: 1.1em;
 }
-.TDS_PS_L2 .bigTable .questionCell h2, 
+.TDS_PS_L2 .bigTable .questionCell h2,
 .TDS_PS_L2 .bigTable .questionContainer h2 {
    font-size: .9em;
 }
-.TDS_PS_L3 .bigTable .questionCell h2, 
-.TDS_PS_L3 .bigTable .questionContainer h2, 
-.TDS_PS_L4 .bigTable .questionCell h2, 
+.TDS_PS_L3 .bigTable .questionCell h2,
+.TDS_PS_L3 .bigTable .questionContainer h2,
+.TDS_PS_L4 .bigTable .questionCell h2,
 .TDS_PS_L4 .bigTable .questionContainer h2 {
    font-size: .8em;
 }
@@ -104,26 +116,26 @@ div.toolsContainer a.itemMenu {
 .TDS_PS_L2 .layout_1 .bigTable .questionCell h2 {
 	margin-top: -1.85em;
 }
-.TDS_PS_L1 .layout_1 .bigTable .questionCell h2, 
-.TDS_PS_L3 .layout_1 .bigTable .questionCell h2, 
+.TDS_PS_L1 .layout_1 .bigTable .questionCell h2,
+.TDS_PS_L3 .layout_1 .bigTable .questionCell h2,
 .TDS_PS_L4 .layout_1 .bigTable .questionCell h2 {
 	margin-top: -1.7em;
 }
 
-.bigTable .itemMarked .questionCell h2, 
-.bigTable .itemMarked .questionContainer h2, 
-.itemMarked .bigTable .questionCell h2, 
-.itemMarked .bigTable .questionContainer h2, 
-.itemMarked .questionCell h2, 
+.bigTable .itemMarked .questionCell h2,
+.bigTable .itemMarked .questionContainer h2,
+.itemMarked .bigTable .questionCell h2,
+.itemMarked .bigTable .questionContainer h2,
+.itemMarked .questionCell h2,
 .itemMarked .questionContainer h2 {
 	background: transparent url(../../Images/universal/universal_content.png) no-repeat right -250px;
 	border-left: solid 1px #666;
 }
-.bigTable .itemMarked.activeItem .questionCell h2, 
-.bigTable .itemMarked.activeItem .questionContainer h2, 
-.itemMarked.activeItem .bigTable .questionCell h2, 
-.itemMarked.activeItem .bigTable .questionContainer h2, 
-.itemMarked.activeItem .questionCell h2, 
+.bigTable .itemMarked.activeItem .questionCell h2,
+.bigTable .itemMarked.activeItem .questionContainer h2,
+.itemMarked.activeItem .bigTable .questionCell h2,
+.itemMarked.activeItem .bigTable .questionContainer h2,
+.itemMarked.activeItem .questionCell h2,
 .itemMarked.activeItem .questionContainer h2 {
 	background-position: right -400px;
 	border-left: solid 1px #0785AB;
@@ -136,6 +148,15 @@ div.toolsContainer a.itemMenu {
 	border-bottom: dotted 1px transparent;
 	padding-top: .4em;
 	min-width: 9em;
+}
+/* prevent item number from shifting block level elements at the begining of a stem */
+.stemContainer:before {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
 }
 .activeItem .stemContainer{
 	border-top-color: #6cb9d6;
@@ -168,13 +189,13 @@ div.toolsContainer a.itemMenu {
 
 /* @group Modes Styles */
 
-.modeEnabled #contents .thePassage, 
+.modeEnabled #contents .thePassage,
 .modeEnabled #contents .questionAnswerGroup {
 	opacity: 0.2;
 	pointer-events: none;
 }
-.modeEnabled .mode-strikethrough .toolsContainer > a::before, 
-.modeEnabled .mode-strikethrough .toolsContainer > a:hover::before {
+.modeEnabled .mode-strikethrough .toolsContainer > a.toolButton::before,
+.modeEnabled .mode-strikethrough .toolsContainer > a.toolButton:hover::before {
 	color: #c4c3c5;
 	cursor: default;
 }
@@ -189,39 +210,43 @@ div.toolsContainer a.itemMenu {
     background-color: #666;
     display: block;
     height: 6px;
-    left: 0;
+    left: 2em;
+    right: 0;
     margin-top: -3px;
     opacity: 0.1;
     position: absolute;
     top: 0.6em;
-    width: 100%;
     z-index: 1;
 }
-.TDS_PS_L2.modeEnabled #contents .activeItem.mode-strikethrough .optionContainer:hover .striked, 
-.TDS_PS_L3.modeEnabled #contents .activeItem.mode-strikethrough .optionContainer:hover .striked, 
+.TDS_PS_L1.modeEnabled #contents .activeItem.mode-strikethrough .optionContainer:hover .striked{
+	left: 1.5em;
+}
+.TDS_PS_L2.modeEnabled #contents .activeItem.mode-strikethrough .optionContainer:hover .striked,
+.TDS_PS_L3.modeEnabled #contents .activeItem.mode-strikethrough .optionContainer:hover .striked,
 .TDS_PS_L4.modeEnabled #contents .activeItem.mode-strikethrough .optionContainer:hover .striked {
     top: 0.7em;
+    left: 2em;
 }
 .modeEnabled #contents .activeItem.mode-strikethrough .optionContainer.strikethrough:hover .striked {
     opacity: 0.8;
 }
-/*.modeEnabled #contents .activeItem.mode-strikethrough .answerContainer div.optionContainer:hover span, 
+/*.modeEnabled #contents .activeItem.mode-strikethrough .answerContainer div.optionContainer:hover span,
 .modeEnabled #contents .activeItem.mode-strikethrough .answerCell .optionContainer:hover span {
 	background-position: 0px 0px;
 }
-.TDS_PS_L1.modeEnabled #contents .activeItem.mode-strikethrough .answerContainer div.optionContainer:hover span, 
+.TDS_PS_L1.modeEnabled #contents .activeItem.mode-strikethrough .answerContainer div.optionContainer:hover span,
 .TDS_PS_L1.modeEnabled #contents .activeItem.mode-strikethrough .answerCell .optionContainer:hover span {
     background-position: -40px 0px;
 }
-.TDS_PS_L2.modeEnabled #contents .activeItem.mode-strikethrough .answerContainer div.optionContainer:hover span, 
+.TDS_PS_L2.modeEnabled #contents .activeItem.mode-strikethrough .answerContainer div.optionContainer:hover span,
 .TDS_PS_L2.modeEnabled #contents .activeItem.mode-strikethrough .answerCell .optionContainer:hover span {
     background-position: 0 -60px;
 }
-.TDS_PS_L3.modeEnabled #contents .activeItem.mode-strikethrough .answerContainer div.optionContainer:hover span, 
+.TDS_PS_L3.modeEnabled #contents .activeItem.mode-strikethrough .answerContainer div.optionContainer:hover span,
 .TDS_PS_L3.modeEnabled #contents .activeItem.mode-strikethrough .answerCell .optionContainer:hover span {
     background-position: -80px -70px;
 }
-.TDS_PS_L4.modeEnabled #contents .activeItem.mode-strikethrough .answerContainer div.optionContainer:hover span, 
+.TDS_PS_L4.modeEnabled #contents .activeItem.mode-strikethrough .answerContainer div.optionContainer:hover span,
 .TDS_PS_L4.modeEnabled #contents .activeItem.mode-strikethrough .answerCell .optionContainer:hover span {
     background-position: -70px 0px;
 }*/
@@ -231,7 +256,7 @@ div.toolsContainer a.itemMenu {
 .modeEnabled #contents .thePassage {
 	background-color: rgba(238,238,238,1);
 }
-.modeEnabled #contents .activeItem .answerCell, 
+.modeEnabled #contents .activeItem .answerCell,
 .modeEnabled #contents .activeItem .answerContainer {
 	background-color: #fff;
 	-moz-box-shadow: 0 0 5px 1px rgba(200,200,200,.9);
@@ -241,75 +266,181 @@ div.toolsContainer a.itemMenu {
     -webkit-transition: all .2s ease-in;
     transition: all .2s ease-in;
 }
-.TDS_CCYellow.modeEnabled #contents .activeItem .answerCell, 
-.TDS_CCYellow.modeEnabled #contents .activeItem .answerContainer {
+.TDS_CCYellow.modeEnabled #contents .activeItem .answerCell,
+.TDS_CCYellow.modeEnabled #contents .activeItem .answerContainer,
+.TDS_CCYellow.modeEnabled #contents .activeItem.mode-asl {
 	background-color: #ffffce;
 }
-.TDS_CCYellow2.modeEnabled #contents .activeItem .answerCell, 
-.TDS_CCYellow2.modeEnabled #contents .activeItem .answerContainer {
+.TDS_CCYellow2.modeEnabled #contents .activeItem .answerCell,
+.TDS_CCYellow2.modeEnabled #contents .activeItem .answerContainer,
+.TDS_CCYellow2.modeEnabled #contents .activeItem.mode-asl {
 	background-color: #fcfce2;
 }
-.TDS_CCCream.modeEnabled #contents .activeItem .answerCell, 
-.TDS_CCCream.modeEnabled #contents .activeItem .answerContainer {
+.TDS_CCCream.modeEnabled #contents .activeItem .answerCell,
+.TDS_CCCream.modeEnabled #contents .activeItem .answerContainer,
+.TDS_CCCream.modeEnabled #contents .activeItem.mode-asl {
 	background-color: #ede0ce;
 }
-.TDS_CCGreen.modeEnabled #contents .activeItem .answerCell, 
-.TDS_CCGreen.modeEnabled #contents .activeItem .answerContainer {
+.TDS_CCGreen.modeEnabled #contents .activeItem .answerCell,
+.TDS_CCGreen.modeEnabled #contents .activeItem .answerContainer,
+.TDS_CCGreen.modeEnabled #contents .activeItem.mode-asl {
 	background-color: #cff799;
 }
-.TDS_CCGreen2.modeEnabled #contents .activeItem .answerCell, 
-.TDS_CCGreen2.modeEnabled #contents .activeItem .answerContainer {
+.TDS_CCGreen2.modeEnabled #contents .activeItem .answerCell,
+.TDS_CCGreen2.modeEnabled #contents .activeItem .answerContainer,
+.TDS_CCGreen2.modeEnabled #contents .activeItem.mode-asl {
 	background-color: #e0f6c1;
 }
-.TDS_CCBlue.modeEnabled #contents .activeItem .answerCell, 
-.TDS_CCBlue.modeEnabled #contents .activeItem .answerContainer {
+.TDS_CCBlue.modeEnabled #contents .activeItem .answerCell,
+.TDS_CCBlue.modeEnabled #contents .activeItem .answerContainer,
+.TDS_CCBlue.modeEnabled #contents .activeItem.mode-asl {
 	background-color: #99ffff;
 }
-.TDS_CCBlue2.modeEnabled #contents .activeItem .answerCell, 
-.TDS_CCBlue2.modeEnabled #contents .activeItem .answerContainer {
+.TDS_CCBlue2.modeEnabled #contents .activeItem .answerCell,
+.TDS_CCBlue2.modeEnabled #contents .activeItem .answerContainer,
+.TDS_CCBlue2.modeEnabled #contents .activeItem.mode-asl {
 	background-color: #cfffff;
 }
-.TDS_CCMagenta.modeEnabled #contents .activeItem .answerCell, 
-.TDS_CCMagenta.modeEnabled #contents .activeItem .answerContainer {
+.TDS_CCMagenta.modeEnabled #contents .activeItem .answerCell,
+.TDS_CCMagenta.modeEnabled #contents .activeItem .answerContainer,
+.TDS_CCMagenta.modeEnabled #contents .activeItem.mode-asl {
 	background-color: #ffd0ff;
 }
-.TDS_CCMagenta2.modeEnabled #contents .activeItem .answerCell, 
-.TDS_CCMagenta2.modeEnabled #contents .activeItem .answerContainer {
+.TDS_CCMagenta2.modeEnabled #contents .activeItem .answerCell,
+.TDS_CCMagenta2.modeEnabled #contents .activeItem .answerContainer,
+.TDS_CCMagenta2.modeEnabled #contents .activeItem.mode-asl {
 	background-color: #fde3fd;
 }
-.TDS_CCGray.modeEnabled #contents .activeItem .answerCell, 
-.TDS_CCGray.modeEnabled #contents .activeItem .answerCell {
+.TDS_CCGray.modeEnabled #contents .activeItem .answerCell,
+.TDS_CCGray.modeEnabled #contents .activeItem .answerCell,
+.TDS_CCGrey.modeEnabled #contents .activeItem.mode-asl {
 	background-color: #cecfce;
 }
-.TDS_CCGray2.modeEnabled #contents .activeItem .answerCell, 
-.TDS_CCMedGrayLtGray.modeEnabled #contents .activeItem .answerCell, 
-.TDS_CCGray2.modeEnabled #contents .activeItem .answerContainer, 
-.TDS_CCMedGrayLtGray.modeEnabled #contents .activeItem .answerContainer {
+.TDS_CCGray2.modeEnabled #contents .activeItem .answerCell,
+.TDS_CCMedGrayLtGray.modeEnabled #contents .activeItem .answerCell,
+.TDS_CCGray2.modeEnabled #contents .activeItem .answerContainer,
+.TDS_CCMedGrayLtGray.modeEnabled #contents .activeItem .answerContainer,
+.TDS_CCGrey2.modeEnabled #contents .activeItem.mode-asl,
+.TDS_CCMedGrayLtGray.modeEnabled #contents .activeItem.mode-asl {
 	background-color: #e5e5e5;
 }
-.TDS_CCInvert.modeEnabled #contents .activeItem .answerCell, 
-.TDS_CCInvert.modeEnabled #contents .activeItem .answerContainer {
+.TDS_CCInvert.modeEnabled #contents .activeItem .answerCell,
+.TDS_CCInvert.modeEnabled #contents .activeItem .answerContainer,
+.TDS_CCInvert.modeEnabled #contents .activeItem.mode-asl {
 	background-color: #000;
 }
-.TDS_CCWhiteN.modeEnabled #contents .activeItem .answerCell, 
-.TDS_CCWhiteN.modeEnabled #contents .activeItem .answerContainer {
+.TDS_CCWhiteN.modeEnabled #contents .activeItem .answerCell,
+.TDS_CCWhiteN.modeEnabled #contents .activeItem .answerContainer,
+.TDS_CCWhiteN.modeEnabled #contents .activeItem.mode-asl {
 	background-color: #003366;
 }
-.TDS_CCYellowB.modeEnabled #contents .activeItem .answerCell, 
-.TDS_CCYellowB.modeEnabled #contents .activeItem .answerContainer {
+.TDS_CCYellowB.modeEnabled #contents .activeItem .answerCell,
+.TDS_CCYellowB.modeEnabled #contents .activeItem .answerContainer,
+.TDS_CCYellowB.modeEnabled #contents .activeItem.mode-asl {
 	background-color: #003399;
 }
-.TDS_CCYellowB.modeEnabled .mode-strikethrough .toolsContainer > a, 
-.TDS_CCYellowB.modeEnabled .mode-strikethrough .toolsContainer > a:hover {
+.TDS_CCYellowB.modeEnabled .mode-strikethrough .toolsContainer > a.toolButton,
+.TDS_CCYellowB.modeEnabled .mode-strikethrough .toolsContainer > a.toolButton:hover {
 	background-color: transparent !important;
 }
-.TDS_CCYellowB.modeEnabled .mode-strikethrough .toolsContainer > a::before, 
-.TDS_CCYellowB.modeEnabled .mode-strikethrough .toolsContainer > a:hover::before, 
-.TDS_CCInvert.modeEnabled .mode-strikethrough .toolsContainer > a::before, 
-.TDS_CCInvert.modeEnabled .mode-strikethrough .toolsContainer > a:hover::before, 
-.TDS_CCWhiteN.modeEnabled .mode-strikethrough .toolsContainer > a::before, 
-.TDS_CCWhiteN.modeEnabled .mode-strikethrough .toolsContainer > a:hover::before {
+.TDS_CCYellowB.modeEnabled .mode-strikethrough .toolsContainer > a.toolButton::before,
+.TDS_CCYellowB.modeEnabled .mode-strikethrough .toolsContainer > a.toolButton:hover::before,
+.TDS_CCInvert.modeEnabled .mode-strikethrough .toolsContainer > a.toolButton::before,
+.TDS_CCInvert.modeEnabled .mode-strikethrough .toolsContainer > a.toolButton:hover::before,
+.TDS_CCWhiteN.modeEnabled .mode-strikethrough .toolsContainer > a.toolButton::before,
+.TDS_CCWhiteN.modeEnabled .mode-strikethrough .toolsContainer > a.toolButton:hover::before {
 	opacity: .3;
+}
+/* @end */
+
+/* @groupASL mode */
+.modeEnabled #contents .activeItem.mode-asl {
+  background-color: #fff;
+	-moz-box-shadow: 0 0 5px 1px rgba(200,200,200,.9);
+	-webkit-box-shadow: 0 0 5px 1px rgba(200,200,200,.9);
+	box-shadow: 0 0 5px 1px rgba(200,200,200,.9);
+	-moz-transition: all .2s ease-in;
+  -webkit-transition: all .2s ease-in;
+  transition: all .2s ease-in;
+}
+.modeEnabled #contents .activeItem.mode-asl .answerCell,
+.modeEnabled #contents .activeItem.mode-asl .answerContainer {
+	background-color: inherit;
+	-moz-box-shadow: none;
+  -webkit-box-shadow: none;
+	box-shadow: none;
+	-moz-transition: none;
+  -webkit-transition: none;
+  transition: none;
+}
+.tds—action-asl,
+.optionAction {
+  display: none;
+}
+.modeEnabled #contents .activeItem.mode-asl .tds—action-asl {
+  display: inline-block;
+  -moz-box-shadow: 0 0 5px 1px rgba(200,200,200,.9);
+	-webkit-box-shadow: 0 0 5px 1px rgba(200,200,200,.9);
+	box-shadow: 0 0 5px 1px rgba(200,200,200,.9);
+  text-indent: -9999px;
+  overflow: hidden;
+  position: relative;
+  padding: .1em;
+  font-size: 1.2em;
+  height: 1em;
+  width: 1.6em;
+  vertical-align: middle;
+  -moz-transition: all .2s ease-in;
+  -webkit-transition: all .2s ease-in;
+  transition: all .2s ease-in;
+}
+.modeEnabled #contents .activeItem.mode-asl .tds—action-asl:active,
+.modeEnabled #contents .activeItem.mode-asl .tds—action-asl:focus,
+.modeEnabled #contents .activeItem.mode-asl .tds—action-asl:hover {
+  background-color: #2ca5d2;
+  color: #fff;
+}
+.modeEnabled #contents .activeItem.mode-asl .tds—action-asl:before {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+  content: "\e907";
+  display: block;
+  text-align: center;
+  text-indent: 0px;
+  margin-bottom: 100em;
+
+}
+.modeEnabled #contents .activeItem.mode-asl .optionAction {
+  display: inline-block;
+  float: left;
+  min-width: 2.21em;
+  min-height: 1.41em;
+  margin-top: -.3em;
+  margin-right: .3em;
+}
+.TDS_PS_L1.modeEnabled #contents .activeItem.mode-asl .optionAction,
+.TDS_PS_L2.modeEnabled #contents .activeItem.mode-asl .optionAction,
+.TDS_PS_L3.modeEnabled #contents .activeItem.mode-asl .optionAction,
+.TDS_PS_L4.modeEnabled #contents .activeItem.mode-asl .optionAction {
+  margin-top: 0em;
+}
+
+.modeEnabled #contents .activeItem.mode-asl .optionsContainer {
+  margin-top: .75em;
+}
+.TDS_PS_L1.modeEnabled #contents .activeItem.mode-asl .optionsContainer,
+.TDS_PS_L2.modeEnabled #contents .activeItem.mode-asl .optionsContainer,
+.TDS_PS_L3.modeEnabled #contents .activeItem.mode-asl .optionsContainer,
+.TDS_PS_L4.modeEnabled #contents .activeItem.mode-asl .optionsContainer {
+  margin-top: 0em;
 }
 /* @end */
 
@@ -325,8 +456,8 @@ div.toolsContainer a.itemMenu {
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 }
-.TDS_PS_L1 .toolsContainer a, 
-.TDS_PS_L2 .toolsContainer a {
+.TDS_PS_L1 .toolsContainer a.toolButton,
+.TDS_PS_L2 .toolsContainer a.toolButton {
 	width: 30px;
 	height: 35px;
 }
@@ -344,7 +475,7 @@ div.toolsContainer a.itemMenu {
 .layoutSingleMulti .layoutColumnLeft .questionContainer h2 {
 	margin-bottom:-.5em;
 }
-.TDS_PS_L1 .toolsContainer{
+.TDS_PS_L1 .toolsContainer {
 	margin-top: -1.6em;
 }
 .TDS_PS_L2 .toolsContainer {
@@ -354,15 +485,15 @@ div.toolsContainer a.itemMenu {
 	width: 35px;
 	margin-right: 0px;
 }
-.toolsContainer a.markReview.toolButton:hover, 
-.toolsContainer a.markReview.toolButton:focus, 
+.toolsContainer a.markReview.toolButton:hover,
+.toolsContainer a.markReview.toolButton:focus,
 .toolsContainer a.markReview.toolButton:active
 {
 	width: 35px;
 	height: 35px;
 	margin-right: 0px;
 }
-.toolsContainer a.printItem, 
+.toolsContainer a.printItem,
 .toolsContainer a.printPassage {
 	display:block;
 	opacity: 1;
@@ -419,50 +550,15 @@ div.toolsContainer a.itemMenu {
 	height: 50px;
 	margin-top: -1.4em;
 }
-.TDS_PS_L3.TDS_IF_S14 .toolsContainer {
+.TDS_PS_L3.TDS_IF_S14 .toolsContainer.itemTools {
 	margin-top: -1.6em;
 }
 .TDS_PS_L4 .toolsContainer {
 	height: 50px;
 	margin-top: -1.1em;
 }
-.TDS_PS_L4.TDS_IF_S14 .toolsContainer {
-	margin-top: -1.4em;
-}
-.TDS_PS_L3 .toolsContainer a, 
-.TDS_PS_L4 .toolsContainer a {
-	width: 40px !important;
-	height: 50px !important;
-}
-.TDS_PS_L1 .toolsContainer li a, 
-.TDS_PS_L2 .toolsContainer li a, 
-.TDS_PS_L3 .toolsContainer li a, 
-.TDS_PS_L4 .toolsContainer li a {
-	width: inherit !important;
-	height: inherit !important;
-}
-.TDS_PS_L3 .toolsContainer a.markReview:hover, 
-.TDS_PS_L3 .toolsContainer a.markReview:focus, 
-.TDS_PS_L3 .toolsContainer a.markReview:active, 
-.TDS_PS_L4 .toolsContainer a.markReview:hover, 
-.TDS_PS_L4 .toolsContainer a.markReview:focus, 
-.TDS_PS_L4 .toolsContainer a.markReview:active {
-	width: 40px;
-	height: 50px;
-}
-.TDS_PS_L3 .layout_wai .toolsContainer a.markReview:hover, 
-.TDS_PS_L3 .layout_wai .toolsContainer a.markReview:focus, 
-.TDS_PS_L3 .layout_wai .toolsContainer a.markReview:active, 
-.TDS_PS_L4 .layout_wai .toolsContainer a.markReview:hover, 
-.TDS_PS_L4 .layout_wai .toolsContainer a.markReview:focus, 
-.TDS_PS_L4 .layout_wai .toolsContainer a.markReview:active {
-	width: 40px !important;
-	height: 50px !important;
-}
-.TDS_PS_L3 .toolsContainer a.printItem, 
-.TDS_PS_L4 .toolsContainer a.printItem {
-	width: 40px !important;
-	height: 50px !important;
+.TDS_PS_L4.TDS_IF_S14 .toolsContainer.itemTools {
+	 margin-top: -1.4em;
 }
 
 /* remove extra pargraph tags */
@@ -493,7 +589,7 @@ div.toolsContainer a.itemMenu {
 	margin-right: 5px;
 	margin-top: -7px;
 }
-.tdsIdentifier:after, 
+.tdsIdentifier:after,
 .tdsIdentifier:before  {
 	visibility: hidden;
 	display: block;
@@ -627,7 +723,7 @@ div.toolsContainer a.itemMenu {
 
 
 
-.activeItem .questionContainer h2, 
+.activeItem .questionContainer h2,
 .activeItem .questionCell h2 {
 	background-color: #6cb9d6;
 	color:#fff;
@@ -695,21 +791,24 @@ div.toolsContainer a.itemMenu {
 }
 
 /* text areas */
-.questionCell .inputCloze, 
-.questionContainer .inputCloze, 
-.answerCell textarea, .answerContainer textarea {
-    border: 1px solid #7a7a7a;
-    -moz-border-radius:  .3em;
-	-webkit-border-radius:  .3em;
-	border-radius: .3em;
-	-webkit-box-shadow: inset 0em 0em .2em #666;
-	-moz-box-shadow: inset 0em 0em .2em #666;
-	box-shadow: inset 0em 0em .2em #666; 
+.questionCell .inputCloze,
+.questionContainer .inputCloze,
+.answerCell textarea,
+.answerContainer textarea,
+.textEntry {
+    border: 1px solid #bbbbbb;
+    -moz-border-radius:  .2em;
+	-webkit-border-radius:  .2em;
+	border-radius: .2em;
+	-webkit-box-shadow: inset 0em 0em .1em #999;
+	-moz-box-shadow: inset 0em 0em .1em #999;
+	box-shadow: inset 0em 0em .1em #999;
 	 -moz-box-sizing: border-box;
   	box-sizing: border-box;
   	-webkit-overflow-scrolling: touch;
+  	margin-right: .1em;
 }
-.questionCell .inputCloze, 
+.questionCell .inputCloze,
 .questionContainer .inputCloze {
     height: 1.8em;
 	line-height: 1.2em;
@@ -717,19 +816,20 @@ div.toolsContainer a.itemMenu {
 .answerCell textarea, .answerContainer textarea {
 	padding:.3em;
 }
-.questionCell .inputCloze:focus, 
-.questionContainer .inputCloze:focus, 
-.answerCell textarea:focus, 
-.answerContainer textarea:focus {
+.questionCell .inputCloze:focus,
+.questionContainer .inputCloze:focus,
+.answerCell textarea:focus,
+.answerContainer textarea:focus,
+.textEntry.contextAreaFocus:focus {
     border-color: #00abf4;
-    -webkit-box-shadow: 0em 0em .4em #666;
-	-moz-box-shadow: 0em 0em .4em #666;
-	box-shadow: 0em 0em .4em #666; 
+    -webkit-box-shadow: 0em 0em .2em #ccc;
+	-moz-box-shadow: 0em 0em .2em #ccc;
+	box-shadow: 0em 0em .2em #ccc;
 }
 
 
 .answerCell textarea:focus, .answerContainer textarea:focus {
-    padding:.5em; 
+    padding:.5em;
 }
 /* mask questions further */
 .passage-expanded .maskQuestions {
@@ -737,7 +837,7 @@ div.toolsContainer a.itemMenu {
     background-color: #f5f5f5;
 }
 /* add drop shadow back fro expanded passages */
-.passage-expanded .thePassage.contextAreaFocus, 
+.passage-expanded .thePassage.contextAreaFocus,
 .passage-expanded .layoutColumnLeft.contextAreaFocus {
 	-webkit-box-shadow: 10px 10px 10px 5px rgba(0, 0, 0, .3);
 	-moz-box-shadow: 10px 10px 10px 5px rgba(0, 0, 0, .3);
@@ -788,7 +888,7 @@ div.toolsContainer a.itemMenu {
 @media only screen and (max-device-height: 600px) {
    .touch .theQuestions, .touch .thePassage {
 		padding-bottom: 5000px !important;
-	} 
+	}
 }
 
 .layout_12 .prompt .stemContainer {
@@ -857,10 +957,10 @@ div.toolsContainer a.itemMenu {
 	border-color: #008fc5;
 	color: #fff;
 }
-#wordListPanel .yui-nav a:hover, 
-#wordListPanel .yui-nav a:focus, 
-#wordListPanel .yui-nav a:active, 
-#wordListPanel .yui-nav .selected a:hover, 
+#wordListPanel .yui-nav a:hover,
+#wordListPanel .yui-nav a:focus,
+#wordListPanel .yui-nav a:active,
+#wordListPanel .yui-nav .selected a:hover,
 #wordListPanel .yui-nav .selected a:active,
 #wordListPanel .yui-nav .selected a:focus {
 	background-color: rgba(0, 174, 239, 0.3);
@@ -872,13 +972,6 @@ div.toolsContainer a.itemMenu {
 	border-top: none;
 	background-color: #fff;
 }
-
-/* center a wordlist illustration glossary image */
-#wordListPanel .bd .yui-content img {
-	display: block;
-	margin: 0 auto;
-}
-
 .TDS_CCInvert #wordListPanel .yui-content {
 	background-color: #000;
 }
@@ -897,54 +990,42 @@ div.toolsContainer a.itemMenu {
 }
 .TDS_PS_L1 #wordListPanel .container-close {
     right: 2px;
-    top: 6px;
-	zoom:1.25;
-	-moz-transform:scale(1.25);
-	-moz-transform-origin: 0 0;
+    top: 8px;
 }
 .TDS_PS_L2 #wordListPanel .container-close {
     right: 2px;
-    top: 7px;
-	zoom:1.5;
-	-moz-transform:scale(1.5);
-	-moz-transform-origin: 0 0;
+    top: 12px;
 }
 .TDS_PS_L3 #wordListPanel .container-close {
     right: 2px;
-    top: 8px;
-	zoom:1.75;
-	-moz-transform:scale(1.75);
-	-moz-transform-origin: 0 0;
+    top: 16px;
 }
 .TDS_PS_L4 #wordListPanel .container-close {
     right: 2px;
-    top: 9px;
-	zoom:2.0;
-	-moz-transform:scale(2.0);
-	-moz-transform-origin: 0 0;
+    top: 20px;
 }
 #wordListPanel .container-close:hover {
 	border-color: #00aeef !important;
 }
 .TDS_PS_L1 #wordListPanel {
 	font-size: 1.25em;
-	/* width: 400px !important; */
+	width: 400px !important;
 }
 .TDS_PS_L2 #wordListPanel {
 	font-size: 1.5em;
-	/* width: 480px !important; */
+	width: 480px !important;
 }
 .TDS_PS_L3 #wordListPanel {
 	font-size: 1.75em;
-	/* width: 560px !important; */
+	width: 560px !important;
 }
 .TDS_PS_L4 #wordListPanel {
 	font-size: 2em;
-	/* width: 640px !important; */
+	width: 640px !important;
 }
 /* adjusting line height to prevent borders from overlapping */
-.TDS_WORD_LIST, 
-.TDS_WORD_LIST_HOVER, 
+.TDS_WORD_LIST,
+.TDS_WORD_LIST_HOVER,
 .TDS_WORD_LIST:hover {
    line-height: 1.5em;
 }
@@ -1041,20 +1122,14 @@ a.ASL:hover {
 .TDS_PS_L1 .thePassage h2  {
 	margin-right: 58px;
 }
-.TDS_PS_L2 .thePassage h2, 
-.TDS_PS_L3 .thePassage h2, 
+.TDS_PS_L2 .thePassage h2,
+.TDS_PS_L3 .thePassage h2,
 .TDS_PS_L4 .thePassage h2  {
 	margin-right: 68px;
 }
 
-.browser_airsecurebrowser.browserVer_3_5.platform_osx .passage-expanded .thePassage, 
-.browser_airsecurebrowser.browserVer_3_5.platform_osx .passage-expanded .thePassage, 
-.browser_airsecurebrowser.browserVer_3_5.platform_osx .passage-expanded .layoutColumnLeft, 
-.browser_airsecurebrowser.browserVer_3_5.platform_osx .passage-expanded .layoutColumnLeft {
-	border-right: 10px solid #8e8f8f;
-}
 /* layout 23 */
-.browser_airsecurebrowser.browserVer_3_5.platform_osx .passage-expanded .layout_23 .thePassage, 
+.browser_airsecurebrowser.browserVer_3_5.platform_osx .passage-expanded .layout_23 .thePassage,
 .browser_airsecurebrowser.browserVer_3_5.platform_osx .passage-expanded .layout_23 .thePassage {
 	border-bottom: 10px solid #8e8f8f;
 	border-right: inherit;
@@ -1081,9 +1156,9 @@ a.ASL:hover {
 /* @group hacks */
 /*hack for the secure browser -- Add SB specific classes when they become available. Important! */
 /*8/27/15 - hacking touch laptops out of these changes */
-.mobile .thePassage, 
-.mobile .theQuestions, 
-.mobile .layoutColumnLeft, 
+.mobile .thePassage,
+.mobile .theQuestions,
+.mobile .layoutColumnLeft,
 .mobile .layoutColumnRight{
 	padding-bottom: 300px !important;
 }
@@ -1094,14 +1169,14 @@ a.ASL:hover {
 	padding-bottom: 5px !important;
 }
 /* hack for android to keep from scrolling beyond the page, overides iOS SB hack */
-.touch.platform_android .thePassage, 
-.touch.platform_android .theQuestions, 
-.touch.platform_android .layoutColumnLeft, 
+.touch.platform_android .thePassage,
+.touch.platform_android .theQuestions,
+.touch.platform_android .layoutColumnLeft,
 .touch.platform_android .layoutColumnRight {
 	bottom: 0px;
 }
 /* make room for keyboard if text box happens to be at the end of the right column
-.touch.platform_android .pageWrapper .theQuestions, 
+.touch.platform_android .pageWrapper .theQuestions,
 .touch.platform_android .pageWrapper .layoutColumnRight {
 	padding-bottom: 300px !important;
 }*/
@@ -1129,9 +1204,9 @@ a.ASL:hover {
 	overflow: hidden;
 	position: relative;*/
 }
-.touch.platform_android .layout_12 .theQuestions, 
-.touch.platform_android .layout_12 .thePassage, 
-.touch.platform_android .layout_wai .theQuestions, 
+.touch.platform_android .layout_12 .theQuestions,
+.touch.platform_android .layout_12 .thePassage,
+.touch.platform_android .layout_wai .theQuestions,
 .touch.platform_android .layout_wai .thePassage {
 	position: static;
 }
@@ -1148,7 +1223,7 @@ a.ASL:hover {
 .touch.platform_android .noColumns .theQuestions {
 	position: fixed !important;
 }
-/* fb-92561 EQ editor disappearing in Samsung Android 
+/* fb-92561 EQ editor disappearing in Samsung Android
 .touch.platform_android .format_eq.response_equationeditor .noColumns .theQuestions{
 	position: static !important;
 }*/
@@ -1176,7 +1251,7 @@ a.ASL:hover {
 }
 /* End Bug #170183*/
 
-/* some items weren't scrolling, switching to static positioning resolved that, but was interfering with fixed header for iOS, so only applying for android 
+/* some items weren't scrolling, switching to static positioning resolved that, but was interfering with fixed header for iOS, so only applying for android
 .touch.platform_android .pageWrapper.showing .noColumns .theQuestions {
 	position: static;
 }
@@ -1193,17 +1268,17 @@ a.ASL:hover {
 /* @end */
 
 /*lets iOS scroll text areas*/
-.mobile .answerCell textarea, 
-.mobile .answerContainer textarea, 
-.mobile .questionCell input, 
+.mobile .answerCell textarea,
+.mobile .answerContainer textarea,
+.mobile .questionCell input,
 .mobile .stemContainer input {
 	-webkit-overflow-scrolling: touch;
 	overflow: auto !important;
 }
 /* fb-100868 iOS scrolling issues */
-.platform_ios .thePassage, 
-.platform_ios .theQuestions, 
-.platform_ios .layoutColumnLeft, 
+.platform_ios .thePassage,
+.platform_ios .theQuestions,
+.platform_ios .layoutColumnLeft,
 .platform_ios .layoutColumnRight {
 	padding-bottom: 0px !important;
 }
@@ -1223,22 +1298,20 @@ math annotation{
 .pageWrapper.hiding math *{
 	display: inline;
 }
-.stemContainer .MathJax_Display, 
-.optionContainer .MathJax_Display, 
-.stemContainer math, 
+.stemContainer .MathJax_Display,
+.optionContainer .MathJax_Display,
+.stemContainer math,
 .optionContainer math {
 	text-align: left !important;
 }
 
-/*Fix - to override Firefox's default rendering of the mi tag.*/
-/*See Bug 175490 for more information */
-math mi::before { 
-	content: "\00FEFF";
-}
 math mi{
 	font-style: italic;
 }
-
+body.browser_chrome .tds-math-img,
+body.platform_chrome .tds-math-img {
+  vertical-align: middle;
+}
 /* temp style to make the pi symbol more legible
 .TDS_FT_Verdana math mo[stretchy] {
 	font-family:arial !important;
@@ -1276,8 +1349,8 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 	width: 100%;
 }
 /* fb-94384 */
-.touch.platform_android  .layout_compound_1 .theQuestions, 
-.touch.platform_android .passage-expanded.layout_compound_1 .theQuestions, 
+.touch.platform_android  .layout_compound_1 .theQuestions,
+.touch.platform_android .passage-expanded.layout_compound_1 .theQuestions,
 .touch.platform_android .passage-collapsed.layout_compound_1 .theQuestions {
 	position: static !important;
 }
@@ -1296,9 +1369,9 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
  	margin-bottom: 0em;
 	margin-top: 0em;
 }
-.TDS_PS_L1 .compound .questionContainer, .TDS_PS_L1 .compound .theQuestions, 
-.TDS_PS_L2 .compound .questionContainer, .TDS_PS_L2 .compound .theQuestions, 
-.TDS_PS_L3 .compound .questionContainer, .TDS_PS_L3 .compound .theQuestions, 
+.TDS_PS_L1 .compound .questionContainer, .TDS_PS_L1 .compound .theQuestions,
+.TDS_PS_L2 .compound .questionContainer, .TDS_PS_L2 .compound .theQuestions,
+.TDS_PS_L3 .compound .questionContainer, .TDS_PS_L3 .compound .theQuestions,
 .TDS_PS_L4 .compound .questionContainer, .TDS_PS_L4 .compound .theQuestions {
 	font-size: .9em;
 	padding: .5em .55em;
@@ -1319,6 +1392,32 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 	margin-top: -1.1em;
 }
 
+.TDS_InfoBar_Saved .compound .toolsContainer,
+.TDS_InfoBar_Name .compound .toolsContainer,
+.TDS_InfoBar_ItemSecurity .compound .toolsContainer
+ {
+	margin-top: -3.1em;
+}
+.TDS_PS_L1.TDS_InfoBar_Saved .compound .toolsContainer,
+.TDS_PS_L1.TDS_InfoBar_Name .compound .toolsContainer,
+.TDS_PS_L1.TDS_InfoBar_ItemSecurity .compound .toolsContainer {
+	margin-top: -2.6em;
+}
+.TDS_PS_L2.TDS_InfoBar_Saved .compound .toolsContainer,
+.TDS_PS_L2.TDS_InfoBar_Name .compound .toolsContainer,
+.TDS_PS_L2.TDS_InfoBar_ItemSecurity .compound .toolsContainer {
+	margin-top: -2.5em;
+}
+.TDS_PS_L3.TDS_InfoBar_Saved .compound .toolsContainer,
+.TDS_PS_L3.TDS_InfoBar_Name .compound .toolsContainer,
+.TDS_PS_L3.TDS_InfoBar_ItemSecurity .compound .toolsContainer {
+	margin-top: -2.4em;
+}
+.TDS_PS_L4.TDS_InfoBar_Saved .compound .toolsContainer,
+.TDS_PS_L4.TDS_InfoBar_Name .compound .toolsContainer,
+.TDS_PS_L4.TDS_InfoBar_ItemSecurity .compound .toolsContainer {
+	margin-top: -2.1em;
+}
 
 .TDS_PS_L2.TDS_ITM1 .compound .toolsContainer {
 	height: 34px;
@@ -1338,9 +1437,9 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 	padding: 0px;
 	margin: .5em 1.25em;
 }
-.TDS_PS_L1 .compound .questionContainer, 
-.TDS_PS_L2 .compound .questionContainer, 
-.TDS_PS_L3 .compound .questionContainer, 
+.TDS_PS_L1 .compound .questionContainer,
+.TDS_PS_L2 .compound .questionContainer,
+.TDS_PS_L3 .compound .questionContainer,
 .TDS_PS_L4 .compound .questionContainer {
 	padding: 0px;
 	margin: .25em .5em;
@@ -1357,7 +1456,7 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
     width: 40px;
     margin-top: 5px;
 }
-.sound_repeat:focus, 
+.sound_repeat:focus,
 .sound_repeat_active {
 	-moz-box-shadow: 0 0 5px 2px rgba(0,174,239,.3);
    	-webkit-box-shadow: 0 0 5px 2px rgba(0,174,239,.3);
@@ -1374,30 +1473,30 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 /*Level 0 - disabled sound icon*/
 .audioControls.load_incomplete .sound_repeat,
 .audioControls.disabled .sound_repeat,
-.audioControls.load_incomplete .sound_repeat:hover, 
+.audioControls.load_incomplete .sound_repeat:hover,
 .audioControls.disabled .sound_repeat:hover {
 	background-position: center -1059px;
 }
 /*Level 0 - crossed out sound icon*/
-.audioControls.load_fail .sound_repeat, 
-.audioControls.load_fail .sound_repeat:hover, 
-.audioControls.playing_fail .sound_repeat, 
-.audioControls.playing_fail .sound_repeat:hover, 
-.audioControls.decode_fail .sound_repeat, 
+.audioControls.load_fail .sound_repeat,
+.audioControls.load_fail .sound_repeat:hover,
+.audioControls.playing_fail .sound_repeat,
+.audioControls.playing_fail .sound_repeat:hover,
+.audioControls.decode_fail .sound_repeat,
 .audioControls.decode_fail .sound_repeat:hover {
 	background-position: center -2200px;
 }
 /*Level 0 - stop sound icon */
-.audioControls.playing_start .sound_repeat, 
+.audioControls.playing_start .sound_repeat,
 .audioControls.playing_paused .sound_repeat {
 	background-position: center -1126px;
 }
 /*Level 0 - stop sound icon hover */
-.audioControls.playing_start .sound_repeat:hover, 
-.audioControls.playing_paused .sound_repeat:hover, 
-.audioControls.playing_start .sound_repeat:active, 
-.audioControls.playing_paused .sound_repeat:active, 
-.audioControls.playing_start .sound_repeat:focus, 
+.audioControls.playing_start .sound_repeat:hover,
+.audioControls.playing_paused .sound_repeat:hover,
+.audioControls.playing_start .sound_repeat:active,
+.audioControls.playing_paused .sound_repeat:active,
+.audioControls.playing_start .sound_repeat:focus,
 .audioControls.playing_paused .sound_repeat:focus {
 	background-position: center -1194px;
 }
@@ -1409,125 +1508,125 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
     background-position: center -505px;
 }
 /*Level 1 - sound icon hover*/
-.TDS_PS_L1 .sound_repeat:hover, 
-.TDS_PS_L1 .sound_repeat:active, 
+.TDS_PS_L1 .sound_repeat:hover,
+.TDS_PS_L1 .sound_repeat:active,
 .TDS_PS_L1 .sound_repeat:focus {
     background-position: center -588px;
 }
 /*Level 1 - disabled sound icon*/
-.TDS_PS_L1 .audioControls.load_incomplete .sound_repeat, 
+.TDS_PS_L1 .audioControls.load_incomplete .sound_repeat,
 .TDS_PS_L1 .audioControls.disabled .sound_repeat,
-.TDS_PS_L1 .audioControls.load_incomplete .sound_repeat:hover, 
+.TDS_PS_L1 .audioControls.load_incomplete .sound_repeat:hover,
 .TDS_PS_L1 .audioControls.disabled .sound_repeat:hover {
 	background-position: center -672px;
 }
 /*Level 1 - crossed out sound icon*/
-.TDS_PS_L1 .audioControls.load_fail .sound_repeat, 
-.TDS_PS_L1 .audioControls.load_fail .sound_repeat:hover, 
-.TDS_PS_L1 .audioControls.playing_fail .sound_repeat, 
-.TDS_PS_L1 .audioControls.playing_fail .sound_repeat:hover, 
-.TDS_PS_L1 .audioControls.decode_fail .sound_repeat, 
+.TDS_PS_L1 .audioControls.load_fail .sound_repeat,
+.TDS_PS_L1 .audioControls.load_fail .sound_repeat:hover,
+.TDS_PS_L1 .audioControls.playing_fail .sound_repeat,
+.TDS_PS_L1 .audioControls.playing_fail .sound_repeat:hover,
+.TDS_PS_L1 .audioControls.decode_fail .sound_repeat,
 .TDS_PS_L1 .audioControls.decode_fail .sound_repeat:hover {
 	background-position: center -2100px;
 }
 /*Level 1 - stop sound icon */
-.TDS_PS_L1 .audioControls.playing_start .sound_repeat, 
+.TDS_PS_L1 .audioControls.playing_start .sound_repeat,
 .TDS_PS_L1 .audioControls.playing_paused .sound_repeat {
 	background-position: center -755px;
 }
 /*Level 1 - stop sound icon hover */
-.TDS_PS_L1 .audioControls.playing_start .sound_repeat:hover, 
-.TDS_PS_L1 .audioControls.playing_paused .sound_repeat:hover, 
-.TDS_PS_L1 .audioControls.playing_start .sound_repeat:active, 
-.TDS_PS_L1 .audioControls.playing_paused .sound_repeat:active, 
-.TDS_PS_L1 .audioControls.playing_start .sound_repeat:focus, 
+.TDS_PS_L1 .audioControls.playing_start .sound_repeat:hover,
+.TDS_PS_L1 .audioControls.playing_paused .sound_repeat:hover,
+.TDS_PS_L1 .audioControls.playing_start .sound_repeat:active,
+.TDS_PS_L1 .audioControls.playing_paused .sound_repeat:active,
+.TDS_PS_L1 .audioControls.playing_start .sound_repeat:focus,
 .TDS_PS_L1 .audioControls.playing_paused .sound_repeat:focus {
 	background-position: center -839px;
 }
 
 /*Levels 2-4 - sound icon*/
-.TDS_PS_L2 .sound_repeat, 
-.TDS_PS_L3 .sound_repeat, 
+.TDS_PS_L2 .sound_repeat,
+.TDS_PS_L3 .sound_repeat,
 .TDS_PS_L4 .sound_repeat {
     height: 60px;
     width: 60px;
     background-position: center -5px;
 }
 /*Levels 2-4 - sound icon hover*/
-.TDS_PS_L2 .sound_repeat:hover, 
-.TDS_PS_L3 .sound_repeat:hover, 
-.TDS_PS_L4 .sound_repeat:hover, 
-.TDS_PS_L2 .sound_repeat:active, 
-.TDS_PS_L3 .sound_repeat:active, 
-.TDS_PS_L4 .sound_repeat:active, 
-.TDS_PS_L2 .sound_repeat:focus, 
-.TDS_PS_L3 .sound_repeat:focus, 
+.TDS_PS_L2 .sound_repeat:hover,
+.TDS_PS_L3 .sound_repeat:hover,
+.TDS_PS_L4 .sound_repeat:hover,
+.TDS_PS_L2 .sound_repeat:active,
+.TDS_PS_L3 .sound_repeat:active,
+.TDS_PS_L4 .sound_repeat:active,
+.TDS_PS_L2 .sound_repeat:focus,
+.TDS_PS_L3 .sound_repeat:focus,
 .TDS_PS_L4 .sound_repeat:focus {
     background-position: center -105px;
 }
 /*Levels 2-4 - disabled sound icon*/
-.TDS_PS_L2 .audioControls.load_incomplete .sound_repeat, 
+.TDS_PS_L2 .audioControls.load_incomplete .sound_repeat,
 .TDS_PS_L2 .audioControls.disabled .sound_repeat,
-.TDS_PS_L2 .audioControls.load_incomplete .sound_repeat:hover, 
-.TDS_PS_L2 .audioControls.disabled .sound_repeat:hover, 
-.TDS_PS_L3 .audioControls.load_incomplete .sound_repeat, 
+.TDS_PS_L2 .audioControls.load_incomplete .sound_repeat:hover,
+.TDS_PS_L2 .audioControls.disabled .sound_repeat:hover,
+.TDS_PS_L3 .audioControls.load_incomplete .sound_repeat,
 .TDS_PS_L3 .audioControls.disabled .sound_repeat,
-.TDS_PS_L3 .audioControls.load_incomplete .sound_repeat:hover, 
-.TDS_PS_L3 .audioControls.disabled .sound_repeat:hover, 
-.TDS_PS_L4 .audioControls.load_incomplete .sound_repeat, 
+.TDS_PS_L3 .audioControls.load_incomplete .sound_repeat:hover,
+.TDS_PS_L3 .audioControls.disabled .sound_repeat:hover,
+.TDS_PS_L4 .audioControls.load_incomplete .sound_repeat,
 .TDS_PS_L4 .audioControls.disabled .sound_repeat,
-.TDS_PS_L4 .audioControls.load_incomplete .sound_repeat:hover, 
+.TDS_PS_L4 .audioControls.load_incomplete .sound_repeat:hover,
 .TDS_PS_L4 .audioControls.disabled .sound_repeat:hover {
 	background-position: center -205px;
 }
 /*Levels 2-4 - crossed out sound icon*/
-.TDS_PS_L2 .audioControls.load_fail .sound_repeat, 
-.TDS_PS_L2 .audioControls.load_fail .sound_repeat:hover, 
-.TDS_PS_L2 .audioControls.playing_fail .sound_repeat, 
-.TDS_PS_L2 .audioControls.playing_fail .sound_repeat:hover, 
-.TDS_PS_L2 .audioControls.decode_fail .sound_repeat, 
-.TDS_PS_L2 .audioControls.decode_fail .sound_repeat:hover, 
-.TDS_PS_L3 .audioControls.load_fail .sound_repeat, 
-.TDS_PS_L3 .audioControls.load_fail .sound_repeat:hover, 
-.TDS_PS_L3 .audioControls.playing_fail .sound_repeat, 
-.TDS_PS_L3 .audioControls.playing_fail .sound_repeat:hover, 
-.TDS_PS_L3 .audioControls.decode_fail .sound_repeat, 
-.TDS_PS_L3 .audioControls.decode_fail .sound_repeat:hover, 
-.TDS_PS_L4 .audioControls.load_fail .sound_repeat, 
-.TDS_PS_L4 .audioControls.load_fail .sound_repeat:hover, 
-.TDS_PS_L4 .audioControls.playing_fail .sound_repeat, 
-.TDS_PS_L4 .audioControls.playing_fail .sound_repeat:hover, 
-.TDS_PS_L4 .audioControls.decode_fail .sound_repeat, 
+.TDS_PS_L2 .audioControls.load_fail .sound_repeat,
+.TDS_PS_L2 .audioControls.load_fail .sound_repeat:hover,
+.TDS_PS_L2 .audioControls.playing_fail .sound_repeat,
+.TDS_PS_L2 .audioControls.playing_fail .sound_repeat:hover,
+.TDS_PS_L2 .audioControls.decode_fail .sound_repeat,
+.TDS_PS_L2 .audioControls.decode_fail .sound_repeat:hover,
+.TDS_PS_L3 .audioControls.load_fail .sound_repeat,
+.TDS_PS_L3 .audioControls.load_fail .sound_repeat:hover,
+.TDS_PS_L3 .audioControls.playing_fail .sound_repeat,
+.TDS_PS_L3 .audioControls.playing_fail .sound_repeat:hover,
+.TDS_PS_L3 .audioControls.decode_fail .sound_repeat,
+.TDS_PS_L3 .audioControls.decode_fail .sound_repeat:hover,
+.TDS_PS_L4 .audioControls.load_fail .sound_repeat,
+.TDS_PS_L4 .audioControls.load_fail .sound_repeat:hover,
+.TDS_PS_L4 .audioControls.playing_fail .sound_repeat,
+.TDS_PS_L4 .audioControls.playing_fail .sound_repeat:hover,
+.TDS_PS_L4 .audioControls.decode_fail .sound_repeat,
 .TDS_PS_L4 .audioControls.decode_fail .sound_repeat:hover {
 	background-position: center -2000px;
 }
 /*Levels 2-4 - stop sound icon */
-.TDS_PS_L2 .audioControls.playing_start .sound_repeat, 
-.TDS_PS_L2 .audioControls.playing_paused .sound_repeat, 
-.TDS_PS_L3 .audioControls.playing_start .sound_repeat, 
-.TDS_PS_L3 .audioControls.playing_paused .sound_repeat, 
-.TDS_PS_L4 .audioControls.playing_start .sound_repeat, 
+.TDS_PS_L2 .audioControls.playing_start .sound_repeat,
+.TDS_PS_L2 .audioControls.playing_paused .sound_repeat,
+.TDS_PS_L3 .audioControls.playing_start .sound_repeat,
+.TDS_PS_L3 .audioControls.playing_paused .sound_repeat,
+.TDS_PS_L4 .audioControls.playing_start .sound_repeat,
 .TDS_PS_L4 .audioControls.playing_paused .sound_repeat {
 	background-position: center -305px;
 }
 /*Levels 2-4 - stop sound icon hover */
-.TDS_PS_L2 .audioControls.playing_start .sound_repeat:hover, 
-.TDS_PS_L2 .audioControls.playing_paused .sound_repeat:hover, 
-.TDS_PS_L3 .audioControls.playing_start .sound_repeat:hover, 
-.TDS_PS_L3 .audioControls.playing_paused .sound_repeat:hover, 
-.TDS_PS_L4 .audioControls.playing_start .sound_repeat:hover, 
-.TDS_PS_L4 .audioControls.playing_paused .sound_repeat:hover, 
-.TDS_PS_L2 .audioControls.playing_start .sound_repeat:active, 
-.TDS_PS_L2 .audioControls.playing_paused .sound_repeat:active, 
-.TDS_PS_L3 .audioControls.playing_start .sound_repeat:active, 
-.TDS_PS_L3 .audioControls.playing_paused .sound_repeat:active, 
-.TDS_PS_L4 .audioControls.playing_start .sound_repeat:active, 
-.TDS_PS_L4 .audioControls.playing_paused .sound_repeat:active, 
-.TDS_PS_L2 .audioControls.playing_start .sound_repeat:focus, 
-.TDS_PS_L2 .audioControls.playing_paused .sound_repeat:focus, 
-.TDS_PS_L3 .audioControls.playing_start .sound_repeat:focus, 
-.TDS_PS_L3 .audioControls.playing_paused .sound_repeat:focus, 
-.TDS_PS_L4 .audioControls.playing_start .sound_repeat:focus, 
+.TDS_PS_L2 .audioControls.playing_start .sound_repeat:hover,
+.TDS_PS_L2 .audioControls.playing_paused .sound_repeat:hover,
+.TDS_PS_L3 .audioControls.playing_start .sound_repeat:hover,
+.TDS_PS_L3 .audioControls.playing_paused .sound_repeat:hover,
+.TDS_PS_L4 .audioControls.playing_start .sound_repeat:hover,
+.TDS_PS_L4 .audioControls.playing_paused .sound_repeat:hover,
+.TDS_PS_L2 .audioControls.playing_start .sound_repeat:active,
+.TDS_PS_L2 .audioControls.playing_paused .sound_repeat:active,
+.TDS_PS_L3 .audioControls.playing_start .sound_repeat:active,
+.TDS_PS_L3 .audioControls.playing_paused .sound_repeat:active,
+.TDS_PS_L4 .audioControls.playing_start .sound_repeat:active,
+.TDS_PS_L4 .audioControls.playing_paused .sound_repeat:active,
+.TDS_PS_L2 .audioControls.playing_start .sound_repeat:focus,
+.TDS_PS_L2 .audioControls.playing_paused .sound_repeat:focus,
+.TDS_PS_L3 .audioControls.playing_start .sound_repeat:focus,
+.TDS_PS_L3 .audioControls.playing_paused .sound_repeat:focus,
+.TDS_PS_L4 .audioControls.playing_start .sound_repeat:focus,
 .TDS_PS_L4 .audioControls.playing_paused .sound_repeat:focus {
 	background-position: center -405px;
 }
@@ -1548,7 +1647,13 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 	vertical-align: middle;
 	margin-bottom: 5px;
 }
-.audio-layout-single.audioControls{
+.TDS_PS_L4 .audioControls .audio-layout-scrubber{
+	min-width: 250px; /*BUG 186853 zooming issue + BUG 186960 rule change to be more specific*/
+}
+.stemContainer .audioControls{
+	margin-bottom: 15px;
+}
+.audio-layout-single.audioControls {
 	background-color: transparent;
 	border: none;
 	height: inherit;
@@ -1559,7 +1664,10 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 	vertical-align: inherit;
 	margin-bottom: 0px;
 }
-.audioControls .playPause, 
+.stemContainer .audio-layout-single.audioControls {
+	margin-bottom: 15px;
+}
+.audioControls .playPause,
 .audioControls.playing_pause .playPause {
 	background: url(../../Images/modern/newSound-2014.png) no-repeat center -925px  rgba(0, 0, 0, 0);
     height: 0px;
@@ -1578,73 +1686,76 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 	overflow: hidden;
     margin-top: 5px;
 }
-.audioControls a:active, 
+.audioControls a:active,
 .audioControls a:focus {
 	-moz-box-shadow: 0 0 5px 2px rgba(0,174,239,.3);
    	-webkit-box-shadow: 0 0 5px 2px rgba(0,174,239,.3);
 	box-shadow: 0 0 5px 2px rgba(0,174,239,.3);
 }
 
-.audioControls.audio-layout-scrubber a, 
+.audioControls.audio-layout-scrubber a,
 .audioControls.audio-layout-scrubber .slide_controls_slider {
 	float: left;
 }
-.audioControls.audio-layout-scrubber .slide_controls_slider {
+.audioControls.audio-layout-scrubber .slide_controls_slider.yui-h-slider {
 	margin-top: 10px;
+	width: 175px !important;
+	margin-right: 10px;
 }
 .TDS_PS_L1 .audioControls.audio-layout-scrubber .slide_controls_slider {
 	margin-top: 13px;
 }
-.TDS_PS_L2 .audioControls.audio-layout-scrubber .slide_controls_slider, 
-.TDS_PS_L3 .audioControls.audio-layout-scrubber .slide_controls_slider, 
+.TDS_PS_L2 .audioControls.audio-layout-scrubber .slide_controls_slider,
+.TDS_PS_L3 .audioControls.audio-layout-scrubber .slide_controls_slider,
 .TDS_PS_L4 .audioControls.audio-layout-scrubber .slide_controls_slider {
 	margin-top: 18px;
 }
 
 /*Level 0 - sound icon hover*/
-.audioControls.playing_done .playPause:hover, 
-.audioControls.playing_pause .playPause:hover, 
-.audioControls.playing_done .playPause:active, 
-.audioControls.playing_pause .playPause:active, 
-.audioControls.playing_done .playPause:focus, 
+.audioControls.playing_done .playPause:hover,
+.audioControls.playing_pause .playPause:hover,
+.audioControls.playing_done .playPause:active,
+.audioControls.playing_pause .playPause:active,
+.audioControls.playing_done .playPause:focus,
 .audioControls.playing_pause .playPause:focus {
     background-position: center -992px;
 }
 /*Level 0 - disabled sound icon*/
-.audioControls.load_incomplete .playPause, 
+.audioControls.load_incomplete .playPause,
 .audioControls.disabled .playPause,
-.audioControls.load_incomplete .playPause:hover, 
+.audioControls.load_incomplete .playPause:hover,
 .audioControls.disabled .playPause:hover {
 	background-position: center -1059px;
 	cursor: default;
 }
 /*Level 0 - crossed out sound icon*/
-.audioControls.load_fail .playPause, 
-.audioControls.load_fail .playPause:hover, 
-.audioControls.playing_fail .playPause, 
-.audioControls.playing_fail.playPause:hover, 
-.audioControls.decode_fail .playPause, 
+.audioControls.load_fail .playPause,
+.audioControls.load_fail .playPause:hover,
+.audioControls.playing_fail .playPause,
+.audioControls.playing_fail .playPause:hover,
+.audioControls.decode_fail .playPause,
 .audioControls.decode_fail .playPause:hover {
 	background-position: center -2200px;
+  pointer-events:none;
 }
 /*Level 0 - stop sound icon */
 .audioControls.playing_start .playPause {
 	background-position: center -1126px;
 }
 /*Level 0 - stop sound icon hover */
-.audioControls.playing_start .playPause:hover, 
-.audioControls.playing_start .playPause:active, 
+.audioControls.playing_start .playPause:hover,
+.audioControls.playing_start .playPause:active,
 .audioControls.playing_start .playPause:focus {
 	background-position: center -1194px;
 }
 /*level 0 - loading icons*/
-.audioControls.load_start, 
-.audioControls.load_complete, 
+.audioControls.load_start,
+.audioControls.load_complete,
 .audioControls.decode_start {
 	background: #fff url(../../Images/controls/loader29.gif) no-repeat center center;
 }
-.audioControls.load_start a, 
-.audioControls.load_complete a, 
+.audioControls.load_start a,
+.audioControls.load_complete a,
 .audioControls.decode_start a {
 	cursor: default;
 	background: none;
@@ -1652,23 +1763,27 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 }
 
 /*level 0 - rewind activate*/
-.audioControls.playing_start .rewind, 
+.audioControls.playing_start .rewind,
 .audioControls.playing_pause .rewind {
 	background-position: center -2486px;
 }
-.audioControls.playing_start .rewind:hover, 
-.audioControls.playing_pause .rewind:hover, 
-.audioControls.playing_start .rewind:active, 
-.audioControls.playing_pause .rewind:active, 
-.audioControls.playing_start .rewind:focus, 
+.audioControls.playing_start .rewind:hover,
+.audioControls.playing_pause .rewind:hover,
+.audioControls.playing_start .rewind:active,
+.audioControls.playing_pause .rewind:active,
+.audioControls.playing_start .rewind:focus,
 .audioControls.playing_pause .rewind:focus {
 	background-position: center -2524px;
+}
+/*level 0 - rewind disable*/
+.audioControls.disabled .rewind {
+    background-position: center -2557px;
 }
 /*Level 1 - sound icon*/
 .TDS_PS_L1 .audioControls {
 	height: 61px;
 }
-.TDS_PS_L1 .audioControls .playPause, 
+.TDS_PS_L1 .audioControls .playPause,
 .TDS_PS_L1 .audioControls.playing_pause .playPause {
     padding: 52px 52px 0 0;
     background-position: center -505px;
@@ -1678,27 +1793,27 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
     background-position: center -2830px;
 }
 /*Level 1 - sound icon hover*/
-.TDS_PS_L1 .audioControls .playPause:hover, 
-.TDS_PS_L1 .audioControls.playing_pause .playPause:hover, 
-.TDS_PS_L1 .audioControls .playPause:active, 
-.TDS_PS_L1 .audioControls.playing_pause .playPause:active, 
-.TDS_PS_L1 .audioControls .playPause:focus, 
+.TDS_PS_L1 .audioControls .playPause:hover,
+.TDS_PS_L1 .audioControls.playing_pause .playPause:hover,
+.TDS_PS_L1 .audioControls .playPause:active,
+.TDS_PS_L1 .audioControls.playing_pause .playPause:active,
+.TDS_PS_L1 .audioControls .playPause:focus,
 .TDS_PS_L1 .audioControls.playing_pause .playPause:focus {
     background-position: center -588px;
 }
 /*Level 1 - disabled sound icon*/
-.TDS_PS_L1 .audioControls.load_incomplete .playPause, 
+.TDS_PS_L1 .audioControls.load_incomplete .playPause,
 .TDS_PS_L1 .audioControls.disabled .playPause,
-.TDS_PS_L1 .audioControls.load_incomplete .playPause:hover, 
+.TDS_PS_L1 .audioControls.load_incomplete .playPause:hover,
 .TDS_PS_L1 .audioControls.disabled .playPause:hover {
-	background-position: center -672px;
+	background-position: center -672px !important;
 }
 /*Level 1 - crossed out sound icon*/
-.TDS_PS_L1 .audioControls.load_fail .playPause, 
-.TDS_PS_L1 .audioControls.load_fail .playPause:hover, 
-.TDS_PS_L1 .audioControls.playing_fail .playPause, 
-.TDS_PS_L1 .audioControls.playing_fail .playPause:hover, 
-.TDS_PS_L1 .audioControls.decode_fail .playPause, 
+.TDS_PS_L1 .audioControls.load_fail .playPause,
+.TDS_PS_L1 .audioControls.load_fail .playPause:hover,
+.TDS_PS_L1 .audioControls.playing_fail .playPause,
+.TDS_PS_L1 .audioControls.playing_fail .playPause:hover,
+.TDS_PS_L1 .audioControls.decode_fail .playPause,
 .TDS_PS_L1 .audioControls.decode_fail .playPause:hover {
 	background-position: center -2100px;
 }
@@ -1707,32 +1822,37 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 	background-position: center -755px;
 }
 /*Level 1 - stop sound icon hover */
-.TDS_PS_L1 .audioControls.playing_start .playPause:hover, 
-.TDS_PS_L1 .audioControls.playing_start .playPause:active, 
+.TDS_PS_L1 .audioControls.playing_start .playPause:hover,
+.TDS_PS_L1 .audioControls.playing_start .playPause:active,
 .TDS_PS_L1 .audioControls.playing_start .playPause:focus {
 	background-position: center -839px;
 }
 
 /*level 1 - loading icons*/
-.TDS_PS_L1 .audioControls.load_incomplete .playPause, 
+.TDS_PS_L1 .audioControls.load_incomplete .playPause,
 .TDS_PS_L1 .audioControls.disabled .playPause,
-.TDS_PS_L1 .audioControls.load_incomplete .playPause:hover, 
+.TDS_PS_L1 .audioControls.load_incomplete .playPause:hover,
 .TDS_PS_L1 .audioControls.disabled .playPause:hover {
 	background-position: -121px -56px;
 	cursor: default;
 }
 /*level 1 - rewind activate*/
-.TDS_PS_L1 .audioControls.playing_start .rewind, 
+.TDS_PS_L1 .audioControls.playing_start .rewind,
 .TDS_PS_L1 .audioControls.playing_pause .rewind {
 	background-position: center -2729px;
 }
-.TDS_PS_L1 .audioControls.playing_start .rewind:hover, 
-.TDS_PS_L1 .audioControls.playing_pause .rewind:hover, 
-.TDS_PS_L1 .audioControls.playing_start .rewind:active, 
-.TDS_PS_L1 .audioControls.playing_pause .rewind:active, 
-.TDS_PS_L1 .audioControls.playing_start .rewind:focus, 
+.TDS_PS_L1 .audioControls.playing_start .rewind:hover,
+.TDS_PS_L1 .audioControls.playing_pause .rewind:hover,
+.TDS_PS_L1 .audioControls.playing_start .rewind:active,
+.TDS_PS_L1 .audioControls.playing_pause .rewind:active,
+.TDS_PS_L1 .audioControls.playing_start .rewind:focus,
 .TDS_PS_L1 .audioControls.playing_pause .rewind:focus {
 	background-position: center -2783px;
+}
+/*level 1 - rewind disable*/
+.TDS_PS_L1 .audioControls.disabled .rewind {
+    padding: 50px 50px 0 0;
+    background-position: center -2830px;
 }
 
 /*Levels 2-4 - sound icon*/
@@ -1743,9 +1863,9 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 }
 .TDS_PS_L2 .audioControls .playPause,
 .TDS_PS_L3 .audioControls .playPause,
-.TDS_PS_L4 .audioControls .playPause, 
-.TDS_PS_L2 .audioControls.playing_pause .playPause, 
-.TDS_PS_L3 .audioControls.playing_pause .playPause, 
+.TDS_PS_L4 .audioControls .playPause,
+.TDS_PS_L2 .audioControls.playing_pause .playPause,
+.TDS_PS_L3 .audioControls.playing_pause .playPause,
 .TDS_PS_L4 .audioControls.playing_pause .playPause {
 	padding: 60px 60px 0 0;
     background-position: center -5px;
@@ -1758,91 +1878,91 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 }
 
 /*Levels 2-4 - sound icon hover*/
-.TDS_PS_L2 .audioControls .playPause:hover, 
-.TDS_PS_L3 .audioControls .playPause:hover, 
-.TDS_PS_L4 .audioControls .playPause:hover, 
-.TDS_PS_L2 .audioControls.playing_pause .playPause:hover, 
-.TDS_PS_L3 .audioControls.playing_pause .playPause:hover, 
-.TDS_PS_L4 .audioControls.playing_pause .playPause:hover, 
-.TDS_PS_L2 .audioControls .playPause:active, 
-.TDS_PS_L3 .audioControls .playPause:active, 
-.TDS_PS_L4 .audioControls .playPause:active, 
-.TDS_PS_L2 .audioControls.playing_pause .playPause:active, 
-.TDS_PS_L3 .audioControls.playing_pause .playPause:active, 
-.TDS_PS_L4 .audioControls.playing_pause .playPause:active, 
-.TDS_PS_L2 .audioControls .playPause:focus, 
-.TDS_PS_L3 .audioControls .playPause:focus, 
-.TDS_PS_L4 .audioControls .playPause:focus, 
-.TDS_PS_L2 .audioControls.playing_pause .playPause:focus, 
-.TDS_PS_L3 .audioControls.playing_pause .playPause:focus, 
+.TDS_PS_L2 .audioControls .playPause:hover,
+.TDS_PS_L3 .audioControls .playPause:hover,
+.TDS_PS_L4 .audioControls .playPause:hover,
+.TDS_PS_L2 .audioControls.playing_pause .playPause:hover,
+.TDS_PS_L3 .audioControls.playing_pause .playPause:hover,
+.TDS_PS_L4 .audioControls.playing_pause .playPause:hover,
+.TDS_PS_L2 .audioControls .playPause:active,
+.TDS_PS_L3 .audioControls .playPause:active,
+.TDS_PS_L4 .audioControls .playPause:active,
+.TDS_PS_L2 .audioControls.playing_pause .playPause:active,
+.TDS_PS_L3 .audioControls.playing_pause .playPause:active,
+.TDS_PS_L4 .audioControls.playing_pause .playPause:active,
+.TDS_PS_L2 .audioControls .playPause:focus,
+.TDS_PS_L3 .audioControls .playPause:focus,
+.TDS_PS_L4 .audioControls .playPause:focus,
+.TDS_PS_L2 .audioControls.playing_pause .playPause:focus,
+.TDS_PS_L3 .audioControls.playing_pause .playPause:focus,
 .TDS_PS_L4 .audioControls.playing_pause .playPause:focus {
     background-position: center -105px;
 }
 /*Levels 2-4 - disabled sound icon*/
-.TDS_PS_L2 .audioControls.load_incomplete .playPause, 
+.TDS_PS_L2 .audioControls.load_incomplete .playPause,
 .TDS_PS_L2 .audioControls.disabled .playPause,
-.TDS_PS_L2 .audioControls.load_incomplete .playPause:hover, 
-.TDS_PS_L2 .audioControls.disabled .playPause:hover, 
-.TDS_PS_L3 .audioControls.load_incomplete .playPause, 
+.TDS_PS_L2 .audioControls.load_incomplete .playPause:hover,
+.TDS_PS_L2 .audioControls.disabled .playPause:hover,
+.TDS_PS_L3 .audioControls.load_incomplete .playPause,
 .TDS_PS_L3 .audioControls.disabled .playPause,
-.TDS_PS_L3 .audioControls.load_incomplete .playPause:hover, 
-.TDS_PS_L3 .audioControls.disabled .playPause:hover, 
-.TDS_PS_L4 .audioControls.load_incomplete .playPause, 
+.TDS_PS_L3 .audioControls.load_incomplete .playPause:hover,
+.TDS_PS_L3 .audioControls.disabled .playPause:hover,
+.TDS_PS_L4 .audioControls.load_incomplete .playPause,
 .TDS_PS_L4 .audioControls.disabled .playPause,
-.TDS_PS_L4 .audioControls.load_incomplete .playPause:hover, 
+.TDS_PS_L4 .audioControls.load_incomplete .playPause:hover,
 .TDS_PS_L4 .audioControls.disabled .playPause:hover {
-	background-position: center -205px;
+	background-position: center -205px !important;
 }
 /*Levels 2-4 - crossed out sound icon*/
-.TDS_PS_L2 .audioControls.load_fail .playPause, 
-.TDS_PS_L2 .audioControls.load_fail .playPause:hover, 
-.TDS_PS_L2 .audioControls.playing_fail .playPause, 
-.TDS_PS_L2 .audioControls.playing_fail .playPause:hover, 
-.TDS_PS_L2 .audioControls.decode_fail .playPause, 
-.TDS_PS_L2 .audioControls.decode_fail .playPause:hover, 
-.TDS_PS_L3 .audioControls.load_fail .playPause, 
-.TDS_PS_L3 .audioControls.load_fail .playPause:hover, 
-.TDS_PS_L3 .audioControls.playing_fail .playPause, 
-.TDS_PS_L3 .audioControls.playing_fail .playPause:hover, 
-.TDS_PS_L3 .audioControls.decode_fail .playPause, 
-.TDS_PS_L3 .audioControls.decode_fail .playPause:hover, 
-.TDS_PS_L4 .audioControls.load_fail .playPause, 
-.TDS_PS_L4 .audioControls.load_fail .playPause:hover, 
-.TDS_PS_L4 .audioControls.playing_fail .playPause, 
-.TDS_PS_L4 .audioControls.playing_fail .playPause:hover, 
-.TDS_PS_L4 .audioControls.decode_fail .playPause, 
+.TDS_PS_L2 .audioControls.load_fail .playPause,
+.TDS_PS_L2 .audioControls.load_fail .playPause:hover,
+.TDS_PS_L2 .audioControls.playing_fail .playPause,
+.TDS_PS_L2 .audioControls.playing_fail .playPause:hover,
+.TDS_PS_L2 .audioControls.decode_fail .playPause,
+.TDS_PS_L2 .audioControls.decode_fail .playPause:hover,
+.TDS_PS_L3 .audioControls.load_fail .playPause,
+.TDS_PS_L3 .audioControls.load_fail .playPause:hover,
+.TDS_PS_L3 .audioControls.playing_fail .playPause,
+.TDS_PS_L3 .audioControls.playing_fail .playPause:hover,
+.TDS_PS_L3 .audioControls.decode_fail .playPause,
+.TDS_PS_L3 .audioControls.decode_fail .playPause:hover,
+.TDS_PS_L4 .audioControls.load_fail .playPause,
+.TDS_PS_L4 .audioControls.load_fail .playPause:hover,
+.TDS_PS_L4 .audioControls.playing_fail .playPause,
+.TDS_PS_L4 .audioControls.playing_fail .playPause:hover,
+.TDS_PS_L4 .audioControls.decode_fail .playPause,
 .TDS_PS_L4 .audioControls.decode_fail .playPause:hover {
 	background-position: center -2000px;
 }
 /*Levels 2-4 - stop sound icon */
-.TDS_PS_L2 .audioControls.playing_start .playPause,  
-.TDS_PS_L3 .audioControls.playing_start .playPause,  
+.TDS_PS_L2 .audioControls.playing_start .playPause,
+.TDS_PS_L3 .audioControls.playing_start .playPause,
 .TDS_PS_L4 .audioControls.playing_start .playPause {
 	background-position: center -304px;
 }
 /*Levels 2-4 - stop sound icon hover */
-.TDS_PS_L2 .audioControls.playing_start .playPause:hover, 
-.TDS_PS_L3 .audioControls.playing_start .playPause:hover, 
-.TDS_PS_L4 .audioControls.playing_start .playPause:hover, 
-.TDS_PS_L2 .audioControls.playing_start .playPause:active, 
-.TDS_PS_L3 .audioControls.playing_start .playPause:active, 
-.TDS_PS_L4 .audioControls.playing_start .playPause:active, 
-.TDS_PS_L2 .audioControls.playing_start .playPause:focus, 
-.TDS_PS_L3 .audioControls.playing_start .playPause:focus, 
+.TDS_PS_L2 .audioControls.playing_start .playPause:hover,
+.TDS_PS_L3 .audioControls.playing_start .playPause:hover,
+.TDS_PS_L4 .audioControls.playing_start .playPause:hover,
+.TDS_PS_L2 .audioControls.playing_start .playPause:active,
+.TDS_PS_L3 .audioControls.playing_start .playPause:active,
+.TDS_PS_L4 .audioControls.playing_start .playPause:active,
+.TDS_PS_L2 .audioControls.playing_start .playPause:focus,
+.TDS_PS_L3 .audioControls.playing_start .playPause:focus,
 .TDS_PS_L4 .audioControls.playing_start .playPause:focus {
 	background-position: center -406px;
 }
-.TDS_PS_L2 .audioControls.load_incomplete .playPause, 
+.TDS_PS_L2 .audioControls.load_incomplete .playPause,
 .TDS_PS_L2 .audioControls.disabled .playPause,
-.TDS_PS_L2 .audioControls.load_incomplete .playPause:hover, 
-.TDS_PS_L2 .audioControls.disabled .playPause:hover, 
-.TDS_PS_L3 .audioControls.load_incomplete .playPause, 
+.TDS_PS_L2 .audioControls.load_incomplete .playPause:hover,
+.TDS_PS_L2 .audioControls.disabled .playPause:hover,
+.TDS_PS_L3 .audioControls.load_incomplete .playPause,
 .TDS_PS_L3 .audioControls.disabled .playPause,
-.TDS_PS_L3 .audioControls.load_incomplete .playPause:hover, 
-.TDS_PS_L3 .audioControls.disabled .playPause:hover, 
-.TDS_PS_L4 .audioControls.load_incomplete, 
+.TDS_PS_L3 .audioControls.load_incomplete .playPause:hover,
+.TDS_PS_L3 .audioControls.disabled .playPause:hover,
+.TDS_PS_L4 .audioControls.load_incomplete,
 .TDS_PS_L4 .audioControls.disabled,
-.TDS_PS_L4 .audioControls.load_incomplete .playPause:hover, 
+.TDS_PS_L4 .audioControls.load_incomplete .playPause:hover,
 .TDS_PS_L4 .audioControls.disabled .playPause:hover {
 	background-position: -528px -86px;
 	cursor: default;
@@ -1850,7 +1970,7 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 /*level 2-4 - rewind activate*/
 .TDS_PS_L2 .audioControls.playing_start .rewind,
 .TDS_PS_L3 .audioControls.playing_start .rewind,
-.TDS_PS_L4 .audioControls.playing_start .rewind, 
+.TDS_PS_L4 .audioControls.playing_start .rewind,
 .TDS_PS_L2 .audioControls.playing_pause .rewind,
 .TDS_PS_L3 .audioControls.playing_pause .rewind,
 .TDS_PS_L4 .audioControls.playing_pause .rewind {
@@ -1858,38 +1978,45 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 }
 .TDS_PS_L2 .audioControls.playing_start .rewind:hover,
 .TDS_PS_L3 .audioControls.playing_start .rewind:hover,
-.TDS_PS_L4 .audioControls.playing_start .rewind:hover, 
+.TDS_PS_L4 .audioControls.playing_start .rewind:hover,
 .TDS_PS_L2 .audioControls.playing_pause .rewind:hover,
 .TDS_PS_L3 .audioControls.playing_pause .rewind:hover,
-.TDS_PS_L4 .audioControls.playing_pause .rewind:hover, 
+.TDS_PS_L4 .audioControls.playing_pause .rewind:hover,
 .TDS_PS_L2 .audioControls.playing_start .rewind:active,
 .TDS_PS_L3 .audioControls.playing_start .rewind:active,
-.TDS_PS_L4 .audioControls.playing_start .rewind:active, 
+.TDS_PS_L4 .audioControls.playing_start .rewind:active,
 .TDS_PS_L2 .audioControls.playing_pause .rewind:active,
 .TDS_PS_L3 .audioControls.playing_pause .rewind:active,
-.TDS_PS_L4 .audioControls.playing_pause .rewind:active, 
+.TDS_PS_L4 .audioControls.playing_pause .rewind:active,
 .TDS_PS_L2 .audioControls.playing_start .rewind:focus,
 .TDS_PS_L3 .audioControls.playing_start .rewind:focus,
-.TDS_PS_L4 .audioControls.playing_start .rewind:focus, 
+.TDS_PS_L4 .audioControls.playing_start .rewind:focus,
 .TDS_PS_L2 .audioControls.playing_pause .rewind:focus,
 .TDS_PS_L3 .audioControls.playing_pause .rewind:focus,
 .TDS_PS_L4 .audioControls.playing_pause .rewind:focus {
 	background-position: center -3153px;
 }
+/*level 2-4 - rewind disable*/
+.TDS_PS_L2 .audioControls.disabled .rewind,
+.TDS_PS_L3 .audioControls.disabled .rewind,
+.TDS_PS_L4 .audioControls.disabled .rewind {
+	padding: 60px 60px 0 0;
+    background-position: center -3216px;
+}
 
 /* make space for sound next to options in Universal shell*/
-.withSound, 
+.withSound,
 .withSound.contextAreaFocus {
 	margin: 0 0 0 20px !important;
 }
 .TDS_PS_L1 .withSound {
     margin: 0 0 0 23px !important;
 }
-.TDS_PS_L2 .withSound, 
-.TDS_PS_L2 .withSound.contextAreaFocus,  
-.TDS_PS_L3 .withSound, 
-.TDS_PS_L3 .withSound.contextAreaFocus, 
-.TDS_PS_L4 .withSound, 
+.TDS_PS_L2 .withSound,
+.TDS_PS_L2 .withSound.contextAreaFocus,
+.TDS_PS_L3 .withSound,
+.TDS_PS_L3 .withSound.contextAreaFocus,
+.TDS_PS_L4 .withSound,
 .TDS_PS_L4 .withSound.contextAreaFocus {
     margin: 0 0 0 30px !important;
 }
@@ -1902,38 +2029,38 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 	margin-top: 1px;
 }
 /*Level 0 - sound icon hover for option*/
-.optionsContainer .optionSound .audioControls a:hover, 
-.optionsContainer .optionSound .audioControls a:active, 
+.optionsContainer .optionSound .audioControls a:hover,
+.optionsContainer .optionSound .audioControls a:active,
 .optionsContainer .optionSound .audioControls a:focus {
 	background-position: center -1843px;
 }
 /*Level 0 - disabled sound icon for option*/
-.optionSound .audioControls.load_incomplete a, 
+.optionSound .audioControls.load_incomplete a,
 .optionSound .audioControls.disabled a,
-.optionSound .audioControls.load_incomplete a:hover, 
+.optionSound .audioControls.load_incomplete a:hover,
 .optionSound .audioControls.disabled a:hover {
 	background-position: center -1873px;
 }
 /*Level 0 - crossed out sound icon for options*/
-.optionSound .audioControls.load_fail a, 
-.optionSound .audioControls.load_fail a:hover, 
-.optionSound .audioControls.playing_fail a, 
-.optionSound .audioControls.playing_fail a:hover, 
-.optionSound .audioControls.decode_fail a, 
+.optionSound .audioControls.load_fail a,
+.optionSound .audioControls.load_fail a:hover,
+.optionSound .audioControls.playing_fail a,
+.optionSound .audioControls.playing_fail a:hover,
+.optionSound .audioControls.decode_fail a,
 .optionSound .audioControls.decode_fail a:hover {
 	background-position: center -2374px;
 }
 /*Level 0 - stop sound icon for option*/
-.optionSound .audioControls.playing_start a, 
+.optionSound .audioControls.playing_start a,
 .optionSound .audioControls.playing_paused a {
 	background-position: center -1902px;
 }
 /*Level 0 - stop sound icon hover for option*/
-.optionSound .audioControls.playing_start a:hover, 
-.optionSound .audioControls.playing_paused a:hover, 
-.optionSound .audioControls.playing_start a:active, 
-.optionSound .audioControls.playing_paused a:active, 
-.optionSound .audioControls.playing_start a:focus, 
+.optionSound .audioControls.playing_start a:hover,
+.optionSound .audioControls.playing_paused a:hover,
+.optionSound .audioControls.playing_start a:active,
+.optionSound .audioControls.playing_paused a:active,
+.optionSound .audioControls.playing_start a:focus,
 .optionSound .audioControls.playing_paused a:focus {
 	background-position: center -1931px;
 }
@@ -1948,46 +2075,46 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 	margin-left: -7px;
 }
 /*Level 1 - sound icon hover for option*/
-.TDS_PS_L1 .optionSound .audioControls a:hover, 
-.TDS_PS_L1 .optionSound .audioControls a:active, 
+.TDS_PS_L1 .optionSound .audioControls a:hover,
+.TDS_PS_L1 .optionSound .audioControls a:active,
 .TDS_PS_L1 .optionSound .audioControls a:focus {
 	background-position: center -1622px;
 }
 /*Level 1 - disabled sound icon for option*/
-.TDS_PS_L1 .optionSound .audioControls.load_incomplete a, 
+.TDS_PS_L1 .optionSound .audioControls.load_incomplete a,
 .TDS_PS_L1 .optionSound .audioControls.disabled a,
-.TDS_PS_L1 .optionSound .audioControls.load_incomplete a:hover, 
+.TDS_PS_L1 .optionSound .audioControls.load_incomplete a:hover,
 .TDS_PS_L1 .optionSound .audioControls.disabled a:hover {
 	background-position: center -1669px;
 }
 /*Level 1 - crossed out sound icon for options*/
-.TDS_PS_L1 .optionSound .audioControls.load_fail a, 
-.TDS_PS_L1 .optionSound .audioControls.load_fail a:hover, 
-.TDS_PS_L1 .optionSound .audioControls.playing_fail a, 
-.TDS_PS_L1 .optionSound .audioControls.playing_fail a:hover, 
-.TDS_PS_L1 .optionSound .audioControls.decode_fail a, 
+.TDS_PS_L1 .optionSound .audioControls.load_fail a,
+.TDS_PS_L1 .optionSound .audioControls.load_fail a:hover,
+.TDS_PS_L1 .optionSound .audioControls.playing_fail a,
+.TDS_PS_L1 .optionSound .audioControls.playing_fail a:hover,
+.TDS_PS_L1 .optionSound .audioControls.decode_fail a,
 .TDS_PS_L1 .optionSound .audioControls.decode_fail a:hover {
 	background-position: center -2320px;
 }
 /*Level 1 - stop sound icon for option*/
-.TDS_PS_L1 .optionSound .audioControls.playing_start a, 
+.TDS_PS_L1 .optionSound .audioControls.playing_start a,
 .TDS_PS_L1 .optionSound .audioControls.playing_paused a {
 	background-position: center -1717px;
 }
 /*Level 1 - stop sound icon hover for option*/
-.TDS_PS_L1 .optionSound .audioControls.playing_start a:hover, 
-.TDS_PS_L1 .optionSound .audioControls.playing_paused a:hover, 
-.TDS_PS_L1 .optionSound .audioControls.playing_start a:active, 
-.TDS_PS_L1 .optionSound .audioControls.playing_paused a:active, 
-.TDS_PS_L1 .optionSound .audioControls.playing_start a:focus, 
+.TDS_PS_L1 .optionSound .audioControls.playing_start a:hover,
+.TDS_PS_L1 .optionSound .audioControls.playing_paused a:hover,
+.TDS_PS_L1 .optionSound .audioControls.playing_start a:active,
+.TDS_PS_L1 .optionSound .audioControls.playing_paused a:active,
+.TDS_PS_L1 .optionSound .audioControls.playing_start a:focus,
 .TDS_PS_L1 .optionSound .audioControls.playing_paused a:focus {
 	background-position: center -1765px;
 }
 
 
 /*Levels 2-4 - sound icon for option*/
-.TDS_PS_L2 .optionSound .audioControls a, 
-.TDS_PS_L3 .optionSound .audioControls a, 
+.TDS_PS_L2 .optionSound .audioControls a,
+.TDS_PS_L3 .optionSound .audioControls a,
 .TDS_PS_L4 .optionSound .audioControls a {
 	background-position: center -1274px;
 	height: 37px;
@@ -2002,80 +2129,80 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 	margin-top: 20px;
 }
 /*Levels 2-4 - sound icon hover for option*/
-.TDS_PS_L2 .optionSound .audioControls a:hover, 
-.TDS_PS_L3 .optionSound .audioControls a:hover, 
-.TDS_PS_L4 .optionSound .audioControls a:hover, 
-.TDS_PS_L2 .optionSound .audioControls a:active, 
-.TDS_PS_L3 .optionSound .audioControls a:active, 
-.TDS_PS_L4 .optionSound .audioControls a:active, 
-.TDS_PS_L2 .optionSound .audioControls a:focus, 
-.TDS_PS_L3 .optionSound .audioControls a:focus, 
+.TDS_PS_L2 .optionSound .audioControls a:hover,
+.TDS_PS_L3 .optionSound .audioControls a:hover,
+.TDS_PS_L4 .optionSound .audioControls a:hover,
+.TDS_PS_L2 .optionSound .audioControls a:active,
+.TDS_PS_L3 .optionSound .audioControls a:active,
+.TDS_PS_L4 .optionSound .audioControls a:active,
+.TDS_PS_L2 .optionSound .audioControls a:focus,
+.TDS_PS_L3 .optionSound .audioControls a:focus,
 .TDS_PS_L4 .optionSound .audioControls a:focus {
 	background-position: center -1334px;
 }
 /*Levels 2-4 - disabled sound icon for option*/
-.TDS_PS_L2 .optionSound .audioControls.load_incomplete a, 
+.TDS_PS_L2 .optionSound .audioControls.load_incomplete a,
 .TDS_PS_L2 .optionSound .audioControls.disabled a,
-.TDS_PS_L2 .optionSound .audioControls.load_incomplete a:hover, 
-.TDS_PS_L2 .optionSound .audioControls.disabled a:hover, 
-.TDS_PS_L3 .optionSound .audioControls.load_incomplete a, 
+.TDS_PS_L2 .optionSound .audioControls.load_incomplete a:hover,
+.TDS_PS_L2 .optionSound .audioControls.disabled a:hover,
+.TDS_PS_L3 .optionSound .audioControls.load_incomplete a,
 .TDS_PS_L3 .optionSound .audioControls.disabled a,
-.TDS_PS_L3 .optionSound .audioControls.load_incomplete a:hover, 
-.TDS_PS_L3 .optionSound .audioControls.disabled a:hover, 
-.TDS_PS_L4 .optionSound .audioControls.load_incomplete a, 
+.TDS_PS_L3 .optionSound .audioControls.load_incomplete a:hover,
+.TDS_PS_L3 .optionSound .audioControls.disabled a:hover,
+.TDS_PS_L4 .optionSound .audioControls.load_incomplete a,
 .TDS_PS_L4 .optionSound .audioControls.disabled a,
-.TDS_PS_L4 .optionSound .audioControls.load_incomplete a:hover, 
+.TDS_PS_L4 .optionSound .audioControls.load_incomplete a:hover,
 .TDS_PS_L4 .optionSound .audioControls.disabled a:hover {
 	background-position: center -1395px;
 }
 /*Levels 2-4 - crossed out sound icon for options*/
-.TDS_PS_L2 .optionSound .audioControls.load_fail a, 
-.TDS_PS_L2 .optionSound .audioControls.load_fail a:hover, 
-.TDS_PS_L2 .optionSound .audioControls.playing_fail a, 
-.TDS_PS_L2 .optionSound .audioControls.playing_fail a:hover, 
-.TDS_PS_L2 .optionSound .audioControls.decode_fail a, 
-.TDS_PS_L2 .optionSound .audioControls.decode_fail a:hover, 
-.TDS_PS_L3 .optionSound .audioControls.load_fail a, 
-.TDS_PS_L3 .optionSound .audioControls.load_fail a:hover, 
-.TDS_PS_L3 .optionSound .audioControls.playing_fail a, 
-.TDS_PS_L3 .optionSound .audioControls.playing_fail a:hover, 
-.TDS_PS_L3 .optionSound .audioControls.decode_fail a, 
-.TDS_PS_L3 .optionSound .audioControls.decode_fail a:hover, 
-.TDS_PS_L4 .optionSound .audioControls.load_fail a, 
-.TDS_PS_L4 .optionSound .audioControls.load_fail a:hover, 
-.TDS_PS_L4 .optionSound .audioControls.playing_fail a, 
-.TDS_PS_L4 .optionSound .audioControls.playing_fail a:hover, 
-.TDS_PS_L4 .optionSound .audioControls.decode_fail a, 
+.TDS_PS_L2 .optionSound .audioControls.load_fail a,
+.TDS_PS_L2 .optionSound .audioControls.load_fail a:hover,
+.TDS_PS_L2 .optionSound .audioControls.playing_fail a,
+.TDS_PS_L2 .optionSound .audioControls.playing_fail a:hover,
+.TDS_PS_L2 .optionSound .audioControls.decode_fail a,
+.TDS_PS_L2 .optionSound .audioControls.decode_fail a:hover,
+.TDS_PS_L3 .optionSound .audioControls.load_fail a,
+.TDS_PS_L3 .optionSound .audioControls.load_fail a:hover,
+.TDS_PS_L3 .optionSound .audioControls.playing_fail a,
+.TDS_PS_L3 .optionSound .audioControls.playing_fail a:hover,
+.TDS_PS_L3 .optionSound .audioControls.decode_fail a,
+.TDS_PS_L3 .optionSound .audioControls.decode_fail a:hover,
+.TDS_PS_L4 .optionSound .audioControls.load_fail a,
+.TDS_PS_L4 .optionSound .audioControls.load_fail a:hover,
+.TDS_PS_L4 .optionSound .audioControls.playing_fail a,
+.TDS_PS_L4 .optionSound .audioControls.playing_fail a:hover,
+.TDS_PS_L4 .optionSound .audioControls.decode_fail a,
 .TDS_PS_L4 .optionSound .audioControls.decode_fail a:hover {
 	background-position: center -2263px;
 }
 /*Levels 2-4 - stop sound icon for option*/
-.TDS_PS_L2 .optionSound .audioControls.playing_start a, 
-.TDS_PS_L2 .optionSound .audioControls.playing_paused a, 
-.TDS_PS_L3 .optionSound .audioControls.playing_start a, 
-.TDS_PS_L3 .optionSound .audioControls.playing_paused a, 
-.TDS_PS_L4 .optionSound .audioControls.playing_start a, 
+.TDS_PS_L2 .optionSound .audioControls.playing_start a,
+.TDS_PS_L2 .optionSound .audioControls.playing_paused a,
+.TDS_PS_L3 .optionSound .audioControls.playing_start a,
+.TDS_PS_L3 .optionSound .audioControls.playing_paused a,
+.TDS_PS_L4 .optionSound .audioControls.playing_start a,
 .TDS_PS_L4 .optionSound .audioControls.playing_paused a {
 	background-position: center -1455px;
 }
 /*Levels 2-4 - stop sound icon hover for option*/
-.TDS_PS_L2 .optionSound .audioControls.playing_start a:hover, 
-.TDS_PS_L2 .optionSound .audioControls.playing_paused a:hover, 
-.TDS_PS_L3 .optionSound .audioControls.playing_start a:hover, 
-.TDS_PS_L3 .optionSound .audioControls.playing_paused a:hover, 
-.TDS_PS_L4 .optionSound .audioControls.playing_start a:hover, 
-.TDS_PS_L4 .optionSound .audioControls.playing_paused a:hover, 
-.TDS_PS_L2 .optionSound .audioControls.playing_start a:active, 
-.TDS_PS_L2 .optionSound .audioControls.playing_paused a:active, 
-.TDS_PS_L3 .optionSound .audioControls.playing_start a:active, 
-.TDS_PS_L3 .optionSound .audioControls.playing_paused a:active, 
-.TDS_PS_L4 .optionSound .audioControls.playing_start a:active, 
-.TDS_PS_L4 .optionSound .audioControls.playing_paused a:active, 
-.TDS_PS_L2 .optionSound .audioControls.playing_start a:focus, 
-.TDS_PS_L2 .optionSound .audioControls.playing_paused a:focus, 
-.TDS_PS_L3 .optionSound .audioControls.playing_start a:focus, 
-.TDS_PS_L3 .optionSound .audioControls.playing_paused a:focus, 
-.TDS_PS_L4 .optionSound .audioControls.playing_start a:focus, 
+.TDS_PS_L2 .optionSound .audioControls.playing_start a:hover,
+.TDS_PS_L2 .optionSound .audioControls.playing_paused a:hover,
+.TDS_PS_L3 .optionSound .audioControls.playing_start a:hover,
+.TDS_PS_L3 .optionSound .audioControls.playing_paused a:hover,
+.TDS_PS_L4 .optionSound .audioControls.playing_start a:hover,
+.TDS_PS_L4 .optionSound .audioControls.playing_paused a:hover,
+.TDS_PS_L2 .optionSound .audioControls.playing_start a:active,
+.TDS_PS_L2 .optionSound .audioControls.playing_paused a:active,
+.TDS_PS_L3 .optionSound .audioControls.playing_start a:active,
+.TDS_PS_L3 .optionSound .audioControls.playing_paused a:active,
+.TDS_PS_L4 .optionSound .audioControls.playing_start a:active,
+.TDS_PS_L4 .optionSound .audioControls.playing_paused a:active,
+.TDS_PS_L2 .optionSound .audioControls.playing_start a:focus,
+.TDS_PS_L2 .optionSound .audioControls.playing_paused a:focus,
+.TDS_PS_L3 .optionSound .audioControls.playing_start a:focus,
+.TDS_PS_L3 .optionSound .audioControls.playing_paused a:focus,
+.TDS_PS_L4 .optionSound .audioControls.playing_start a:focus,
 .TDS_PS_L4 .optionSound .audioControls.playing_paused a:focus {
 	background-position: center -1515px;
 }
@@ -2094,7 +2221,7 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 .TDS_CCCream #contents .passageTools a {
 	background-color: #ede0ce;
 }
-.TDS_CCYellow .alertBar.alertActive, 
+.TDS_CCYellow .alertBar.alertActive,
 .TDS_CCYellow2 .alertBar.alertActive {
 	background-color: rgba(255,188,86,0.51);
 }
@@ -2110,13 +2237,13 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 .TDS_CCBlue2 #contents .passageTools a {
 	background-color: #cfffff;
 }
-.TDS_CCBlue .thePassage.contextAreaFocus, 
+.TDS_CCBlue .thePassage.contextAreaFocus,
 .TDS_CCBlue2 .thePassage.contextAreaFocus {
    -moz-box-shadow:inset 0 0 5px 2px rgba(255,187,55,.4);
    -webkit-box-shadow:inset 0 0 5px 2px rgba(255,187,55,.4);
 	box-shadow:inset 0 0 5px 2px rgba(255,187,55,.4);
 }
-.TDS_CCBlue .theQuestions .contextAreaFocus, 
+.TDS_CCBlue .theQuestions .contextAreaFocus,
 .TDS_CCBlue2 .theQuestions .contextAreaFocus {
 	-moz-box-shadow: 0 0 5px 2px rgba(255,187,55,.2);
    	-webkit-box-shadow: 0 0 5px 2px rgba(255,187,55,.2);
@@ -2131,65 +2258,23 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 .TDS_CCGray #contents .passageTools a {
 	background-color: #cecfce;
 }
-.TDS_CCGray2 #contents .passageTools a, 
+.TDS_CCGray2 #contents .passageTools a,
 .TDS_CCMedGrayLtGray #contents .passageTools a {
 	background-color: #e5e5e5;
 }
 .TDS_CCInvert #contents .passageTools a {
 	background-color: #000;
 }
-.TDS_CCInvert .multi-page a {
-	color: #fff;
-	background-color: rgba(0,0,0,0.9);
+.TDS_CCYellowB #contents .passageTools a {
+	background-color: #003399;
 }
-.TDS_CCInvert li.page-active a {
-	background-color: #fff;
-	color: #000;
-}
-.TDS_CCInvert .multi-page a:active, 
-.TDS_CCInvert .multi-page a:focus, 
-.TDS_CCInvert .multi-page a:hover {
-	color: #fff;
-	background-color: #00aeef;
+.TDS_CCWhiteN #contents .passageTools a {
+	background-color: #003366;
 }
 .TDS_CCInvert .theQuestions .contextAreaFocus {
 	-moz-box-shadow: 0 0 5px 2px rgba(205,247,235,.3);
    	-webkit-box-shadow: 0 0 5px 2px rgba(205,247,235,.3);
 	box-shadow: 0 0 5px 2px rgba(205,247,235,.3);
-}
-.TDS_CCWhiteN #contents .passageTools a {
-	background-color: #003366;
-}
-.TDS_CCWhiteN .multi-page a {
-	color: #fff;
-	background-color: rgba(0,51,102,0.9);
-}
-.TDS_CCWhiteN li.page-active a {
-	background-color: rgba(255,255,255,0.9);
-	color: #003366;
-}
-.TDS_CCWhiteN .multi-page a:active, 
-.TDS_CCWhiteN .multi-page a:focus, 
-.TDS_CCWhiteN .multi-page a:hover {
-	color: #fff;
-	background-color: #00aeef;
-}
-.TDS_CCYellowB #contents .passageTools a {
-	background-color: #003399;
-}
-.TDS_CCYellowB .multi-page a {
-	color: #ffcc00;
-	background-color: rgba(1,71,252,0.9);
-}
-.TDS_CCYellowB li.page-active a {
-	background-color: rgba(255,236,0,0.9);
-	color: #003399;
-}
-.TDS_CCYellowB .multi-page a:active, 
-.TDS_CCYellowB .multi-page a:focus, 
-.TDS_CCYellowB .multi-page a:hover {
-	color: #fff;
-	background-color: #00aeef;
 }
 /*remove sound level indicator, not supported in modern shell*/
 .elicitedaround, .disabled .elicitedaround, .btnRecord, .btnPlayPause, .elicitedwrap.playing_start .btnPlayPause {
@@ -2197,7 +2282,7 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 }
 
 /* make sure IE displays text left-aligned */
-.browser_ie .noColumns .answerCell, 
+.browser_ie .noColumns .answerCell,
 .browser_ie .noColumns .questionCell {
 	text-align: left;
 }
@@ -2239,7 +2324,7 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 	top: 120px;
 }
 
-.layout_wai .thePassage p, 
+.layout_wai .thePassage p,
 .layout_wai .theQuestions p {
 	line-height: 2em;
 }
@@ -2249,7 +2334,7 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 .layout_wai .optionContent {
 	margin-bottom: 1.5em;
 }
-.layout_wai .thePassage, 
+.layout_wai .thePassage,
 .layout_wai .theQuestions {
 	padding: 30px;
 }
@@ -2261,7 +2346,7 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
    -webkit-box-shadow:inset 0 0 5px 2px rgba(0,174,239,.5);
 	box-shadow:inset 0 0 5px 2px rgba(0,174,239,.5);
 }
-.TDS_CCBlue .layout_wai .thePassage:focus, 
+.TDS_CCBlue .layout_wai .thePassage:focus,
 .TDS_CCBlue2 .layout_wai .thePassage:focus {
    -moz-box-shadow:inset 0 0 5px 2px rgba(255,187,55,.5);
    -webkit-box-shadow:inset 0 0 5px 2px rgba(255,187,55,.5);
@@ -2272,10 +2357,10 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
    -webkit-box-shadow: 0 0 5px 2px rgba(0,174,239,.5);
 	box-shadow: 0 0 5px 2px rgba(0,174,239,.5);
 }
-.TDS_CCBlue .layout_wai .theQuestions *:focus, 
+.TDS_CCBlue .layout_wai .theQuestions *:focus,
 .TDS_CCBlue2 .layout_wai .theQuestions *:focus {
 	-moz-box-shadow: 0 0 5px 2px rgba(255,187,55,.5);
-   	-webkit-box-shadow: 0 0 5px 2px rgba(255,187,55,.5);
+  -webkit-box-shadow: 0 0 5px 2px rgba(255,187,55,.5);
 	box-shadow: 0 0 5px 2px rgba(255,187,55,.5);
 }
 .layout_wai .questionAnswerGroup h3 {
@@ -2289,10 +2374,23 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
     padding: 0.3em;
     text-align: center;
     font-size: 1.2em;
-    margin-top: -1.6em;
+    margin-top:0em;
     line-height: 1em;
 }
-
+.TDS_SLM1 .tds-badges {
+  margin-left: 5px;
+  margin-top: .4em;
+}
+.TDS_SLM1.TDS_PS_L4 .tds-badges {
+  margin-top: 1em;
+}
+.TDS_SLM1 .toolsContainer {
+  margin-top: 0px;
+  height: 1em;
+}
+.TDS_SLM1 .stemContainer {
+  clear: both;
+}
 /* @group format_ebsr */
 
 .layout_wai .response_ebsr .response {
@@ -2329,7 +2427,7 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 	margin-left: 6.5em;
 	color: #666;
 }
-.layout_wai .itemStatus ul, 
+.layout_wai .itemStatus ul,
 .layout_wai .itemStatus li {
 	display: block;
 	float: left;
@@ -2340,8 +2438,8 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 .layout_wai .stemContainer {
    margin-bottom: .5em;
 }
-.layout_wai .optionContainer input, 
-.layout_wai .questionLabel, 
+.layout_wai .optionContainer input,
+.layout_wai .questionLabel,
 .layout_wai .passageLabel {
 	overflow: hidden;
 	width: 1px;
@@ -2349,7 +2447,7 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 	position: absolute;
 	left: -9999px;
 }
-.layout_wai .illustration td, 
+.layout_wai .illustration td,
 .layout_wai .illustration th {
 	border: solid 1px #ccc;
 	padding: .4em;
@@ -2388,7 +2486,7 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 	box-shadow: inherit;
 	width: 30px;
 }
-.TDS_PS_L2 .layout_wai .passageTools.toolsContainer .passageMenu, 
+.TDS_PS_L2 .layout_wai .passageTools.toolsContainer .passageMenu,
 .TDS_PS_L3 .layout_wai .passageTools.toolsContainer .passageMenu {
 	width: 45px !important;
 }
@@ -2397,7 +2495,7 @@ body.platform_android.touch .passage-expanded .layoutColumnLeft .thePassage {
 }
 /* passage does not expand or collapse in streamlined mode */
 .layout_wai .passageTools.toolsContainer .expand-collapse-passage {
-	display: none !important; 
+	display: none !important;
 }
 
 /* @end */
@@ -2458,62 +2556,62 @@ math .symbol_9633 {
 	background-image: url(../../Images/mathSymbols/box_04_yellow.png);
 }
 /* */
-.TDS_CCInvert math .symbol_9633, 
+.TDS_CCInvert math .symbol_9633,
 .TDS_CCWhiteN math .symbol_9633 {
 	background-image: url(../../Images/mathSymbols/box_00_white.png);
 }
-.TDS_CCInvert.TDS_PS_L1 math .symbol_9633, 
+.TDS_CCInvert.TDS_PS_L1 math .symbol_9633,
 .TDS_CCWhiteN.TDS_PS_L1 math .symbol_9633 {
 	background-image: url(../../Images/mathSymbols/box_01_white.png);
 }
-.TDS_CCInvert.TDS_PS_L2 math .symbol_9633, 
+.TDS_CCInvert.TDS_PS_L2 math .symbol_9633,
 .TDS_CCWhiteN.TDS_PS_L2 math .symbol_9633 {
 	background-image: url(../../Images/mathSymbols/box_02_white.png);
 }
-.TDS_CCInvert.TDS_PS_L3 math .symbol_9633, 
+.TDS_CCInvert.TDS_PS_L3 math .symbol_9633,
 .TDS_CCWhiteN.TDS_PS_L3 math .symbol_9633 {
 	background-image: url(../../Images/mathSymbols/box_03_white.png);
 }
-.TDS_CCInvert.TDS_PS_L4 math .symbol_9633, 
+.TDS_CCInvert.TDS_PS_L4 math .symbol_9633,
 .TDS_CCWhiteN.TDS_PS_L4 math .symbol_9633 {
 	background-image: url(../../Images/mathSymbols/box_04_white.png);
 }
 
 /*box for safari 7 - will need to add for secure browser in iOS, iOS 6 does not need these styles*/
-.browser_safari.browserVer_7.platform_osx math .symbol_9633, 
-.browser_safari.browserVer_8.platform_osx math .symbol_9633, 
-.browser_safari.browserVer_7.platform_ios math .symbol_9633, 
+.browser_safari.browserVer_7.platform_osx math .symbol_9633,
+.browser_safari.browserVer_8.platform_osx math .symbol_9633,
+.browser_safari.browserVer_7.platform_ios math .symbol_9633,
 .browser_safari.browserVer_8.platform_ios math .symbol_9633 {
 	font-size: 30px;
 	letter-spacing: 5px;
 	background-position: center 1px;
 }
-.TDS_PS_L1 .browser_safari.browserVer_7.platform_osx math .symbol_9633, 
-.TDS_PS_L1 .browser_safari.browserVer_8.platform_osx math .symbol_9633, 
-.TDS_PS_L1 .browser_safari.browserVer_7.platform_ios math .symbol_9633, 
+.TDS_PS_L1 .browser_safari.browserVer_7.platform_osx math .symbol_9633,
+.TDS_PS_L1 .browser_safari.browserVer_8.platform_osx math .symbol_9633,
+.TDS_PS_L1 .browser_safari.browserVer_7.platform_ios math .symbol_9633,
 .TDS_PS_L1 .browser_safari.browserVer_8.platform_ios math .symbol_9633 {
 	font-size: 42px;
 	letter-spacing: 5px;
 	background-position: center 1px;
 }
-.TDS_PS_L2 .browser_safari.browserVer_7.platform_osx math .symbol_9633, 
-.TDS_PS_L2 .browser_safari.browserVer_8.platform_osx math .symbol_9633, 
-.TDS_PS_L2 .browser_safari.browserVer_7.platform_ios math .symbol_9633, 
+.TDS_PS_L2 .browser_safari.browserVer_7.platform_osx math .symbol_9633,
+.TDS_PS_L2 .browser_safari.browserVer_8.platform_osx math .symbol_9633,
+.TDS_PS_L2 .browser_safari.browserVer_7.platform_ios math .symbol_9633,
 .TDS_PS_L2 .browser_safari.browserVer_8.platform_ios math .symbol_9633 {
 	font-size: 54px;
 	letter-spacing: 2px;
 	background-position: center 1px;
 }
-.TDS_PS_L3 .browser_safari.browserVer_7.platform_osx  math .symbol_9633, 
-.TDS_PS_L3 .browser_safari.browserVer_8.platform_osx  math .symbol_9633, 
-.TDS_PS_L3 .browser_safari.browserVer_7.platform_ios  math .symbol_9633, 
+.TDS_PS_L3 .browser_safari.browserVer_7.platform_osx  math .symbol_9633,
+.TDS_PS_L3 .browser_safari.browserVer_8.platform_osx  math .symbol_9633,
+.TDS_PS_L3 .browser_safari.browserVer_7.platform_ios  math .symbol_9633,
 .TDS_PS_L3 .browser_safari.browserVer_8.platform_ios  math .symbol_9633 {
 	font-size: 68px;
 	letter-spacing: 0px;
 	background-position: center 0px;
 }
-.TDS_PS_L4 .browser_safari.browserVer_7.platform_osx math .symbol_9633, 
-.TDS_PS_L4 .browser_safari.browserVer_7.platform_ios math .symbol_9633, 
+.TDS_PS_L4 .browser_safari.browserVer_7.platform_osx math .symbol_9633,
+.TDS_PS_L4 .browser_safari.browserVer_7.platform_ios math .symbol_9633,
 .TDS_PS_L4 .browser_safari.browserVer_8.platform_ios math .symbol_9633 {
 	font-size: 88px;
 	letter-spacing: 0px;
@@ -2570,105 +2668,105 @@ math .symbol_8736 {
 	background-image: url(../../Images/mathSymbols/angle_04_yellow.png);
 }
 /* */
-.TDS_CCInvert math .symbol_8736, 
+.TDS_CCInvert math .symbol_8736,
 .TDS_CCWhiteN math .symbol_8736 {
 	background-image: url(../../Images/mathSymbols/angle_00_white.png);
 }
-.TDS_CCInvert.TDS_PS_L1 math .symbol_8736, 
+.TDS_CCInvert.TDS_PS_L1 math .symbol_8736,
 .TDS_CCWhiteN.TDS_PS_L1 math .symbol_8736 {
 	background-image: url(../../Images/mathSymbols/angle_01_white.png);
 }
-.TDS_CCInvert.TDS_PS_L2 math .symbol_8736, 
+.TDS_CCInvert.TDS_PS_L2 math .symbol_8736,
 .TDS_CCWhiteN.TDS_PS_L2 math .symbol_8736 {
 	background-image: url(../../Images/mathSymbols/angle_02_white.png);
 }
-.TDS_CCInvert.TDS_PS_L3 math .symbol_8736, 
+.TDS_CCInvert.TDS_PS_L3 math .symbol_8736,
 .TDS_CCWhiteN.TDS_PS_L3 math .symbol_8736 {
 	background-image: url(../../Images/mathSymbols/angle_03_white.png);
 }
-.TDS_CCInvert.TDS_PS_L4 math .symbol_8736, 
+.TDS_CCInvert.TDS_PS_L4 math .symbol_8736,
 .TDS_CCWhiteN.TDS_PS_L4 math .symbol_8736 {
 	background-image: url(../../Images/mathSymbols/angle_04_white.png);
 }
 /*angle for safari*/
-.browser_safari.browserVer_7.platform_osx math .symbol_8736, 
-.TDS_FT_Verdana .browser_safari.browserVer_7.platform_osx math .symbol_8736, 
-.browser_safari.browserVer_8.platform_osx math .symbol_8736, 
+.browser_safari.browserVer_7.platform_osx math .symbol_8736,
+.TDS_FT_Verdana .browser_safari.browserVer_7.platform_osx math .symbol_8736,
+.browser_safari.browserVer_8.platform_osx math .symbol_8736,
 .TDS_FT_Verdana .browser_safari.browserVer_8.platform_osx math .symbol_8736 {
 	font-size: 38px;
 	letter-spacing: 0px !important;
 }
-.TDS_PS_L1 .browser_safari.browserVer_7.platform_osx math .symbol_8736, 
-.TDS_FT_Verdana.TDS_PS_L1 .browser_safari.browserVer_7.platform_osx math .symbol_8736, 
-.TDS_PS_L1 .browser_safari.browserVer_8.platform_osx math .symbol_8736, 
+.TDS_PS_L1 .browser_safari.browserVer_7.platform_osx math .symbol_8736,
+.TDS_FT_Verdana.TDS_PS_L1 .browser_safari.browserVer_7.platform_osx math .symbol_8736,
+.TDS_PS_L1 .browser_safari.browserVer_8.platform_osx math .symbol_8736,
 .TDS_FT_Verdana.TDS_PS_L1 .browser_safari.browserVer_8.platform_osx math .symbol_8736 {
 	font-size: 45px;
 }
-.TDS_PS_L2 .browser_safari.browserVer_7.platform_osx math .symbol_8736, 
-.TDS_FT_Verdana.TDS_PS_L2 .browser_safari.browserVer_7 math .symbol_8736, 
-.TDS_PS_L2 .browser_safari.browserVer_8.platform_osx math .symbol_8736, 
+.TDS_PS_L2 .browser_safari.browserVer_7.platform_osx math .symbol_8736,
+.TDS_FT_Verdana.TDS_PS_L2 .browser_safari.browserVer_7 math .symbol_8736,
+.TDS_PS_L2 .browser_safari.browserVer_8.platform_osx math .symbol_8736,
 .TDS_FT_Verdana.TDS_PS_L2 .browser_safari.browserVer_8 math .symbol_8736 {
 	font-size: 52px;
 }
-.TDS_PS_L3 .browser_safari.browserVer_7.platform_osx math .symbol_8736, 
-.TDS_FT_Verdana.TDS_PS_L3 .browser_safari.browserVer_7 math .symbol_8736, 
-.TDS_PS_L3 .browser_safari.browserVer_8.platform_osx math .symbol_8736, 
+.TDS_PS_L3 .browser_safari.browserVer_7.platform_osx math .symbol_8736,
+.TDS_FT_Verdana.TDS_PS_L3 .browser_safari.browserVer_7 math .symbol_8736,
+.TDS_PS_L3 .browser_safari.browserVer_8.platform_osx math .symbol_8736,
 .TDS_FT_Verdana.TDS_PS_L3 .browser_safari.browserVer_8 math .symbol_8736 {
 	font-size: 68px;
 }
-.TDS_PS_L4 .browser_safari.browserVer_7.platform_osx math .symbol_8736, 
-.TDS_FT_Verdana.TDS_PS_L4 .browser_safari.browserVer_7.platform_osx math .symbol_8736, 
-.TDS_PS_L4 .browser_safari.browserVer_8.platform_osx math .symbol_8736, 
+.TDS_PS_L4 .browser_safari.browserVer_7.platform_osx math .symbol_8736,
+.TDS_FT_Verdana.TDS_PS_L4 .browser_safari.browserVer_7.platform_osx math .symbol_8736,
+.TDS_PS_L4 .browser_safari.browserVer_8.platform_osx math .symbol_8736,
 .TDS_FT_Verdana.TDS_PS_L4 .browser_safari.browserVer_8.platform_osx math .symbol_8736 {
 	font-size: 85px;
 }
 .TDS_FT_Verdana .browser_safari.browserVer_7.platform_osx math .symbol_8736,
-.TDS_FT_Verdana.TDS_PS_L1 .browser_safari.browserVer_7.platform_osx math .symbol_8736, 
+.TDS_FT_Verdana.TDS_PS_L1 .browser_safari.browserVer_7.platform_osx math .symbol_8736,
 .TDS_FT_Verdana .browser_safari.browserVer_8.platform_osx math .symbol_8736,
 .TDS_FT_Verdana.TDS_PS_L1 .browser_safari.browserVer_8.platform_osx math .symbol_8736 {
 	background-position: center 1px;
 }
-.TDS_FT_Verdana.TDS_PS_L2 .browser_safari.browserVer_7.platform_osx math .symbol_8736, 
+.TDS_FT_Verdana.TDS_PS_L2 .browser_safari.browserVer_7.platform_osx math .symbol_8736,
 .TDS_FT_Verdana.TDS_PS_L3 .browser_safari.browserVer_7.platform_osx math .symbol_8736,
-.TDS_FT_Verdana.TDS_PS_L4 .browser_safari.browserVer_7.platform_osx math .symbol_8736, 
-.TDS_FT_Verdana.TDS_PS_L2 .browser_safari.browserVer_8.platform_osx math .symbol_8736, 
+.TDS_FT_Verdana.TDS_PS_L4 .browser_safari.browserVer_7.platform_osx math .symbol_8736,
+.TDS_FT_Verdana.TDS_PS_L2 .browser_safari.browserVer_8.platform_osx math .symbol_8736,
 .TDS_FT_Verdana.TDS_PS_L3 .browser_safari.browserVer_8.platform_osx math .symbol_8736,
 .TDS_FT_Verdana.TDS_PS_L4 .browser_safari.browserVer_8.platform_osx math .symbol_8736 {
 	background-position: center 2px;
 }
 /*angle for mobile safari*/
-.browser_safari.browserVer_7.platform_ios math .symbol_8736, 
-.TDS_FT_Verdana .browser_safari.browserVer_7.platform_ios math .symbol_8736, 
-.browser_safari.browserVer_8.platform_ios math .symbol_8736, 
+.browser_safari.browserVer_7.platform_ios math .symbol_8736,
+.TDS_FT_Verdana .browser_safari.browserVer_7.platform_ios math .symbol_8736,
+.browser_safari.browserVer_8.platform_ios math .symbol_8736,
 .TDS_FT_Verdana .browser_safari.browserVer_8.platform_ios math .symbol_8736 {
 	font-size: 22px;
 	background-position: center -6px;
 	letter-spacing: 0px !important;
 }
-.TDS_PS_L1 .browser_safari.browserVer_7.platform_ios math .symbol_8736, 
-.TDS_FT_Verdana.TDS_PS_L1 .browser_safari.browserVer_7.platform_ios math .symbol_8736, 
-.TDS_PS_L1 .browser_safari.browserVer_8.platform_ios math .symbol_8736, 
+.TDS_PS_L1 .browser_safari.browserVer_7.platform_ios math .symbol_8736,
+.TDS_FT_Verdana.TDS_PS_L1 .browser_safari.browserVer_7.platform_ios math .symbol_8736,
+.TDS_PS_L1 .browser_safari.browserVer_8.platform_ios math .symbol_8736,
 .TDS_FT_Verdana.TDS_PS_L1 .browser_safari.browserVer_8.platform_ios math .symbol_8736 {
 	font-size: 24px;
 	background-position: center 1px;
 }
-.TDS_PS_L2 .browser_safari.browserVer_7.platform_ios math .symbol_8736, 
-.TDS_FT_Verdana.TDS_PS_L2 .browser_safari.browserVer_7.platform_ios math .symbol_8736, 
-.TDS_PS_L2 .browser_safari.browserVer_8.platform_ios math .symbol_8736, 
+.TDS_PS_L2 .browser_safari.browserVer_7.platform_ios math .symbol_8736,
+.TDS_FT_Verdana.TDS_PS_L2 .browser_safari.browserVer_7.platform_ios math .symbol_8736,
+.TDS_PS_L2 .browser_safari.browserVer_8.platform_ios math .symbol_8736,
 .TDS_FT_Verdana.TDS_PS_L2 .browser_safari.browserVer_8.platform_ios math .symbol_8736 {
 	font-size: 28px;
 	background-position: center 1px;
 }
-.TDS_PS_L3 .browser_safari.browserVer_7.platform_ios math .symbol_8736, 
-.TDS_FT_Verdana.TDS_PS_L3 .browser_safari.browserVer_7.platform_ios math .symbol_8736, 
-.TDS_PS_L3 .browser_safari.browserVer_8.platform_ios math .symbol_8736, 
+.TDS_PS_L3 .browser_safari.browserVer_7.platform_ios math .symbol_8736,
+.TDS_FT_Verdana.TDS_PS_L3 .browser_safari.browserVer_7.platform_ios math .symbol_8736,
+.TDS_PS_L3 .browser_safari.browserVer_8.platform_ios math .symbol_8736,
 .TDS_FT_Verdana.TDS_PS_L3 .browser_safari.browserVer_8.platform_ios math .symbol_8736 {
 	font-size: 36px;
 	background-position: center 0px;
 }
-.TDS_PS_L4 .browser_safari.browserVer_7.platform_ios math .symbol_8736, 
-.TDS_FT_Verdana.TDS_PS_L4 .browser_safari.browserVer_7.platform_ios math .symbol_8736, 
-.TDS_PS_L4 .browser_safari.browserVer_8.platform_ios math .symbol_8736, 
+.TDS_PS_L4 .browser_safari.browserVer_7.platform_ios math .symbol_8736,
+.TDS_FT_Verdana.TDS_PS_L4 .browser_safari.browserVer_7.platform_ios math .symbol_8736,
+.TDS_PS_L4 .browser_safari.browserVer_8.platform_ios math .symbol_8736,
 .TDS_FT_Verdana.TDS_PS_L4 .browser_safari.browserVer_8.platform_ios math .symbol_8736 {
 	font-size: 45px;
 	background-position: center 0px;
@@ -2676,139 +2774,139 @@ math .symbol_8736 {
 
 
 /*cdot*/
-math .symbol_8226, 
+math .symbol_8226,
 math .symbol_8901 {
 	background: url(../../Images/mathSymbols/cdot_00a.png) no-repeat center 1px;
 	color: transparent;
 	font-size: 10px;
 	letter-spacing: 8px;
 }
-.TDS_PS_L1 math .symbol_8226,  
+.TDS_PS_L1 math .symbol_8226,
 .TDS_PS_L1 math .symbol_8901 {
 	background-image: url(../../Images/mathSymbols/cdot_01.png);
 }
-.TDS_PS_L2 math .symbol_8226,  
+.TDS_PS_L2 math .symbol_8226,
 .TDS_PS_L2 math .symbol_8901 {
 	background-image: url(../../Images/mathSymbols/cdot_02.png);
 	font-size: 15px;
 }
-.TDS_PS_L3 math .symbol_8226,  
+.TDS_PS_L3 math .symbol_8226,
 .TDS_PS_L3 math .symbol_8901 {
 	background-image: url(../../Images/mathSymbols/cdot_03.png);
 	font-size: 21px;
 }
-.TDS_PS_L4 math .symbol_8226,  
+.TDS_PS_L4 math .symbol_8226,
 .TDS_PS_L4 math .symbol_8901 {
 	background-image: url(../../Images/mathSymbols/cdot_04.png);
 	font-size: 27px;
 }
 /* */
-.TDS_CCYellowB math .symbol_8226,  
+.TDS_CCYellowB math .symbol_8226,
 .TDS_CCYellowB math .symbol_8901 {
 	background-image: url(../../Images/mathSymbols/cdot_00_yellow.png);
 }
-.TDS_CCYellowB.TDS_PS_L1 math .symbol_8226,  
+.TDS_CCYellowB.TDS_PS_L1 math .symbol_8226,
 .TDS_CCYellowB.TDS_PS_L1 math .symbol_8901 {
 	background-image: url(../../Images/mathSymbols/cdot_01_yellow.png);
 }
-.TDS_CCYellowB.TDS_PS_L2 math .symbol_8226,  
+.TDS_CCYellowB.TDS_PS_L2 math .symbol_8226,
 .TDS_CCYellowB.TDS_PS_L2 math .symbol_8901 {
 	background-image: url(../../Images/mathSymbols/cdot_02_yellow.png);
 }
-.TDS_CCYellowB.TDS_PS_L3 math .symbol_8226,  
+.TDS_CCYellowB.TDS_PS_L3 math .symbol_8226,
 .TDS_CCYellowB.TDS_PS_L3 math .symbol_8901 {
 	background-image: url(../../Images/mathSymbols/cdot_03_yellow.png);
 }
-.TDS_CCYellowB.TDS_PS_L4 math .symbol_8226,  
+.TDS_CCYellowB.TDS_PS_L4 math .symbol_8226,
 .TDS_CCYellowB.TDS_PS_L4 math .symbol_8901 {
 	background-image: url(../../Images/mathSymbols/cdot_04_yellow.png);
 }
 /* */
-.TDS_CCInvert math .symbol_8226,  
-.TDS_CCInvert math .symbol_8901, 
-.TDS_CCWhiteN math .symbol_8226,  
+.TDS_CCInvert math .symbol_8226,
+.TDS_CCInvert math .symbol_8901,
+.TDS_CCWhiteN math .symbol_8226,
 .TDS_CCWhiteN math .symbol_8901 {
 	background-image: url(../../Images/mathSymbols/cdot_00_white.png);
 }
-.TDS_CCInvert.TDS_PS_L1 math .symbol_8226,  
-.TDS_CCInvert.TDS_PS_L1 math .symbol_8901, 
-.TDS_CCWhiteN.TDS_PS_L1 math .symbol_8226,  
+.TDS_CCInvert.TDS_PS_L1 math .symbol_8226,
+.TDS_CCInvert.TDS_PS_L1 math .symbol_8901,
+.TDS_CCWhiteN.TDS_PS_L1 math .symbol_8226,
 .TDS_CCWhiteN.TDS_PS_L1 math .symbol_8901 {
 	background-image: url(../../Images/mathSymbols/cdot_01_white.png);
 }
-.TDS_CCInvert.TDS_PS_L2 math .symbol_8226,  
-.TDS_CCInvert.TDS_PS_L2 math .symbol_8901, 
-.TDS_CCWhiteN.TDS_PS_L2 math .symbol_8226,  
+.TDS_CCInvert.TDS_PS_L2 math .symbol_8226,
+.TDS_CCInvert.TDS_PS_L2 math .symbol_8901,
+.TDS_CCWhiteN.TDS_PS_L2 math .symbol_8226,
 .TDS_CCWhiteN.TDS_PS_L2 math .symbol_8901 {
 	background-image: url(../../Images/mathSymbols/cdot_02_white.png);
 }
-.TDS_CCInvert.TDS_PS_L3 math .symbol_8226,  
-.TDS_CCInvert.TDS_PS_L3 math .symbol_8901, 
-.TDS_CCWhiteN.TDS_PS_L3 math .symbol_8226,  
+.TDS_CCInvert.TDS_PS_L3 math .symbol_8226,
+.TDS_CCInvert.TDS_PS_L3 math .symbol_8901,
+.TDS_CCWhiteN.TDS_PS_L3 math .symbol_8226,
 .TDS_CCWhiteN.TDS_PS_L3 math .symbol_8901 {
 	background-image: url(../../Images/mathSymbols/cdot_03_white.png);
 }
-.TDS_CCInvert.TDS_PS_L4 math .symbol_8226,  
-.TDS_CCInvert.TDS_PS_L4 math .symbol_8901, 
-.TDS_CCWhiteN.TDS_PS_L4 math .symbol_8226,  
+.TDS_CCInvert.TDS_PS_L4 math .symbol_8226,
+.TDS_CCInvert.TDS_PS_L4 math .symbol_8901,
+.TDS_CCWhiteN.TDS_PS_L4 math .symbol_8226,
 .TDS_CCWhiteN.TDS_PS_L4 math .symbol_8901 {
 	background-image: url(../../Images/mathSymbols/cdot_04_white.png);
 }
 
 /*cdot for safari*/
-.browser_safari.browserVer_7 math .symbol_8226, 
-.browser_safari.browserVer_7 math .symbol_8901, 
-.TDS_FT_Verdana .browser_safari.browserVer_7.platform_ios math .symbol_8226, 
-.TDS_FT_Verdana .browser_safari.browserVer_7.platform_ios math .symbol_8901, 
-.browser_safari.browserVer_8 math .symbol_8226, 
-.browser_safari.browserVer_8 math .symbol_8901, 
-.TDS_FT_Verdana .browser_safari.browserVer_8.platform_ios math .symbol_8226, 
+.browser_safari.browserVer_7 math .symbol_8226,
+.browser_safari.browserVer_7 math .symbol_8901,
+.TDS_FT_Verdana .browser_safari.browserVer_7.platform_ios math .symbol_8226,
+.TDS_FT_Verdana .browser_safari.browserVer_7.platform_ios math .symbol_8901,
+.browser_safari.browserVer_8 math .symbol_8226,
+.browser_safari.browserVer_8 math .symbol_8901,
+.TDS_FT_Verdana .browser_safari.browserVer_8.platform_ios math .symbol_8226,
 .TDS_FT_Verdana .browser_safari.browserVer_8.platform_ios math .symbol_8901 {
 	background-position: center 0px;
 	font-size: 1.5em;
 	letter-spacing: 5px;
 }
-.TDS_PS_L1 .browser_safari.browserVer_7 math .symbol_8226,  
-.TDS_PS_L1 .browser_safari.browserVer_7 math .symbol_8901, 
-.TDS_FT_Verdana.TDS_PS_L1 .browser_safari.browserVer_7 math .symbol_8226,  
-.TDS_FT_Verdana.TDS_PS_L1 .browser_safari.browserVer_7 math .symbol_8901, 
-.TDS_PS_L1 .browser_safari.browserVer_8 math .symbol_8226,  
-.TDS_PS_L1 .browser_safari.browserVer_8 math .symbol_8901, 
-.TDS_FT_Verdana.TDS_PS_L1 .browser_safari.browserVer_8 math .symbol_8226,  
+.TDS_PS_L1 .browser_safari.browserVer_7 math .symbol_8226,
+.TDS_PS_L1 .browser_safari.browserVer_7 math .symbol_8901,
+.TDS_FT_Verdana.TDS_PS_L1 .browser_safari.browserVer_7 math .symbol_8226,
+.TDS_FT_Verdana.TDS_PS_L1 .browser_safari.browserVer_7 math .symbol_8901,
+.TDS_PS_L1 .browser_safari.browserVer_8 math .symbol_8226,
+.TDS_PS_L1 .browser_safari.browserVer_8 math .symbol_8901,
+.TDS_FT_Verdana.TDS_PS_L1 .browser_safari.browserVer_8 math .symbol_8226,
 .TDS_FT_Verdana.TDS_PS_L1 .browser_safari.browserVer_8 math .symbol_8901 {
 	background-position: center 0px;
 }
-.TDS_PS_L2 .browser_safari.browserVer_7 math .symbol_8226,  
-.TDS_PS_L2 .browser_safari.browserVer_7 math .symbol_8901, 
-.TDS_FT_Verdana.TDS_PS_L2 .browser_safari.browserVer_7 math .symbol_8226,  
-.TDS_FT_Verdana.TDS_PS_L2 .browser_safari.browserVer_7 math .symbol_8901, 
-.TDS_PS_L2 .browser_safari.browserVer_8 math .symbol_8226,  
-.TDS_PS_L2 .browser_safari.browserVer_8 math .symbol_8901, 
-.TDS_FT_Verdana.TDS_PS_L2 .browser_safari.browserVer_8 math .symbol_8226,  
+.TDS_PS_L2 .browser_safari.browserVer_7 math .symbol_8226,
+.TDS_PS_L2 .browser_safari.browserVer_7 math .symbol_8901,
+.TDS_FT_Verdana.TDS_PS_L2 .browser_safari.browserVer_7 math .symbol_8226,
+.TDS_FT_Verdana.TDS_PS_L2 .browser_safari.browserVer_7 math .symbol_8901,
+.TDS_PS_L2 .browser_safari.browserVer_8 math .symbol_8226,
+.TDS_PS_L2 .browser_safari.browserVer_8 math .symbol_8901,
+.TDS_FT_Verdana.TDS_PS_L2 .browser_safari.browserVer_8 math .symbol_8226,
 .TDS_FT_Verdana.TDS_PS_L2 .browser_safari.browserVer_8 math .symbol_8901 {
 	background-position: center 0px;
 	font-size: 1.6em;
 	letter-spacing: 5px;
 }
-.TDS_PS_L3 .browser_safari.browserVer_7 math .symbol_8226,  
-.TDS_PS_L3 .browser_safari.browserVer_7 math .symbol_8901, 
-.TDS_FT_Verdana.TDS_PS_L3 .browser_safari.browserVer_7 math .symbol_8226,  
-.TDS_FT_Verdana.TDS_PS_L3 .browser_safari.browserVer_7 math .symbol_8901, 
-.TDS_PS_L3 .browser_safari.browserVer_8 math .symbol_8226,  
-.TDS_PS_L3 .browser_safari.browserVer_8 math .symbol_8901, 
-.TDS_FT_Verdana.TDS_PS_L3 .browser_safari.browserVer_8 math .symbol_8226,  
+.TDS_PS_L3 .browser_safari.browserVer_7 math .symbol_8226,
+.TDS_PS_L3 .browser_safari.browserVer_7 math .symbol_8901,
+.TDS_FT_Verdana.TDS_PS_L3 .browser_safari.browserVer_7 math .symbol_8226,
+.TDS_FT_Verdana.TDS_PS_L3 .browser_safari.browserVer_7 math .symbol_8901,
+.TDS_PS_L3 .browser_safari.browserVer_8 math .symbol_8226,
+.TDS_PS_L3 .browser_safari.browserVer_8 math .symbol_8901,
+.TDS_FT_Verdana.TDS_PS_L3 .browser_safari.browserVer_8 math .symbol_8226,
 .TDS_FT_Verdana.TDS_PS_L3 .browser_safari.browserVer_8 math .symbol_8901 {
 	background-position: center 0px;
 	font-size: 1.6em;
 	letter-spacing: 5px;
 }
-.TDS_PS_L4 .browser_safari.browserVer_7 math .symbol_8226,  
-.TDS_PS_L4 .browser_safari.browserVer_7 math .symbol_8901, 
-.TDS_FT_Verdana.TDS_PS_L4 .browser_safari.browserVer_7 math .symbol_8226,  
-.TDS_FT_Verdana.TDS_PS_L4 .browser_safari.browserVer_7 math .symbol_8901, 
-.TDS_PS_L4 .browser_safari.browserVer_8 math .symbol_8226,  
-.TDS_PS_L4 .browser_safari.browserVer_8 math .symbol_8901, 
-.TDS_FT_Verdana.TDS_PS_L4 .browser_safari.browserVer_8 math .symbol_8226,  
+.TDS_PS_L4 .browser_safari.browserVer_7 math .symbol_8226,
+.TDS_PS_L4 .browser_safari.browserVer_7 math .symbol_8901,
+.TDS_FT_Verdana.TDS_PS_L4 .browser_safari.browserVer_7 math .symbol_8226,
+.TDS_FT_Verdana.TDS_PS_L4 .browser_safari.browserVer_7 math .symbol_8901,
+.TDS_PS_L4 .browser_safari.browserVer_8 math .symbol_8226,
+.TDS_PS_L4 .browser_safari.browserVer_8 math .symbol_8901,
+.TDS_FT_Verdana.TDS_PS_L4 .browser_safari.browserVer_8 math .symbol_8226,
 .TDS_FT_Verdana.TDS_PS_L4 .browser_safari.browserVer_8 math .symbol_8901 {
 	background-position: center 0px;
 	font-size: 1.6em;
@@ -3059,6 +3157,20 @@ math .symbol .highlight {
 
 /* @end */
 
+img.math {
+  vertical-align: middle;
+}
+.TDS_CCInvert img.math,
+.TDS_CCWhiteN img.math,
+.TDS_CCYellowB img.math {
+  vertical-align: middle;
+  -webkit-filter: invert(1);
+  filter: invert(1);
+  background-color: transparent !important;
+}
+
+
+
 .thePassage.contextAreaFocus .padding {
     background-image: none;
 }
@@ -3068,14 +3180,14 @@ math .symbol .highlight {
 	box-shadow:inset 0 0 5px 2px rgba(0,174,239,.3);
 }
 
-/* hide letters for some QTI options 
+/* hide letters for some QTI options
 .hideOptionLabels .format_mc .optionClicker {
 	background-image: url("../../Images/controls/options/optionBlank.png") !important;
 }*/
 
 /* @group Icon Fonts for content tools */
 
-.pageWrapper .toolsContainer > a {
+.pageWrapper .toolsContainer > a.toolButton {
 	text-decoration: none;
 	text-indent: 0px;
 	font-family: 'icomoon';
@@ -3089,7 +3201,7 @@ math .symbol .highlight {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
-.pageWrapper .toolsContainer > a:before {
+.pageWrapper .toolsContainer > a.toolButton:before {
 	height: 29px;
 	width: 99%;
 	text-align: center;
@@ -3100,39 +3212,43 @@ math .symbol .highlight {
 	content: " ";
 	display: block;
 }
-.TDS_CCInvert .pageWrapper .toolsContainer a:before, 
-.TDS_CCWhiteN .pageWrapper .toolsContainer a:before {
+.TDS_CCInvert .pageWrapper .toolsContainer a.toolButton:before,
+.TDS_CCWhiteN .pageWrapper .toolsContainer a.toolButton:before {
 	color: #fff;
 }
-.TDS_CCYellowB .pageWrapper .toolsContainer a:before {
+.TDS_CCYellowB .pageWrapper .toolsContainer a.toolButton:before {
 	color: #ffcc00;
 }
-.TDS_CCYellowB .pageWrapper .toolsContainer a:hover, 
-.TDS_CCYellowB .pageWrapper .toolsContainer a:active, 
-.TDS_CCYellowB .pageWrapper .toolsContainer a:focus {
+.TDS_CCYellowB .pageWrapper .toolsContainer a.toolButton:hover,
+.TDS_CCYellowB .pageWrapper .toolsContainer a.toolButton:active,
+.TDS_CCYellowB .pageWrapper .toolsContainer a.toolButton:focus {
 	background-color: #00aeef !important;
 }
-.TDS_CCYellowB .pageWrapper .toolsContainer a:hover:before, 
-.TDS_CCYellowB .pageWrapper .toolsContainer a:active:before, 
-.TDS_CCYellowB .pageWrapper .toolsContainer a:focus:before {
+.TDS_CCYellowB .pageWrapper .toolsContainer a.toolButton:hover:before,
+.TDS_CCYellowB .pageWrapper .toolsContainer a.toolButton:active:before,
+.TDS_CCYellowB .pageWrapper .toolsContainer a.toolButton:focus:before {
 	color: #fff;
 }
-.pageWrapper .toolsContainer a:hover:before, 
-.pageWrapper .toolsContainer a:active:before, 
-.pageWrapper .toolsContainer a:focus:before {
+.pageWrapper .toolsContainer a.toolButton:hover:before,
+.pageWrapper .toolsContainer a.toolButton:active:before,
+.pageWrapper .toolsContainer a.toolButton:focus:before {
 	color: #00aeef;
 }
-.TDS_CCWhiteN .pageWrapper .toolsContainer a:hover:before, 
-.TDS_CCWhiteN .pageWrapper .toolsContainer a:active:before, 
-.TDS_CCWhiteN .pageWrapper .toolsContainer a:focus:before {
+.TDS_CCWhiteN .pageWrapper .toolsContainer a.toolButton:hover:before,
+.TDS_CCWhiteN .pageWrapper .toolsContainer a.toolButton:active:before,
+.TDS_CCWhiteN .pageWrapper .toolsContainer a.toolButton:focus:before {
 	color: #ffcc00;
 }
-.pageWrapper .toolsContainer a.passageMenu:before, 
+.pageWrapper .toolsContainer a.passageMenu:before,
 .pageWrapper .toolsContainer a.itemMenu:before {
 	content: "\e61e";
 }
 .pageWrapper .toolsContainer a.contexthelp:before {
 	content: "\e631";
+}
+.pageWrapper .toolsContainer a.printItem:before,
+.pageWrapper .toolButton.printPassage:before {
+	content: "\e61c";
 }
 .pageWrapper .toolsContainer a.commentItem:before {
 	content: "\e62e";
@@ -3157,25 +3273,25 @@ a.toolButton.response-recovery-item {
 .pageWrapper .toolsContainer a.response-recovery-item:before {
 	content: "\e609";
 }
-.pageWrapper .toolsContainer a.markReview.markReviewMarked, 
-.pageWrapper .toolsContainer a.markReview.markReviewMarked:hover, 
-.pageWrapper .toolsContainer a.markReview.markReviewMarked:active, 
-.pageWrapper .toolsContainer a.markReview.markReviewMarked:focus, 
-.TDS_PS_L1 .pageWrapper .toolsContainer a.markReview.markReviewMarked, 
-.TDS_PS_L1 .pageWrapper .toolsContainer a.markReview.markReviewMarked:hover, 
-.TDS_PS_L1 .pageWrapper .toolsContainer a.markReview.markReviewMarked:active, 
-.TDS_PS_L1 .pageWrapper .toolsContainer a.markReview.markReviewMarked:focus, 
-.TDS_PS_L2 .pageWrapper .toolsContainer a.markReview.markReviewMarked, 
-.TDS_PS_L2 .pageWrapper .toolsContainer a.markReview.markReviewMarked:hover, 
-.TDS_PS_L2 .pageWrapper .toolsContainer a.markReview.markReviewMarked:active, 
-.TDS_PS_L2 .pageWrapper .toolsContainer a.markReview.markReviewMarked:focus, 
-.TDS_PS_L3 .pageWrapper .toolsContainer a.markReview.markReviewMarked, 
-.TDS_PS_L3 .pageWrapper .toolsContainer a.markReview.markReviewMarked:hover, 
-.TDS_PS_L3 .pageWrapper .toolsContainer a.markReview.markReviewMarked:active, 
-.TDS_PS_L3 .pageWrapper .toolsContainer a.markReview.markReviewMarked:focus, 
-.TDS_PS_L4 .pageWrapper .toolsContainer a.markReview.markReviewMarked, 
-.TDS_PS_L4 .pageWrapper .toolsContainer a.markReview.markReviewMarked:hover, 
-.TDS_PS_L4 .pageWrapper .toolsContainer a.markReview.markReviewMarked:active, 
+.pageWrapper .toolsContainer a.markReview.markReviewMarked,
+.pageWrapper .toolsContainer a.markReview.markReviewMarked:hover,
+.pageWrapper .toolsContainer a.markReview.markReviewMarked:active,
+.pageWrapper .toolsContainer a.markReview.markReviewMarked:focus,
+.TDS_PS_L1 .pageWrapper .toolsContainer a.markReview.markReviewMarked,
+.TDS_PS_L1 .pageWrapper .toolsContainer a.markReview.markReviewMarked:hover,
+.TDS_PS_L1 .pageWrapper .toolsContainer a.markReview.markReviewMarked:active,
+.TDS_PS_L1 .pageWrapper .toolsContainer a.markReview.markReviewMarked:focus,
+.TDS_PS_L2 .pageWrapper .toolsContainer a.markReview.markReviewMarked,
+.TDS_PS_L2 .pageWrapper .toolsContainer a.markReview.markReviewMarked:hover,
+.TDS_PS_L2 .pageWrapper .toolsContainer a.markReview.markReviewMarked:active,
+.TDS_PS_L2 .pageWrapper .toolsContainer a.markReview.markReviewMarked:focus,
+.TDS_PS_L3 .pageWrapper .toolsContainer a.markReview.markReviewMarked,
+.TDS_PS_L3 .pageWrapper .toolsContainer a.markReview.markReviewMarked:hover,
+.TDS_PS_L3 .pageWrapper .toolsContainer a.markReview.markReviewMarked:active,
+.TDS_PS_L3 .pageWrapper .toolsContainer a.markReview.markReviewMarked:focus,
+.TDS_PS_L4 .pageWrapper .toolsContainer a.markReview.markReviewMarked,
+.TDS_PS_L4 .pageWrapper .toolsContainer a.markReview.markReviewMarked:hover,
+.TDS_PS_L4 .pageWrapper .toolsContainer a.markReview.markReviewMarked:active,
 .TDS_PS_L4 .pageWrapper .toolsContainer a.markReview.markReviewMarked:focus {
 	position: relative;
 }
@@ -3198,17 +3314,17 @@ a.toolButton.response-recovery-item {
 .pageWrapper .passage-expanded .toolsContainer a.expand-collapse-passage:before {
 	content: "\e60b";
 }
-.TDS_PS_L2 .pageWrapper .toolsContainer > a:before, 
-.TDS_PS_L3 .pageWrapper .toolsContainer > a:before {
+.TDS_PS_L2 .pageWrapper .toolsContainer > a.toolButton:before,
+.TDS_PS_L3 .pageWrapper .toolsContainer > a.toolButton:before {
 	height: 35px;
   	font-size: 30px;
   	line-height: 32px;
 }
-.TDS_PS_L2 .pageWrapper .toolsContainer a.expand-collapse-passage:before, 
+.TDS_PS_L2 .pageWrapper .toolsContainer a.expand-collapse-passage:before,
 .TDS_PS_L3 .pageWrapper .toolsContainer a.expand-collapse-passage:before {
 	font-size: 26px;
-} 
-.TDS_PS_L4 .pageWrapper .toolsContainer > a:before {
+}
+.TDS_PS_L4 .pageWrapper .toolsContainer > a.toolButton:before {
 	height: 40px;
   	font-size: 39px;
   	line-height: 41px;
@@ -3217,55 +3333,63 @@ a.toolButton.response-recovery-item {
 	font-size: 31px;
 }
 
-.TDS_PS_L1 .pageWrapper .toolsContainer a.commentItem:before, 
+.TDS_PS_L1 .pageWrapper .toolsContainer a.commentItem:before,
 .TDS_PS_L2 .pageWrapper .toolsContainer a.commentItem:before {
 	font-size: 33px;
   	line-height: 35px;
 }
-.TDS_PS_L1 .pageWrapper .toolsContainer a.markReview:before, 
+.TDS_PS_L1 .pageWrapper .toolsContainer a.markReview:before,
 .TDS_PS_L2 .pageWrapper .toolsContainer a.markReview:before {
 	font-size: 33px;
   	line-height: 35px;
 }
-.TDS_PS_L1 .pageWrapper .toolsContainer a.markReview.markReviewMarked:after, 
+.TDS_PS_L1 .pageWrapper .toolsContainer a.markReview.markReviewMarked:after,
 .TDS_PS_L2 .pageWrapper .toolsContainer a.markReview.markReviewMarked:after {
 	top: 21px;
 }
 
-.TDS_PS_L3 .pageWrapper .toolsContainer a.commentItem:before, 
+.TDS_PS_L3 .pageWrapper .toolsContainer a.commentItem:before,
 .TDS_PS_L4 .pageWrapper .toolsContainer a.commentItem:before {
 	font-size: 46px;
     line-height: 40px;
 }
-.TDS_PS_L3 .pageWrapper .toolsContainer a.markReview:before, 
+.TDS_PS_L3 .pageWrapper .toolsContainer a.markReview:before,
 .TDS_PS_L4 .pageWrapper .toolsContainer a.markReview:before {
 	font-size: 42px;
     line-height: 39px;
 }
-.TDS_PS_L3 .pageWrapper .toolsContainer a.markReview.markReviewMarked:after, 
+.TDS_PS_L3 .pageWrapper .toolsContainer a.markReview.markReviewMarked:after,
 .TDS_PS_L4 .pageWrapper .toolsContainer a.markReview.markReviewMarked:after {
 	top: 27px;
 }
 /* @end */
 
+
+.platform_ios .pageWrapper img {
+	pointer-events:none !important;
+}
+
 /* @group fixed expand/collapse button */
 
 .passageTools.toolsContainer {
 	position: fixed;
+	display: none;
 	top: 90px;
-	left: 40%;
-	margin-left: -160px;
-	margin-top: 0px !important;
-	right: inherit;
+	right: 60%;
+	margin: 0px;
+	left: inherit;
+	padding-right: 20px;
 	z-index: 7 !important;
-	width: 130px;
 	-webkit-transition: all .3s linear;
 	-moz-transition: all .3s linear;
 	-ms-transition: all .3s linear;
 	-o-transition: all .3s linear;
 	transition: all .3s linear;
 }
-.pageWrapper.hiding .passage-expanded .passageTools.toolsContainer, 
+.pageWrapper .passageShowing .passageTools.toolsContainer {
+	display: inline-block;
+}
+.pageWrapper.hiding .passage-expanded .passageTools.toolsContainer,
 .pageWrapper.hiding .passage-collapsed .passageTools.toolsContainer {
 	-webkit-transition: all .0s linear;
 	-moz-transition: all .0s linear;
@@ -3276,18 +3400,18 @@ a.toolButton.response-recovery-item {
 .fs-enabled .passageTools.toolsContainer {
 	top: 15px;
 }
-.app_Student.platform_ios .passageTools.toolsContainer {
+/*.app_Student.platform_ios .passageTools.toolsContainer {
 	top: 40px;
 }
-.platform_ios .multi-page {
+.platform_ios .page-tabs {
 	top: 0px;
 	position: -webkit-sticky !important;
-}
+}*/
 .TDS_ITM0 .passageTools.toolsContainer {
 	margin-left: -95px;
 	width: 65px;
 }
-.passageTools.toolsContainer a {
+.passageTools.toolsContainer a.toolButton {
 	position: static !important;
 	margin: 0px;
 	-moz-box-sizing:border-box;
@@ -3297,101 +3421,842 @@ a.toolButton.response-recovery-item {
 	box-shadow: 0 0 3px 2px rgba(209,209,209,.3);
 	float: right;
 }
-.passageTools.toolsContainer a.passageMenu {
+.passageTools.toolsContainer a.toolButton {
 	background-color: #fff;
 	display: block;
 	width: 45px;
 	height: 29px;
 }
-.passageTools.toolsContainer .expand-collapse-passage, 
+.passageTools.toolsContainer .expand-collapse-passage,
 .TDS_PS_L1 .passageTools.toolsContainer .expand-collapse-passage {
-	height: 29px !important;
-	width: 40px !important;
+	height: 29px;
+	width: 40px;
 }
-.TDS_PS_L2 .passageTools.toolsContainer .expand-collapse-passage, 
+.TDS_PS_L2 .passageTools.toolsContainer .expand-collapse-passage,
 .TDS_PS_L3 .passageTools.toolsContainer .expand-collapse-passage {
-	height: 34px !important;
+	  height: 34px !important;
     width: 45px !important;
 }
-.TDS_PS_L2 .passageTools.toolsContainer .passageMenu, 
+.TDS_PS_L2 .passageTools.toolsContainer .passageMenu,
 .TDS_PS_L3 .passageTools.toolsContainer .passageMenu {
-	height: 34px !important;
-    width: 52px !important;
+	  height: 34px;
+    width: 52px;
 }
 .TDS_PS_L4 .passageTools.toolsContainer .expand-collapse-passage {
 	height: 45px !important;
     width: 60px !important;
 }
 .TDS_PS_L4 .passageTools.toolsContainer .passageMenu {
-	height: 45px !important;
-    width: 70px !important;
+	  height: 45px;
+    width: 70px;
 }
 
 .passage-expanded .passageTools.toolsContainer {
-	left: 90% !important;
+	right: 10% !important;
 }
-.layout11 .passageTools.toolsContainer, 
-.layout17 .passageTools.toolsContainer {
-	left: 60%;
+.layout_11 .passageTools.toolsContainer,
+.layout_17 .passageTools.toolsContainer {
+	right: 40%;
 }
-.layout21 .passageTools.toolsContainer {
-	left: 40%;
+.layout_21 .passageTools.toolsContainer {
+	right: 60%;
 }
-.layout23 .passageTools.toolsContainer,  
-.passage-expanded .layout23 .passageTools.toolsContainer {
-	left: 100% !important;
+.layout_23 .passageTools.toolsContainer,
+.passage-expanded .layout_23 .passageTools.toolsContainer {
+	right: 0% !important;
 }
-.layout24 .passageTools.toolsContainer, 
-.layout29 .passageTools.toolsContainer {
-	left: 38%;
+.TDS_PIG1 .layout_23 .passageTools.toolsContainer {
+	top: 120px;
 }
-.layout25 .passageTools.toolsContainer {
-	left: 30%;
+.TDS_PIG1.TDS_PS_L1 .layout_23 .passageTools.toolsContainer,
+.TDS_PIG1.TDS_PS_L2 .layout_23 .passageTools.toolsContainer {
+	top: 140px;
 }
-.layout26 .passageTools.toolsContainer {
-	left: 50%;
+.TDS_PIG1.TDS_PS_L3 .layout_23 .passageTools.toolsContainer,
+.TDS_PIG1.TDS_PS_L4 .layout_23 .passageTools.toolsContainer {
+	top: 174px;
 }
-.layout27 .passageTools.toolsContainer, 
-.layout28 .passageTools.toolsContainer {
-	left: 70%;
+
+.layout_24 .passageTools.toolsContainer,
+.layout_29 .passageTools.toolsContainer {
+	right: 62%;
 }
-.platform_ios .pageWrapper.hiding .passageTools.toolsContainer {
+.layout_25 .passageTools.toolsContainer {
+	right: 70%;
+}
+.layout_26 .passageTools.toolsContainer {
+	right: 50%;
+}
+.layout_27 .passageTools.toolsContainer,
+.layout_28 .passageTools.toolsContainer {
+	right: 30%;
+}
+.layoutPaginatedPassage .passageTools.toolsContainer {
+	right: 0%;
+}
+.layoutPaginatedPassage .passageTools.toolsContainer .toolButton.passageMenu {
+	float: right;
+}
+.layoutPaginatedPassage .passageTools.toolsContainer .expand-collapse-items,
+.layoutPaginatedPassage .passageTools.toolsContainer .expand-collapse-passage {
 	display: none !important;
 }
-.platform_ios .passageTools.toolsContainer {
-	position: -webkit-sticky !important;
-	top:  10px !important;
-	left: 70%;
-}
-.platform_ios .layout11 .passageTools.toolsContainer, 
-.platform_ios .layout17 .passageTools.toolsContainer {
-	left: 80%;
-}
-.platform_ios .layout23 .passageTools.toolsContainer,  
-.passage-expanded.platform_ios .layout23 .passageTools.toolsContainer {
-	left: 90%;
-}
-.platform_ios .layout27 .passageTools.toolsContainer, 
-.platform_ios .layout28 .passageTools.toolsContainer {
-	left: 85%;
-}
-
-.platform_ios .pageWrapper img {
-	pointer-events:none !important;
-}
-
 .passageTools.toolsContainer a.yuimenuitemlabel{
 	position: relative !important;
 	float: none;
 }
-
-/* Safari 6 hack - Safari calculates the viewport differently than in iOS 7, so this style shifts the button down */
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-::i-block-chrome,.platform_ios .passageTools.toolsContainer {
-	top:  95px !important;
+.TDS_PIG1 .layoutPaginatedPassage .passageTools.toolsContainer {
+	top: 114px;
+	width: 100%;
 }
-::i-block-chrome,.platform_ios.fs-enabled .passageTools.toolsContainer {
-	top: 10px !important;
+.TDS_PS_L1.TDS_PIG1 .layoutPaginatedPassage .passageTools.toolsContainer,
+.TDS_PS_L2.TDS_PIG1 .layoutPaginatedPassage .passageTools.toolsContainer {
+	top: 140px;
+}
+.TDS_PS_L3.TDS_PIG1 .layoutPaginatedPassage .passageTools.toolsContainer,
+.TDS_PS_L4.TDS_PIG1 .layoutPaginatedPassage .passageTools.toolsContainer {
+	top: 170px;
+}
+.TDS_PIG1 .layoutPaginatedPassage .passageTools.toolsContainer .toolButton.passageMenu {
+	margin-right: 25px;
 }
 
 /* @end */
+.layoutSingleMulti .passageTools {
+	margin-top: 0px !important;
+}
+.layoutSingleMulti .layoutColumnLeft {
+	padding-top: 45px;
+}
+.layoutSingleMulti .passageTools .passageMenu {
+	display: none !important;
+}
+.layoutSingleMulti .layoutColumnLeft .passageTools .expand-collapse-passage {
+	background-color: #fff;
+	margin-right: -5px;
+}
+
+/* @group Expandable Items */
+.TDS_ExpandableItems1 .passageTools.toolsContainer {
+	-webkit-transition: inherit;
+	-moz-transition: inherit;
+	-ms-transition: inherit;
+	-o-transition: inherit;
+	transition: inherit;
+}
+.TDS_ExpandableItems1 .passageTools.toolsContainer {
+	top: 92px;
+	padding: 0px;
+}
+.TDS_ExpandableItems1 .theQuestions .padding,
+.TDS_ExpandableItems1 .thePassage .padding {
+	padding-top: 50px;
+}
+.TDS_PS_L1.TDS_ExpandableItems1 .passageTools.toolsContainer,
+.TDS_PS_L2.TDS_ExpandableItems1 .passageTools.toolsContainer {
+    top: 114px;
+}
+.TDS_PS_L3.TDS_ExpandableItems1 .passageTools.toolsContainer,
+.TDS_PS_L4.TDS_ExpandableItems1 .passageTools.toolsContainer {
+    top: 138px;
+}
+.fs-enabled.TDS_ExpandableItems1 .passageTools.toolsContainer,
+.fs-enabled.TDS_PS_L1.TDS_ExpandableItems1 .passageTools.toolsContainer,
+.fs-enabled.TDS_PS_L2.TDS_ExpandableItems1 .passageTools.toolsContainer,
+.fs-enabled.TDS_PS_L3.TDS_ExpandableItems1 .passageTools.toolsContainer,
+.fs-enabled.TDS_PS_L4.TDS_ExpandableItems1 .passageTools.toolsContainer {
+	top: 5px;
+}
+.TDS_ExpandableItems1 .passageTools.toolsContainer a.toolButton {
+	float: left;
+}
+.TDS_ExpandableItems1 .pageWrapper.showing .passageTools.toolsContainer a.toolButton {
+	-webkit-transition: all .5s ease;
+	-moz-transition: all .5s ease;
+	-ms-transition: all .5s ease;
+	-o-transition: all .5s ease;
+	transition: all .5s ease;
+}
+
+.TDS_ExpandableItems1 .passageTools.toolsContainer .passageMenu {
+   	margin-right: 10px;
+}
+.TDS_ExpandableItems1 .pageWrapper.showing .passageTools.toolsContainer a.toolButton:before {
+	font-size: 24px;
+  	line-height: 29px;
+  	-webkit-transition: all .7s ease;
+	-moz-transition: all .7s ease;
+	-ms-transition: all .7s ease;
+	-o-transition: all .7s ease;
+	transition: all .7s ease;
+}
+.TDS_ExpandableItems1.TDS_PS_L1 .pageWrapper.showing .passageTools.toolsContainer a.toolButton:before,
+.TDS_ExpandableItems1.TDS_PS_L2 .pageWrapper.showing .passageTools.toolsContainer a.toolButton:before {
+	font-size: 30px;
+  	line-height: 34px;
+}
+.TDS_ExpandableItems1.TDS_PS_L1 .passageTools.toolsContainer a.toolButton,
+.TDS_ExpandableItems1.TDS_PS_L2 .passageTools.toolsContainer a.toolButton {
+	height: 34px !important;
+}
+.TDS_ExpandableItems1.TDS_PS_L3 .pageWrapper.showing .passageTools.toolsContainer a.toolButton:before,
+.TDS_ExpandableItems1.TDS_PS_L4 .pageWrapper.showing .passageTools.toolsContainer a.toolButton:before {
+	font-size: 34px;
+  	line-height: 40px;
+}
+.TDS_ExpandableItems1.TDS_PS_L3 .passageTools.toolsContainer a.toolButton,
+.TDS_ExpandableItems1.TDS_PS_L4 .passageTools.toolsContainer a.toolButton {
+	height: 40px !important;
+}
+.TDS_ExpandableItems1 .passageTools.toolsContainer a.expand-collapse-passage {
+	width: 30px;
+	margin-right: -30px;
+	border-left: solid 1px #e2e2e2;
+	-moz-box-shadow: 2px 0 5px 1px rgba(209,209,209,.3);
+   	-webkit-box-shadow: 2px 0 5px 1px rgba(209,209,209,.3);
+	box-shadow: 2px 0 5px 1px rgba(209,209,209,.3);
+}
+.TDS_ExpandableItems1.TDS_PS_L1 .passageTools.toolsContainer a.expand-collapse-passage,
+.TDS_ExpandableItems1.TDS_PS_L2 .passageTools.toolsContainer a.expand-collapse-passage,
+.TDS_ExpandableItems1.TDS_PS_L3 .passageTools.toolsContainer a.expand-collapse-passage,
+.TDS_ExpandableItems1.TDS_PS_L4 .passageTools.toolsContainer a.expand-collapse-passage {
+	width: 40px !important;
+}
+.TDS_ExpandableItems1 .passageTools.toolsContainer a.expand-collapse-passage:before {
+	content: "\e801";
+}
+.TDS_ExpandableItems1 .passage-expanded .passageTools.toolsContainer a.expand-collapse-passage {
+	margin-right: 0px;
+	border-left: none;
+}
+.TDS_ExpandableItems1 .passage-expanded .passageTools.toolsContainer a.expand-collapse-passage:before {
+	-moz-transform: rotate(-180deg);
+	-webkit-transform: rotate(-180deg);
+	-o-transform: rotate(-180deg);
+	-ms-transform: rotate(-180deg);
+	transform: rotate(-180deg);
+}
+.passageTools.toolsContainer .expand-collapse-items {
+	display: none;
+}
+.TDS_ExpandableItems1 .passageTools.toolsContainer a.expand-collapse-items {
+	display: block;
+	width: 30px;
+}
+.TDS_ExpandableItems1.TDS_PS_L1 .passageTools.toolsContainer a.expand-collapse-items,
+.TDS_ExpandableItems1.TDS_PS_L2 .passageTools.toolsContainer a.expand-collapse-items,
+.TDS_ExpandableItems1.TDS_PS_L3 .passageTools.toolsContainer a.expand-collapse-items,
+.TDS_ExpandableItems1.TDS_PS_L4 .passageTools.toolsContainer a.expand-collapse-items {
+	width: 40px !important;
+}
+.TDS_ExpandableItems1.TDS_PS_L1 .passageTools.toolsContainer a.expand-collapse-passage,
+.TDS_ExpandableItems1.TDS_PS_L2 .passageTools.toolsContainer a.expand-collapse-passage,
+.TDS_ExpandableItems1.TDS_PS_L3 .passageTools.toolsContainer a.expand-collapse-passage,
+.TDS_ExpandableItems1.TDS_PS_L4 .passageTools.toolsContainer a.expand-collapse-passage {
+	margin-right: -40px;
+}
+.TDS_ExpandableItems1.TDS_PS_L1 .passage-expanded .passageTools.toolsContainer a.expand-collapse-passage,
+.TDS_ExpandableItems1.TDS_PS_L2 .passage-expanded .passageTools.toolsContainer a.expand-collapse-passage,
+.TDS_ExpandableItems1.TDS_PS_L3 .passage-expanded .passageTools.toolsContainer a.expand-collapse-passage,
+.TDS_ExpandableItems1.TDS_PS_L4 .passage-expanded .passageTools.toolsContainer a.expand-collapse-passage {
+	margin-right: 0px;
+}
+.TDS_ExpandableItems1 .passageTools.toolsContainer .expand-collapse-items:before {
+	content: "\e800";
+}
+.TDS_ExpandableItems1.TDS_PS_L1 .passageTools.toolsContainer .passageMenu,
+.TDS_ExpandableItems1.TDS_PS_L2 .passageTools.toolsContainer .passageMenu {
+	width: 45px !important;
+}
+.TDS_ExpandableItems1.TDS_PS_L3 .passageTools.toolsContainer .passageMenu,
+.TDS_ExpandableItems1.TDS_PS_L4 .passageTools.toolsContainer .passageMenu {
+	width: 50px !important;
+}
+.TDS_ExpandableItems1 .items-expanded .passageTools.toolsContainer .expand-collapse-items {
+	margin-right: -30px;
+	border-left: solid 1px #e2e2e2;
+}
+.TDS_ExpandableItems1.TDS_PS_L1 .items-expanded .passageTools.toolsContainer .expand-collapse-items,
+.TDS_ExpandableItems1.TDS_PS_L2 .items-expanded .passageTools.toolsContainer .expand-collapse-items {
+	margin-right: -40px;
+}
+.TDS_ExpandableItems1.TDS_PS_L3 .items-expanded .passageTools.toolsContainer .expand-collapse-items,
+.TDS_ExpandableItems1.TDS_PS_L4 .items-expanded .passageTools.toolsContainer .expand-collapse-items {
+	margin-right: -48px;
+}
+.TDS_ExpandableItems1 .items-expanded .passageTools.toolsContainer .expand-collapse-items:before {
+	/*content: "\e801";*/
+	-moz-transform: rotate(-180deg);
+	-webkit-transform: rotate(-180deg);
+	-o-transform: rotate(-180deg);
+	-ms-transform: rotate(-180deg);
+	transform: rotate(-180deg);
+}
+.TDS_ExpandableItems1.TDS_PS_L1 .items-expanded .passageTools.toolsContainer .expand-collapse-items:before,
+.TDS_ExpandableItems1.TDS_PS_L3 .items-expanded .passageTools.toolsContainer .expand-collapse-items:before,
+.TDS_ExpandableItems1.TDS_PS_L1 .passage-expanded .passageTools.toolsContainer .expand-collapse-passage:before,
+.TDS_ExpandableItems1.TDS_PS_L3 .passage-expanded .passageTools.toolsContainer .expand-collapse-passage:before {
+	margin-top: 5px;
+}
+
+
+
+
+.TDS_ExpandableItems1 .passage-expanded .passageTools.toolsContainer a.expand-collapse-items  {
+	display: none;
+}
+
+.TDS_ExpandableItems1 .layout_23 .passageTools.toolsContainer {
+	width: 40px;
+	height: inherit;
+	right: 5px !important;
+	top: 40%;
+	margin-top: -23px;
+}
+.TDS_ExpandableItems1 .layout_23 .passageTools.toolsContainer a.toolButton {
+	float: none;
+	width: 100% !important;
+	margin: 0px;
+	border: none;
+	-moz-box-shadow: 0 0 3px 2px rgba(209,209,209,.3);
+   	-webkit-box-shadow: 0 0 3px 2px rgba(209,209,209,.3);
+	box-shadow: 0 0 3px 2px rgba(209,209,209,.3);
+}
+.TDS_ExpandableItems1 .layout_23 .passageTools.toolsContainer a.passageMenu {
+	margin-bottom: 10px;
+}
+.TDS_ExpandableItems1 .layout_23 .passageTools.toolsContainer a.expand-collapse-passage:before {
+	content: "\e802";
+}
+.TDS_ExpandableItems1 .layout_23 .passageTools.toolsContainer a.expand-collapse-passage {
+	position: absolute !important;
+	left: 0px;
+	top: 68px;
+	border-top: solid 2px #999;
+}
+.TDS_ExpandableItems1 .layout_23 .passageTools.toolsContainer a.expand-collapse-items:before {
+	content: "\e803";
+}
+.TDS_ExpandableItems1 .passage-expanded.layout_23 .passageTools.toolsContainer {
+	top: 90%;
+	margin-top: -61px;
+}
+.TDS_ExpandableItems1 .passage-expanded.layout_23 .passageTools.toolsContainer a.expand-collapse-passage {
+	position: static !important;
+	border: none;
+}
+.TDS_ExpandableItems1 .passage-expanded.layout_23 .passageTools.toolsContainer a.expand-collapse-passage:before {
+	content: "\e803";
+}
+
+.items-expanded .theQuestions,
+.items-expanded .layoutColumnRight {
+	z-index: 6 !important;
+	width: 90% !important;
+	background-color: #fff;
+	-webkit-box-shadow: 0px 10px 10px 5px rgba(0, 0, 0, .3);
+	-moz-box-shadow: 0px 10px 10px 5px rgba(0, 0, 0, .3);
+	box-shadow: 0px 10px 10px 5px rgba(0, 0, 0, .3);
+	-webkit-transition: width .3s linear;
+	-moz-transition: width .3s linear;
+	-ms-transition: width .3s linear;
+	-o-transition: width .3s linear;
+	transition: width .3s linear;
+	right: 0px;
+	left: inherit;
+}
+.items-expanded .maskQuestions {
+	display: block;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 100%;
+	z-index: 5;
+	opacity: 0.95;
+    background-color: #f5f5f5;
+}
+.items-expanded .passageTools.toolsContainer {
+	right: 90%;
+}
+.items-expanded .passageTools.toolsContainer .toolButton.expand-collapse-passage,
+.items-expanded .passageTools.toolsContainer .toolButton.passageMenu {
+	display: none !important;
+}
+.items-expanded .passageTools.toolsContainer .toolButton.expand-collapse-items {
+	border-color: #ccc;
+}
+
+
+
+
+.items-expanded.layout_23 .theQuestions {
+    -webkit-box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, .3);
+	-moz-box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, .3);
+	box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, .3);
+    width: 100% !important;
+    z-index: 6 !important;
+    top: 60px;
+    height: inherit;
+    bottom: 0;
+}
+.TDS_ExpandableItems1 .items-expanded.layout_23 .passageTools.toolsContainer {
+	top: 160px;
+}
+.TDS_ExpandableItems1 .items-expanded.layout_23 .passageTools.toolsContainer a.expand-collapse-items:before {
+	content: "\e802";
+}
+.TDS_ExpandableItems1.fs-enabled .layout_23 .passageTools.toolsContainer {
+	margin-top: -68px;
+}
+.TDS_ExpandableItems1.fs-enabled .items-expanded.layout_23 .passageTools.toolsContainer {
+	top: 62px;
+	margin-top: 0px;
+}
+.TDS_ExpandableItems1.fs-enabled .passage-expanded.layout_23 .passageTools.toolsContainer {
+	margin-top: -68px;
+}
+
+/* @end */
+
+
+
+/* @group Info Bar */
+
+.infobar {
+	border-top: solid 1px #dbdbdb;
+	font-size: .6em;
+	color: #666;
+}
+.infobar::after,
+.infobar::before {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+}
+.infobar-item {
+	float: left;
+	margin-right: 5px;
+	margin-top: -.9em;
+	border-right: solid 1px #ccc;
+	padding: 3px 5px;
+	line-height: 1.4em;
+}
+.infobar-item:empty {
+	display: none;
+}
+.TDS_PS_L1 .infobar-item,
+.TDS_PS_L2 .infobar-item,
+.TDS_PS_L3 .infobar-item,
+.TDS_PS_L4 .infobar-item {
+	margin-top: -.1em;
+}
+.infobar-item:nth-last-child(1) {
+   	border-right: none;
+}
+.activeItem .infobar {
+	border-color: #6cb9d6;
+}
+.TDS_SLM1 .infobar {
+  clear: both;
+}
+.TDS_SLM1 .testee-name.infobar-item {
+  margin-top: 0;
+}
+.TDS_SLM1 .itemsecurity.infobar-item {
+  margin-top: -5px;
+}
+.TDS_SLM1 .lastsaved.infobar-item {
+    margin-top: 0;
+}
+.TDS_SLM1.TDS_InfoBar_Saved .toolsContainer,
+.TDS_SLM1.TDS_InfoBar_Saved.TDS_PS_L3 .toolsContainer,
+.TDS_SLM1.TDS_InfoBar_Saved.TDS_PS_L4 .toolsContainer,
+.TDS_SLM1.TDS_InfoBar_Name .toolsContainer,
+.TDS_SLM1.TDS_InfoBar_Name.TDS_PS_L3 .toolsContainer,
+.TDS_SLM1.TDS_InfoBar_Name.TDS_PS_L4 .toolsContainer,
+.TDS_SLM1.TDS_InfoBar_ItemSecurity .toolsContainer,
+.TDS_SLM1.TDS_InfoBar_ItemSecurity.TDS_PS_L3 .toolsContainer,
+.TDS_SLM1.TDS_InfoBar_ItemSecurity.TDS_PS_L4 .toolsContainer{
+  margin-top: -3.2em;
+}
+.TDS_SLM1.TDS_InfoBar_Saved .toolsContainer.passageTools,
+.TDS_SLM1.TDS_InfoBar_Saved.TDS_PS_L3 .toolsContainer.passageTools,
+.TDS_SLM1.TDS_InfoBar_Saved.TDS_PS_L4 .toolsContainer.passageTools,
+.TDS_SLM1.TDS_InfoBar_Name .toolsContainer.passageTools,
+.TDS_SLM1.TDS_InfoBar_Name.TDS_PS_L3 .toolsContainer.passageTools,
+.TDS_SLM1.TDS_InfoBar_Name.TDS_PS_L4 .toolsContainer.passageTools,
+.TDS_SLM1.TDS_InfoBar_ItemSecurity .toolsContainer.passageTools,
+.TDS_SLM1.TDS_InfoBar_ItemSecurity.TDS_PS_L3 .toolsContainer.passageTools,
+.TDS_SLM1.TDS_InfoBar_ItemSecurity.TDS_PS_L4 .toolsContainer.passageTools{
+  margin-top: 1em;
+}
+
+/* @end */
+
+
+/* @group Enhanced Contrast */
+.TDS_EC1 .pageWrapper .toolsContainer > a.toolButton::before,
+.TDS_EC1 .yuimenu li a::before,
+.TDS_SLM1 .pageWrapper .toolsContainer > a.toolButton::before,
+.TDS_SLM1 .yuimenu li a::before {
+  color: #000;
+}
+.TDS_EC1 .pageWrapper .toolsContainer a.toolButton:hover::before,
+.TDS_EC1 .pageWrapper .toolsContainer a.toolButton:active::before,
+.TDS_EC1 .pageWrapper .toolsContainer a.toolButton:focus::before,
+.TDS_EC1.TDS_CCInvert .pageWrapper .toolsContainer a.toolButton:hover::before,
+.TDS_EC1.TDS_CCInvert .pageWrapper .toolsContainer a.toolButton:active::before,
+.TDS_EC1.TDS_CCInvert .pageWrapper .toolsContainer a.toolButton:focus::before,
+.TDS_EC1.TDS_CCWhiteN .pageWrapper .toolsContainer a.toolButton:hover::before,
+.TDS_EC1.TDS_CCWhiteN .pageWrapper .toolsContainer a.toolButton:active::before,
+.TDS_EC1.TDS_CCWhiteN .pageWrapper .toolsContainer a.toolButton:focus::before,
+.TDS_SLM1 .pageWrapper .toolsContainer a.toolButton:hover::before,
+.TDS_SLM1 .pageWrapper .toolsContainer a.toolButton:active::before,
+.TDS_SLM1 .pageWrapper .toolsContainer a.toolButton:focus::before,
+.TDS_SLM1.TDS_CCInvert .pageWrapper .toolsContainer a.toolButton:hover::before,
+.TDS_SLM1.TDS_CCInvert .pageWrapper .toolsContainer a.toolButton:active::before,
+.TDS_SLM1.TDS_CCInvert .pageWrapper .toolsContainer a.toolButton:focus::before,
+.TDS_SLM1.TDS_CCWhiteN .pageWrapper .toolsContainer a.toolButton:hover::before,
+.TDS_SLM1.TDS_CCWhiteN .pageWrapper .toolsContainer a.toolButton:active::before,
+.TDS_SLM1.TDS_CCWhiteN .pageWrapper .toolsContainer a.toolButton:focus::before{
+    color: #00aeef;
+}
+.TDS_EC1.TDS_CCYellowB .pageWrapper .toolsContainer a.toolButton::before,
+.TDS_EC1.TDS_CCYellowB .yuimenu li a::before,
+.TDS_SLM1.TDS_CCYellowB .pageWrapper .toolsContainer a.toolButton::before,
+.TDS_SLM1.TDS_CCYellowB .yuimenu li a::before {
+    color: #ffcc00;
+}
+.TDS_EC1.TDS_CCYellowB .pageWrapper .toolsContainer a.toolButton:hover::before,
+.TDS_EC1.TDS_CCYellowB .pageWrapper .toolsContainer a.toolButton:active::before,
+.TDS_EC1.TDS_CCYellowB .pageWrapper .toolsContainer a.toolButton:focus::before,
+.TDS_SLM1.TDS_CCYellowB .pageWrapper .toolsContainer a.toolButton:hover::before,
+.TDS_SLM1.TDS_CCYellowB .pageWrapper .toolsContainer a.toolButton:active::before,
+.TDS_SLM1.TDS_CCYellowB .pageWrapper .toolsContainer a.toolButton:focus::before {
+    color: #fff;
+}
+.TDS_EC1.TDS_CCInvert .pageWrapper .toolsContainer a.toolButton::before,
+.TDS_EC1.TDS_CCWhiteN .pageWrapper .toolsContainer a.toolButton::before,
+.TDS_EC1.TDS_CCInvert .yuimenu li a::before,
+.TDS_EC1.TDS_CCWhiteN .yuimenu li a::before,
+.TDS_SLM1.TDS_CCInvert .pageWrapper .toolsContainer a.toolButton::before,
+.TDS_SLM1.TDS_CCWhiteN .pageWrapper .toolsContainer a.toolButton::before,
+.TDS_SLM1.TDS_CCInvert .yuimenu li a::before,
+.TDS_SLM1.TDS_CCWhiteN .yuimenu li a::before {
+    color: #fff;
+}
+.TDS_SLM1 .pageWrapper .yuimenu li a:hover::before,
+.TDS_SLM1 .pageWrapper .yuimenu li a:active::before,
+.TDS_SLM1 .pageWrapper .yuimenu li a:focus::before {
+    color: #fff;
+}
+.TDS_SLM1.TDS_EC0 .pageWrapper .toolsContainer > a.toolButton::before,
+.TDS_SLM1.TDS_EC0 .yuimenu li a::before {
+  color: #7b7b7b;
+}
+.TDS_SLM1.TDS_EC0.TDS_CCInvert .pageWrapper .toolsContainer > a.toolButton::before,
+.TDS_SLM1.TDS_EC0.TDS_CCWhiteN .pageWrapper .toolsContainer > a.toolButton::before {
+  color: #fff;
+}
+.TDS_SLM1.TDS_EC0.TDS_CCInvert .pageWrapper .toolsContainer > a.toolButton:active::before,
+.TDS_SLM1.TDS_EC0.TDS_CCInvert .pageWrapper .toolsContainer > a.toolButton:focus::before,
+.TDS_SLM1.TDS_EC0.TDS_CCInvert .pageWrapper .toolsContainer > a.toolButton:hover::before,
+.TDS_SLM1.TDS_EC0.TDS_CCWhiteN .pageWrapper .toolsContainer > a.toolButton:active::before,
+.TDS_SLM1.TDS_EC0.TDS_CCWhiteN .pageWrapper .toolsContainer > a.toolButton:focus::before,
+.TDS_SLM1.TDS_EC0.TDS_CCWhiteN .pageWrapper .toolsContainer > a.toolButton:hover::before {
+    color: #00aeef;
+}
+.TDS_SLM1.TDS_EC0.TDS_CCYellowB .pageWrapper .toolsContainer > a.toolButton::before {
+  color: #ffcc00;
+}
+.TDS_SLM1.TDS_EC0.TDS_CCYellowB .pageWrapper .toolsContainer > a.toolButton:active::before,
+.TDS_SLM1.TDS_EC0.TDS_CCYellowB .pageWrapper .toolsContainer > a.toolButton:focus::before,
+.TDS_SLM1.TDS_EC0.TDS_CCYellowB .pageWrapper .toolsContainer > a.toolButton:hover::before {
+    color: #fff;
+}
+.TDS_SLM1.TDS_EC0.TDS_CCYellowB .yuimenu li a {
+  color: #ffcc00 !important;
+}
+/* @end */
+
+
+/* Bug #181042 prevent slow transitions from bleeding into next pages */
+.pageWrapper.hiding .itemContainer * {
+	-moz-transition: inherit !important;
+    -webkit-transition: inherit !important;
+    transition: inherit !important;
+}
+
+/* Bug #184369 make sure expand and collapse buttons aren't enabled in streamlined mode */
+.TDS_SLM1 .toolsContainer.passageTools .expand-collapse-items,
+.TDS_SLM1 .toolsContainer.passageTools .expand-collapse-passage {
+  display: none !important
+}
+
+/* horizontally center video if it's in a pargraph that's already centered */
+p[style*="text-align:center"] .video-js {
+		margin-left:auto;
+		margin-right:auto;
+	}
+/*Bug 186824 make sure instrucitons area in one column doesn't have too little padding on touch devices*/
+.touch .noColumns .theQuestions .padding .instructions{
+	padding-top: 40px;
+}
+
+/* @group ETS hacks */
+.ets-fraction_entry {
+	display: inline-block;
+}
+.ets-fraction_entry div[id*="numerator"] {
+	border-bottom: solid 2px red;
+	padding-bottom: 2px;
+	margin-bottom: 2px;
+}
+.ets-math_expression img {
+	vertical-align: middle;
+}
+.ets-item-stem {
+	margin-bottom: 1em;
+}
+/* @end */
+
+/* @group Item Badges */
+
+.tds-badges {
+  float: left;
+  margin-top: -1.2em;
+  margin-left: .5em;
+}
+
+.tds-badges .badge {
+  display: none;
+  position: relative;
+  height: 1em;
+  width: 1.5em;
+  margin-right: 3px;
+  overflow: hidden;
+  float: left;
+  color: transparent;
+}
+
+.tds-badges .badge::before,
+.tds-badges .badge::after {
+  font-family: 'icomoon';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0px;
+  position: absolute;
+  width: 100%;
+  height: 1.5em;
+  top: 0;
+  left: 0;
+  content: ' ';
+  display: block;
+  font-size: 1em;
+  line-height: 1em;
+  text-align: center;
+  z-index: 1;
+}
+
+.tds-badges .badge::after {
+  content: '\e628';
+  color: #00a651;
+  z-index: 2;
+  font-size: .5em;
+  text-align: right;
+  line-height: 3em;
+  text-shadow: -1px -1px 0 #fff,
+}
+
+.tds-badges .badge::before {
+  color:#666;
+  z-index: 1;
+  /*font-size: 15px;*/
+}
+
+.tds-badges .badge.marked::before {
+  content: '\e62a';
+}
+
+.tds-badges .badge.printed::before {
+  content: '\e61c';
+}
+
+.tds-badges .badge.notes::before {
+  content: '\e620';
+}
+
+.tds-badges .badge.embossed::before {
+  content: '\e90c';
+}
+
+.tds-badges .badge.unlocked::before {
+  content: '\e90d';
+  color: #008a43;
+}
+
+.tds-badges .badge.locked::before {
+  content: '\e90a';
+  color: #9c0f17;
+}
+
+.tds-badges .badge.locked::after,
+.tds-badges .badge.unlocked::after {
+  display: none;
+}
+
+.tds-badges .badge:hover {
+  overflow: visible;
+  background-color: #59d0ff;
+  color: #fff;
+  border-bottom: solid 2px #59d0ff;
+  margin-bottom: -2px;
+  -moz-transition: background-color .2s ease-in;
+  -webkit-transition: background-color .2s ease-in;
+  transition: background-color .2s ease-in;
+  -webkit-box-shadow: 0px 0px 2px #b4b4b4;
+  -moz-box-shadow: 0px 0px 2px #b4b4b4;
+  box-shadow: 0px 0px 2px #b4b4b4;
+}
+.tds-badges .badge:focus {
+  overflow: visible;
+  -webkit-box-shadow: 0px 0px 2px #b4b4b4;
+  -moz-box-shadow: 0px 0px 2px #b4b4b4;
+  box-shadow: 0px 0px 2px #b4b4b4;
+}
+
+.tds-badges .badge:hover::before {
+  color: #fff;
+}
+.tds-badges .badge .label {
+  opacity: 0;
+}
+.tds-badges .badge:hover .label {
+  display: block;
+  text-indent: 0px;
+  position: absolute;
+  top: -1.2em;
+  white-space: nowrap;
+  background-color: #59d0ff;
+  padding: .1em;
+  left: -1em;
+  -moz-transition: background-color .2s ease-in;
+  -webkit-transition: background-color .2s ease-in;
+  transition: background-color .2s ease-in;
+  -webkit-box-shadow: 0px 0px 2px #b4b4b4;
+  -moz-box-shadow: 0px 0px 2px #b4b4b4;
+  box-shadow: 0px 0px 2px #b4b4b4;
+  opacity: 1;
+}
+.tds-badges .badge:focus .label {
+  display: block;
+  text-indent: 0px;
+  position: absolute;
+  top: -1.2em;
+  white-space: nowrap;
+  background-color: #59d0ff;
+  color: #fff;
+  padding: .1em;
+  left: -1em;
+  -moz-transition: background-color .2s ease-in;
+  -webkit-transition: background-color .2s ease-in;
+  transition: background-color .2s ease-in;
+  -webkit-box-shadow: 0px 0px 2px #b4b4b4;
+  -moz-box-shadow: 0px 0px 2px #b4b4b4;
+  box-shadow: 0px 0px 2px #b4b4b4;
+  animation: fadeLabel 3s;
+  animation-delay: 0s;
+  animation-timing-function: ease-out;
+  animation-direction: normal;
+}
+@keyframes fadeLabel {
+  0% {
+    opacity: 1;
+  }
+  98% {
+    opacity: 1;
+  }
+  99% {
+    opacity: 0;
+  }
+
+}
+
+.tds-badges .badge.enabled {
+	display: block;
+}
+/* zoomimg */
+.TDS_PS_L3 .tds-badges {
+  font-size: .9em
+}
+.TDS_PS_L4 .tds-badges {
+  font-size: .7em
+}
+/* colors */
+.TDS_CCInvert .badge::before,
+.TDS_CCWhiteN .badge::before {
+  color: #fff;
+}
+.TDS_CCInvert .badge::after,
+.TDS_CCWhiteN .badge::after {
+  text-shadow: inherit;
+  color: #d7c604;
+}
+.TDS_CCInvert .badge:hover .label,
+.TDS_CCWhiteN .badge:hover .label,
+.TDS_CCInvert .badge:hover,
+.TDS_CCWhiteN .badge:hover{
+  background-color: #666;
+  border-bottom-color: #666;
+}
+.TDS_CCYellowB .badge::before {
+  color: #fc0;
+}
+.TDS_CCYellowB .badge:hover .label,
+.TDS_CCYellowB .badge:hover {
+  background-color: rgba(1,71,252,1);
+  border-bottom-color: rgba(1,71,252,1);
+  color: #fc0;
+}
+
+/* @end */
+
+/* TDS-81 collapse area of option to avoid accisental selection on scroll with tablets */
+.touch .optionsContainer .optionsGroup {
+  float: left;
+  clear: both;
+}
+.touch .iat-ebsr-header,
+.touch .iat-interaction-container,
+.touch .format_ebsr .interactionContainer {
+  clear: both;
+}
+.touch .optionContainer {
+  float: left;
+}
+.touch .optionsGroup .optionContainer {
+  float: none;
+}
+.touch .optionsContainer::after,
+.touch .format_ebsr .interactionContainer::after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+.touch .optionsContainer .optionSound {
+  clear: left;
+}

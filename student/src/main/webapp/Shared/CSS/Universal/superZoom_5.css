@@ -1,0 +1,384 @@
+/* @group Top Stuff */
+.TDS_PS_L5 #infoBar {
+	overflow: visible;
+}
+.TDS_PS_L5 .infoWrapper {
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 150px;
+	height: 21px;
+	overflow: auto;
+}
+.TDS_PS_L5 #infoBar #jumpQuestions {
+	display: inline-block;
+	height: 110px;
+	padding-top: 21px;
+	margin-right: 20px;
+}
+.TDS_PS_L5 #infoBar #jumpQuestions #ddlNavigation {
+	padding: 0px;
+	margin: 5px 0px 0px 5px;
+	font-size: 90px;
+	height: 100px;
+	line-height: 100px;
+	letter-spacing: -0.05em;
+	max-width: 3em;
+	display: block;
+	-moz-appearance: button;
+	-webkit-appearance: button;
+}
+.TDS_PS_L5 #infoBar #jumpQuestions #jumpGo {
+	height: 80px;
+	width: 80px;
+	margin-top: 20px;
+	background: #fff url(../../Images/universal/chevron_right_black.svg) no-repeat;
+	background-size: 100% 100%;
+	position: relative;
+	font-size: 70px;
+}
+.TDS_PS_L5 #infoBar #jumpQuestions #jumpGo:hover,
+.TDS_PS_L5 #infoBar #jumpQuestions #jumpGo:active,
+.TDS_PS_L5 #infoBar #jumpQuestions #jumpGo:focus {
+	background: #00aeef url(../../Images/universal/chevron_right_white.svg) no-repeat;
+}
+.TDS_PS_L5 #jumpLabel {
+	height: 0;
+	width: 0;
+	position: absolute;
+	overflow: hidden;
+	text-indent: -9999px;
+}
+.TDS_PS_L5 #topBar {
+	border: none;
+	height: 131px;
+}
+.TDS_PS_L5 #navigation {
+	height: 110px;
+}
+.TDS_PS_L5 #contents {
+	top: 122px;
+}
+.TDS_PS_L5 #navigation ul {
+	float: none;
+	display: inline;
+	height: 110px;
+}
+.TDS_PS_L5 #navigation li {
+	float: left;
+	display: inline-block;
+	background-color: #fff;
+	margin-top: 2px;
+	height: 108px;
+}
+.TDS_PS_L5 #studentControls li:nth-last-child(1) {
+	border-right: 20px solid transparent;
+}
+.TDS_PS_L5 #navigation a {
+    min-width: inherit;;
+    width: 100px;
+		height: 100px;
+    margin-left: 5px;
+		margin-right: 5px;
+		padding: 0;
+}
+.TDS_PS_L5 #navigation .icon {
+    height: 100px;
+    margin-left: -50px;
+    top: 2px;
+    width: 100px;
+}
+.TDS_PS_L5 #topBar .icon:before {
+    font-size: 60px;
+    line-height: 100px;
+}
+.TDS_PS_L5 #navigation .label {
+    height: 0px;
+		width: 0px;
+		color: transparent;
+		font-size: 0px;
+		overflow: hidden;
+		display: inline-block;
+		-moz-transition: background-color .2s ease-in;
+	  -webkit-transition: background-color .2s ease-in;
+	  transition: background-color .2s ease-in;
+}
+.TDS_PS_L5 #navigation a:focus .label,
+.TDS_PS_L5 #navigation a:active .label,
+.TDS_PS_L5 #navigation a:hover .label {
+    height: 110px;
+		line-height: 110px;
+		width: 90%;
+		color: #fff;
+		font-size: 90px;
+		overflow: inherit;
+		display: block;
+		background-color: rgba(125, 215, 255, 0.95);
+		color: #000;
+		position: fixed;
+		top: 140px;
+		left: 5%;
+		border: solid 1px #000;
+		-webkit-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, .9);
+		-moz-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, .9);
+		box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, .9);
+}
+.TDS_PS_L5 #skipNav:focus,
+.TDS_PS_L5 #skipNav:active {
+    font-size: 10em;
+}
+/* @end */
+
+
+.TDS_PS_L5 .layout_wai{
+	font-size: 7em;
+	top: 132px;
+	font-family: sans-serif;
+}
+.TDS_PS_L5 .toolsContainer.itemTools {
+    margin-left: 0em;
+		margin-bottom: -.5em;
+}
+.TDS_PS_L5 .toolsContainer a.toolButton {
+    width: 50px !important;
+    height: 50px !important;
+}
+.TDS_PS_L5 .pageWrapper .toolsContainer > a.toolButton:before  {
+    height: 50px;
+    font-size: 45px;
+    line-height: 50px;
+}
+/* @group convert context menu to strip */
+.TDS_PS_L5 .toolsContainer a.toolButton {
+    float: right;
+}
+.TDS_PS_L5 .passageTools.toolsContainer {
+    float: right;
+    width: 100%;
+		margin-bottom: -1em;
+}
+.TDS_PS_L5 .toolsContainer {
+	position: relative;
+	overflow: visible;
+	float: none;
+}
+.TDS_PS_L5 .toolsContainer .yuimenu {
+	top: 0 !important;
+	right: 0 !important;
+	left: inherit !important;
+	width: inherit !important;
+	margin-top: 50px;
+	border: none;
+	background-color: transparent !important;
+	padding: 0px;
+	font-size: .6em;
+	line-height: 1em;
+}
+
+.TDS_PS_L5 .yuimenu li a::before {
+    font-size: .7em !important;
+    height: 1em;
+    left: 2px;
+    line-height: 1.8em;
+    top: 2px;
+    width: 1.5em;
+}
+.TDS_PS_L5.yui-skin-sam .yuimenu li {
+	display: inline-block !important;
+	float: right;
+}
+.TDS_PS_L5.yui-skin-sam .yuimenu li a {
+	display: inline-block !important;
+	padding-left: 1em;
+	border: none;
+	background-color: #fff;
+	-webkit-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, .9);
+	-moz-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, .9);
+	box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, .9);
+}
+.TDS_PS_L5.yui-skin-sam .toolsContainer .yuimenu,
+.TDS_PS_L5.yui-skin-sam .toolsContainer .yuimenu .bd,
+.TDS_PS_L5.yui-skin-sam .yuimenu li,
+.TDS_PS_L5.yui-skin-sam .yuimenu li a {
+	border-radius: inherit;
+}
+/* @end */
+
+
+.TDS_PS_L5.TDS_SLM1 .tds-badges {
+    margin-top: 0em;
+		font-size: .75em;
+}
+.TDS_PS_L5.TDS_SLM1 .thePassage p,
+.TDS_PS_L5.TDS_SLM1 .theQuestions p {
+    line-height:.95em;
+}
+.TDS_PS_L5.TDS_SLM1 .questionAnswerGroup h3 {
+		background-image: none;
+		background-color: #ccc;
+		font-size: .5em;
+}
+.TDS_PS_L5.TDS_SLM1 .stemContainer {
+    min-width: inherit;
+}
+.TDS_PS_L5.TDS_SLM1 .format_mc .optionClicker,
+.TDS_PS_L5.TDS_SLM1 .format_ebsr .EBSR_mc .optionClicker,
+.TDS_PS_L5.TDS_SLM1 .format_si .optionClicker{
+	height: 75px;
+	width: 75px;
+	border-width: 2px;
+}
+.TDS_PS_L5.TDS_SLM1 .format_mc .optionClicker::before,
+.TDS_PS_L5.TDS_SLM1 .format_ebsr .EBSR_mc .optionClicker::before,
+.TDS_PS_L5.TDS_SLM1 .format_si .optionClicker::before{
+	line-height: 75px;
+	width: 75px;
+	font-size: 65px;
+}
+.TDS_PS_L5.TDS_SLM1 .optionClicker {
+	height: 75px;
+	width: 75px;
+}
+.TDS_PS_L5.TDS_SLM1 .format_ms .optionSelected .optionClicker::before,
+.TDS_PS_L5.TDS_SLM1 .format_ms .answerContainer .optionContainer:hover .optionClicker::before,
+.TDS_PS_L5.TDS_SLM1 .format_ms .answerCell .optionContainer:hover .optionClicker::before,
+.TDS_PS_L5.TDS_SLM1 .EBSR_ms .optionClicker::before,
+.TDS_PS_L5.TDS_SLM1 .EBSR_ms:hover optionClicker::before {
+    font-size: 65px;
+    height: 75px;
+    line-height: 75px;
+    width: 75px;
+}
+.TDS_PS_L5.TDS_SLM1 .response .interactionPrompt,
+ {
+    margin-bottom: .3em;
+}
+.TDS_PS_L5.TDS_SLM1 .questionAnswerGroup {
+    margin-top: 1em;
+    margin-bottom: .1em;
+}
+.TDS_PS_L5.TDS_SLM1 .optionContainer {
+	margin-top: .5em;
+}
+.TDS_PS_L5.TDS_SLM1 .optionContent {
+    margin-bottom: 0em;
+		margin-left: 85px;
+}
+
+.TDS_PS_L5.TDS_SLM1 .response_ebsr .response {
+    margin-top: 0em;
+}
+.TDS_PS_L5.TDS_SLM1 .response .interactionContainer {
+    margin-bottom: 0em;
+}
+
+/* @group table match */
+.TDS_PS_L5 .matchItemDemoAccesible-Ideal label {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image: none;
+	text-indent: -99999px;
+	color: transparent;
+}
+.TDS_PS_L5 .matchItemDemoAccesible-Ideal label::before {
+	content: '';
+	height: 75px;
+	width: 75px;
+  border: 1px solid #999;
+  border-radius: 3px;
+  box-shadow: 1px 1px 1px 1px inset;
+  display: inline-block;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -37px;
+	margin-bottom: -37px;
+	color: #000;
+}
+.TDS_PS_L5 .matchItemDemoAccesible-Ideal input:checked + label::before,
+.TDS_PS_L5 .matchItemDemoAccesible-Ideal .matchItem_cellChecked label::before {
+	background-color: #666;
+}
+.TDS_PS_L5 .matchItemDemoAccesible-Ideal input:checked + label::after,
+.TDS_PS_L5 .matchItemDemoAccesible-Ideal .matchItem_cellChecked label::after {
+	font-family: 'icomoon';
+  content: "\e628";
+	color: #fff;
+	font-size: 65px;
+	height: 75px;
+	line-height: 75px;
+	width: 75px;
+  display: inline-block;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -37px;
+	margin-bottom: -37px;
+	text-indent: 0px;
+	text-align: center;
+}
+/* @end */
+
+/* @group color choices */
+.TDS_CCYellow.TDS_PS_L5 #navigation li,
+.TDS_CCYellow.TDS_PS_L5.yui-skin-sam .yuimenu li a {
+	background-color: #ffffce;
+}
+.TDS_CCYellow2.TDS_PS_L5 #navigation li,
+.TDS_CCYellow2.TDS_PS_L5.yui-skin-sam .yuimenu li a {
+	background-color: #fcfce2;
+}
+.TDS_CCCream.TDS_PS_L5 #navigation li,
+.TDS_CCCream.TDS_PS_L5.yui-skin-sam .yuimenu li a {
+	background-color: #ede0ce;
+}
+.TDS_CCBlue.TDS_PS_L5 #navigation li,
+.TDS_CCBlue.TDS_PS_L5.yui-skin-sam .yuimenu li a {
+	background-color: #99ffff;
+}
+.TDS_CCBlue2.TDS_PS_L5 #navigation li,
+.TDS_CCBlue2.TDS_PS_L5.yui-skin-sam .yuimenu li a {
+	background-color: #cfffff;
+}
+.TDS_CCMagenta.TDS_PS_L5 #navigation li,
+.TDS_CCMagenta.TDS_PS_L5.yui-skin-sam .yuimenu li a {
+	background-color: #ffd0ff;
+}
+.TDS_CCMagenta2.TDS_PS_L5 #navigation li,
+.TDS_CCMagenta2.TDS_PS_L5.yui-skin-sam .yuimenu li a {
+	background-color: #fde3fd;
+}
+.TDS_CCGreen.TDS_PS_L5 #navigation li,
+.TDS_CCGreen.TDS_PS_L5.yui-skin-sam .yuimenu li a {
+	background-color: #cff799;
+}
+.TDS_CCGreen2.TDS_PS_L5 #navigation li,
+.TDS_CCGreen2.TDS_PS_L5.yui-skin-sam .yuimenu li a {
+	background-color: #e0f6c1;
+}
+.TDS_CCGray.TDS_PS_L5 #navigation li,
+.TDS_CCGray.TDS_PS_L5.yui-skin-sam .yuimenu li a {
+	background-color: #cecfce;
+}
+.TDS_CCGray2.TDS_PS_L5 #navigation li,
+.TDS_CCMedGrayLtGray.TDS_PS_L5 #navigation li,
+.TDS_CCGray2.TDS_PS_L5.yui-skin-sam .yuimenu li a,
+.TDS_CCMedGrayLtGray.TDS_PS_L5.yui-skin-sam .yuimenu li a {
+	background-color: #e5e5e5;
+}
+.TDS_CCYellowB.TDS_PS_L5 #navigation li,
+.TDS_CCYellowB.TDS_PS_L5.yui-skin-sam .yuimenu li a {
+	background-color: #039;
+}
+.TDS_CCInvert.TDS_PS_L5 #navigation li,
+.TDS_CCInvert.TDS_PS_L5.yui-skin-sam .yuimenu li a {
+	background-color: #000;
+}
+.TDS_CCWhiteN.TDS_PS_L5 #navigation li,
+.TDS_CCWhiteN.TDS_PS_L5.yui-skin-sam .yuimenu li a {
+	background-color: #003366;
+}
+/* @end */
