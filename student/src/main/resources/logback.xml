@@ -7,4 +7,5 @@
 	<!--logger name="tds.student.performance" level="debug" /-->
 	<!--logger name="org.springframework" level="debug" /-->
 	<!--logger name="org.springframework.jdbc.datasource.DataSourceTransactionManager" level="debug" /-->
+	<logger name="tds.shared.spring.interceptors.RestTemplateLoggingInterceptor" level="DEBUG"/>
 </configuration>

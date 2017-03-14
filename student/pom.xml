@@ -22,15 +22,12 @@
 	</licenses>
 
 	<properties>
-		<item-selection.version>0.0.1-SNAPSHOT</item-selection.version>
-		<testscoring.version>0.0.1-SNAPSHOT</testscoring.version>
 		<progman-client.version>3.0.0</progman-client.version>
-		<sb11-mna-client.version>0.0.4-SNAPSHOT</sb11-mna-client.version>
+		<sb11-mna-client.version>3.0.0</sb11-mna-client.version>
 		<sb11-shared-code.version>3.0.0</sb11-shared-code.version>
 		<tds-exam-client.version>0.0.1</tds-exam-client.version>
+		<shared-spring.version>3.0.2</shared-spring.version>
 		<tds-common-legacy.version>0.0.2</tds-common-legacy.version>
-		<item-renderer.version>3.0.0-SNAPSHOT</item-renderer.version>
-		<item-scoring.version>1.1.0-SNAPSHOT</item-scoring.version>
 		<tds-assessment-client.version>0.0.2</tds-assessment-client.version>
 		<jackson.version>2.8.5</jackson.version>
 	</properties>
@@ -92,31 +89,26 @@
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>tds-itemselection-aironline</artifactId>
-			<version>${item-selection.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>item-scoring-api</artifactId>
-			<version>${item-scoring.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>item-scoring-engine</artifactId>
-			<version>${item-scoring.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>tds-itemselection-common</artifactId>
-			<version>${item-selection.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>testscoring</artifactId>
-			<version>${testscoring.version}</version>
 		</dependency>
 
 		<dependency>
@@ -145,8 +137,14 @@
 
 		<dependency>
 			<groupId>org.opentestsystem.shared</groupId>
+			<artifactId>shared-spring</artifactId>
+			<version>${shared-spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.opentestsystem.shared</groupId>
 			<artifactId>monitoring-alerting.client</artifactId>
-			<version> ${sb11-mna-client.version}</version>
+			<version>${sb11-mna-client.version}</version>
 		</dependency>
 
 		<dependency>
@@ -220,13 +218,11 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
-			<version>2.6.0</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -239,14 +235,14 @@
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>resource-bundler</artifactId>
-			<version>${item-renderer.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.opentestsystem.blackbox</groupId>
 			<artifactId>shared-blackbox</artifactId>
-			<version>${item-renderer.version}</version>
 			<type>war</type>
 		</dependency>
+
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -269,7 +265,6 @@
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
-			<version>1.10.19</version>
 			<scope>test</scope>
 		</dependency>
 

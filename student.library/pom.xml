@@ -14,9 +14,6 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<item-scoring.version>1.1.0-SNAPSHOT</item-scoring.version>
-		<item-selection.version>0.0.1-SNAPSHOT</item-selection.version>
-		<item-renderer.version>3.0.0-SNAPSHOT</item-renderer.version>
 		<tds-exam-client.version>0.0.1</tds-exam-client.version>
 	</properties>
 
@@ -24,13 +21,11 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
-			<version>2.6.0</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -50,7 +45,6 @@
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>item-renderer</artifactId>
-			<version>${item-renderer.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
@@ -59,7 +53,6 @@
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>item-scoring-api</artifactId>
-			<version>${item-scoring.version}</version>
 		</dependency>
     </dependencies>
 </project>
