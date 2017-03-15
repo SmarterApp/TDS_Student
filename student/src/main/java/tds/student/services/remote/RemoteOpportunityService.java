@@ -27,19 +27,18 @@ import tds.exam.SegmentApprovalRequest;
 import tds.student.performance.dao.TestOpportunityExamMapDao;
 import tds.student.services.abstractions.IOpportunityService;
 import tds.student.services.data.ApprovalInfo;
-import tds.student.sql.repository.ExamRepository;
 import tds.student.sql.data.OpportunityInfo;
 import tds.student.sql.data.OpportunityInstance;
 import tds.student.sql.data.OpportunitySegment;
 import tds.student.sql.data.OpportunityStatus;
 import tds.student.sql.data.OpportunityStatusChange;
-import tds.student.sql.data.OpportunityStatusExtensions;
 import tds.student.sql.data.OpportunityStatusType;
 import tds.student.sql.data.TestConfig;
 import tds.student.sql.data.TestSegment;
 import tds.student.sql.data.TestSelection;
 import tds.student.sql.data.TestSession;
 import tds.student.sql.data.Testee;
+import tds.student.sql.repository.ExamRepository;
 import tds.student.sql.repository.ExamSegmentRepository;
 
 @Service("integrationOpportunityService")
@@ -172,7 +171,7 @@ public class RemoteOpportunityService implements IOpportunityService {
   @Override
   public boolean setStatus(final OpportunityInstance oppInstance, final OpportunityStatusChange statusChange) throws ReturnStatusException {
     boolean isApproved = false;
-    ReturnStatus returnStatus = null;
+    ReturnStatus returnStatus;
 
     if (isLegacyCallsEnabled) {
       isApproved = legacyOpportunityService.setStatus(oppInstance, statusChange);
@@ -203,9 +202,8 @@ public class RemoteOpportunityService implements IOpportunityService {
 
     log.warn("Error setting exam status for exam id {}: Failed to set status to '{}' - {}",
       oppInstance.getExamId(), statusChange.getStatus(), returnStatus.getReason());
-    isApproved = false;
 
-    return isApproved;
+    return false;
   }
 
   @Override
@@ -237,6 +235,8 @@ public class RemoteOpportunityService implements IOpportunityService {
 
     approvalInfo = checkTestApproval(oppInstance);
 
+    //TODO - This will not work since the comparison is between a String and an enum which will never be equal.  Bug has been filed but to fix it
+    //unit tests need to be written.
     if (ExamStatusCode.STATUS_APPROVED.equals(approvalInfo.getStatus())) {
       examRepository.updateStatus(oppInstance.getExamId(), ExamStatusCode.STATUS_STARTED, "segment");
     }
