@@ -34,7 +34,6 @@ import tds.student.sql.data.OpportunityInstance;
 import tds.student.sql.data.OpportunitySegment;
 import tds.student.sql.data.OpportunityStatus;
 import tds.student.sql.data.OpportunityStatusChange;
-import tds.student.sql.data.OpportunityStatusExtensions;
 import tds.student.sql.data.OpportunityStatusType;
 import tds.student.sql.data.TestConfig;
 import tds.student.sql.data.TestSegment;
@@ -55,25 +54,25 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class RemoteOpportunityServiceTest {
   @Mock
-  private IOpportunityService legacyOpportunityService;
+  private IOpportunityService mockLegacyOpportunityService;
 
   private IOpportunityService service;
 
   @Mock
-  private ExamRepository examRepository;
+  private ExamRepository mockExamRepository;
 
   @Mock
-  private ExamSegmentRepository examSegmentRepository;
+  private ExamSegmentRepository mockExamSegmentRepository;
 
   @Mock
-  private TestOpportunityExamMapDao testOpportunityExamMapDao;
+  private TestOpportunityExamMapDao mockTestOpportunityExamMapDao;
 
   @Captor
-  ArgumentCaptor<SegmentApprovalRequest> segmentApprovalRequestArgumentCaptor;
+  private ArgumentCaptor<SegmentApprovalRequest> segmentApprovalRequestArgumentCaptor;
 
   @Before
   public void setUp() {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, true, examRepository, examSegmentRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(mockLegacyOpportunityService, true, true, mockExamRepository, mockExamSegmentRepository, mockTestOpportunityExamMapDao);
   }
 
   @After
@@ -91,15 +90,15 @@ public class RemoteOpportunityServiceTest {
       .build();
     Response<Exam> response = new Response<>(exam);
 
-    when(examRepository.openExam(isA(OpenExamRequest.class))).thenReturn(response);
+    when(mockExamRepository.openExam(isA(OpenExamRequest.class))).thenReturn(response);
 
     TestSession session = new TestSession();
     Testee testee = new Testee();
 
-    when(legacyOpportunityService.openTest(testee, session, "testKey")).thenReturn(new OpportunityInfo());
+    when(mockLegacyOpportunityService.openTest(testee, session, "testKey")).thenReturn(new OpportunityInfo());
 
     OpportunityInfo info = service.openTest(testee, session, "testKey");
-    verify(legacyOpportunityService).openTest(testee, session, "testKey");
+    verify(mockLegacyOpportunityService).openTest(testee, session, "testKey");
 
     assertThat(info.getExamBrowserKey()).isEqualTo(browserKey);
     assertThat(info.getExamId()).isEqualTo(examId);
@@ -111,25 +110,25 @@ public class RemoteOpportunityServiceTest {
     ValidationError error = new ValidationError("TEST", "TEST");
 
     Response<Exam> response = new Response<>(error);
-    when(examRepository.openExam(isA(OpenExamRequest.class))).thenReturn(response);
+    when(mockExamRepository.openExam(isA(OpenExamRequest.class))).thenReturn(response);
 
     TestSession session = new TestSession();
     Testee testee = new Testee();
 
     service.openTest(testee, session, "testKey");
-    verify(legacyOpportunityService).openTest(testee, session, "testKey");
+    verify(mockLegacyOpportunityService).openTest(testee, session, "testKey");
   }
 
   @Test
   public void shouldNotExecuteRemoteCallIfNotEnabled() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, false, true, examRepository, examSegmentRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(mockLegacyOpportunityService, false, true, mockExamRepository, mockExamSegmentRepository, mockTestOpportunityExamMapDao);
 
     Testee testee = new Testee();
     TestSession testSession = new TestSession();
     service.openTest(testee, testSession, "testKey");
-    verify(legacyOpportunityService).openTest(testee, testSession, "testKey");
+    verify(mockLegacyOpportunityService).openTest(testee, testSession, "testKey");
 
-    verifyZeroInteractions(examRepository);
+    verifyZeroInteractions(mockExamRepository);
   }
 
   @Test
@@ -139,112 +138,112 @@ public class RemoteOpportunityServiceTest {
       .build();
     Response<Exam> response = new Response<>(exam);
 
-    when(examRepository.openExam(isA(OpenExamRequest.class))).thenReturn(response);
+    when(mockExamRepository.openExam(isA(OpenExamRequest.class))).thenReturn(response);
 
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(mockLegacyOpportunityService, true, false, mockExamRepository, mockExamSegmentRepository, mockTestOpportunityExamMapDao);
 
     Testee testee = new Testee();
     TestSession testSession = new TestSession();
     service.openTest(testee, testSession, "testKey");
-    verify(examRepository).openExam(isA(OpenExamRequest.class));
+    verify(mockExamRepository).openExam(isA(OpenExamRequest.class));
 
-    verifyZeroInteractions(legacyOpportunityService);
+    verifyZeroInteractions(mockLegacyOpportunityService);
   }
 
   @Test(expected = IllegalStateException.class)
   public void shouldThrowIfBothImplementationsAreDisabled() {
-    new RemoteOpportunityService(legacyOpportunityService, false, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
+    new RemoteOpportunityService(mockLegacyOpportunityService, false, false, mockExamRepository, mockExamSegmentRepository, mockTestOpportunityExamMapDao);
   }
 
   @Test
   public void shouldGetApprovedStatusNoErrors() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(mockLegacyOpportunityService, true, false, mockExamRepository, mockExamSegmentRepository, mockTestOpportunityExamMapDao);
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     ExamApproval examApproval = new ExamApproval(oppInstance.getExamId(), new ExamStatusCode(ExamStatusCode.STATUS_APPROVED, ExamStatusStage.OPEN), null);
 
-    when(examRepository.getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey())).thenReturn(
-      new Response(examApproval));
+    when(mockExamRepository.getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey())).thenReturn(
+      new Response<>(examApproval));
     OpportunityStatus retStatus = service.getStatus(oppInstance);
     assertThat(retStatus.getStatus().toString()).isEqualTo("Approved");
-    verify(examRepository).getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey());
+    verify(mockExamRepository).getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey());
   }
 
   @Test
   public void shouldGetDeniedStatusNoErrors() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(mockLegacyOpportunityService, true, false, mockExamRepository, mockExamSegmentRepository, mockTestOpportunityExamMapDao);
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     ExamApproval examApproval = new ExamApproval(oppInstance.getExamId(), new ExamStatusCode(ExamStatusCode.STATUS_DENIED, ExamStatusStage.OPEN), null);
 
-    when(examRepository.getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey())).thenReturn(
-      new Response(examApproval));
+    when(mockExamRepository.getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey())).thenReturn(
+      new Response<>(examApproval));
     OpportunityStatus retStatus = service.getStatus(oppInstance);
     assertThat(retStatus.getStatus().toString()).isEqualTo("Denied");
-    verify(examRepository).getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey());
+    verify(mockExamRepository).getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey());
   }
 
   @Test(expected = ReturnStatusException.class)
   public void shouldThrowWithErrorsPresent() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(mockLegacyOpportunityService, true, false, mockExamRepository, mockExamSegmentRepository, mockTestOpportunityExamMapDao);
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     ExamApproval examApproval = new ExamApproval(oppInstance.getExamId(), new ExamStatusCode(ExamStatusCode.STATUS_DENIED, ExamStatusStage.OPEN), null);
 
-    when(examRepository.getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey())).thenReturn(
-      new Response(examApproval, new ValidationError("Some Error", "ErrorCode")));
-    OpportunityStatus retStatus = service.getStatus(oppInstance);
+    when(mockExamRepository.getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey())).thenReturn(
+      new Response<>(examApproval, new ValidationError("Some Error", "ErrorCode")));
+    service.getStatus(oppInstance);
   }
 
   @Test
   public void shouldReturnApprovalInfo() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(mockLegacyOpportunityService, true, false, mockExamRepository, mockExamSegmentRepository, mockTestOpportunityExamMapDao);
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     ExamApproval examApproval = new ExamApproval(oppInstance.getExamId(), new ExamStatusCode(ExamStatusCode.STATUS_APPROVED, ExamStatusStage.OPEN), null);
 
-    when(examRepository.getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey())).thenReturn(
-      new Response(examApproval));
+    when(mockExamRepository.getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey())).thenReturn(
+      new Response<>(examApproval));
     ApprovalInfo approvalInfo = service.checkTestApproval(oppInstance);
     assertThat(approvalInfo.getStatus().toString()).isEqualTo("Approved");
-    verify(examRepository).getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey());
+    verify(mockExamRepository).getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey());
   }
 
   @Test
   public void shouldDenyApproval() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(mockLegacyOpportunityService, true, false, mockExamRepository, mockExamSegmentRepository, mockTestOpportunityExamMapDao);
 
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
 
     //mock getStatus
-    when(examRepository.getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey()))
+    when(mockExamRepository.getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey()))
       .thenReturn(new Response<>(new ExamApproval(oppInstance.getExamId(), new ExamStatusCode(ExamStatusCode.STATUS_APPROVED), "reason")));
 
     final String deniedStatus = ExamStatusCode.STATUS_DENIED;
     OpportunityStatusChange statusChange = new OpportunityStatusChange(OpportunityStatusType.Pending, true, deniedStatus);
-    when(examRepository.updateStatus(oppInstance.getExamId(), statusChange.getStatus().name().toLowerCase(), deniedStatus)).thenReturn(Optional.<ValidationError>absent());
+    when(mockExamRepository.updateStatus(oppInstance.getExamId(), statusChange.getStatus().name().toLowerCase(), deniedStatus)).thenReturn(Optional.<ValidationError>absent());
     service.denyApproval(oppInstance);
 
-    verify(examRepository).getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey());
-    verify(examRepository).updateStatus(oppInstance.getExamId(), statusChange.getStatus().name().toLowerCase(), deniedStatus);
+    verify(mockExamRepository).getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey());
+    verify(mockExamRepository).updateStatus(oppInstance.getExamId(), statusChange.getStatus().name().toLowerCase(), deniedStatus);
   }
 
   @Test
   public void shouldNotSetStatusIfStatusIsPaused() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(mockLegacyOpportunityService, true, false, mockExamRepository, mockExamSegmentRepository, mockTestOpportunityExamMapDao);
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     OpportunityStatus currentStatus = new OpportunityStatus();
     currentStatus.setStatus(OpportunityStatusType.Paused);
 
     //mock getStatus
-    when(examRepository.getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey()))
+    when(mockExamRepository.getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey()))
       .thenReturn(new Response<>(new ExamApproval(oppInstance.getExamId(), new ExamStatusCode(ExamStatusCode.STATUS_PAUSED), "reason")));
 
     service.denyApproval(oppInstance);
 
-    verify(examRepository).getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey());
-    verify(examRepository, never()).updateStatus((UUID) any(), (String) any(), (String) any());
+    verify(mockExamRepository).getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey());
+    verify(mockExamRepository, never()).updateStatus((UUID) any(), (String) any(), (String) any());
   }
 
   @Test
   public void shouldUpdateStatus() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(mockLegacyOpportunityService, true, false, mockExamRepository, mockExamSegmentRepository, mockTestOpportunityExamMapDao);
 
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     OpportunityStatus currentStatus = new OpportunityStatus();
@@ -252,15 +251,15 @@ public class RemoteOpportunityServiceTest {
 
     final String deniedStatus = ExamStatusCode.STATUS_DENIED;
     OpportunityStatusChange statusChange = new OpportunityStatusChange(OpportunityStatusType.Pending, true, deniedStatus);
-    when(examRepository.updateStatus(oppInstance.getExamId(), statusChange.getStatus().name().toLowerCase(), deniedStatus)).thenReturn(Optional.<ValidationError>absent());
+    when(mockExamRepository.updateStatus(oppInstance.getExamId(), statusChange.getStatus().name().toLowerCase(), deniedStatus)).thenReturn(Optional.<ValidationError>absent());
     boolean isApproved = service.setStatus(oppInstance, statusChange);
     assertThat(isApproved).isTrue();
-    verify(examRepository).updateStatus(oppInstance.getExamId(), statusChange.getStatus().name().toLowerCase(), deniedStatus);
+    verify(mockExamRepository).updateStatus(oppInstance.getExamId(), statusChange.getStatus().name().toLowerCase(), deniedStatus);
   }
 
   @Test
   public void shouldReturnTrueForErrorWithFalseCheckStatus() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(mockLegacyOpportunityService, true, false, mockExamRepository, mockExamSegmentRepository, mockTestOpportunityExamMapDao);
 
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     OpportunityStatus currentStatus = new OpportunityStatus();
@@ -268,16 +267,16 @@ public class RemoteOpportunityServiceTest {
 
     final String deniedStatus = ExamStatusCode.STATUS_DENIED;
     OpportunityStatusChange statusChange = new OpportunityStatusChange(OpportunityStatusType.Pending, false, deniedStatus);
-    when(examRepository.updateStatus(oppInstance.getExamId(), statusChange.getStatus().name(), deniedStatus))
+    when(mockExamRepository.updateStatus(oppInstance.getExamId(), statusChange.getStatus().name(), deniedStatus))
       .thenReturn(Optional.of(new ValidationError("Error", "Code")));
     boolean isApproved = service.setStatus(oppInstance, statusChange);
     assertThat(isApproved).isTrue();
-    verify(examRepository).updateStatus(oppInstance.getExamId(), statusChange.getStatus().name().toLowerCase(), deniedStatus);
+    verify(mockExamRepository).updateStatus(oppInstance.getExamId(), statusChange.getStatus().name().toLowerCase(), deniedStatus);
   }
 
   @Test(expected = ReturnStatusException.class)
   public void shouldThrowForReturnStatusFailed() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(mockLegacyOpportunityService, true, false, mockExamRepository, mockExamSegmentRepository, mockTestOpportunityExamMapDao);
 
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     OpportunityStatus currentStatus = new OpportunityStatus();
@@ -285,14 +284,14 @@ public class RemoteOpportunityServiceTest {
 
     final String deniedStatus = ExamStatusCode.STATUS_DENIED;
     OpportunityStatusChange statusChange = new OpportunityStatusChange(OpportunityStatusType.Pending, true, deniedStatus);
-    when(examRepository.updateStatus(oppInstance.getExamId(), statusChange.getStatus().name().toLowerCase(), deniedStatus))
+    when(mockExamRepository.updateStatus(oppInstance.getExamId(), statusChange.getStatus().name().toLowerCase(), deniedStatus))
       .thenReturn(Optional.of(new ValidationError(ExamStatusCode.STATUS_FAILED, "There was an error!")));
     service.setStatus(oppInstance, statusChange);
   }
 
   @Test
   public void shouldReturnFalseForValidationErrorReturned() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(mockLegacyOpportunityService, true, false, mockExamRepository, mockExamSegmentRepository, mockTestOpportunityExamMapDao);
 
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     OpportunityStatus currentStatus = new OpportunityStatus();
@@ -300,27 +299,27 @@ public class RemoteOpportunityServiceTest {
 
     final String deniedStatus = ExamStatusCode.STATUS_DENIED;
     OpportunityStatusChange statusChange = new OpportunityStatusChange(OpportunityStatusType.Pending, true, deniedStatus);
-    when(examRepository.updateStatus(oppInstance.getExamId(), statusChange.getStatus().name().toLowerCase(), deniedStatus))
+    when(mockExamRepository.updateStatus(oppInstance.getExamId(), statusChange.getStatus().name().toLowerCase(), deniedStatus))
       .thenReturn(Optional.of(new ValidationError("Another Error", "There was an error!")));
     boolean isApproved = service.setStatus(oppInstance, statusChange);
     assertThat(isApproved).isFalse();
-    verify(examRepository).updateStatus(oppInstance.getExamId(), statusChange.getStatus().name().toLowerCase(), deniedStatus);
+    verify(mockExamRepository).updateStatus(oppInstance.getExamId(), statusChange.getStatus().name().toLowerCase(), deniedStatus);
   }
 
   @Test(expected = ReturnStatusException.class)
   public void shouldThrowForErrorPresent() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(mockLegacyOpportunityService, true, false, mockExamRepository, mockExamSegmentRepository, mockTestOpportunityExamMapDao);
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     final String assessmentKey = "assessmentKey";
     Response<ExamConfiguration> errorResponse = new Response<>(new ValidationError("uh", "oh!"));
 
-    when(examRepository.startExam(oppInstance.getExamId())).thenReturn(errorResponse);
+    when(mockExamRepository.startExam(oppInstance.getExamId())).thenReturn(errorResponse);
     service.startTest(oppInstance, assessmentKey, null);
   }
 
   @Test
   public void shouldStartExamAndReturnTestConfig() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(mockLegacyOpportunityService, true, false, mockExamRepository, mockExamSegmentRepository, mockTestOpportunityExamMapDao);
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     final String assessmentKey = "assessmentKey";
 
@@ -341,12 +340,12 @@ public class RemoteOpportunityServiceTest {
       .withExamRestartWindowMinutes(60)
       .build();
 
-    when(examRepository.startExam(oppInstance.getExamId())).thenReturn(new Response<>(mockExamConfig));
+    when(mockExamRepository.startExam(oppInstance.getExamId())).thenReturn(new Response<>(mockExamConfig));
     TestConfig testConfig = service.startTest(oppInstance, assessmentKey, null);
-    verify(examRepository).startExam(oppInstance.getExamId());
+    verify(mockExamRepository).startExam(oppInstance.getExamId());
 
     assertThat(testConfig).isNotNull();
-    assertThat(testConfig.getStatus()).isEqualTo(OpportunityStatusExtensions.parseExamStatus(ExamStatusCode.STATUS_STARTED));
+    assertThat(testConfig.getStatus()).isEqualTo(ExamStatusMapper.parseExamStatus(ExamStatusCode.STATUS_STARTED));
     assertThat(testConfig.getPrefetch()).isEqualTo(mockExamConfig.getPrefetch());
     assertThat(testConfig.getContentLoadTimeout()).isEqualTo(mockExamConfig.getContentLoadTimeoutMinutes());
     assertThat(testConfig.getInterfaceTimeout()).isEqualTo(mockExamConfig.getInterfaceTimeoutMinutes());
@@ -358,7 +357,7 @@ public class RemoteOpportunityServiceTest {
 
   @Test
   public void shouldFindExamSegmentsForExamIds() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(mockLegacyOpportunityService, true, false, mockExamRepository, mockExamSegmentRepository, mockTestOpportunityExamMapDao);
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     ExamSegment seg1 = new ExamSegment.Builder()
       .withSegmentKey("seg1")
@@ -383,10 +382,10 @@ public class RemoteOpportunityServiceTest {
       .withFieldTestItemCount(4)
       .build();
 
-    when(examRepository.findExamSegments(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey()))
+    when(mockExamRepository.findExamSegments(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey()))
       .thenReturn(new Response<>(Arrays.asList(seg1, seg2)));
     OpportunitySegment.OpportunitySegments opportunitySegments = service.getSegments(oppInstance, true);
-    verify(examRepository).findExamSegments(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey());
+    verify(mockExamRepository).findExamSegments(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey());
 
     assertThat(opportunitySegments).isNotNull();
     OpportunitySegment oppSeg1 = null;
@@ -399,6 +398,9 @@ public class RemoteOpportunityServiceTest {
         oppSeg2 = oppSeg;
       }
     }
+
+    assertThat(oppSeg1).isNotNull();
+    assertThat(oppSeg2).isNotNull();
 
     assertThat(oppSeg1.getId()).isEqualTo(seg1.getSegmentId());
     assertThat(oppSeg1.getFormID()).isEqualTo(seg1.getFormId());
@@ -419,19 +421,19 @@ public class RemoteOpportunityServiceTest {
 
   @Test(expected = ReturnStatusException.class)
   public void shouldThrowForErrorsPresentFindExamSegments() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(mockLegacyOpportunityService, true, false, mockExamRepository, mockExamSegmentRepository, mockTestOpportunityExamMapDao);
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
-    when(examRepository.findExamSegments(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey()))
+    when(mockExamRepository.findExamSegments(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey()))
       .thenReturn(new Response<List<ExamSegment>>(new ValidationError("why", "not")));
     service.getSegments(oppInstance, true);
   }
 
   @Test
   public void shouldWaitForSegmentEntry() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(mockLegacyOpportunityService, true, false, mockExamRepository, mockExamSegmentRepository, mockTestOpportunityExamMapDao);
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     service.waitForSegment(oppInstance, 2, TestSegment.TestSegmentApproval.Entry);
-    verify(examRepository).waitForSegmentApproval(eq(oppInstance.getExamId()), segmentApprovalRequestArgumentCaptor.capture());
+    verify(mockExamRepository).waitForSegmentApproval(eq(oppInstance.getExamId()), segmentApprovalRequestArgumentCaptor.capture());
     SegmentApprovalRequest request = segmentApprovalRequestArgumentCaptor.getValue();
 
     assertThat(request.getSegmentPosition()).isEqualTo(2);
@@ -442,10 +444,10 @@ public class RemoteOpportunityServiceTest {
 
   @Test
   public void shouldWaitForSegmentExit() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(mockLegacyOpportunityService, true, false, mockExamRepository, mockExamSegmentRepository, mockTestOpportunityExamMapDao);
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     service.waitForSegment(oppInstance, 2, TestSegment.TestSegmentApproval.Exit);
-    verify(examRepository).waitForSegmentApproval(eq(oppInstance.getExamId()), segmentApprovalRequestArgumentCaptor.capture());
+    verify(mockExamRepository).waitForSegmentApproval(eq(oppInstance.getExamId()), segmentApprovalRequestArgumentCaptor.capture());
     SegmentApprovalRequest request = segmentApprovalRequestArgumentCaptor.getValue();
 
     assertThat(request.getSegmentPosition()).isEqualTo(2);
@@ -456,10 +458,10 @@ public class RemoteOpportunityServiceTest {
 
   @Test
   public void shouldExitSegment() throws ReturnStatusException {
-    service = new RemoteOpportunityService(legacyOpportunityService, true, false, examRepository, examSegmentRepository, testOpportunityExamMapDao);
+    service = new RemoteOpportunityService(mockLegacyOpportunityService, true, false, mockExamRepository, mockExamSegmentRepository, mockTestOpportunityExamMapDao);
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     service.exitSegment(oppInstance, 2);
-    verify(examSegmentRepository).exitSegment(oppInstance.getExamId(), 2);
+    verify(mockExamSegmentRepository).exitSegment(oppInstance.getExamId(), 2);
   }
 }
 
