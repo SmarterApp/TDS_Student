@@ -38,7 +38,7 @@ public class RemoteExamSegmentRepository implements ExamSegmentRepository {
     headers.setContentType(MediaType.APPLICATION_JSON);
     HttpEntity<?> requestHttpEntity = new HttpEntity<>(headers);
 
-    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/segments/%s/exit/%d", examUrl, examId, segmentPosition));
+    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/%s/segments/%d/exit", examUrl, examId, segmentPosition));
 
     try {
       restTemplate.exchange(
