@@ -163,7 +163,7 @@
 	background-color: rgba(146,146,146,0.5);
 }
 #loadingDialog .border {
-	width: 50px;
+	width: 300px;
 	left: 50%;
 	top: 40%;
 	position: absolute;
@@ -171,7 +171,6 @@
 	margin-top: -15px;
 	display: block;
 	background-color: transparent;
-	border: none;
 }
 #loadingDialog .container,
 #yuiProgressDialog .bd,
@@ -208,9 +207,6 @@
 @keyframes spinme {
 	from {transform: rotate(0deg);}
 	to {transform: rotate(359deg);}
-}
-#loadingMessage.bd {
-	display: none;
 }
 
 #loadingDialog .bd {
