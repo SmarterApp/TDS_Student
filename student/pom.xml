@@ -22,7 +22,7 @@
 	</licenses>
 
 	<properties>
-		<progman-client.version>3.0.0</progman-client.version>
+		<progman-client.version>3.0.1</progman-client.version>
 		<sb11-mna-client.version>3.0.0</sb11-mna-client.version>
 		<sb11-shared-code.version>3.0.0</sb11-shared-code.version>
 		<tds-exam-client.version>0.0.1</tds-exam-client.version>
@@ -30,6 +30,8 @@
 		<tds-common-legacy.version>0.0.2</tds-common-legacy.version>
 		<tds-assessment-client.version>0.0.2</tds-assessment-client.version>
 		<jackson.version>2.8.5</jackson.version>
+
+		<docker.image.prefix>fwsbac</docker.image.prefix>
 	</properties>
 
 	<dependencies>
@@ -312,4 +314,39 @@
 		</dependency>
 
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.4.10</version>
+				<configuration>
+					<imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+					<imageTags>
+						<imageTag>${project.version}</imageTag>
+						<imageTag>latest</imageTag>
+					</imageTags>
+					<dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
+					<resources>
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.build.directory}</directory>
+							<include>${project.build.finalName}.war</include>
+						</resource>
+
+						<!-- TDS_Student requires file-system test definitions.  The resource directories below must
+							be defined in the build machine's local file-system at the specified paths
+							to be embedded into the student docker container image.
+							Modify as required.-->
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>/usr/local/tomcat/resources/tds/bank</directory>
+							<include>**/*</include>
+						</resource>
+					</resources>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
