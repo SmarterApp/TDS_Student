@@ -172,7 +172,13 @@
 	display: block;
 	background-color: transparent;
 }
-#loadingDialog .container,
+#loadingDialog .container {
+	display: block;
+	height: 30px;
+	background: #f9fbfb url(../Images/loadingAnimation.gif) no-repeat center center;
+	padding: 10px;
+	text-indent: -9999px;
+}
 #yuiProgressDialog .bd,
 #testApprovalProgress:before {
 	position: fixed;
