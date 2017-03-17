@@ -255,7 +255,7 @@ public class RemoteExamRepository implements ExamRepository {
     HttpEntity<?> requestHttpEntity = new HttpEntity<>(headers);
     ResponseEntity<Response<List<ExamSegment>>> responseEntity;
 
-    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/segments/%s", examUrl, examId))
+    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/%s/segments", examUrl, examId))
       .queryParam("sessionId", sessionId)
       .queryParam("browserId", browserId);
 
