@@ -10,12 +10,14 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class StudentEventLogger extends EventLoggerBase {
+
   protected String getApp() {
     return "student";
   }
 
-  public enum StudentLogEvent implements ILogEvent {
+  public enum StudentLogEvent implements LogEvent {
     ANSWER_QUESTIONS,
+    APPROVAL_CHECK,
     DETERMINE_NEXT_QUESTION,
     DISPLAY_PAGE_CONTENTS,
     DISPLAY_PREVIOUS_PAGE,
@@ -28,7 +30,7 @@ public class StudentEventLogger extends EventLoggerBase {
     STUDENT_LOGOUT,
   }
 
-  public enum StudentEventData implements IEventData {
+  public enum StudentEventData implements EventData {
     ACCOMMODATIONS,
     ASSESSMENTS,
     EXAMS,
