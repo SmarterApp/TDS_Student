@@ -28,7 +28,7 @@
 		<tds-exam-client.version>0.0.1</tds-exam-client.version>
 		<shared-spring.version>3.0.2</shared-spring.version>
 		<tds-common-legacy.version>0.0.2</tds-common-legacy.version>
-		<tds-assessment-client.version>0.0.3</tds-assessment-client.version>
+		<tds-assessment-client.version>0.0.4</tds-assessment-client.version>
 		<jackson.version>2.8.5</jackson.version>
 	</properties>
 
