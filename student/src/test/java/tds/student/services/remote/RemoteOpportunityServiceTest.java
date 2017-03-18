@@ -383,7 +383,7 @@ public class RemoteOpportunityServiceTest {
       .build();
 
     when(mockExamRepository.findExamSegments(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey()))
-      .thenReturn(new Response<>(Arrays.asList(seg1, seg2)));
+      .thenReturn(Arrays.asList(seg1, seg2));
     OpportunitySegment.OpportunitySegments opportunitySegments = service.getSegments(oppInstance, true);
     verify(mockExamRepository).findExamSegments(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey());
 
@@ -417,15 +417,6 @@ public class RemoteOpportunityServiceTest {
     assertThat(oppSeg2.getIsPermeable()).isEqualTo(1);
     assertThat(oppSeg2.getRestorePermOn()).isEqualTo(seg2.getRestorePermeableCondition());
     assertThat(oppSeg2.getFtItems()).isEqualTo(String.valueOf(seg2.getFieldTestItemCount()));
-  }
-
-  @Test(expected = ReturnStatusException.class)
-  public void shouldThrowForErrorsPresentFindExamSegments() throws ReturnStatusException {
-    service = new RemoteOpportunityService(mockLegacyOpportunityService, true, false, mockExamRepository, mockExamSegmentRepository, mockTestOpportunityExamMapDao);
-    OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
-    when(mockExamRepository.findExamSegments(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey()))
-      .thenReturn(new Response<List<ExamSegment>>(new ValidationError("why", "not")));
-    service.getSegments(oppInstance, true);
   }
 
   @Test

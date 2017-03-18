@@ -307,18 +307,8 @@ public class RemoteOpportunityService implements IOpportunityService {
       return opportunitySegments;
     }
 
-    Response<List<ExamSegment>> response = examRepository.findExamSegments(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey());
-
-    if (response.getError().isPresent()) {
-      final ValidationError validationError = response.getError().get();
-      final String errorMessage = validationError.getTranslatedMessage().isPresent()
-        ? validationError.getTranslatedMessage().get()
-        : validationError.getMessage();
-
-      throw new ReturnStatusException(errorMessage);
-    }
-
-    final List<ExamSegment> examSegments = response.getData().get();
+    final List<ExamSegment> examSegments = examRepository.findExamSegments(oppInstance.getExamId(),
+      oppInstance.getSessionKey(), oppInstance.getExamBrowserKey());
 
     opportunitySegments = mapExamSegmentsToOpportunitySegments(examSegments);
 

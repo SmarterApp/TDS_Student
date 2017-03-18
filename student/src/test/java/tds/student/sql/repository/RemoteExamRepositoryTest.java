@@ -191,11 +191,10 @@ public class RemoteExamRepositoryTest {
       .withSegmentPosition(2)
       .build();
     when(mockRestTemplate.exchange(isA(URI.class), isA(HttpMethod.class), isA(HttpEntity.class), isA(ParameterizedTypeReference.class)))
-      .thenReturn(new ResponseEntity(new Response<>(Arrays.asList(seg1, seg2)), HttpStatus.OK));
-    Response<List<ExamSegment>> response = remoteExamRepository.findExamSegments(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+      .thenReturn(new ResponseEntity(Arrays.asList(seg1, seg2), HttpStatus.OK));
+    List<ExamSegment> response = remoteExamRepository.findExamSegments(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     verify(mockRestTemplate).exchange(isA(URI.class), isA(HttpMethod.class), isA(HttpEntity.class), isA(ParameterizedTypeReference.class));
-    assertThat(response.getError().isPresent()).isFalse();
-    assertThat(response.getData().get()).hasSize(2);
+    assertThat(response).hasSize(2);
   }
 
   @Test(expected = ReturnStatusException.class)

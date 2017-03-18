@@ -90,7 +90,7 @@ public interface ExamRepository {
    * @return a {@link tds.common.Response} containing the list of {@link tds.exam.ExamSegment}s for the exam
    * @throws ReturnStatusException
    */
-  Response<List<ExamSegment>> findExamSegments(final UUID examId, final UUID sessionId, final UUID browserId) throws ReturnStatusException;
+  List<ExamSegment> findExamSegments(final UUID examId, final UUID sessionId, final UUID browserId) throws ReturnStatusException;
 
   /**
    * Creats an {@link tds.exam.ExamPrintRequest} to print or emboss an item, page, or passage

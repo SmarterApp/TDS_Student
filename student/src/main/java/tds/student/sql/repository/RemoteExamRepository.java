@@ -248,12 +248,12 @@ public class RemoteExamRepository implements ExamRepository {
   }
 
   @Override
-  public Response<List<ExamSegment>> findExamSegments(UUID examId, UUID sessionId, UUID browserId) throws ReturnStatusException {
+  public List<ExamSegment> findExamSegments(UUID examId, UUID sessionId, UUID browserId) throws ReturnStatusException {
     HttpHeaders headers = new HttpHeaders();
     headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
     headers.setContentType(MediaType.APPLICATION_JSON);
     HttpEntity<?> requestHttpEntity = new HttpEntity<>(headers);
-    ResponseEntity<Response<List<ExamSegment>>> responseEntity;
+    ResponseEntity<List<ExamSegment>> responseEntity;
 
     UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/%s/segments", examUrl, examId))
       .queryParam("sessionId", sessionId)
@@ -264,7 +264,7 @@ public class RemoteExamRepository implements ExamRepository {
         builder.build().encode().toUri(),
         HttpMethod.GET,
         requestHttpEntity,
-        new ParameterizedTypeReference<Response<List<ExamSegment>>>() {
+        new ParameterizedTypeReference<List<ExamSegment>>() {
         });
     } catch (RestClientException rce) {
       throw new ReturnStatusException(rce);
