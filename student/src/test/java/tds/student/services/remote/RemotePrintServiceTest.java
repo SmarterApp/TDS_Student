@@ -51,7 +51,7 @@ public class RemotePrintServiceTest {
   @Captor
   private ArgumentCaptor<ExamPrintRequest> examPrintRequestCaptor;
 
-  final OpportunityInstance mockOpportunityInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+  private final OpportunityInstance mockOpportunityInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
 
   @Before
   public void setUp() {

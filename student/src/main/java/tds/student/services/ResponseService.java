@@ -28,13 +28,14 @@ import tds.student.sql.data.OpportunityItem;
 import tds.student.sql.data.OpportunityItem.OpportunityItems;
 import TDS.Shared.Data.ReturnStatus;
 import TDS.Shared.Exceptions.ReturnStatusException;
+import org.springframework.stereotype.Service;
 
 /**
  * @author temp_rreddy
  * 
  */
-@Component
 @Scope ("prototype")
+@Service("legacyResponseService")
 public class ResponseService implements IResponseService
 {
 

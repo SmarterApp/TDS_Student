@@ -30,7 +30,7 @@ public class RemoteExamSegmentRepository implements ExamSegmentRepository {
     this.restTemplate = restTemplate;
     this.examUrl = examUrl;
   }
-  
+
   @Override
   public void exitSegment(final UUID examId, final int segmentPosition) throws ReturnStatusException {
     HttpHeaders headers = new HttpHeaders();
@@ -50,5 +50,28 @@ public class RemoteExamSegmentRepository implements ExamSegmentRepository {
     } catch (RestClientException rce) {
       throw new ReturnStatusException(rce);
     }
+  }
+
+  @Override
+  public boolean checkSegmentsSatisfied(final UUID examId) throws ReturnStatusException {
+    HttpHeaders headers = new HttpHeaders();
+    headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+    headers.setContentType(MediaType.APPLICATION_JSON);
+    HttpEntity<?> requestHttpEntity = new HttpEntity<>(headers);
+    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/%s/segments/completed", examUrl, examId));
+    Boolean completed;
+
+    try {
+      completed = restTemplate.exchange(
+        builder.build().toUri(),
+        HttpMethod.GET,
+        requestHttpEntity,
+        new ParameterizedTypeReference<Boolean>() {
+        }).getBody();
+    } catch (RestClientException rce) {
+      throw new ReturnStatusException(rce);
+    }
+
+    return completed;
   }
 }

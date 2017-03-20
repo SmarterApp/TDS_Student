@@ -51,6 +51,7 @@ public class ContentHandler extends BaseContentRendererController
   private static final Logger _logger = LoggerFactory.getLogger (ContentHandler.class);
 
   @Autowired
+  @Qualifier("integrationResponseService")
   private IResponseService    _responseService;
 
   @Autowired
