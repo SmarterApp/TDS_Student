@@ -79,6 +79,7 @@ public class TestShellHandler extends TDSHandler
   @Qualifier("integrationOpportunityService")
   private IOpportunityService    _oppService;
   @Autowired
+  @Qualifier("integrationResponseService")
   private IResponseService       _responseService;
   @Autowired
   private IResponseRepository    _responseRepository;

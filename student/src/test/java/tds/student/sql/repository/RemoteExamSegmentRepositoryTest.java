@@ -17,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URI;
 import java.util.UUID;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -52,5 +53,22 @@ public class RemoteExamSegmentRepositoryTest {
     when(mockRestTemplate.exchange(isA(URI.class), isA(HttpMethod.class), isA(HttpEntity.class), isA(ParameterizedTypeReference.class)))
       .thenThrow(new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Invalid", null, null));
     remoteSegmentExamRepository.exitSegment(examId, segmentPosition);
+  }
+
+  @Test
+  public void shouldCheckIfSegmentsAreCompleted() throws Exception {
+    final UUID examId = UUID.randomUUID();
+    when(mockRestTemplate.exchange(isA(URI.class), isA(HttpMethod.class), isA(HttpEntity.class), isA(ParameterizedTypeReference.class)))
+      .thenReturn(new ResponseEntity(true, HttpStatus.OK));
+    assertThat(remoteSegmentExamRepository.checkSegmentsSatisfied(examId)).isTrue();
+    verify(mockRestTemplate).exchange(isA(URI.class), isA(HttpMethod.class), isA(HttpEntity.class), isA(ParameterizedTypeReference.class));
+  }
+
+  @Test (expected = ReturnStatusException.class)
+  public void shouldThrowReturnStatusExceptionForRestClientErrorSegmentsCompleted() throws Exception {
+    final UUID examId = UUID.randomUUID();
+    when(mockRestTemplate.exchange(isA(URI.class), isA(HttpMethod.class), isA(HttpEntity.class), isA(ParameterizedTypeReference.class)))
+      .thenThrow(new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Invalid", null, null));
+    remoteSegmentExamRepository.checkSegmentsSatisfied(examId);
   }
 }

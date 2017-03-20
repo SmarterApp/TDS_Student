@@ -118,6 +118,7 @@ public class MasterShellHandler extends TDSHandler
   private IOpportunityRepository _oppRepository;
 
   @Autowired
+  @Qualifier("integrationResponseService")
   private IResponseService       _responseService;
 
   @Autowired
