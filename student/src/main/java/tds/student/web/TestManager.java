@@ -119,7 +119,7 @@ public class TestManager
   // / </remarks>
   public boolean CheckIfTestComplete () throws ReturnStatusException
   {
-    _isTestComplete = _responseService.isTestComplete (_testOpp.getOppInstance ().getKey ());
+    _isTestComplete = _responseService.isTestComplete (_testOpp.getOppInstance ().getExamId());
     return _isTestComplete;
   }
 
