@@ -19,7 +19,7 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class RemoteResponseServiceTest {
   @Mock
-  private IResponseService legacyResponseService;
+  private IResponseService mockLegacyResponseService;
 
   @Mock
   private ExamSegmentRepository mockExamSegmentRepository;
@@ -28,7 +28,7 @@ public class RemoteResponseServiceTest {
 
   @Before
   public void setUp() {
-    service = new RemoteResponseService(legacyResponseService, true, false, mockExamSegmentRepository);
+    service = new RemoteResponseService(mockLegacyResponseService, true, false, mockExamSegmentRepository);
   }
 
   @Test
