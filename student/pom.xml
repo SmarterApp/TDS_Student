@@ -26,7 +26,6 @@
 		<sb11-mna-client.version>3.0.0</sb11-mna-client.version>
 		<sb11-shared-code.version>3.0.0</sb11-shared-code.version>
 		<tds-exam-client.version>0.0.1</tds-exam-client.version>
-		<shared-spring.version>3.0.2</shared-spring.version>
 		<tds-common-legacy.version>0.0.2</tds-common-legacy.version>
 		<tds-assessment-client.version>0.0.4</tds-assessment-client.version>
 		<jackson.version>2.8.5</jackson.version>
@@ -35,11 +34,6 @@
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.opentestsystem.delivery</groupId>
-			<artifactId>student-shared</artifactId>
-			<version>${project.version}</version>
-		</dependency>
 
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
@@ -49,8 +43,12 @@
 
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
-			<artifactId>student.library</artifactId>
-			<version>${project.version}</version>
+			<artifactId>student-library</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>student-web</artifactId>
 		</dependency>
 
 		<dependency>
@@ -134,7 +132,6 @@
 		<dependency>
 			<groupId>org.opentestsystem.shared</groupId>
 			<artifactId>shared-spring</artifactId>
-			<version>${shared-spring.version}</version>
 		</dependency>
 
 		<dependency>
@@ -276,6 +273,10 @@
 		<groupId>org.opentestsystem.shared</groupId>
 		<artifactId>shared-test</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>org.opentestsystem.shared</groupId>
+            <artifactId>shared-web</artifactId>
+        </dependency>
 		<dependency>
 		<groupId>commons-primitives</groupId>
 		<artifactId>commons-primitives</artifactId>

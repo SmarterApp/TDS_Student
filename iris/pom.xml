@@ -19,8 +19,12 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
-			<artifactId>student-shared</artifactId>
-			<version>${project.version}</version>
+			<artifactId>student-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>student-library</artifactId>
 		</dependency>
 
 		<dependency>
@@ -31,15 +35,17 @@
 
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
-			<artifactId>student.library</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>student</artifactId>
 			<version>${project.version}</version>
 			<exclusions>
+				<exclusion>
+					<groupId>org.opentestsystem.delivery</groupId>
+					<artifactId>student-web</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.opentestsystem.delivery</groupId>
+					<artifactId>student-library</artifactId>
+				</exclusion>
 				<exclusion>
 					<groupId>org.opentestsystem.shared</groupId>
 					<artifactId>prog-mgmnt-client</artifactId>

@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.opentestsystem.shared</groupId>
         <artifactId>shared-master</artifactId>
-        <version>3.0.1</version>
+        <version>3.0.3</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -23,6 +23,7 @@
         <mockito.version>1.10.19</mockito.version>
         <tds-dll.version>3.0.0</tds-dll.version>
         <test-scoring.version>3.0.0</test-scoring.version>
+        <tds-student-common.version>3.0.1</tds-student-common.version>
     </properties>
 
     <modules>
@@ -35,6 +36,19 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- TDS Student Common dependencies -->
+            <dependency>
+                <groupId>org.opentestsystem.delivery</groupId>
+                <artifactId>student-library</artifactId>
+                <version>${tds-student-common.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.opentestsystem.delivery</groupId>
+                <artifactId>student-web</artifactId>
+                <version>${tds-student-common.version}</version>
+            </dependency>
+
             <!-- TDS Item Selection dependencies -->
             <dependency>
                 <groupId>org.opentestsystem.delivery</groupId>
