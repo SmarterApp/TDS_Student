@@ -27,9 +27,7 @@
     </properties>
 
     <modules>
-        <module>student-shared</module>
         <module>student</module>
-        <module>student.library</module>
         <module>iris</module>
         <module>SpellCheck</module>
     </modules>
