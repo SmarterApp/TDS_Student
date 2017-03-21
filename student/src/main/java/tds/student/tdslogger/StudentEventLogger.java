@@ -16,25 +16,10 @@ public class StudentEventLogger extends EventLoggerBase {
   }
 
   public enum StudentLogEvent implements LogEvent {
-    ANSWER_QUESTIONS,
-    APPROVAL_CHECK,
     DETERMINE_NEXT_QUESTION,
-    DISPLAY_PAGE_CONTENTS,
-    DISPLAY_PREVIOUS_PAGE,
-    PAUSE_EXAM,
-    READ_QUESTIONS,
-    SCORE_EXAM,
-    SEGMENT_TRANSITION,
-    START_EXAM,
-    STUDENT_LOGIN,
-    STUDENT_LOGOUT,
   }
 
   public enum StudentEventData implements EventData {
-    ACCOMMODATIONS,
-    ASSESSMENTS,
-    EXAMS,
-    QUESTIONS,
     STUDENT_ID,
   }
 

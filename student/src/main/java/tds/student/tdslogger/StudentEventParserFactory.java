@@ -12,22 +12,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import tds.student.tdslogger.StudentEventLogger.StudentEventData;
-import tds.student.tdslogger.StudentEventLogger.StudentLogEvent;
 
 
 public class StudentEventParserFactory extends EventParserFactory {
 
   private static Map<String, Class<? extends EventParser>> classMap = new HashMap<>();
-  private static Map<String, EventLogger.LogEvent> eventMap = new HashMap<>();
 
   static {
-    classMap.put("/MasterShell.axd/checkApproval", CheckApprovalParser.class);
-    classMap.put("/MasterShell.axd/loginStudent", LoginParser.class);
-    classMap.put("*", DefaultParser.class);
-
-    eventMap.put("/MasterShell.axd/checkApproval", StudentLogEvent.APPROVAL_CHECK);
-    eventMap.put("/MasterShell.axd/loginStudent", StudentLogEvent.STUDENT_LOGIN);
-    eventMap.put("/MasterShell.axd/pauseTest", StudentLogEvent.PAUSE_EXAM);
+    classMap.put("/TestShell.axd/updateResponses", UpdateResponsesParser.class);
   }
 
   @Override
@@ -35,59 +27,22 @@ public class StudentEventParserFactory extends EventParserFactory {
     return classMap;
   }
 
-  private static String getEventName(HttpServletRequest request) {
-    String eventName = request.getPathInfo();
-    if (eventMap.containsKey(request.getPathInfo())) {
-      eventName = eventMap.get(request.getPathInfo()).name();
-    }
-    return eventName;
-  }
-
-
-  public static class DefaultParser extends EventParser {
+  public static class UpdateResponsesParser extends EventParser {
     @Override
-    public Optional<EventInfo> parsePreHandle(final HttpServletRequest request, EventLogger logger) {
-      final Map<EventLogger.EventData, Object> fields = getEventDataFields(request);
-      return Optional.of(EventInfo.create(getEventName(request), fields));
-    }
-
-    @Override
-    public Optional<EventInfo> parsePostHandle(HttpServletRequest request, HttpServletResponse response,
-                                               EventLogger logger) {
-      final Map<EventLogger.EventData, Object> fields = getEventDataFields(request);
-      return Optional.of(EventInfo.create(getEventName(request), fields));
-    }
-  }
-
-
-  public static class LoginParser extends DefaultParser {
-    @Override
-    public Optional<EventInfo> parsePostHandle(HttpServletRequest request, HttpServletResponse response,
-                                               EventLogger logger) {
-      final Map<EventLogger.EventData, Object> fields = getEventDataFields(request);
-      fields.put(EventLogger.BaseEventData.RESULT, "success".equals(logger.getField("login_status")));
-      return Optional.of(EventInfo.create(getEventName(request), fields));
-    }
-  }
-
-
-  public static class CheckApprovalParser extends EventParser {
-    @Override
-    public Optional<EventInfo> parsePreHandle(final HttpServletRequest request, EventLogger logger) {
+    public Optional<EventInfo> parsePreHandle(final HttpServletRequest request, Object handler, EventLogger logger) {
       String studentId = "TODO: fake Student ID enter";//request.getParameter("studentID");
       final Map<EventLogger.EventData, Object> fields = getEventDataFields(request);
       fields.put(StudentEventData.STUDENT_ID, studentId);
-      return Optional.of(EventInfo.create(getEventName(request), fields));
+      return Optional.of(EventInfo.create(request.getPathInfo(), fields));
     }
 
     @Override
     public Optional<EventInfo> parsePostHandle(HttpServletRequest request, HttpServletResponse response,
-                                               EventLogger logger) {
+                                               Object handler, EventLogger logger) {
       String studentId = "TODO: fake Student ID exit";//request.getParameter("studentID");
       final Map<EventLogger.EventData, Object> fields = getEventDataFields(request);
       fields.put(StudentEventData.STUDENT_ID, studentId);
-      return Optional.of(EventInfo.create(getEventName(request), fields));
+      return Optional.of(EventInfo.create(request.getPathInfo(), fields));
     }
   }
-
 }
