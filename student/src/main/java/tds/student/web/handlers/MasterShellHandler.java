@@ -416,13 +416,13 @@ public class MasterShellHandler extends TDSHandler
 
     // check if the proctor has responded and get back accommodations if
     // student has been approved
-    boolean isApproved = false;
     boolean isGuestSession = isGuestSession (testSession);
     oppApproval = _oppService.checkTestApproval (oppInstance);
     // clean up comment
     oppApproval.setComment (oppApproval.getComment ());
     // if the opportunity was approved and a testkey was provided load
     // accommodations
+    _eventLogger.putField("result", oppApproval.getStatus().name().toLowerCase());
     if (oppApproval.getStatus () == OpportunityApprovalStatus.Approved) {
       // load the opportunity accommodations
       List<Accommodations> segmentsAccommodations = null;
@@ -431,12 +431,10 @@ public class MasterShellHandler extends TDSHandler
     }
     // if there are accommodations then proctor approved us
     if (oppApproval.getSegmentsAccommodations () != null) {
-      isApproved = true;
       // save cookie
       StudentContext.saveSegmentsAccommodations (oppApproval.getSegmentsAccommodations ());
       StudentCookie.writeStore ();
     }
-    _eventLogger.putField("result", isApproved);
     return new ResponseData<ApprovalInfo> (TDSReplyCode.OK.getCode (), "OK", oppApproval);
   }
 
