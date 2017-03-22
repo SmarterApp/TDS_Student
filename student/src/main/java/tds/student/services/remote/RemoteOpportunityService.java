@@ -235,9 +235,7 @@ public class RemoteOpportunityService implements IOpportunityService {
 
     approvalInfo = checkTestApproval(oppInstance);
 
-    //TODO - This will not work since the comparison is between a String and an enum which will never be equal.  Bug has been filed but to fix it
-    //unit tests need to be written.
-    if (ExamStatusCode.STATUS_APPROVED.equals(approvalInfo.getStatus())) {
+    if (ExamStatusCode.STATUS_APPROVED.equalsIgnoreCase(approvalInfo.getStatus().name())) {
       examRepository.updateStatus(oppInstance.getExamId(), ExamStatusCode.STATUS_STARTED, "segment");
     }
 
