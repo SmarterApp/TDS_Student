@@ -273,56 +273,67 @@
 		</dependency>
 
 		<dependency>
-		<groupId>org.opentestsystem.shared</groupId>
-		<artifactId>shared-logging</artifactId>
+            <groupId>org.opentestsystem.shared</groupId>
+            <artifactId>shared-logging</artifactId>
 		</dependency>
+
 		<dependency>
-		<groupId>org.opentestsystem.shared</groupId>
-		<artifactId>shared-threading</artifactId>
+            <groupId>org.opentestsystem.shared</groupId>
+            <artifactId>shared-threading</artifactId>
 		</dependency>
+
 		<dependency>
-		<groupId>org.opentestsystem.shared</groupId>
-		<artifactId>shared-test</artifactId>
+            <groupId>org.opentestsystem.shared</groupId>
+            <artifactId>shared-test</artifactId>
 		</dependency>
+
         <dependency>
             <groupId>org.opentestsystem.shared</groupId>
             <artifactId>shared-web</artifactId>
         </dependency>
+
 		<dependency>
-		<groupId>commons-primitives</groupId>
-		<artifactId>commons-primitives</artifactId>
+            <groupId>commons-primitives</groupId>
+            <artifactId>commons-primitives</artifactId>
 		</dependency>
+
 		<dependency>
-		<groupId>commons-collections</groupId>
-		<artifactId>commons-collections</artifactId>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
 		</dependency>
+
 		<dependency>
-		<groupId>commons-lang</groupId>
-		<artifactId>commons-lang</artifactId>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
 		</dependency>
+
 		<dependency>
-		<groupId>commons-configuration</groupId>
-		<artifactId>commons-configuration</artifactId>
+            <groupId>commons-configuration</groupId>
+            <artifactId>commons-configuration</artifactId>
 		</dependency>
+
 		<dependency>
-		<groupId>commons-digester</groupId>
-		<artifactId>commons-digester</artifactId>
+            <groupId>commons-digester</groupId>
+            <artifactId>commons-digester</artifactId>
 		</dependency>
+
 		 <!--@Inject-->
 		<dependency>
-		<groupId>javax.inject</groupId>
-		<artifactId>javax.inject</artifactId>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
 		</dependency>
+
 		<!-- Servlet -->
 		<dependency>
-		<groupId>javax.servlet</groupId>
-		<artifactId>servlet-api</artifactId>
-		<scope>provided</scope>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <scope>provided</scope>
 		</dependency>
+
 		<dependency>
-		<groupId>javax.servlet.jsp</groupId>
-		<artifactId>jsp-api</artifactId>
-		<scope>provided</scope>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>jsp-api</artifactId>
+            <scope>provided</scope>
 		</dependency>
 
 	</dependencies>

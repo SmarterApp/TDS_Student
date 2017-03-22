@@ -103,11 +103,13 @@ body {
 }
 /* fb-85688 prevents overlapping of Grid SVG objects in IE9/10 */
 #contents div.pageWrapper.hiding object {
-	overflow: hidden;
-	margin-left: -9999px;
+	overflow: hidden !important;
+	margin-left: -9999px !important;
 }
 /* make each page aboslutely positioned, with a default z-index of 0*/
 .browser_ie #contents div.pageWrapper, 
+/*SB-1505 : Code fix for Backlog Item 5.6, Safari9 Braille Test Display.*/
+.browser_safari #contents div.pageWrapper,
 .browser_chrome #contents div.pageWrapper {
 	position: absolute;
 	z-index: 0;
@@ -118,6 +120,8 @@ body {
 }
 /* move each hidden page below the shims that are drawn */
 .browser_ie #contents div.pageWrapper.hiding, 
+/*SB-1505 : Code fix for Backlog Item 5.6, Safari9 Braille Test Display.*/
+.browser_safari #contents div.pageWrapper.hiding,
 .browser_chrome #contents div.pageWrapper.hiding {
 	height: 0px;
 	width: 0px;
@@ -161,7 +165,8 @@ I can't hide passages because when they show they
 have a scrolling motion. I think it is because of 
 the expand/collapse styles we applied.
 */
-div.pageWrapper div.itemContainer.hiding {
+div.pageWrapper div.itemContainer.hiding,
+div.pageWrapper div.layoutPaginatedPassage div.thePassage.hiding {
 	overflow: hidden !important;
 	height: 0px !important;
 	width: 0px !important;
@@ -342,6 +347,12 @@ div.pageWrapper div.thePassage.hiding.contentEmpty {
 	position: fixed;
 	top: 0px;
 	right: 20px;
+	background: #fff;
+	border-left: solid 1px #c2c2c2;
+	border-right: solid 1px #c2c2c2;
+}
+.TDS_CCInvert #smallButtons, .TDS_CCWhiteN #smallButtons, .TDS_CCYellowB #smallButtons{
+	background: transparent;
 }
 #smallButtons a {
 	overflow: hidden;
@@ -349,8 +360,8 @@ div.pageWrapper div.thePassage.hiding.contentEmpty {
 	text-indent: -9999px;
 	height: 14px;
 	width: 14px;
-	margin-right: 0px;
-	margin-left: 15px;
+	margin-right: 7px;
+	margin-left: 7px;
 	border: solid 2px #c2c2c2;
 	-moz-border-radius:  50%;
 	-webkit-border-radius:  50%;
@@ -395,6 +406,10 @@ div.pageWrapper div.thePassage.hiding.contentEmpty {
 	height: 53px;
 	border-bottom: solid 1px #c2c2c2;
 	font-size: 9px;
+}
+/* bug #180275 */
+.platform_ios #navigation {
+	height: 52px;
 }
 #navigation ul {
 	display: block;
@@ -527,6 +542,8 @@ ul#studentTools {
     outline: none;
     background-color: rgba(211, 242, 254, 0.3);
     border: solid 1px #00aeef;
+    /* SB-1504: Bottom Next Button moves up on space bar */
+    position: fixed;
 }
 .TDS_SLM1 #btnNextBottom:focus .icon, 
 .TDS_SLM1 #btnNextBottom:active .icon {
@@ -671,6 +688,10 @@ ul#studentTools {
 	z-index: 0;
 }
 
+.lr-enabled.no-touch #contents{
+	position: fixed;
+}
+
 /* @group Context Menu */
 
 .yui-skin-sam .yuimenu {
@@ -683,7 +704,22 @@ ul#studentTools {
 	box-shadow: 0em 0em .4em #666;
 	font-size: 10px;
 	line-height: 16px;
-	font-family: "Lucida Grande", "Lucida Sans", Arial, Helvetica, sans-serif;
+	font-family: "Lucida Grande", Lucida, Arial, Helvetica, sans-serif;
+}
+/* push menu over in Streamlined to make room for scroll bar*/
+.TDS_SLM1 .toolsContainer .yuimenu  {
+	 border-right: 20px solid transparent;
+	 -webkit-box-shadow: inherit;
+	 -moz-box-shadow: inherit;
+	 box-shadow: inherit;
+}
+.TDS_SLM1 .toolsContainer .yuimenu .bd {
+	-webkit-box-shadow: 0em 0em .4em #666;
+	-moz-box-shadow: 0em 0em .4em #666;
+	box-shadow: 0em 0em .4em #666;
+	-moz-border-radius:  5px;
+	-webkit-border-radius:  5px;
+	border-radius: 5px;
 }
 .yui-skin-sam .yuimenu .bd {
 	background-color: transparent;
@@ -896,8 +932,8 @@ ul#studentTools {
     overflow: hidden;
     text-indent: -9999px;
     line-height: 25px;
-    /* SB-622: commenting following line for tutorial close button
-	margin-top: -25px; */
+    /* SB-1505-UI-Consistency-Enhancements:SB-622: Remove the margin-top specification so that the tutorial window's close button is visible. This was also reported in SB-622*/
+    /*margin-top: -25px; */
     text-decoration: none;
 	background: url(../../Images/modern/sprites_mobile_0.png) center -2730px no-repeat;
 }
@@ -1459,6 +1495,7 @@ a.yui-panel-bottom:active
 .reviewInstructions {
 	float: right;
 	width: 570px;
+	margin-bottom: 1em;
 }
 .TDS_PS_L2 .reviewInstructions {
 	width: 545px;
@@ -1583,8 +1620,8 @@ a.yui-panel-bottom:active
 
 /* @group review old */
 
-#markedWarning, 
-#unansweredWarning {
+.markedWarning,
+.unansweredWarning {
 	background: rgba(0, 0, 0, 0) url("../../Images/Universal/marked.png") no-repeat scroll 0 center;
     border: 1px solid #ccc;
     font-size: 1.3em;
@@ -1592,10 +1629,10 @@ a.yui-panel-bottom:active
     padding: 0.5em 0.5em 0.5em 35px;
     width: 147px;
 }
-#markedWarning {
+.markedWarning {
 	margin-top: 1em;
 }
-#unansweredWarning {
+.unansweredWarning {
 	background-image: url(../../Images/Universal/unanswered.png);
 }
 
@@ -1628,9 +1665,9 @@ a.yui-panel-bottom:active
 
 
 /* @group Review New List View */
-.TDS_RSL_ListView #markedWarning, 
-.TDS_RSL_ListView #unansweredWarning {
-	background: url(../../Images/Universal/marked.png) no-repeat 1em center;
+.TDS_RSL_ListView .markedWarning,
+.TDS_RSL_ListView .unansweredWarning {
+	background: url(../../Images/Universal/marked.svg) no-repeat 1em center;
 	border: solid 1px #666;
 	font-size: 1.3em;
 	padding-left: 4em;
@@ -1639,12 +1676,24 @@ a.yui-panel-bottom:active
 	padding-top: 1em;
 	margin-bottom: 1em;
 	width: auto;
+	background-size: 2em;
 }
-.TDS_RSL_ListView #markedWarning {
+.TDS_RSL_ListView .markedWarning {
 	margin-top: 1em;
 }
-.TDS_RSL_ListView #unansweredWarning {
-	background-image: url(../../Images/Universal/unanswered.png);
+.TDS_RSL_ListView .unansweredWarning {
+	background-image: url(../../Images/Universal/unanswered.svg);
+}
+
+.TDS_CCYellowB.TDS_RSL_ListView .markedWarning,
+.TDS_CCWhiteN.TDS_RSL_ListView .markedWarning,
+.TDS_CCInvert.TDS_RSL_ListView .markedWarning {
+	background-image: url(../Shared/Images/Universal/marked_white.svg);
+}
+.TDS_CCYellowB.TDS_RSL_ListView .unansweredWarning,
+.TDS_CCWhiteN.TDS_RSL_ListView .unansweredWarning,
+.TDS_CCInvert.TDS_RSL_ListView .unansweredWarning {
+	background-image: url(../Shared/Images/Universal/unanswered_white.svg);
 }
 .reviewListView {
 	position: absolute;
@@ -1755,10 +1804,11 @@ a.yui-panel-bottom:active
     column-count: 6;
 }
 .TDS_RSL_ListView .review .pages a.marked {
-	background: url(../../Images/Universal/marked.png) no-repeat right center;
+	background: url(../../Images/Universal/marked.svg) no-repeat right center;
 	-moz-box-shadow: 0 0 5px 2px rgba(0,174,239,.1);
    	-webkit-box-shadow: 0 0 5px 2px rgba(0,174,239,.1);
 	box-shadow: 0 0 5px 2px rgba(0,174,239,.4);
+	background-size: 1.5em;
 }
 .TDS_RSL_ListView .review .pages a.marked:hover, 
 .TDS_RSL_ListView .review .pages a.marked:focus, 
@@ -1769,10 +1819,12 @@ a.yui-panel-bottom:active
 	background-color: #00aeef;
 }
 .TDS_RSL_ListView .review .pages a.unanswered {
-	background: url(../../Images/Universal/unanswered.png) no-repeat right center;
+	background: url(../../Images/Universal/unanswered.svg) no-repeat right center;
+	background-size: 1.5em;
 }
 .TDS_RSL_ListView .review .pages a.marked.unanswered {
-	background-image: url(../../Images/Universal/marked_unanswered.png);
+	background-image: url(../../Images/Universal/marked_unanswered.svg);
+	background-size: 1.5em;
 }
 .TDS_RSL_ListView.TDS_PS_L2 .review .pages, 
 .TDS_RSL_ListView.TDS_PS_L3 .review .pages, 
@@ -1781,18 +1833,27 @@ a.yui-panel-bottom:active
 }
 .TDS_CCYellowB.TDS_RSL_ListView .review .pages a.marked, 
 .TDS_CCInvert.TDS_RSL_ListView .review .pages a.marked, 
-.TDS_CCWhiteN.TDS_RSL_ListView .review .pages a.marked {
-	background-image: url(../../Images/Universal/marked_acc.png);
+.TDS_CCWhiteN.TDS_RSL_ListView .review .pages a.marked,
+.TDS_CCYellowB.TDS_RSL_ListView .markedWarning,
+.TDS_CCInvert.TDS_RSL_ListView .markedWarning,
+.TDS_CCWhiteN.TDS_RSL_ListView .markedWarning{
+	background-image: url(../../Images/Universal/marked_white.svg);
+	background-size: 1.5em;
 }
 .TDS_CCYellowB.TDS_RSL_ListView .review .pages a.unanswered, 
 .TDS_CCInvert.TDS_RSL_ListView .review .pages a.unanswered, 
-.TDS_CCWhiteN.TDS_RSL_ListView .review .pages a.unanswered {
-	background-image: url(../../Images/Universal/unanswered_acc.png);
+.TDS_CCWhiteN.TDS_RSL_ListView .review .pages a.unanswered,
+.TDS_CCYellowB.TDS_RSL_ListView .unansweredWarning,
+.TDS_CCInvert.TDS_RSL_ListView .unansweredWarning,
+.TDS_CCWhiteN.TDS_RSL_ListView .unansweredWarning{
+	background-image: url(../../Images/Universal/unanswered_white.svg);
+	background-size: 1.5em;
 }
 .TDS_CCYellowB.TDS_RSL_ListView .review .pages a.marked.unanswered, 
 .TDS_CCInvert.TDS_RSL_ListView .review .pages a.marked.unanswered, 
 .TDS_CCWhiteN.TDS_RSL_ListView .review .pages a.marked.unanswered {
-	background-image: url(../../Images/Universal/marked_unanswered_acc.png);
+	background-image: url(../../Images/Universal/marked_unanswered_white.svg);
+	background-size: 1.5em;
 }
 .TDS_CCYellowB.TDS_RSL_ListView .review .pages a.marked:hover, 
 .TDS_CCYellowB.TDS_RSL_ListView .review .pages a.marked:focus, 
@@ -1805,7 +1866,9 @@ a.yui-panel-bottom:active
 .TDS_CCInvert.TDS_RSL_ListView .review .pages a.marked:active {
 	background-color: #00aeef;
 }
-.TDS_CCInvert.TDS_RSL_ListView .pages a {
+.TDS_CCInvert.TDS_RSL_ListView .pages a,
+.TDS_CCWhiteN.TDS_RSL_ListView .pages a,
+.TDS_CCYellowB.TDS_RSL_ListView .pages a {
 	-moz-box-shadow: 0 0 3px 1px rgba(0,0,0,.2);
    	-webkit-box-shadow: 0 0 3px 1px rgba(0,0,0,.2);
 	box-shadow: 0 0 3px 1px rgba(255,255,255,.2);
@@ -1982,6 +2045,14 @@ a.yui-panel-bottom:active
 /* shift content up to take advantange of extra space*/
 .fs-enabled #contents {
     top: 0px;
+    /* for iOS to oviride inline height */
+    height: 100%;
+}
+.TDS_PS_L1.fs-enabled.TDS_PIG1 #contents,
+.TDS_PS_L2.fs-enabled.TDS_PIG1 #contents,
+.TDS_PS_L3.fs-enabled.TDS_PIG1 #contents,
+.TDS_PS_L4.fs-enabled.TDS_PIG1 #contents {
+	top: 0px;
 }
 /*hide all buttons except for toggle*/
 .fs-enabled #studentControls a {
@@ -2017,154 +2088,604 @@ a.yui-panel-bottom:active
 }
 /* @end */
 
-/* @group pagination widget */
+/* @group passage tabs widget */
+/* Making room, shifting elements */
+.TDS_PP1 .pageWrapper .thePassage {
+  top: 65px;
+}
+/* logic to show correct passage */
+.tds-groupedPassage {
+  display: none;
+}
+.tds-groupedPassage.tds-passageActive {
+  display: block;
+}
 
-.multi-page {
-	list-style: none;
-	position: fixed;
+
+/* tab styling */
+.tds-passageTabs {
+  /*background-color: #f3f3f3;*/
+  position: fixed;
+  top: 76px;
+  left: 0px;
+  width: 100%;
+  height: 64px;
+  overflow: hidden;
+  border-right: solid 1px #c2c2c2;
+}
+.layout_11 .tds-passageTabs,
+.layout_17 .tds-passageTabs {
+  width: 60%;
+}
+.layout_21 .tds-passageTabs {
+  width: 40%;
+}
+.layout_24 .tds-passageTabs,
+.layout_29 .tds-passageTabs {
+  width: 38%;
+}
+.layout_25 .tds-passageTabs {
+  width: 30%;
+}
+.layout_26 .tds-passageTabs {
+  width: 50%;
+}
+.layout_27 .tds-passageTabs,
+.layout_28 .tds-passageTabs {
+  width: 70%;
+}
+.TDS_PS_L1 .tds-passageTabs,
+.TDS_PS_L2 .tds-passageTabs {
+  top: 97px;
+}
+.TDS_PS_L3 .tds-passageTabs,
+.TDS_PS_L4 .tds-passageTabs {
+  top: 121px;
+}
+.fs-enabled .tds-passageTabs {
+  top: 1px;
+}
+.tds-passageTabs::after {
+  content: ' ';
+  display: block;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 0px;
+  border-bottom: solid 1px #6cb9d6;
+}
+.tds-passageTabs .tablist {
+  list-style: none;
+  display: block;
+  height: 52px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 84px;
+	padding-left: 20px;
+}
+.fs-enabled .tds-passageTabs .tablist {
+  padding-left: 60px;
+}
+.tds-passageTabs .tablist li {
+
+}
+.tds-passageTabs .tab {
+  background-color: #fff;
+  color: #000;
+  text-decoration: none;
+  display: inline-block;
+  padding: 15px 10px 10px;
+  font-weight: bold;
+  font-size: 17px;
+  line-height: 1.5em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-shadow: 0px 0px 2px #b4b4b4;
+0 -moz-box-shadow: 0px 0px 2px #b4b4b4;
+  box-shadow: 0px 0px 2px #b4b4b4;
+  border: solid 1px #fff;
+  border-bottom-color: #6cb9d6;
+  cursor: pointer;
+  -webkit-transition: background-color .3s linear;
+	-moz-transition: background-color .3s linear;
+	transition: background-color .3s linear;
+	text-indent: -9999px;
+	position: relative;
+	margin: 0px 5px 0px 0px;
+	float: left;
+	min-width: 15px;
+}
+.tds-passageTabs .tab::after {
+   content: ' ';
+    display: block;
+   position: absolute;
+	 top: 0;
+	 left: 0;
+   height: 28px;
+   width: 100%;
+   background-color: rgba(197, 197, 197, .3);
+   color: #4D4D4D;
+   line-height: 28px;
+	 text-align: center;
+	 text-indent: 0px;
+	 -webkit-transition: background-color .3s linear;
+ 	-moz-transition: background-color .3s linear;
+ 	transition: background-color .3s linear;
+}
+
+.tds-passageTabs .tab.active {
+  z-index: 9;
+  border-color: #6cb9d6;
+  border-bottom-color: #fff;
+	max-width: 70%;
+	text-indent: inherit;
+	padding-left: 52px;
+	-webkit-box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, .2);
+	-moz-box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, .2);
+	box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, .2);
+}
+.tds-passageTabs .tab.active:hover,
+.tds-passageTabs .tab.active:focus {
+  border-bottom-color: #6cb9d6;
+}
+.tds-passageTabs .tab.active::after {
+  width: 42px;
+	height: 30px;
+	background-color: #6cb9d6;
+	color: #fff;
+}
+.pageWrapper .tds-passageTabs .tab:hover::after,
+.pageWrapper .tds-passageTabs .tab:focus::after {
+  background-color: #6cb9d6;
+	color: #fff;
+}
+/* Setting up indents for each tab, plus tab numbers */
+.tds-passageTabs li:nth-child(1) .tab:after {
+   content: '1';
+}
+.tds-passageTabs li:nth-child(2) .tab:after {
+   content: '2';
+}
+.tds-passageTabs li:nth-child(3) .tab:after {
+   content: '3';
+}
+.tds-passageTabs li:nth-child(4) .tab:after {
+   content: '4';
+}
+.tds-passageTabs li:nth-child(5) .tab:after {
+   content: '5';
+}
+
+.passage-expanded .tds-passageTabs {
+  width: 90%;
+  z-index: 6;
+}
+.passage-expanded .tds-passageTabs li:nth-child(2) .tab {
+  margin-left: 12%;
+}
+.passage-expanded .tds-passageTabs li:nth-child(3) .tab {
+  margin-left: 22%;
+}
+.passage-expanded .tds-passageTabs li:nth-child(4) .tab {
+  margin-left: 32%;
+}
+.passage-expanded .tds-passageTabs li:nth-child(5) .tab {
+  margin-left: 42%;
+}
+/* Color Choices */
+
+.TDS_CCYellow .tds-passageTabs .tab {
+	background-color: #ffffce;
+  border-bottom-color: #ffffce;
+}
+.TDS_CCYellow2 .tds-passageTabs .tab {
+	background-color: #fcfce2;
+  border-bottom-color: #fcfce2;
+}
+.TDS_CCCream .tds-passageTabs .tab {
+	background-color: #ede0ce;
+  border-bottom-color: #ede0ce;
+}
+.TDS_CCBlue .tds-passageTabs .tab {
+	background-color: #99ffff;
+  border-bottom-color: #99ffff;
+}
+.TDS_CCBlue2 .tds-passageTabs .tab {
+	background-color: #cfffff;
+  border-bottom-color: #cfffff;
+}
+.TDS_CCMagenta .tds-passageTabs .tab {
+	background-color: #ffd0ff;
+  border-bottom-color: #ffd0ff;
+}
+.TDS_CCMagenta2 .tds-passageTabs .tab {
+	background-color: #fde3fd;
+  border-bottom-color: #fde3fd;
+}
+.TDS_CCGreen .tds-passageTabs .tab {
+	background-color: #cff799;
+  border-bottom-color: #cff799;
+}
+.TDS_CCGreen2 .tds-passageTabs .tab {
+	background-color: #e0f6c1;
+  border-bottom-color: #e0f6c1;
+}
+.TDS_CCGray .tds-passageTabs .tab {
+	background-color: #cecfce;
+  border-bottom-color: #cecfce;
+}
+.TDS_CCGray2 .tds-passageTabs .tab {
+	background-color: #e5e5e5;
+  border-bottom-color: #e5e5e5;
+}
+.TDS_CCMedGrayLtGray .tds-passageTabs .tab {
+	background-color: #e5e5e5;
+	color: #666;
+  border-bottom-color: #e5e5e5;
+}
+.TDS_CCYellowB .tds-passageTabs .tablist .tab,
+.TDS_CCYellowB .tds-passageTabs .tablist .tab.active {
+	background-color: #039;
+	color:#FC0;
+  border-bottom-color: #039;
+}
+.TDS_CCYellowB .tds-passageTabs .tab.active::after {
+	background-color: #ffcc00;
+	color:#003399;
+}
+.TDS_CCYellowB .tds-passageTabs .tab::after {
+  color: #ffcc00;
+  background-color: #627396;
+}
+.TDS_CCInvert .tds-passageTabs .tab,
+.TDS_CCInvert .tds-passageTabs .tablist .tab.active {
+	background-color: #000;
+	color:#FFF;
+  border-bottom-color: #000;
+}
+.TDS_CCInvert .tds-passageTabs li:nth-child(n) .tab.active::after {
+	background-color: #fff;
+	color:#000;
+}
+.TDS_CCWhiteN .tds-passageTabs .tab {
+	color:#FFF;
+	background-color: #003366;
+}
+.TDS_CCWhiteN .tds-passageTabs .tablist .tab.active {
+	background-color: #003366;
+	color:#FFF;
+  border-bottom-color: #003366;
+}
+.TDS_CCWhiteN .tds-passageTabs .tab.active::after {
+	background-color: #fff;
+	color:#003366;
+}
+.TDS_CCWhiteN .tds-passageTabs .tab::after {
+	background-color: #3a6085;
+	color: #fff;
+}
+/* @end */
+
+/* @group page tabs widget */
+.TDS_PIG1 .bigTable .theQuestions {
+  border-top: 64px solid transparent;
+}
+.TDS_PIG1 .bigTable.noColumns .theQuestions,
+.TDS_PIG1 .bigTable.compund .theQuestions {
+  border-top: none;
+}
+
+.TDS_PIG1 .layout_11 .tds-pageTabs,
+.TDS_PIG1 .layout_17 .tds-pageTabs {
+	width: 40%;
+}
+.TDS_PIG1 .layout_21 .tds-pageTabs {
+	width: 60%;
+}
+.TDS_PIG1 .layout_24 .tds-pageTabs,
+.TDS_PIG1 .layout_29 .tds-pageTabs {
+	width: 62%;
+}
+.TDS_PIG1 .layout_25 .tds-pageTabs {
+	width: 70%;
+}
+.TDS_PIG1 .layout_26 .tds-pageTabs {
+	width: 50%;
+}
+.TDS_PIG1 .layout_27 .tds-pageTabs,
+.TDS_PIG1 .layout_28 .tds-pageTabs {
+	width: 30%;
+}
+.TDS_PIG1 .theQuestions .padding,
+.TDS_PIG1.TDS_ExpandableItems1 .theQuestions .padding,
+.TDS_PIG1.TDS_ExpandableItems1 .thePassage .padding {
+  padding-top: 10px;
+}
+
+.fs-enabled.TDS_ExpandableItems1.TDS_PIG1 .passageTools.toolsContainer,
+.fs-enabled.TDS_PS_L1.TDS_ExpandableItems1.TDS_PIG1 .passageTools.toolsContainer,
+.fs-enabled.TDS_PS_L2.TDS_ExpandableItems1.TDS_PIG1 .passageTools.toolsContainer,
+.fs-enabled.TDS_PS_L3.TDS_ExpandableItems1.TDS_PIG1 .passageTools.toolsContainer,
+.fs-enabled.TDS_PS_L4.TDS_ExpandableItems1.TDS_PIG1 .passageTools.toolsContainer {
+	top: 16px;
+}
+.tds-pageTabs {
+	border-bottom: solid 1px #6cb9d6;
+	height: 64px;
+	position: absolute;
 	right: 0px;
-	top: 76px;
-	z-index: 5;
+	top: 0px;
+	z-index: 7;
+	width: 100%;
+}
+.TDS_PIG1 .items-expanded .tds-pageTabs {
+	width: 90%;
+}
+.passage-expanded .tds-pageTabs {
+	z-index: 0;
+}
+.tds-pageTabs .tablist {
+	list-style: none;
+	position: absolute;
+	right: 0px;
+	top: 0px;
 	padding-right: 25px;
 	float: right;
+	height: 64px;
+	padding-left: 5px;
 }
-.fs-enabled .multi-page {
-	top: 0px;
-}
-.layout_11 .multi-page, 
-.layout_17 .multi-page {
-	max-width: 35%;
-}
-.layout_21 .multi-page, 
-.layout_24 .multi-page, 
-.layout_29 .multi-page {
-	max-width: 55%;
-}
-.layout25 .multi-page {
-	max-width: 65%;
-}
-.layout26 .multi-page {
-	max-width: 45%;
-}
-.layout27 .multi-page, 
-.layout28 .multi-page {
-	max-width: 25%;
-}
-.platform_ios .layoutSingleMulti .multi-page{
-	position: -webkit-sticky;
-}
-.platform_android .multi-page {
-	z-index: 6;
-}
-.platform_android .passage-expanded .multi-page {
-	z-index: 5;
-}
-.pageWrapper.hiding .multi-page, 
-.TDS_PIG1.TDS_PIG_HIDE .multi-page {
-	display: none;
-}
-.multi-page li {
-	margin-bottom: 6px;
-	margin-left: 5px;
-	border: solid 1px #fff;
-	-moz-box-shadow: 0 0 3px 2px rgba(209,209,209,.3);
-   	-webkit-box-shadow: 0 0 3px 2px rgba(209,209,209,.3);
-	box-shadow: 0 0 3px 2px rgba(209,209,209,.3);
-	position: relative;
+.tds-pageTabs .tablist li {
 	float: left;
 	border-top-style: none;
+	position: relative;
+	overflow: hidden;
+	padding-left: 2px;
+	padding-right: 2px;
 }
-.multi-page a {
+.tds-pageTabs .tablist .tab {
 	color: #000;
     display: block;
-    font-family: "Lucida Grande","Lucida Sans",Arial,Helvetica,sans-serif;
-    font-size: 10px;
-    line-height: 25px;
-    min-width: 12px;
-    padding: 8px 5px 0px;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 17px;
+		font-weight: bold;
     text-align: center;
     text-decoration: none;
-	-moz-transition: background-color .2s ease-in;
-    -webkit-transition: background-color .2s ease-in;
-    transition: background-color .2s ease-in;
+		-webkit-box-shadow: 0px 0px 2px #b4b4b4;
+	0 -moz-box-shadow: 0px 0px 2px #b4b4b4;
+	  box-shadow: 0px 0px 2px #b4b4b4;
+	  border: solid 1px #fff;
+	  border-bottom-color: #6cb9d6;
+	  cursor: pointer;
+		overflow: hidden;
+		position: relative;
+		min-width: 35px;
+		height: 50px;
+		margin-top: 13px;
+		line-height: 28px;
+		color: #4D4D4D;
+		padding-right: 5px;
+		text-indent: 5px;
 }
-.TDS_CC0 .multi-page a {
-	background-color: rgba(252,252,252,0.9);
+.tds-pageTabs .tablist .tab::before {
+		content: '';
+		display: block;
+		height: 28px;
+		width: 100%;
+    top: 0;
+		background-color: rgba(197, 197, 197, .3);
+		position: absolute;
+		z-index: -1;
+		-webkit-transition: background-color .3s linear;
+		-moz-transition: background-color .3s linear;
+		transition: background-color .3s linear;
 }
-.TDS_CCYellow .multi-page a {
-	background-color: rgba(255,255,206,0.9);
+.tds-pageTabs .tablist .tab:hover::before,
+.tds-pageTabs .tablist .tab:focus::before {
+		background-color: #6cb9d6;
 }
-.TDS_CCYellow2 .multi-page a {
-	background-color: rgba(252,252,226,0.9);
+.tds-pageTabs .tablist .tab:hover,
+.tds-pageTabs .tablist .tab:focus {
+		color: #fff;
 }
-.TDS_CCCream .multi-page a {
-	background-color: rgba(237,224,206,0.9);
+.tds-pageTabs .tablist .tab.active {
+		border-color: #6cb9d6;
+		color: #fff;
+		border-bottom-color: #fff;
+		-webkit-box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, .2);
+		-moz-box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, .2);
+		box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, .2);
 }
-.TDS_CCGreen .multi-page a {
-	background-color: rgba(207,247,153,0.9);
+.tds-pageTabs .tablist .tab.active::before {
+		background-color: #6cb9d6;
 }
-.TDS_CCGreen2 .multi-page a {
-	background-color: rgba(224,246,193,0.9);
+.tds-pageTabs .tablist .tab.answered::after {
+    content: "\e628";
+    display: block !important;
+    height: 12px;
+    color: #00a651;
+    font-size: 14px;
+		line-height: 9px;
+    text-align: center;
+		margin-top: 6px;
 }
-.TDS_CCBlue .multi-page a {
-	background-color: rgba(153,255,255,0.9);
+.tds-pageTabs .tab.passage {
+	text-indent: -9999px;
+	width: 24px;
+	overflow: hidden;
 }
-.TDS_CCBlue2 .multi-page a {
-	background-color: rgba(207,255,255,0.9);
+.tds-pageTabs .tab.passage::after {
+	content: "\e900";
+    background-image: none;
+    display: block !important;
+    height: 24px;
+    left: 50%;
+    margin-left: -12px;
+    position: absolute;
+    top: 2px;
+    width: 24px;
+    z-index: 1;
+    font-size: 24px;
+    text-align: center;
+    text-indent: 0;
 }
-.TDS_CCMagenta .multi-page a {
-	background-color: rgba(255,208,255,0.9);
+.passage-expanded .tds-pageTabs .tablist {
+	z-index: 1;
 }
-.TDS_CCMagenta2 .multi-page a {
-	background-color: rgba(253,227,253,0.9);
+.TDS_PIG1 .layout_34 .layoutPaginatedPassage .tds-pageTabs {
+	position: fixed;
+	top: 68px;
 }
-.TDS_CCGray .multi-page a {
-	background-color: rgba(206,207,206,0.9);
+.TDS_PIG1.TDS_PS_L1 .layout_34 .layoutPaginatedPassage .tds-pageTabs,
+.TDS_PIG1.TDS_PS_L2 .layout_34 .layoutPaginatedPassage .tds-pageTabs {
+	top: 88px;
+	font-size: 17px;
 }
-.TDS_CCGray2 .multi-page a, 
-.TDS_CCMedGrayLtGray .multi-page a {
-	background-color: rgba(229,229,229,0.9);
+.TDS_PIG1.TDS_PS_L3 .layout_34 .layoutPaginatedPassage .tds-pageTabs,
+.TDS_PIG1.TDS_PS_L4 .layout_34 .layoutPaginatedPassage .tds-pageTabs {
+	top: 113px;
+	font-size: 17px;
 }
-.TDS_CCInvert .multi-page a {
-	background-color: rgba(0,0,0,0.9);
+.TDS_PS_L1.TDS_PIG1 .layout_34 .layoutPaginatedPassage .passageTools.toolsContainer,
+.TDS_PS_L2.TDS_PIG1 .layout_34 .layoutPaginatedPassage .passageTools.toolsContainer {
+	top: 108px;
 }
-.TDS_CCWhiteN .multi-page a {
-	background-color: rgba(0,51,102,0.9);
+.TDS_PS_L3.TDS_PIG1 .layout_34 .layoutPaginatedPassage .passageTools.toolsContainer,
+.TDS_PS_L4.TDS_PIG1 .layout_34 .layoutPaginatedPassage .passageTools.toolsContainer {
+	top: 131px;
 }
-.TDS_CCYellowB .multi-page a {
-	background-color: rgba(0,51,153,0.9);
+.fs-enabled.TDS_PIG1 .layout_34 .layoutPaginatedPassage .tds-pageTabs {
+	top: 0px;
 }
-.multi-page a:active, 
-.multi-page a:focus, 
-.multi-page a:hover {
+.fs-enabled.TDS_PIG1 .layout_34 .layoutPaginatedPassage .passageTools.toolsContainer {
+	top: 17px;
+}
+.TDS_PIG1 .layout_34 .layoutPaginatedPassage .passageTools.toolsContainer .toolButton.passageMenu {
+	margin: 0px;
+}
+.TDS_PIG1 .layout_34 .layoutPaginatedPassage .tablist {
+	right: 64px;
+}
+.TDS_PIG1.TDS_ExpandableItems1 .layoutPaginatedPassage .theQuestions .padding,
+.TDS_PIG1.TDS_ExpandableItems1 .layoutPaginatedPassage .thePassage .padding {
+    padding-top: 0px;
+}
+.TDS_PIG1 .layout_34 .layoutPaginatedPassage .passageTools.toolsContainer {
+	top: 90px;
+  left: 100%;
+  width: 45px;
+  margin-left: -67px;
+}
+.TDS_PIG1 .layoutPaginatedPassage {
+    top: 58px;
+}
+.TDS_PIG1 .bigTable.layoutPaginatedPassage .theQuestions {
+    border-top: none;
+}
+.TDS_PIG1 .layoutPaginatedPassage .thePassage,
+.TDS_PIG1 .layoutPaginatedPassage .theQuestions {
+    padding: 20px;
+}
+.TDS_CCYellow .tablist .tab.active {
+	border-bottom-color: #ffffce;
+}
+.TDS_CCYellow2 .tablist .tab.active{
+	border-bottom-color: #fcfce2;
+}
+.TDS_CCCream .tablist .tab.active{
+	border-bottom-color: #ede0ce;
+}
+.TDS_CCBlue .tablist .tab.active{
+	border-bottom-color: #99ffff;
+}
+.TDS_CCBlue2 .tablist .tab.active{
+	border-bottom-color: #cfffff;
+}
+.TDS_CCMagenta .tablist .tab.active{
+	border-bottom-color: #ffd0ff;
+}
+.TDS_CCMagenta2 .tablist .tab.active{
+	border-bottom-color: #fde3fd;
+}
+.TDS_CCGreen .tablist .tab.active{
+	border-bottom-color: #cff799;
+}
+.TDS_CCGreen2 .tablist .tab.active{
+	border-bottom-color: #e0f6c1;
+}
+.TDS_CCGray .tablist .tab.active{
+	border-bottom-color: #cecfce;
+}
+.TDS_CCGray .tds-passageTabs .tab::after,
+.TDS_CCGray .tds-pageTabs .tablist .tab::before {
+		background-color: #dadada;
+}
+.TDS_CCGray .tds-passageTabs .tab.active::after,
+.TDS_CCGray .tds-pageTabs .tablist .tab.active::before {
+		background-color: #6cb9d6;
+}
+.TDS_CCGray2 .tablist .tab.active{
+	border-bottom-color: #e5e5e5;
+}
+.TDS_CCMedGrayLtGray .tablist .tab.active{
+	border-bottom-color: #e5e5e5;
+}
+.TDS_CCYellowB .tablist .tab {
+	color: #ffcc00;
+}
+.TDS_CCYellowB .tablist .tab::before {
+	background-color: #627396;
+}
+.TDS_CCYellowB .tablist .tab.active{
+	color: #003399;
+	border-bottom-color: #003399;
+}
+.TDS_CCYellowB .tablist .tab.active::before {
+	color: #003399;
+	background-color: #ffcc00;
+}
+.TDS_CCInvert .tablist .tab {
+	color: #4d4d4d;
+}
+.TDS_CCInvert .tablist .tab.active{
+	border-bottom-color: #000;
+	color: #000;
+}
+.TDS_CCInvert .tablist .tab.active::before {
+	background-color: #fff;
+}
+.TDS_CCWhiteN .tablist .tab {
+	color: #fff;
+}
+.TDS_CCWhiteN .tablist .tab::before {
+	background-color: #3a6085;
+}
+.TDS_CCWhiteN .tablist .tab.active{
+	border-bottom-color: #003366;
+	color: #003366;
+}
+.TDS_CCWhiteN .tablist .tab.active::before {
+	background-color: #fff;
+}
+.TDS_CCWhiteN .tablist .tab:active,
+.TDS_CCWhiteN .tablist .tab:focus,
+.TDS_CCWhiteN .tablist .tab:hover,
+.TDS_CCInvert .tablist .tab:active,
+.TDS_CCInvert .tablist .tab:focus,
+.TDS_CCInvert .tablist .tab:hover,
+.TDS_CCYellowB .tablist .tab:active,
+.TDS_CCYellowB .tablist .tab:focus,
+.TDS_CCYellowB .tablist .tab:hover  {
 	color: #fff;
 	background-color: #00aeef;
-	outline: none;
 }
-/*.multi-page li:after {
-	content: "";  
-	display:block !important;
-	height: 12px;
-	width: 12px;
-	background: url(../../Images/universal/universal_content.png) no-repeat -9999px -200px;
-	position: absolute;
-	z-index: 1;
-	left: 50%;
-	top: 2px;
-	margin-left: -6px;
-}
-.multi-page li.page-answered:after {
-	background-position: center -200px;
-}*/
-li.page-active {
-	border-color: #0085ad;
-	-webkit-box-shadow: 0px 0px 3px #b4b4b4;
-	-moz-box-shadow: 0px 0px 3px #b4b4b4;
-	box-shadow: 0px 0px 3px #b4b4b4;
-}
-li.page-active a {
-	background-color: rgba(255,255,255,0.9);
-}
+
+/* @end */
+
+
+
 
 .questionAnswerGroup.page-item-hidden {
 	overflow:hidden;
@@ -2176,11 +2697,6 @@ li.page-active a {
 	z-index: -1 !important;
 	padding: 0px !important;
 }
-/* make room for widget 
-.thePassage .padding, 
-.layoutSingleMulti .layoutColumnLeft .questionAnswerGroup {
-	padding-left: 30px !important;
-}*/
 
 /* @end */
 
@@ -2507,7 +3023,7 @@ body.browser_safari.platform_osx.showingLoading {
   clip: rect(1px, 1px, 1px, 1px);
 }
 
-/* Hide Help button in Score & Response Entry modes */
+/* Hide Help button in Score & Response Entry modes --- commented out, we can now display the correct guides when in these modes
 .app_ScoreEntry.practiceTest a#btnHelp,
 .app_ResponseEntry.practiceTest a#btnHelp,
 .app_scoreEntry a#btnHelp,
@@ -2540,7 +3056,8 @@ body.browser_safari.platform_osx.showingLoading {
 #topBar .icon, 
 #smallButtons a, 
 .yuimenu li a:before, 
-.multi-page li.page-answered a:after {
+.tablist .tab.answered:after,
+.tablist .tab.passage:after {
 	font-family: 'icomoon';
 	speak: none;
 	font-style: normal;
@@ -2566,10 +3083,10 @@ body.browser_safari.platform_osx.showingLoading {
 	width: 10px;
 	top: 50%;
 	left: 50%;
-	margin-top: -6px;
+	margin-top: -7px;
 	margin-left: -6px;
 	text-indent: 0px;
-	color: #7b7b7b;
+	color: #00a651;
 	font-size: 12px;
 }
 .TDS_CCInvert #smallButtons a:before, 
@@ -2815,6 +3332,24 @@ a#proctorLogout:before {
 .yuimenu .bd ul li a:focus:before {
     color: #fff;
 }
+.TDS_SLM1 .yuimenu .bd ul li a:active,
+.TDS_SLM1 .yuimenu .bd ul li a:hover,
+.TDS_SLM1 .yuimenu .bd ul li a:focus {
+	background-color: #477a8c !important;
+}
+.TDS_SLM1.TDS_CCInvert .yuimenu .bd ul li a:active,
+.TDS_SLM1.TDS_CCInvert .yuimenu .bd ul li a:hover,
+.TDS_SLM1.TDS_CCInvert .yuimenu .bd ul li a:focus,
+.TDS_SLM1.TDS_CCWhiteN .yuimenu .bd ul li a:active,
+.TDS_SLM1.TDS_CCWhiteN .yuimenu .bd ul li a:hover,
+.TDS_SLM1.TDS_CCWhiteN .yuimenu .bd ul li a:focus {
+	background-color: #fff !important;
+}
+.TDS_SLM1.TDS_CCYellowB .yuimenu .bd ul li a:active,
+.TDS_SLM1.TDS_CCYellowB .yuimenu .bd ul li a:hover,
+.TDS_SLM1.TDS_CCYellowB .yuimenu .bd ul li a:focus {
+	background-color: #ffcc00 !important;
+}
 .TDS_CCYellowB .yuimenu li a:before {
     color: #ffcc00;
 }
@@ -2926,9 +3461,8 @@ a#proctorLogout:before {
 	content: "\e62e";
 	font-size: 20px;
 }
-.yuimenu .comment.Notepad a:before
-{
-    content: "\e633";
+.yuimenu .comment.Notepad a:before {
+    content: "\e901";
     font-size: 16px;
 }
 .yuimenu .save a:before {
@@ -2956,6 +3490,9 @@ a#proctorLogout:before {
 .yuimenu .ASL a:before {
 	content: "\e608";
 	font-size: 28px;
+}
+.yuimenu .mode-ASL a:before {
+	content: "\e907";
 }
 .yuimenu .maskingtool a:before {
 	content: "\e62b";
@@ -2988,6 +3525,12 @@ a#proctorLogout:before {
 }
 .yuimenu .response-recovery a:before {
 	content: "\e632";
+}
+.yuimenu .contentDialogMenu a:before {
+    content: "\e902";
+}
+.yuimenu .hrrItem a:before{
+	content: "\e61a";
 }
 .TDS_PS_L1 .yuimenuitem .yuimenuitemlabel, 
 .TDS_PS_L2 .yuimenuitem .yuimenuitemlabel {
@@ -3162,11 +3705,10 @@ body.platform_chrome.TDS_PS_L0 #contents {
 .TDS_PS_L2 .passageTools.toolsContainer {
     top: 115px;
 }
-/*.TDS_PS_L1 .multi-page, 
-.TDS_PS_L2 .multi-page {
-    top: 95px;
-}*/
-
+.TDS_PS_L1 .layoutPaginatedPassage .passageTools.toolsContainer,
+.TDS_PS_L2 .layoutPaginatedPassage .passageTools.toolsContainer {
+    top: 140px;
+}
 /* @end */
 
 /* @group Level 3-4 */
@@ -3181,7 +3723,7 @@ body.platform_chrome.TDS_PS_L0 #contents {
 	font-size: 18px;
 	height: 20px;
 	width: 20px;
-	margin-top: -10px;
+	margin-top: -9px;
 	margin-left: -10px;
 }
 .TDS_PS_L3 #infoBar, 
@@ -3214,8 +3756,14 @@ body.platform_chrome.TDS_PS_L0 #contents {
 .TDS_PS_L4 #navigation {
     font-size: 22px;
     height: 88px;
-} 
-.TDS_PS_L3 #studentControls:after, 
+}
+@media only screen and (max-width: 1100px) {
+
+		.TDS_PS_L3 #navigation,
+		.TDS_PS_L4 #navigation {
+    		font-size: 18px;}
+}
+.TDS_PS_L3 #studentControls:after,
 .TDS_PS_L4 #studentControls:after {
 	font-size: 0;
 	content: " ";
@@ -3257,146 +3805,10 @@ body.platform_chrome.TDS_PS_L0 #contents {
 .TDS_PS_L4 .passageTools.toolsContainer {
     top: 130px;
 }
-/*.TDS_PS_L3 .multi-page, 
-.TDS_PS_L4 .multi-page {
-    top: 120px;
-}*/
-
-/* @end */
-
-/* @group pagination widget */
-.multi-page {
-	position: absolute;
-	top: 0px;
+.TDS_PS_L3 .layoutPaginatedPassage .passageTools.toolsContainer,
+.TDS_PS_L4 .layoutPaginatedPassage .passageTools.toolsContainer {
+    top: 170px;
 }
-.multi-page li.page-answered a::after {
-    content: "\e628";
-    background-image: none;
-    display: block !important;
-    height: 12px;
-    left: 50%;
-    margin-left: -6px;
-    position: absolute;
-    top: 2px;
-    width: 12px;
-    z-index: 1;
-    color: #00a651;
-    font-size: 10px;
-    text-align: center;
-}
-.multi-page li.page-answered a:hover::after, 
-.multi-page li.page-answered a:active::after, 
-.multi-page li.page-answered a:focus::after {
-    color: #fff;
-}
-.TDS_PS_L1 .multi-page a, 
-.TDS_PS_L2 .multi-page a {
-	font-size: 16px;
-  	min-width: 12px;
-  	padding: 10px 7px 2px;
-}
-.TDS_PS_L1 .multi-page li.page-answered a::after, 
-.TDS_PS_L2 .multi-page li.page-answered a::after {
-    top: 1px;
-    font-size: 12px;
-}
-.TDS_PS_L3 .multi-page a, 
-.TDS_PS_L4 .multi-page a {
-	font-size: 20px;
-  	line-height: 30px;
-  	min-width: 12px;
-  	padding: 12px 10px 2px;
-}
-.TDS_PS_L3 .multi-page li.page-answered a::after, 
-.TDS_PS_L4 .multi-page li.page-answered a::after {
-    top: 0;
-    font-size: 14px;
-}
-/* @end */
-/* @end */
-
-
-
-/* @group bacon */
-	.bacon {
-        display: block;
-    	float: right;
-	    height: 3px;
-    	line-height: 0;
-    	margin-bottom: -3px;
-    }
-	.bacon span {
-        display: block;
-        width: 5px;
-        height: 3px;
-        float: left;
-    }
-    .baconItem span {
-        width: 3px;
-        height: 3px;
-        margin-left: 2px;
-    }
-    .bacon span.reference {
-        background-color: orange;
-    }
-    .bacon span.A {
-        background-color: red;
-    }
-    .bacon span.B {
-        background-color: blue;
-    }
-
-	.bacon.baconPage {
-	position: fixed;
-	top: 73px;
-	z-index: 99;
-	left: 0px;
-	width: 100%;
-	height: 3px;
-	display: block;
-	background-color: #c2c2c2;
-	overflow: hidden; 
-}
-.baconPage span {
-	display: block;
-	height: 3px;
-	width: 3px;
-	margin-left: 3px;
-	float: left;
-}
-
-.baconStripes .bacon.baconPage {
-	top: 72px;
-	height: 4px;
-	background-color: #fff;
-}
-.baconStripes .bacon span {
-	height: 4px;
-	width: 5px;
-	margin-left: 0px;
-	border-right: solid 2px #fff;
-}
-.baconStripes .bacon span.A {
-	background-color: #38c3de;
-}
-.baconStripes .bacon span.B {
-	background-color: #026282;
-}
-.baconStripes .bacon.baconItem {
-	max-width: 100%;
-	overflow: visible;
-}
-.baconStripes .bacon.baconItem span {
-	margin-bottom: 1px;
-	
-}
-.baconStripes .bacon span.reference {
-        background-color: #fff;
-        border: solid 1px orange;
-        height: 2px;
-        width: 10px;
-        margin-right: 3px !important;
-    }
 
 /* @end */
 	
@@ -3418,12 +3830,26 @@ body.segmentHardStopPauseEnabled .endSegment .pauseSegment {
 body.segmentHardStopExitEnabled .endSegment .submitSegment {
 	display: block;
 }
+/* show next segment button */
+body.TDS_RSO_Next .endSegment .nextSegment {
+	display: block;
+}
+/* show end test button, but only after test has been completed */
+body.TDS_RSO_EndTest.testCompleted .endSegment .endTestSegment {
+	display: block;
+}
 
 /* hide the next button */
 body.segmentHardStopPauseEnabled a#btnNext,
 body.segmentHardStopExitEnabled a#btnNext {
 	display: none;
 	visibility: hidden;
+}
+/* show this button if it's a guest student */
+body.guestStudent.segmentHardStopPauseEnabled a#btnNext,
+body.guestStudent.segmentHardStopExitEnabled a#btnNext {
+	display: block;
+	visibility: visible;
 }
 
 .endSegment div span {
@@ -3480,4 +3906,189 @@ body.segmentHardStopExitEnabled a#btnNext {
 	color: #fff;
 }
 
+/* @end */
+
+/* @group Full screen video */
+
+.video-js.tds-VideoFullScreen  {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 10;
+	width: 100%;
+	height: 100%;
+}
+body.tds-VideoFullScreen #contents .pageWrapper.showing .theQuestions,
+body.tds-VideoFullScreen #contents .pageWrapper.showing .thePassage,
+body.tds-VideoFullScreen .pageWrapper.showing .toolsContainer.passageTools,
+body.tds-VideoFullScreen .pageWrapper.showing .tablist,
+body.tds-VideoFullScreen #topBar {
+	z-index: 0;
+}
+body.tds-VideoFullScreen #contents {
+	top: 0 !important;
+	height: 100%;
+}
+body.tds-VideoFullScreen #contents .pageWrapper.showing .theQuestions,
+body.tds-VideoFullScreen #contents .pageWrapper.showing .thePassage {
+	position: static !important;
+}
+body.tds-VideoFullScreen #contents .pageWrapper.showing .toolsContainer {
+	z-index: 0 !important;
+}
+/* iOS hacks */
+body.tds-VideoFullScreen #contents .pageWrapper.showing .platform_ios .bigTable {
+	background-color: #000;
+}
+body.tds-VideoFullScreen #contents .pageWrapper.showing .platform_ios .thePassage,
+body.tds-VideoFullScreen #contents .pageWrapper.showing .platform_ios .theQuestions {
+	height: 1000px;
+	width: 1000px;
+	overflow: hidden;
+	padding-top: 10000px;
+}
+body.tds-VideoFullScreen #contents .pageWrapper.showing .platform_ios .video-js .vjs-control-bar {
+	width: 99%;
+}
+body.tds-VideoFullScreen #contents .pageWrapper.showing .platform_ios .video-js.tds-VideoFullScreen  {
+	height: 98%;
+}
+/* @end */
+
+
+/* @group inception */
+#contentDialog {
+	width: 800px;
+	height: 600px;
+}
+#contentDialog .hd {
+	height: 30px;
+	line-height: 30px;
+}
+#contentDialog .container-close{
+	top: 6px;
+	right: 6px;
+}
+#contentDialogPages {
+	height: 450px;
+	overflow: hidden;
+	position: relative;
+}
+#contentDialogPages .pageWrapper.showing {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+#contentDialogPages .bigTable {
+	font-size: .995em;
+	padding-top: 2.5em;
+}
+#contentDialogPages .questionNumber {
+	display: none;
+}
+
+#contentDialogPages .guide_revision {
+    font-size: inherit;
+    height: inherit;
+    overflow: inherit;
+    padding: inherit;
+    width: inherit;
+}
+#contentDialogPages .guide_revision .bigTable {
+	padding-top: 0em;
+}
+#contentDialogPages .guide_revision .stemContainer {
+	border-top: none;
+}
+#contentDialogPages .guide_revision table {
+    width: auto !important;
+}
+#contentDialogPages .guide_revision li {
+	margin: .5em 1em;
+}
+
+.TDS_CCWhiteN #contentDialogPages .guide_revision table td,
+.TDS_CCInvert #contentDialogPages .guide_revision table td {
+    border-color: #fff !important;
+}
+.TDS_CCYellowB #contentDialogPages .guide_revision table td {
+    border-color: #FC0 !important;
+}
+.TDS_PS_L1 #contentDialogPages .bigTable{
+	font-size: 1.55em;
+}
+.TDS_PS_L2 #contentDialogPages .bigTable{
+	font-size: 2.05em;
+}
+.TDS_PS_L3 #contentDialogPages .bigTable {
+	font-size: 2.6em;
+}
+.TDS_PS_L4 #contentDialogPages .bigTable {
+	font-size: 3.3em;
+}
+/* for Streamlined rendering */
+#contentDialogPages .layout_wai {
+	position: absolute;
+	top: 0;
+}
+#contentDialogPages .layout_wai .padding,
+#contentDialogPages .layout_wai .theQuestions {
+	padding: 0px;
+}
+#contentDialogPages .layout_wai .questionAnswerGroup,
+#contentDialogPages .layout_wai .stemContainer {
+	margin: 0px;
+	border: none;
+	padding: 0px
+}
+#contentDialogPages .layout_wai h3,
+#contentDialogPages .layout_wai .toolsContainer.itemTools,
+#contentDialogPages .layout_wai .illustration,
+#contentDialogPages .layout_wai .response {
+	display: none;
+}
+#contentDialogPages .layout_wai iframe {
+	width: 100%;
+}
+
+/* bring Open Office guide to revision bullets into line with IAT bullets */
+.pageWrapper .guide_revision li {
+	margin: .5em 1em;
+}
+
+.TDS_ExpandableItems1 #contentDialogPages .tutorial .noColumns .padding,
+#contentDialogPages .tutorial .noColumns .padding {
+    padding-top: 0;
+}
+#contentDialogPages .tutorial .noColumns .structure {
+    margin-top: 0;
+}
+#contentDialogPages .tutorial .stemContainer {
+    border-top: none !important;
+}
+#contentDialogPages .tutorial .questionCell,
+#contentDialogPages .tutorial .answerCell,
+#contentDialogPages .tutorial .stimulusCell {
+    padding: 0;
+}
+/* @end */
+
+
+/* @Human Scorable rubric */
+
+#hrrDialog {
+	width: 800px !important;
+	height: 600px !important;
+}
+#hrrDialog_c .bd {
+    height: 445px !important;
+    overflow: auto;
+}
 /* @end */

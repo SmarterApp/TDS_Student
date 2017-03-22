@@ -1,0 +1,18 @@
+<resources>
+    <fileSet name="mastershell-base">
+        <input>CSS/reset.css</input>
+        <input>../Styles/masterShell.css</input>
+        <input>CSS/elpa.css</input>
+        <input>../Styles/soundcheck.css</input>
+        <input>../Scripts/Libraries/yahoo/yui2/build/button/assets/skins/sam/button.css</input>
+        <input>CSS/dialogs.css</input>
+        <reference set="project-master" />
+        <input>CSS/accommodations.css</input>
+        <input>../Scripts/Libraries/yahoo/yui2/build/slider/assets/skins/sam/slider.css</input>
+    </fileSet>
+    
+    <fileSet name="testshell-base">
+      <reference set="universal" />
+      <input>../Scripts/ResponseRecovery/responserecovery.css</input>
+    </fileSet>
+</resources>
