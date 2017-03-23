@@ -19,12 +19,13 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
-			<artifactId>student-web</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>student-library</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.opentestsystem.delivery</groupId>
+					<artifactId>item-renderer</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -38,10 +39,6 @@
 			<artifactId>student</artifactId>
 			<version>${project.version}</version>
 			<exclusions>
-				<exclusion>
-					<groupId>org.opentestsystem.delivery</groupId>
-					<artifactId>student-web</artifactId>
-				</exclusion>
 				<exclusion>
 					<groupId>org.opentestsystem.delivery</groupId>
 					<artifactId>student-library</artifactId>

@@ -15,7 +15,7 @@
 
     <properties>
         <assertj.version>2.6.0</assertj.version>
-        <item-renderer.version>3.0.1</item-renderer.version>
+        <item-renderer.version>3.0.5</item-renderer.version>
         <item-selection.version>3.0.0</item-selection.version>
         <item-scoring.version>3.0.0</item-scoring.version>
         <junit.version>4.12</junit.version>
@@ -37,12 +37,6 @@
             <dependency>
                 <groupId>org.opentestsystem.delivery</groupId>
                 <artifactId>student-library</artifactId>
-                <version>${tds-student-common.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.opentestsystem.delivery</groupId>
-                <artifactId>student-web</artifactId>
                 <version>${tds-student-common.version}</version>
             </dependency>
 
@@ -86,8 +80,8 @@
             </dependency>
 
             <dependency>
-                <groupId>org.opentestsystem.blackbox</groupId>
-                <artifactId>shared-blackbox</artifactId>
+                <groupId>org.opentestsystem.delivery</groupId>
+                <artifactId>item-renderer-web</artifactId>
                 <version>${item-renderer.version}</version>
                 <type>war</type>
             </dependency>

@@ -8,15 +8,12 @@
  ******************************************************************************/
 package tds.student.web.handlers;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.net.URL;
-import java.util.HashSet;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import AIR.Common.Helpers.StopWatch;
+import AIR.Common.TDSLogger.ITDSLogger;
+import AIR.Common.Web.Session.HttpContext;
+import AIR.Common.Web.WebHelper;
+import TDS.Shared.Exceptions.ReturnStatusException;
+import TDS.Shared.Exceptions.TDSSecurityException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,8 +22,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import tds.blackbox.ContentRequestException;
+import tds.blackbox.web.handlers.TDSHandler;
 import tds.student.sbacossmerge.data.TestResponseReaderSax;
 import tds.student.services.abstractions.IItemScoringService;
 import tds.student.services.data.NextItemGroupResult;
@@ -38,12 +35,14 @@ import tds.student.sql.data.ServerLatency;
 import tds.student.web.StudentContext;
 import tds.student.web.StudentSettings;
 import tds.student.web.TestManager;
-import AIR.Common.Helpers.StopWatch;
-import AIR.Common.TDSLogger.ITDSLogger;
-import AIR.Common.Web.WebHelper;
-import AIR.Common.Web.Session.HttpContext;
-import TDS.Shared.Exceptions.ReturnStatusException;
-import TDS.Shared.Exceptions.TDSSecurityException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.net.URL;
+import java.util.HashSet;
+import java.util.List;
 
 @Controller
 @Scope ("request")
