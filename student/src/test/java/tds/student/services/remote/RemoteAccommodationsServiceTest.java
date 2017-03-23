@@ -98,69 +98,6 @@ public class RemoteAccommodationsServiceTest {
     }
     
     @Test
-    public void shouldApproveNothingForEmptyAssessmentAccommodations() throws ReturnStatusException {
-        final String assessmentKey = "assessment-key";
-        final String assessmentId = "assessment-id";
-        final String clientName = "SBAC_PT";
-        final UUID examId = UUID.randomUUID();
-        OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(),
-          examId, UUID.randomUUID(), clientName);
-    
-        AccommodationDependency dependency = new AccommodationDependency.Builder(assessmentId)
-          .withIfType("Language")
-          .withIfValue("ELA")
-          .withThenType("Masking")
-          .withThenValue("Off")
-          .withIsDefault(true)
-          .build();
-    
-        Segment seg1 = new Segment("segmentKey1", Algorithm.ADAPTIVE_2);
-        seg1.setLabel("ELA Segment 1");
-        seg1.setSegmentId("segment-id-1");
-        seg1.setPosition(1);
-        Segment seg2 = new Segment("segmentKey2", Algorithm.ADAPTIVE_2);
-        seg2.setLabel("ELA Segment 2");
-        seg2.setSegmentId("segment-id-2");
-        seg2.setPosition(2);
-    
-        Assessment assessment = new Assessment();
-        assessment.setKey(assessmentKey);
-        assessment.setAssessmentId(assessmentId);
-        assessment.setLabel("ELA Test");
-        assessment.setAccommodationDependencies(Arrays.asList(dependency));
-        assessment.setSegments(Arrays.asList(seg1, seg2));
-        
-        ExamAccommodation assessmentExamAcc1 = new ExamAccommodation.Builder(UUID.randomUUID())
-          .withCode("AccType1")
-          .withType("AccType1")
-          .build();
-        ExamAccommodation segment1ExamAcc = new ExamAccommodation.Builder(UUID.randomUUID())
-          .withCode("AccType2")
-          .withType("AccType2")
-          .build();
-        ExamAccommodation segment2ExamAcc = new ExamAccommodation.Builder(UUID.randomUUID())
-          .withCode("AccType3")
-          .withType("AccType3")
-          .build();
-    
-        when(legacyAccommodationsService.getApproved(oppInstance, assessmentKey, true)).thenReturn(new ArrayList<Accommodations>());
-        when(mockAssessmentRepository.findAccommodations(clientName, assessmentKey)).thenReturn(new ArrayList<Accommodation>());
-        when(mockAssessmentRepository.findAssessment(clientName, assessmentKey)).thenReturn(assessment);
-        when(mockExamRepository.findApprovedAccommodations(examId)).thenReturn(Arrays.asList(assessmentExamAcc1, segment1ExamAcc, segment2ExamAcc));
-    
-        List<Accommodations> retAccommodations = service.getApproved(oppInstance, assessmentKey, true);
-    
-        verify(legacyAccommodationsService).getApproved(oppInstance, assessmentKey, true);
-        verify(mockAssessmentRepository).findAccommodations(clientName, assessmentKey);
-        verify(mockAssessmentRepository).findAssessment(clientName, assessmentKey);
-        verify(mockExamRepository).findApprovedAccommodations(examId);
-
-        for (Accommodations accommodations : retAccommodations) {
-            assertThat(accommodations.getTypes()).isEmpty();
-        }
-    }
-    
-    @Test
     public void shouldApproveNothingForEmptyExamAccommodations() throws ReturnStatusException {
         final String assessmentKey = "assessment-key";
         final String assessmentId = "assessment-id";
@@ -192,53 +129,14 @@ public class RemoteAccommodationsServiceTest {
         assessment.setLabel("ELA Test");
         assessment.setAccommodationDependencies(Arrays.asList(dependency));
         assessment.setSegments(Arrays.asList(seg1, seg2));
-    
-        Accommodation assessmentAcc1 = new Accommodation.Builder()
-          .withContext(assessmentId)
-          .withAccommodationType("AccType1")
-          .withAccommodationCode("AccCode1")
-          .withSegmentPosition(0)
-          .withAllowChange(true)
-          .withAllowCombine(false)
-          .withDependsOnToolType("Language")
-          .build();
-        Accommodation assessmentAcc2 = new Accommodation.Builder()
-          .withContext(assessmentId)
-          .withAccommodationType("AccType2")
-          .withAccommodationCode("AccCode2")
-          .withSegmentPosition(0)
-          .withAllowChange(true)
-          .withAllowCombine(false)
-          .withDependsOnToolType("Language")
-          .build();
-        Accommodation segment1Acc = new Accommodation.Builder()
-          .withContext(seg1.getSegmentId())
-          .withAccommodationType("AccType3")
-          .withAccommodationCode("AccCode3")
-          .withSegmentPosition(1)
-          .withAllowChange(true)
-          .withAllowCombine(false)
-          .withDependsOnToolType("Language")
-          .build();
-        Accommodation segment2Acc = new Accommodation.Builder()
-          .withContext(seg2.getSegmentId())
-          .withAccommodationType("AccType4")
-          .withAccommodationCode("AccCode4")
-          .withSegmentPosition(2)
-          .withAllowChange(true)
-          .withAllowCombine(false)
-          .build();
         
         when(legacyAccommodationsService.getApproved(oppInstance, assessmentKey, true)).thenReturn(new ArrayList<Accommodations>());
-        when(mockAssessmentRepository.findAccommodations(clientName, assessmentKey))
-          .thenReturn(Arrays.asList(assessmentAcc1, assessmentAcc2, segment1Acc, segment2Acc));
         when(mockAssessmentRepository.findAssessment(clientName, assessmentKey)).thenReturn(assessment);
         when(mockExamRepository.findApprovedAccommodations(examId)).thenReturn(new ArrayList<ExamAccommodation>());
     
         List<Accommodations> retAccommodations = service.getApproved(oppInstance, assessmentKey, true);
     
         verify(legacyAccommodationsService).getApproved(oppInstance, assessmentKey, true);
-        verify(mockAssessmentRepository).findAccommodations(clientName, assessmentKey);
         verify(mockAssessmentRepository).findAssessment(clientName, assessmentKey);
         verify(mockExamRepository).findApprovedAccommodations(examId);
         
@@ -279,85 +177,39 @@ public class RemoteAccommodationsServiceTest {
         assessment.setLabel("ELA Test");
         assessment.setAccommodationDependencies(Arrays.asList(dependency));
         assessment.setSegments(Arrays.asList(seg1, seg2));
-    
-        Accommodation assessmentAcc1 = new Accommodation.Builder()
-          .withContext(assessmentId)
-          .withAccommodationType("AccType1")
-          .withAccommodationCode("AccCode1")
-          .withSegmentPosition(0)
-          .withAllowChange(true)
-          .withAllowCombine(false)
-          .withDependsOnToolType("Language")
-          .build();
-        Accommodation assessmentAcc2 = new Accommodation.Builder()
-          .withContext(assessmentId)
-          .withAccommodationType("AccType2")
-          .withAccommodationCode("AccCode2")
-          .withSegmentPosition(0)
-          .withAllowChange(true)
-          .withAllowCombine(false)
-          .withDependsOnToolType("Language")
-          .build();
-        Accommodation assessmentAcc3 = new Accommodation.Builder()
-          .withContext(assessmentId)
-          .withAccommodationType("AccType3")
-          .withAccommodationCode("AccCode3")
-          .withSegmentPosition(0)
-          .withAllowChange(true)
-          .withAllowCombine(false)
-          .withDisableOnGuestSession(true)
-          .withDependsOnToolType("Language")
-          .build();
-        Accommodation segment1Acc = new Accommodation.Builder()
-          .withContext(seg1.getSegmentId())
-          .withAccommodationType("AccType4")
-          .withAccommodationCode("AccCode4")
-          .withSegmentPosition(1)
-          .withAllowChange(true)
-          .withAllowCombine(false)
-          .withDependsOnToolType("Language")
-          .build();
-        Accommodation segment2Acc = new Accommodation.Builder()
-          .withContext(seg2.getSegmentId())
-          .withAccommodationType("AccType5")
-          .withAccommodationCode("AccCode5")
-          .withSegmentPosition(2)
-          .withAllowChange(true)
-          .withAllowCombine(false)
-          .build();
-    
+
         ExamAccommodation assessmentExamAcc1 = new ExamAccommodation.Builder(UUID.randomUUID())
-          .withCode(assessmentAcc1.getCode())
-          .withType(assessmentAcc1.getType())
-          .build();
-        ExamAccommodation badAssessmentExamAcc2 = new ExamAccommodation.Builder(UUID.randomUUID())
-          .withCode("DifferentCode")
-          .withType(assessmentAcc2.getType())
+          .withCode("AccCode1")
+          .withType("AccType1")
+          .withDependsOn("Language")
           .build();
         ExamAccommodation disabledGuestAccom = new ExamAccommodation.Builder(UUID.randomUUID())
-          .withType(assessmentAcc3.getType())
-          .withCode(assessmentAcc3.getCode())
+          .withCode("AccCode3")
+          .withType("AccType3")
+          .withDisabledOnGuestSession(true)
+          .withDependsOn("Language")
           .build();
         ExamAccommodation segment1ExamAcc = new ExamAccommodation.Builder(UUID.randomUUID())
-          .withType(segment1Acc.getType())
-          .withCode(segment1Acc.getCode())
+          .withType("AccType4")
+          .withCode("AccCode4")
+          .withSegmentPosition(1)
+          .withDependsOn("Language")
           .build();
         ExamAccommodation segment2ExamAcc = new ExamAccommodation.Builder(UUID.randomUUID())
-          .withType(segment2Acc.getType())
-          .withCode(segment2Acc.getCode())
+          .withType("AccType5")
+          .withCode("AccCode5")
+          .withDependsOn("Language")
+          .withSegmentPosition(2)
           .build();
-        
+
         when(legacyAccommodationsService.getApproved(oppInstance, assessmentKey, true)).thenReturn(new ArrayList<Accommodations>());
-        when(mockAssessmentRepository.findAccommodations(clientName, assessmentKey))
-          .thenReturn(Arrays.asList(assessmentAcc1, assessmentAcc2, assessmentAcc3, segment1Acc, segment2Acc));
         when(mockAssessmentRepository.findAssessment(clientName, assessmentKey)).thenReturn(assessment);
         when(mockExamRepository.findApprovedAccommodations(examId))
-          .thenReturn(Arrays.asList(assessmentExamAcc1, badAssessmentExamAcc2, disabledGuestAccom, segment1ExamAcc, segment2ExamAcc));
+          .thenReturn(Arrays.asList(assessmentExamAcc1, disabledGuestAccom, segment1ExamAcc, segment2ExamAcc));
         
         List<Accommodations> retAccommodations = service.getApproved(oppInstance, assessmentKey, true);
         
         verify(legacyAccommodationsService).getApproved(oppInstance, assessmentKey, true);
-        verify(mockAssessmentRepository).findAccommodations(clientName, assessmentKey);
         verify(mockAssessmentRepository).findAssessment(clientName, assessmentKey);
         verify(mockExamRepository).findApprovedAccommodations(examId);
         
@@ -382,10 +234,10 @@ public class RemoteAccommodationsServiceTest {
         assertThat(assessmentAccommodations.getTypes()).hasSize(1);
         
         AccommodationType assessmentAccType = assessmentAccommodations.getTypes().get(0);
-        assertThat(assessmentAccType.getDependsOnToolType()).isEqualTo(assessmentAcc1.getDependsOnToolType());
-        assertThat(assessmentAccType.getName()).isEqualTo(assessmentAcc1.getType());
+        assertThat(assessmentAccType.getDependsOnToolType()).isEqualTo("Language");
+        assertThat(assessmentAccType.getName()).isEqualTo("AccType1");
         String assessmentAccCode = ((AccommodationValue) assessmentAccType.getValues().toArray()[0]).getCode();
-        assertThat(assessmentAccCode).isEqualTo(assessmentAcc1.getCode());
+        assertThat(assessmentAccCode).isEqualTo("AccCode1");
         
         // Segment 1 accommodations
         assertThat(segment1Accommodations.getLabel()).isEqualTo(seg1.getLabel());
@@ -393,10 +245,10 @@ public class RemoteAccommodationsServiceTest {
         assertThat(segment1Accommodations.getTypes()).hasSize(1);
     
         AccommodationType segment1AccType = segment1Accommodations.getTypes().get(0);
-        assertThat(segment1AccType.getDependsOnToolType()).isEqualTo(segment1Acc.getDependsOnToolType());
-        assertThat(segment1AccType.getName()).isEqualTo(segment1Acc.getType());
+        assertThat(segment1AccType.getDependsOnToolType()).isEqualTo("Language");
+        assertThat(segment1AccType.getName()).isEqualTo("AccType4");
         String seg1AccCode = ((AccommodationValue) segment1AccType.getValues().toArray()[0]).getCode();
-        assertThat(seg1AccCode).isEqualTo(segment1Acc.getCode());
+        assertThat(seg1AccCode).isEqualTo("AccCode4");
         
         // Segment 2 accommodations
         assertThat(segment2Accommodations.getLabel()).isEqualTo(seg2.getLabel());
@@ -404,9 +256,9 @@ public class RemoteAccommodationsServiceTest {
         assertThat(segment2Accommodations.getTypes()).hasSize(1);
     
         AccommodationType segment2AccType = segment2Accommodations.getTypes().get(0);
-        assertThat(segment2AccType.getDependsOnToolType()).isEqualTo(segment2Acc.getDependsOnToolType());
-        assertThat(segment2AccType.getName()).isEqualTo(segment2Acc.getType());
+        assertThat(segment2AccType.getDependsOnToolType()).isEqualTo("Language");
+        assertThat(segment2AccType.getName()).isEqualTo("AccType5");
         String seg2AccCode = ((AccommodationValue) segment2AccType.getValues().toArray()[0]).getCode();
-        assertThat(seg2AccCode).isEqualTo(segment2Acc.getCode());
+        assertThat(seg2AccCode).isEqualTo("AccCode5");
     }
 }
