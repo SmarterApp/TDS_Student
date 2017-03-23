@@ -8,28 +8,16 @@
  ******************************************************************************/
 package tds.iris.content;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
-
-import javax.annotation.PostConstruct;
-
+import AIR.Common.Configuration.AppSettingsHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
-import AIR.Common.Configuration.AppSettingsHelper;
-import AIR.Common.Helpers.CaseInsensitiveMap;
-import AIR.Common.Utilities.SpringApplicationContext;
 import tds.blackbox.ContentRequestException;
-import tds.iris.abstractions.repository.ContentException;
-import tds.iris.abstractions.repository.IContentBuilder;
+import tds.blackbox.abstractions.repository.ContentException;
+import tds.blackbox.abstractions.repository.IContentBuilder;
 import tds.itempreview.ConfigBuilder;
 import tds.itemrenderer.data.IITSDocument;
-import tds.itemrenderer.data.IrisITSDocument;
-import tds.itemrenderer.data.ItsItemIdUtil;
-import tds.itemrenderer.data.ITSTypes.ITSEntityType;
 
 @Component
 @Scope ("singleton")

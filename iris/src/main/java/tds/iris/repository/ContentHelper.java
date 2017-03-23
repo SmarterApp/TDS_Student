@@ -8,29 +8,26 @@
  ******************************************************************************/
 package tds.iris.repository;
 
-import java.util.UUID;
-
-import javax.annotation.PostConstruct;
-
+import AIR.Common.Utilities.SpringApplicationContext;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
-import AIR.Common.Utilities.SpringApplicationContext;
-import tds.iris.abstractions.repository.ContentException;
-import tds.iris.abstractions.repository.IContentBuilder;
-import tds.iris.abstractions.repository.IContentHelper;
-import tds.iris.web.data.ContentRequest;
-import tds.iris.web.data.ContentRequestItem;
+import tds.blackbox.abstractions.repository.ContentException;
+import tds.blackbox.abstractions.repository.IContentBuilder;
+import tds.blackbox.abstractions.repository.IContentHelper;
+import tds.blackbox.web.data.ContentRequest;
+import tds.blackbox.web.data.ContentRequestItem;
 import tds.itemrenderer.data.IITSDocument;
 import tds.itemrenderer.data.IItemRender;
+import tds.itemrenderer.data.ITSTypes.ITSEntityType;
 import tds.itemrenderer.data.ItemRender;
 import tds.itemrenderer.data.ItemRenderGroup;
 import tds.itemrenderer.data.ItsItemIdUtil;
-import tds.itemrenderer.data.ITSTypes.ITSEntityType;
+
+import javax.annotation.PostConstruct;
+import java.util.UUID;
 
 @Component
 @Scope ("singleton")
@@ -38,7 +35,7 @@ public class ContentHelper implements IContentHelper
 {
   private static final Logger _logger = LoggerFactory.getLogger (ContentHelper.class);
 
-  private IContentBuilder     _contentBuilder;
+  private IContentBuilder _contentBuilder;
 
   @PostConstruct
   public synchronized void init () throws ContentException {

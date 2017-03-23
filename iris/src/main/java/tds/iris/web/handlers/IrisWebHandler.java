@@ -8,16 +8,8 @@
  ******************************************************************************/
 package tds.iris.web.handlers;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import AIR.Common.Web.TDSReplyCode;
+import AIR.Common.data.ResponseData;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jetty.http.HttpStatus;
@@ -29,17 +21,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import AIR.Common.Web.TDSReplyCode;
-import AIR.Common.data.ResponseData;
-import tds.iris.abstractions.repository.ContentException;
-import tds.iris.abstractions.repository.IContentHelper;
-import tds.iris.web.data.ContentRequest;
+import tds.blackbox.ContentRequestException;
+import tds.blackbox.abstractions.repository.ContentException;
+import tds.blackbox.abstractions.repository.IContentHelper;
+import tds.blackbox.web.data.ContentRequest;
+import tds.blackbox.web.handlers.BaseContentRendererController;
 import tds.itemrenderer.data.AccLookup;
 import tds.itemrenderer.data.ItemRenderGroup;
 import tds.itemrenderer.webcontrols.PageSettings.UniqueIdType;
-import tds.blackbox.ContentRequestException;
-import tds.student.web.handlers.BaseContentRendererController;
+
+import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 @Scope ("prototype")
 @Controller
@@ -48,7 +46,7 @@ public class IrisWebHandler extends BaseContentRendererController
   private static final Logger _logger = LoggerFactory.getLogger (IrisWebHandler.class);
 
   @Autowired
-  private IContentHelper      _contentHelper;
+  private IContentHelper _contentHelper;
 
   @PostConstruct
   public void init () {

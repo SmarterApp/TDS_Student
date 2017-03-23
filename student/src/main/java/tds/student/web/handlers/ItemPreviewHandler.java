@@ -8,17 +8,17 @@
  ******************************************************************************/
 package tds.student.web.handlers;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import tds.blackbox.web.handlers.TDSHandler;
 import tds.itempreview.Config;
 import tds.itempreview.ConfigLoader;
 import tds.itempreview.ItemPreviewSettings;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 @Controller
 @Scope ("prototype")
