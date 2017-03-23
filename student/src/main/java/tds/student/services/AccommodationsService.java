@@ -43,6 +43,7 @@ import AIR.Common.collections.IGrouping;
 import TDS.Shared.Data.ReturnStatus;
 import TDS.Shared.Exceptions.ReadOnlyException;
 import TDS.Shared.Exceptions.ReturnStatusException;
+import org.springframework.stereotype.Service;
 
 /**
  * @author temp_rreddy
@@ -51,6 +52,7 @@ import TDS.Shared.Exceptions.ReturnStatusException;
 
 @Component
 @Scope ("prototype")
+@Service("legacyAccommodationsService")
 public class AccommodationsService implements IAccommodationsService
 {
   @Autowired

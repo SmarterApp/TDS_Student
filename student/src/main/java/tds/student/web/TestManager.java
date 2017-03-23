@@ -19,6 +19,7 @@ import tds.student.services.data.PageList;
 import tds.student.services.data.TestOpportunity;
 import AIR.Common.Utilities.SpringApplicationContext;
 import TDS.Shared.Exceptions.ReturnStatusException;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  * @author temp_rreddy
@@ -35,7 +36,7 @@ public class TestManager
   public TestManager (TestOpportunity testOpp)
   {
     _testOpp = testOpp;
-    _responseService = SpringApplicationContext.getBean (IResponseService.class);
+    _responseService = SpringApplicationContext.getBean ("integrationResponseService", IResponseService.class);
     _adaptiveService = SpringApplicationContext.getBean (IAdaptiveService.class);
   }
 
@@ -118,7 +119,7 @@ public class TestManager
   // / </remarks>
   public boolean CheckIfTestComplete () throws ReturnStatusException
   {
-    _isTestComplete = _responseService.isTestComplete (_testOpp.getOppInstance ().getKey ());
+    _isTestComplete = _responseService.isTestComplete (_testOpp.getOppInstance ().getExamId());
     return _isTestComplete;
   }
 

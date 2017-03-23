@@ -8,18 +8,19 @@
  ******************************************************************************/
 package tds.student.web.handlers;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import AIR.Common.TDSLogger.ITDSLogger;
+import AIR.Common.Web.BrowserParser;
+import AIR.Common.Web.Session.HttpContext;
+import AIR.Common.Web.Session.Server;
+import AIR.Common.Web.TDSReplyCode;
+import AIR.Common.Web.UrlHelper;
+import AIR.Common.Web.WebHelper;
+import AIR.Common.data.ResponseData;
+import AIR.Common.time.DateTime;
+import TDS.Shared.Browser.BrowserInfo;
+import TDS.Shared.Exceptions.FailedReturnStatusException;
+import TDS.Shared.Exceptions.ReturnStatusException;
+import TDS.Shared.Exceptions.TDSSecurityException;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.collections.Predicate;
@@ -30,13 +31,13 @@ import org.opentestsystem.shared.trapi.data.TestStatusType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import tds.blackbox.web.handlers.TDSHandler;
 import tds.itemrenderer.data.AccLookup;
 import tds.itemrenderer.data.AccProperties;
 import tds.student.data.Segment;
@@ -58,7 +59,6 @@ import tds.student.services.data.LoginKeyValues;
 import tds.student.services.data.PageList;
 import tds.student.services.data.TestOpportunity;
 import tds.student.services.data.TestScoreStatus;
-import tds.student.sql.abstractions.IItemBankRepository;
 import tds.student.sql.abstractions.IOpportunityRepository;
 import tds.student.sql.abstractions.IScoringRepository;
 import tds.student.sql.data.Accommodations;
@@ -88,19 +88,17 @@ import tds.student.web.StudentCookie;
 import tds.student.web.StudentSettings;
 import tds.student.web.TestManager;
 import tds.student.web.configuration.TestShellSettings;
-import AIR.Common.TDSLogger.ITDSLogger;
-import AIR.Common.Web.BrowserParser;
-import AIR.Common.Web.TDSReplyCode;
-import AIR.Common.Web.UrlHelper;
-import AIR.Common.Web.WebHelper;
-import AIR.Common.Web.Session.HttpContext;
-import AIR.Common.Web.Session.Server;
-import AIR.Common.data.ResponseData;
-import AIR.Common.time.DateTime;
-import TDS.Shared.Browser.BrowserInfo;
-import TDS.Shared.Exceptions.FailedReturnStatusException;
-import TDS.Shared.Exceptions.ReturnStatusException;
-import TDS.Shared.Exceptions.TDSSecurityException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 @Controller
 @Scope ("prototype")
@@ -109,9 +107,7 @@ public class MasterShellHandler extends TDSHandler
   private static final Logger    _logger = LoggerFactory.getLogger (MasterShellHandler.class);
 
   @Autowired
-  private IOpportunityService    _oppService;
-
-  @Autowired
+  @Qualifier("integrationAccommodationsService")
   private IAccommodationsService _accsService;
 
   @Autowired
@@ -121,6 +117,7 @@ public class MasterShellHandler extends TDSHandler
   private IOpportunityRepository _oppRepository;
 
   @Autowired
+  @Qualifier("integrationResponseService")
   private IResponseService       _responseService;
 
   @Autowired
@@ -140,6 +137,10 @@ public class MasterShellHandler extends TDSHandler
 
   @Autowired
   private ItemBankService         itemBankService;
+
+  @Autowired
+  @Qualifier("integrationOpportunityService")
+  private IOpportunityService    _oppService;
 
   /***
    * 
@@ -352,8 +353,8 @@ public class MasterShellHandler extends TDSHandler
       StudentContext.throwMissingException ();
     }
 
-
     OpportunityInfo oppInfo = _oppService.openTest (testee, session, testKey);
+
     OpportunityInstance oppInstance = oppInfo.createOpportunityInstance (session.getKey ());
 
     // if we are in PT mode and the session is proctorless then we need to
@@ -375,7 +376,9 @@ public class MasterShellHandler extends TDSHandler
     opportunityInfoJsonModel.setTesteeForms (new ArrayList<String> ());
     opportunityInfoJsonModel.setBrowserKey (oppInfo.getBrowserKey ());
     opportunityInfoJsonModel.setOppKey (oppInfo.getOppKey ());
-    return new ResponseData<OpportunityInfoJsonModel> (TDSReplyCode.OK.getCode (), "OK", opportunityInfoJsonModel);
+    opportunityInfoJsonModel.setExamBrowserKey(oppInfo.getExamId());
+    opportunityInfoJsonModel.setExamBrowserKey(oppInfo.getExamBrowserKey());
+    return new ResponseData<> (TDSReplyCode.OK.getCode (), "OK", opportunityInfoJsonModel);
   }
 
   /***

@@ -43,6 +43,10 @@
 				<beans:entry key="itemscoring.qti.sympyTimeoutMillis" value="${itemscoring.qti.sympyTimeoutMillis}" />
 				<beans:entry key="itemScoring.callbackUrl" value="${itemScoring.callbackUrl}" />
 				<beans:entry key="tds.testshell.dictionaryUrl" value="${tds.testshell.dictionaryUrl:}" />
+				<beans:entry key="tds.exam.remote.enabled" value="${tds.exam.remote.enabled:false}" />
+				<beans:entry key="tds.exam.legacy.enabled" value="${tds.exam.legacy.enabled:true}" />
+				<beans:entry key="tds.exam.remote.url" value="${tds.exam.remote.url}" />
+				<beans:entry key="tds.assessment.remote.url" value="${tds.assessment.remote.url}" />
 			</util:map>
 
 		</beans:constructor-arg>
@@ -125,6 +129,14 @@
 
 	<!-- HTTP web helper -->
 	<beans:bean id="httpWebHelper" class="AIR.Common.Web.HttpWebHelper" />
+
+	<beans:bean id="clientRequestFactory" class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory"/>
+
+	<!-- a generic rest Template bean for invoking webservices can be injected into clients -->
+	<beans:bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+		<beans:constructor-arg ref="clientRequestFactory"/>
+	</beans:bean>
+
 
 	<beans:bean id="hikariAIRConfig" class="com.zaxxer.hikari.HikariConfig">
 		<beans:property name="dataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlDataSource" />

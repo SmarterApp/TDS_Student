@@ -43,6 +43,7 @@ import TDS.Shared.Browser.BrowserRule;
 import TDS.Shared.Browser.BrowserValidation;
 import TDS.Shared.Data.ReturnStatus;
 import TDS.Shared.Exceptions.ReturnStatusException;
+import org.springframework.stereotype.Service;
 
 /**
  * @author temp_rreddy
@@ -50,6 +51,7 @@ import TDS.Shared.Exceptions.ReturnStatusException;
  */
 @Component
 @Scope ("prototype")
+@Service("legacyOpportunityService")
 public class OpportunityService implements IOpportunityService
 {
   @Autowired

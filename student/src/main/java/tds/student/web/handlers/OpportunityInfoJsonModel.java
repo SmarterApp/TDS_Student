@@ -8,12 +8,11 @@
  ******************************************************************************/
 package tds.student.web.handlers;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import tds.student.sql.data.OpportunityInfo;
 import tds.student.sql.data.TestForm;
 
 /**
@@ -26,6 +25,8 @@ public class OpportunityInfoJsonModel
   List<TestForm>  _testForms;
   private UUID    _oppKey;
   private UUID    _browserKey;
+  private UUID examId;
+  private UUID examBrowserKey;
 
   /**
    * @return the testeeForms
@@ -75,4 +76,21 @@ public class OpportunityInfoJsonModel
     this._browserKey = value;
   }
 
+  @JsonProperty ("examId")
+  public UUID getExamId() {
+    return examId;
+  }
+
+  public void setExamId(UUID examId) {
+    this.examId = examId;
+  }
+
+  @JsonProperty ("examBrowserKey")
+  public UUID getExamBrowserKey() {
+    return examBrowserKey;
+  }
+
+  public void setExamBrowserKey(UUID examBrowserKey) {
+    this.examBrowserKey = examBrowserKey;
+  }
 }
