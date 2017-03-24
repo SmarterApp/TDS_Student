@@ -15,6 +15,8 @@ import AIR.Common.Web.WebHelper;
 import TDS.Shared.Exceptions.ReturnStatusException;
 import TDS.Shared.Exceptions.TDSSecurityException;
 import org.apache.commons.lang3.StringUtils;
+import org.opentestsystem.delivery.logging.EventInfo;
+import org.opentestsystem.delivery.logging.LoggingInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,23 +24,37 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+
 import tds.blackbox.ContentRequestException;
 import tds.blackbox.web.handlers.TDSHandler;
 import tds.student.sbacossmerge.data.TestResponseReaderSax;
 import tds.student.services.abstractions.IItemScoringService;
+import tds.student.services.data.ItemResponse;
 import tds.student.services.data.NextItemGroupResult;
 import tds.student.services.data.PageList;
 import tds.student.services.data.TestOpportunity;
 import tds.student.sql.data.ItemResponseUpdate;
 import tds.student.sql.data.ItemResponseUpdateStatus;
 import tds.student.sql.data.ServerLatency;
+import tds.student.tdslogger.StudentEventLogger;
 import tds.student.web.StudentContext;
 import tds.student.web.StudentSettings;
 import tds.student.web.TestManager;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
+import AIR.Common.TDSLogger.ITDSLogger;
+import AIR.Common.Web.WebHelper;
+import TDS.Shared.Exceptions.ReturnStatusException;
+import TDS.Shared.Exceptions.TDSSecurityException;
 import java.io.FileReader;
 import java.net.URL;
 import java.util.HashSet;
@@ -58,6 +74,9 @@ public class TestResponseHandler extends TDSHandler
 
   @Autowired
   private ITDSLogger          _tdsLogger;
+
+  @Autowired
+  private StudentEventLogger  _eventLogger;
 
   // ServiceLocator.resolve<IItemScoringService>();
 
@@ -115,7 +134,7 @@ public class TestResponseHandler extends TDSHandler
       if (testOpp == null)
         StudentContext.throwMissingException ();
 
-      // get the last page the client has recieved responses for
+      // get the last page the client has received responses for
       int lastPage = WebHelper.getQueryValueInt ("lastPage");
 
       // create server latency
@@ -127,6 +146,17 @@ public class TestResponseHandler extends TDSHandler
 
       // get the request information from tehe browser
       TestResponseReader responseReader = TestResponseReaderSax.parseSax (request.getInputStream (), testOpp);
+
+      List<Map<String,String>> responses = new ArrayList<>();
+      for(ItemResponseUpdate responseUpdate: responseReader.getResponses()) {
+        Map<String, String> responseItems = new HashMap<>();
+        responseItems.put("segment_id", responseUpdate.getSegmentID());
+        responseItems.put("item_id", responseUpdate.getItemID());
+        responseItems.put("value", responseUpdate.getValue());
+        responseItems.put("valid", String.valueOf(responseUpdate.getIsValid()));
+        responses.add(responseItems);
+      }
+      _eventLogger.putField("responses_updated", responses);
 
       /*
        * Ping
@@ -141,8 +171,17 @@ public class TestResponseHandler extends TDSHandler
       // If scoring is done sychronously, then score and then updateDB
       // If scoring is done asynchronously, then updateDB (with score -1 and
       // status WaitingForMachineScore) and then score
+      _eventLogger.info(((EventInfo)request.getAttribute(LoggingInterceptor.EVENT_INFO))
+        .withMessage("_itemScoringService.updateResponses")
+        .withCheckpoint(SERVICE_CALL.name()));
+
       List<ItemResponseUpdateStatus> responseResults = null;
         responseResults = _itemScoringService.updateResponses (testOpp.getOppInstance (), responseReader.getResponses (), responseReader.getPageDuration());
+
+      _eventLogger.info(((EventInfo)request.getAttribute(LoggingInterceptor.EVENT_INFO))
+        .withMessage("_itemScoringService.updateResponses")
+        .withCheckpoint(SERVICE_RETURN.name()));
+
         /*
          * } catch (ReturnStatusException rse) {
          * response.setStatus(HttpServletResponse.SC_FORBIDDEN);
@@ -166,9 +205,7 @@ public class TestResponseHandler extends TDSHandler
       // get test manager
       TestManager testManager = new TestManager (testOpp);
 
-      // if we didn't update responses then we need to validate (unless we are
-      // in
-      // read only mode)
+      // if we didn't update responses then we need to validate (unless we are in read only mode)
       boolean validateResponses = (responseReader.getResponses ().size () == 0);
       if (_studentSettings.isReadOnly ()) {
         validateResponses = false;
@@ -202,16 +239,22 @@ public class TestResponseHandler extends TDSHandler
       } catch (Exception e) {
         _logger.error ("Error in updateResponses :CheckIfTestComplete:: "+e);
       }
-      //temp counter for debuging
+      List<Map<String,String>> prefetchedItemResponses = new ArrayList<>();
       // if the test is not completed then check if prefetch is available
       while (testManager.CheckPrefetchAvailability (testOpp.getTestConfig ().getPrefetch ())) {
         // call adaptive algorithm to get the next item group
         NextItemGroupResult nextItemGroup = testManager.CreateNextItemGroup ();
-        
         if(nextItemGroup==null) {
           break;
         }
-        
+
+        for(ItemResponse itemResponse: nextItemGroup.getPage()) {
+          Map<String, String> responseItems = new HashMap<>();
+          responseItems.put("segment_id", itemResponse.getSegmentID());
+          responseItems.put("item_id", itemResponse.getItemID());
+          prefetchedItemResponses.add(responseItems);
+        }
+
         latency.setDbLatency (latency.getDbLatency () + nextItemGroup.getDbLatency ());
         prefetchCount++;
 
@@ -231,6 +274,10 @@ public class TestResponseHandler extends TDSHandler
                 , testOpp.getTestConfig ().getTestLength ());
       	_tdsLogger.applicationError(message, "updateResponses", request, null);
       }
+
+      _eventLogger.putField("prefetched_item_responses", prefetchedItemResponses);
+      _eventLogger.putField("last_page", testManager.getLastPage());
+      _eventLogger.putField("prefetch_count", prefetchCount);
 
       // set latency operation type
       boolean prefetched = (prefetchCount > 0);
