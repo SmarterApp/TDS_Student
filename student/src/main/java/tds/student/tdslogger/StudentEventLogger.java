@@ -3,6 +3,7 @@ package tds.student.tdslogger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.opentestsystem.delivery.logging.EventLoggerBase;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
@@ -28,7 +29,7 @@ public class StudentEventLogger extends EventLoggerBase {
   }
 
   @Autowired
-  public StudentEventLogger(final ObjectMapper objectMapper) {
+  public StudentEventLogger(@Qualifier("integrationObjectMapper") final ObjectMapper objectMapper) {
     super(objectMapper);
   }
 }

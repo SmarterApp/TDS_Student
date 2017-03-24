@@ -137,9 +137,8 @@
 	<beans:bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
 		<beans:constructor-arg ref="clientRequestFactory"/>
 	</beans:bean>
-	<beans:bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
-	<beans:bean id="eventParser" class="tds.student.tdslogger.StudentEventParserFactory" />
 
+	<beans:bean id="eventParser" class="tds.student.tdslogger.StudentEventParserFactory" />
 
 	<beans:bean id="hikariAIRConfig" class="com.zaxxer.hikari.HikariConfig">
 		<beans:property name="dataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlDataSource" />

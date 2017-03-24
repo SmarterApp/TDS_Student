@@ -15,8 +15,6 @@ import AIR.Common.Web.WebHelper;
 import TDS.Shared.Exceptions.ReturnStatusException;
 import TDS.Shared.Exceptions.TDSSecurityException;
 import org.apache.commons.lang3.StringUtils;
-import org.opentestsystem.delivery.logging.EventInfo;
-import org.opentestsystem.delivery.logging.LoggingInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,9 +49,6 @@ import tds.student.tdslogger.StudentEventLogger;
 import tds.student.web.StudentContext;
 import tds.student.web.StudentSettings;
 import tds.student.web.TestManager;
-
-import static org.opentestsystem.delivery.logging.EventLogger.Checkpoint.SERVICE_CALL;
-import static org.opentestsystem.delivery.logging.EventLogger.Checkpoint.SERVICE_RETURN;
 
 @Controller
 @Scope ("request")
@@ -166,17 +161,8 @@ public class TestResponseHandler extends TDSHandler
       // If scoring is done sychronously, then score and then updateDB
       // If scoring is done asynchronously, then updateDB (with score -1 and
       // status WaitingForMachineScore) and then score
-      _eventLogger.info(((EventInfo)request.getAttribute(LoggingInterceptor.EVENT_INFO))
-        .withMessage("_itemScoringService.updateResponses")
-        .withCheckpoint(SERVICE_CALL.name()));
-
       List<ItemResponseUpdateStatus> responseResults = null;
         responseResults = _itemScoringService.updateResponses (testOpp.getOppInstance (), responseReader.getResponses (), responseReader.getPageDuration());
-
-      _eventLogger.info(((EventInfo)request.getAttribute(LoggingInterceptor.EVENT_INFO))
-        .withMessage("_itemScoringService.updateResponses")
-        .withCheckpoint(SERVICE_RETURN.name()));
-
         /*
          * } catch (ReturnStatusException rse) {
          * response.setStatus(HttpServletResponse.SC_FORBIDDEN);
