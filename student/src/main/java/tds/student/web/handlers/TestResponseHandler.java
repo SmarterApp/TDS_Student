@@ -24,6 +24,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
@@ -51,14 +52,8 @@ import tds.student.web.StudentContext;
 import tds.student.web.StudentSettings;
 import tds.student.web.TestManager;
 
-import AIR.Common.TDSLogger.ITDSLogger;
-import AIR.Common.Web.WebHelper;
-import TDS.Shared.Exceptions.ReturnStatusException;
-import TDS.Shared.Exceptions.TDSSecurityException;
-import java.io.FileReader;
-import java.net.URL;
-import java.util.HashSet;
-import java.util.List;
+import static org.opentestsystem.delivery.logging.EventLogger.Checkpoint.SERVICE_CALL;
+import static org.opentestsystem.delivery.logging.EventLogger.Checkpoint.SERVICE_RETURN;
 
 @Controller
 @Scope ("request")
