@@ -36,7 +36,7 @@ public class RemoteAccommodationsService implements IAccommodationsService {
   private final ExamRepository examRepository;
   private final AssessmentRepository assessmentRepository;
   private static final int ASSESSMENT_POSITION = 0;
-  
+
   @Autowired
   public RemoteAccommodationsService(
     @Qualifier("legacyAccommodationsService") IAccommodationsService legacyAccommodationsService,
@@ -99,54 +99,48 @@ public class RemoteAccommodationsService implements IAccommodationsService {
     /* AccommodationService [194] */
     List<ExamAccommodation> examAccommodationResponse = examRepository.findApprovedAccommodations(opportunityInstance.getExamId());
     /* [396] This should contain accommodations for the entire assessment and its individual segments. */
-    // Contains all accommodation data
-    List<Accommodation> assessmentAccommodationsResponse = assessmentRepository.findAccommodations(opportunityInstance.getExamClientName(), testKey);
-
-    return mapExamAccommodationsToLegacyAccommodations(assessment, assessmentAccommodationsResponse, examAccommodationResponse, isGuestSession);
+    return mapExamAccommodationsToLegacyAccommodations(assessment, examAccommodationResponse, isGuestSession);
   }
 
   /* This method is a port of AccommodationService.getTestSegments() between [398 - 426] with some logic located in getApproved()
   *  The "Accommodations" class is what the legacy code will use to create the TDS-Student-Accs cookie */
-  private List<Accommodations> mapExamAccommodationsToLegacyAccommodations(final Assessment assessment, final List<Accommodation> assessmentAccommodations,
+  private List<Accommodations> mapExamAccommodationsToLegacyAccommodations(final Assessment assessment,
                                                                            final List<ExamAccommodation> approvedExamAccommodations, final boolean isGuestSession) {
-    // accCode -> ExamAccommodation
-    Map<String, ExamAccommodation> approvedExamAccommodationMap = new HashMap<>();
+
+    Map<Integer, String> segmentPositionToId = mapSegmentPositionsToSegmentIds(assessment);
     // segmentPosition -> legacy Accommodations object (per segment + assessment)
     Map<Integer, Accommodations> segmentPositionToAccommodations = new HashMap<>();
     Accommodations retAccommodations;
-    ExamAccommodation approvedExamAccommodation;
     int segmentPosition;
 
-    // Map the accommodation keys (code) to their exam accommodations for quick lookup
-    for (ExamAccommodation examAccommodation : approvedExamAccommodations) {
-      approvedExamAccommodationMap.put(examAccommodation.getCode(), examAccommodation);
-    }
-    
-    /* We need to filter only approve ExamAccommodations - although the Assessment accommodations contain
-       the majority of the accommodation metadata  */
-    for (Accommodation accommodation : assessmentAccommodations) {
-      // Filter only approved accommodations
-      approvedExamAccommodation = approvedExamAccommodationMap.get(accommodation.getCode());
+    for (ExamAccommodation approvedExamAccommodation : approvedExamAccommodations) {
+      segmentPosition = approvedExamAccommodation.getSegmentPosition();
+      retAccommodations = segmentPositionToAccommodations.get(segmentPosition);
 
-      if (approvedExamAccommodation != null && approvedExamAccommodation.getType().equalsIgnoreCase(accommodation.getType())) {
-        segmentPosition = accommodation.getSegmentPosition();
-        retAccommodations = segmentPositionToAccommodations.get(segmentPosition);
+      // If there are no Accommodations created for this segment position, we need to create one.
+      if (retAccommodations == null) {
+        // Accommodation context is either the segmentId or assessmentId, depending on whether the accommodation is
+        // segment specific or global to the assessment
+        retAccommodations = new Accommodations(segmentPosition, segmentPositionToId.get(segmentPosition), getLabelForAssessmentOrSegment(segmentPosition, assessment));
+        segmentPositionToAccommodations.put(segmentPosition, retAccommodations);
+      }
 
-        // If there are no Accommodations created for this segment position, we need to create one.
-        if (retAccommodations == null) {
-          // Accommodation context is either the segmentId or assessmentId, depending on whether the accommodation is
-          // segment specific or global to the assessment
-          retAccommodations = new Accommodations(segmentPosition, accommodation.getContext(), getLabelForAssessmentOrSegment(segmentPosition, assessment));
-          segmentPositionToAccommodations.put(segmentPosition, retAccommodations);
-        }
-      
-        /* AccommodationService [399-400] - If this isn't a guest session, then no need to check isDisabledOnGuest flag */
-        if (!isGuestSession || !accommodation.isDisableOnGuestSession()) {
-          // Create accommodations type and value - these will be used by the UI between checkApproval and startTest
-          retAccommodations.create(accommodation.getType(), accommodation.getCode(), accommodation.getValue(), accommodation.isVisible(),
-            accommodation.isSelectable(), accommodation.isAllowChange(), accommodation.isStudentControl(), accommodation.getDependsOnToolType(),
-            accommodation.isDisableOnGuestSession(), accommodation.isDefaultAccommodation(), accommodation.isAllowCombine(), true);
-        }
+      /* AccommodationService [399-400] - If this isn't a guest session, then no need to check isDisabledOnGuest flag */
+      if (!isGuestSession || !approvedExamAccommodation.isDisabledOnGuestSession()) {
+        // Create accommodations type and value - these will be used by the UI between checkApproval and startTest
+        retAccommodations.create(
+          approvedExamAccommodation.getType(),
+          approvedExamAccommodation.getCode(),
+          approvedExamAccommodation.getValue(),
+          approvedExamAccommodation.isVisible(),
+          approvedExamAccommodation.isSelectable(),
+          approvedExamAccommodation.isAllowChange(),
+          approvedExamAccommodation.isStudentControlled(),
+          approvedExamAccommodation.getDependsOn(),
+          approvedExamAccommodation.isDisabledOnGuestSession(),
+          approvedExamAccommodation.isDefaultAccommodation(),
+          approvedExamAccommodation.isAllowCombine(),
+          true);
       }
     }
 
@@ -154,9 +148,11 @@ public class RemoteAccommodationsService implements IAccommodationsService {
     if (!segmentPositionToAccommodations.isEmpty()) {
       Accommodations assessmentAccommodation = segmentPositionToAccommodations.get(ASSESSMENT_POSITION);
 
-      for (AccommodationDependency assessmentDependency : assessment.getAccommodationDependencies()) {
-        assessmentAccommodation.AddDependency(assessmentDependency.getIfType(), assessmentDependency.getIfValue(),
-          assessmentDependency.getThenType(), assessmentDependency.getThenValue(), assessmentDependency.isDefault());
+      if (assessmentAccommodation != null) {
+        for (AccommodationDependency assessmentDependency : assessment.getAccommodationDependencies()) {
+          assessmentAccommodation.AddDependency(assessmentDependency.getIfType(), assessmentDependency.getIfValue(),
+            assessmentDependency.getThenType(), assessmentDependency.getThenValue(), assessmentDependency.isDefault());
+        }
       }
     }
 
@@ -173,6 +169,20 @@ public class RemoteAccommodationsService implements IAccommodationsService {
     }
 
     return new ArrayList<>(segmentPositionToAccommodations.values());
+  }
+
+  private static Map<Integer, String> mapSegmentPositionsToSegmentIds(final Assessment assessment) {
+    Map<Integer, String> segmentPositionToId = new HashMap<>();
+
+    segmentPositionToId.put(ASSESSMENT_POSITION, assessment.getAssessmentId());
+
+    if (assessment.isSegmented()) {
+      for (Segment segment : assessment.getSegments()) {
+        segmentPositionToId.put(segment.getPosition(), segment.getSegmentId());
+      }
+    }
+
+    return segmentPositionToId;
   }
 
   private String getLabelForAssessmentOrSegment(final int position, final Assessment assessment) {
@@ -208,5 +218,5 @@ public class RemoteAccommodationsService implements IAccommodationsService {
     }
     return segmentPosToAccommodationCodes;
   }
-  
+
 }

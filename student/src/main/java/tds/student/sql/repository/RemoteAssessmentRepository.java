@@ -15,9 +15,6 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.List;
-
-import tds.accommodation.Accommodation;
 import tds.assessment.Assessment;
 
 @Repository
@@ -47,30 +44,6 @@ public class RemoteAssessmentRepository implements AssessmentRepository {
         HttpMethod.GET,
         requestHttpEntity,
         new ParameterizedTypeReference<Assessment>() {
-        });
-    } catch (RestClientException rce) {
-      throw new ReturnStatusException(rce);
-    }
-
-    return responseEntity.getBody();
-  }
-
-  @Override
-  public List<Accommodation> findAccommodations(final String clientName, final String assessmentKey) throws ReturnStatusException {
-    HttpHeaders headers = new HttpHeaders();
-    headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
-    HttpEntity<?> requestHttpEntity = new HttpEntity<>(headers);
-    ResponseEntity<List<Accommodation>> responseEntity;
-
-    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/%s/assessments/accommodations", assessmentUrl, clientName))
-      .queryParam("assessmentKey", assessmentKey);
-
-    try {
-      responseEntity = restTemplate.exchange(
-        builder.build().toUri(),
-        HttpMethod.GET,
-        requestHttpEntity,
-        new ParameterizedTypeReference<List<Accommodation>>() {
         });
     } catch (RestClientException rce) {
       throw new ReturnStatusException(rce);

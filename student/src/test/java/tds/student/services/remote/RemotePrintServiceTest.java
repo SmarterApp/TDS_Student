@@ -86,8 +86,7 @@ public class RemotePrintServiceTest {
     assertThat(printRequest.getItemPosition()).isEqualTo(0);
     assertThat(printRequest.getPagePosition()).isEqualTo(pageGroup.getNumber());
     assertThat(printRequest.getParameters()).isEqualTo(requestParams);
-    assertThat(printRequest.getDeniedAt()).isNull();
-    assertThat(printRequest.getApprovedAt()).isNull();
+    assertThat(printRequest.getChangedAt()).isNull();
     assertThat(printRequest.getReasonDenied()).isNull();
     assertThat(printRequest.getValue()).isEqualTo("/path/to/stim");
     assertThat(printRequest.getType()).isEqualTo(ExamPrintRequest.REQUEST_TYPE_PRINT_PASSAGE);
@@ -138,8 +137,7 @@ public class RemotePrintServiceTest {
     assertThat(printRequest.getItemPosition()).isEqualTo(opportunityItem1.getPosition());
     assertThat(printRequest.getPagePosition()).isEqualTo(opportunityItem1.getPage());
     assertThat(printRequest.getParameters()).isEqualTo(requestParams);
-    assertThat(printRequest.getDeniedAt()).isNull();
-    assertThat(printRequest.getApprovedAt()).isNull();
+    assertThat(printRequest.getChangedAt()).isNull();
     assertThat(printRequest.getReasonDenied()).isNull();
     assertThat(printRequest.getValue()).isEqualTo("/path/to/stim");
     assertThat(printRequest.getType()).isEqualTo(ExamPrintRequest.REQUEST_TYPE_PRINT_ITEM);
@@ -208,8 +206,7 @@ public class RemotePrintServiceTest {
     assertThat(printRequest.getItemPosition()).isEqualTo(0);
     assertThat(printRequest.getPagePosition()).isEqualTo(opportunityItem1.getPage());
     assertThat(printRequest.getParameters()).isEqualTo("FileFormat:BRAILLE TYPE");
-    assertThat(printRequest.getDeniedAt()).isNull();
-    assertThat(printRequest.getApprovedAt()).isNull();
+    assertThat(printRequest.getChangedAt()).isNull();
     assertThat(printRequest.getReasonDenied()).isNull();
     assertThat(printRequest.getValue()).isEqualTo("/path/to/braille/file");
     assertThat(printRequest.getType()).isEqualTo(ExamPrintRequest.REQUEST_TYPE_EMBOSS_PASSAGE);
@@ -266,8 +263,7 @@ public class RemotePrintServiceTest {
     assertThat(printRequest.getItemPosition()).isEqualTo(0);
     assertThat(printRequest.getPagePosition()).isEqualTo(opportunityItem1.getPage());
     assertThat(printRequest.getParameters()).isEqualTo("FileFormat:BRAILLE TYPE");
-    assertThat(printRequest.getDeniedAt()).isNull();
-    assertThat(printRequest.getApprovedAt()).isNull();
+    assertThat(printRequest.getChangedAt()).isNull();
     assertThat(printRequest.getReasonDenied()).isNull();
     assertThat(printRequest.getValue()).isEqualTo("/path/to/braille/file;/path/to/braille/file2");
     assertThat(printRequest.getType()).isEqualTo(ExamPrintRequest.REQUEST_TYPE_EMBOSS_PASSAGE);
@@ -410,8 +406,7 @@ public class RemotePrintServiceTest {
     assertThat(printRequest.getItemPosition()).isEqualTo(0);
     assertThat(printRequest.getPagePosition()).isEqualTo(opportunityItem1.getPage());
     assertThat(printRequest.getParameters()).isEqualTo("FileFormat:BRAILLE TYPE");
-    assertThat(printRequest.getDeniedAt()).isNull();
-    assertThat(printRequest.getApprovedAt()).isNull();
+    assertThat(printRequest.getChangedAt()).isNull();
     assertThat(printRequest.getReasonDenied()).isNull();
     assertThat(printRequest.getValue()).isEqualTo("/path/to/braille/file");
     assertThat(printRequest.getType()).isEqualTo(ExamPrintRequest.REQUEST_TYPE_EMBOSS_PASSAGE);
@@ -459,8 +454,7 @@ public class RemotePrintServiceTest {
     assertThat(printRequest.getItemPosition()).isEqualTo(1);
     assertThat(printRequest.getPagePosition()).isEqualTo(opportunityItem1.getPage());
     assertThat(printRequest.getParameters()).isEqualTo("FileFormat:BRAILLE TYPE");
-    assertThat(printRequest.getDeniedAt()).isNull();
-    assertThat(printRequest.getApprovedAt()).isNull();
+    assertThat(printRequest.getChangedAt()).isNull();
     assertThat(printRequest.getReasonDenied()).isNull();
     assertThat(printRequest.getValue()).isEqualTo("/path/to/braille/file");
     assertThat(printRequest.getType()).isEqualTo(ExamPrintRequest.REQUEST_TYPE_EMBOSS_ITEM);
@@ -513,8 +507,7 @@ public class RemotePrintServiceTest {
     assertThat(printRequest.getItemPosition()).isEqualTo(1);
     assertThat(printRequest.getPagePosition()).isEqualTo(opportunityItem1.getPage());
     assertThat(printRequest.getParameters()).isEqualTo("FileFormat:BRAILLE TYPE");
-    assertThat(printRequest.getDeniedAt()).isNull();
-    assertThat(printRequest.getApprovedAt()).isNull();
+    assertThat(printRequest.getChangedAt()).isNull();
     assertThat(printRequest.getReasonDenied()).isNull();
     assertThat(printRequest.getValue()).isEqualTo("/path/to/braille/file;/path/to/braille/file2");
     assertThat(printRequest.getType()).isEqualTo(ExamPrintRequest.REQUEST_TYPE_EMBOSS_ITEM);
