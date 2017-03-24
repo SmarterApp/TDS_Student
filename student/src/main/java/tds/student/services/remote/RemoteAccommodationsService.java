@@ -126,7 +126,8 @@ public class RemoteAccommodationsService implements IAccommodationsService {
       }
 
       /* AccommodationService [399-400] - If this isn't a guest session, then no need to check isDisabledOnGuest flag */
-      if (!isGuestSession || !approvedExamAccommodation.isDisabledOnGuestSession()) {
+      // Do not include "non-functional" accommodations - these do not need to be visible to student
+      if (approvedExamAccommodation.isFunctional() && (!isGuestSession || !approvedExamAccommodation.isDisabledOnGuestSession())) {
         // Create accommodations type and value - these will be used by the UI between checkApproval and startTest
         retAccommodations.create(
           approvedExamAccommodation.getType(),
