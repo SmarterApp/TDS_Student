@@ -156,13 +156,17 @@ public class StudentContext
     
     TDSIdentity.getCurrentTDSIdentity ().setAuthCookieValue ("O_TKEY", testKey);
     TDSIdentity.getCurrentTDSIdentity ().setAuthCookieValue ("O_TID", testID);
-    TDSIdentity.getCurrentTDSIdentity ().setAuthCookieValue ("O_KEY", oppInfo.getOppKey ().toString ());
+
+    if (oppInfo.getOppKey() != null) {
+      TDSIdentity.getCurrentTDSIdentity ().setAuthCookieValue ("O_KEY", oppInfo.getOppKey ().toString ());
+    }
+    if (oppInfo.getBrowserKey() != null) {
+      StudentCookie.setCookieData ("O_BKEY", oppInfo.getBrowserKey ().toString ());
+    }
+
     TDSIdentity.getCurrentTDSIdentity().setAuthCookieValue(EXAM_CLIENT_NAME, oppInfo.getExamClientName());
     TDSIdentity.getCurrentTDSIdentity().setAuthCookieValue(EXAM_ID_COOKIE_KEY, oppInfo.getExamId().toString());
-
     TDSIdentity.getCurrentTDSIdentity ().saveAuthCookie ();
-
-    StudentCookie.setCookieData ("O_BKEY", oppInfo.getBrowserKey ().toString ());
     StudentCookie.setCookieData(EXAM_BROWSER_KEY, oppInfo.getExamBrowserKey().toString());
   }
 
@@ -200,9 +204,14 @@ public class StudentContext
     }
 
     TDSIdentity tdsIdentity = TDSIdentity.getCurrentTDSIdentity();
-    UUID oppKey = UUID.fromString (tdsIdentity.get ("O_KEY"));
+    UUID oppKey = tdsIdentity.get ("O_KEY") == null
+      ? null
+      : UUID.fromString (tdsIdentity.get ("O_KEY"));
+
     UUID sessionKey = UUID.fromString (StudentCookie.getCookieData ("S_KEY"));
-    UUID browserKey = UUID.fromString (StudentCookie.getCookieData ("O_BKEY"));
+    UUID browserKey = StudentCookie.getCookieData ("O_BKEY") == null
+      ? null
+      : UUID.fromString (StudentCookie.getCookieData ("O_BKEY"));
 
     UUID examBrowserKey = StudentCookie.getCookieData(EXAM_BROWSER_KEY) == null
       ? null
