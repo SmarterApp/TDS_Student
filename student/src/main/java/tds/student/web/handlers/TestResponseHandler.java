@@ -22,6 +22,15 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.net.URL;
+import java.util.HashSet;
+import java.util.List;
+
 import tds.blackbox.ContentRequestException;
 import tds.blackbox.web.handlers.TDSHandler;
 import tds.student.sbacossmerge.data.TestResponseReaderSax;
@@ -32,17 +41,10 @@ import tds.student.services.data.TestOpportunity;
 import tds.student.sql.data.ItemResponseUpdate;
 import tds.student.sql.data.ItemResponseUpdateStatus;
 import tds.student.sql.data.ServerLatency;
+import tds.student.tdslogger.StudentEventLogger;
 import tds.student.web.StudentContext;
 import tds.student.web.StudentSettings;
 import tds.student.web.TestManager;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.net.URL;
-import java.util.HashSet;
-import java.util.List;
 
 @Controller
 @Scope ("request")
@@ -58,6 +60,9 @@ public class TestResponseHandler extends TDSHandler
 
   @Autowired
   private ITDSLogger          _tdsLogger;
+
+  @Autowired
+  private StudentEventLogger  _eventLogger;
 
   // ServiceLocator.resolve<IItemScoringService>();
 
@@ -115,7 +120,7 @@ public class TestResponseHandler extends TDSHandler
       if (testOpp == null)
         StudentContext.throwMissingException ();
 
-      // get the last page the client has recieved responses for
+      // get the last page the client has received responses for
       int lastPage = WebHelper.getQueryValueInt ("lastPage");
 
       // create server latency
@@ -127,6 +132,8 @@ public class TestResponseHandler extends TDSHandler
 
       // get the request information from tehe browser
       TestResponseReader responseReader = TestResponseReaderSax.parseSax (request.getInputStream (), testOpp);
+
+      _eventLogger.putField("responses_updated", responseReader);
 
       /*
        * Ping
@@ -166,9 +173,7 @@ public class TestResponseHandler extends TDSHandler
       // get test manager
       TestManager testManager = new TestManager (testOpp);
 
-      // if we didn't update responses then we need to validate (unless we are
-      // in
-      // read only mode)
+      // if we didn't update responses then we need to validate (unless we are in read only mode)
       boolean validateResponses = (responseReader.getResponses ().size () == 0);
       if (_studentSettings.isReadOnly ()) {
         validateResponses = false;
@@ -202,16 +207,16 @@ public class TestResponseHandler extends TDSHandler
       } catch (Exception e) {
         _logger.error ("Error in updateResponses :CheckIfTestComplete:: "+e);
       }
-      //temp counter for debuging
       // if the test is not completed then check if prefetch is available
       while (testManager.CheckPrefetchAvailability (testOpp.getTestConfig ().getPrefetch ())) {
         // call adaptive algorithm to get the next item group
         NextItemGroupResult nextItemGroup = testManager.CreateNextItemGroup ();
-        
         if(nextItemGroup==null) {
           break;
         }
-        
+
+        _eventLogger.putField("prefetched_item_responses", nextItemGroup);
+
         latency.setDbLatency (latency.getDbLatency () + nextItemGroup.getDbLatency ());
         prefetchCount++;
 
@@ -231,6 +236,9 @@ public class TestResponseHandler extends TDSHandler
                 , testOpp.getTestConfig ().getTestLength ());
       	_tdsLogger.applicationError(message, "updateResponses", request, null);
       }
+
+      _eventLogger.putField("last_page", testManager.getLastPage());
+      _eventLogger.putField("prefetch_count", prefetchCount);
 
       // set latency operation type
       boolean prefetched = (prefetchCount > 0);

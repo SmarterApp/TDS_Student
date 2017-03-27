@@ -79,6 +79,7 @@ import tds.student.sql.data.TestSelection;
 import tds.student.sql.data.TestSession;
 import tds.student.sql.data.TestSummary;
 import tds.student.sql.data.Testee;
+import tds.student.tdslogger.StudentEventLogger;
 import tds.student.web.BrowserInfoCookie;
 import tds.student.web.DebugSettings;
 import tds.student.web.ProxyContext;
@@ -136,6 +137,9 @@ public class MasterShellHandler extends TDSHandler
   private ITDSLogger             _tdsLogger;
 
   @Autowired
+  private StudentEventLogger     _eventLogger;
+
+  @Autowired
   private ItemBankService         itemBankService;
 
   @Autowired
@@ -189,6 +193,7 @@ public class MasterShellHandler extends TDSHandler
       // get login error message
       String loginErrorKey = "Login.Label.Error";
       response.setStatus (HttpStatus.SC_INTERNAL_SERVER_ERROR);
+      _eventLogger.putField("result", "denied: error");
       return new ResponseData<tds.student.sbacossmerge.data.LoginInfo> (TDSReplyCode.Error.getCode (), loginErrorKey, null);
     }
 
@@ -223,6 +228,7 @@ public class MasterShellHandler extends TDSHandler
       _logger.error ("Error validating login info : " + message);
       // send error to client
       response.setStatus (HttpStatus.SC_FORBIDDEN);
+      _eventLogger.putField("result", "denied");
       return new ResponseData<tds.student.sbacossmerge.data.LoginInfo> (TDSReplyCode.Denied.getCode (), error, null);
     }
 
@@ -249,6 +255,7 @@ public class MasterShellHandler extends TDSHandler
     // TODO Shajib: no url attr in LoginInfo
     // _loginInfo.setUrl(HttpContext.getCurrentContext ().getServer
     // ().getContextPath ());
+    _eventLogger.putField("result", "success");
     return new ResponseData<tds.student.sbacossmerge.data.LoginInfo> (TDSReplyCode.OK.getCode (), "OK", _loginInfo);
   }
 
@@ -415,6 +422,7 @@ public class MasterShellHandler extends TDSHandler
     oppApproval.setComment (oppApproval.getComment ());
     // if the opportunity was approved and a testkey was provided load
     // accommodations
+    _eventLogger.putField("result", oppApproval.getStatus().name().toLowerCase());
     if (oppApproval.getStatus () == OpportunityApprovalStatus.Approved) {
       // load the opportunity accommodations
       List<Accommodations> segmentsAccommodations = null;

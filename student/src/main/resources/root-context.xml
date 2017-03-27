@@ -59,6 +59,7 @@
 	<context:component-scan base-package="tds.student.sql.repository" />
 	<context:component-scan base-package="tds.student.sql.singletons" />
 	<context:component-scan base-package="tds.student.services" />
+	<context:component-scan base-package="tds.student.tdslogger"/>
 	<context:component-scan base-package="tds.student.web" />
 	<context:component-scan base-package="tds.student.configuration" />
 	<context:component-scan base-package="tds.itemscoringengine" />
@@ -137,6 +138,7 @@
 		<beans:constructor-arg ref="clientRequestFactory"/>
 	</beans:bean>
 
+	<beans:bean id="eventParser" class="tds.student.tdslogger.StudentEventParserFactory" />
 
 	<beans:bean id="hikariAIRConfig" class="com.zaxxer.hikari.HikariConfig">
 		<beans:property name="dataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlDataSource" />
