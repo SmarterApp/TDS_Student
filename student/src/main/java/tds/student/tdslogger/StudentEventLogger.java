@@ -36,13 +36,11 @@ public class StudentEventLogger extends EventLoggerBase {
 
   public StudentEventLogger() {
     super(new ObjectMapper());
-    info(getApp(), "naked constructor", "construct0", null, null);
   }
 
   @Autowired
   public StudentEventLogger(@Qualifier("integrationObjectMapper") final ObjectMapper objectMapper) {
     super(objectMapper);
-    info(getApp(), "1-arg constructor", "construct1", null, null);
   }
 
   public void putField(String key, TestResponseReader responseReader) {
