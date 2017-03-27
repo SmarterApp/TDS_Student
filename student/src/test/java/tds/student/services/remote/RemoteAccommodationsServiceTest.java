@@ -182,30 +182,41 @@ public class RemoteAccommodationsServiceTest {
           .withCode("AccCode1")
           .withType("AccType1")
           .withDependsOn("Language")
+          .withFunctional(true)
           .build();
         ExamAccommodation disabledGuestAccom = new ExamAccommodation.Builder(UUID.randomUUID())
           .withCode("AccCode3")
           .withType("AccType3")
           .withDisabledOnGuestSession(true)
           .withDependsOn("Language")
+          .withFunctional(true)
           .build();
         ExamAccommodation segment1ExamAcc = new ExamAccommodation.Builder(UUID.randomUUID())
           .withType("AccType4")
           .withCode("AccCode4")
           .withSegmentPosition(1)
           .withDependsOn("Language")
+          .withFunctional(true)
           .build();
         ExamAccommodation segment2ExamAcc = new ExamAccommodation.Builder(UUID.randomUUID())
           .withType("AccType5")
           .withCode("AccCode5")
           .withDependsOn("Language")
+          .withFunctional(true)
+          .withSegmentPosition(2)
+          .build();
+        ExamAccommodation nonFunctionalAccomm = new ExamAccommodation.Builder(UUID.randomUUID())
+          .withType("AccType6")
+          .withCode("AccCode6")
+          .withDependsOn("Language")
+          .withFunctional(false)
           .withSegmentPosition(2)
           .build();
 
         when(legacyAccommodationsService.getApproved(oppInstance, assessmentKey, true)).thenReturn(new ArrayList<Accommodations>());
         when(mockAssessmentRepository.findAssessment(clientName, assessmentKey)).thenReturn(assessment);
         when(mockExamRepository.findApprovedAccommodations(examId))
-          .thenReturn(Arrays.asList(assessmentExamAcc1, disabledGuestAccom, segment1ExamAcc, segment2ExamAcc));
+          .thenReturn(Arrays.asList(assessmentExamAcc1, disabledGuestAccom, segment1ExamAcc, segment2ExamAcc, nonFunctionalAccomm));
         
         List<Accommodations> retAccommodations = service.getApproved(oppInstance, assessmentKey, true);
         
