@@ -447,6 +447,41 @@ public class RemoteOpportunityServiceTest {
   }
 
   @Test
+  public void shouldCheckSegmentApprovalLegacyEnabled() throws ReturnStatusException {
+    service = new RemoteOpportunityService(mockLegacyOpportunityService, true, true, mockExamRepository, mockExamSegmentRepository, mockTestOpportunityExamMapDao);
+    OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+    ExamApproval examApproval = new ExamApproval(oppInstance.getExamId(), new ExamStatusCode(ExamStatusCode.STATUS_APPROVED), "reason");
+    OpportunityStatus oppStatusFromLegacy = new OpportunityStatus();
+    oppStatusFromLegacy.setStatus(OpportunityStatusType.Approved);
+
+    when(mockLegacyOpportunityService.checkSegmentApproval(isA(OpportunityInstance.class))).thenReturn(new ApprovalInfo(oppStatusFromLegacy));
+    when(mockExamRepository.getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey()))
+        .thenReturn(new Response<>(examApproval));
+    ApprovalInfo info = service.checkSegmentApproval(oppInstance);
+
+    verify(mockLegacyOpportunityService).checkSegmentApproval(isA(OpportunityInstance.class));
+    verify(mockExamRepository).updateStatus(oppInstance.getExamId(), ExamStatusCode.STATUS_STARTED, "segment");
+    verify(mockLegacyOpportunityService, never()).checkTestApproval(isA(OpportunityInstance.class));
+    assertThat(info.getStatus().name()).isEqualTo("Approved");
+  }
+
+  @Test
+  public void shouldCheckSegmentApprovalOnlyLegacy() throws ReturnStatusException {
+    service = new RemoteOpportunityService(mockLegacyOpportunityService, false, true, mockExamRepository, mockExamSegmentRepository, mockTestOpportunityExamMapDao);
+    OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+    OpportunityStatus oppStatusFromLegacy = new OpportunityStatus();
+    oppStatusFromLegacy.setStatus(OpportunityStatusType.Approved);
+
+    when(mockLegacyOpportunityService.checkSegmentApproval(isA(OpportunityInstance.class))).thenReturn(new ApprovalInfo(oppStatusFromLegacy));
+    ApprovalInfo info = service.checkSegmentApproval(oppInstance);
+
+    verify(mockLegacyOpportunityService).checkSegmentApproval(isA(OpportunityInstance.class));
+    verify(mockExamRepository, never()).updateStatus(oppInstance.getExamId(), ExamStatusCode.STATUS_STARTED, "segment");
+    verify(mockLegacyOpportunityService, never()).checkTestApproval(isA(OpportunityInstance.class));
+    assertThat(info.getStatus().name()).isEqualTo("Approved");
+  }
+
+  @Test
   public void shouldCheckSegmentApprovalNotApproved() throws ReturnStatusException {
     service = new RemoteOpportunityService(mockLegacyOpportunityService, true, false, mockExamRepository, mockExamSegmentRepository, mockTestOpportunityExamMapDao);
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());

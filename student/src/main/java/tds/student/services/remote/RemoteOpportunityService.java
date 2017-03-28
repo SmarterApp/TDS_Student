@@ -227,13 +227,13 @@ public class RemoteOpportunityService implements IOpportunityService {
 
     if (isLegacyCallsEnabled) {
       approvalInfo = legacyOpportunityService.checkSegmentApproval(oppInstance);
+    } else {
+      approvalInfo = checkTestApproval(oppInstance);
     }
 
     if (!isRemoteExamCallsEnabled) {
       return approvalInfo;
     }
-
-    approvalInfo = checkTestApproval(oppInstance);
 
     if (ExamStatusCode.STATUS_APPROVED.equalsIgnoreCase(approvalInfo.getStatus().name())) {
       examRepository.updateStatus(oppInstance.getExamId(), ExamStatusCode.STATUS_STARTED, "segment");
