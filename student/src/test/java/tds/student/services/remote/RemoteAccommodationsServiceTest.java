@@ -102,9 +102,10 @@ public class RemoteAccommodationsServiceTest {
         final String assessmentKey = "assessment-key";
         final String assessmentId = "assessment-id";
         final String clientName = "SBAC_PT";
+        final String browserUserAgent = "user-agent";
         final UUID examId = UUID.randomUUID();
         OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(),
-          examId, UUID.randomUUID(), clientName);
+          examId, UUID.randomUUID(), clientName, browserUserAgent);
     
         AccommodationDependency dependency = new AccommodationDependency.Builder(assessmentId)
           .withIfType("Language")
@@ -147,12 +148,13 @@ public class RemoteAccommodationsServiceTest {
     
     @Test
     public void shouldGetAccommodationsForGuestSessionWithSegments() throws ReturnStatusException {
+        final String browserUserAgent = "user-agent";
         final String assessmentKey = "assessment-key";
         final String assessmentId = "assessment-id";
         final String clientName = "SBAC_PT";
         final UUID examId = UUID.randomUUID();
         OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(),
-          examId, UUID.randomUUID(), clientName);
+          examId, UUID.randomUUID(), clientName, browserUserAgent);
     
         AccommodationDependency dependency = new AccommodationDependency.Builder(assessmentId)
           .withIfType("Language")

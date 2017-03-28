@@ -268,9 +268,9 @@ public class RemoteOpportunityService implements IOpportunityService {
     if (!isRemoteExamCallsEnabled) {
       return testConfig;
     }
-  
+
     /* Note that the formKeys argument can be ignored - it is an unused functionality */
-    Response<ExamConfiguration> response = examRepository.startExam(oppInstance.getExamId());
+    final Response<ExamConfiguration> response = examRepository.startExam(oppInstance.getExamId(), oppInstance.getBrowserUserAgent());
 
     if (response.getError().isPresent()) {
       final ValidationError validationError = response.getError().get();
@@ -287,9 +287,7 @@ public class RemoteOpportunityService implements IOpportunityService {
 
     final ExamConfiguration examConfiguration = response.getData().get();
 
-    testConfig = mapExamConfigurationToTestConfig(examConfiguration);
-
-    return testConfig;
+    return mapExamConfigurationToTestConfig(examConfiguration);
   }
 
   @Override

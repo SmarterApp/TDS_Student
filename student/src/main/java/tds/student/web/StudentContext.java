@@ -8,12 +8,13 @@
  ******************************************************************************/
 package tds.student.web;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
+import AIR.Common.TDSLogger.ITDSLogger;
+import AIR.Common.Utilities.UrlEncoderDecoderUtils;
+import AIR.Common.Web.Session.HttpContext;
+import AIR.Common.Web.Session.MultiValueCookie;
+import TDS.Shared.Security.TDSIdentity;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.lang3.StringUtils;
@@ -21,8 +22,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import tds.itemrenderer.data.AccLookup;
 import tds.student.services.data.TestOpportunity;
@@ -34,11 +38,6 @@ import tds.student.sql.data.OpportunityInstance;
 import tds.student.sql.data.TestConfig;
 import tds.student.sql.data.TestSession;
 import tds.student.sql.data.Testee;
-import AIR.Common.TDSLogger.ITDSLogger;
-import AIR.Common.Utilities.UrlEncoderDecoderUtils;
-import AIR.Common.Web.Session.HttpContext;
-import AIR.Common.Web.Session.MultiValueCookie;
-import TDS.Shared.Security.TDSIdentity;
 
 /**
  * @author Milan Patel
@@ -54,6 +53,8 @@ public class StudentContext
   private static final String EXAM_ID_COOKIE_KEY = "EXAM_ID";
   private static final String EXAM_BROWSER_KEY = "EXAM_BROWSER_KEY";
   private static final String EXAM_CLIENT_NAME = "EXAM_CLIENT_NAME";
+  private static final String EXAM_BROWSER_USER_AGENT = "EXAM_BROWSER_USER_AGENT";
+
 
   public static void throwMissingException () throws StudentContextException {
     throw new StudentContextException ("Missing context info");
@@ -168,6 +169,7 @@ public class StudentContext
     TDSIdentity.getCurrentTDSIdentity().setAuthCookieValue(EXAM_ID_COOKIE_KEY, oppInfo.getExamId().toString());
     TDSIdentity.getCurrentTDSIdentity ().saveAuthCookie ();
     StudentCookie.setCookieData(EXAM_BROWSER_KEY, oppInfo.getExamBrowserKey().toString());
+    StudentCookie.setCookieData(EXAM_BROWSER_USER_AGENT, oppInfo.getBrowerUserAgent());
   }
 
   // / <summary>
@@ -217,13 +219,17 @@ public class StudentContext
       ? null
       : UUID.fromString(StudentCookie.getCookieData(EXAM_BROWSER_KEY));
 
+    String browserUserAgent = StudentCookie.getCookieData(EXAM_BROWSER_USER_AGENT) == null
+        ? null
+        : StudentCookie.getCookieData(EXAM_BROWSER_USER_AGENT);
+
     UUID examId = tdsIdentity.get(EXAM_ID_COOKIE_KEY) == null
       ? null
       : UUID.fromString(tdsIdentity.get(EXAM_ID_COOKIE_KEY));
 
     String examClientName = tdsIdentity.get(EXAM_CLIENT_NAME);
 
-    return new OpportunityInstance (oppKey, sessionKey, browserKey, examId, examBrowserKey, examClientName);
+    return new OpportunityInstance (oppKey, sessionKey, browserKey, examId, examBrowserKey, examClientName, browserUserAgent);
   }
 
   /**

@@ -147,6 +147,7 @@ public class RemoteExamRepositoryTest {
 
   @Test
   public void shouldReturnExamConfiguration() throws ReturnStatusException {
+    final String browserUserAgent = "007";
     UUID examId = UUID.randomUUID();
     Response<ExamConfiguration> mockResponse = new Response<>(
       new ExamConfiguration.Builder()
@@ -156,28 +157,30 @@ public class RemoteExamRepositoryTest {
     when(mockRestTemplate.exchange(isA(URI.class), isA(HttpMethod.class), isA(HttpEntity.class), isA(ParameterizedTypeReference.class)))
       .thenReturn(new ResponseEntity(mockResponse, HttpStatus.OK));
 
-    Response<ExamConfiguration> response = remoteExamRepository.startExam(examId);
+    Response<ExamConfiguration> response = remoteExamRepository.startExam(examId, browserUserAgent);
     assertThat(response.getData().isPresent()).isTrue();
     assertThat(response.getData().get().getStatus()).isEqualTo("test");
   }
 
   @Test
   public void shouldReturnResponseWithValidationErrorsForClientException() throws ReturnStatusException {
+    final String browserUserAgent = "007";
     UUID examId = UUID.randomUUID();
     when(mockRestTemplate.exchange(isA(URI.class), isA(HttpMethod.class), isA(HttpEntity.class), isA(ParameterizedTypeReference.class)))
       .thenThrow(new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Invalid", ERROR_JSON.getBytes(), null));
 
-    Response<ExamConfiguration> response = remoteExamRepository.startExam(examId);
+    Response<ExamConfiguration> response = remoteExamRepository.startExam(examId, browserUserAgent);
 
     assertThat(response.getError().isPresent()).isTrue();
   }
 
   @Test(expected = ReturnStatusException.class)
   public void shouldThrowForInternalServerErrorStartExam() throws ReturnStatusException {
+    final String browserUserAgent = "007";
     UUID examId = UUID.randomUUID();
     when(mockRestTemplate.exchange(isA(URI.class), isA(HttpMethod.class), isA(HttpEntity.class), isA(ParameterizedTypeReference.class)))
       .thenThrow(new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Invalid", ERROR_JSON.getBytes(), null));
-    remoteExamRepository.startExam(examId);
+    remoteExamRepository.startExam(examId, browserUserAgent);
   }
 
   @Test

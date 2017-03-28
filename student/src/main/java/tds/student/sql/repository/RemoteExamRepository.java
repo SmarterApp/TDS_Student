@@ -217,11 +217,11 @@ public class RemoteExamRepository implements ExamRepository {
   }
 
   @Override
-  public Response<ExamConfiguration> startExam(UUID examId) throws ReturnStatusException {
+  public Response<ExamConfiguration> startExam(final UUID examId, final String browserUserAgent) throws ReturnStatusException {
     HttpHeaders headers = new HttpHeaders();
     headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
     headers.setContentType(MediaType.APPLICATION_JSON);
-    HttpEntity<?> requestHttpEntity = new HttpEntity<>(headers);
+    HttpEntity<?> requestHttpEntity = new HttpEntity<>(browserUserAgent, headers);
     Response<ExamConfiguration> response;
     UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/%s/start", examUrl, examId));
 
