@@ -1,9 +1,12 @@
 package tds.student.services.remote;
 
+import AIR.Common.Web.Session.HttpContext;
 import TDS.Shared.Browser.BrowserInfo;
 import TDS.Shared.Data.ReturnStatus;
 import TDS.Shared.Exceptions.ReturnStatusException;
 import com.google.common.base.Optional;
+import com.google.common.net.HttpHeaders;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.UUID;
 
@@ -268,9 +272,12 @@ public class RemoteOpportunityService implements IOpportunityService {
     if (!isRemoteExamCallsEnabled) {
       return testConfig;
     }
-  
+
+    final HttpServletRequest httpRequest = HttpContext.getCurrentContext().getRequest();
+    final String browserUserAgent = httpRequest != null ? httpRequest.getHeader(HttpHeaders.USER_AGENT) : StringUtils.EMPTY;
+
     /* Note that the formKeys argument can be ignored - it is an unused functionality */
-    Response<ExamConfiguration> response = examRepository.startExam(oppInstance.getExamId());
+    final Response<ExamConfiguration> response = examRepository.startExam(oppInstance.getExamId(), browserUserAgent);
 
     if (response.getError().isPresent()) {
       final ValidationError validationError = response.getError().get();
@@ -287,9 +294,7 @@ public class RemoteOpportunityService implements IOpportunityService {
 
     final ExamConfiguration examConfiguration = response.getData().get();
 
-    testConfig = mapExamConfigurationToTestConfig(examConfiguration);
-
-    return testConfig;
+    return mapExamConfigurationToTestConfig(examConfiguration);
   }
 
   @Override

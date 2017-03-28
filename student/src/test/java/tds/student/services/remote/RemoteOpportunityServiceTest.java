@@ -313,7 +313,7 @@ public class RemoteOpportunityServiceTest {
     final String assessmentKey = "assessmentKey";
     Response<ExamConfiguration> errorResponse = new Response<>(new ValidationError("uh", "oh!"));
 
-    when(mockExamRepository.startExam(oppInstance.getExamId())).thenReturn(errorResponse);
+    when(mockExamRepository.startExam(oppInstance.getExamId(), "")).thenReturn(errorResponse);
     service.startTest(oppInstance, assessmentKey, null);
   }
 
@@ -322,7 +322,6 @@ public class RemoteOpportunityServiceTest {
     service = new RemoteOpportunityService(mockLegacyOpportunityService, true, false, mockExamRepository, mockExamSegmentRepository, mockTestOpportunityExamMapDao);
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
     final String assessmentKey = "assessmentKey";
-
     ExamConfiguration mockExamConfig = new ExamConfiguration.Builder()
       .withExam(
         new Exam.Builder()
@@ -340,9 +339,9 @@ public class RemoteOpportunityServiceTest {
       .withExamRestartWindowMinutes(60)
       .build();
 
-    when(mockExamRepository.startExam(oppInstance.getExamId())).thenReturn(new Response<>(mockExamConfig));
+    when(mockExamRepository.startExam(oppInstance.getExamId(), "")).thenReturn(new Response<>(mockExamConfig));
     TestConfig testConfig = service.startTest(oppInstance, assessmentKey, null);
-    verify(mockExamRepository).startExam(oppInstance.getExamId());
+    verify(mockExamRepository).startExam(oppInstance.getExamId(), "");
 
     assertThat(testConfig).isNotNull();
     assertThat(testConfig.getStatus()).isEqualTo(ExamStatusMapper.parseExamStatus(ExamStatusCode.STATUS_STARTED));

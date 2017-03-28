@@ -493,6 +493,7 @@ public class MasterShellHandler extends TDSHandler
     StudentCookie.writeStore ();
     sendTestStatus (StudentContext.getTestee ().getId (), testKey, oppInstance.getKey (), TestStatusType.STARTED);
     // log browser info
+    //TODO: Remove this call when we are ready to disable legacy calls
     logBrowser (oppInstance, testConfig.getRestart ());
     TestInfo testInfo = loadTestInfo (oppInstance, testConfig);
 
@@ -799,7 +800,7 @@ public class MasterShellHandler extends TDSHandler
 
   /**
    * Logs browser information for this test opportunity
-   * 
+   *
    * @param oppInstance
    * @param restart
    * @throws ReturnStatusException

@@ -75,11 +75,12 @@ public interface ExamRepository {
   /**
    * Creates a request to start an exam
    *
-   * @param examId the id of the {@link tds.exam.Exam}
+   * @param examId           the id of the {@link tds.exam.Exam}
+   * @param browserUserAgent the browser user agent string
    * @return the {@link tds.exam.ExamConfiguration} containing exam configuration metadata
    * @throws ReturnStatusException
    */
-  Response<ExamConfiguration> startExam(final UUID examId) throws ReturnStatusException;
+  Response<ExamConfiguration> startExam(final UUID examId, final String browserUserAgent) throws ReturnStatusException;
 
   /**
    * Creates a request to fetch {@link tds.exam.ExamSegment}s for an exam
@@ -103,7 +104,7 @@ public interface ExamRepository {
   /**
    * Creates a segment approval request for an exam segment
    *
-   * @param examId The id of the exam
+   * @param examId                 The id of the exam
    * @param segmentApprovalRequest A {@link tds.exam.SegmentApprovalRequest} containing request data
    * @throws TDS.Shared.Exceptions.ReturnStatusException
    */
