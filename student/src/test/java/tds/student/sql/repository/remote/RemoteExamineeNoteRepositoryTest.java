@@ -1,4 +1,4 @@
-package tds.student.services.remote;
+package tds.student.sql.repository.remote;
 
 import TDS.Shared.Exceptions.ReturnStatusException;
 import com.google.common.base.Optional;
@@ -102,7 +102,7 @@ public class RemoteExamineeNoteRepositoryTest {
             eq(ResponseEntity.class)))
             .thenReturn(new ResponseEntity<ResponseEntity>(HttpStatus.NO_CONTENT));
 
-        remoteExamineeNoteRepository.insert(mockOpportunityInstance, note);
+        remoteExamineeNoteRepository.save(mockOpportunityInstance, note);
         verify(mockRestTemplate).postForEntity(any(URI.class),
             any(ExamineeNote.class),
             eq(ResponseEntity.class));
@@ -122,7 +122,7 @@ public class RemoteExamineeNoteRepositoryTest {
             eq(ResponseEntity.class)))
             .thenThrow(new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR));
 
-        remoteExamineeNoteRepository.insert(mockOpportunityInstance, note);
+        remoteExamineeNoteRepository.save(mockOpportunityInstance, note);
         verify(mockRestTemplate).postForEntity(any(URI.class),
             any(ExamineeNote.class),
             eq(ResponseEntity.class));

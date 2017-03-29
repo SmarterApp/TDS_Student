@@ -170,15 +170,15 @@ public class RemoteExamineeNoteServiceImplTest {
             anyLong(),
             any(UUID.class),
             anyString());
-        doNothing().when(mockRemoteExamineeNoteRepository).insert(any(OpportunityInstance.class),
+        doNothing().when(mockRemoteExamineeNoteRepository).save(any(OpportunityInstance.class),
             any(ExamineeNote.class));
 
-        remoteExamineeNoteService.insertExamNote(mockOpportunityInstance, 42L, "Exam-level note");
+        remoteExamineeNoteService.saveExamNote(mockOpportunityInstance, 42L, "Exam-level note");
         verify(mockLegacyOpportunityRepository).recordComment(any(UUID.class),
             anyLong(),
             any(UUID.class),
             anyString());
-        verify(mockRemoteExamineeNoteRepository).insert(any(OpportunityInstance.class),
+        verify(mockRemoteExamineeNoteRepository).save(any(OpportunityInstance.class),
             any(ExamineeNote.class));
         verifyZeroInteractions(mockLegacyResponseRepository);
     }
@@ -196,7 +196,7 @@ public class RemoteExamineeNoteServiceImplTest {
             any(UUID.class),
             anyString());
 
-        remoteExamineeNoteService.insertExamNote(mockOpportunityInstance, 42L, "Exam-level note");
+        remoteExamineeNoteService.saveExamNote(mockOpportunityInstance, 42L, "Exam-level note");
         verify(mockLegacyOpportunityRepository).recordComment(any(UUID.class),
             anyLong(),
             any(UUID.class),
@@ -213,11 +213,11 @@ public class RemoteExamineeNoteServiceImplTest {
             false,
             true);
 
-        doNothing().when(mockRemoteExamineeNoteRepository).insert(any(OpportunityInstance.class),
+        doNothing().when(mockRemoteExamineeNoteRepository).save(any(OpportunityInstance.class),
             any(ExamineeNote.class));
 
-        remoteExamineeNoteService.insertExamNote(mockOpportunityInstance, 42L, "Exam-level note");
-        verify(mockRemoteExamineeNoteRepository).insert(any(OpportunityInstance.class),
+        remoteExamineeNoteService.saveExamNote(mockOpportunityInstance, 42L, "Exam-level note");
+        verify(mockRemoteExamineeNoteRepository).save(any(OpportunityInstance.class),
             any(ExamineeNote.class));
         verifyZeroInteractions(mockLegacyOpportunityRepository);
         verifyZeroInteractions(mockLegacyResponseRepository);
@@ -230,10 +230,10 @@ public class RemoteExamineeNoteServiceImplTest {
             any(UUID.class),
             anyInt(),
             anyString());
-        doNothing().when(mockRemoteExamineeNoteRepository).insert(any(OpportunityInstance.class),
+        doNothing().when(mockRemoteExamineeNoteRepository).save(any(OpportunityInstance.class),
             any(ExamineeNote.class));
 
-        remoteExamineeNoteService.insertItemNote(mockOpportunityInstance, 42L,
+        remoteExamineeNoteService.saveItemNote(mockOpportunityInstance, 42L,
             5,
             "Item-level note");
         verify(mockLegacyResponseRepository).recordComment(any(UUID.class),
@@ -241,7 +241,7 @@ public class RemoteExamineeNoteServiceImplTest {
             any(UUID.class),
             anyInt(),
             anyString());
-        verify(mockRemoteExamineeNoteRepository).insert(any(OpportunityInstance.class),
+        verify(mockRemoteExamineeNoteRepository).save(any(OpportunityInstance.class),
             any(ExamineeNote.class));
         verifyZeroInteractions(mockLegacyOpportunityRepository);
     }
@@ -260,7 +260,7 @@ public class RemoteExamineeNoteServiceImplTest {
             anyInt(),
             anyString());
 
-        remoteExamineeNoteService.insertItemNote(mockOpportunityInstance, 42L,
+        remoteExamineeNoteService.saveItemNote(mockOpportunityInstance, 42L,
             5,
             "Item-level note");
         verify(mockLegacyResponseRepository).recordComment(any(UUID.class),
@@ -280,14 +280,14 @@ public class RemoteExamineeNoteServiceImplTest {
             false,
             true);
 
-        doNothing().when(mockRemoteExamineeNoteRepository).insert(any(OpportunityInstance.class),
+        doNothing().when(mockRemoteExamineeNoteRepository).save(any(OpportunityInstance.class),
             any(ExamineeNote.class));
 
-        remoteExamineeNoteService.insertItemNote(mockOpportunityInstance, 42L,
+        remoteExamineeNoteService.saveItemNote(mockOpportunityInstance, 42L,
             5,
             "Item-level note");
 
-        verify(mockRemoteExamineeNoteRepository).insert(any(OpportunityInstance.class),
+        verify(mockRemoteExamineeNoteRepository).save(any(OpportunityInstance.class),
             any(ExamineeNote.class));
         verifyZeroInteractions(mockLegacyOpportunityRepository);
         verifyZeroInteractions(mockLegacyResponseRepository);

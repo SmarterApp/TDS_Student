@@ -53,9 +53,9 @@ public class RemoteExamineeNoteServiceImpl implements RemoteExamineeNoteService 
     }
 
     @Override
-    public void insertExamNote(final OpportunityInstance opportunityInstance,
-                               final long testeeKey ,
-                               final String note) throws ReturnStatusException {
+    public void saveExamNote(final OpportunityInstance opportunityInstance,
+                             final long testeeKey ,
+                             final String note) throws ReturnStatusException {
         if (isLegacyCallsEnabled) {
             legacyOpportunityRepository.recordComment(opportunityInstance.getSessionKey(),
                 testeeKey,
@@ -73,14 +73,14 @@ public class RemoteExamineeNoteServiceImpl implements RemoteExamineeNoteService 
             .withNote(note)
             .build();
 
-        examineeNoteRepository.insert(opportunityInstance, examineeNote);
+        examineeNoteRepository.save(opportunityInstance, examineeNote);
     }
 
     @Override
-    public void insertItemNote(final OpportunityInstance opportunityInstance,
-                               final long testeeKey,
-                               final int position,
-                               final String note) throws ReturnStatusException {
+    public void saveItemNote(final OpportunityInstance opportunityInstance,
+                             final long testeeKey,
+                             final int position,
+                             final String note) throws ReturnStatusException {
 
         if (isLegacyCallsEnabled) {
             legacyResponseRepository.recordComment(opportunityInstance.getSessionKey(),
@@ -101,6 +101,6 @@ public class RemoteExamineeNoteServiceImpl implements RemoteExamineeNoteService 
             .withNote(note)
             .build();
 
-        examineeNoteRepository.insert(opportunityInstance, examineeNote);
+        examineeNoteRepository.save(opportunityInstance, examineeNote);
     }
 }

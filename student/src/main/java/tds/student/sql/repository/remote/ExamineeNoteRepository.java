@@ -31,6 +31,6 @@ public interface ExamineeNoteRepository {
      * @param examineeNote        The {@link tds.exam.ExamineeNote} to persist
      * @throws ReturnStatusException In the event of a failure
      */
-    void insert(final OpportunityInstance opportunityInstance,
+    void save(final OpportunityInstance opportunityInstance,
                 final ExamineeNote examineeNote) throws ReturnStatusException;
 }

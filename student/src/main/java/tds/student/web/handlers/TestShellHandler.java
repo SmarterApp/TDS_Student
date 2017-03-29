@@ -414,7 +414,7 @@ public class TestShellHandler extends TDSHandler
     }
 
     //_responseRepository.recordComment (oppInstance.getSessionKey (), testee.getKey (), oppInstance.getKey (), position, comment);
-    remoteExamineeNoteService.insertItemNote(oppInstance, testee.getKey(), position, comment);
+    remoteExamineeNoteService.saveItemNote(oppInstance, testee.getKey(), position, comment);
 
     return new ResponseData<String> (TDSReplyCode.OK.getCode (), "OK", null);
   }
@@ -433,7 +433,7 @@ public class TestShellHandler extends TDSHandler
      * UrlEncoderDecoderUtils.encode (comment); }
      */
 
-    remoteExamineeNoteService.insertExamNote(oppInstance, testee.getKey(), comment);
+    remoteExamineeNoteService.saveExamNote(oppInstance, testee.getKey(), comment);
 
     return new ResponseData<String> (TDSReplyCode.OK.getCode (), "OK", null);
   }

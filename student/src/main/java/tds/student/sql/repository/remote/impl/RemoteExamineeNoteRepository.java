@@ -56,8 +56,8 @@ public class RemoteExamineeNoteRepository implements ExamineeNoteRepository {
     }
 
     @Override
-    public void insert(final OpportunityInstance opportunityInstance,
-                       final ExamineeNote examineeNote) throws ReturnStatusException {
+    public void save(final OpportunityInstance opportunityInstance,
+                     final ExamineeNote examineeNote) throws ReturnStatusException {
         UriComponents uriComponents = UriComponentsBuilder.fromUriString("{examUrl}/{examId}/note")
             .queryParam("sessionId", opportunityInstance.getSessionKey())
             .queryParam("browserId", opportunityInstance.getExamBrowserKey())

@@ -29,9 +29,9 @@ public interface RemoteExamineeNoteService {
      * @param note                The note text to save
      * @throws TDS.Shared.Exceptions.ReturnStatusException in the event of a failure
      */
-    void insertExamNote(final OpportunityInstance opportunityInstance,
-                        final long testeeKey,
-                        final String note) throws ReturnStatusException;
+    void saveExamNote(final OpportunityInstance opportunityInstance,
+                      final long testeeKey,
+                      final String note) throws ReturnStatusException;
 
     /**
      * Persist an item-level note {@link tds.exam.ExamineeNote} to the database
@@ -44,8 +44,8 @@ public interface RemoteExamineeNoteService {
      * @param note                The note text provided by the user
      * @throws ReturnStatusException In the event of a failure
      */
-    void insertItemNote(final OpportunityInstance opportunityInstance,
-                        final long testeeKey,
-                        final int position,
-                        final String note) throws ReturnStatusException;
+    void saveItemNote(final OpportunityInstance opportunityInstance,
+                      final long testeeKey,
+                      final int position,
+                      final String note) throws ReturnStatusException;
 }
