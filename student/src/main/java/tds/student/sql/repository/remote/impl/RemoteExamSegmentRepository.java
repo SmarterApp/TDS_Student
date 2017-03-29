@@ -1,4 +1,4 @@
-package tds.student.sql.repository;
+package tds.student.sql.repository.remote.impl;
 
 import TDS.Shared.Exceptions.ReturnStatusException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.UUID;
 
 import tds.common.web.resources.NoContentResponseResource;
+import tds.student.sql.repository.remote.ExamSegmentRepository;
 
 @Repository
 public class RemoteExamSegmentRepository implements ExamSegmentRepository {

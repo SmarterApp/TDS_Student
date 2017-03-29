@@ -1,4 +1,4 @@
-package tds.student.sql.repository;
+package tds.student.sql.repository.remote.impl;
 
 import TDS.Shared.Exceptions.ReturnStatusException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import tds.assessment.Assessment;
+import tds.student.sql.repository.remote.AssessmentRepository;
 
 @Repository
 public class RemoteAssessmentRepository implements AssessmentRepository {

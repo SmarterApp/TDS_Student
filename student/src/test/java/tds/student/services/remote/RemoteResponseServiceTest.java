@@ -10,7 +10,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.UUID;
 
 import tds.student.services.abstractions.IResponseService;
-import tds.student.sql.repository.ExamSegmentRepository;
+import tds.student.sql.repository.remote.ExamSegmentRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;

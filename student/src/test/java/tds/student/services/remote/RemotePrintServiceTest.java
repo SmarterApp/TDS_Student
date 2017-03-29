@@ -27,7 +27,7 @@ import tds.student.services.data.TestOpportunity;
 import tds.student.sql.data.OpportunityInstance;
 import tds.student.sql.data.OpportunityItem;
 import tds.student.sql.data.TestConfig;
-import tds.student.sql.repository.ExamRepository;
+import tds.student.sql.repository.remote.ExamRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.isA;

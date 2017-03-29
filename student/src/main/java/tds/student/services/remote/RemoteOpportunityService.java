@@ -38,8 +38,8 @@ import tds.student.sql.data.TestSegment;
 import tds.student.sql.data.TestSelection;
 import tds.student.sql.data.TestSession;
 import tds.student.sql.data.Testee;
-import tds.student.sql.repository.ExamRepository;
-import tds.student.sql.repository.ExamSegmentRepository;
+import tds.student.sql.repository.remote.ExamRepository;
+import tds.student.sql.repository.remote.ExamSegmentRepository;
 
 @Service("integrationOpportunityService")
 @Scope("prototype")

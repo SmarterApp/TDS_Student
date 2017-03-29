@@ -1,4 +1,4 @@
-package tds.student.sql.repository;
+package tds.student.sql.repository.remote;
 
 import TDS.Shared.Exceptions.ReturnStatusException;
 import org.junit.Before;
@@ -16,6 +16,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.util.UUID;
+
+import tds.student.sql.repository.remote.impl.RemoteExamSegmentRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.isA;

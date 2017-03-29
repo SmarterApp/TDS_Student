@@ -13,7 +13,7 @@ import tds.student.services.data.PageGroup;
 import tds.student.services.data.PageList;
 import tds.student.sql.data.AdaptiveGroup;
 import tds.student.sql.data.OpportunityInstance;
-import tds.student.sql.repository.ExamSegmentRepository;
+import tds.student.sql.repository.remote.ExamSegmentRepository;
 
 @Service("integrationResponseService")
 @Scope("prototype")

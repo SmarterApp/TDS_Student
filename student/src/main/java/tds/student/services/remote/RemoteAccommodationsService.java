@@ -15,17 +15,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import tds.accommodation.Accommodation;
 import tds.accommodation.AccommodationDependency;
 import tds.assessment.Assessment;
 import tds.assessment.Segment;
 import tds.exam.ApproveAccommodationsRequest;
 import tds.exam.ExamAccommodation;
 import tds.student.services.abstractions.IAccommodationsService;
-import tds.student.sql.repository.AssessmentRepository;
-import tds.student.sql.repository.ExamRepository;
 import tds.student.sql.data.Accommodations;
 import tds.student.sql.data.OpportunityInstance;
+import tds.student.sql.repository.remote.AssessmentRepository;
+import tds.student.sql.repository.remote.ExamRepository;
 
 @Service("integrationAccommodationsService")
 @Scope("prototype")
