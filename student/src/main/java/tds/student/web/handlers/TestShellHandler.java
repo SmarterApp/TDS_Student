@@ -41,6 +41,7 @@ import tds.student.services.data.ItemResponse;
 import tds.student.services.data.PageGroup;
 import tds.student.services.data.PageList;
 import tds.student.services.data.TestOpportunity;
+import tds.student.services.remote.RemoteExamineeNoteService;
 import tds.student.sql.abstractions.IOpportunityRepository;
 import tds.student.sql.abstractions.IResponseRepository;
 import tds.student.sql.data.ClientLatency;
@@ -88,6 +89,13 @@ public class TestShellHandler extends TDSHandler
   private PrintService _printService;
   @Autowired
   private ITDSLogger             _tdsLogger;
+
+  private final RemoteExamineeNoteService remoteExamineeNoteService;
+
+  @Autowired
+  public TestShellHandler(final RemoteExamineeNoteService remoteExamineeNoteService) {
+    this.remoteExamineeNoteService = remoteExamineeNoteService;
+  }
 
   @RequestMapping (value = "TestShell.axd/logAuditTrail")
   @ResponseBody
@@ -405,7 +413,8 @@ public class TestShellHandler extends TDSHandler
       comment = HtmlUtils.htmlEscape (comment);
     }
 
-    _responseRepository.recordComment (oppInstance.getSessionKey (), testee.getKey (), oppInstance.getKey (), position, comment);
+    //_responseRepository.recordComment (oppInstance.getSessionKey (), testee.getKey (), oppInstance.getKey (), position, comment);
+    remoteExamineeNoteService.insertItemNote(oppInstance, testee.getKey(), position, comment);
 
     return new ResponseData<String> (TDSReplyCode.OK.getCode (), "OK", null);
   }
@@ -424,7 +433,8 @@ public class TestShellHandler extends TDSHandler
      * UrlEncoderDecoderUtils.encode (comment); }
      */
 
-    _oppRepository.recordComment (oppInstance.getSessionKey (), testee.getKey (), oppInstance.getKey (), comment);
+    //_oppRepository.recordComment (oppInstance.getSessionKey (), testee.getKey (), oppInstance.getKey (), comment);
+    remoteExamineeNoteService.insertExamNote(oppInstance, testee.getKey(), comment);
 
     return new ResponseData<String> (TDSReplyCode.OK.getCode (), "OK", null);
   }
@@ -435,7 +445,8 @@ public class TestShellHandler extends TDSHandler
     checkAuthenticated ();
     OpportunityInstance oppInstance = StudentContext.getOppInstance ();
 
-    String comment = _oppRepository.getComment (oppInstance.getKey ());
+    // String comment = _oppRepository.getComment (oppInstance.getKey ());
+    final String comment = remoteExamineeNoteService.findExamNote(oppInstance);
 
     return new ResponseData<String> (TDSReplyCode.OK.getCode (), "OK", comment);
   }

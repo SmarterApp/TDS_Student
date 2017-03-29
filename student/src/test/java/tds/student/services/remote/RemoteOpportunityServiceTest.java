@@ -13,7 +13,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
 
 import tds.common.Response;
@@ -39,8 +38,8 @@ import tds.student.sql.data.TestConfig;
 import tds.student.sql.data.TestSegment;
 import tds.student.sql.data.TestSession;
 import tds.student.sql.data.Testee;
-import tds.student.sql.repository.ExamRepository;
-import tds.student.sql.repository.ExamSegmentRepository;
+import tds.student.sql.repository.remote.ExamRepository;
+import tds.student.sql.repository.remote.ExamSegmentRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;

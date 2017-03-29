@@ -33,6 +33,7 @@ import tds.exam.ExamSegment;
 import tds.exam.ExamStatusCode;
 import tds.exam.OpenExamRequest;
 import tds.exam.SegmentApprovalRequest;
+import tds.student.sql.repository.remote.impl.RemoteExamRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.isA;

@@ -18,14 +18,13 @@ import tds.itemrenderer.data.AccLookup;
 import tds.itemrenderer.data.IITSDocument;
 import tds.itemrenderer.data.ITSAttachment;
 import tds.itemrenderer.data.ITSContent;
-import tds.student.services.PrintServiceImpl;
 import tds.student.services.abstractions.IContentService;
 import tds.student.services.abstractions.PrintService;
 import tds.student.services.data.ItemResponse;
 import tds.student.services.data.PageGroup;
 import tds.student.services.data.TestOpportunity;
 import tds.student.sql.data.OpportunityInstance;
-import tds.student.sql.repository.ExamRepository;
+import tds.student.sql.repository.remote.ExamRepository;
 
 @Service("integrationPrintService")
 @Scope("prototype")

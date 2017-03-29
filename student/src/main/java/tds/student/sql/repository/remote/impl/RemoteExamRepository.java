@@ -1,4 +1,4 @@
-package tds.student.sql.repository;
+package tds.student.sql.repository.remote.impl;
 
 import TDS.Shared.Exceptions.ReturnStatusException;
 import com.fasterxml.jackson.databind.JavaType;
@@ -36,6 +36,7 @@ import tds.exam.ExamPrintRequest;
 import tds.exam.ExamSegment;
 import tds.exam.OpenExamRequest;
 import tds.exam.SegmentApprovalRequest;
+import tds.student.sql.repository.remote.ExamRepository;
 
 @Repository
 public class RemoteExamRepository implements ExamRepository {

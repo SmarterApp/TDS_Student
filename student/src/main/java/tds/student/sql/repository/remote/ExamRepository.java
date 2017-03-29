@@ -1,4 +1,4 @@
-package tds.student.sql.repository;
+package tds.student.sql.repository.remote;
 
 import TDS.Shared.Exceptions.ReturnStatusException;
 import com.google.common.base.Optional;
