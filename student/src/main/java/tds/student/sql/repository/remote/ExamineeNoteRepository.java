@@ -7,7 +7,8 @@ import tds.exam.ExamineeNote;
 import tds.student.sql.data.OpportunityInstance;
 
 /**
- * Interface for interacting with the TDS_ExamService.
+ * Interface for interacting with the methods in the TDS_ExamService that are responsible for handling
+ * {@link tds.exam.ExamineeNote} data.
  */
 public interface ExamineeNoteRepository {
     /**

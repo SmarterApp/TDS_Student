@@ -19,13 +19,12 @@ import tds.common.Algorithm;
 import tds.exam.ApproveAccommodationsRequest;
 import tds.exam.ExamAccommodation;
 import tds.student.services.abstractions.IAccommodationsService;
-import tds.student.services.remote.impl.RemoteAccommodationsService;
-import tds.student.sql.repository.remote.AssessmentRepository;
-import tds.student.sql.repository.remote.ExamRepository;
 import tds.student.sql.data.AccommodationType;
 import tds.student.sql.data.AccommodationValue;
 import tds.student.sql.data.Accommodations;
 import tds.student.sql.data.OpportunityInstance;
+import tds.student.sql.repository.remote.AssessmentRepository;
+import tds.student.sql.repository.remote.ExamRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;

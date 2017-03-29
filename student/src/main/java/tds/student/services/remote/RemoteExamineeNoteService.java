@@ -5,7 +5,7 @@ import TDS.Shared.Exceptions.ReturnStatusException;
 import tds.student.sql.data.OpportunityInstance;
 
 /**
- * Interface for interacting with {@link tds.exam.ExamineeNote} data
+ * Interface for interacting with {@link tds.exam.ExamineeNote} data from a remote source (e.g. the TDS_ExamService).
  */
 public interface RemoteExamineeNoteService {
     /**

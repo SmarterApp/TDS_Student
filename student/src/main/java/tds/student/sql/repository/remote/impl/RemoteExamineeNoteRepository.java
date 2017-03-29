@@ -34,7 +34,7 @@ public class RemoteExamineeNoteRepository implements ExamineeNoteRepository {
     public Optional<ExamineeNote> findNoteInExamContext(final OpportunityInstance opportunityInstance) throws ReturnStatusException {
         UriComponents uriComponents = UriComponentsBuilder.fromUriString("{examUrl}/{examId}/note")
             .queryParam("sessionId", opportunityInstance.getSessionKey())
-            .queryParam("browserId", opportunityInstance.getBrowserKey())
+            .queryParam("browserId", opportunityInstance.getExamBrowserKey())
             .buildAndExpand(examUrl, opportunityInstance.getExamId());
         ResponseEntity<ExamineeNote> responseEntity;
 
@@ -60,7 +60,7 @@ public class RemoteExamineeNoteRepository implements ExamineeNoteRepository {
                        final ExamineeNote examineeNote) throws ReturnStatusException {
         UriComponents uriComponents = UriComponentsBuilder.fromUriString("{examUrl}/{examId}/note")
             .queryParam("sessionId", opportunityInstance.getSessionKey())
-            .queryParam("browserId", opportunityInstance.getBrowserKey())
+            .queryParam("browserId", opportunityInstance.getExamBrowserKey())
             .buildAndExpand(examUrl, examineeNote.getExamId());
 
         try {

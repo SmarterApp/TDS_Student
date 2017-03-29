@@ -433,7 +433,6 @@ public class TestShellHandler extends TDSHandler
      * UrlEncoderDecoderUtils.encode (comment); }
      */
 
-    //_oppRepository.recordComment (oppInstance.getSessionKey (), testee.getKey (), oppInstance.getKey (), comment);
     remoteExamineeNoteService.insertExamNote(oppInstance, testee.getKey(), comment);
 
     return new ResponseData<String> (TDSReplyCode.OK.getCode (), "OK", null);
@@ -445,7 +444,6 @@ public class TestShellHandler extends TDSHandler
     checkAuthenticated ();
     OpportunityInstance oppInstance = StudentContext.getOppInstance ();
 
-    // String comment = _oppRepository.getComment (oppInstance.getKey ());
     final String comment = remoteExamineeNoteService.findExamNote(oppInstance);
 
     return new ResponseData<String> (TDSReplyCode.OK.getCode (), "OK", comment);

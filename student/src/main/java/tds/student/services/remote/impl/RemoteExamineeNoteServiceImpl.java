@@ -28,6 +28,10 @@ public class RemoteExamineeNoteServiceImpl implements RemoteExamineeNoteService 
                                          final ExamineeNoteRepository examineeNoteRepository,
                                          @Value("${tds.exam.legacy.enabled}") final boolean isLegacyCallsEnabled,
                                          @Value("${tds.exam.remote.enabled}") final boolean isRemoteExamCallsEnabled) {
+        if (!isRemoteExamCallsEnabled && !isLegacyCallsEnabled) {
+            throw new IllegalStateException("Remote and legacy calls are both disabled.  Please check progman configuration for 'tds.exam.remote.enabled' and 'tds.exam.legacy.enabled' settings");
+        }
+
         this.legacyOpportunityRepository = legacyOpportunityRepository;
         this.legacyResponseRepository = legacyResponseRepository;
         this.examineeNoteRepository = examineeNoteRepository;
@@ -37,14 +41,8 @@ public class RemoteExamineeNoteServiceImpl implements RemoteExamineeNoteService 
 
     @Override
     public String findExamNote(final OpportunityInstance opportunityInstance) throws ReturnStatusException {
-        String comment = null;
-
         if (isLegacyCallsEnabled) {
-            comment = legacyOpportunityRepository.getComment(opportunityInstance.getKey());
-        }
-
-        if (!isRemoteExamCallsEnabled) {
-            return comment;
+            return legacyOpportunityRepository.getComment(opportunityInstance.getKey());
         }
 
         final Optional<ExamineeNote> maybeExamNote = examineeNoteRepository.findNoteInExamContext(opportunityInstance);
