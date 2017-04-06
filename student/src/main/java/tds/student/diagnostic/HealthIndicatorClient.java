@@ -54,7 +54,7 @@ public class HealthIndicatorClient {
             // add default http protocol if missing
             builder = UriComponentsBuilder.fromHttpUrl(String.format("http://%s", url));
         }
-        builder.pathSegment("health");
+        builder.replacePath("health");
 
         final String restUrl = builder.build().toUriString();
         return restTemplate.getForObject(restUrl, Health.class);
