@@ -61,11 +61,11 @@ public class RemoteResponseService implements IResponseService {
       isComplete = legacyResponseService.isTestComplete(examId);
     }
 
-    if (!isRemoteExamCallsEnabled) {
+//    if (!isRemoteExamCallsEnabled) {
       return isComplete;
-    }
+//    }
 
-    return examSegmentRepository.checkSegmentsSatisfied(examId);
+//    return examSegmentRepository.checkSegmentsSatisfied(examId);
   }
 
   @Override
