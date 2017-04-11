@@ -164,6 +164,7 @@ public class RemoteOpportunityService implements IOpportunityService {
     ExamApproval examApproval = response.getData().get();
     status = new OpportunityStatus();
     status.setStatus(ExamStatusMapper.parseExamStatus(examApproval.getExamStatusCode()));
+    status.setComment(examApproval.getStatusChangeReason());
 
     return status;
   }
