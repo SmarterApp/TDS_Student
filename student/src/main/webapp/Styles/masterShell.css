@@ -1955,7 +1955,7 @@ select.summary-segment-type-values {
 }
 
 .markedWarning, .unansweredWarning {
-	background: url(../Shared/Images/Universal/marked.svg) no-repeat 1em
+	background: url(../Shared/Images/universal/marked.svg) no-repeat 1em
 		center;
 	border: solid 1px #666;
 	font-size: 1.3em;
@@ -1967,7 +1967,7 @@ select.summary-segment-type-values {
 }
 
 .unansweredWarning {
-	background-image: url(../Shared/Images/Universal/unanswered.svg);
+	background-image: url(../Shared/Images/universal/unanswered.svg);
 }
 
 #sectionTestResults #scoreSummary {
@@ -2336,7 +2336,7 @@ span#testApprovalProgress:before {
 
 /* @group Review New List View */
 .TDS_RSL_ListView .markedWarning, .TDS_RSL_ListView .unansweredWarning {
-	background: url(../Shared/Images/Universal/marked.svg) no-repeat 1em
+	background: url(../Shared/Images/universal/marked.svg) no-repeat 1em
 		center;
 	border: solid 1px #666;
 	font-size: 1.3em;
@@ -2349,7 +2349,7 @@ span#testApprovalProgress:before {
 }
 
 .TDS_RSL_ListView .unansweredWarning {
-	background-image: url(../Shared/Images/Universal/unanswered.svg);
+	background-image: url(../Shared/Images/universal/unanswered.svg);
 }
 
 .TDS_PS_L1.TDS_RSL_ListView .markedWarning, .TDS_PS_L2.TDS_RSL_ListView .markedWarning,
@@ -2372,12 +2372,12 @@ span#testApprovalProgress:before {
 
 .TDS_CCYellowB .markedWarning, .TDS_CCWhiteN .markedWarning,
 	.TDS_CCInvert .markedWarning {
-	background-image: url(../Shared/Images/Universal/marked_white.svg);
+	background-image: url(../Shared/Images/universal/marked_white.svg);
 }
 
 .TDS_CCYellowB .unansweredWarning, .TDS_CCWhiteN .unansweredWarning,
 	.TDS_CCInvert .unansweredWarning {
-	background-image: url(../Shared/Images/Universal/unanswered_white.svg);
+	background-image: url(../Shared/Images/universal/unanswered_white.svg);
 }
 
 .TDS_RSL_ListView .pages {
@@ -2489,7 +2489,7 @@ span#testApprovalProgress:before {
 }
 
 .TDS_RSL_ListView #sectionTestReview .pages a.marked {
-	background: url(../Shared/Images/Universal/marked.svg) no-repeat right
+	background: url(../Shared/Images/universal/marked.svg) no-repeat right
 		center;
 	-moz-box-shadow: 0 0 5px 2px rgba(0, 174, 239, .1);
 	-webkit-box-shadow: 0 0 5px 2px rgba(0, 174, 239, .1);
@@ -2498,13 +2498,13 @@ span#testApprovalProgress:before {
 }
 
 .TDS_RSL_ListView #sectionTestReview .pages a.unanswered {
-	background: url(../Shared/Images/Universal/unanswered.svg) no-repeat
+	background: url(../Shared/Images/universal/unanswered.svg) no-repeat
 		right center;
 	background-size: 1.5em;
 }
 
 .TDS_RSL_ListView #sectionTestReview .pages a.marked.unanswered {
-	background-image: url(../Shared/Images/Universal/marked_unanswered.svg);
+	background-image: url(../Shared/Images/universal/marked_unanswered.svg);
 	background-size: 3em;
 }
 
@@ -2532,14 +2532,14 @@ span#testApprovalProgress:before {
 .TDS_CCYellowB.TDS_RSL_ListView #sectionTestReview .pages a.marked,
 	.TDS_CCInvert.TDS_RSL_ListView #sectionTestReview .pages a.marked,
 	.TDS_CCWhiteN.TDS_RSL_ListView #sectionTestReview .pages a.marked {
-	background-image: url(../Shared/Images/Universal/marked_white.svg);
+	background-image: url(../Shared/Images/universal/marked_white.svg);
 	background-size: 1.5em;
 }
 
 .TDS_CCYellowB.TDS_RSL_ListView #sectionTestReview .pages a.unanswered,
 	.TDS_CCInvert.TDS_RSL_ListView #sectionTestReview .pages a.unanswered,
 	.TDS_CCWhiteN.TDS_RSL_ListView #sectionTestReview .pages a.unanswered {
-	background-image: url(../Shared/Images/Universal/unanswered_white.svg);
+	background-image: url(../Shared/Images/universal/unanswered_white.svg);
 	background-size: 1.5em;
 }
 
@@ -2548,7 +2548,7 @@ span#testApprovalProgress:before {
 	.TDS_CCWhiteN.TDS_RSL_ListView #sectionTestReview .pages a.marked.unanswered
 	{
 	background-image:
-		url(../Shared/Images/Universal/marked_unanswered_white.svg);
+		url(../Shared/Images/universal/marked_unanswered_white.svg);
 	background-size: 3em;
 }
 
