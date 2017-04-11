@@ -38,6 +38,10 @@ import TDS.Shared.Messages.IMessageService;
 public class GlobalJavascript extends UIComponentBase
 {
   private static final Logger _logger = LoggerFactory.getLogger (GlobalJavascript.class);
+  static final String CONTEXT_LOGIN_SHELL = "LoginShell";
+  static final String CONTEXT_REVIEW_SHELL = "ReviewShell";
+  static final String CONTEXT_DIAGNOSTIC_SHELL = "DiagnosticShell";
+  static final String CONTEXT_TEST_SHELL = "TestShell";
 
   private String              _contextName;
   private String              _messages;
@@ -87,7 +91,7 @@ public class GlobalJavascript extends UIComponentBase
     writer.WriteAppSettings();
 
     // required on login shell
-    if (StringUtils.equals (getContextName (), "LoginShell")) {
+    if (StringUtils.equals (getContextName (), CONTEXT_LOGIN_SHELL)) {
       writer.writeLoginRequirements ();
       // writer.writeGrades ();
       writer.writeGlobalAccommodations ();
@@ -95,7 +99,7 @@ public class GlobalJavascript extends UIComponentBase
     }
 
     // required for test shell
-    if (StringUtils.equals (getContextName (), "TestShell")) {
+    if (StringUtils.equals (getContextName (), CONTEXT_TEST_SHELL)) {
       writer.writeTestShellButtons ();
       writer.writeManifest ();
     }
@@ -123,7 +127,7 @@ public class GlobalJavascript extends UIComponentBase
       contextList.add (contextName);
 
     // LEGACY CONTEXTS:
-    if (StringUtils.equals (contextName, "LoginShell")) {
+    if (StringUtils.equals (contextName, CONTEXT_LOGIN_SHELL)) {
       // TODO
       /*
        * if (geoServer == GeoType.Login) { contextList.AddRange(new[] {
@@ -133,7 +137,7 @@ public class GlobalJavascript extends UIComponentBase
           "TestInstructions.aspx", "Approval.aspx" };
       // ServerSide
       contextList.addAll (Arrays.asList (pagesArray));
-    } else if (StringUtils.equals (contextName, "TestShell")) {
+    } else if (StringUtils.equals (contextName, CONTEXT_TEST_SHELL)) {
 
       // Removed in new code
       // ServerSide
@@ -145,10 +149,14 @@ public class GlobalJavascript extends UIComponentBase
 
       // ClientSide
       contextList.addAll (Arrays.asList (jsArray));
-    } else if (StringUtils.equals (contextName, "ReviewShell")) {
+    } else if (StringUtils.equals (contextName, CONTEXT_REVIEW_SHELL)) {
       String[] morePages = { "Student.Master", "TestReview.aspx", "TestResults.aspx" };
       // ServerSide
       contextList.addAll (Arrays.asList (morePages));
+
+    } else if (StringUtils.equals(contextName, CONTEXT_DIAGNOSTIC_SHELL)) {
+      String[] pagesArray = { "Default.aspx", "Diagnostics.aspx", "SoundCheck.aspx", "TTSCheck.aspx" };
+      contextList.addAll (Arrays.asList (pagesArray));
     }
 
     return contextList;
