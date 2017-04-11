@@ -31,9 +31,12 @@ import TDS.Shared.Exceptions.ReadOnlyException;
 import TDS.Shared.Exceptions.ReturnStatusException;
 import TDS.Shared.Messages.IMessageService;
 
-// / <summary>
-// / Adds global variables to a page
-// / </summary>
+/**
+ * This faces component is responsible for fetching resources from the system and providing initial
+ * page-wide javascript values via an embedded <script/> tag.
+ * The javascript values produced include TDS configuration values, I18N translation values,
+ * system information values, etc.
+ */
 @FacesComponent (value = "GlobalJavascript")
 public class GlobalJavascript extends UIComponentBase
 {
@@ -62,6 +65,12 @@ public class GlobalJavascript extends UIComponentBase
     init ();
   }
 
+  /**
+   * Write the super javascript tag to the output stream.
+   *
+   * @param context       The faces context
+   * @throws IOException
+   */
   @Override
   public void encodeAll (FacesContext context) throws IOException {
     ResponseWriter output = context.getResponseWriter ();
@@ -76,6 +85,14 @@ public class GlobalJavascript extends UIComponentBase
     output.write ("</script>");
   }
 
+  /**
+   * Write various javascript property values based upon the context.
+   *
+   * @param output  The output writer
+   * @throws IOException
+   * @throws ReturnStatusException
+   * @throws ReadOnlyException
+   */
   public void writeJavascript (ResponseWriter output) throws IOException, ReturnStatusException, ReadOnlyException {
     GlobalJavascriptWriter writer = new GlobalJavascriptWriter (output, _studentSettings, _configRepository, _itemBankRepository, _iMessageService);
     writer.writeProperties (); // required
@@ -114,6 +131,13 @@ public class GlobalJavascript extends UIComponentBase
      */
   }
 
+  /**
+   * Retrieve the set of contexts required by the given root context.
+   * (e.g. the test shell requires many sub-contexts to provide message translations)
+   *
+   * @param contextName The root context
+   * @return The set of contexts required by the root context
+   */
   public static List<String> getContexts (String contextName) {
     // TODO GeoSettings
     // GeoType geoServer = GeoSettings.GetServerType();
@@ -162,6 +186,13 @@ public class GlobalJavascript extends UIComponentBase
     return contextList;
   }
 
+  /**
+   * Write message translations for all contexts as a javascript/json property: "TDS.Config.messages"
+   *
+   * @param writer  The output writer
+   * @throws IOException
+   * @throws ReturnStatusException
+   */
   private void writeMessages (GlobalJavascriptWriter writer) throws IOException, ReturnStatusException {
     List<String> contextList = getContexts (getContextName ());
 
