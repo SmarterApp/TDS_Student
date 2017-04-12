@@ -34,6 +34,9 @@ import tds.exam.ExamApproval;
 import tds.exam.ExamConfiguration;
 import tds.exam.ExamPrintRequest;
 import tds.exam.ExamSegment;
+import tds.exam.ExamStatusCode;
+import tds.exam.ExamStatusRequest;
+import tds.exam.ExamStatusStage;
 import tds.exam.OpenExamRequest;
 import tds.exam.SegmentApprovalRequest;
 import tds.student.sql.repository.remote.ExamRepository;
@@ -187,11 +190,10 @@ public class RemoteExamRepository implements ExamRepository {
     HttpHeaders headers = new HttpHeaders();
     headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
     headers.setContentType(MediaType.APPLICATION_JSON);
-    HttpEntity<?> requestHttpEntity = new HttpEntity<>(headers);
+    ExamStatusRequest request = new ExamStatusRequest(new ExamStatusCode(status), reason);
+    HttpEntity<?> requestHttpEntity = new HttpEntity<>(request, headers);
 
-    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/%s/status", examUrl, examId))
-      .queryParam("status", status)
-      .queryParam("reason", reason);
+    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/%s/status", examUrl, examId));
 
     try {
       restTemplate.exchange(
