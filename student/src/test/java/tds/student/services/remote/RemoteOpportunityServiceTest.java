@@ -202,6 +202,7 @@ public class RemoteOpportunityServiceTest {
     ApprovalInfo approvalInfo = service.checkTestApproval(oppInstance);
     assertThat(approvalInfo.getStatus().toString()).isEqualTo("Approved");
     verify(mockExamRepository).getApproval(oppInstance.getExamId(), oppInstance.getSessionKey(), oppInstance.getExamBrowserKey());
+    assertThat(approvalInfo.getComment()).isEqualTo(examApproval.getStatusChangeReason());
   }
 
   @Test
