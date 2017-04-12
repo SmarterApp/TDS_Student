@@ -1,5 +1,5 @@
 <configuration scan="true">
-	<property scope="local" name="app.context.name" value="student" />
+	<property scope="context" name="app.context.name" value="student" />
 	<property scope="local" name="app.base.package.name" value="org.air.student" />
 	<property scope="local" name="mna.appender.active" value="true" />
 	<include resource="logback-included-common-config.xml" />
