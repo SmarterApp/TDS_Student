@@ -13,6 +13,7 @@ import tds.student.services.data.PageGroup;
 import tds.student.services.data.PageList;
 import tds.student.sql.data.AdaptiveGroup;
 import tds.student.sql.data.OpportunityInstance;
+import tds.student.sql.repository.remote.ExamItemResponseRepository;
 import tds.student.sql.repository.remote.ExamSegmentRepository;
 
 @Service("integrationResponseService")
@@ -22,12 +23,14 @@ public class RemoteResponseService implements IResponseService {
   private final boolean isLegacyCallsEnabled;
   private final IResponseService legacyResponseService;
   private final ExamSegmentRepository examSegmentRepository;
+  private final ExamItemResponseRepository examItemResponseRepository;
 
   @Autowired
   public RemoteResponseService(final IResponseService legacyResponseService,
                                final @Value("${tds.exam.remote.enabled}") Boolean remoteExamCallsEnabled,
                                final @Value("${tds.exam.legacy.enabled}") Boolean legacyCallsEnabled,
-                               final ExamSegmentRepository examSegmentRepository) {
+                               final ExamSegmentRepository examSegmentRepository,
+                               final ExamItemResponseRepository examItemResponseRepository) {
     if (!remoteExamCallsEnabled && !legacyCallsEnabled) {
       throw new IllegalStateException("Remote and legacy calls are both disabled.  Please check progman configuration");
     }
@@ -36,6 +39,7 @@ public class RemoteResponseService implements IResponseService {
     this.examSegmentRepository = examSegmentRepository;
     this.isRemoteExamCallsEnabled = remoteExamCallsEnabled;
     this.isLegacyCallsEnabled = legacyCallsEnabled;
+    this.examItemResponseRepository = examItemResponseRepository;
   }
 
   @Override
@@ -71,5 +75,18 @@ public class RemoteResponseService implements IResponseService {
   @Override
   public void removeResponse(final OpportunityInstance oppInstance, final int position, final String itemID, final String dateCreated) throws ReturnStatusException {
     legacyResponseService.removeResponse(oppInstance, position, itemID, dateCreated);
+  }
+
+  @Override
+  public void markItemForReview(final OpportunityInstance opportunityInstance, final int position, final boolean mark) throws ReturnStatusException {
+    if (isLegacyCallsEnabled) {
+      legacyResponseService.markItemForReview(opportunityInstance, position, mark);
+    }
+
+    if (!isRemoteExamCallsEnabled) {
+      return;
+    }
+
+    examItemResponseRepository.markItemForReview(opportunityInstance, position, mark);
   }
 }
