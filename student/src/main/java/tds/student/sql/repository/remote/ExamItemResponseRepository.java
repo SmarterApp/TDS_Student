@@ -10,11 +10,11 @@ import tds.student.sql.data.OpportunityInstance;
 public interface ExamItemResponseRepository {
 
     /**
-     * Verified access and marks an item for review
+     * Verifies access and marks an item for review
      *
      * @param opportunityInstance the {@link tds.student.sql.data.OpportunityInstance} containing exam validation data
-     * @param position the item position of the item to mark
-     * @param mark a flag indicating whether the item should be marked or unmarked
+     * @param position            the item position of the item to mark
+     * @param mark                a flag indicating whether the item should be marked or unmarked
      */
     void markItemForReview(OpportunityInstance opportunityInstance, int position, boolean mark) throws ReturnStatusException;
 }
