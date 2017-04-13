@@ -136,4 +136,9 @@ public class ResponseService implements IResponseService
       throw e;
     }
   }
+
+  @Override
+  public void markItemForReview(final OpportunityInstance opportunityInstance, final int position, final boolean mark) throws ReturnStatusException {
+    _responseRepository.setItemMarkForReview(opportunityInstance, position, mark);
+  }
 }

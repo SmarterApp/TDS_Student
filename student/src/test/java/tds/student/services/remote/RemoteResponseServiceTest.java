@@ -11,6 +11,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.UUID;
 
 import tds.student.services.abstractions.IResponseService;
+import tds.student.sql.data.OpportunityInstance;
+import tds.student.sql.repository.remote.ExamItemResponseRepository;
 import tds.student.sql.repository.remote.ExamSegmentRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,11 +27,15 @@ public class RemoteResponseServiceTest {
   @Mock
   private ExamSegmentRepository mockExamSegmentRepository;
 
+  @Mock
+  private ExamItemResponseRepository mockExamItemResponseRepository;
+
   private IResponseService service;
 
   @Before
   public void setUp() {
-    service = new RemoteResponseService(mockLegacyResponseService, true, false, mockExamSegmentRepository);
+    service = new RemoteResponseService(mockLegacyResponseService, true, false,
+        mockExamSegmentRepository, mockExamItemResponseRepository);
   }
 
   @Ignore
@@ -40,5 +46,15 @@ public class RemoteResponseServiceTest {
     boolean isComplete = service.isTestComplete(examId);
     assertThat(isComplete).isFalse();
     verify(mockExamSegmentRepository).checkSegmentsSatisfied(examId);
+  }
+
+  @Test
+  public void shouldMarkForReview() throws ReturnStatusException {
+    final OpportunityInstance opportunityInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+    final int position = 3;
+    final boolean mark = true;
+
+    service.markItemForReview(opportunityInstance, position, mark);
+    verify(mockExamItemResponseRepository).markItemForReview(opportunityInstance, position, mark);
   }
 }

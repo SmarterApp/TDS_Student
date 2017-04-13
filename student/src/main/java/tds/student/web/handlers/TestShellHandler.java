@@ -457,9 +457,9 @@ public class TestShellHandler extends TDSHandler
 
     OpportunityInstance oppInstance = StudentContext.getOppInstance ();
 
-    _responseRepository.setItemMarkForReview (oppInstance, position, mark);
+    _responseService.markItemForReview(oppInstance, position, mark);
 
-    return new ResponseData<String> (TDSReplyCode.OK.getCode (), "OK", null);
+    return new ResponseData<> (TDSReplyCode.OK.getCode (), "OK", null);
   }
 
   @RequestMapping (value = "TestShell.axd/removeResponse")
