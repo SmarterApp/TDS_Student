@@ -3,7 +3,7 @@
     <parent>
         <groupId>org.opentestsystem.shared</groupId>
         <artifactId>shared-master</artifactId>
-        <version>3.0.4</version>
+        <version>3.0.5</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -22,7 +22,7 @@
         <mockito.version>1.10.19</mockito.version>
         <tds-dll.version>3.0.0</tds-dll.version>
         <test-scoring.version>3.0.0</test-scoring.version>
-        <tds-student-common.version>3.0.2</tds-student-common.version>
+        <tds-student-common.version>3.0.3</tds-student-common.version>
     </properties>
 
     <modules>
