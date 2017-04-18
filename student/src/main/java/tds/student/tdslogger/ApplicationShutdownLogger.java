@@ -12,7 +12,7 @@ import static tds.student.tdslogger.StudentEventLogger.StudentLogEvent.APP_SHUTD
 @Component
 public class ApplicationShutdownLogger implements ApplicationListener<ContextClosedEvent> {
 
-  private StudentEventLogger logger;
+  private final StudentEventLogger logger;
   boolean logged = false;
 
   @Autowired

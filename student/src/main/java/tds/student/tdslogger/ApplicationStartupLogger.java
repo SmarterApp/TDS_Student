@@ -12,7 +12,7 @@ import static tds.student.tdslogger.StudentEventLogger.StudentLogEvent.APP_START
 @Component
 public class ApplicationStartupLogger implements ApplicationListener<ContextRefreshedEvent> {
 
-  private StudentEventLogger logger;
+  private final StudentEventLogger logger;
   boolean logged = false;
 
   @Autowired
