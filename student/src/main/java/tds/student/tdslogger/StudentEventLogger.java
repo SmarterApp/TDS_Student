@@ -22,11 +22,13 @@ import tds.student.web.handlers.TestResponseReader;
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class StudentEventLogger extends EventLoggerBase {
 
-  protected String getApp() {
+  public String getApp() {
     return "student";
   }
 
   public enum StudentLogEvent implements LogEvent {
+    APP_STARTUP,
+    APP_SHUTDOWN,
     DETERMINE_NEXT_QUESTION,
   }
 
