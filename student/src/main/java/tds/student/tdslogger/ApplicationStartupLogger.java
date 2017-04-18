@@ -20,6 +20,10 @@ public class ApplicationStartupLogger implements ApplicationListener<ContextRefr
     logger = new StudentEventLogger(objectMapper);
   }
 
+  /**
+   * We want to log an event to our centralized log service when the application server starts up.
+   * This event is fired multiple times on startup, so we add logic to only log the first occurrence.
+   */
   @Override
   public void onApplicationEvent(final ContextRefreshedEvent event) {
     // This event fires multiple times - we only want to log the first occurrence.
