@@ -2,6 +2,10 @@ package tds.student.sql.repository.remote;
 
 import TDS.Shared.Exceptions.ReturnStatusException;
 
+import java.util.UUID;
+
+import tds.exam.item.PageGroupRequest;
+import tds.student.services.data.PageGroup;
 import tds.student.sql.data.OpportunityInstance;
 
 /**
@@ -17,4 +21,6 @@ public interface ExamItemResponseRepository {
      * @param mark                a flag indicating whether the item should be marked or unmarked
      */
     void markItemForReview(OpportunityInstance opportunityInstance, int position, boolean mark) throws ReturnStatusException;
+
+    PageGroup getNextItemGroup(UUID id, PageGroupRequest pageGroupRequest) throws ReturnStatusException;
 }

@@ -9,12 +9,17 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.UUID;
+
 import tds.common.web.resources.NoContentResponseResource;
+import tds.exam.item.PageGroupRequest;
+import tds.student.services.data.PageGroup;
 import tds.student.sql.data.OpportunityInstance;
 import tds.student.sql.repository.remote.ExamItemResponseRepository;
 
@@ -49,6 +54,29 @@ public class RemoteExamItemResponseRepository implements ExamItemResponseReposit
                 requestHttpEntity,
                 new ParameterizedTypeReference<NoContentResponseResource>() {
                 });
+        } catch (RestClientException rce) {
+            throw new ReturnStatusException(rce);
+        }
+    }
+
+    @Override
+    public PageGroup getNextItemGroup(final UUID id, final PageGroupRequest pageGroupRequest) throws ReturnStatusException {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<?> requestHttpEntity = new HttpEntity<>(pageGroupRequest, headers);
+
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/%s/item", examUrl));
+
+        try {
+            ResponseEntity<PageGroup> response = restTemplate.exchange(
+              builder.build().toUri(),
+              HttpMethod.POST,
+              requestHttpEntity,
+              new ParameterizedTypeReference<PageGroup>() {
+              });
+
+            return response.getBody();
         } catch (RestClientException rce) {
             throw new ReturnStatusException(rce);
         }
