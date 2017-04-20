@@ -13,6 +13,7 @@ import java.util.UUID;
 import tds.student.services.abstractions.IResponseService;
 import tds.student.sql.data.OpportunityInstance;
 import tds.student.sql.repository.remote.ExamItemResponseRepository;
+import tds.student.sql.repository.remote.ExamPageRepository;
 import tds.student.sql.repository.remote.ExamSegmentRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,12 +31,15 @@ public class RemoteResponseServiceTest {
   @Mock
   private ExamItemResponseRepository mockExamItemResponseRepository;
 
+  @Mock
+  private ExamPageRepository mockExamPageRepository;
+
   private IResponseService service;
 
   @Before
   public void setUp() {
     service = new RemoteResponseService(mockLegacyResponseService, true, false,
-        mockExamSegmentRepository, mockExamItemResponseRepository);
+        mockExamSegmentRepository, mockExamItemResponseRepository, mockExamPageRepository);
   }
 
   @Ignore
@@ -56,5 +60,21 @@ public class RemoteResponseServiceTest {
 
     service.markItemForReview(opportunityInstance, position, mark);
     verify(mockExamItemResponseRepository).markItemForReview(opportunityInstance, position, mark);
+  }
+
+  @Test
+  public void shouldGetOpportunityItemsForAnExamWhenLegacyCallsAndRemoteCallsAreEnabled() throws ReturnStatusException {
+    final OpportunityInstance opportunityInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+
+  }
+
+  @Test
+  public void shouldGetOpportunityItemsForAnExamWhenLegacyCallsAreEnabledButRemoteCallsAreDisabled() {
+
+  }
+
+  @Test
+  public void shouldGetOpportunityItemsForAnExamWhenLegacyCallseAreDisabledButRemoteCallsAReEnabled() {
+
   }
 }
