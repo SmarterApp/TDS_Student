@@ -138,6 +138,11 @@ public class RemoteResponseService implements IResponseService {
         opportunityItem.setGroupID(page.getItemGroupKey());
         opportunityItem.setSegment(page.getSegmentPosition());
         opportunityItem.setSegmentID(page.getSegmentKey());
+        opportunityItem.setGroupItemsRequired(page.isGroupItemsRequired() ? 0 : -1);
+        opportunityItem.setIsRequired(item.isRequired());
+        opportunityItem.setItemFile(item.getItemFilePath());
+        opportunityItem.setStimulusFile(item.getStimulusFilePath().isPresent() ? item.getStimulusFilePath().get() : null);
+        opportunityItem.setDateCreated(dateFormatter.format(item.getCreatedAt()));
 
         // This value is always set to 'format' in the t_getopportunityitems stored procedure, then converted to
         // upper-case in ResponseRepository#readOpportunityItems() (@ line 295).
@@ -146,22 +151,16 @@ public class RemoteResponseService implements IResponseService {
         // OpportunityItem#isVisible (mapped to an OpportunityItem in ResponseRepository#readOpportunityItems @ line
         // 297) never seems to be used (which is why it was not ported to the exam database), so has been omitted from
         // this mapping.
-        opportunityItem.setGroupItemsRequired(page.isGroupItemsRequired() ? 0 : -1);
-        opportunityItem.setIsRequired(item.isRequired());
-        opportunityItem.setItemFile(item.getItemFilePath());
-        opportunityItem.setStimulusFile(item.getStimulusFilePath().isPresent() ? item.getStimulusFilePath().get() : null);
 
         if (item.getResponse().isPresent()) {
           ExamItemResponse itemResponse = item.getResponse().get();
           opportunityItem.setSequence(itemResponse.getSequence());
-          opportunityItem.setDateCreated(dateFormatter.format(itemResponse.getCreatedAt()));
           opportunityItem.setMarkForReview(itemResponse.isMarkedForReview());
           opportunityItem.setValue(itemResponse.getResponse());
           opportunityItem.setIsValid(itemResponse.isValid());
           opportunityItem.setIsSelected(itemResponse.isSelected());
         } else {
           opportunityItem.setValue(null);
-          opportunityItem.setDateCreated(dateFormatter.format(item.getCreatedAt()));
         }
 
         opportunityItems.add(opportunityItem);
