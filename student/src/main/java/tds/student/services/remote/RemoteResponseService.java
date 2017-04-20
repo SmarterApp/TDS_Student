@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -74,9 +73,7 @@ public class RemoteResponseService implements IResponseService {
 
     List<ExamPage> examPagesWithItems = examPageRepository.findAllPagesWithItems(oppInstance);
 
-    List<OpportunityItem> opportunityItems = getOpportunityItemsFromExamItems(examPagesWithItems);
-
-    return PageList.Create(opportunityItems);
+    return convertExamPagesToPageList(examPagesWithItems);
   }
 
   @Override
@@ -119,12 +116,12 @@ public class RemoteResponseService implements IResponseService {
 
   /**
    * Flatten the {@link tds.exam.ExamPage}s and their constituent {@link tds.exam.ExamItem}s and map them to a
-   * collection of {@link tds.student.sql.data.OpportunityItem}s.
+   * {@link tds.student.services.data.PageList}.
    *
    * @param examPages The collection of {@link tds.exam.ExamPage}s from the {@link tds.exam.Exam}
-   * @return A collection of {@link tds.student.sql.data.OpportunityItem}s
+   * @return A {@link tds.student.services.data.PageList} that represents the collection of {@link tds.exam.ExamPage}s
    */
-  private static List<OpportunityItem> getOpportunityItemsFromExamItems(final List<ExamPage> examPages) {
+  private static PageList convertExamPagesToPageList(final List<ExamPage> examPages) {
     List<OpportunityItem> opportunityItems = new ArrayList<>();
 
     // Match the datetime format returned by t_getopportunityitems
@@ -169,6 +166,6 @@ public class RemoteResponseService implements IResponseService {
       }
     }
 
-    return opportunityItems;
+    return PageList.Create(opportunityItems);
   }
 }
