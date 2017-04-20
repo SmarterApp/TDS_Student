@@ -66,7 +66,7 @@ public class RemoteExamItemResponseRepository implements ExamItemResponseReposit
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<?> requestHttpEntity = new HttpEntity<>(pageGroupRequest, headers);
 
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/%s/item", examUrl));
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/%s/item", examUrl, id));
 
         try {
             ResponseEntity<PageGroup> response = restTemplate.exchange(

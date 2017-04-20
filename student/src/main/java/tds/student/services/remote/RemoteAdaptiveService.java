@@ -49,6 +49,8 @@ public class RemoteAdaptiveService implements IAdaptiveService {
     }
 
     PageGroupRequest pageRequest = new PageGroupRequest(lastPage, lastPosition, false);
-    return examItemResponseRepository.getNextItemGroup(testOpportunity.getOppInstance().getExamId(), pageRequest);
+    PageGroup group = examItemResponseRepository.getNextItemGroup(testOpportunity.getOppInstance().getExamId(), pageRequest);
+
+    return group;
   }
 }
