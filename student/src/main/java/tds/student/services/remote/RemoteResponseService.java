@@ -1,6 +1,8 @@
 package tds.student.services.remote;
 
 import TDS.Shared.Exceptions.ReturnStatusException;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -42,7 +44,7 @@ public class RemoteResponseService implements IResponseService {
                                final ExamItemResponseRepository examItemResponseRepository,
                                final ExamPageRepository examPageRepository) {
     if (!remoteExamCallsEnabled && !legacyCallsEnabled) {
-      throw new IllegalStateException("Remote and legacy calls are both disabled.  Please check progman configuration");
+      throw new IllegalStateException("Remote and legacy calls are both disabled.  Please check progman configuration for 'tds.exam.remote.enabled' and 'tds.exam.legacy.enabled' settings");
     }
 
     this.legacyResponseService = legacyResponseService;
@@ -126,7 +128,7 @@ public class RemoteResponseService implements IResponseService {
     List<OpportunityItem> opportunityItems = new ArrayList<>();
 
     // Match the datetime format returned by t_getopportunityitems
-    SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS");
+    DateTimeFormatter dateFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
 
     for (ExamPage page : examPages) {
       for (ExamItem item : page.getExamItems()) {
@@ -142,7 +144,7 @@ public class RemoteResponseService implements IResponseService {
         opportunityItem.setIsRequired(item.isRequired());
         opportunityItem.setItemFile(item.getItemFilePath());
         opportunityItem.setStimulusFile(item.getStimulusFilePath().isPresent() ? item.getStimulusFilePath().get() : null);
-        opportunityItem.setDateCreated(dateFormatter.format(item.getCreatedAt()));
+        opportunityItem.setDateCreated(item.getCreatedAt().toString(dateFormatter));
 
         // This value is always set to 'format' in the t_getopportunityitems stored procedure, then converted to
         // upper-case in ResponseRepository#readOpportunityItems() (@ line 295).
