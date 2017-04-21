@@ -60,7 +60,8 @@ public class RemoteResponseService implements IResponseService {
   }
 
   @Override
-  public PageList getOpportunityItems(final OpportunityInstance oppInstance, final boolean validate) throws ReturnStatusException {
+  public PageList getOpportunityItems(final OpportunityInstance oppInstance,
+                                      final boolean validate) throws ReturnStatusException {
     PageList pageList = null;
 
     if (isLegacyCallsEnabled) {
@@ -73,12 +74,28 @@ public class RemoteResponseService implements IResponseService {
 
     List<ExamPage> examPagesWithItems = examPageRepository.findAllPagesWithItems(oppInstance);
 
-    return convertExamPagesToPageList(examPagesWithItems);
+    return PageList.Create(convertExamPagesToOpportunityItems(examPagesWithItems.toArray(new ExamPage[examPagesWithItems.size()])));
   }
 
   @Override
-  public PageGroup getItemGroup(final OpportunityInstance oppInstance, final int page, final String groupID, final String dateCreated, final boolean validate) throws ReturnStatusException {
-    return legacyResponseService.getItemGroup(oppInstance, page, groupID, dateCreated, validate);
+  public PageGroup getItemGroup(final OpportunityInstance oppInstance,
+                                final int page,
+                                final String groupID,
+                                final String dateCreated,
+                                final boolean validate) throws ReturnStatusException {
+    PageGroup pageGroup = null;
+
+    if (isLegacyCallsEnabled) {
+      pageGroup = legacyResponseService.getItemGroup(oppInstance, page, groupID, dateCreated, validate);
+    }
+
+    if (!isRemoteExamCallsEnabled) {
+      return pageGroup;
+    }
+
+    ExamPage examPageWithItems = examPageRepository.findPageWithItems(oppInstance, page);
+
+    return PageGroup.Create(convertExamPagesToOpportunityItems(examPageWithItems));
   }
 
   @Override
@@ -121,7 +138,7 @@ public class RemoteResponseService implements IResponseService {
    * @param examPages The collection of {@link tds.exam.ExamPage}s from the {@link tds.exam.Exam}
    * @return A {@link tds.student.services.data.PageList} that represents the collection of {@link tds.exam.ExamPage}s
    */
-  private static PageList convertExamPagesToPageList(final List<ExamPage> examPages) {
+  private static List<OpportunityItem> convertExamPagesToOpportunityItems(ExamPage... examPages) {
     List<OpportunityItem> opportunityItems = new ArrayList<>();
 
     // Match the datetime format returned by t_getopportunityitems
@@ -136,8 +153,8 @@ public class RemoteResponseService implements IResponseService {
         opportunityItem.setPage(page.getPagePosition());
         opportunityItem.setGroupID(page.getItemGroupKey());
         opportunityItem.setSegment(page.getSegmentPosition());
-        opportunityItem.setSegmentID(page.getSegmentKey());
-        opportunityItem.setGroupItemsRequired(page.isGroupItemsRequired() ? 0 : -1);
+        opportunityItem.setSegmentID(page.getSegmentId());
+        opportunityItem.setGroupItemsRequired(page.isGroupItemsRequired() ? -1 : 0);
         opportunityItem.setIsRequired(item.isRequired());
         opportunityItem.setItemFile(item.getItemFilePath());
         opportunityItem.setStimulusFile(item.getStimulusFilePath().isPresent() ? item.getStimulusFilePath().get() : null);
@@ -166,6 +183,6 @@ public class RemoteResponseService implements IResponseService {
       }
     }
 
-    return PageList.Create(opportunityItems);
+    return opportunityItems;
   }
 }

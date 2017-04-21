@@ -1,11 +1,18 @@
 package tds.student.sql.repository.remote;
 
 import TDS.Shared.Exceptions.ReturnStatusException;
+import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
@@ -13,11 +20,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import tds.common.Response;
 import tds.exam.ExamItem;
 import tds.exam.ExamPage;
 import tds.student.sql.data.OpportunityInstance;
 import tds.student.sql.repository.remote.impl.RemoteExamPageRepository;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
@@ -53,20 +62,15 @@ public class RemoteExamPageRepositoryTest {
             .withExamPageId(secondExamPageId)
             .build();
 
-        List<ExamItem> firstExamItemList = new ArrayList<>();
-        firstExamItemList.add(firstExamItem);
-        List<ExamItem> secondExamItemList = new ArrayList<>();
-        secondExamItemList.add(secondExamItem);
-
         final ExamPage firstExamPage = new ExamPage.Builder()
             .withId(firstExamPageId)
             .withExamId(examId)
-            .withExamItems(firstExamItemList)
+            .withExamItems(newArrayList(firstExamItem))
             .build();
         final ExamPage secondExamPage = new ExamPage.Builder()
             .withId(secondExamPageId)
             .withExamId(examId)
-            .withExamItems(secondExamItemList)
+            .withExamItems(newArrayList(secondExamItem))
             .build();
 
         ExamPage[] examPageResult = new ExamPage[2];
@@ -80,5 +84,34 @@ public class RemoteExamPageRepositoryTest {
         verify(mockRestTemplate).getForObject(any(URI.class), eq(ExamPage[].class));
 
         assertThat(result).hasSize(2);
+    }
+
+    @Test
+    public void shouldGetAnExamPageWithItems() throws ReturnStatusException {
+        final UUID examId = UUID.randomUUID();
+        final UUID examPageId = UUID.randomUUID();
+
+        final ExamItem examItem = new ExamItem.Builder(UUID.randomUUID())
+            .withExamPageId(examPageId)
+            .build();
+        final ExamPage examPage = new ExamPage.Builder()
+            .withId(examPageId)
+            .withExamId(examId)
+            .withExamItems(newArrayList(examItem))
+            .build();
+        final Response<ExamPage> examPageResponse = new Response<>(examPage);
+        final ResponseEntity<Response<ExamPage>> responseEntity = new ResponseEntity<>(examPageResponse, HttpStatus.OK);
+
+        when(mockRestTemplate.exchange(any(URI.class),
+            any(HttpMethod.class),
+            any(HttpEntity.class),
+            any(ParameterizedTypeReference.class)))
+            .thenReturn(responseEntity);
+
+        ExamPage result = remoteExamPageRepository.findPageWithItems(mockOpportunityInstance, 1);
+
+        assertThat(result.getId()).isEqualTo(examPage.getId());
+        assertThat(result.getExamId()).isEqualTo(examPage.getExamId());
+        assertThat(result.getExamItems()).hasSize(1);
     }
 }
