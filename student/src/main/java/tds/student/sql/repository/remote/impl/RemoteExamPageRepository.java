@@ -1,6 +1,7 @@
 package tds.student.sql.repository.remote.impl;
 
 import TDS.Shared.Exceptions.ReturnStatusException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -31,6 +32,7 @@ public class RemoteExamPageRepository implements ExamPageRepository {
     private final RestTemplate restTemplate;
     private final String examUrl;
 
+    @Autowired
     public RemoteExamPageRepository(@Qualifier("integrationRestTemplate") final RestTemplate restTemplate,
                                     @Value("${tds.exam.remote.url}") final String examUrl) {
         this.restTemplate = restTemplate;
