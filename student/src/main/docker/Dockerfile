@@ -3,7 +3,7 @@
 ################
 
 #Based off of the shared secure tomcat 7 image from SS_SharedMultiJar
-FROM fwsbac/secure-tomcat-image:3.0.1
+FROM fwsbac/secure-tomcat-image:3.0.2
 
 #Add the WAR file
 ADD student-*.war $CATALINA_HOME/webapps/student.war
