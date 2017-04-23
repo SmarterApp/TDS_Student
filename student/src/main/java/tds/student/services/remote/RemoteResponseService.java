@@ -68,13 +68,14 @@ public class RemoteResponseService implements IResponseService {
       pageList = legacyResponseService.getOpportunityItems(oppInstance, validate);
     }
 
-    if (!isRemoteExamCallsEnabled) {
+    // TODO: Add this code back in when items/pages can be fetched from the exam service
+//    if (!isRemoteExamCallsEnabled) {
       return pageList;
-    }
+//    }
 
-    List<ExamPage> examPagesWithItems = examPageRepository.findAllPagesWithItems(oppInstance);
-
-    return PageList.Create(convertExamPagesToOpportunityItems(examPagesWithItems.toArray(new ExamPage[examPagesWithItems.size()])));
+//    List<ExamPage> examPagesWithItems = examPageRepository.findAllPagesWithItems(oppInstance);
+//
+//    return PageList.Create(convertExamPagesToOpportunityItems(examPagesWithItems.toArray(new ExamPage[examPagesWithItems.size()])));
   }
 
   @Override
@@ -89,13 +90,14 @@ public class RemoteResponseService implements IResponseService {
       pageGroup = legacyResponseService.getItemGroup(oppInstance, page, groupID, dateCreated, validate);
     }
 
-    if (!isRemoteExamCallsEnabled) {
+    // TODO: Add this code back in when items/pages can be fetched from the exam service
+//    if (!isRemoteExamCallsEnabled) {
       return pageGroup;
-    }
+//    }
 
-    ExamPage examPageWithItems = examPageRepository.findPageWithItems(oppInstance, page);
-
-    return PageGroup.Create(convertExamPagesToOpportunityItems(examPageWithItems));
+//    ExamPage examPageWithItems = examPageRepository.findPageWithItems(oppInstance, page);
+//
+//    return PageGroup.Create(convertExamPagesToOpportunityItems(examPageWithItems));
   }
 
   @Override
