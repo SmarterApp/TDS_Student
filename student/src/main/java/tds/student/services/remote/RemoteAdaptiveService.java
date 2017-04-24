@@ -7,10 +7,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import tds.exam.item.PageGroupRequest;
 import tds.student.services.abstractions.IAdaptiveService;
+import tds.student.services.data.ItemResponse;
 import tds.student.services.data.PageGroup;
 import tds.student.services.data.TestOpportunity;
+import tds.student.sql.data.OpportunityItem;
 import tds.student.sql.repository.remote.ExamItemResponseRepository;
 
 @Service("integrationAdaptiveService")
@@ -38,19 +42,24 @@ public class RemoteAdaptiveService implements IAdaptiveService {
 
   @Override
   public PageGroup createNextItemGroup(final TestOpportunity testOpportunity, final int lastPage, final int lastPosition) throws ReturnStatusException {
-    PageGroup pageGroup = null;
+    PageGroup legacyPageGroup = null;
 
     if(legacyCallsEnabled) {
-      pageGroup = legacyAdaptiveService.createNextItemGroup(testOpportunity, lastPage, lastPosition);
+      legacyPageGroup = legacyAdaptiveService.createNextItemGroup(testOpportunity, lastPage, lastPosition);
     }
 
     if(!remoteExamCallsEnabled) {
-      return pageGroup;
+      return legacyPageGroup;
     }
 
     PageGroupRequest pageRequest = new PageGroupRequest(lastPage, lastPosition, false);
-    PageGroup group = examItemResponseRepository.getNextItemGroup(testOpportunity.getOppInstance().getExamId(), pageRequest);
+    List<OpportunityItem> items = examItemResponseRepository.getNextItemGroup(testOpportunity.getOppInstance().getExamId(), pageRequest);
 
-    return group;
+    PageGroup remotePageGroup = new PageGroup(items.get(0));
+    for(OpportunityItem item : items) {
+      remotePageGroup.add(new ItemResponse(item));
+    }
+
+    return legacyPageGroup;
   }
 }

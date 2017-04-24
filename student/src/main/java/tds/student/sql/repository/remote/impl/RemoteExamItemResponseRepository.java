@@ -15,12 +15,14 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.List;
 import java.util.UUID;
 
 import tds.common.web.resources.NoContentResponseResource;
 import tds.exam.item.PageGroupRequest;
 import tds.student.services.data.PageGroup;
 import tds.student.sql.data.OpportunityInstance;
+import tds.student.sql.data.OpportunityItem;
 import tds.student.sql.repository.remote.ExamItemResponseRepository;
 
 @Repository
@@ -60,7 +62,7 @@ public class RemoteExamItemResponseRepository implements ExamItemResponseReposit
     }
 
     @Override
-    public PageGroup getNextItemGroup(final UUID id, final PageGroupRequest pageGroupRequest) throws ReturnStatusException {
+    public List<OpportunityItem> getNextItemGroup(final UUID id, final PageGroupRequest pageGroupRequest) throws ReturnStatusException {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -69,11 +71,11 @@ public class RemoteExamItemResponseRepository implements ExamItemResponseReposit
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/%s/item", examUrl, id));
 
         try {
-            ResponseEntity<PageGroup> response = restTemplate.exchange(
+            ResponseEntity<List<OpportunityItem>> response = restTemplate.exchange(
               builder.build().toUri(),
               HttpMethod.POST,
               requestHttpEntity,
-              new ParameterizedTypeReference<PageGroup>() {
+              new ParameterizedTypeReference<List<OpportunityItem>>() {
               });
 
             return response.getBody();
