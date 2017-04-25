@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,6 +54,7 @@ public class TestResponseHandler extends TDSHandler
   private static final Logger _logger = LoggerFactory.getLogger (TestResponseHandler.class);
 
   @Autowired
+  @Qualifier("integrationItemScoringService")
   private IItemScoringService _itemScoringService;
 
   @Autowired
