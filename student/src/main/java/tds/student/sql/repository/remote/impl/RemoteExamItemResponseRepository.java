@@ -9,13 +9,18 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.List;
+import java.util.UUID;
+
 import tds.common.web.resources.NoContentResponseResource;
 import tds.student.sql.data.OpportunityInstance;
+import tds.student.sql.data.OpportunityItem;
 import tds.student.sql.repository.remote.ExamItemResponseRepository;
 
 @Repository
@@ -49,6 +54,27 @@ public class RemoteExamItemResponseRepository implements ExamItemResponseReposit
                 requestHttpEntity,
                 new ParameterizedTypeReference<NoContentResponseResource>() {
                 });
+        } catch (RestClientException rce) {
+            throw new ReturnStatusException(rce);
+        }
+    }
+
+    @Override
+    public List<OpportunityItem> createNextItemGroup(final UUID id, final int lastPageRequested, final int lastItemPosition) throws ReturnStatusException {
+        UriComponentsBuilder builder = UriComponentsBuilder
+          .fromHttpUrl(String.format("%s/%s/item", examUrl, id))
+          .queryParam("lastPagePosition", lastPageRequested)
+          .queryParam("lastItemPosition", lastItemPosition);
+
+        try {
+            ResponseEntity<List<OpportunityItem>> response = restTemplate.exchange(
+              builder.build().toUri(),
+              HttpMethod.POST,
+              null,
+              new ParameterizedTypeReference<List<OpportunityItem>>() {
+              });
+
+            return response.getBody();
         } catch (RestClientException rce) {
             throw new ReturnStatusException(rce);
         }

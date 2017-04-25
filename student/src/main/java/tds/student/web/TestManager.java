@@ -37,7 +37,7 @@ public class TestManager
   {
     _testOpp = testOpp;
     _responseService = SpringApplicationContext.getBean ("integrationResponseService", IResponseService.class);
-    _adaptiveService = SpringApplicationContext.getBean (IAdaptiveService.class);
+    _adaptiveService = SpringApplicationContext.getBean ("integrationAdaptiveService", IAdaptiveService.class);
   }
 
   private PageList         _pageList     = null;
