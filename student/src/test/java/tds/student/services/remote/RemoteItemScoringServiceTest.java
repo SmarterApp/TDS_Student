@@ -49,12 +49,12 @@ public class RemoteItemScoringServiceTest {
 
         verify(mockLegacyItemScoringService).updateResponses(eq(oppInstance), eq(responsesUpdated), eq(pageDuration));
         verify(mockRepository).updateResponses(
-            eq(oppInstance.getExamId()),
-            eq(oppInstance.getSessionKey()),
-            eq(oppInstance.getExamBrowserKey()),
-            eq(oppInstance.getExamClientName()),
-            eq(pageDuration),
-            eq(responsesUpdated));
+            oppInstance.getExamId(),
+            oppInstance.getSessionKey(),
+            oppInstance.getExamBrowserKey(),
+            oppInstance.getExamClientName(),
+            pageDuration,
+            responsesUpdated);
     }
 
     @Test
@@ -81,12 +81,12 @@ public class RemoteItemScoringServiceTest {
 
         verifyZeroInteractions(mockLegacyItemScoringService);
         verify(mockRepository).updateResponses(
-            eq(oppInstance.getExamId()),
-            eq(oppInstance.getSessionKey()),
-            eq(oppInstance.getExamBrowserKey()),
-            eq(oppInstance.getExamClientName()),
-            eq(pageDuration),
-            eq(responsesUpdated));
+            oppInstance.getExamId(),
+            oppInstance.getSessionKey(),
+            oppInstance.getExamBrowserKey(),
+            oppInstance.getExamClientName(),
+            pageDuration,
+            responsesUpdated);
     }
 
     @Test(expected = IllegalStateException.class)
