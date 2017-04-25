@@ -42,24 +42,25 @@ public class RemoteAdaptiveService implements IAdaptiveService {
 
   @Override
   public PageGroup createNextItemGroup(final TestOpportunity testOpportunity, final int lastPage, final int lastPosition) throws ReturnStatusException {
-    PageGroup legacyPageGroup = null;
+    PageGroup pageGroup = null;
 
     if(legacyCallsEnabled) {
-      legacyPageGroup = legacyAdaptiveService.createNextItemGroup(testOpportunity, lastPage, lastPosition);
+      pageGroup = legacyAdaptiveService.createNextItemGroup(testOpportunity, lastPage, lastPosition);
     }
 
     if(!remoteExamCallsEnabled) {
-      return legacyPageGroup;
+      return pageGroup;
     }
 
     PageGroupRequest pageRequest = new PageGroupRequest(lastPage, lastPosition, false);
     List<OpportunityItem> items = examItemResponseRepository.getNextItemGroup(testOpportunity.getOppInstance().getExamId(), pageRequest);
 
     PageGroup remotePageGroup = new PageGroup(items.get(0));
+
     for(OpportunityItem item : items) {
       remotePageGroup.add(new ItemResponse(item));
     }
 
-    return legacyPageGroup;
+    return pageGroup;
   }
 }
