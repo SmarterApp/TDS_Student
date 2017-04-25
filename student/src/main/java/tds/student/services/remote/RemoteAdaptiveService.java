@@ -61,6 +61,12 @@ public class RemoteAdaptiveService implements IAdaptiveService {
       remotePageGroup.add(response);
     }
 
-    return remotePageGroup;
+    if(!legacyCallsEnabled) {
+      return remotePageGroup;
+    }
+
+    //TODO - Since this data is used to insert records into the DB we will need to manually move the code over to use
+    //the new page group.  Returning the legacy allows us to do data checking.
+    return pageGroup;
   }
 }

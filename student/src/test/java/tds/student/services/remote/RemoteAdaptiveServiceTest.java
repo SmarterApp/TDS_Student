@@ -71,7 +71,7 @@ public class RemoteAdaptiveServiceTest {
     verify(legacyAdaptiveService).createNextItemGroup(testOpportunity, 1, 1);
     verify(responseRepository).createNextItemGroup(examId, 1, 1);
 
-    assertThat(pageGroup).hasSize(1);
+    assertThat(pageGroup).isEqualTo(legacyPageGroup);
   }
 
   @Test
