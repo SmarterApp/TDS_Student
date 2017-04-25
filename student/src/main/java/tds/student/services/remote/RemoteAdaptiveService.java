@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import tds.exam.item.PageGroupRequest;
 import tds.student.services.abstractions.IAdaptiveService;
 import tds.student.services.data.ItemResponse;
 import tds.student.services.data.PageGroup;
@@ -44,20 +43,19 @@ public class RemoteAdaptiveService implements IAdaptiveService {
   public PageGroup createNextItemGroup(final TestOpportunity testOpportunity, final int lastPage, final int lastPosition) throws ReturnStatusException {
     PageGroup pageGroup = null;
 
-    if(legacyCallsEnabled) {
+    if (legacyCallsEnabled) {
       pageGroup = legacyAdaptiveService.createNextItemGroup(testOpportunity, lastPage, lastPosition);
     }
 
-    if(!remoteExamCallsEnabled) {
+    if (!remoteExamCallsEnabled) {
       return pageGroup;
     }
 
-    PageGroupRequest pageRequest = new PageGroupRequest(lastPage, lastPosition, false);
-    List<OpportunityItem> items = examItemResponseRepository.getNextItemGroup(testOpportunity.getOppInstance().getExamId(), pageRequest);
+    List<OpportunityItem> items = examItemResponseRepository.createNextItemGroup(testOpportunity.getOppInstance().getExamId(), lastPage, lastPosition);
 
     PageGroup remotePageGroup = new PageGroup(items.get(0));
 
-    for(OpportunityItem item : items) {
+    for (OpportunityItem item : items) {
       ItemResponse response = new ItemResponse(item);
       response.setPrefetched(true);
       remotePageGroup.add(response);

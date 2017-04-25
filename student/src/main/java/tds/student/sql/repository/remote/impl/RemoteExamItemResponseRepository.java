@@ -19,8 +19,6 @@ import java.util.List;
 import java.util.UUID;
 
 import tds.common.web.resources.NoContentResponseResource;
-import tds.exam.item.PageGroupRequest;
-import tds.student.services.data.PageGroup;
 import tds.student.sql.data.OpportunityInstance;
 import tds.student.sql.data.OpportunityItem;
 import tds.student.sql.repository.remote.ExamItemResponseRepository;
@@ -62,19 +60,17 @@ public class RemoteExamItemResponseRepository implements ExamItemResponseReposit
     }
 
     @Override
-    public List<OpportunityItem> getNextItemGroup(final UUID id, final PageGroupRequest pageGroupRequest) throws ReturnStatusException {
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<?> requestHttpEntity = new HttpEntity<>(pageGroupRequest, headers);
-
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/%s/item", examUrl, id));
+    public List<OpportunityItem> createNextItemGroup(final UUID id, final int lastPageRequested, final int lastItemPosition) throws ReturnStatusException {
+        UriComponentsBuilder builder = UriComponentsBuilder
+          .fromHttpUrl(String.format("%s/%s/item", examUrl, id))
+          .queryParam("lastPagePosition", lastPageRequested)
+          .queryParam("lastItemPosition", lastItemPosition);
 
         try {
             ResponseEntity<List<OpportunityItem>> response = restTemplate.exchange(
               builder.build().toUri(),
               HttpMethod.POST,
-              requestHttpEntity,
+              null,
               new ParameterizedTypeReference<List<OpportunityItem>>() {
               });
 

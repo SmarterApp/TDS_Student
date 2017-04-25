@@ -5,7 +5,6 @@ import TDS.Shared.Exceptions.ReturnStatusException;
 import java.util.List;
 import java.util.UUID;
 
-import tds.exam.item.PageGroupRequest;
 import tds.student.sql.data.OpportunityInstance;
 import tds.student.sql.data.OpportunityItem;
 
@@ -26,10 +25,11 @@ public interface ExamItemResponseRepository {
   /**
    * Gets the next item group
    *
-   * @param id               the exam id
-   * @param pageGroupRequest the {@link tds.exam.item.PageGroupRequest}
+   * @param examId           the exam id
+   * @param lastPagePosition the last page position fetched
+   * @param lastItemPosition the last item position fetched
    * @return List of {@link tds.student.sql.data.OpportunityItem} which compose the group
    * @throws ReturnStatusException if there is any issue
    */
-  List<OpportunityItem> getNextItemGroup(UUID id, PageGroupRequest pageGroupRequest) throws ReturnStatusException;
+  List<OpportunityItem> createNextItemGroup(final UUID examId, final int lastPagePosition, final int lastItemPosition) throws ReturnStatusException;
 }
