@@ -58,9 +58,11 @@ public class RemoteAdaptiveService implements IAdaptiveService {
     PageGroup remotePageGroup = new PageGroup(items.get(0));
 
     for(OpportunityItem item : items) {
-      remotePageGroup.add(new ItemResponse(item));
+      ItemResponse response = new ItemResponse(item);
+      response.setPrefetched(true);
+      remotePageGroup.add(response);
     }
 
-    return pageGroup;
+    return remotePageGroup;
   }
 }
