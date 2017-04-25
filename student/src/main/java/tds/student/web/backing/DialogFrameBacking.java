@@ -23,12 +23,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.web.util.UriComponentsBuilder;
 import tds.student.web.StudentContext;
 import tds.student.web.handlers.DialogFrameHandler;
 import AIR.Common.Web.WebHelper;
 import AIR.Common.Web.Session.HttpContext;
 import TDS.Shared.Web.BasePage;
 import TDS.Shared.Web.client.GenericRestAPIClient;
+
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 /**
  * @author mpatel This Managed Bean is used as integration with the
@@ -38,6 +41,10 @@ import TDS.Shared.Web.client.GenericRestAPIClient;
 public class DialogFrameBacking extends BasePage
 {
   private static Logger _logger             = LoggerFactory.getLogger (DialogFrameBacking.class);
+
+  private final static String X_FORWARDED_HOST = "x-forwarded-host";
+  private final static String X_FORWARDED_PORT = "x-forwarded-port";
+  private final static String X_FORWARDED_PROTOCOL = "x-forwarded-proto";
 
   private String        diaglogFrameContent = "";
 
@@ -67,18 +74,29 @@ public class DialogFrameBacking extends BasePage
   private String getContent (long bankKey, long itemKey) {
     try {
       HttpServletRequest request = HttpContext.getCurrentContext ().getRequest ();
-      StringBuilder urlSB = new StringBuilder ();
-      urlSB.append (request.getRequestURL ().toString ().replace ("DialogFrame.aspx", "API/DialogFrame.axd/getContent"));
-      urlSB.append ("?language=").append (StudentContext.getLanguage ());
-      urlSB.append ("&bankKey=").append (bankKey);
-      urlSB.append ("&itemKey=").append (itemKey);
+      final UriComponentsBuilder uriBuilder = UriComponentsBuilder
+          .fromHttpUrl(request.getRequestURL ().toString ().replace ("DialogFrame.aspx", "API/DialogFrame.axd/getContent"))
+          .queryParam("language", StudentContext.getLanguage())
+          .queryParam("bankKey", bankKey)
+          .queryParam("itemKey", itemKey);
+
+      if (isNotBlank(request.getHeader(X_FORWARDED_HOST))) {
+          uriBuilder.host(request.getHeader(X_FORWARDED_HOST));
+      }
+      if (isNotBlank(request.getHeader(X_FORWARDED_PORT))) {
+          uriBuilder.port(Integer.valueOf(request.getHeader(X_FORWARDED_PORT), 10));
+      }
+      if (isNotBlank(request.getHeader(X_FORWARDED_PROTOCOL))) {
+          uriBuilder.scheme(request.getHeader(X_FORWARDED_PROTOCOL));
+      }
+
       if (_logger.isDebugEnabled ()) {
-         _logger.debug ("REST API URL for getting Dialog Frame Content :: " + urlSB.toString ());
+         _logger.debug ("REST API URL for getting Dialog Frame Content :: " + uriBuilder.build().toUriString());
       }
       HttpHeaders headers = new HttpHeaders();
       headers.setAccept(Arrays.asList(MediaType.APPLICATION_XML));
       HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
-      GenericRestAPIClient restApiClient = new GenericRestAPIClient(urlSB.toString ());
+      GenericRestAPIClient restApiClient = new GenericRestAPIClient(uriBuilder.build().toUriString());
       ResponseEntity<String> responseEntity = restApiClient.exchange(HttpMethod.GET, httpEntity, String.class);
 
       if (responseEntity.getStatusCode () != HttpStatus.OK) {
