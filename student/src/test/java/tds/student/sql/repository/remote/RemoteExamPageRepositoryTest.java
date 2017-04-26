@@ -57,19 +57,29 @@ public class RemoteExamPageRepositoryTest {
 
         final ExamItem firstExamItem = new ExamItem.Builder(UUID.randomUUID())
             .withExamPageId(firstExamPageId)
+            .withItemKey("itemKey")
+            .withItemFilePath("filePath")
+            .withItemType("itemType")
             .build();
         final ExamItem secondExamItem = new ExamItem.Builder(UUID.randomUUID())
             .withExamPageId(secondExamPageId)
+            .withItemKey("itemKey2")
+            .withItemFilePath("filePath2")
+            .withItemType("itemType2")
             .build();
 
         final ExamPage firstExamPage = new ExamPage.Builder()
             .withId(firstExamPageId)
             .withExamId(examId)
+            .withSegmentKey("segmentKey")
+            .withItemGroupKey("itemGroup")
             .withExamItems(newArrayList(firstExamItem))
             .build();
         final ExamPage secondExamPage = new ExamPage.Builder()
             .withId(secondExamPageId)
             .withExamId(examId)
+            .withSegmentKey("segmentKey2")
+            .withItemGroupKey("itemGroup2")
             .withExamItems(newArrayList(secondExamItem))
             .build();
 
@@ -93,10 +103,15 @@ public class RemoteExamPageRepositoryTest {
 
         final ExamItem examItem = new ExamItem.Builder(UUID.randomUUID())
             .withExamPageId(examPageId)
+            .withItemKey("itemKey")
+            .withItemFilePath("filePath")
+            .withItemType("itemType")
             .build();
         final ExamPage examPage = new ExamPage.Builder()
             .withId(examPageId)
             .withExamId(examId)
+            .withSegmentKey("segmentKey")
+            .withItemGroupKey("itemGroup")
             .withExamItems(newArrayList(examItem))
             .build();
         final Response<ExamPage> examPageResponse = new Response<>(examPage);

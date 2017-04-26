@@ -8,14 +8,18 @@
  ******************************************************************************/
 package tds.student.services;
 
-import java.sql.SQLException;
-
+import AIR.Common.DB.AbstractDAO;
+import AIR.Common.DB.SQLConnection;
+import AIR.Common.Helpers._Ref;
+import TDS.Shared.Exceptions.ReturnStatusException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import java.sql.SQLException;
 
 import tds.itemselection.api.IAIROnline;
 import tds.itemselection.base.ItemGroup;
@@ -27,11 +31,6 @@ import tds.student.services.data.PageGroup;
 import tds.student.services.data.TestOpportunity;
 import tds.student.sql.data.AdaptiveGroup;
 import tds.student.sql.data.AdaptiveItem;
-import tds.student.sql.data.OpportunityInstance;
-import AIR.Common.DB.AbstractDAO;
-import AIR.Common.DB.SQLConnection;
-import AIR.Common.Helpers._Ref;
-import TDS.Shared.Exceptions.ReturnStatusException;
 
 /**
  * @author temp_rreddy
@@ -39,6 +38,7 @@ import TDS.Shared.Exceptions.ReturnStatusException;
  */
 @Component
 @Scope ("prototype")
+@Qualifier("legacyAdaptiveService")
 public class AdaptiveService extends AbstractDAO implements IAdaptiveService
 {
 
