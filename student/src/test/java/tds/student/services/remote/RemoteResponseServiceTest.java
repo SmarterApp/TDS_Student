@@ -84,6 +84,8 @@ public class RemoteResponseServiceTest {
 
     pageGroup = PageGroup.Create(newArrayList(opportunityItem));
 
+    UUID pageID = UUID.randomUUID();
+
     // Build test data representing response from the RemoteExamPageRepository
     ExamItemResponse examItemResponse = new ExamItemResponse.Builder()
         .withResponse(opportunityItem.getValue())
@@ -91,16 +93,22 @@ public class RemoteResponseServiceTest {
         .build();
 
     ExamItem examItem = new ExamItem.Builder(UUID.randomUUID())
+        .withItemKey("itemKey")
+        .withItemType("itemType")
+        .withItemFilePath("filePath")
         .withAssessmentItemBankKey(opportunityItem.getBankKey())
         .withAssessmentItemKey(opportunityItem.getItemKey())
         .withPosition(opportunityItem.getPosition())
         .withResponse(examItemResponse)
         .withCreatedAt(Instant.now())
+        .withExamPageId(pageID)
         .withStimulusFilePath(opportunityItem.getStimulusFile())
         .withRequired(true)
         .build();
 
     examPage = new ExamPage.Builder()
+        .withId(pageID)
+        .withExamId(UUID.randomUUID())
         .withPagePosition(opportunityItem.getPage())
         .withExamItems(newArrayList(examItem))
         .withCreatedAt(Instant.now())
