@@ -51,19 +51,19 @@ public class RemoteAdaptiveService implements IAdaptiveService {
       return pageGroup;
     }
 
-//    List<OpportunityItem> items = examItemResponseRepository.createNextItemGroup(testOpportunity.getOppInstance().getExamId(), lastPage, lastPosition);
-//
-//    PageGroup remotePageGroup = new PageGroup(items.get(0));
-//
-//    for (OpportunityItem item : items) {
-//      ItemResponse response = new ItemResponse(item);
-//      response.setPrefetched(true);
-//      remotePageGroup.add(response);
-//    }
-//
-//    if(!legacyCallsEnabled) {
-//      return remotePageGroup;
-//    }
+    List<OpportunityItem> items = examItemResponseRepository.createNextItemGroup(testOpportunity.getOppInstance().getExamId(), lastPage, lastPosition);
+
+    PageGroup remotePageGroup = new PageGroup(items.get(0));
+
+    for (OpportunityItem item : items) {
+      ItemResponse response = new ItemResponse(item);
+      response.setPrefetched(true);
+      remotePageGroup.add(response);
+    }
+
+    if(!legacyCallsEnabled) {
+      return remotePageGroup;
+    }
 
     //TODO - Since this data is used to insert records into the DB we will need to manually move the code over to use
     //the new page group.  Returning the legacy allows us to do data checking.
