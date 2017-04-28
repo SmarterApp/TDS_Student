@@ -31,12 +31,12 @@ import tds.exam.ApproveAccommodationsRequest;
 import tds.exam.Exam;
 import tds.exam.ExamAccommodation;
 import tds.exam.ExamApproval;
+import tds.exam.ExamAssessmentMetadata;
 import tds.exam.ExamConfiguration;
 import tds.exam.ExamPrintRequest;
 import tds.exam.ExamSegment;
 import tds.exam.ExamStatusCode;
 import tds.exam.ExamStatusRequest;
-import tds.exam.ExamStatusStage;
 import tds.exam.OpenExamRequest;
 import tds.exam.SegmentApprovalRequest;
 import tds.student.sql.repository.remote.ExamRepository;
@@ -316,5 +316,32 @@ public class RemoteExamRepository implements ExamRepository {
     } catch (RestClientException rce) {
       throw new ReturnStatusException(rce);
     }
+  }
+
+  @Override
+  public List<ExamAssessmentMetadata> findExamAssessmentInfo(final long studentId, final UUID sessionId, final String grade) throws ReturnStatusException {
+    HttpHeaders headers = new HttpHeaders();
+    headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+    headers.setContentType(MediaType.APPLICATION_JSON);
+    HttpEntity<?> requestHttpEntity = new HttpEntity<>(headers);
+    ResponseEntity<Response<List<ExamAssessmentMetadata>>> responseEntity;
+
+    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/metadata", examUrl))
+        .queryParam("studentId", studentId)
+        .queryParam("sessionId", sessionId)
+        .queryParam("grade", grade);
+
+    try {
+      responseEntity = restTemplate.exchange(
+          builder.build().encode().toUri(),
+          HttpMethod.GET,
+          requestHttpEntity,
+          new ParameterizedTypeReference<Response<List<ExamAssessmentMetadata>>>() {
+          });
+    } catch (RestClientException rce) {
+      throw new ReturnStatusException(rce);
+    }
+
+    return responseEntity.getBody().getData().get();
   }
 }

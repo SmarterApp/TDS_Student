@@ -1,9 +1,13 @@
 package tds.student.services.remote;
 
+import TDS.Shared.Browser.BrowserAction;
 import TDS.Shared.Browser.BrowserInfo;
+import TDS.Shared.Browser.BrowserRule;
+import TDS.Shared.Browser.BrowserValidation;
 import TDS.Shared.Data.ReturnStatus;
 import TDS.Shared.Exceptions.ReturnStatusException;
 import com.google.common.base.Optional;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,6 +24,7 @@ import tds.common.Response;
 import tds.common.ValidationError;
 import tds.exam.Exam;
 import tds.exam.ExamApproval;
+import tds.exam.ExamAssessmentMetadata;
 import tds.exam.ExamConfiguration;
 import tds.exam.ExamSegment;
 import tds.exam.ExamStatusCode;
@@ -38,6 +44,7 @@ import tds.student.sql.data.TestSegment;
 import tds.student.sql.data.TestSelection;
 import tds.student.sql.data.TestSession;
 import tds.student.sql.data.Testee;
+import tds.student.sql.repository.ConfigRepository;
 import tds.student.sql.repository.remote.ExamRepository;
 import tds.student.sql.repository.remote.ExamSegmentRepository;
 
@@ -51,6 +58,7 @@ public class RemoteOpportunityService implements IOpportunityService {
   private final ExamRepository examRepository;
   private final ExamSegmentRepository examSegmentRepository;
   private final TestOpportunityExamMapDao testOpportunityExamMapDao;
+  private final ConfigRepository configRepository;
 
   @Autowired
   public RemoteOpportunityService(
@@ -59,7 +67,8 @@ public class RemoteOpportunityService implements IOpportunityService {
     @Value("${tds.exam.legacy.enabled}") final Boolean legacyCallsEnabled,
     final ExamRepository examRepository,
     final ExamSegmentRepository examSegmentRepository,
-    final TestOpportunityExamMapDao testOpportunityExamMapDao) {
+    final TestOpportunityExamMapDao testOpportunityExamMapDao,
+    final ConfigRepository configRepository) {
 
     if (!remoteExamCallsEnabled && !legacyCallsEnabled) {
       throw new IllegalStateException("Remote and legacy calls are both disabled.  Please check progman configuration");
@@ -71,11 +80,24 @@ public class RemoteOpportunityService implements IOpportunityService {
     this.examRepository = examRepository;
     this.testOpportunityExamMapDao = testOpportunityExamMapDao;
     this.examSegmentRepository = examSegmentRepository;
+    this.configRepository = configRepository;
   }
 
   @Override
   public List<TestSelection> getEligibleTests(final Testee testee, final TestSession session, final String grade, final BrowserInfo browserInfo) throws ReturnStatusException {
-    return legacyOpportunityService.getEligibleTests(testee, session, grade, browserInfo);
+    List<TestSelection> testSelections = new ArrayList<>();
+
+    if (isLegacyCallsEnabled) {
+      testSelections = legacyOpportunityService.getEligibleTests(testee, session, grade, browserInfo);
+    }
+
+    if (!isRemoteExamCallsEnabled) {
+      return testSelections;
+    }
+
+    List<ExamAssessmentMetadata> assessmentMetadata = examRepository.findExamAssessmentInfo(testee.getKey(), session.getKey(), grade);
+
+    return mapAssessmentMetadataToTestSelections(assessmentMetadata, browserInfo);
   }
 
   @Override
@@ -379,5 +401,71 @@ public class RemoteOpportunityService implements IOpportunityService {
     }
 
     return opportunitySegments;
+  }
+
+  private List<TestSelection> mapAssessmentMetadataToTestSelections(final List<ExamAssessmentMetadata> assessmenMetadata,
+                                                                    final BrowserInfo browserInfo) throws ReturnStatusException {
+    List<TestSelection> selections = new ArrayList<>();
+
+    for (ExamAssessmentMetadata metadata : assessmenMetadata) {
+      TestSelection selection = new TestSelection();
+      selection.SetReturnStatus(new ReturnStatus(metadata.getStatus(), metadata.getDeniedReason()));
+      selection.setTestKey(metadata.getAssessmentKey());
+      selection.setTestID(metadata.getAssessmentId());
+      selection.setOpportunity(metadata.getAttempt());
+      selection.setMode("online");
+      selection.setDisplayName(metadata.getAssessmentLabel());
+      selection.setMaxOpportunities(metadata.getMaxAttempts());
+      selection.setSortOrder(0); // not used by UI
+      selection.setSubject(metadata.getSubject());
+      selection.setGrade(metadata.getGrade());
+      //TODO: Determine if we need this
+//      selection.getRequirements ().lookup (getTdsSettings ().getClientName (), testSelection);
+
+      validateBrowserInfo(browserInfo, selection);
+
+      selections.add(selection);
+    }
+
+    return selections;
+  }
+
+  private void validateBrowserInfo(final BrowserInfo browserInfo, final TestSelection selection) throws ReturnStatusException {
+    if (browserInfo != null) {
+      if (selection.getTestStatus() != TestSelection.Status.Disabled && selection.getTestStatus() != TestSelection.Status.Hidden) {
+        BrowserValidation browserValidation = new BrowserValidation();
+
+        for (BrowserRule rule : configRepository.getBrowserTestRules(selection.getTestID())) {
+          browserValidation.AddRule (rule);
+        }
+
+        if (browserValidation.GetRules() != null && !browserValidation.GetRules().isEmpty()) {
+          // get the rule that matches our current browser info
+          BrowserRule browserRule = browserValidation.FindRule(browserInfo);
+
+          if (browserRule == null || browserRule.getAction() == BrowserAction.Deny) {
+            selection.setTestStatus(TestSelection.Status.Disabled);
+
+            if (browserRule == null || StringUtils.isEmpty (browserRule.getMessageKey ()))
+            {
+              selection.setReasonKey("BrowserDeniedTest");
+            }
+            else
+            {
+              selection.setReasonKey(browserRule.getMessageKey ());
+            }
+          } else if (browserRule.getAction() == BrowserAction.Warn) {
+            if (StringUtils.isEmpty (browserRule.getMessageKey ()))
+            {
+              selection.setWarningKey ( "BrowserWarnTest");
+            }
+            else
+            {
+              selection.setWarningKey(browserRule.getMessageKey());
+            }
+          }
+        }
+      }
+    }
   }
 }
