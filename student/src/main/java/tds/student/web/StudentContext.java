@@ -164,12 +164,19 @@ public class StudentContext
     if (oppInfo.getBrowserKey() != null) {
       StudentCookie.setCookieData ("O_BKEY", oppInfo.getBrowserKey ().toString ());
     }
-
-    TDSIdentity.getCurrentTDSIdentity().setAuthCookieValue(EXAM_CLIENT_NAME, oppInfo.getExamClientName());
-    TDSIdentity.getCurrentTDSIdentity().setAuthCookieValue(EXAM_ID_COOKIE_KEY, oppInfo.getExamId().toString());
+    if(oppInfo.getExamClientName() != null) {
+      TDSIdentity.getCurrentTDSIdentity().setAuthCookieValue(EXAM_CLIENT_NAME, oppInfo.getExamClientName());
+    }
+    if(oppInfo.getExamId() != null) {
+      TDSIdentity.getCurrentTDSIdentity().setAuthCookieValue(EXAM_ID_COOKIE_KEY, oppInfo.getExamId().toString());
+    }
     TDSIdentity.getCurrentTDSIdentity ().saveAuthCookie ();
-    StudentCookie.setCookieData(EXAM_BROWSER_KEY, oppInfo.getExamBrowserKey().toString());
-    StudentCookie.setCookieData(EXAM_BROWSER_USER_AGENT, oppInfo.getBrowerUserAgent());
+    if(oppInfo.getExamBrowserKey() != null) {
+      StudentCookie.setCookieData(EXAM_BROWSER_KEY, oppInfo.getExamBrowserKey().toString());
+    }
+    if(oppInfo.getBrowerUserAgent() != null) {
+      StudentCookie.setCookieData(EXAM_BROWSER_USER_AGENT, oppInfo.getBrowerUserAgent());
+    }
   }
 
   // / <summary>
