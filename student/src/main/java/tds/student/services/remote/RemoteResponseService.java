@@ -167,8 +167,11 @@ public class RemoteResponseService implements IResponseService {
         opportunityItem.setFormat("FORMAT");
 
         // OpportunityItem#isVisible (mapped to an OpportunityItem in ResponseRepository#readOpportunityItems @ line
-        // 297) never seems to be used (which is why it was not ported to the exam database), so has been omitted from
-        // this mapping.
+        // 297) never seems to be used (which is why it was not ported to the exam database).  The source of the
+        // #isVisible property is the testeeresponse.isinactive column, which is always 0.  The only code that changes
+        // testeeresponse.isinactive is in the _removeunanswered stored procedure, which sets isinactive = 0.  Due to
+        // all this, the OpportunityItem#isVisible will always be set to "true".
+        opportunityItem.setIsVisible(true);
 
         if (item.getResponse().isPresent()) {
           ExamItemResponse itemResponse = item.getResponse().get();

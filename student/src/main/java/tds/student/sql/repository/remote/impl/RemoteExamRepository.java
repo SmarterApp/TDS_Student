@@ -18,6 +18,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
@@ -39,6 +40,7 @@ import tds.exam.ExamStatusRequest;
 import tds.exam.ExamStatusStage;
 import tds.exam.OpenExamRequest;
 import tds.exam.SegmentApprovalRequest;
+import tds.student.sql.data.OpportunityInstance;
 import tds.student.sql.repository.remote.ExamRepository;
 
 @Repository
@@ -248,6 +250,30 @@ public class RemoteExamRepository implements ExamRepository {
     }
 
     return response;
+  }
+
+  @Override
+  public Optional<ValidationError> reviewExam(final OpportunityInstance opportunityInstance) throws ReturnStatusException {
+    UriComponents uriComponentsBuilder = UriComponentsBuilder.fromUriString("{examUrl}/{examId}/review")
+        .queryParam("sessionId", opportunityInstance.getSessionKey())
+        .queryParam("browserId", opportunityInstance.getExamBrowserKey())
+        .buildAndExpand(examUrl, opportunityInstance.getExamId());
+
+    try {
+      restTemplate.put(uriComponentsBuilder.encode().toUri(), null);
+    } catch (HttpClientErrorException hce) {
+      // An unprocessable entity response means that a validation error was returned by the exam service.  Extract the
+      // message and return it as a ValidationError to the caller.
+      if (hce.getStatusCode().equals(HttpStatus.UNPROCESSABLE_ENTITY)) {
+        return Optional.of(new ValidationError("code", hce.getMessage()));
+      }
+    } catch (RestClientException rce) {
+      throw new ReturnStatusException(rce);
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+
+    return Optional.absent();
   }
 
   @Override
