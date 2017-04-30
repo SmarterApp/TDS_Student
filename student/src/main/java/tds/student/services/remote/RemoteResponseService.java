@@ -4,13 +4,13 @@ import TDS.Shared.Exceptions.ReturnStatusException;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import tds.exam.ExamItem;
 import tds.exam.ExamItemResponse;
@@ -36,7 +36,7 @@ public class RemoteResponseService implements IResponseService {
   private final ExamPageRepository examPageRepository;
 
   @Autowired
-  public RemoteResponseService(final IResponseService legacyResponseService,
+  public RemoteResponseService(final @Qualifier("legacyResponseService") IResponseService legacyResponseService,
                                final @Value("${tds.exam.remote.enabled}") Boolean remoteExamCallsEnabled,
                                final @Value("${tds.exam.legacy.enabled}") Boolean legacyCallsEnabled,
                                final ExamSegmentRepository examSegmentRepository,
@@ -101,18 +101,18 @@ public class RemoteResponseService implements IResponseService {
   }
 
   @Override
-  public boolean isTestComplete(final UUID examId) throws ReturnStatusException {
+  public boolean isTestComplete(OpportunityInstance opportunityInstance) throws ReturnStatusException {
     boolean isComplete = false;
 
     if (isLegacyCallsEnabled) {
-      isComplete = legacyResponseService.isTestComplete(examId);
+      isComplete = legacyResponseService.isTestComplete(opportunityInstance);
     }
 
-//    if (!isRemoteExamCallsEnabled) {
+    if (!isRemoteExamCallsEnabled) {
       return isComplete;
-//    }
+    }
 
-//    return examSegmentRepository.checkSegmentsSatisfied(examId);
+    return examSegmentRepository.checkSegmentsSatisfied(opportunityInstance.getExamId());
   }
 
   @Override
