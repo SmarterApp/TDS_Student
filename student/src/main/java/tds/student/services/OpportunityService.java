@@ -49,7 +49,6 @@ import org.springframework.stereotype.Service;
  * @author temp_rreddy
  * 
  */
-@Component
 @Scope ("prototype")
 @Service("legacyOpportunityService")
 public class OpportunityService implements IOpportunityService

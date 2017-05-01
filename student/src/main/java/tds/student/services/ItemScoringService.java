@@ -39,6 +39,7 @@ import AIR.Common.Web.WebValueCollection;
 import AIR.Common.Web.WebValueCollectionCorrect;
 import TDS.Shared.Data.ReturnStatus;
 import TDS.Shared.Exceptions.ReturnStatusException;
+import org.springframework.stereotype.Service;
 import tds.itemrenderer.data.AccLookup;
 import tds.itemrenderer.data.IITSDocument;
 import tds.itemrenderer.data.ITSMachineRubric;
@@ -69,7 +70,7 @@ import tds.student.sql.data.OpportunityInstance;
 import tds.student.sql.singletons.ClientSingleton;
 import tds.student.tdslogger.TDSLogger;
 
-@Component
+@Service("legacyItemScoringService")
 @Scope ("prototype")
 public class ItemScoringService implements IItemScoringService
 {

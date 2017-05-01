@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,6 +49,7 @@ public class ItemScoringCallbackHandler extends TDSHandler
   private static final Logger _logger = LoggerFactory.getLogger (ItemScoringCallbackHandler.class);
 
   @Autowired
+  @Qualifier("legacyItemScoringService")
   private IItemScoringService _itemScoringService;
 
   /**
