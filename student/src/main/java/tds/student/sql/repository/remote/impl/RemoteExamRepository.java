@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -338,7 +339,11 @@ public class RemoteExamRepository implements ExamRepository {
           requestHttpEntity,
           new ParameterizedTypeReference<Response<List<ExamAssessmentMetadata>>>() {
           });
-    } catch (RestClientException rce) {
+    } catch (final HttpStatusCodeException e) {
+      final ReturnStatusException statusException = new ReturnStatusException("Failed to find assessment info: " + e.getResponseBodyAsString());
+      statusException.getReturnStatus().setHttpStatusCode(500);
+      throw statusException;
+    } catch (final RestClientException rce) {
       throw new ReturnStatusException(rce);
     }
 

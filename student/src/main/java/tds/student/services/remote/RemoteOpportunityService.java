@@ -419,8 +419,6 @@ public class RemoteOpportunityService implements IOpportunityService {
       selection.setSortOrder(0); // not used by UI
       selection.setSubject(metadata.getSubject());
       selection.setGrade(metadata.getGrade());
-      //TODO: Determine if we need this
-//      selection.getRequirements ().lookup (getTdsSettings ().getClientName (), testSelection);
 
       validateBrowserInfo(browserInfo, selection);
 
@@ -431,39 +429,42 @@ public class RemoteOpportunityService implements IOpportunityService {
   }
 
   private void validateBrowserInfo(final BrowserInfo browserInfo, final TestSelection selection) throws ReturnStatusException {
-    if (browserInfo != null) {
-      if (selection.getTestStatus() != TestSelection.Status.Disabled && selection.getTestStatus() != TestSelection.Status.Hidden) {
-        BrowserValidation browserValidation = new BrowserValidation();
 
-        for (BrowserRule rule : configRepository.getBrowserTestRules(selection.getTestID())) {
-          browserValidation.AddRule (rule);
+    if (browserInfo == null
+        || selection.getTestStatus() == TestSelection.Status.Disabled
+        || selection.getTestStatus() == TestSelection.Status.Hidden) {
+      return;
+    }
+
+    BrowserValidation browserValidation = new BrowserValidation();
+
+    for (BrowserRule rule : configRepository.getBrowserTestRules(selection.getTestID())) {
+      browserValidation.AddRule (rule);
+    }
+
+    if (browserValidation.GetRules() != null && !browserValidation.GetRules().isEmpty()) {
+      // get the rule that matches our current browser info
+      BrowserRule browserRule = browserValidation.FindRule(browserInfo);
+
+      if (browserRule == null || browserRule.getAction() == BrowserAction.Deny) {
+        selection.setTestStatus(TestSelection.Status.Disabled);
+
+        if (browserRule == null || StringUtils.isEmpty (browserRule.getMessageKey ()))
+        {
+          selection.setReasonKey("BrowserDeniedTest");
         }
-
-        if (browserValidation.GetRules() != null && !browserValidation.GetRules().isEmpty()) {
-          // get the rule that matches our current browser info
-          BrowserRule browserRule = browserValidation.FindRule(browserInfo);
-
-          if (browserRule == null || browserRule.getAction() == BrowserAction.Deny) {
-            selection.setTestStatus(TestSelection.Status.Disabled);
-
-            if (browserRule == null || StringUtils.isEmpty (browserRule.getMessageKey ()))
-            {
-              selection.setReasonKey("BrowserDeniedTest");
-            }
-            else
-            {
-              selection.setReasonKey(browserRule.getMessageKey ());
-            }
-          } else if (browserRule.getAction() == BrowserAction.Warn) {
-            if (StringUtils.isEmpty (browserRule.getMessageKey ()))
-            {
-              selection.setWarningKey ( "BrowserWarnTest");
-            }
-            else
-            {
-              selection.setWarningKey(browserRule.getMessageKey());
-            }
-          }
+        else
+        {
+          selection.setReasonKey(browserRule.getMessageKey ());
+        }
+      } else if (browserRule.getAction() == BrowserAction.Warn) {
+        if (StringUtils.isEmpty (browserRule.getMessageKey ()))
+        {
+          selection.setWarningKey ( "BrowserWarnTest");
+        }
+        else
+        {
+          selection.setWarningKey(browserRule.getMessageKey());
         }
       }
     }
