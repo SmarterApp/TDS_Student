@@ -204,44 +204,6 @@ public class ResponseServiceTest extends AbstractTest
   // Sucess Test Case
   @Test
   @Ignore("Never actually implemented")
-  public void testisTestComplete () throws SQLException, ReturnStatusException {
-    try {
-      UUID uuid = null;
-      boolean pageGroup = responseService.isTestComplete (uuid);
-      Assert.assertTrue (pageGroup);
-    } catch (ReturnStatusException exp) {
-      ReturnStatus returnStatus = exp.getReturnStatus ();
-      _logger.error ("Status: " + returnStatus.getStatus ());
-      _logger.error ("Reason: " + returnStatus.getReason ());
-      _logger.error (exp.getMessage ());
-    } catch (Exception exp) {
-      exp.printStackTrace ();
-      _logger.error (exp.getMessage ());
-    }
-  }
-
-  // Failure Test Case
-  @Test
-  @Ignore("Never actually implemented")
-  public void testisTestCompleteFailure () throws SQLException, ReturnStatusException {
-    try {
-      UUID uuid = null;
-      boolean pageGroup = responseService.isTestComplete (uuid);
-      Assert.assertFalse (pageGroup);
-    } catch (ReturnStatusException exp) {
-      ReturnStatus returnStatus = exp.getReturnStatus ();
-      _logger.error ("Status: " + returnStatus.getStatus ());
-      _logger.error ("Reason: " + returnStatus.getReason ());
-      _logger.error (exp.getMessage ());
-    } catch (Exception exp) {
-      exp.printStackTrace ();
-      _logger.error (exp.getMessage ());
-    }
-  }
-
-  // Sucess Test Case
-  @Test
-  @Ignore("Never actually implemented")
   public void testremoveResponse () throws SQLException, ReturnStatusException {
     try {
       OpportunityInstance oppInstance = null;

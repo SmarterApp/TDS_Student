@@ -12,6 +12,7 @@ import tds.exam.ApproveAccommodationsRequest;
 import tds.exam.Exam;
 import tds.exam.ExamAccommodation;
 import tds.exam.ExamApproval;
+import tds.exam.ExamAssessmentMetadata;
 import tds.exam.ExamConfiguration;
 import tds.exam.ExamPrintRequest;
 import tds.exam.ExamSegment;
@@ -122,4 +123,14 @@ public interface ExamRepository {
    */
   void waitForSegmentApproval(final UUID examId, final SegmentApprovalRequest segmentApprovalRequest) throws ReturnStatusException;
 
+  /**
+   * Finds the list of exam assessments available for a student and session.
+   *
+   * @param studentId  The id of the student to fetch {@link tds.exam.ExamAssessmentMetadata}s for
+   * @param sessionId  The id current session
+   * @param grade      The assessment grades to fetch
+   * @return A list of {@link tds.exam.ExamAssessmentMetadata}, containing various metadata pertaining to the assessment and exams.
+   * @throws TDS.Shared.Exceptions.ReturnStatusException
+   */
+  List<ExamAssessmentMetadata> findExamAssessmentInfo(final long studentId, final UUID sessionId, final String grade) throws ReturnStatusException;
 }
