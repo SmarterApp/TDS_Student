@@ -1,8 +1,12 @@
 package tds.student.services.remote;
 
 import TDS.Shared.Exceptions.ReturnStatusException;
+import com.google.common.base.Optional;
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +32,8 @@ import tds.student.sql.repository.remote.ExamSegmentRepository;
 @Service("integrationResponseService")
 @Scope("prototype")
 public class RemoteResponseService implements IResponseService {
+  private static final Logger LOG = LoggerFactory.getLogger(RemoteResponseService.class);
+
   private final boolean isRemoteExamCallsEnabled;
   private final boolean isLegacyCallsEnabled;
   private final IResponseService legacyResponseService;
@@ -68,14 +74,13 @@ public class RemoteResponseService implements IResponseService {
       pageList = legacyResponseService.getOpportunityItems(oppInstance, validate);
     }
 
-    // TODO: Add this code back in when items/pages can be fetched from the exam service
-//    if (!isRemoteExamCallsEnabled) {
+    if (!isRemoteExamCallsEnabled) {
       return pageList;
-//    }
+    }
 
-//    List<ExamPage> examPagesWithItems = examPageRepository.findAllPagesWithItems(oppInstance);
-//
-//    return PageList.Create(convertExamPagesToOpportunityItems(examPagesWithItems.toArray(new ExamPage[examPagesWithItems.size()])));
+    List<ExamPage> examPagesWithItems = examPageRepository.findAllPagesWithItems(oppInstance);
+
+    return PageList.Create(convertExamPagesToOpportunityItems(examPagesWithItems.toArray(new ExamPage[examPagesWithItems.size()])));
   }
 
   @Override
@@ -90,14 +95,19 @@ public class RemoteResponseService implements IResponseService {
       pageGroup = legacyResponseService.getItemGroup(oppInstance, page, groupID, dateCreated, validate);
     }
 
-    // TODO: Add this code back in when items/pages can be fetched from the exam service
-//    if (!isRemoteExamCallsEnabled) {
+    if (!isRemoteExamCallsEnabled) {
       return pageGroup;
-//    }
+    }
 
-//    ExamPage examPageWithItems = examPageRepository.findPageWithItems(oppInstance, page);
-//
-//    return PageGroup.Create(convertExamPagesToOpportunityItems(examPageWithItems));
+    ExamPage examPage= examPageRepository.findPageWithItems(oppInstance, page);
+
+    PageGroup remotePageGroup = PageGroup.Create(convertExamPagesToOpportunityItems(examPage));
+
+    if(pageGroup != null && StringUtils.equals(remotePageGroup.getFilePath(), pageGroup.getFilePath())) {
+      LOG.warn("Data between the legacy page group and remote page group filepaths are off legacy {} and remote {}", pageGroup.getFilePath(), remotePageGroup.getFilePath());
+    }
+
+    return pageGroup;
   }
 
   @Override

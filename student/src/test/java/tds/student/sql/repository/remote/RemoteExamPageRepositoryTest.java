@@ -9,17 +9,21 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import tds.assessment.AssessmentWindow;
 import tds.common.Response;
 import tds.exam.ExamItem;
 import tds.exam.ExamPage;
@@ -97,7 +101,7 @@ public class RemoteExamPageRepositoryTest {
     }
 
     @Test
-    public void shouldGetAnExamPageWithItems() throws ReturnStatusException {
+    public void shouldGetAnExamPageWithItems() throws ReturnStatusException, URISyntaxException {
         final UUID examId = UUID.randomUUID();
         final UUID examPageId = UUID.randomUUID();
 
@@ -114,14 +118,20 @@ public class RemoteExamPageRepositoryTest {
             .withItemGroupKey("itemGroup")
             .withExamItems(newArrayList(examItem))
             .build();
-        final Response<ExamPage> examPageResponse = new Response<>(examPage);
-        final ResponseEntity<Response<ExamPage>> responseEntity = new ResponseEntity<>(examPageResponse, HttpStatus.OK);
 
-        when(mockRestTemplate.exchange(any(URI.class),
-            any(HttpMethod.class),
-            any(HttpEntity.class),
-            any(ParameterizedTypeReference.class)))
-            .thenReturn(responseEntity);
+        final ResponseEntity<ExamPage> responseEntity = new ResponseEntity<>(examPage, HttpStatus.OK);
+
+        URI uri = new URI(String.format("http://localhost:8080/exam/%s/page/%d", examId, 1));
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<?> requestHttpEntity = new HttpEntity<>(headers);
+
+        when(mockRestTemplate.exchange(uri,
+            HttpMethod.GET,
+            requestHttpEntity,
+          new ParameterizedTypeReference<ExamPage>() {
+          })).thenReturn(responseEntity);
 
         ExamPage result = remoteExamPageRepository.findPageWithItems(mockOpportunityInstance, 1);
 
