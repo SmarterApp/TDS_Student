@@ -21,12 +21,14 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
 import tds.common.Response;
 import tds.common.ValidationError;
 import tds.exam.Exam;
+import tds.exam.ExamAssessmentMetadata;
 import tds.exam.ExamConfiguration;
 import tds.exam.ExamPrintRequest;
 import tds.exam.ExamSegment;
@@ -255,5 +257,35 @@ public class RemoteExamRepositoryTest {
     remoteExamRepository.waitForSegmentApproval(examId, request);
     verify(mockRestTemplate).exchange(isA(URI.class), isA(HttpMethod.class), isA(HttpEntity.class), isA(ParameterizedTypeReference.class));
   }
+
+  @Test
+  public void shouldFetchAssessmentMetadata() throws Exception {
+    Response<List<ExamAssessmentMetadata>> response = new Response<>(Collections.singletonList(
+        new ExamAssessmentMetadata.Builder()
+            .withSubject("ELA")
+            .withAssessmentKey("assessmentKey1")
+            .withAssessmentId("assessmentId1")
+            .withAssessmentLabel("label")
+            .withAttempt(3)
+            .withMaxAttempts(12)
+            .withDeniedReason("Some reason")
+            .withStatus(ExamStatusCode.STATUS_PENDING)
+            .withGrade("7")
+            .build()
+    ));
+    when(mockRestTemplate.exchange(isA(URI.class), isA(HttpMethod.class), isA(HttpEntity.class), isA(ParameterizedTypeReference.class)))
+        .thenReturn(new ResponseEntity(response, HttpStatus.OK));
+    List<ExamAssessmentMetadata> metadata = remoteExamRepository.findExamAssessmentInfo(1234, UUID.randomUUID(), "test");
+    verify(mockRestTemplate).exchange(isA(URI.class), isA(HttpMethod.class), isA(HttpEntity.class), isA(ParameterizedTypeReference.class));
+    assertThat(response.getData().get()).isEqualTo(metadata);
+  }
+
+  @Test (expected = ReturnStatusException.class)
+  public void shouldThrowForErrorFound() throws Exception {
+    when(mockRestTemplate.exchange(isA(URI.class), isA(HttpMethod.class), isA(HttpEntity.class), isA(ParameterizedTypeReference.class)))
+        .thenThrow(RestClientException.class);
+    remoteExamRepository.findExamAssessmentInfo(1234, UUID.randomUUID(), "test");
+  }
+
 
 }
