@@ -2,22 +2,21 @@ package tds.student.services.remote;
 
 import TDS.Shared.Exceptions.ReturnStatusException;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import java.util.Collections;
-import java.util.UUID;
-
 import tds.student.services.abstractions.IAdaptiveService;
+import tds.student.services.data.ItemResponse;
 import tds.student.services.data.PageGroup;
 import tds.student.services.data.TestOpportunity;
 import tds.student.sql.data.OpportunityInstance;
 import tds.student.sql.data.OpportunityItem;
 import tds.student.sql.data.TestConfig;
 import tds.student.sql.repository.remote.ExamItemResponseRepository;
+
+import java.util.Collections;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
@@ -46,7 +45,6 @@ public class RemoteAdaptiveServiceTest {
   }
 
   @Test
-  @Ignore
   public void shouldFindPageGroup() throws ReturnStatusException {
     OpportunityItem item = new OpportunityItem();
 
@@ -73,11 +71,14 @@ public class RemoteAdaptiveServiceTest {
     verify(legacyAdaptiveService).createNextItemGroup(testOpportunity, 1, 1);
     verify(responseRepository).createNextItemGroup(examId, 1, 1);
 
+    for (final ItemResponse itemResponse : pageGroup) {
+      assertThat(itemResponse.isPrefetched()).isTrue();
+    }
+
     assertThat(pageGroup).isEqualTo(legacyPageGroup);
   }
 
   @Test
-  @Ignore
   public void shouldOnlyCallLegacyCode() throws ReturnStatusException {
     service = new RemoteAdaptiveService(legacyAdaptiveService, false, true, responseRepository);
     OpportunityItem legacyItem = new OpportunityItem();
@@ -104,7 +105,6 @@ public class RemoteAdaptiveServiceTest {
   }
 
   @Test
-  @Ignore
   public void shouldOnlyCallRemote() throws ReturnStatusException {
     service = new RemoteAdaptiveService(legacyAdaptiveService, true, false, responseRepository);
     OpportunityItem item = new OpportunityItem();
@@ -129,5 +129,24 @@ public class RemoteAdaptiveServiceTest {
     verify(responseRepository).createNextItemGroup(examId, 1, 1);
 
     assertThat(pageGroup).hasSize(1);
+  }
+
+  @Test
+  public void itShouldReturnNullForARemoteExamWithNoRemainingOpportunityItems() throws Exception {
+    final UUID examId = UUID.randomUUID();
+    final OpportunityInstance opp = new OpportunityInstance(
+        UUID.randomUUID(),
+        UUID.randomUUID(),
+        UUID.randomUUID(),
+        examId,
+        UUID.randomUUID(),
+        "SBAC_PT",
+        "agent");
+    final TestOpportunity testOpportunity = new TestOpportunity(opp, "testKey", "testId", "ENDU", new TestConfig());
+
+    service = new RemoteAdaptiveService(legacyAdaptiveService, true, false, responseRepository);
+    when(responseRepository.createNextItemGroup(examId, 1, 1)).thenReturn(Collections.<OpportunityItem>emptyList());
+
+    assertThat(service.createNextItemGroup(testOpportunity, 1, 1)).isNull();
   }
 }
