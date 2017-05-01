@@ -64,7 +64,7 @@ public class ReviewTestServiceImpl implements ReviewTestService {
             return responseData;
         }
 
-        Optional<ValidationError> maybeValidationError = examRepository.reviewExam(testOpportunity.getOppInstance());
+        final Optional<ValidationError> maybeValidationError = examRepository.reviewExam(testOpportunity.getOppInstance());
         if (maybeValidationError.isPresent()) {
             tdsLogger.applicationError (maybeValidationError.get().getMessage(), "reviewTest", request, null);
             HttpContext.getCurrentContext()
@@ -81,8 +81,9 @@ public class ReviewTestServiceImpl implements ReviewTestService {
      * Executes the legacy implementation of review exam logic.
      *
      * @param testOpportunity The {@link tds.student.services.data.TestOpportunity}
-     * @param request
-     * @return
+     * @param request The HTTP request from the student application for reviewing the
+     *        {@link tds.student.services.data.TestOpportunity}
+     * @return A {@link AIR.Common.data.ResponseData} indicating success or failure
      * @throws ReturnStatusException
      * @throws IOException
      */
@@ -120,7 +121,7 @@ public class ReviewTestServiceImpl implements ReviewTestService {
 
         // put test in review mode
         OpportunityStatusChange statusChange = new OpportunityStatusChange (OpportunityStatusType.Review, true);
-        opportunityService.setStatus (testOpportunity.getOppInstance (), statusChange);
+        opportunityService.setStatus(testOpportunity.getOppInstance(), statusChange);
 
         return new ResponseData<>(TDSReplyCode.OK.getCode(), "OK", null);
     }

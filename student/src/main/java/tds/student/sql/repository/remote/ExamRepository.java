@@ -3,6 +3,7 @@ package tds.student.sql.repository.remote;
 import TDS.Shared.Exceptions.ReturnStatusException;
 import com.google.common.base.Optional;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -93,7 +94,7 @@ public interface ExamRepository {
    * indicates success
    * @throws ReturnStatusException
    */
-  Optional<ValidationError> reviewExam(final OpportunityInstance opportunityInstance) throws ReturnStatusException;
+  Optional<ValidationError> reviewExam(final OpportunityInstance opportunityInstance) throws ReturnStatusException, IOException;
 
   /**
    * Creates a request to fetch {@link tds.exam.ExamSegment}s for an exam

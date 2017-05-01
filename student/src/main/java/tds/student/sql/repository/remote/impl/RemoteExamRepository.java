@@ -41,6 +41,7 @@ import tds.exam.ExamStatusCode;
 import tds.exam.ExamStatusRequest;
 import tds.exam.OpenExamRequest;
 import tds.exam.SegmentApprovalRequest;
+import tds.exam.error.ValidationErrorCode;
 import tds.student.sql.data.OpportunityInstance;
 import tds.student.sql.repository.remote.ExamRepository;
 
@@ -254,7 +255,7 @@ public class RemoteExamRepository implements ExamRepository {
   }
 
   @Override
-  public Optional<ValidationError> reviewExam(final OpportunityInstance opportunityInstance) throws ReturnStatusException {
+  public Optional<ValidationError> reviewExam(final OpportunityInstance opportunityInstance) throws ReturnStatusException, IOException {
     UriComponents uriComponentsBuilder = UriComponentsBuilder.fromUriString("{examUrl}/{examId}/review")
         .queryParam("sessionId", opportunityInstance.getSessionKey())
         .queryParam("browserId", opportunityInstance.getExamBrowserKey())
@@ -266,12 +267,10 @@ public class RemoteExamRepository implements ExamRepository {
       // An unprocessable entity response means that a validation error was returned by the exam service.  Extract the
       // message and return it as a ValidationError to the caller.
       if (hce.getStatusCode().equals(HttpStatus.UNPROCESSABLE_ENTITY)) {
-        return Optional.of(new ValidationError("code", hce.getMessage()));
+        return Optional.of(objectMapper.readValue(hce.getResponseBodyAsString(), ValidationError.class));
       }
     } catch (RestClientException rce) {
       throw new ReturnStatusException(rce);
-    } catch (Exception e) {
-      System.out.println(e.getMessage());
     }
 
     return Optional.absent();
