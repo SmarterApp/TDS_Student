@@ -114,9 +114,9 @@ public class ResponseService implements IResponseService
     return PageGroup.Create (sqlResult);
   }
 
-  public boolean isTestComplete (UUID oppKey) throws ReturnStatusException {
+  public boolean isTestComplete (OpportunityInstance opportunityInstance) throws ReturnStatusException {
     try {
-      return _responseRepository.isTestComplete (oppKey);
+      return _responseRepository.isTestComplete (opportunityInstance.getKey());
     } catch (ReturnStatusException e) {
       _logger.error (e.getMessage ());
       throw e;

@@ -65,6 +65,8 @@
 	<context:component-scan base-package="tds.itemscoringengine" />
 	<context:component-scan base-package="tds.itemscoringengine.web.server" />
 
+	<context:component-scan base-package="org.opentestsystem.delivery.logging" />
+
 	<!-- Start item scoring engine Configuration. TODO Shiva: Please consolidate these in a config in item-scoring-engine project so that we can just do an import. -->
 	<beans:bean id="rubricCache" class="tds.itemscoringengine.complexitemscorers.RubricCache" scope="singleton" />
 
