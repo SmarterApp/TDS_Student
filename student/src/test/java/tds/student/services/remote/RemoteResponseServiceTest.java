@@ -87,6 +87,7 @@ public class RemoteResponseServiceTest {
 
     // Build test data representing response from the RemoteExamPageRepository
     ExamItemResponse examItemResponse = new ExamItemResponse.Builder()
+      .withExamItemId(UUID.randomUUID())
       .withResponse(opportunityItem.getValue())
       .withCreatedAt(Instant.now())
       .build();
