@@ -120,7 +120,7 @@ public class TestManager
   public boolean CheckIfTestComplete () throws ReturnStatusException
   {
     //TODO: Pass in the examId instead of opportunity key when we are ready to switch to performance code
-    _isTestComplete = _responseService.isTestComplete (_testOpp.getOppInstance ().getKey());
+    _isTestComplete = _responseService.isTestComplete (_testOpp.getOppInstance ());
     return _isTestComplete;
   }
 
