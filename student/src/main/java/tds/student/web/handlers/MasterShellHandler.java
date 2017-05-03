@@ -501,7 +501,7 @@ public class MasterShellHandler extends TDSHandler
     sendTestStatus (StudentContext.getTestee ().getId (), testKey, oppInstance.getKey (), TestStatusType.STARTED);
     // log browser info
     //TODO: Remove this call when we are ready to disable legacy calls
-    logBrowser (oppInstance, testConfig.getRestart ());
+//    logBrowser (oppInstance, testConfig.getRestart ());
     TestInfo testInfo = loadTestInfo (oppInstance, testConfig);
 
     return new ResponseData<TestInfo> (TDSReplyCode.OK.getCode (), "OK", testInfo);
