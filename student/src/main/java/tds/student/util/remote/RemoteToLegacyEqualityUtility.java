@@ -18,7 +18,7 @@ public class RemoteToLegacyEqualityUtility {
 
     for(ItemResponse legacyResponse : legacy) {
       for(ItemResponse remoteResponse : remote) {
-        if(isItemResponseEqual(legacyResponse, remoteResponse)) {
+        if(!isItemResponseEqual(legacyResponse, remoteResponse)) {
           return false;
         }
       }
@@ -63,7 +63,7 @@ public class RemoteToLegacyEqualityUtility {
     if (legacy.getFilePath() != null ? !legacy.getFilePath().equals(remote.getFilePath()) : remote.getFilePath() != null) return false;
     if (legacy.getId() != null ? !legacy.getId().equals(remote.getId()) : remote.getId() != null) return false;
     if (legacy._document!= null ? !legacy._document.equals(remote._document) : remote._document != null) return false;
-    if (legacy._iitsDocument != null ? legacy._iitsDocument.equals(remote._iitsDocument) : remote._iitsDocument == null) return false;
+    if (legacy._iitsDocument != null ? legacy._iitsDocument.equals(remote._iitsDocument) : remote._iitsDocument != null) return false;
 
     return isItemResponsesEqual(legacy, remote);
   }
