@@ -33,6 +33,7 @@ import tds.student.sql.data.OpportunityItem;
 import tds.student.sql.repository.remote.ExamItemResponseRepository;
 import tds.student.sql.repository.remote.ExamSegmentRepository;
 import tds.student.sql.repository.remote.ExamSegmentWrapperRepository;
+import tds.student.util.remote.RemoteToLegacyEqualityUtility;
 
 @Service("integrationResponseService")
 @Scope("prototype")
@@ -73,39 +74,31 @@ public class RemoteResponseService implements IResponseService {
   @Override
   public PageList getOpportunityItems(final OpportunityInstance oppInstance,
                                       final boolean validate) throws ReturnStatusException {
-    PageList pageList = null;
+    PageList legacyPageList = null;
 
     if (isLegacyCallsEnabled) {
-      pageList = legacyResponseService.getOpportunityItems(oppInstance, validate);
+      legacyPageList = legacyResponseService.getOpportunityItems(oppInstance, validate);
     }
 
     if (!isRemoteExamCallsEnabled) {
-      return pageList;
+      return legacyPageList;
     }
 
     List<ExamSegmentWrapper> examSegmentWrappers = examSegmentWrapperRepository.findAllExamSegmentWrappersForExam(oppInstance.getExamId());
 
     PageList remotePageList = PageList.Create(convertExamPagesToOpportunityItems(examSegmentWrappers));
 
-//    if (remotePageList.size() != pageList.size()) {
-//      LOG.warn("sizes don't match");
-//    }
-//
-//    if (!pageList.equals(remotePageList)) {
-//      LOG.warn("page lists don't match");
-//
-//      for (PageGroup pageGroup : pageList) {
-//        for (PageGroup remotePageGroup : remotePageList) {
-//          for (ItemResponse itemResponse : pageGroup) {
-//            for (ItemResponse remoteItemResponse : remotePageGroup) {
-//              if (itemResponse.equals(remoteItemResponse)) {
-//                LOG.warn("item responses don't match");
-//              }
-//            }
-//          }
-//        }
-//      }
-//    }
+    if (remotePageList.size() != legacyPageList.size()) {
+      LOG.warn("sizes don't match");
+    }
+
+    for (PageGroup legacyPageGroup : legacyPageList) {
+      for (PageGroup remotePageGroup : remotePageList) {
+        if(!RemoteToLegacyEqualityUtility.isPageGroupEqual(legacyPageGroup, remotePageGroup)) {
+          LOG.warn("Page Groups don't match");
+        }
+      }
+    }
 
     return remotePageList;
   }
@@ -116,14 +109,14 @@ public class RemoteResponseService implements IResponseService {
                                 final String groupID,
                                 final String dateCreated,
                                 final boolean validate) throws ReturnStatusException {
-    PageGroup pageGroup = null;
+    PageGroup legacyPageGroup = null;
 
     if (isLegacyCallsEnabled) {
-      pageGroup = legacyResponseService.getItemGroup(oppInstance, page, groupID, dateCreated, validate);
+      legacyPageGroup = legacyResponseService.getItemGroup(oppInstance, page, groupID, dateCreated, validate);
     }
 
     if (!isRemoteExamCallsEnabled) {
-      return pageGroup;
+      return legacyPageGroup;
     }
 
     Optional<ExamSegmentWrapper> maybeExamSegmentWrapper = examSegmentWrapperRepository.findExamSegmentWrappersForExamAndPagePosition(oppInstance.getExamId(), page);
@@ -134,21 +127,13 @@ public class RemoteResponseService implements IResponseService {
 
     PageGroup remotePageGroup = PageGroup.Create(convertExamPagesToOpportunityItems(Collections.singletonList(maybeExamSegmentWrapper.get())));
 
-//    if (pageGroup != null && StringUtils.equals(remotePageGroup.getFilePath(), pageGroup.getFilePath())) {
-//      LOG.warn("Data between the legacy page group and remote page group filepaths are off legacy {} and remote {}", pageGroup.getFilePath(), remotePageGroup.getFilePath());
-//    }
-//
-//    if (!pageGroup.equals(remotePageGroup)) {
-//      LOG.warn("page groups don't match");
-//
-//      for (ItemResponse itemResponse : pageGroup) {
-//        for (ItemResponse remoteItemResponse : remotePageGroup) {
-//          if (itemResponse.equals(remoteItemResponse)) {
-//            LOG.warn("item responses don't match");
-//          }
-//        }
-//      }
-//    }
+    if (legacyPageGroup != null && StringUtils.equals(remotePageGroup.getFilePath(), legacyPageGroup.getFilePath())) {
+      LOG.warn("Data between the legacy page group and remote page group filepaths are off legacy {} and remote {}", legacyPageGroup.getFilePath(), remotePageGroup.getFilePath());
+    }
+
+    if (!RemoteToLegacyEqualityUtility.isPageGroupEqual(legacyPageGroup, remotePageGroup)) {
+      LOG.warn("page groups don't match");
+    }
 
     return remotePageGroup;
   }
