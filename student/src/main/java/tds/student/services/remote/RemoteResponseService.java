@@ -14,20 +14,25 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import tds.exam.ExamItem;
 import tds.exam.ExamItemResponse;
 import tds.exam.ExamPage;
+import tds.exam.ExamSegment;
+import tds.exam.wrapper.ExamPageWrapper;
+import tds.exam.wrapper.ExamSegmentWrapper;
 import tds.student.services.abstractions.IResponseService;
+import tds.student.services.data.ItemResponse;
 import tds.student.services.data.PageGroup;
 import tds.student.services.data.PageList;
 import tds.student.sql.data.AdaptiveGroup;
 import tds.student.sql.data.OpportunityInstance;
 import tds.student.sql.data.OpportunityItem;
 import tds.student.sql.repository.remote.ExamItemResponseRepository;
-import tds.student.sql.repository.remote.ExamPageRepository;
 import tds.student.sql.repository.remote.ExamSegmentRepository;
+import tds.student.sql.repository.remote.ExamSegmentWrapperRepository;
 
 @Service("integrationResponseService")
 @Scope("prototype")
@@ -39,7 +44,7 @@ public class RemoteResponseService implements IResponseService {
   private final IResponseService legacyResponseService;
   private final ExamSegmentRepository examSegmentRepository;
   private final ExamItemResponseRepository examItemResponseRepository;
-  private final ExamPageRepository examPageRepository;
+  private final ExamSegmentWrapperRepository examSegmentWrapperRepository;
 
   @Autowired
   public RemoteResponseService(final @Qualifier("legacyResponseService") IResponseService legacyResponseService,
@@ -47,7 +52,7 @@ public class RemoteResponseService implements IResponseService {
                                final @Value("${tds.exam.legacy.enabled}") Boolean legacyCallsEnabled,
                                final ExamSegmentRepository examSegmentRepository,
                                final ExamItemResponseRepository examItemResponseRepository,
-                               final ExamPageRepository examPageRepository) {
+                               final ExamSegmentWrapperRepository examSegmentWrapperRepository) {
     if (!remoteExamCallsEnabled && !legacyCallsEnabled) {
       throw new IllegalStateException("Remote and legacy calls are both disabled.  Please check progman configuration for 'tds.exam.remote.enabled' and 'tds.exam.legacy.enabled' settings");
     }
@@ -57,7 +62,7 @@ public class RemoteResponseService implements IResponseService {
     this.isRemoteExamCallsEnabled = remoteExamCallsEnabled;
     this.isLegacyCallsEnabled = legacyCallsEnabled;
     this.examItemResponseRepository = examItemResponseRepository;
-    this.examPageRepository = examPageRepository;
+    this.examSegmentWrapperRepository = examSegmentWrapperRepository;
   }
 
   @Override
@@ -78,9 +83,31 @@ public class RemoteResponseService implements IResponseService {
       return pageList;
     }
 
-    List<ExamPage> examPagesWithItems = examPageRepository.findAllPagesWithItems(oppInstance);
+    List<ExamSegmentWrapper> examSegmentWrappers = examSegmentWrapperRepository.findAllExamSegmentWrappersForExam(oppInstance.getExamId());
 
-    return PageList.Create(convertExamPagesToOpportunityItems(examPagesWithItems.toArray(new ExamPage[examPagesWithItems.size()])));
+    PageList remotePageList = PageList.Create(convertExamPagesToOpportunityItems(examSegmentWrappers));
+
+//    if (remotePageList.size() != pageList.size()) {
+//      LOG.warn("sizes don't match");
+//    }
+//
+//    if (!pageList.equals(remotePageList)) {
+//      LOG.warn("page lists don't match");
+//
+//      for (PageGroup pageGroup : pageList) {
+//        for (PageGroup remotePageGroup : remotePageList) {
+//          for (ItemResponse itemResponse : pageGroup) {
+//            for (ItemResponse remoteItemResponse : remotePageGroup) {
+//              if (itemResponse.equals(remoteItemResponse)) {
+//                LOG.warn("item responses don't match");
+//              }
+//            }
+//          }
+//        }
+//      }
+//    }
+
+    return remotePageList;
   }
 
   @Override
@@ -99,15 +126,31 @@ public class RemoteResponseService implements IResponseService {
       return pageGroup;
     }
 
-    ExamPage examPage= examPageRepository.findPageWithItems(oppInstance, page);
+    Optional<ExamSegmentWrapper> maybeExamSegmentWrapper = examSegmentWrapperRepository.findExamSegmentWrappersForExamAndPagePosition(oppInstance.getExamId(), page);
 
-    PageGroup remotePageGroup = PageGroup.Create(convertExamPagesToOpportunityItems(examPage));
-
-    if(pageGroup != null && StringUtils.equals(remotePageGroup.getFilePath(), pageGroup.getFilePath())) {
-      LOG.warn("Data between the legacy page group and remote page group filepaths are off legacy {} and remote {}", pageGroup.getFilePath(), remotePageGroup.getFilePath());
+    if (!maybeExamSegmentWrapper.isPresent()) {
+      throw new ReturnStatusException(String.format("Could not find page for exam id %s and page %d", oppInstance.getExamId(), page));
     }
 
-    return pageGroup;
+    PageGroup remotePageGroup = PageGroup.Create(convertExamPagesToOpportunityItems(Collections.singletonList(maybeExamSegmentWrapper.get())));
+
+//    if (pageGroup != null && StringUtils.equals(remotePageGroup.getFilePath(), pageGroup.getFilePath())) {
+//      LOG.warn("Data between the legacy page group and remote page group filepaths are off legacy {} and remote {}", pageGroup.getFilePath(), remotePageGroup.getFilePath());
+//    }
+//
+//    if (!pageGroup.equals(remotePageGroup)) {
+//      LOG.warn("page groups don't match");
+//
+//      for (ItemResponse itemResponse : pageGroup) {
+//        for (ItemResponse remoteItemResponse : remotePageGroup) {
+//          if (itemResponse.equals(remoteItemResponse)) {
+//            LOG.warn("item responses don't match");
+//          }
+//        }
+//      }
+//    }
+
+    return remotePageGroup;
   }
 
   @Override
@@ -147,51 +190,57 @@ public class RemoteResponseService implements IResponseService {
    * Flatten the {@link tds.exam.ExamPage}s and their constituent {@link tds.exam.ExamItem}s and map them to a
    * {@link tds.student.services.data.PageList}.
    *
-   * @param examPages The collection of {@link tds.exam.ExamPage}s from the {@link tds.exam.Exam}
+   * @param examSegmentWrappers The collection of {@link tds.exam.wrapper.ExamSegmentWrapper}s from the {@link tds.exam.Exam}
    * @return A {@link tds.student.services.data.PageList} that represents the collection of {@link tds.exam.ExamPage}s
    */
-  private static List<OpportunityItem> convertExamPagesToOpportunityItems(ExamPage... examPages) {
+  private static List<OpportunityItem> convertExamPagesToOpportunityItems(List<ExamSegmentWrapper> examSegmentWrappers) {
     List<OpportunityItem> opportunityItems = new ArrayList<>();
 
     // Match the datetime format returned by t_getopportunityitems
     DateTimeFormatter dateFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
 
-    for (ExamPage page : examPages) {
-      for (ExamItem item : page.getExamItems()) {
-        OpportunityItem opportunityItem = new OpportunityItem();
-        opportunityItem.setBankKey(item.getAssessmentItemBankKey());
-        opportunityItem.setItemKey(item.getAssessmentItemKey());
-        opportunityItem.setPosition(item.getPosition());
-        opportunityItem.setPage(page.getPagePosition());
-        opportunityItem.setGroupID(page.getItemGroupKey());
-        opportunityItem.setSegment(page.getSegmentPosition());
-        opportunityItem.setSegmentID(page.getSegmentId());
-        opportunityItem.setGroupItemsRequired(page.isGroupItemsRequired() ? -1 : 0);
-        opportunityItem.setIsRequired(item.isRequired());
-        opportunityItem.setItemFile(item.getItemFilePath());
-        opportunityItem.setStimulusFile(item.getStimulusFilePath().isPresent() ? item.getStimulusFilePath().get() : null);
-        opportunityItem.setDateCreated(item.getCreatedAt().toString(dateFormatter));
+    for (ExamSegmentWrapper examSegmentWrapper : examSegmentWrappers) {
+      ExamSegment examSegment = examSegmentWrapper.getExamSegment();
+      for (ExamPageWrapper pageWrapper : examSegmentWrapper.getExamPages()) {
+        ExamPage page = pageWrapper.getExamPage();
+        for (ExamItem item : pageWrapper.getExamItems()) {
+          OpportunityItem opportunityItem = new OpportunityItem();
+          opportunityItem.setBankKey(item.getAssessmentItemBankKey());
+          opportunityItem.setItemKey(item.getAssessmentItemKey());
+          opportunityItem.setPosition(item.getPosition());
+          opportunityItem.setPage(page.getPagePosition());
+          opportunityItem.setGroupID(page.getItemGroupKey());
+          opportunityItem.setSegment(examSegment.getSegmentPosition());
+          opportunityItem.setSegmentID(examSegment.getSegmentKey());
+          opportunityItem.setGroupItemsRequired(page.isGroupItemsRequired() ? -1 : 0);
+          opportunityItem.setIsRequired(item.isRequired());
+          opportunityItem.setItemFile(item.getItemFilePath());
+          opportunityItem.setStimulusFile(item.getStimulusFilePath().isPresent() ? item.getStimulusFilePath().get() : null);
+          opportunityItem.setDateCreated(item.getCreatedAt().toString(dateFormatter));
 
-        // This value is always set to 'format' in the t_getopportunityitems stored procedure, then converted to
-        // upper-case in ResponseRepository#readOpportunityItems() (@ line 295).
-        opportunityItem.setFormat("FORMAT");
+          // This value is always set to 'format' in the t_getopportunityitems stored procedure, then converted to
+          // upper-case in ResponseRepository#readOpportunityItems() (@ line 295).
+          opportunityItem.setFormat(item.getItemType());
 
-        // OpportunityItem#isVisible (mapped to an OpportunityItem in ResponseRepository#readOpportunityItems @ line
-        // 297) never seems to be used (which is why it was not ported to the exam database), so has been omitted from
-        // this mapping.
+          opportunityItem.setIsVisible(true);
 
-        if (item.getResponse().isPresent()) {
-          ExamItemResponse itemResponse = item.getResponse().get();
-          opportunityItem.setSequence(itemResponse.getSequence());
-          opportunityItem.setMarkForReview(itemResponse.isMarkedForReview());
-          opportunityItem.setValue(itemResponse.getResponse());
-          opportunityItem.setIsValid(itemResponse.isValid());
-          opportunityItem.setIsSelected(itemResponse.isSelected());
-        } else {
-          opportunityItem.setValue(null);
+          // OpportunityItem#isVisible (mapped to an OpportunityItem in ResponseRepository#readOpportunityItems @ line
+          // 297) never seems to be used (which is why it was not ported to the exam database), so has been omitted from
+          // this mapping.
+
+          if (item.getResponse().isPresent()) {
+            ExamItemResponse itemResponse = item.getResponse().get();
+            opportunityItem.setSequence(itemResponse.getSequence());
+            opportunityItem.setMarkForReview(itemResponse.isMarkedForReview());
+            opportunityItem.setValue(itemResponse.getResponse());
+            opportunityItem.setIsValid(itemResponse.isValid());
+            opportunityItem.setIsSelected(itemResponse.isSelected());
+          } else {
+            opportunityItem.setValue(null);
+          }
+
+          opportunityItems.add(opportunityItem);
         }
-
-        opportunityItems.add(opportunityItem);
       }
     }
 
