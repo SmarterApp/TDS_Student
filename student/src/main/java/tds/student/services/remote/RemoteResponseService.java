@@ -24,7 +24,6 @@ import tds.exam.ExamSegment;
 import tds.exam.wrapper.ExamPageWrapper;
 import tds.exam.wrapper.ExamSegmentWrapper;
 import tds.student.services.abstractions.IResponseService;
-import tds.student.services.data.ItemResponse;
 import tds.student.services.data.PageGroup;
 import tds.student.services.data.PageList;
 import tds.student.sql.data.AdaptiveGroup;
@@ -33,7 +32,6 @@ import tds.student.sql.data.OpportunityItem;
 import tds.student.sql.repository.remote.ExamItemResponseRepository;
 import tds.student.sql.repository.remote.ExamSegmentRepository;
 import tds.student.sql.repository.remote.ExamSegmentWrapperRepository;
-import tds.student.util.remote.RemoteToLegacyEqualityUtility;
 
 @Service("integrationResponseService")
 @Scope("prototype")
@@ -86,21 +84,7 @@ public class RemoteResponseService implements IResponseService {
 
     List<ExamSegmentWrapper> examSegmentWrappers = examSegmentWrapperRepository.findAllExamSegmentWrappersForExam(oppInstance.getExamId());
 
-    PageList remotePageList = PageList.Create(convertExamPagesToOpportunityItems(examSegmentWrappers));
-
-    if (remotePageList.size() != legacyPageList.size()) {
-      LOG.warn("sizes don't match");
-    }
-
-    for (PageGroup legacyPageGroup : legacyPageList) {
-      for (PageGroup remotePageGroup : remotePageList) {
-        if(!RemoteToLegacyEqualityUtility.isPageGroupEqual(legacyPageGroup, remotePageGroup)) {
-          LOG.warn("Page Groups don't match");
-        }
-      }
-    }
-
-    return remotePageList;
+    return PageList.Create(convertExamPagesToOpportunityItems(examSegmentWrappers));
   }
 
   @Override
@@ -125,17 +109,7 @@ public class RemoteResponseService implements IResponseService {
       throw new ReturnStatusException(String.format("Could not find page for exam id %s and page %d", oppInstance.getExamId(), page));
     }
 
-    PageGroup remotePageGroup = PageGroup.Create(convertExamPagesToOpportunityItems(Collections.singletonList(maybeExamSegmentWrapper.get())));
-
-    if (legacyPageGroup != null && StringUtils.equals(remotePageGroup.getFilePath(), legacyPageGroup.getFilePath())) {
-      LOG.warn("Data between the legacy page group and remote page group filepaths are off legacy {} and remote {}", legacyPageGroup.getFilePath(), remotePageGroup.getFilePath());
-    }
-
-    if (!RemoteToLegacyEqualityUtility.isPageGroupEqual(legacyPageGroup, remotePageGroup)) {
-      LOG.warn("page groups don't match");
-    }
-
-    return remotePageGroup;
+    return PageGroup.Create(convertExamPagesToOpportunityItems(Collections.singletonList(maybeExamSegmentWrapper.get())));
   }
 
   @Override
@@ -196,11 +170,11 @@ public class RemoteResponseService implements IResponseService {
           opportunityItem.setPage(page.getPagePosition());
           opportunityItem.setGroupID(page.getItemGroupKey());
           opportunityItem.setSegment(examSegment.getSegmentPosition());
-          opportunityItem.setSegmentID(examSegment.getSegmentKey());
+          opportunityItem.setSegmentID(examSegment.getSegmentId());
           opportunityItem.setGroupItemsRequired(page.isGroupItemsRequired() ? -1 : 0);
           opportunityItem.setIsRequired(item.isRequired());
           opportunityItem.setItemFile(item.getItemFilePath());
-          opportunityItem.setStimulusFile(item.getStimulusFilePath().isPresent() ? item.getStimulusFilePath().get() : null);
+          opportunityItem.setStimulusFile(getStimulusFilePath(item));
           opportunityItem.setDateCreated(item.getCreatedAt().toString(dateFormatter));
 
           // This value is always set to 'format' in the t_getopportunityitems stored procedure, then converted to
@@ -230,5 +204,19 @@ public class RemoteResponseService implements IResponseService {
     }
 
     return opportunityItems;
+  }
+
+  /**
+   * The legacy expects stimulus filepath to be null if it isn't valid.
+   *
+   * @param item {@link tds.exam.ExamItem}
+   * @return the filepath if valid otherwise null
+   */
+  private static String getStimulusFilePath(ExamItem item) {
+    if (!item.getStimulusFilePath().isPresent()) return null;
+
+    String stimulusFilePath = item.getStimulusFilePath().get();
+
+    return StringUtils.isEmpty(stimulusFilePath) ? null : stimulusFilePath;
   }
 }
