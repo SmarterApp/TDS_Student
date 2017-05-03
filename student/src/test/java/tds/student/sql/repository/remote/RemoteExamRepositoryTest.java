@@ -19,7 +19,11 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.URI;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -35,11 +39,17 @@ import tds.exam.ExamSegment;
 import tds.exam.ExamStatusCode;
 import tds.exam.OpenExamRequest;
 import tds.exam.SegmentApprovalRequest;
+import tds.exam.error.ValidationErrorCode;
+import tds.student.sql.data.OpportunityInstance;
 import tds.student.sql.repository.remote.impl.RemoteExamRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.isA;
+import static org.mockito.Matchers.isNull;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -286,6 +296,4 @@ public class RemoteExamRepositoryTest {
         .thenThrow(RestClientException.class);
     remoteExamRepository.findExamAssessmentInfo(1234, UUID.randomUUID(), "test");
   }
-
-
 }

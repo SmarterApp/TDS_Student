@@ -32,6 +32,7 @@ import org.springframework.web.util.HtmlUtils;
 import tds.blackbox.web.handlers.TDSHandler;
 import tds.itemrenderer.data.AccLookup;
 import tds.itemrenderer.data.AccProperties;
+import tds.student.services.ReviewTestService;
 import tds.student.services.abstractions.IOpportunityService;
 import tds.student.services.abstractions.IResponseService;
 import tds.student.services.abstractions.PrintService;
@@ -58,6 +59,7 @@ import tds.student.web.data.TestShellAudit;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.ws.Response;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -91,10 +93,13 @@ public class TestShellHandler extends TDSHandler
   private ITDSLogger             _tdsLogger;
 
   private final RemoteExamineeNoteService remoteExamineeNoteService;
+  private final ReviewTestService reviewTestService;
 
   @Autowired
-  public TestShellHandler(final RemoteExamineeNoteService remoteExamineeNoteService) {
+  public TestShellHandler(final RemoteExamineeNoteService remoteExamineeNoteService,
+                          final ReviewTestService reviewTestService) {
     this.remoteExamineeNoteService = remoteExamineeNoteService;
+    this.reviewTestService = reviewTestService;
   }
 
   @RequestMapping (value = "TestShell.axd/logAuditTrail")
@@ -226,54 +231,24 @@ public class TestShellHandler extends TDSHandler
 
   @RequestMapping (value = "TestShell.axd/complete")
   @ResponseBody
-  public ResponseData<String> reviewTest (@RequestParam Map<String, String> formParams, HttpServletRequest request) throws IOException, TDSSecurityException, ReturnStatusException {
+  public ResponseData<String> reviewTest (@RequestParam Map<String, String> formParams, HttpServletRequest request)
+    throws IOException, TDSSecurityException, ReturnStatusException {
     checkAuthenticated ();
 
     TestOpportunity testOpp = StudentContext.getTestOpportunity ();
 
-    // get responses
-    TestManager testManager = new TestManager (testOpp);
-    testManager.LoadResponses (true);
+    ResponseData<String> responseData = reviewTestService.reviewTest(testOpp, new TestManager(testOpp));
 
-    // check if test length is met
-    testManager.CheckIfTestComplete ();
+    if (responseData.getReplyCode() != TDSReplyCode.OK.getCode()) {
+      _tdsLogger.applicationError (responseData.getReplyText(), "reviewTest", request, null);
+      HttpContext.getCurrentContext()
+          .getResponse()
+          .sendError(HttpStatus.SC_FORBIDDEN, "Cannot end the test.");
 
-    if (!testManager.IsTestLengthMet ()) {
-      // TODO mpatel - Check to see status and message in response and make sure
-      // following works
-      String message = "Review Test: Cannot end test because test length is not met.";
-      _tdsLogger.applicationError (message, "reviewTest", request, null);
-      HttpContext.getCurrentContext ().getResponse ().sendError (HttpStatus.SC_FORBIDDEN, "Cannot end the test.");
       return null;
     }
 
-    // check if all visible pages are completed
-    PageList pageList = testManager.GetVisiblePages ();
-
-    if (!pageList.isAllCompleted ()) {
-      String message = "Review Test: Cannot end test because all the groups have not been answered.";
-      _tdsLogger.applicationError (message, "reviewTest", request, null);
-      HttpContext.getCurrentContext ().getResponse ().sendError (HttpStatus.SC_FORBIDDEN, "Cannot end the test.");
-      return null;
-    }
-
-    String latencies = parseOutLatencies (formParams);
-    if (latencies != null) {
-      TestShellAudit testShellAudit = null;
-      try {
-        ObjectMapper mapper = new ObjectMapper ();
-        testShellAudit = mapper.readValue (latencies, TestShellAudit.class);
-      } catch (IOException e) {
-        _logger.error (String.format ("Problem mapping pause request to TestShellAudit: %s", e.getMessage ()));
-      }
-      PerformTestShellAudit (testOpp, testShellAudit, request);
-    }
-    // put test in review mode
-    OpportunityStatusChange statusChange = new OpportunityStatusChange (OpportunityStatusType.Review, true);
-    _oppService.setStatus (testOpp.getOppInstance (), statusChange);
-
-    // success
-    return new ResponseData<String> (TDSReplyCode.OK.getCode (), "OK", null);
+    return responseData;
   }
 
   /**

@@ -3,6 +3,7 @@ package tds.student.sql.repository.remote;
 import TDS.Shared.Exceptions.ReturnStatusException;
 import com.google.common.base.Optional;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,6 +19,7 @@ import tds.exam.ExamPrintRequest;
 import tds.exam.ExamSegment;
 import tds.exam.OpenExamRequest;
 import tds.exam.SegmentApprovalRequest;
+import tds.student.sql.data.OpportunityInstance;
 
 /**
  * Repository to interact with exam data
