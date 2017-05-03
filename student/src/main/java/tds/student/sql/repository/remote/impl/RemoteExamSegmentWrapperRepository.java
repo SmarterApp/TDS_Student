@@ -65,7 +65,7 @@ public class RemoteExamSegmentWrapperRepository implements ExamSegmentWrapperRep
       .pathSegment("{examId}", "segmentWrappers");
 
     if (pagePosition != null) {
-      builder.queryParam("pagePosition", 1);
+      builder.queryParam("pagePosition", pagePosition);
     }
 
     try {
