@@ -1,20 +1,14 @@
 package tds.student.services;
 
-import AIR.Common.TDSLogger.ITDSLogger;
-import AIR.Common.Web.Session.HttpContext;
 import AIR.Common.Web.TDSReplyCode;
 import AIR.Common.data.ResponseData;
 import TDS.Shared.Exceptions.ReturnStatusException;
 import com.google.common.base.Optional;
-import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 
 import tds.common.ValidationError;
 import tds.exam.ExamStatusCode;
