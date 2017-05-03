@@ -1,19 +1,23 @@
 package tds.student.services.remote;
 
 import TDS.Shared.Exceptions.ReturnStatusException;
+import com.google.common.base.Optional;
 import org.joda.time.Instant;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.Collections;
 import java.util.UUID;
 
 import tds.exam.ExamItem;
 import tds.exam.ExamItemResponse;
 import tds.exam.ExamPage;
+import tds.exam.ExamSegment;
+import tds.exam.wrapper.ExamPageWrapper;
+import tds.exam.wrapper.ExamSegmentWrapper;
 import tds.student.services.abstractions.IResponseService;
 import tds.student.services.data.ItemResponse;
 import tds.student.services.data.PageGroup;
@@ -21,8 +25,8 @@ import tds.student.services.data.PageList;
 import tds.student.sql.data.OpportunityInstance;
 import tds.student.sql.data.OpportunityItem;
 import tds.student.sql.repository.remote.ExamItemResponseRepository;
-import tds.student.sql.repository.remote.ExamPageRepository;
 import tds.student.sql.repository.remote.ExamSegmentRepository;
+import tds.student.sql.repository.remote.ExamSegmentWrapperRepository;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -46,17 +50,17 @@ public class RemoteResponseServiceTest {
   private ExamItemResponseRepository mockExamItemResponseRepository;
 
   @Mock
-  private ExamPageRepository mockExamPageRepository;
+  private ExamSegmentWrapperRepository mockExamSegmentWrapperRepository;
 
   private IResponseService service;
 
-  private final OpportunityInstance opportunityInstance = new OpportunityInstance(UUID.randomUUID(),
-    UUID.randomUUID(),
-    UUID.randomUUID());
+  private OpportunityInstance opportunityInstance;
   private OpportunityItem opportunityItem;
   private PageList pageList;
   private PageGroup pageGroup;
-  private ExamPage examPage;
+
+  private ExamSegmentWrapper examSegmentWrapper;
+  private UUID examId;
 
   @Before
   public void setUp() {
@@ -65,7 +69,17 @@ public class RemoteResponseServiceTest {
       false,
       mockExamSegmentRepository,
       mockExamItemResponseRepository,
-      mockExamPageRepository);
+      mockExamSegmentWrapperRepository);
+
+    examId = UUID.randomUUID();
+
+    opportunityInstance = new OpportunityInstance(UUID.randomUUID(),
+      UUID.randomUUID(),
+      UUID.randomUUID(),
+      examId,
+      UUID.randomUUID(),
+      "SBAC_PT",
+      "browserAgent");
 
     // Build test data for legacy data
     opportunityItem = new OpportunityItem();
@@ -83,7 +97,7 @@ public class RemoteResponseServiceTest {
 
     pageGroup = PageGroup.Create(newArrayList(opportunityItem));
 
-    UUID pageID = UUID.randomUUID();
+    UUID pageId = UUID.randomUUID();
 
     // Build test data representing response from the RemoteExamPageRepository
     ExamItemResponse examItemResponse = new ExamItemResponse.Builder()
@@ -101,33 +115,41 @@ public class RemoteResponseServiceTest {
       .withPosition(opportunityItem.getPosition())
       .withResponse(examItemResponse)
       .withCreatedAt(Instant.now())
-      .withExamPageId(pageID)
+      .withExamPageId(pageId)
       .withStimulusFilePath(opportunityItem.getStimulusFile())
       .withRequired(true)
       .build();
 
-    examPage = new ExamPage.Builder()
-      .withId(pageID)
-      .withExamId(UUID.randomUUID())
+    ExamPage examPage = new ExamPage.Builder()
+      .withId(pageId)
+      .withExamId(examId)
       .withPagePosition(opportunityItem.getPage())
-      .withExamItems(newArrayList(examItem))
       .withCreatedAt(Instant.now())
       .withItemGroupKey(opportunityItem.getGroupID())
-      .withSegmentId(opportunityItem.getSegmentID())
       .withSegmentKey("segment key")
       .withGroupItemsRequired(true)
       .build();
+
+    ExamSegment examSegment = new ExamSegment.Builder()
+      .withExamId(examId)
+      .withSegmentId("segment id")
+      .withSegmentKey("segment key")
+      .withSegmentPosition(1)
+      .build();
+
+    ExamPageWrapper examPageWrapper = new ExamPageWrapper(examPage, Collections.singletonList(examItem));
+    examSegmentWrapper = new ExamSegmentWrapper(examSegment, Collections.singletonList(examPageWrapper));
   }
 
   @Test
   public void shouldCheckIfExamSegmentsComplete() throws ReturnStatusException {
-    when(mockExamSegmentRepository.checkSegmentsSatisfied(opportunityInstance.getExamId())).thenReturn(false);
+    when(mockExamSegmentRepository.checkSegmentsSatisfied(examId)).thenReturn(false);
 
     boolean isComplete = service.isTestComplete(opportunityInstance);
     assertThat(isComplete).isFalse();
 
     verifyZeroInteractions(mockLegacyResponseService);
-    verify(mockExamSegmentRepository).checkSegmentsSatisfied(opportunityInstance.getExamId());
+    verify(mockExamSegmentRepository).checkSegmentsSatisfied(examId);
   }
 
   @Test
@@ -137,15 +159,15 @@ public class RemoteResponseServiceTest {
       true,
       mockExamSegmentRepository,
       mockExamItemResponseRepository,
-      mockExamPageRepository);
+      mockExamSegmentWrapperRepository);
 
-    when(mockExamSegmentRepository.checkSegmentsSatisfied(opportunityInstance.getExamId())).thenReturn(false);
+    when(mockExamSegmentRepository.checkSegmentsSatisfied(examId)).thenReturn(false);
 
     boolean isComplete = service.isTestComplete(opportunityInstance);
     assertThat(isComplete).isFalse();
 
     verify(mockLegacyResponseService).isTestComplete(opportunityInstance);
-    verify(mockExamSegmentRepository).checkSegmentsSatisfied(opportunityInstance.getExamId());
+    verify(mockExamSegmentRepository).checkSegmentsSatisfied(examId);
   }
 
   @Test
@@ -158,23 +180,22 @@ public class RemoteResponseServiceTest {
   }
 
   @Test
-  @Ignore("Ignored until exam items/pages can be fetched from exam service")
   public void shouldGetPageListWhenLegacyCallsAndRemoteCallsAreEnabled() throws ReturnStatusException {
     service = new RemoteResponseService(mockLegacyResponseService,
       true,
       true,
       mockExamSegmentRepository,
       mockExamItemResponseRepository,
-      mockExamPageRepository);
+      mockExamSegmentWrapperRepository);
 
     when(mockLegacyResponseService.getOpportunityItems(any(OpportunityInstance.class), anyBoolean()))
       .thenReturn(pageList);
-    when(mockExamPageRepository.findAllPagesWithItems(any(OpportunityInstance.class)))
-      .thenReturn(newArrayList(examPage));
+    when(mockExamSegmentWrapperRepository.findAllExamSegmentWrappersForExam(examId))
+      .thenReturn(newArrayList(examSegmentWrapper));
 
     PageList result = service.getOpportunityItems(opportunityInstance, true);
     verify(mockLegacyResponseService).getOpportunityItems(opportunityInstance, true);
-    verify(mockExamPageRepository).findAllPagesWithItems(opportunityInstance);
+    verify(mockExamSegmentWrapperRepository).findAllExamSegmentWrappersForExam(examId);
 
     // When the PageList is created, it calls PageGroup#Create, which converts the OpportunityItem into an ItemResponse.
     // Therefore, the OpportunityItem created during setUp() is compared against the ItemResponse contained within the
@@ -184,10 +205,11 @@ public class RemoteResponseServiceTest {
     assertThat(result).hasSize(1);
 
     PageGroup pageGroup = result.get(0);
+    ExamPage examPage = examSegmentWrapper.getExamPages().get(0).getExamPage();
     assertThat(pageGroup.getNumber()).isEqualTo(examPage.getPagePosition());
     assertThat(pageGroup.getGroupID()).isEqualTo(examPage.getItemGroupKey());
-    assertThat(pageGroup.getSegmentPos()).isEqualTo(examPage.getSegmentPosition());
-    assertThat(pageGroup.getSegmentID()).isEqualTo(examPage.getSegmentId());
+    assertThat(pageGroup.getSegmentPos()).isEqualTo(examSegmentWrapper.getExamSegment().getSegmentPosition());
+    assertThat(pageGroup.getSegmentID()).isEqualTo(examSegmentWrapper.getExamSegment().getSegmentId());
     assertThat(pageGroup.getItemsRequired()).isEqualTo(1);
 
     // Verify the PageGroup only has one ItemResponse
@@ -208,32 +230,23 @@ public class RemoteResponseServiceTest {
       true,
       mockExamSegmentRepository,
       mockExamItemResponseRepository,
-      mockExamPageRepository);
+      mockExamSegmentWrapperRepository);
 
     when(mockLegacyResponseService.getOpportunityItems(any(OpportunityInstance.class), anyBoolean()))
       .thenReturn(pageList);
 
     PageList result = service.getOpportunityItems(opportunityInstance, true);
     verify(mockLegacyResponseService).getOpportunityItems(opportunityInstance, true);
-    verifyZeroInteractions(mockExamPageRepository);
+    verifyZeroInteractions(mockExamSegmentWrapperRepository);
 
     // When the PageList is created, it calls PageGroup#Create, which converts the OpportunityItem into an ItemResponse.
     // Therefore, the OpportunityItem created during setUp() is compared against the ItemResponse contained within the
     // PageGroup (which is itself contained within the PageList).
 
     // Verify the PageList only has one PageGroup
-    assertThat(result).hasSize(1);
-
-    PageGroup pageGroup = result.get(0);
-    assertThat(pageGroup.getNumber()).isEqualTo(examPage.getPagePosition());
-    assertThat(pageGroup.getGroupID()).isEqualTo(examPage.getItemGroupKey());
-    assertThat(pageGroup.getSegmentPos()).isEqualTo(examPage.getSegmentPosition());
-    assertThat(pageGroup.getSegmentID()).isEqualTo(examPage.getSegmentId());
-    assertThat(pageGroup.getItemsRequired()).isEqualTo(1);
+    assertThat(result).containsExactly(pageGroup);
 
     // Verify the PageGroup only has one ItemResponse
-    assertThat(pageGroup).hasSize(1);
-
     ItemResponse itemResponse = result.get(0).get(0);
     assertThat(itemResponse.getBankKey()).isEqualTo(opportunityItem.getBankKey());
     assertThat(itemResponse.getItemKey()).isEqualTo(opportunityItem.getItemKey());
@@ -243,21 +256,20 @@ public class RemoteResponseServiceTest {
   }
 
   @Test
-  @Ignore("Ignored until exam items/pages can be fetched from exam service")
   public void shouldGetPageListWhenLegacyCallsAreDisabledButRemoteCallsAReEnabled() throws ReturnStatusException {
     service = new RemoteResponseService(mockLegacyResponseService,
       true,
       false,
       mockExamSegmentRepository,
       mockExamItemResponseRepository,
-      mockExamPageRepository);
+      mockExamSegmentWrapperRepository);
 
-    when(mockExamPageRepository.findAllPagesWithItems(any(OpportunityInstance.class)))
-      .thenReturn(newArrayList(examPage));
+    when(mockExamSegmentWrapperRepository.findAllExamSegmentWrappersForExam(examId))
+      .thenReturn(Collections.singletonList(examSegmentWrapper));
 
     PageList result = service.getOpportunityItems(opportunityInstance, true);
     verifyZeroInteractions(mockLegacyResponseService);
-    verify(mockExamPageRepository).findAllPagesWithItems(opportunityInstance);
+    verify(mockExamSegmentWrapperRepository).findAllExamSegmentWrappersForExam(examId);
 
     // When the PageList is created, it calls PageGroup#Create, which converts the OpportunityItem into an ItemResponse.
     // Therefore, the OpportunityItem created during setUp() is compared against the ItemResponse contained within the
@@ -267,10 +279,11 @@ public class RemoteResponseServiceTest {
     assertThat(result).hasSize(1);
 
     PageGroup pageGroup = result.get(0);
+    ExamPage examPage = examSegmentWrapper.getExamPages().get(0).getExamPage();
     assertThat(pageGroup.getNumber()).isEqualTo(examPage.getPagePosition());
     assertThat(pageGroup.getGroupID()).isEqualTo(examPage.getItemGroupKey());
-    assertThat(pageGroup.getSegmentPos()).isEqualTo(examPage.getSegmentPosition());
-    assertThat(pageGroup.getSegmentID()).isEqualTo(examPage.getSegmentId());
+    assertThat(pageGroup.getSegmentPos()).isEqualTo(examSegmentWrapper.getExamSegment().getSegmentPosition());
+    assertThat(pageGroup.getSegmentID()).isEqualTo(examSegmentWrapper.getExamSegment().getSegmentId());
     assertThat(pageGroup.getItemsRequired()).isEqualTo(1);
 
     // Verify the PageGroup only has one ItemResponse
@@ -285,14 +298,13 @@ public class RemoteResponseServiceTest {
   }
 
   @Test
-  @Ignore("Ignored until exam items/pages can be fetched from exam service")
   public void shouldGetPageGroupWhenLegacyCallsAndRemoteCallsAreEnabled() throws ReturnStatusException {
     service = new RemoteResponseService(mockLegacyResponseService,
       true,
       true,
       mockExamSegmentRepository,
       mockExamItemResponseRepository,
-      mockExamPageRepository);
+      mockExamSegmentWrapperRepository);
 
     when(mockLegacyResponseService.getItemGroup(any(OpportunityInstance.class),
       anyInt(),
@@ -300,8 +312,8 @@ public class RemoteResponseServiceTest {
       anyString(),
       anyBoolean()))
       .thenReturn(pageGroup);
-    when(mockExamPageRepository.findPageWithItems(any(OpportunityInstance.class), anyInt()))
-      .thenReturn(examPage);
+    when(mockExamSegmentWrapperRepository.findExamSegmentWrappersForExamAndPagePosition(examId, 1))
+      .thenReturn(Optional.of(examSegmentWrapper));
 
     PageGroup result = service.getItemGroup(opportunityInstance,
       1,
@@ -314,12 +326,13 @@ public class RemoteResponseServiceTest {
       anyString(),
       anyString(),
       anyBoolean());
-    verify(mockExamPageRepository).findPageWithItems(any(OpportunityInstance.class), anyInt());
+    verify(mockExamSegmentWrapperRepository).findExamSegmentWrappersForExamAndPagePosition(examId, 1);
 
+    ExamPage examPage = examSegmentWrapper.getExamPages().get(0).getExamPage();
     assertThat(result.getNumber()).isEqualTo(examPage.getPagePosition());
     assertThat(result.getGroupID()).isEqualTo(examPage.getItemGroupKey());
-    assertThat(result.getSegmentPos()).isEqualTo(examPage.getSegmentPosition());
-    assertThat(result.getSegmentID()).isEqualTo(examPage.getSegmentId());
+    assertThat(result.getSegmentPos()).isEqualTo(examSegmentWrapper.getExamSegment().getSegmentPosition());
+    assertThat(result.getSegmentID()).isEqualTo(examSegmentWrapper.getExamSegment().getSegmentId());
     assertThat(result.getItemsRequired()).isEqualTo(1);
     assertThat(result).hasSize(1);
 
@@ -342,7 +355,7 @@ public class RemoteResponseServiceTest {
       true,
       mockExamSegmentRepository,
       mockExamItemResponseRepository,
-      mockExamPageRepository);
+      mockExamSegmentWrapperRepository);
 
     when(mockLegacyResponseService.getItemGroup(any(OpportunityInstance.class),
       anyInt(),
@@ -362,19 +375,13 @@ public class RemoteResponseServiceTest {
       anyString(),
       anyString(),
       anyBoolean());
-    verifyZeroInteractions(mockExamPageRepository);
-
-    assertThat(result.getNumber()).isEqualTo(examPage.getPagePosition());
-    assertThat(result.getGroupID()).isEqualTo(examPage.getItemGroupKey());
-    assertThat(result.getSegmentPos()).isEqualTo(examPage.getSegmentPosition());
-    assertThat(result.getSegmentID()).isEqualTo(examPage.getSegmentId());
-    assertThat(result.getItemsRequired()).isEqualTo(1);
-    assertThat(result).hasSize(1);
+    verifyZeroInteractions(mockExamSegmentWrapperRepository);
 
     // When the PageList is created, it calls PageGroup#Create, which converts the OpportunityItem into an ItemResponse.
     // Therefore, the OpportunityItem created during setUp() is compared against the ItemResponse contained within the
     // PageGroup (which is itself contained within the PageList).
 
+    assertThat(result).isEqualTo(pageGroup);
     ItemResponse itemResponse = result.get(0);
     assertThat(itemResponse.getBankKey()).isEqualTo(opportunityItem.getBankKey());
     assertThat(itemResponse.getItemKey()).isEqualTo(opportunityItem.getItemKey());
@@ -384,17 +391,16 @@ public class RemoteResponseServiceTest {
   }
 
   @Test
-  @Ignore("Ignored until exam items/pages can be fetched from exam service")
   public void shouldGetPageGroupWhenLegacyCallsAreDisabledButRemoteCallsAreEnabled() throws ReturnStatusException {
     service = new RemoteResponseService(mockLegacyResponseService,
       true,
       false,
       mockExamSegmentRepository,
       mockExamItemResponseRepository,
-      mockExamPageRepository);
+      mockExamSegmentWrapperRepository);
 
-    when(mockExamPageRepository.findPageWithItems(any(OpportunityInstance.class), anyInt()))
-      .thenReturn(examPage);
+    when(mockExamSegmentWrapperRepository.findExamSegmentWrappersForExamAndPagePosition(examId, 1))
+      .thenReturn(Optional.of(examSegmentWrapper));
 
     PageGroup result = service.getItemGroup(opportunityInstance,
       1,
@@ -403,12 +409,13 @@ public class RemoteResponseServiceTest {
       true);
 
     verifyZeroInteractions(mockLegacyResponseService);
-    verify(mockExamPageRepository).findPageWithItems(any(OpportunityInstance.class), anyInt());
+    verify(mockExamSegmentWrapperRepository).findExamSegmentWrappersForExamAndPagePosition(examId, 1);
 
+    ExamPage examPage = examSegmentWrapper.getExamPages().get(0).getExamPage();
     assertThat(result.getNumber()).isEqualTo(examPage.getPagePosition());
     assertThat(result.getGroupID()).isEqualTo(examPage.getItemGroupKey());
-    assertThat(result.getSegmentPos()).isEqualTo(examPage.getSegmentPosition());
-    assertThat(result.getSegmentID()).isEqualTo(examPage.getSegmentId());
+    assertThat(result.getSegmentPos()).isEqualTo(examSegmentWrapper.getExamSegment().getSegmentPosition());
+    assertThat(result.getSegmentID()).isEqualTo(examSegmentWrapper.getExamSegment().getSegmentId());
     assertThat(result).hasSize(1);
 
     // When the PageList is created, it calls PageGroup#Create, which converts the OpportunityItem into an ItemResponse.
@@ -430,6 +437,6 @@ public class RemoteResponseServiceTest {
       false,
       mockExamSegmentRepository,
       mockExamItemResponseRepository,
-      mockExamPageRepository);
+      mockExamSegmentWrapperRepository);
   }
 }
