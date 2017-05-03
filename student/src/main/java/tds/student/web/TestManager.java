@@ -20,11 +20,13 @@ import tds.student.services.data.TestOpportunity;
 import AIR.Common.Utilities.SpringApplicationContext;
 import TDS.Shared.Exceptions.ReturnStatusException;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 /**
  * @author temp_rreddy
  * 
  */
+
 public class TestManager
 {
   private final TestOpportunity _testOpp;
@@ -38,6 +40,22 @@ public class TestManager
     _testOpp = testOpp;
     _responseService = SpringApplicationContext.getBean ("integrationResponseService", IResponseService.class);
     _adaptiveService = SpringApplicationContext.getBean ("integrationAdaptiveService", IAdaptiveService.class);
+  }
+
+  /**
+   * Constructor to allow passing in dependencies instead of having the {@link tds.student.web.TestManager} wire them
+   * up internally (like the constructor above).
+   *
+   * @param testOpportunity The {@link tds.student.services.data.TestOpportunity} being managed
+   * @param responseService An implementation of the {@link tds.student.services.abstractions.IResponseService}
+   * @param adaptiveService An implementation of the {@link tds.student.services.abstractions.IAdaptiveService}
+   */
+  public TestManager(final TestOpportunity testOpportunity,
+                     final IResponseService responseService,
+                     final IAdaptiveService adaptiveService) {
+    _testOpp = testOpportunity;
+    _responseService = responseService;
+    _adaptiveService = adaptiveService;
   }
 
   private PageList         _pageList     = null;
