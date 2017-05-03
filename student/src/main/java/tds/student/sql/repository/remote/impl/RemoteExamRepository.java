@@ -19,7 +19,6 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
@@ -41,8 +40,6 @@ import tds.exam.ExamStatusCode;
 import tds.exam.ExamStatusRequest;
 import tds.exam.OpenExamRequest;
 import tds.exam.SegmentApprovalRequest;
-import tds.exam.error.ValidationErrorCode;
-import tds.student.sql.data.OpportunityInstance;
 import tds.student.sql.repository.remote.ExamRepository;
 
 @Repository

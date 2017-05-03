@@ -239,7 +239,7 @@ public class TestShellHandler extends TDSHandler
 
     ResponseData<String> responseData = reviewTestService.reviewTest(testOpp, new TestManager(testOpp));
 
-    if (responseData.getReplyCode() == TDSReplyCode.Error.getCode()) {
+    if (responseData.getReplyCode() != TDSReplyCode.OK.getCode()) {
       _tdsLogger.applicationError (responseData.getReplyText(), "reviewTest", request, null);
       HttpContext.getCurrentContext()
           .getResponse()

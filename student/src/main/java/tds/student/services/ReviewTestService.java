@@ -10,7 +10,7 @@ import tds.student.services.data.TestOpportunity;
 import tds.student.web.TestManager;
 
 /**
- * A service for
+ * A service for verifying an {@link tds.student.services.data.TestOpportunity} can be moved to the "review" status.
  */
 public interface ReviewTestService {
     /**
@@ -22,7 +22,6 @@ public interface ReviewTestService {
      *                        {@link tds.student.services.data.TestOpportunity}
      * @return A {@link AIR.Common.data.ResponseData} indicating success or failure
      * @throws ReturnStatusException In the event of a failure
-     * @throws IOException           In the event the {@link javax.servlet.http.HttpServletRequest} throws
      */
     ResponseData<String> reviewTest(final TestOpportunity testOpportunity,
                                     final TestManager testManager) throws ReturnStatusException;

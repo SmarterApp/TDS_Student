@@ -84,17 +84,6 @@ public interface ExamRepository {
    * @throws ReturnStatusException
    */
   Response<ExamConfiguration> startExam(final UUID examId, final String browserUserAgent) throws ReturnStatusException;
-//
-//  /**
-//   * Final review the {@link tds.exam.Exam} to verify it is complete and ready for transmission to downstream systems
-//   * prior to submitting it.
-//   *
-//   * @param opportunityInstance The {@link tds.student.sql.data.OpportunityInstance} representing the exam to review
-//   * @return A {@link tds.common.ValidationError} if the review process fails; otherwise {@code Optional.empty}, which
-//   * indicates success
-//   * @throws ReturnStatusException
-//   */
-//  Optional<ValidationError> reviewExam(final OpportunityInstance opportunityInstance) throws ReturnStatusException, IOException;
 
   /**
    * Creates a request to fetch {@link tds.exam.ExamSegment}s for an exam

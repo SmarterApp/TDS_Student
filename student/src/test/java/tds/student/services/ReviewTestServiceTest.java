@@ -24,9 +24,6 @@ import tds.student.sql.repository.remote.ExamRepository;
 import tds.student.web.TestManager;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyBoolean;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -80,21 +77,21 @@ public class ReviewTestServiceTest {
 
     @Test
     public void shouldReviewATestWhenLegacyCallsAndRemoteCallsAreEnabled() throws ReturnStatusException {
-        doNothing().when(mockTestManager).LoadResponses(anyBoolean());
+        doNothing().when(mockTestManager).LoadResponses(true);
         when(mockTestManager.GetVisiblePages()).thenReturn(mockPageList);
         when(mockTestManager.CheckIfTestComplete()).thenReturn(true);
         when(mockTestManager.IsTestLengthMet()).thenReturn(true);
         when(mockPageList.isAllCompleted()).thenReturn(true);
-        when(remoteExamRepository.updateStatus(any(UUID.class), anyString(), anyString()))
+        when(remoteExamRepository.updateStatus(opportunityInstance.getExamId(), "review", null))
             .thenReturn(Optional.<ValidationError>absent());
 
         final ResponseData<String> responseData = reviewTestService.reviewTest(testOpportunity, mockTestManager);
-        verify(mockTestManager).LoadResponses(anyBoolean());
+        verify(mockTestManager).LoadResponses(true);
         verify(mockTestManager).GetVisiblePages();
         verify(mockTestManager).CheckIfTestComplete();
         verify(mockTestManager).IsTestLengthMet();
         verify(mockPageList).isAllCompleted();
-        verify(remoteExamRepository).updateStatus(any(UUID.class), anyString(), anyString());
+        verify(remoteExamRepository).updateStatus(opportunityInstance.getExamId(), "review", null);
 
         assertThat(responseData.getReplyCode()).isEqualTo(TDSReplyCode.OK.getCode());
         assertThat(responseData.getData()).isNull();
@@ -108,16 +105,16 @@ public class ReviewTestServiceTest {
             true,
             false);
 
-        doNothing().when(mockTestManager).LoadResponses(anyBoolean());
+        doNothing().when(mockTestManager).LoadResponses(true);
         when(mockTestManager.GetVisiblePages()).thenReturn(mockPageList);
         when(mockTestManager.CheckIfTestComplete()).thenReturn(true);
         when(mockTestManager.IsTestLengthMet()).thenReturn(true);
         when(mockPageList.isAllCompleted()).thenReturn(true);
-        when(remoteExamRepository.updateStatus(any(UUID.class), anyString(), anyString()))
+        when(remoteExamRepository.updateStatus(opportunityInstance.getExamId(), "review", null))
             .thenReturn(Optional.<ValidationError>absent());
 
         final ResponseData<String> responseData = reviewTestService.reviewTest(testOpportunity, mockTestManager);
-        verify(mockTestManager).LoadResponses(anyBoolean());
+        verify(mockTestManager).LoadResponses(true);
         verify(mockTestManager).GetVisiblePages();
         verify(mockTestManager).CheckIfTestComplete();
         verify(mockTestManager).IsTestLengthMet();
@@ -136,19 +133,19 @@ public class ReviewTestServiceTest {
             false,
             true);
 
-        doNothing().when(mockTestManager).LoadResponses(anyBoolean());
+        doNothing().when(mockTestManager).LoadResponses(true);
         when(mockTestManager.GetVisiblePages()).thenReturn(mockPageList);
         when(mockTestManager.CheckIfTestComplete()).thenReturn(true);
         when(mockTestManager.IsTestLengthMet()).thenReturn(true);
         when(mockPageList.isAllCompleted()).thenReturn(true);
-        when(remoteExamRepository.updateStatus(any(UUID.class), anyString(), anyString()))
+        when(remoteExamRepository.updateStatus(opportunityInstance.getExamId(), "review", null))
             .thenReturn(Optional.<ValidationError>absent());
 
         final ResponseData<String> responseData = reviewTestService.reviewTest(testOpportunity, mockTestManager);
 
         // Since the ReviewTestServiceImpl#legacyReviewTest method is private, we can verify that the legacy entities
         // are not being interacted with.
-        verify(remoteExamRepository).updateStatus(any(UUID.class), anyString(), anyString());
+        verify(remoteExamRepository).updateStatus(opportunityInstance.getExamId(), "review", null);
         verifyZeroInteractions(mockTestManager);
         verifyZeroInteractions(mockPageList);
 
@@ -159,12 +156,12 @@ public class ReviewTestServiceTest {
 
     @Test
     public void shouldReturnTestLengthNotMetMessageWhenLegacyCallsAreEnabledAndIsTestLengthMetIsFalse() throws ReturnStatusException {
-        doNothing().when(mockTestManager).LoadResponses(anyBoolean());
+        doNothing().when(mockTestManager).LoadResponses(true);
         when(mockTestManager.GetVisiblePages()).thenReturn(mockPageList);
         when(mockTestManager.CheckIfTestComplete()).thenReturn(true);
         when(mockTestManager.IsTestLengthMet()).thenReturn(false);
         when(mockPageList.isAllCompleted()).thenReturn(true);
-        when(remoteExamRepository.updateStatus(any(UUID.class), anyString(), anyString()))
+        when(remoteExamRepository.updateStatus(opportunityInstance.getExamId(), "review", null))
             .thenReturn(Optional.<ValidationError>absent());
 
         final ResponseData<String> responseData = reviewTestService.reviewTest(testOpportunity, mockTestManager);
@@ -176,12 +173,12 @@ public class ReviewTestServiceTest {
 
     @Test
     public void shouldReturnGroupsNotAnsweredMessageWhenLegacyCallsAreEnabledAndIsAllCompletedIsFalse() throws ReturnStatusException {
-        doNothing().when(mockTestManager).LoadResponses(anyBoolean());
+        doNothing().when(mockTestManager).LoadResponses(true);
         when(mockTestManager.GetVisiblePages()).thenReturn(mockPageList);
         when(mockTestManager.CheckIfTestComplete()).thenReturn(true);
         when(mockTestManager.IsTestLengthMet()).thenReturn(true);
         when(mockPageList.isAllCompleted()).thenReturn(false);
-        when(remoteExamRepository.updateStatus(any(UUID.class), anyString(), anyString()))
+        when(remoteExamRepository.updateStatus(opportunityInstance.getExamId(), "review", null))
             .thenReturn(Optional.<ValidationError>absent());
 
         final ResponseData<String> responseData = reviewTestService.reviewTest(testOpportunity, mockTestManager);

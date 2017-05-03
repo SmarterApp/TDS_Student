@@ -26,7 +26,6 @@ import org.springframework.stereotype.Component;
  * @author temp_rreddy
  * 
  */
-
 public class TestManager
 {
   private final TestOpportunity _testOpp;
