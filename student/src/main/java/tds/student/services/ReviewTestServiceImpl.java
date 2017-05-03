@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 import tds.common.ValidationError;
+import tds.exam.ExamStatusCode;
 import tds.student.services.abstractions.IOpportunityService;
 import tds.student.services.data.PageList;
 import tds.student.services.data.TestOpportunity;
@@ -30,14 +31,12 @@ import tds.student.web.TestManager;
 public class ReviewTestServiceImpl implements ReviewTestService {
     private final IOpportunityService opportunityService;
     private final ExamRepository examRepository;
-    private final ITDSLogger tdsLogger;
     private final boolean isLegacyCallsEnabled;
     private final boolean isRemoteCallsEnabled;
 
     @Autowired
     public ReviewTestServiceImpl(@Qualifier("integrationOpportunityService") final IOpportunityService opportunityService,
                                  final ExamRepository examRepository,
-                                 final ITDSLogger tdsLogger,
                                  @Value("${tds.exam.legacy.enabled}") final boolean legacyCallsEnabled,
                                  @Value("${tds.exam.remote.enabled}") final boolean remoteExamCallsEnabled) {
         if (!remoteExamCallsEnabled && !legacyCallsEnabled) {
@@ -46,32 +45,31 @@ public class ReviewTestServiceImpl implements ReviewTestService {
 
         this.opportunityService = opportunityService;
         this.examRepository = examRepository;
-        this.tdsLogger = tdsLogger;
         isLegacyCallsEnabled = legacyCallsEnabled;
         isRemoteCallsEnabled = remoteExamCallsEnabled;
     }
 
     @Override
-    public ResponseData<String> reviewTest(final TestOpportunity testOpportunity,
-                                           final HttpServletRequest request) throws ReturnStatusException, IOException {
+    public ResponseData<String> reviewTest(final TestOpportunity testOpportunity, final TestManager testManager)
+        throws ReturnStatusException {
         ResponseData<String> responseData = new ResponseData<>(TDSReplyCode.OK.getCode(), "OK", null);
 
         if (isLegacyCallsEnabled) {
-            responseData = legacyReviewTest(testOpportunity, request);
+            responseData = legacyReviewTest(testOpportunity, testManager);
         }
 
         if (!isRemoteCallsEnabled) {
             return responseData;
         }
 
-        final Optional<ValidationError> maybeValidationError = examRepository.reviewExam(testOpportunity.getOppInstance());
+        final Optional<ValidationError> maybeValidationError =
+            examRepository.updateStatus(testOpportunity.getOppInstance().getExamId(),
+                ExamStatusCode.STATUS_REVIEW,
+                null);
         if (maybeValidationError.isPresent()) {
-            tdsLogger.applicationError (maybeValidationError.get().getMessage(), "reviewTest", request, null);
-            HttpContext.getCurrentContext()
-                .getResponse()
-                .sendError(HttpStatus.SC_FORBIDDEN, "Cannot end the test.");
-
-            responseData = null;
+            return new ResponseData<>(TDSReplyCode.Error.getCode(),
+                maybeValidationError.get().getMessage(),
+                null);
         }
 
         return responseData;
@@ -81,46 +79,37 @@ public class ReviewTestServiceImpl implements ReviewTestService {
      * Executes the legacy implementation of review exam logic.
      *
      * @param testOpportunity The {@link tds.student.services.data.TestOpportunity}
-     * @param request The HTTP request from the student application for reviewing the
-     *        {@link tds.student.services.data.TestOpportunity}
+     *                        {@link tds.student.services.data.TestOpportunity}
+     * @param testManager     The {@link tds.student.web.TestManager} that is handling the
+     *                        {@link tds.student.services.data.TestOpportunity}
      * @return A {@link AIR.Common.data.ResponseData} indicating success or failure
-     * @throws ReturnStatusException
-     * @throws IOException
+     * @throws ReturnStatusException In the event of a failure from one of the {@link tds.student.web.TestManager}
+     *                               methods
      */
-    private ResponseData<String> legacyReviewTest(final TestOpportunity testOpportunity,
-                                                  final HttpServletRequest request) throws ReturnStatusException, IOException {
+    private ResponseData<String> legacyReviewTest(final TestOpportunity testOpportunity, final TestManager testManager)
+        throws ReturnStatusException {
         // get responses
-        final TestManager testManager = new TestManager(testOpportunity);
         testManager.LoadResponses(true);
 
         // check if test length is met
         testManager.CheckIfTestComplete();
-
         if (!testManager.IsTestLengthMet()) {
-            // TODO mpatel - Check to see status and message in response and make sure following works
-            final String message = "Review Test: Cannot end test because test length is not met.";
-            tdsLogger.applicationError (message, "reviewTest", request, null);
-            HttpContext.getCurrentContext()
-                .getResponse()
-                .sendError(HttpStatus.SC_FORBIDDEN, "Cannot end the test.");
-
-            return null;
+            return new ResponseData<>(TDSReplyCode.Error.getCode(),
+                "Review Test: Cannot end test because test length is not met.",
+                null);
         }
 
         // check if all visible pages are completed
         PageList pageList = testManager.GetVisiblePages();
         if (!pageList.isAllCompleted()) {
-            final String message = "Review Test: Cannot end test because all the groups have not been answered.";
-            tdsLogger.applicationError (message, "reviewTest", request, null);
-            HttpContext.getCurrentContext()
-                .getResponse()
-                .sendError(HttpStatus.SC_FORBIDDEN, "Cannot end the test.");
-
-            return null;
+            return new ResponseData<>(TDSReplyCode.Error.getCode(),
+                "Review Test: Cannot end test because all the groups have not been answered.",
+                null);
         }
 
         // put test in review mode
-        OpportunityStatusChange statusChange = new OpportunityStatusChange (OpportunityStatusType.Review, true);
+        OpportunityStatusChange statusChange =
+            new OpportunityStatusChange(OpportunityStatusType.Review, true);
         opportunityService.setStatus(testOpportunity.getOppInstance(), statusChange);
 
         return new ResponseData<>(TDSReplyCode.OK.getCode(), "OK", null);

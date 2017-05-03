@@ -255,28 +255,6 @@ public class RemoteExamRepository implements ExamRepository {
   }
 
   @Override
-  public Optional<ValidationError> reviewExam(final OpportunityInstance opportunityInstance) throws ReturnStatusException, IOException {
-    UriComponents uriComponentsBuilder = UriComponentsBuilder.fromUriString("{examUrl}/{examId}/review")
-        .queryParam("sessionId", opportunityInstance.getSessionKey())
-        .queryParam("browserId", opportunityInstance.getExamBrowserKey())
-        .buildAndExpand(examUrl, opportunityInstance.getExamId());
-
-    try {
-      restTemplate.put(uriComponentsBuilder.encode().toUri(), null);
-    } catch (HttpClientErrorException hce) {
-      // An unprocessable entity response means that a validation error was returned by the exam service.  Extract the
-      // message and return it as a ValidationError to the caller.
-      if (hce.getStatusCode().equals(HttpStatus.UNPROCESSABLE_ENTITY)) {
-        return Optional.of(objectMapper.readValue(hce.getResponseBodyAsString(), ValidationError.class));
-      }
-    } catch (RestClientException rce) {
-      throw new ReturnStatusException(rce);
-    }
-
-    return Optional.absent();
-  }
-
-  @Override
   public List<ExamSegment> findExamSegments(UUID examId, UUID sessionId, UUID browserId) throws ReturnStatusException {
     HttpHeaders headers = new HttpHeaders();
     headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);

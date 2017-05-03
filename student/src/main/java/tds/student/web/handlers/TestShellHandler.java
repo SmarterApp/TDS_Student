@@ -231,23 +231,21 @@ public class TestShellHandler extends TDSHandler
 
   @RequestMapping (value = "TestShell.axd/complete")
   @ResponseBody
-  public ResponseData<String> reviewTest (@RequestParam Map<String, String> formParams, HttpServletRequest request) throws IOException, TDSSecurityException, ReturnStatusException {
+  public ResponseData<String> reviewTest (@RequestParam Map<String, String> formParams, HttpServletRequest request)
+    throws IOException, TDSSecurityException, ReturnStatusException {
     checkAuthenticated ();
 
     TestOpportunity testOpp = StudentContext.getTestOpportunity ();
 
-    ResponseData<String> responseData = reviewTestService.reviewTest(testOpp, request);
+    ResponseData<String> responseData = reviewTestService.reviewTest(testOpp, new TestManager(testOpp));
 
-    String latencies = parseOutLatencies (formParams);
-    if (latencies != null) {
-      TestShellAudit testShellAudit = null;
-      try {
-        ObjectMapper mapper = new ObjectMapper ();
-        testShellAudit = mapper.readValue (latencies, TestShellAudit.class);
-      } catch (IOException e) {
-        _logger.error (String.format ("Problem mapping pause request to TestShellAudit: %s", e.getMessage ()));
-      }
-      PerformTestShellAudit (testOpp, testShellAudit, request);
+    if (responseData.getReplyCode() == TDSReplyCode.Error.getCode()) {
+      _tdsLogger.applicationError (responseData.getReplyText(), "reviewTest", request, null);
+      HttpContext.getCurrentContext()
+          .getResponse()
+          .sendError(HttpStatus.SC_FORBIDDEN, "Cannot end the test.");
+
+      return null;
     }
 
     return responseData;

@@ -297,51 +297,51 @@ public class RemoteExamRepositoryTest {
     remoteExamRepository.findExamAssessmentInfo(1234, UUID.randomUUID(), "test");
   }
 
-  @Test
-  public void shouldReviewAnExam() throws Exception {
-    final OpportunityInstance opportunityInstance = new OpportunityInstance(UUID.randomUUID(),
-        UUID.randomUUID(),
-        UUID.randomUUID(),
-        UUID.randomUUID(),
-        UUID.randomUUID(),
-        "exam-client",
-        "browser-user-agent");
-
-    doNothing().when(mockRestTemplate).put(isA(URI.class), isNull());
-
-    final Optional<ValidationError> maybeError = remoteExamRepository.reviewExam(opportunityInstance);
-
-    verify(mockRestTemplate).put(isA(URI.class), isNull());
-
-    assertThat(maybeError.isPresent()).isFalse();
-  }
-
-  @Test
-  public void shouldReturnValidationErrorWhenExamIsNotComplete() throws Exception {
-    final OpportunityInstance opportunityInstance = new OpportunityInstance(UUID.randomUUID(),
-        UUID.randomUUID(),
-        UUID.randomUUID(),
-        UUID.randomUUID(),
-        UUID.randomUUID(),
-        "exam-client",
-        "browser-user-agent");
-    final String error = "{\n" +
-        "  \"code\": \"examIncomplete\",\n" +
-        "  \"message\": \"Review Test: Cannot end test because test length is not met.\"\n" +
-        "}";
-    final HttpClientErrorException ex = new HttpClientErrorException(HttpStatus.UNPROCESSABLE_ENTITY,
-        "Unprocessable Entity",
-        error.getBytes(Charset.defaultCharset()),
-        Charset.defaultCharset());
-
-    doThrow(ex).when(mockRestTemplate).put(isA(URI.class), isNull());
-
-    final Optional<ValidationError> maybeError = remoteExamRepository.reviewExam(opportunityInstance);
-    verify(mockRestTemplate).put(isA(URI.class), isNull());
-
-    assertThat(maybeError.isPresent()).isTrue();
-    ValidationError validationError = maybeError.get();
-    assertThat(validationError.getCode()).isEqualTo(ValidationErrorCode.EXAM_INCOMPLETE);
-    assertThat(validationError.getMessage()).isEqualTo("Review Test: Cannot end test because test length is not met.");
-  }
+//  @Test
+//  public void shouldReviewAnExam() throws Exception {
+//    final OpportunityInstance opportunityInstance = new OpportunityInstance(UUID.randomUUID(),
+//        UUID.randomUUID(),
+//        UUID.randomUUID(),
+//        UUID.randomUUID(),
+//        UUID.randomUUID(),
+//        "exam-client",
+//        "browser-user-agent");
+//
+//    doNothing().when(mockRestTemplate).put(isA(URI.class), isNull());
+//
+//    final Optional<ValidationError> maybeError = remoteExamRepository.reviewExam(opportunityInstance);
+//
+//    verify(mockRestTemplate).put(isA(URI.class), isNull());
+//
+//    assertThat(maybeError.isPresent()).isFalse();
+//  }
+//
+//  @Test
+//  public void shouldReturnValidationErrorWhenExamIsNotComplete() throws Exception {
+//    final OpportunityInstance opportunityInstance = new OpportunityInstance(UUID.randomUUID(),
+//        UUID.randomUUID(),
+//        UUID.randomUUID(),
+//        UUID.randomUUID(),
+//        UUID.randomUUID(),
+//        "exam-client",
+//        "browser-user-agent");
+//    final String error = "{\n" +
+//        "  \"code\": \"examIncomplete\",\n" +
+//        "  \"message\": \"Review Test: Cannot end test because test length is not met.\"\n" +
+//        "}";
+//    final HttpClientErrorException ex = new HttpClientErrorException(HttpStatus.UNPROCESSABLE_ENTITY,
+//        "Unprocessable Entity",
+//        error.getBytes(Charset.defaultCharset()),
+//        Charset.defaultCharset());
+//
+//    doThrow(ex).when(mockRestTemplate).put(isA(URI.class), isNull());
+//
+//    final Optional<ValidationError> maybeError = remoteExamRepository.reviewExam(opportunityInstance);
+//    verify(mockRestTemplate).put(isA(URI.class), isNull());
+//
+//    assertThat(maybeError.isPresent()).isTrue();
+//    ValidationError validationError = maybeError.get();
+//    assertThat(validationError.getCode()).isEqualTo(ValidationErrorCode.EXAM_INCOMPLETE);
+//    assertThat(validationError.getMessage()).isEqualTo("Review Test: Cannot end test because test length is not met.");
+//  }
 }
