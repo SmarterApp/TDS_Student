@@ -17,9 +17,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import tds.dll.common.performance.caching.CacheType;
 import tds.student.tdslogger.TDSLogger;
 import AIR.Common.TDSLogger.ITDSLogger;
 import TDS.Shared.Data.ReturnStatus;
@@ -58,7 +60,7 @@ public class MessageService implements IMessageService
   // / <summary>
   // / Load the client/system name from SQL.
   // / </summary>
-
+  @Cacheable(CacheType.LongTerm)
   public MessageSystem load (String language, List<String> contextList) throws ReturnStatusException {
     // get all the messages that match the context
     List<MessageDTO> messageDTOs = null;
@@ -73,6 +75,7 @@ public class MessageService implements IMessageService
     return _messageSystem;
   }
 
+  @Cacheable(CacheType.LongTerm)
   public String get (String context, String language, String messageKey) throws ReturnStatusException {
     String msgs = null;
     try {
