@@ -8,6 +8,21 @@
  ******************************************************************************/
 package tds.student.sql.repositorysp;
 
+import AIR.Common.DB.AbstractDAO;
+import AIR.Common.DB.SQLConnection;
+import AIR.Common.DB.SqlParametersMaps;
+import AIR.Common.DB.results.DbResultRecord;
+import AIR.Common.DB.results.MultiDataResultSet;
+import AIR.Common.DB.results.SingleDataResultSet;
+import TDS.Shared.Exceptions.ReturnStatusException;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,13 +30,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
+import tds.dll.common.performance.caching.CacheType;
 import tds.student.sql.abstractions.IItemBankRepository;
 import tds.student.sql.data.AccList;
 import tds.student.sql.data.AccListParseData;
@@ -30,13 +39,6 @@ import tds.student.sql.data.TestForm;
 import tds.student.sql.data.TestGrade;
 import tds.student.sql.data.TestProperties;
 import tds.student.sql.data.TestSegment;
-import AIR.Common.DB.AbstractDAO;
-import AIR.Common.DB.SQLConnection;
-import AIR.Common.DB.SqlParametersMaps;
-import AIR.Common.DB.results.DbResultRecord;
-import AIR.Common.DB.results.MultiDataResultSet;
-import AIR.Common.DB.results.SingleDataResultSet;
-import TDS.Shared.Exceptions.ReturnStatusException;
 
 @Component
 @Scope ("prototype")
@@ -281,6 +283,7 @@ public class ItemBankRepository extends AbstractDAO implements IItemBankReposito
     return testforms;
   }
 
+  @Cacheable(CacheType.LongTerm)
   public String getItemPath (long bankKey, long itemKey) throws ReturnStatusException {
     String itemPath = null;
     final String CMD_GET_ITEM_PATH = "BEGIN; SET NOCOUNT ON; exec IB_GetItemPath ${clientName}, ${bankKey}, ${itemKey}; end;";
