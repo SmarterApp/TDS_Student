@@ -253,6 +253,7 @@ public class ItemBankServiceImpl extends AbstractDAO implements ItemBankService 
         return testforms;
     }
 
+    @Cacheable(CacheType.LongTerm)
     public String getItemPath (long bankKey, long itemKey) throws ReturnStatusException {
         String itemPath = null;
 
@@ -274,6 +275,7 @@ public class ItemBankServiceImpl extends AbstractDAO implements ItemBankService 
         return itemPath;
     }
 
+    @Cacheable(CacheType.LongTerm)
     public String getStimulusPath (long bankKey, long stimulusKey) throws ReturnStatusException {
         String stimulusPath = null;
 
