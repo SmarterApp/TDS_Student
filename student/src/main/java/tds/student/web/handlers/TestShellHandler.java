@@ -368,8 +368,7 @@ public class TestShellHandler extends TDSHandler
     checkAuthenticated ();
 
     OpportunityInstance oppInstance = StudentContext.getOppInstance ();
-
-    _oppRepository.exitSegment (oppInstance, segmentPosition);
+    _oppService.exitSegment(oppInstance, segmentPosition);
   }
 
   @RequestMapping (value = "TestShell.axd/recordItemComment")

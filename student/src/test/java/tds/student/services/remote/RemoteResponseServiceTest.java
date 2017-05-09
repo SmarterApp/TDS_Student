@@ -127,7 +127,7 @@ public class RemoteResponseServiceTest {
       .withCreatedAt(Instant.now())
       .withItemGroupKey(opportunityItem.getGroupID())
       .withSegmentKey("segment key")
-      .withGroupItemsRequired(true)
+      .withGroupItemsRequired(-1)
       .build();
 
     ExamSegment examSegment = new ExamSegment.Builder()
@@ -211,6 +211,7 @@ public class RemoteResponseServiceTest {
     assertThat(pageGroup.getSegmentPos()).isEqualTo(examSegmentWrapper.getExamSegment().getSegmentPosition());
     assertThat(pageGroup.getSegmentID()).isEqualTo(examSegmentWrapper.getExamSegment().getSegmentId());
     assertThat(pageGroup.getItemsRequired()).isEqualTo(1);
+    assertThat(pageGroup.getNumRequired()).isEqualTo(-1);
 
     // Verify the PageGroup only has one ItemResponse
     assertThat(pageGroup).hasSize(1);
