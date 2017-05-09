@@ -171,7 +171,7 @@ public class RemoteResponseService implements IResponseService {
           opportunityItem.setGroupID(page.getItemGroupKey());
           opportunityItem.setSegment(examSegment.getSegmentPosition());
           opportunityItem.setSegmentID(examSegment.getSegmentId());
-          opportunityItem.setGroupItemsRequired(page.isGroupItemsRequired() ? -1 : 0);
+          opportunityItem.setGroupItemsRequired(page.getGroupItemsRequired());
           opportunityItem.setIsRequired(item.isRequired());
           opportunityItem.setItemFile(item.getItemFilePath());
           opportunityItem.setStimulusFile(getStimulusFilePath(item));
