@@ -29,7 +29,7 @@ public class ApplicationStartupLogger implements ApplicationListener<ContextRefr
     // This event fires multiple times - we only want to log the first occurrence.
     if (!logged) {
       logged = true;
-      logger.info(logger.getApp(), APP_STARTUP.name(), null, null, null);
+      logger.trace(logger.getApp(), APP_STARTUP.name(), null, null, null);
     }
   }
 }
