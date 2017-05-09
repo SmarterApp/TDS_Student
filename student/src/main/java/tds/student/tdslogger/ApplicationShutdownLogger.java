@@ -29,7 +29,7 @@ public class ApplicationShutdownLogger implements ApplicationListener<ContextClo
     // This event fires multiple times - we only want to log the first occurrence.
     if (!logged) {
       logged = true;
-      logger.info(logger.getApp(), APP_SHUTDOWN.name(), null, null, null);
+      logger.trace(logger.getApp(), APP_SHUTDOWN.name(), null, null, null);
     }
   }
 }
