@@ -39,8 +39,8 @@ public class ExamCompletionServiceImpl implements ExamCompletionService {
 
         this.opportunityService = opportunityService;
         this.examRepository = examRepository;
-        isLegacyCallsEnabled = false;
-        isRemoteCallsEnabled = true;
+        isLegacyCallsEnabled = legacyCallsEnabled;
+        isRemoteCallsEnabled = remoteExamCallsEnabled;
     }
 
     @Override
