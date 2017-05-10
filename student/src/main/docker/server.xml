@@ -69,10 +69,8 @@
              Define a non-SSL HTTP/1.1 Connector on port 8080
         -->
         <Connector port="8080"
-                   protocol="org.apache.coyote.http11.Http11NioProtocol"
+                   protocol="org.apache.coyote.http11.Http11Protocol"
                    acceptCount="10"
-                   maxConnections="1000"
-                   minSpareThreads="500"
                    maxHttpHeaderSize="18192"
                    URIEncoding="UTF-8"
                    connectionTimeout="20000"
