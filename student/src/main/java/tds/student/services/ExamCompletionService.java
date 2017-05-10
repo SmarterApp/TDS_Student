@@ -20,9 +20,11 @@ public interface ReviewTestService {
      * @param testOpportunity The {@link tds.student.services.data.TestOpportunity}
      * @param testManager     The {@link tds.student.web.TestManager} handling the
      *                        {@link tds.student.services.data.TestOpportunity}
+     * @param statusCode      The code of the status to set the Exam to
      * @return A {@link AIR.Common.data.ResponseData} indicating success or failure
      * @throws ReturnStatusException In the event of a failure
      */
     ResponseData<String> reviewTest(final TestOpportunity testOpportunity,
-                                    final TestManager testManager) throws ReturnStatusException;
+                                    final TestManager testManager,
+                                    final String statusCode) throws ReturnStatusException;
 }
