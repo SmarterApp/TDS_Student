@@ -31,12 +31,14 @@ import TDS.Shared.Exceptions.ReturnStatusException;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import tds.dll.api.IProctorDLL;
 import TDS.Shared.Messages.ContextType;
 import TDS.Shared.Messages.MessageDTO;
+import tds.dll.common.performance.caching.CacheType;
 
 @Component
 @Scope ("prototype")
@@ -54,6 +56,8 @@ public class MessageRepository extends AbstractDAO implements IMessageRepository
   * Gets all the message translations available for a list of contexts.
   * This will return ServerSide and ClientSide messages.
   */
+  @Override
+  @Cacheable(CacheType.LongTerm)
   public List<MessageDTO> getMessages (String language, String contextlist) throws ReturnStatusException {
     // check for language
     if (StringUtils.isEmpty (language)) {
@@ -108,6 +112,8 @@ public class MessageRepository extends AbstractDAO implements IMessageRepository
   * If the translation is not found then will return the app key that was
   * passed in.
   */
+  @Override
+  @Cacheable(CacheType.LongTerm)
   public String getMessage (String contextType, String context, String appKey, String language) throws ReturnStatusException {
 
     _Ref<String> message = new _Ref<String> ();

@@ -8,21 +8,6 @@
  ******************************************************************************/
 package tds.student.services;
 
-import java.io.File;
-import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
-import tds.dll.common.performance.caching.CacheType;
-import tds.student.tdslogger.TDSLogger;
 import AIR.Common.TDSLogger.ITDSLogger;
 import TDS.Shared.Data.ReturnStatus;
 import TDS.Shared.Exceptions.ReturnStatusException;
@@ -34,12 +19,23 @@ import TDS.Shared.Messages.MessageContextType;
 import TDS.Shared.Messages.MessageDTO;
 import TDS.Shared.Messages.MessageSystem;
 import TDS.Shared.Messages.MessageXml;
+import com.google.common.base.Joiner;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+import java.io.File;
+import java.util.List;
 
 // TODO Shiva move this to a common project
 @Component
 @Scope ("prototype")
 public class MessageService implements IMessageService
 {
+  private final static Joiner KEY_JOINER = Joiner.on("|");
 
   @Autowired
   private ITDSLogger               _tdsLogger;
@@ -60,7 +56,7 @@ public class MessageService implements IMessageService
   // / <summary>
   // / Load the client/system name from SQL.
   // / </summary>
-  @Cacheable(CacheType.LongTerm)
+  @Override
   public MessageSystem load (String language, List<String> contextList) throws ReturnStatusException {
     // get all the messages that match the context
     List<MessageDTO> messageDTOs = null;
@@ -75,7 +71,7 @@ public class MessageService implements IMessageService
     return _messageSystem;
   }
 
-  @Cacheable(CacheType.LongTerm)
+  @Override
   public String get (String context, String language, String messageKey) throws ReturnStatusException {
     String msgs = null;
     try {
@@ -145,5 +141,4 @@ public class MessageService implements IMessageService
     // get/create translation
     message.addTranslation (messageDTO.getLanguage (), messageDTO.getSubject (), messageDTO.getGrade (), messageDTO.getMessage ());
   }
-
 }
