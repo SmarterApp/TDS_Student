@@ -50,7 +50,7 @@ public class ExamCompletionServiceImpl implements ExamCompletionService {
         ResponseData<String> responseData = new ResponseData<>(TDSReplyCode.OK.getCode(), "OK", null);
 
         if (isLegacyCallsEnabled) {
-            responseData = legacyReviewTest(testOpportunity, testManager, statusCode);
+            responseData = legacyValidateAndUpdateTest(testOpportunity, testManager, statusCode);
         }
 
         if (!isRemoteCallsEnabled) {
@@ -82,9 +82,13 @@ public class ExamCompletionServiceImpl implements ExamCompletionService {
      * @throws ReturnStatusException In the event of a failure from one of the {@link tds.student.web.TestManager}
      *                               methods
      */
-    private ResponseData<String> legacyReviewTest(final TestOpportunity testOpportunity, final TestManager testManager,
-                                                  final String statusCode)
+    private ResponseData<String> legacyValidateAndUpdateTest(final TestOpportunity testOpportunity, final TestManager testManager,
+                                                             final String statusCode)
         throws ReturnStatusException {
+        if (!ExamStatusCode.STATUS_REVIEW.equals(statusCode) && !ExamStatusCode.STATUS_COMPLETED.equals(statusCode)) {
+            throw new IllegalArgumentException("Can only call the legacy method with a status code of 'review' or 'completed'.");
+        }
+
         // get responses
         testManager.LoadResponses(true);
 
