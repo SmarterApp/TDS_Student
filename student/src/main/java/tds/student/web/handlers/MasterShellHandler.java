@@ -657,6 +657,11 @@ public class MasterShellHandler extends TDSHandler
   public ResponseData<TestSummary> scoreTest (HttpServletRequest request) throws ReturnStatusException, TDSSecurityException, StudentContextException {
     checkAuthenticated ();
     TestOpportunity testOpp = StudentContext.getTestOpportunity ();
+    // validate context
+    if (testOpp == null) {
+      StudentContext.throwMissingException();
+    }
+    
     examCompletionService.updateStatusWithValidation(testOpp, new TestManager(testOpp), ExamStatusCode.STATUS_COMPLETED);
     // Send the exam status to ART
     sendTestStatus (StudentContext.getTestee ().getId (), testOpp.getTestKey (), testOpp.getOppInstance ().getKey (), TestStatusType.COMPLETED);
