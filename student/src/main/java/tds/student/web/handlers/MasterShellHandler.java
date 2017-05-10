@@ -51,6 +51,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import tds.blackbox.web.handlers.TDSHandler;
+import tds.exam.ExamStatusCode;
 import tds.itemrenderer.data.AccLookup;
 import tds.itemrenderer.data.AccProperties;
 import tds.student.data.Segment;
@@ -59,6 +60,7 @@ import tds.student.performance.services.ItemBankService;
 import tds.student.proxy.data.Proctor;
 import tds.student.sbacossmerge.data.GeoComponent;
 import tds.student.sbacossmerge.data.GeoType;
+import tds.student.services.ExamCompletionService;
 import tds.student.services.abstractions.IAccommodationsService;
 import tds.student.services.abstractions.ILoginService;
 import tds.student.services.abstractions.IOpportunityService;
@@ -69,7 +71,6 @@ import tds.student.services.data.ApprovalInfo;
 import tds.student.services.data.ApprovalInfo.OpportunityApprovalStatus;
 import tds.student.services.data.LoginInfo;
 import tds.student.services.data.LoginKeyValues;
-import tds.student.services.data.PageList;
 import tds.student.services.data.TestOpportunity;
 import tds.student.services.data.TestScoreStatus;
 import tds.student.sql.abstractions.IOpportunityRepository;
@@ -147,6 +148,9 @@ public class MasterShellHandler extends TDSHandler
   @Autowired
   @Qualifier("integrationOpportunityService")
   private IOpportunityService    _oppService;
+
+  @Autowired
+  private ExamCompletionService examCompletionService;
 
   /***
    * 
@@ -499,8 +503,6 @@ public class MasterShellHandler extends TDSHandler
     StudentContext.saveTestConfig (testConfig);
     StudentCookie.writeStore ();
     sendTestStatus (StudentContext.getTestee ().getId (), testKey, oppInstance.getKey (), TestStatusType.STARTED);
-    // log browser info
-    //TODO: Remove this call when we are ready to disable legacy calls
 //    logBrowser (oppInstance, testConfig.getRestart ());
     TestInfo testInfo = loadTestInfo (oppInstance, testConfig);
 
@@ -654,54 +656,17 @@ public class MasterShellHandler extends TDSHandler
   @ResponseBody
   public ResponseData<TestSummary> scoreTest (HttpServletRequest request) throws ReturnStatusException, TDSSecurityException, StudentContextException {
     checkAuthenticated ();
-
     TestOpportunity testOpp = StudentContext.getTestOpportunity ();
-
     // validate context
-    if (testOpp == null)
-      StudentContext.throwMissingException ();
-
-    TestManager testManager = new TestManager (testOpp);
-    testManager.LoadResponses (true);
-
-    // If there are more adaptive item groups to take then stop here and
-    // return
-    testManager.CheckIfTestComplete ();
-
-    if (!testManager.IsTestLengthMet ()) {
-      String message = "Review: A student has tried to complete the test but there are still more items left to be generated.";
-      _tdsLogger.applicationError (message, "scoreTest", request, null);
-      HttpContext.getCurrentContext ().getResponse ().setStatus (HttpStatus.SC_FORBIDDEN);
-      return new ResponseData<TestSummary> (TDSReplyCode.Denied.getCode (), message, null);
+    if (testOpp == null) {
+      StudentContext.throwMissingException();
     }
-
-    // check if all visible pages are completed
-    PageList pages = testManager.GetVisiblePages ();
-
-    if (!pages.isAllCompleted ()) {
-      String message = "Review: A student has tried to complete the test but all the questions are not completed.";
-      _tdsLogger.applicationError (message, "scoreTest", request, null);
-      HttpContext.getCurrentContext ().getResponse ().setStatus (HttpStatus.SC_FORBIDDEN);
-      return new ResponseData<TestSummary> (TDSReplyCode.Denied.getCode (), message, null);
-    }
-
-    // complete test
-    _oppService.setStatus (testOpp.getOppInstance (), new OpportunityStatusChange (OpportunityStatusType.Completed, true));
-
+    
+    examCompletionService.updateStatusWithValidation(testOpp, new TestManager(testOpp), ExamStatusCode.STATUS_COMPLETED);
+    // Send the exam status to ART
     sendTestStatus (StudentContext.getTestee ().getId (), testOpp.getTestKey (), testOpp.getOppInstance ().getKey (), TestStatusType.COMPLETED);
 
-    // score the test
-    TestScoreStatus scoreStatus = _testScoringService.scoreTest (testOpp.getOppInstance ().getKey (), testOpp.getTestKey ());
-
-    // if we successfully scored the record the server latency
-    if (scoreStatus == TestScoreStatus.Submitted) {
-      ServerLatency latency = ServerLatency.getCurrent (HttpContext.getCurrentContext ());
-      latency.setOperation (ServerLatency.OperationType.Score);
-    }
-
-    // try and get scores
-    return getTestSummary ();
-
+    return new ResponseData<TestSummary> (TDSReplyCode.OK.getCode (), "OK", new TestSummary());
   }
 
   /***
