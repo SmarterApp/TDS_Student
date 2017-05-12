@@ -44,7 +44,7 @@ public class TestOpportunityDaoTest extends IntegrationTest {
 
     private final String expectedTestKey = "(SBAC_PT)SBAC-IRP-Perf-MATH-3-Summer-2015-2016";
     private final Long expectedTestee = Math.round(ThreadLocalRandom.current().nextDouble(100, 500));
-    private final String expectedTestId = "SBAC-IRP-Perf-MATH-3";
+    private final String expectedTestId = "MY-SUPER-AWESOME-TEST-ID";
     private final Integer expectedOpportunity = 1;
     private final String expectedStatus = "pending";
     private final String expectedSubject = "MATH";
