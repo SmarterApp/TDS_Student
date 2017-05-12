@@ -22,17 +22,17 @@ import tds.student.web.TestManager;
 
 @Service
 @Scope("prototype")
-public class ReviewTestServiceImpl implements ReviewTestService {
+public class ExamCompletionServiceImpl implements ExamCompletionService {
     private final IOpportunityService opportunityService;
     private final ExamRepository examRepository;
     private final boolean isLegacyCallsEnabled;
     private final boolean isRemoteCallsEnabled;
 
     @Autowired
-    public ReviewTestServiceImpl(@Qualifier("integrationOpportunityService") final IOpportunityService opportunityService,
-                                 final ExamRepository examRepository,
-                                 @Value("${tds.exam.legacy.enabled}") final boolean legacyCallsEnabled,
-                                 @Value("${tds.exam.remote.enabled}") final boolean remoteExamCallsEnabled) {
+    public ExamCompletionServiceImpl(@Qualifier("integrationOpportunityService") final IOpportunityService opportunityService,
+                                     final ExamRepository examRepository,
+                                     @Value("${tds.exam.legacy.enabled}") final boolean legacyCallsEnabled,
+                                     @Value("${tds.exam.remote.enabled}") final boolean remoteExamCallsEnabled) {
         if (!remoteExamCallsEnabled && !legacyCallsEnabled) {
             throw new IllegalStateException("Remote and legacy calls are both disabled.  Please check progman configuration for 'tds.exam.remote.enabled' and 'tds.exam.legacy.enabled' settings");
         }
@@ -44,12 +44,13 @@ public class ReviewTestServiceImpl implements ReviewTestService {
     }
 
     @Override
-    public ResponseData<String> reviewTest(final TestOpportunity testOpportunity, final TestManager testManager)
+    public ResponseData<String> updateStatusWithValidation(final TestOpportunity testOpportunity, final TestManager testManager,
+                                                           final String statusCode)
         throws ReturnStatusException {
         ResponseData<String> responseData = new ResponseData<>(TDSReplyCode.OK.getCode(), "OK", null);
 
         if (isLegacyCallsEnabled) {
-            responseData = legacyReviewTest(testOpportunity, testManager);
+            responseData = legacyValidateAndUpdateTest(testOpportunity, testManager, statusCode);
         }
 
         if (!isRemoteCallsEnabled) {
@@ -58,8 +59,9 @@ public class ReviewTestServiceImpl implements ReviewTestService {
 
         final Optional<ValidationError> maybeValidationError =
             examRepository.updateStatus(testOpportunity.getOppInstance().getExamId(),
-                ExamStatusCode.STATUS_REVIEW,
+                statusCode,
                 null);
+
         if (maybeValidationError.isPresent()) {
             return new ResponseData<>(TDSReplyCode.Error.getCode(),
                 maybeValidationError.get().getMessage(),
@@ -80,8 +82,13 @@ public class ReviewTestServiceImpl implements ReviewTestService {
      * @throws ReturnStatusException In the event of a failure from one of the {@link tds.student.web.TestManager}
      *                               methods
      */
-    private ResponseData<String> legacyReviewTest(final TestOpportunity testOpportunity, final TestManager testManager)
+    private ResponseData<String> legacyValidateAndUpdateTest(final TestOpportunity testOpportunity, final TestManager testManager,
+                                                             final String statusCode)
         throws ReturnStatusException {
+        if (!ExamStatusCode.STATUS_REVIEW.equals(statusCode) && !ExamStatusCode.STATUS_COMPLETED.equals(statusCode)) {
+            throw new IllegalArgumentException("Can only call the legacy method with a status code of 'review' or 'completed'.");
+        }
+
         // get responses
         testManager.LoadResponses(true);
 
@@ -103,7 +110,7 @@ public class ReviewTestServiceImpl implements ReviewTestService {
 
         // put test in review mode
         OpportunityStatusChange statusChange =
-            new OpportunityStatusChange(OpportunityStatusType.Review, true);
+            new OpportunityStatusChange(OpportunityStatusType.parse(statusCode), true);
         opportunityService.setStatus(testOpportunity.getOppInstance(), statusChange);
 
         return new ResponseData<>(TDSReplyCode.OK.getCode(), "OK", null);
