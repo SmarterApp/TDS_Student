@@ -35,7 +35,6 @@ import java.util.List;
 @Scope ("prototype")
 public class MessageService implements IMessageService
 {
-  private final static Joiner KEY_JOINER = Joiner.on("|");
 
   @Autowired
   private ITDSLogger               _tdsLogger;
