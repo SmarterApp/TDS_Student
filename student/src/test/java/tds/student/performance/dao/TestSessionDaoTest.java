@@ -160,7 +160,7 @@ public class TestSessionDaoTest extends IntegrationTest {
 
         Assert.assertEquals(null, result.getTestId());
         Assert.assertEquals((Integer)1, result.getOpportunityExpiration());
-        Assert.assertEquals((Integer)10, result.getOpportunityRestartWindowMinutes());
+        Assert.assertEquals((Integer)10, result.getOpportunityRestartMinutes());
         Assert.assertEquals((Integer)(-1), result.getOpportunityDelayDays());
         Assert.assertEquals((Integer)40, result.getInterfaceTimeoutMinutes());
         Assert.assertEquals((Integer)200, result.getRequestInterfaceTimeoutMinutes());
