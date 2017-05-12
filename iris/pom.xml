@@ -13,7 +13,6 @@
 
 	<properties>
 		<shared-master.version>3.0.1</shared-master.version>
-		<tds-dll.version>3.0.0</tds-dll.version>
 	</properties>
 
 	<dependencies>

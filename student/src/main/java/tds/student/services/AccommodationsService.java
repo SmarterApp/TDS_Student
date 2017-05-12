@@ -397,7 +397,7 @@ public class AccommodationsService implements IAccommodationsService
     // if this is PT then remove all acc's that are disabled for guest sessions
     try {
       if (isGuestSession)
-        CollectionUtils.removeAll (accList, CollectionUtils.select (accList, new Predicate ()
+        CollectionUtils.removeAll (accList.getData(), CollectionUtils.select (accList.getData(), new Predicate ()
         {
           public boolean evaluate (Object object) {
             return ((Data) object).isDisableOnGuestSession ();

@@ -153,14 +153,14 @@
 		</beans:property>
 
 		<beans:property name="poolName" value="AIRHikariCP" />
-		<beans:property name="maxLifetime" value="1800000" />
+		<beans:property name="maxLifetime" value="${datasource.maxLifetime:1800000}" />
 		<beans:property name="minimumIdle" value="${datasource.minPoolSize:5}" />
 		<beans:property name="maximumPoolSize" value="${datasource.maxPoolSize:20}" />
-		<!-- <beans:property name="leakDetectionThreshold" value="15000" /> -->
+		<beans:property name="connectionTimeout" value="${datasource.connectionTimeout:30000}" />
+		<beans:property name="leakDetectionThreshold" value="${datasource.leakDetectionThreshold:0}" />
 
 		<!-- The follow values are the defaults -->
 		<!--<beans:property name="autoCommit" value="true" />-->
-		<!--<beans:property name="connectionTimeout" value="30000" />-->
 		<!--<beans:property name="idleTimeout" value="30000" /> &lt;!&ndash; connect_timeout on MySQL is 60 seconds, and HikariCP recommends making this 30 seconds less than that value &ndash;&gt;-->
 	</beans:bean>
 

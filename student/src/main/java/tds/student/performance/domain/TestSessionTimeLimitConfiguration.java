@@ -64,7 +64,7 @@ public class TestSessionTimeLimitConfiguration {
      *     This value is in minutes.
      * </p>
      */
-    public Integer getOpportunityRestartWindowMinutes() {
+    public Integer getOpportunityRestartMinutes() {
         return opportunityRestartMinutes;
     }
 
