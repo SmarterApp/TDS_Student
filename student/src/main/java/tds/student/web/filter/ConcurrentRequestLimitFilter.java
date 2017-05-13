@@ -1,6 +1,8 @@
 package tds.student.web.filter;
 
 import org.apache.http.HttpHeaders;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -21,6 +23,7 @@ import static java.lang.Integer.parseInt;
  */
 @Component
 public class ConcurrentRequestLimitFilter extends OncePerRequestFilter {
+    private static final Logger LOG = LoggerFactory.getLogger(ConcurrentRequestLimitFilter.class);
 
     private static AtomicInteger concurrentRequests = new AtomicInteger(0);
 
@@ -42,6 +45,7 @@ public class ConcurrentRequestLimitFilter extends OncePerRequestFilter {
             if (maxConcurrentRequests < 0 || currentRequest <= maxConcurrentRequests) {
                 filterChain.doFilter(request, response);
             } else {
+                LOG.error("Rejecting request due to too many concurrent requests: {}, {}/{}", request.getRequestURI(), currentRequest, maxConcurrentRequests);
                 response.addHeader(HttpHeaders.RETRY_AFTER, "30");
                 response.sendError(503, "Too many requests");
             }
