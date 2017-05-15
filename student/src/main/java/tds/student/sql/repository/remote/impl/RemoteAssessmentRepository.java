@@ -4,6 +4,7 @@ import TDS.Shared.Exceptions.ReturnStatusException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -16,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import tds.assessment.Assessment;
+import tds.dll.common.performance.caching.CacheType;
 import tds.student.sql.repository.remote.AssessmentRepository;
 
 @Repository
@@ -31,6 +33,7 @@ public class RemoteAssessmentRepository implements AssessmentRepository {
   }
 
   @Override
+  @Cacheable(CacheType.LongTerm)
   public Assessment findAssessment(final String clientName, final String key) throws ReturnStatusException {
     HttpHeaders headers = new HttpHeaders();
     headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
