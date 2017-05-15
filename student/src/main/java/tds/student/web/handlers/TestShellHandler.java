@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Educational Online Test Delivery System Copyright (c) 2014 American
  * Institutes for Research
- * 
+ *
  * Distributed under the AIR Open Source License, Version 1.0 See accompanying
  * file AIR-License-1_0.txt or at http://www.smarterapp.org/documents/
  * American_Institutes_for_Research_Open_Source_Software_License.pdf
@@ -30,9 +30,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.HtmlUtils;
 import tds.blackbox.web.handlers.TDSHandler;
+import tds.exam.ExamStatusCode;
 import tds.itemrenderer.data.AccLookup;
 import tds.itemrenderer.data.AccProperties;
-import tds.student.services.ReviewTestService;
+import tds.student.services.ExamCompletionService;
 import tds.student.services.abstractions.IOpportunityService;
 import tds.student.services.abstractions.IResponseService;
 import tds.student.services.abstractions.PrintService;
@@ -40,7 +41,6 @@ import tds.student.services.data.ApprovalInfo;
 import tds.student.services.data.ApprovalInfo.OpportunityApprovalStatus;
 import tds.student.services.data.ItemResponse;
 import tds.student.services.data.PageGroup;
-import tds.student.services.data.PageList;
 import tds.student.services.data.TestOpportunity;
 import tds.student.services.remote.RemoteExamineeNoteService;
 import tds.student.sql.abstractions.IOpportunityRepository;
@@ -59,7 +59,6 @@ import tds.student.web.data.TestShellAudit;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.ws.Response;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -68,7 +67,7 @@ import java.util.UUID;
 
 /**
  * @author mpatel
- * 
+ *
  */
 @Controller
 @Scope ("prototype")
@@ -93,13 +92,13 @@ public class TestShellHandler extends TDSHandler
   private ITDSLogger             _tdsLogger;
 
   private final RemoteExamineeNoteService remoteExamineeNoteService;
-  private final ReviewTestService reviewTestService;
+  private final ExamCompletionService examCompletionService;
 
   @Autowired
   public TestShellHandler(final RemoteExamineeNoteService remoteExamineeNoteService,
-                          final ReviewTestService reviewTestService) {
+                          final ExamCompletionService examCompletionService) {
     this.remoteExamineeNoteService = remoteExamineeNoteService;
-    this.reviewTestService = reviewTestService;
+    this.examCompletionService = examCompletionService;
   }
 
   @RequestMapping (value = "TestShell.axd/logAuditTrail")
@@ -237,13 +236,14 @@ public class TestShellHandler extends TDSHandler
 
     TestOpportunity testOpp = StudentContext.getTestOpportunity ();
 
-    ResponseData<String> responseData = reviewTestService.reviewTest(testOpp, new TestManager(testOpp));
+    ResponseData<String> responseData = examCompletionService.updateStatusWithValidation(testOpp, new TestManager(testOpp),
+      ExamStatusCode.STATUS_REVIEW);
 
     if (responseData.getReplyCode() != TDSReplyCode.OK.getCode()) {
-      _tdsLogger.applicationError (responseData.getReplyText(), "reviewTest", request, null);
+      _tdsLogger.applicationError (responseData.getReplyText(), "updateStatusWithValidation", request, null);
       HttpContext.getCurrentContext()
-          .getResponse()
-          .sendError(HttpStatus.SC_FORBIDDEN, "Cannot end the test.");
+        .getResponse()
+        .sendError(HttpStatus.SC_FORBIDDEN, "Cannot end the test.");
 
       return null;
     }
@@ -253,7 +253,7 @@ public class TestShellHandler extends TDSHandler
 
   /**
    * Gets the test shell audit json and logs data to the DB.
-   * 
+   *
    * @param testOpp
    * @throws ReturnStatusException
    */
@@ -368,8 +368,7 @@ public class TestShellHandler extends TDSHandler
     checkAuthenticated ();
 
     OpportunityInstance oppInstance = StudentContext.getOppInstance ();
-
-    _oppRepository.exitSegment (oppInstance, segmentPosition);
+    _oppService.exitSegment(oppInstance, segmentPosition);
   }
 
   @RequestMapping (value = "TestShell.axd/recordItemComment")

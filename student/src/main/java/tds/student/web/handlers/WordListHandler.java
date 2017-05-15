@@ -9,10 +9,13 @@
 package tds.student.web.handlers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import tds.dll.common.performance.caching.CacheType;
 import tds.itemrenderer.handler.WordListHandlerBase;
+import tds.student.performance.services.ItemBankService;
 import tds.student.sql.abstractions.IItemBankRepository;
 import TDS.Shared.Exceptions.ReturnStatusException;
 
@@ -26,7 +29,7 @@ public class WordListHandler extends WordListHandlerBase
 {
   
   @Autowired
-  private IItemBankRepository _ibRepository;
+  private ItemBankService itemBankService;
 
 
   /* (non-Javadoc)
@@ -34,7 +37,7 @@ public class WordListHandler extends WordListHandlerBase
    */
   @Override
   protected String getItemPath (long bankKey, long itemKey) throws ReturnStatusException {
-      return _ibRepository.getItemPath(bankKey, itemKey);
+      return itemBankService.getItemPath(bankKey, itemKey);
   }
 
 }

@@ -202,7 +202,7 @@ public class ItemBankRepository extends AbstractDAO implements IItemBankReposito
           }
         }
       }
-      Collections.sort (accList, new Comparator<Data> ()
+      Collections.sort (accList.getData(), new Comparator<Data> ()
       {
         @Override
         public int compare (Data acc1, Data acc2) {

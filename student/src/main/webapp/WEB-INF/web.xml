@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
+		 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+		 version="2.5">
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:root-context.xml</param-value>
@@ -145,6 +146,28 @@
 		<filter-name>contextInitializerFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+
+	<!--
+		This filter limits concurrent requests to an arbitrary value, sacrificing clients in
+		the name of preventing the server from being overloaded and preserving throughput.
+	-->
+	<filter>
+		<filter-name>concurrentRequestLimitFilter</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>concurrentRequestLimitFilter</filter-name>
+		<url-pattern>/Pages/API/*</url-pattern>
+		<url-pattern>/Pages/Pages/API/*</url-pattern>
+		<url-pattern>/API.axd/*</url-pattern>
+		<url-pattern>/TIS/API/*</url-pattern>
+		<url-pattern>/Pages/SpellEngine.axd/*</url-pattern>
+		<url-pattern>/ItemScoringRubric.axd/*</url-pattern>
+		<url-pattern>/ItemScoringCallback.axd/*</url-pattern>
+		<url-pattern>/browsersessionlaunch</url-pattern>
+		<url-pattern>*.xhtml</url-pattern>
+	</filter-mapping>
+
 	<filter>
 		<filter-name>caseinsensitiveFilter</filter-name>
 		<filter-class>AIR.Common.Web.Session.CaseInsensitiveFileNameFilter</filter-class>

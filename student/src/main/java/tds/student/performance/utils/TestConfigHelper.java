@@ -63,7 +63,7 @@ public class TestConfigHelper {
         TestConfig config = new TestConfig();
         config.setContentLoadTimeout(CONTENT_LOAD_TIMEOUT);
         config.setInterfaceTimeout(timeLimitConfiguration.getInterfaceTimeoutMinutes());
-        config.setOppRestartMins(timeLimitConfiguration.getOpportunityRestartWindowMinutes());
+        config.setOppRestartMins(timeLimitConfiguration.getOpportunityRestartMinutes());
         config.setPrefetch(clientTestProperty.getPrefetch());
         config.setRequestInterfaceTimeout(timeLimitConfiguration.getRequestInterfaceTimeoutMinutes());
         config.setRestart(0);
@@ -103,7 +103,7 @@ public class TestConfigHelper {
         TestConfig config = new TestConfig();
         config.setContentLoadTimeout(CONTENT_LOAD_TIMEOUT);
         config.setInterfaceTimeout(timeLimitConfiguration.getInterfaceTimeoutMinutes());
-        config.setOppRestartMins(timeLimitConfiguration.getOpportunityRestartWindowMinutes());
+        config.setOppRestartMins(timeLimitConfiguration.getOpportunityRestartMinutes());
         config.setPrefetch(clientTestProperty.getPrefetch());
         config.setRequestInterfaceTimeout(timeLimitConfiguration.getRequestInterfaceTimeoutMinutes());
         config.setRestart(restartCount);
