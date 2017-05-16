@@ -22,7 +22,7 @@
         <mockito.version>1.10.19</mockito.version>
         <tds-dll.version>3.0.1</tds-dll.version>
         <test-scoring.version>3.0.0</test-scoring.version>
-        <tds-student-common.version>3.0.9-SNAPSHOT</tds-student-common.version>
+        <tds-student-common.version>3.0.9</tds-student-common.version>
     </properties>
 
     <modules>
