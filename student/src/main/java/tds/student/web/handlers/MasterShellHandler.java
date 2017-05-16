@@ -502,7 +502,7 @@ public class MasterShellHandler extends TDSHandler
     // save test config info
     StudentContext.saveTestConfig (testConfig);
     StudentCookie.writeStore ();
-    sendTestStatus (StudentContext.getTestee ().getId (), testKey, oppInstance.getKey (), TestStatusType.STARTED);
+    sendTestStatus (StudentContext.getTestee ().getId (), testKey, oppInstance, TestStatusType.STARTED);
 //    logBrowser (oppInstance, testConfig.getRestart ());
     TestInfo testInfo = loadTestInfo (oppInstance, testConfig);
 
@@ -661,10 +661,10 @@ public class MasterShellHandler extends TDSHandler
     if (testOpp == null) {
       StudentContext.throwMissingException();
     }
-    
+
     examCompletionService.updateStatusWithValidation(testOpp, new TestManager(testOpp), ExamStatusCode.STATUS_COMPLETED);
     // Send the exam status to ART
-    sendTestStatus (StudentContext.getTestee ().getId (), testOpp.getTestKey (), testOpp.getOppInstance ().getKey (), TestStatusType.COMPLETED);
+    sendTestStatus (StudentContext.getTestee().getId(), testOpp.getTestKey(), testOpp.getOppInstance(), TestStatusType.COMPLETED);
 
     return new ResponseData<TestSummary> (TDSReplyCode.OK.getCode (), "OK", new TestSummary());
   }
@@ -813,7 +813,7 @@ public class MasterShellHandler extends TDSHandler
    * @param oppKey
    * @param testStatusType
    */
-  private void sendTestStatus (String testeeId, String testKey, UUID oppKey, TestStatusType testStatusType) {
+  private void sendTestStatus (String testeeId, String testKey, OpportunityInstance opportunityInstance, TestStatusType testStatusType) {
     try {
       final String GUESTID = "guest";
       if (testeeId == null || testeeId.toLowerCase ().startsWith (GUESTID)) {
@@ -822,7 +822,7 @@ public class MasterShellHandler extends TDSHandler
       TestStatus testStatus = new TestStatus ();
       testStatus.setStudentId (testeeId);
       testStatus.setTestId (testKey);
-      testStatus.setOpportunity (_oppRepository.getOpportunityNumber (oppKey));
+      testStatus.setOpportunity (_oppService.getAttemptNumber (opportunityInstance));
       testStatus.setUpdatedTime (DateTime.getFormattedDate (new Date (), "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"));
       testStatus.setStatus (testStatusType.name ());
       _studentPackageService.sendTestStatus (testStatus);

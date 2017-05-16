@@ -366,6 +366,21 @@ public class RemoteOpportunityService implements IOpportunityService {
     examSegmentRepository.exitSegment(oppInstance.getExamId(), segmentPosition);
   }
 
+  @Override
+  public int getAttemptNumber(final OpportunityInstance opportunityInstance) throws ReturnStatusException {
+    int attemptNumber = 0;
+
+    if (isLegacyCallsEnabled) {
+      attemptNumber = legacyOpportunityService.getAttemptNumber(opportunityInstance);
+    }
+
+    if (!isRemoteExamCallsEnabled) {
+      return attemptNumber;
+    }
+
+    return examRepository.getExamById(opportunityInstance.getExamId()).getAttempts();
+  }
+
   private static TestConfig mapExamConfigurationToTestConfig(ExamConfiguration examConfiguration) {
     Exam exam = examConfiguration.getExam();
     TestConfig testConfig = new TestConfig();

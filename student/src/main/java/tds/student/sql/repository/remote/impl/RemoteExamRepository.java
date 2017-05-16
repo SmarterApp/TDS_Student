@@ -349,4 +349,32 @@ public class RemoteExamRepository implements ExamRepository {
 
     return responseEntity.getBody().getData().get();
   }
+
+  @Override
+  public Exam getExamById(final UUID id) throws ReturnStatusException {
+    HttpHeaders headers = new HttpHeaders();
+    headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+    HttpEntity<?> requestHttpEntity = new HttpEntity<>(headers);
+    Exam response;
+    ResponseEntity<Exam> responseEntity;
+    UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/%s", examUrl, id));
+    try {
+      responseEntity = restTemplate.exchange(
+        builder.build().toUri(),
+        HttpMethod.GET,
+        requestHttpEntity,
+        new ParameterizedTypeReference<Exam>() {
+        });
+
+      response = responseEntity.getBody();
+    } catch (final HttpStatusCodeException e) {
+      final ReturnStatusException statusException = new ReturnStatusException("Failed to find exam: " + e.getResponseBodyAsString());
+      statusException.getReturnStatus().setHttpStatusCode(500);
+      throw statusException;
+    } catch (final RestClientException rce) {
+      throw new ReturnStatusException(rce);
+    }
+
+    return response;
+  }
 }
