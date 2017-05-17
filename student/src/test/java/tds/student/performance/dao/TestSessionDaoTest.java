@@ -151,6 +151,7 @@ public class TestSessionDaoTest extends IntegrationTest {
      ?, NULL, '1', '10', '-1', '10', 'SBAC_PT', '1', '30', '20', '20', '2012-12-21 00:02:53.000', '2012-12-21 00:02:53.000', NULL, '8', '15', '2'
      */
     @Test
+    @Ignore
     public void should_Return_a_TestSessionTimeLimitConfiguration_With_Null_TestId_For_SBAC_PT_ClientName() {
         String clientName = "SBAC_PT";
 
