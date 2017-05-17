@@ -349,4 +349,9 @@ public class OpportunityService implements IOpportunityService
       throw new ReturnStatusException (e);
     }
   }
+
+  @Override
+  public int getAttemptNumber(final OpportunityInstance opportunityInstance) throws ReturnStatusException {
+    return _oppRepository.getOpportunityNumber(opportunityInstance.getKey());
+  }
 }
