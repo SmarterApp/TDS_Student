@@ -137,7 +137,7 @@ public class RemoteResponseServiceTest {
       .withSegmentPosition(1)
       .build();
 
-    ExamPageWrapper examPageWrapper = new ExamPageWrapper(examPage, Collections.singletonList(examItem));
+    ExamPageWrapper examPageWrapper = new ExamPageWrapper(examPage, Collections.singletonList(examItem), true);
     examSegmentWrapper = new ExamSegmentWrapper(examSegment, Collections.singletonList(examPageWrapper));
   }
 
