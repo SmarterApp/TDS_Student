@@ -471,6 +471,22 @@ public class RemoteOpportunityServiceTest {
   }
 
   @Test
+  public void shouldFindAttemptNumberForExam() throws ReturnStatusException {
+    service = new RemoteOpportunityService(mockLegacyOpportunityService, true, false, mockExamRepository, mockExamSegmentRepository, mockTestOpportunityExamMapDao, configRepository);
+    OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+    Exam exam = new Exam.Builder()
+      .withId(UUID.randomUUID())
+      .withAttempts(3)
+      .build();
+    when(mockExamRepository.getExamById(oppInstance.getExamId()))
+      .thenReturn(exam);
+
+    int attemptNumber = service.getAttemptNumber(oppInstance);
+    verify(mockExamRepository).getExamById(oppInstance.getExamId());
+    assertThat(attemptNumber).isEqualTo(exam.getAttempts());
+  }
+
+  @Test
   public void shouldCheckSegmentApprovalLegacyEnabled() throws ReturnStatusException {
     service = new RemoteOpportunityService(mockLegacyOpportunityService, true, true, mockExamRepository, mockExamSegmentRepository, mockTestOpportunityExamMapDao, configRepository);
     OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());

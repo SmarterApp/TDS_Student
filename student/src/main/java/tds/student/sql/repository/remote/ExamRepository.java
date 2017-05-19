@@ -116,11 +116,19 @@ public interface ExamRepository {
   /**
    * Finds the list of exam assessments available for a student and session.
    *
-   * @param studentId  The id of the student to fetch {@link tds.exam.ExamAssessmentMetadata}s for
-   * @param sessionId  The id current session
-   * @param grade      The assessment grades to fetch
+   * @param studentId The id of the student to fetch {@link tds.exam.ExamAssessmentMetadata}s for
+   * @param sessionId The id current session
+   * @param grade     The assessment grades to fetch
    * @return A list of {@link tds.exam.ExamAssessmentMetadata}, containing various metadata pertaining to the assessment and exams.
    * @throws TDS.Shared.Exceptions.ReturnStatusException
    */
   List<ExamAssessmentMetadata> findExamAssessmentInfo(final long studentId, final UUID sessionId, final String grade) throws ReturnStatusException;
+
+  /**
+   * Retrieves an exam based on the UUID
+   *
+   * @param id the id of the exam
+   * @return {@link Exam} otherwise null
+   */
+  Exam getExamById(final UUID id) throws ReturnStatusException;
 }
