@@ -3,21 +3,17 @@ package tds.student.services;
 import AIR.Common.Web.TDSReplyCode;
 import AIR.Common.data.ResponseData;
 import TDS.Shared.Exceptions.ReturnStatusException;
-import com.google.common.base.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import tds.common.ValidationError;
 import tds.exam.ExamStatusCode;
 import tds.student.services.abstractions.IOpportunityService;
-import tds.student.services.data.PageList;
 import tds.student.services.data.TestOpportunity;
 import tds.student.sql.data.OpportunityStatusChange;
 import tds.student.sql.data.OpportunityStatusType;
-import tds.student.sql.repository.remote.ExamRepository;
 import tds.student.web.TestManager;
 
 @Service
