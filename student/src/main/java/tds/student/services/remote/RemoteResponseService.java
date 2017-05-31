@@ -181,7 +181,7 @@ public class RemoteResponseService implements IResponseService {
           // upper-case in ResponseRepository#readOpportunityItems() (@ line 295).
           opportunityItem.setFormat(item.getItemType());
 
-          opportunityItem.setIsVisible(true);
+          opportunityItem.setIsVisible(page.isVisible());
 
           // OpportunityItem#isVisible (mapped to an OpportunityItem in ResponseRepository#readOpportunityItems @ line
           // 297) never seems to be used (which is why it was not ported to the exam database), so has been omitted from

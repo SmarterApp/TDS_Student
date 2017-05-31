@@ -104,6 +104,7 @@ public class RemoteResponseServiceTest {
       .withExamItemId(UUID.randomUUID())
       .withResponse(opportunityItem.getValue())
       .withCreatedAt(Instant.now())
+      .withExamId(UUID.randomUUID())
       .build();
 
     ExamItem examItem = new ExamItem.Builder(UUID.randomUUID())
@@ -118,6 +119,7 @@ public class RemoteResponseServiceTest {
       .withExamPageId(pageId)
       .withStimulusFilePath(opportunityItem.getStimulusFile())
       .withRequired(true)
+      .withGroupId("G-123-1234")
       .build();
 
     ExamPage examPage = new ExamPage.Builder()
