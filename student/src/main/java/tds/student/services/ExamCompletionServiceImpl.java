@@ -51,17 +51,20 @@ public class ExamCompletionServiceImpl implements ExamCompletionService {
         // get responses
         testManager.LoadResponses(true);
 
-        // check if test length is met
-        testManager.CheckIfTestComplete();
-        if (!testManager.IsTestLengthMet()) {
+        // check if test is complete
+        // NOTE:  The legacy version of this code would call testManager.CheckIfTestComplete() and ignore the result.  A
+        // call to testManager.IsTestLengthMet() would execute immediately afterward, which checks the _isComplete
+        // field of the testManager.  Since the _isComplete field is set by testManager.CheckIfTestComplete(), the call
+        // to testManager.IsTestLengthMet() has been ommitted (because testManager.CheckIfTestComplete() and
+        // testManager.IsTestLengthMet() effectively return the same result)
+        if (!testManager.CheckIfTestComplete()) {
             return new ResponseData<>(TDSReplyCode.Error.getCode(),
                 "Review Test: Cannot end test because test length is not met.",
                 null);
         }
 
         // check if all visible pages are completed
-        final PageList pageList = testManager.GetVisiblePages();
-        if (!pageList.isAllCompleted()) {
+        if (!testManager.GetVisiblePages().isAllCompleted()) {
             return new ResponseData<>(TDSReplyCode.Error.getCode(),
                 "Review Test: Cannot end test because all the groups have not been answered.",
                 null);
