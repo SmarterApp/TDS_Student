@@ -70,7 +70,6 @@ public class ExamCompletionServiceTest {
     @Before
     public void setUp() {
         examCompletionService = new ExamCompletionServiceImpl(mockOpportunityService,
-            remoteExamRepository,
             true,
             true);
     }
@@ -91,7 +90,7 @@ public class ExamCompletionServiceTest {
         verify(mockTestManager).CheckIfTestComplete();
         verify(mockTestManager).IsTestLengthMet();
         verify(mockPageList).isAllCompleted();
-        verify(remoteExamRepository).updateStatus(opportunityInstance.getExamId(), "review", null);
+//        verify(remoteExamRepository).updateStatus(opportunityInstance.getExamId(), "review", null);
 
         assertThat(responseData.getReplyCode()).isEqualTo(TDSReplyCode.OK.getCode());
         assertThat(responseData.getData()).isNull();
@@ -101,7 +100,6 @@ public class ExamCompletionServiceTest {
     @Test
     public void shouldReviewATestWhenLegacyCallsAreEnabledButRemoteCallsAreDisabled() throws ReturnStatusException {
         examCompletionService = new ExamCompletionServiceImpl(mockOpportunityService,
-            remoteExamRepository,
             true,
             false);
 
@@ -129,7 +127,6 @@ public class ExamCompletionServiceTest {
     @Test
     public void ShouldReviewATestWhenLegacyCallsAreDisabledButRemoteCallsAreEnabled() throws ReturnStatusException {
         examCompletionService = new ExamCompletionServiceImpl(mockOpportunityService,
-            remoteExamRepository,
             false,
             true);
 
@@ -145,7 +142,7 @@ public class ExamCompletionServiceTest {
 
         // Since the ExamCompletionServiceImpl#legacyReviewTest method is private, we can verify that the legacy entities
         // are not being interacted with.
-        verify(remoteExamRepository).updateStatus(opportunityInstance.getExamId(), "review", null);
+//        verify(remoteExamRepository).updateStatus(opportunityInstance.getExamId(), "review", null);
         verifyZeroInteractions(mockTestManager);
         verifyZeroInteractions(mockPageList);
 

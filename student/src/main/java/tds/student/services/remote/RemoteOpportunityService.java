@@ -218,13 +218,13 @@ public class RemoteOpportunityService implements IOpportunityService {
     returnStatus = new ReturnStatus(error.getCode(), error.getMessage());
 
     if (ExamStatusCode.STATUS_FAILED.equalsIgnoreCase(maybeError.get().getCode())) {
+      log.warn("Error setting exam status for exam id {}: Failed to set status to '{}' - {}",
+          oppInstance.getExamId(), statusChange.getStatus(), returnStatus.getReason());
+
       throw new ReturnStatusException(returnStatus);
     }
     /* OpportunityService - We can skip line [234-237] as trying to update to an invalid status should result in a ValidationError generated
        by the ExamService. */
-
-    log.warn("Error setting exam status for exam id {}: Failed to set status to '{}' - {}",
-      oppInstance.getExamId(), statusChange.getStatus(), returnStatus.getReason());
 
     return false;
   }
