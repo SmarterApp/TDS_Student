@@ -83,7 +83,6 @@ public class ExamCompletionServiceTest {
         doNothing().when(mockTestManager).LoadResponses(true);
         when(mockTestManager.GetVisiblePages()).thenReturn(mockPageList);
         when(mockTestManager.CheckIfTestComplete()).thenReturn(true);
-        when(mockTestManager.IsTestLengthMet()).thenReturn(true);
         when(mockPageList.isAllCompleted()).thenReturn(true);
         when(mockOpportunityService.setStatus(opportunityInstance, statusChange)).thenReturn(true);
 
@@ -93,7 +92,6 @@ public class ExamCompletionServiceTest {
         verify(mockTestManager).LoadResponses(true);
         verify(mockTestManager).GetVisiblePages();
         verify(mockTestManager).CheckIfTestComplete();
-        verify(mockTestManager).IsTestLengthMet();
         verify(mockPageList).isAllCompleted();
         verify(mockOpportunityService).setStatus(opportunityInstanceArgumentCaptor.capture(),
             opportunityStatusChangeArgumentCaptor.capture());
@@ -112,8 +110,7 @@ public class ExamCompletionServiceTest {
     public void shouldReturnTestLengthNotMetMessageWhenIsTestLengthMetIsFalse() throws ReturnStatusException {
         doNothing().when(mockTestManager).LoadResponses(true);
         when(mockTestManager.GetVisiblePages()).thenReturn(mockPageList);
-        when(mockTestManager.CheckIfTestComplete()).thenReturn(true);
-        when(mockTestManager.IsTestLengthMet()).thenReturn(false);
+        when(mockTestManager.CheckIfTestComplete()).thenReturn(false);
         when(mockPageList.isAllCompleted()).thenReturn(true);
 
         final ResponseData<String> responseData = examCompletionService.updateStatusWithValidation(testOpportunity,
@@ -121,7 +118,6 @@ public class ExamCompletionServiceTest {
             "review");
         verify(mockTestManager).LoadResponses(true);
         verify(mockTestManager).CheckIfTestComplete();
-        verify(mockTestManager).IsTestLengthMet();
         verifyZeroInteractions(mockOpportunityService);
 
         assertThat(responseData.getReplyCode()).isEqualTo(TDSReplyCode.Error.getCode());
@@ -134,7 +130,6 @@ public class ExamCompletionServiceTest {
         doNothing().when(mockTestManager).LoadResponses(true);
         when(mockTestManager.GetVisiblePages()).thenReturn(mockPageList);
         when(mockTestManager.CheckIfTestComplete()).thenReturn(true);
-        when(mockTestManager.IsTestLengthMet()).thenReturn(true);
         when(mockPageList.isAllCompleted()).thenReturn(false);
 
         final ResponseData<String> responseData = examCompletionService.updateStatusWithValidation(testOpportunity,
@@ -142,7 +137,6 @@ public class ExamCompletionServiceTest {
             "review");
         verify(mockTestManager).LoadResponses(true);
         verify(mockTestManager).CheckIfTestComplete();
-        verify(mockTestManager).IsTestLengthMet();
         verify(mockTestManager).GetVisiblePages();
         verify(mockPageList).isAllCompleted();
         verifyZeroInteractions(mockOpportunityService);
