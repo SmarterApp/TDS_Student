@@ -3,24 +3,24 @@ package tds.student.services;
 import AIR.Common.Web.TDSReplyCode;
 import AIR.Common.data.ResponseData;
 import TDS.Shared.Exceptions.ReturnStatusException;
-import com.google.common.base.Optional;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.UUID;
 
-import tds.common.ValidationError;
 import tds.student.services.abstractions.IAdaptiveService;
 import tds.student.services.abstractions.IOpportunityService;
 import tds.student.services.abstractions.IResponseService;
 import tds.student.services.data.PageList;
 import tds.student.services.data.TestOpportunity;
 import tds.student.sql.data.OpportunityInstance;
+import tds.student.sql.data.OpportunityStatusChange;
+import tds.student.sql.data.OpportunityStatusType;
 import tds.student.sql.data.TestConfig;
-import tds.student.sql.repository.remote.ExamRepository;
 import tds.student.web.TestManager;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -39,9 +39,6 @@ public class ExamCompletionServiceTest {
 
     @Mock
     private IOpportunityService mockOpportunityService;
-
-    @Mock
-    private ExamRepository remoteExamRepository;
 
     private OpportunityInstance opportunityInstance = new OpportunityInstance(UUID.randomUUID(),
         UUID.randomUUID(),
@@ -70,101 +67,58 @@ public class ExamCompletionServiceTest {
     @Before
     public void setUp() {
         examCompletionService = new ExamCompletionServiceImpl(mockOpportunityService,
-            remoteExamRepository,
             true,
             true);
     }
 
     @Test
-    public void shouldReviewATestWhenLegacyCallsAndRemoteCallsAreEnabled() throws ReturnStatusException {
-        doNothing().when(mockTestManager).LoadResponses(true);
-        when(mockTestManager.GetVisiblePages()).thenReturn(mockPageList);
-        when(mockTestManager.CheckIfTestComplete()).thenReturn(true);
-        when(mockTestManager.IsTestLengthMet()).thenReturn(true);
-        when(mockPageList.isAllCompleted()).thenReturn(true);
-        when(remoteExamRepository.updateStatus(opportunityInstance.getExamId(), "review", null))
-            .thenReturn(Optional.<ValidationError>absent());
-
-        final ResponseData<String> responseData = examCompletionService.updateStatusWithValidation(testOpportunity, mockTestManager, "review");
-        verify(mockTestManager).LoadResponses(true);
-        verify(mockTestManager).GetVisiblePages();
-        verify(mockTestManager).CheckIfTestComplete();
-        verify(mockTestManager).IsTestLengthMet();
-        verify(mockPageList).isAllCompleted();
-        verify(remoteExamRepository).updateStatus(opportunityInstance.getExamId(), "review", null);
-
-        assertThat(responseData.getReplyCode()).isEqualTo(TDSReplyCode.OK.getCode());
-        assertThat(responseData.getData()).isNull();
-        assertThat(responseData.getReplyText()).isEqualTo("OK");
-    }
-
-    @Test
-    public void shouldReviewATestWhenLegacyCallsAreEnabledButRemoteCallsAreDisabled() throws ReturnStatusException {
-        examCompletionService = new ExamCompletionServiceImpl(mockOpportunityService,
-            remoteExamRepository,
-            true,
-            false);
-
-        doNothing().when(mockTestManager).LoadResponses(true);
-        when(mockTestManager.GetVisiblePages()).thenReturn(mockPageList);
-        when(mockTestManager.CheckIfTestComplete()).thenReturn(true);
-        when(mockTestManager.IsTestLengthMet()).thenReturn(true);
-        when(mockPageList.isAllCompleted()).thenReturn(true);
-        when(remoteExamRepository.updateStatus(opportunityInstance.getExamId(), "review", null))
-            .thenReturn(Optional.<ValidationError>absent());
-
-        final ResponseData<String> responseData = examCompletionService.updateStatusWithValidation(testOpportunity, mockTestManager, "review");
-        verify(mockTestManager).LoadResponses(true);
-        verify(mockTestManager).GetVisiblePages();
-        verify(mockTestManager).CheckIfTestComplete();
-        verify(mockTestManager).IsTestLengthMet();
-        verify(mockPageList).isAllCompleted();
-        verifyZeroInteractions(remoteExamRepository);
-
-        assertThat(responseData.getReplyCode()).isEqualTo(TDSReplyCode.OK.getCode());
-        assertThat(responseData.getData()).isNull();
-        assertThat(responseData.getReplyText()).isEqualTo("OK");
-    }
-
-    @Test
-    public void ShouldReviewATestWhenLegacyCallsAreDisabledButRemoteCallsAreEnabled() throws ReturnStatusException {
-        examCompletionService = new ExamCompletionServiceImpl(mockOpportunityService,
-            remoteExamRepository,
-            false,
+    public void shouldReviewATest() throws ReturnStatusException {
+        final OpportunityStatusChange statusChange = new OpportunityStatusChange(OpportunityStatusType.parse("review"),
             true);
+        final ArgumentCaptor<OpportunityInstance> opportunityInstanceArgumentCaptor =
+            ArgumentCaptor.forClass(OpportunityInstance.class);
+        final ArgumentCaptor<OpportunityStatusChange> opportunityStatusChangeArgumentCaptor =
+            ArgumentCaptor.forClass(OpportunityStatusChange.class);
 
         doNothing().when(mockTestManager).LoadResponses(true);
         when(mockTestManager.GetVisiblePages()).thenReturn(mockPageList);
         when(mockTestManager.CheckIfTestComplete()).thenReturn(true);
-        when(mockTestManager.IsTestLengthMet()).thenReturn(true);
         when(mockPageList.isAllCompleted()).thenReturn(true);
-        when(remoteExamRepository.updateStatus(opportunityInstance.getExamId(), "review", null))
-            .thenReturn(Optional.<ValidationError>absent());
+        when(mockOpportunityService.setStatus(opportunityInstance, statusChange)).thenReturn(true);
 
-        final ResponseData<String> responseData = examCompletionService.updateStatusWithValidation(testOpportunity, mockTestManager, "review");
-
-        // Since the ExamCompletionServiceImpl#legacyReviewTest method is private, we can verify that the legacy entities
-        // are not being interacted with.
-        verify(remoteExamRepository).updateStatus(opportunityInstance.getExamId(), "review", null);
-        verifyZeroInteractions(mockTestManager);
-        verifyZeroInteractions(mockPageList);
+        final ResponseData<String> responseData = examCompletionService.updateStatusWithValidation(testOpportunity,
+            mockTestManager,
+            "review");
+        verify(mockTestManager).LoadResponses(true);
+        verify(mockTestManager).GetVisiblePages();
+        verify(mockTestManager).CheckIfTestComplete();
+        verify(mockPageList).isAllCompleted();
+        verify(mockOpportunityService).setStatus(opportunityInstanceArgumentCaptor.capture(),
+            opportunityStatusChangeArgumentCaptor.capture());
 
         assertThat(responseData.getReplyCode()).isEqualTo(TDSReplyCode.OK.getCode());
         assertThat(responseData.getData()).isNull();
         assertThat(responseData.getReplyText()).isEqualTo("OK");
+        assertThat(opportunityInstanceArgumentCaptor.getValue()).isEqualTo(opportunityInstance);
+
+        final OpportunityStatusChange capturedStatusChange = opportunityStatusChangeArgumentCaptor.getValue();
+        assertThat(capturedStatusChange.getStatus()).isEqualTo(statusChange.getStatus());
+        assertThat(capturedStatusChange.getReason()).isEqualTo(statusChange.getReason());
     }
 
     @Test
-    public void shouldReturnTestLengthNotMetMessageWhenLegacyCallsAreEnabledAndIsTestLengthMetIsFalse() throws ReturnStatusException {
+    public void shouldReturnTestLengthNotMetMessageWhenIsTestLengthMetIsFalse() throws ReturnStatusException {
         doNothing().when(mockTestManager).LoadResponses(true);
         when(mockTestManager.GetVisiblePages()).thenReturn(mockPageList);
-        when(mockTestManager.CheckIfTestComplete()).thenReturn(true);
-        when(mockTestManager.IsTestLengthMet()).thenReturn(false);
+        when(mockTestManager.CheckIfTestComplete()).thenReturn(false);
         when(mockPageList.isAllCompleted()).thenReturn(true);
-        when(remoteExamRepository.updateStatus(opportunityInstance.getExamId(), "review", null))
-            .thenReturn(Optional.<ValidationError>absent());
 
-        final ResponseData<String> responseData = examCompletionService.updateStatusWithValidation(testOpportunity, mockTestManager, "review");
+        final ResponseData<String> responseData = examCompletionService.updateStatusWithValidation(testOpportunity,
+            mockTestManager,
+            "review");
+        verify(mockTestManager).LoadResponses(true);
+        verify(mockTestManager).CheckIfTestComplete();
+        verifyZeroInteractions(mockOpportunityService);
 
         assertThat(responseData.getReplyCode()).isEqualTo(TDSReplyCode.Error.getCode());
         assertThat(responseData.getData()).isNull();
@@ -172,20 +126,29 @@ public class ExamCompletionServiceTest {
     }
 
     @Test
-    public void shouldReturnGroupsNotAnsweredMessageWhenLegacyCallsAreEnabledAndIsAllCompletedIsFalse() throws ReturnStatusException {
+    public void shouldReturnGroupsNotAnsweredMessageWhenIsAllCompletedIsFalse() throws ReturnStatusException {
         doNothing().when(mockTestManager).LoadResponses(true);
         when(mockTestManager.GetVisiblePages()).thenReturn(mockPageList);
         when(mockTestManager.CheckIfTestComplete()).thenReturn(true);
-        when(mockTestManager.IsTestLengthMet()).thenReturn(true);
         when(mockPageList.isAllCompleted()).thenReturn(false);
-        when(remoteExamRepository.updateStatus(opportunityInstance.getExamId(), "review", null))
-            .thenReturn(Optional.<ValidationError>absent());
 
-        final ResponseData<String> responseData = examCompletionService.updateStatusWithValidation(testOpportunity, mockTestManager, "review");
+        final ResponseData<String> responseData = examCompletionService.updateStatusWithValidation(testOpportunity,
+            mockTestManager,
+            "review");
+        verify(mockTestManager).LoadResponses(true);
+        verify(mockTestManager).CheckIfTestComplete();
+        verify(mockTestManager).GetVisiblePages();
+        verify(mockPageList).isAllCompleted();
+        verifyZeroInteractions(mockOpportunityService);
 
         assertThat(responseData.getReplyCode()).isEqualTo(TDSReplyCode.Error.getCode());
         assertThat(responseData.getData()).isNull();
         assertThat(responseData.getReplyText()).isEqualTo("Review Test: Cannot end test because all the groups have not been answered.");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowIllegalArgumentExceptionWhenStatusCodeIsNotReviewOrCompleted() throws ReturnStatusException {
+        examCompletionService.updateStatusWithValidation(testOpportunity, mockTestManager, "pending");
     }
 }
 
