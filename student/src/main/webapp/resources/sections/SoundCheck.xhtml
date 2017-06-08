@@ -1,120 +1,208 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:cc="http://java.sun.com/jsf/composite" xmlns:tds="http://airast.org/jsfcustom">
-<cc:interface />
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://java.sun.com/jsf/passthrough"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:cc="http://java.sun.com/jsf/composite"
+	xmlns:tds="http://airast.org/jsfcustom"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+<cc:interface componentType="tds.student.web.controls.SectionControl">
+</cc:interface>
 <cc:implementation>
 
 	<tds:SectionWrapper id="sectionSoundCheck">
 
 		<span class="preloader"><span class="recorder"></span></span>
 
-		<div id="checkSound" class="shadowBox small soundcheck" style="">
-			<h1 i18n-content="SoundCheck.Label.DidYouHear"></h1>
+		<!-- for sound check pages with user control options, using SoundCheckWrapper to create header and instructions divs -->
+		<tds:SoundCheckWrapper id="checkSound" headerName="checkSound">
 
 			<div class="instructions">
 				<div class="audioControls">
-					<a id="audioPlayer" autoplay="False" visible="True" class="sound_repeat" type="audio/ogg" href="#{request.contextPath}/Shared/Audio/SoundCheckSample.ogg" tabindex="0" /> 
-				</div>	
-					<span i18n-content="SoundCheck.Label.ClickToHear"></span>
-				
-				<p i18n-content="SoundCheck.Label.HeardYesOrNo"></p>
+					<div class="tds-audio">
+					<a id="audioPlayer" class="sound_repeat" type="audio/ogg" href="../Shared/Audio/SoundCheckSample.ogg" tabindex="0">
+					</a>
+					</div>
+				</div>
+				<span i18n-content="SoundCheck.Label.ClickToHear"></span>
 			</div>
-	
-		<div class="sliderWrap" style="display: none;">
-            <div id="SoundCheck_Adjust_Volume" class="yui-h-slider">
-                <h2 i18n-content="SoundCheck.Label.SliderVolume"></h2>
-                <div id="volumeSCThumb" class="yui-slider-thumb"><img src="#{request.contextPath}/Scripts/Libraries/yahoo/yui2/build/slider/assets/thumb-n.gif" /></div>
-            </div>
-            <div id="Volume_SCValue" class="sliderValue">0</div>
-        </div>
 
-			<span class="actions"> <tds:Button id="btnSoundNo" styleClass="negative" key="SoundCheck.Label.HeardNo" /> <tds:Button id="btnSoundYes" styleClass="positive disabled"
+			<div class="sliderWrap" style="display: none;">
+				<div id="SoundCheck_Adjust_Volume" class="yui-h-slider"
+					touch-action="none">
+					<h2 i18n-content="SoundCheck.Label.SliderVolume"></h2>
+					<div id="volumeSCThumb" class="yui-slider-thumb">
+						<img
+							src="#{request.contextPath}/Scripts/Libraries/yahoo/yui2/build/slider/assets/thumb-n.gif" />
+					</div>
+				</div>
+				<div id="Volume_SCValue" class="sliderValue">0</div>
+			</div>
+
+			<tds:NextStepWrapper headerID="sectionCheckSoundNextSteps"
+				headerName="checkSound">
+				<tds:Button id="btnSoundYes" styleClass="positive disabled"
 					key="SoundCheck.Label.HeardYes" />
-			</span> <span class="clear"></span>
-		</div>
+				<tds:Button id="btnSoundNo" styleClass="negative"
+					key="SoundCheck.Label.HeardNo" />
+			</tds:NextStepWrapper>		
+					
+			<span class="clear"></span>
 
-		<div id="checkRecorderSources" class="shadowBox small soundcheck" style="display: none;">
-			<h1 i18n-content="SoundCheck.Label.SelectRecordingSource">Recording Input Device Selection</h1>
+		</tds:SoundCheckWrapper>
+
+		<div id="checkRecorderPreamble" class="shadowBox small soundcheck"
+			style="display: none;">
+			<h1 i18n-content="SoundCheck.Label.RecordAndPlay"></h1>
 
 			<div class="instructions">
-				<div class="sources-placeholder" i18n-content="SoundCheck.Label.SourceSelectWait" style="display: none;">Finding recording input devices, please wait.</div>
-				<div class="sources-error" i18n-content="SoundCheck.Label.SourceSelectError" style="display: none;">There was a problem finding recording devices, click [Problem (No)].</div>
-				<div class="sources-content" i18n-content="SoundCheck.Label.SourceSelectInstructions">
-					Please speak and select the recording input device which best detects your voice, and then click [Yes].<br /> If there are no devices, or if none of the devices detects your voice, click
+				<p i18n-content="SoundCheck.Label.RecordingWait">Preparing to
+					record audio, please wait.</p>
+			</div>
+		</div>
+
+		<div id="checkRecorderSources" class="shadowBox small soundcheck"
+			style="display: none;">
+			<h1 i18n-content="SoundCheck.Label.SelectRecordingSource">Recording
+				Input Device Selection</h1>
+
+			<div class="instructions">
+				<div class="sources-placeholder"
+					i18n-content="SoundCheck.Label.SourceSelectWait"
+					style="display: none;">Finding recording input devices,
+					please wait.</div>
+				<div class="sources-error"
+					i18n-content="SoundCheck.Label.SourceSelectError"
+					style="display: none;">There was a problem finding recording
+					devices, click [Problem (No)].</div>
+				<div class="sources-content"
+					i18n-content="SoundCheck.Label.SourceSelectInstructions">
+					Please speak and select the recording input device which best
+					detects your voice, and then click [Yes].<br /> If there are no
+					devices, or if none of the devices detects your voice, click
 					[Problem (No)].
 				</div>
 			</div>
+
 
 			<div id="audioSourceSelect" class="sources-content" role="radiogroup">
 				<!-- content is gerenated by section_SoundCheck.js -->
 			</div>
 
-			<span class="actions"> <tds:Button id="btnNoSuitableSource" styleClass="negative" key="SoundCheck.Button.InstructionsFollowUpNo" /> <tds:Button id="btnSourceSelected"
-					styleClass="positive disabled" key="SoundCheck.Button.InstructionsFollowUpYes" />
-			</span> <span class="clear"></span>
+			<tds:NextStepWrapper headerID="sectionCheckRecorderSourceNextSteps"
+				headerName="CheckRecorderSource">
+				<tds:Button id="btnSourceSelected" styleClass="positive disabled"
+					key="SoundCheck.Button.InstructionsFollowUpYes" />
+				<tds:Button id="btnNoSuitableSource" styleClass="negative"
+					key="SoundCheck.Button.InstructionsFollowUpNo" />
+			</tds:NextStepWrapper>
+			<span class="clear"></span>
 		</div>
 
-		<div id="checkRecorder" class="shadowBox small soundcheck" style="display: none;">
-			<h1 i18n-content="SoundCheck.Label.RecordAndPlay"></h1>
+		<tds:SoundCheckWrapper id="checkRecorder" headerName="CheckRecorder"
+			show="false">
 
 			<div class="instructions">
-				<div id="audioRecorder" class="elicitedwrap recording_ready disabled">
-					<span class="soundlevelwrap"><span class="soundlevelindicator" style="width: 50%"></span></span>
+				<div id="audioRecorder"
+					class="elicitedwrap recording_ready disabled">
+					<span class="soundlevelwrap"><span
+						class="soundlevelindicator" style="width: 50%"></span></span>
 					<div class="elicitedaround">
-						<a href="javascript:void(0);" class="btnRecord" tabindex="8" i18n-content="SoundCheck.Button.StartStopRecording"></a> <a href="javascript:void(0);" class="btnPlayPause" tabindex="9"
-							i18n-content="SoundCheck.Button.Play"></a> <span class="elicitedcontrols"></span>
+						<a href="javascript:void(0);" class="btnRecord" tabindex="8"
+							i18n-content="SoundCheck.Button.StartStopRecording"></a> <a
+							href="javascript:void(0);" class="btnPlayPause" tabindex="9"
+							i18n-content="SoundCheck.Button.Play"></a> <span
+							class="elicitedcontrols"></span>
 					</div>
 				</div>
 				<div i18n-content="SoundCheck.Label.SoundCheckInstructions"></div>
 				<!-- NOTE: before i18n change this div was not here -->
 			</div>
 
-			<span class="actions"> <tds:Button id="btnRecorderProblem" styleClass="negative" key="SoundCheck.Button.InstructionsFollowUpNo" /> <tds:Button id="btnRecorderYes"
-					styleClass="positive disabled" key="SoundCheck.Button.InstructionsFollowUpYes" />
-			</span> <span class="clear"></span>
-		</div>
+			<tds:NextStepWrapper headerID="sectionCheckRecorderNextSteps"
+				headerName="CheckRecorder">
+				<tds:Button id="btnRecorderYes" styleClass="positive disabled"
+					key="SoundCheck.Button.InstructionsFollowUpYes" />
+				<tds:Button id="btnRecorderProblem" styleClass="negative"
+					key="SoundCheck.Button.InstructionsFollowUpNo" />
+			</tds:NextStepWrapper>
+			<span class="clear"></span>
+		</tds:SoundCheckWrapper>
 
-		<div id="checkRecorderError" class="shadowBox small soundcheck" style="display: none;">
+		<!-- for sound check pages with only messages, no user control options, using HTML instead of SoundCheckWrapper tag -->
+		<div id="checkRecorderError" class="shadowBox small soundcheck"
+			style="display: none;">
 			<h1 i18n-content="SoundCheck.Label.RecordingProblem"></h1>
 
 			<div class="instructions">
 				<p i18n-content="SoundCheck.Label.RecordingErrorMessage"></p>
 			</div>
 
-			<span class="actions"> <tds:Button id="btnRecorderRetry" styleClass="negative" key="SoundCheck.Label.TryAgain" /> <tds:Button id="btnSourceSelect" styleClass="negative"
-					key="SoundCheck.Label.SourceSelect" /> <tds:Button styleClass="soundCheckLogout positive" key="SoundChecl.Label.LogoutOnAudioError" />
+			<tds:NextStepWrapper headerID="sectionCheckRecorderErrorNextSteps"
+				headerName="CheckRecorderError">
+				<tds:Button id="btnRecorderRetry" styleClass="positive"
+					key="SoundCheck.Label.TryAgain" />
+				<tds:Button id="btnSourceSelect" styleClass="positive"
+					key="SoundCheck.Label.SourceSelect" />
+				<tds:Button styleClass="soundCheckLogout negative"
+					Key="SoundCheck.Label.LogoutOnAudioError" />
+			</tds:NextStepWrapper>
+			<span class="clear"></span>
+		</div>
+
+		<div id="checkRecorderPermissionError"
+			class="shadowbox small soundcheck" style="display: none">
+			<h1 i18n-content="SoundCheck.Label.PermissionRequired">Unable to
+				Access Microphone</h1>
+
+			<div class="instructions">
+				<p class="soundCheckPermissionError soundCheckPermissionError-ios"
+					i18-content="SoundCheck.Label.iOSPermissionMessage">Please
+					grant permission for Secure Browser to use the microphone on your
+					device.</p>
+				<p
+					class="soundCheckPermissionError soundCheckPermissionError-android"
+					i18-content="SoundCheck.Label.AndroidPermissionMessage">Please
+					grant permission for Secure Browser to use the microphone on your
+					device.</p>
+			</div>
+
+			<span class="actions"> <tds:Button
+					Class="soundCheckLogout negative"
+					Key="SoundCheck.Label.LogoutOnPermissionError" />
 			</span> <span class="clear"></span>
 		</div>
 
-		<div id="checkError" class="shadowBox small soundcheck" style="display: none;">
+		<div id="checkError" class="shadowBox small soundcheck"
+			style="display: none;">
 			<h1 i18n-content="SoundCheck.Label.AudioProblem"></h1>
 
 			<div class="instructions">
 				<p i18n-content="SoundCheck.Label.TellAdminMessage"></p>
 			</div>
 
-			<span class="actions"> <tds:Button id="btnErrorRetry" styleClass="negative" key="SoundCheck.Label.TryAgain" /> <tds:Button styleClass="soundCheckLogout positive"
+			<tds:NextStepWrapper headerID="sectionCheckErrorNextSteps"
+				headerName="CheckError">
+				<tds:Button id="btnErrorRetry" styleClass="positive"
+					key="SoundCheck.Label.TryAgain" />
+				<tds:Button styleClass="soundCheckLogout negative"
 					key="SoundChecl.Label.LogoutOnAudioError" />
-			</span> <span class="clear"></span>
+			</tds:NextStepWrapper>
+			<span class="clear"></span>
 		</div>
 
-		<!-- -->
-
-		<div id="javaError" class="shadowBox small soundcheck" style="display: none">
-			<h1 i18n-content="SoundCheck.Label.Java14Required"></h1>
-			<span class="actions"> <tds:Button styleClass="positive" key="SoundCheck.Button.LogoutOnJavaError" />
-			</span>
-		</div>
-
-		<div id="flashError" class="shadowBox small soundcheck" style="display: none">
-			<h1 i18n-content="SoundCheck.Label.Flash9Required"></h1>
-			<span class="actions"> <tds:Button styleClass="positive" key="SoundCheck.Label.LogoutOnFlashError" />
-			</span> <span class="clear"></span>
-		</div>
-
-		<div id="soundCheckRecorderError" class="shadowBox small soundcheck" style="display: none">
+		<div id="soundCheckRecorderError" class="shadowBox small soundcheck"
+			style="display: none">
 			<h1 i18n-content="SoundCheck.RecorderRequired.Header"></h1>
-			<div class="instructions" i18n-content="SoundCheck.RecorderRequired.Text"></div>
-			<span class="actions"> <tds:Button styleClass="soundCheckLogout positive" key="SoundChecl.Label.LogoutOnAudioError" />
+			<div class="instructions"
+				i18n-content="SoundCheck.RecorderRequired.Text"></div>
+			<span class="actions">
+				<h3 id="sectionSoundCheckRecorderErrorNextSteps"
+					i18n-content="Sections.BottomHeader.SoundCheckRecorderError"></h3>
+				<tds:Button styleClass="soundCheckLogout positive"
+					key="SoundChecl.Label.LogoutOnAudioError" />
 			</span> <span class="clear"></span>
 		</div>
 

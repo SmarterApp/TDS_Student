@@ -8,12 +8,13 @@
  ******************************************************************************/
 package tds.student.web;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
+import AIR.Common.TDSLogger.ITDSLogger;
+import AIR.Common.Utilities.UrlEncoderDecoderUtils;
+import AIR.Common.Web.Session.HttpContext;
+import AIR.Common.Web.Session.MultiValueCookie;
+import TDS.Shared.Security.TDSIdentity;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.lang3.StringUtils;
@@ -21,8 +22,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import tds.itemrenderer.data.AccLookup;
 import tds.student.services.data.TestOpportunity;
@@ -34,11 +38,6 @@ import tds.student.sql.data.OpportunityInstance;
 import tds.student.sql.data.TestConfig;
 import tds.student.sql.data.TestSession;
 import tds.student.sql.data.Testee;
-import AIR.Common.TDSLogger.ITDSLogger;
-import AIR.Common.Utilities.UrlEncoderDecoderUtils;
-import AIR.Common.Web.Session.HttpContext;
-import AIR.Common.Web.Session.MultiValueCookie;
-import TDS.Shared.Security.TDSIdentity;
 
 /**
  * @author Milan Patel
@@ -51,6 +50,11 @@ public class StudentContext
 
   private final static String CACHE_PREFIX = "TDS_";
   private static final Logger _logger      = LoggerFactory.getLogger (StudentContext.class);
+  private static final String EXAM_ID_COOKIE_KEY = "EXAM_ID";
+  private static final String EXAM_BROWSER_KEY = "EXAM_BROWSER_KEY";
+  private static final String EXAM_CLIENT_NAME = "EXAM_CLIENT_NAME";
+  private static final String EXAM_BROWSER_USER_AGENT = "EXAM_BROWSER_USER_AGENT";
+
 
   public static void throwMissingException () throws StudentContextException {
     throw new StudentContextException ("Missing context info");
@@ -153,10 +157,26 @@ public class StudentContext
     
     TDSIdentity.getCurrentTDSIdentity ().setAuthCookieValue ("O_TKEY", testKey);
     TDSIdentity.getCurrentTDSIdentity ().setAuthCookieValue ("O_TID", testID);
-    TDSIdentity.getCurrentTDSIdentity ().setAuthCookieValue ("O_KEY", oppInfo.getOppKey ().toString ());
-    TDSIdentity.getCurrentTDSIdentity ().saveAuthCookie ();
 
-    StudentCookie.setCookieData ("O_BKEY", oppInfo.getBrowserKey ().toString ());
+    if (oppInfo.getOppKey() != null) {
+      TDSIdentity.getCurrentTDSIdentity ().setAuthCookieValue ("O_KEY", oppInfo.getOppKey ().toString ());
+    }
+    if (oppInfo.getBrowserKey() != null) {
+      StudentCookie.setCookieData ("O_BKEY", oppInfo.getBrowserKey ().toString ());
+    }
+    if(oppInfo.getExamClientName() != null) {
+      TDSIdentity.getCurrentTDSIdentity().setAuthCookieValue(EXAM_CLIENT_NAME, oppInfo.getExamClientName());
+    }
+    if(oppInfo.getExamId() != null) {
+      TDSIdentity.getCurrentTDSIdentity().setAuthCookieValue(EXAM_ID_COOKIE_KEY, oppInfo.getExamId().toString());
+    }
+    TDSIdentity.getCurrentTDSIdentity ().saveAuthCookie ();
+    if(oppInfo.getExamBrowserKey() != null) {
+      StudentCookie.setCookieData(EXAM_BROWSER_KEY, oppInfo.getExamBrowserKey().toString());
+    }
+    if(oppInfo.getBrowerUserAgent() != null) {
+      StudentCookie.setCookieData(EXAM_BROWSER_USER_AGENT, oppInfo.getBrowerUserAgent());
+    }
   }
 
   // / <summary>
@@ -188,20 +208,35 @@ public class StudentContext
   }
 
   public static OpportunityInstance getOppInstance () {
-    if (!isAuthenticated ())
+    if (!isAuthenticated ()) {
       return null;
-    UUID oppKey = UUID.fromString (TDSIdentity.getCurrentTDSIdentity ().get ("O_KEY"));
+    }
+
+    TDSIdentity tdsIdentity = TDSIdentity.getCurrentTDSIdentity();
+    UUID oppKey = tdsIdentity.get ("O_KEY") == null
+      ? null
+      : UUID.fromString (tdsIdentity.get ("O_KEY"));
+
     UUID sessionKey = UUID.fromString (StudentCookie.getCookieData ("S_KEY"));
-    UUID browserKey = UUID.fromString (StudentCookie.getCookieData ("O_BKEY"));
+    UUID browserKey = StudentCookie.getCookieData ("O_BKEY") == null
+      ? null
+      : UUID.fromString (StudentCookie.getCookieData ("O_BKEY"));
 
-    // check if opp instance exists
-    // if (oppKey == Guid.Empty || sessionKey == Guid.Empty || browserKey ==
-    // Guid.Empty) return null;
-    if (oppKey == null || sessionKey == null || browserKey == null)
-      return null;
+    UUID examBrowserKey = StudentCookie.getCookieData(EXAM_BROWSER_KEY) == null
+      ? null
+      : UUID.fromString(StudentCookie.getCookieData(EXAM_BROWSER_KEY));
 
-    OpportunityInstance oppInstance = new OpportunityInstance (oppKey, sessionKey, browserKey);
-    return oppInstance;
+    String browserUserAgent = StudentCookie.getCookieData(EXAM_BROWSER_USER_AGENT) == null
+        ? null
+        : StudentCookie.getCookieData(EXAM_BROWSER_USER_AGENT);
+
+    UUID examId = tdsIdentity.get(EXAM_ID_COOKIE_KEY) == null
+      ? null
+      : UUID.fromString(tdsIdentity.get(EXAM_ID_COOKIE_KEY));
+
+    String examClientName = tdsIdentity.get(EXAM_CLIENT_NAME);
+
+    return new OpportunityInstance (oppKey, sessionKey, browserKey, examId, examBrowserKey, examClientName, browserUserAgent);
   }
 
   /**
@@ -235,6 +270,8 @@ public class StudentContext
     StudentCookie.setCookieData ("TC_P", testConfig.getPrefetch ());
     StudentCookie.setCookieData ("TC_SBT", testConfig.isScoreByTDS ());
     StudentCookie.setCookieData ("TC_VC", testConfig.isValidateCompleteness ());
+
+    StudentCookie.setCookieData("TC_MSB", testConfig.isMsb());
   }
 
   public static TestConfig getTestConfig () {
@@ -248,6 +285,7 @@ public class StudentContext
     testConfig.setPrefetch (StudentCookie.getCookieDataInt ("TC_P"));
     testConfig.setScoreByTDS (StudentCookie.getCookieDataBoolean ("TC_SBT"));
     testConfig.setValidateCompleteness (StudentCookie.getCookieDataBoolean ("TC_VC"));
+    testConfig.setIsMsb(StudentCookie.getCookieDataBoolean("TC_MSB"));
 
     // check if test config exists
     return (testConfig.getTestLength () != 0) ? testConfig : null;

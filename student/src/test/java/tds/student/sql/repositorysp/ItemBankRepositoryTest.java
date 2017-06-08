@@ -215,7 +215,7 @@ public class ItemBankRepositoryTest extends AbstractTest
     try {
       AccList accList = itemRepository
           .getTestAccommodations ("(Oregon)Oregon-Student Help-NA-Winter-2011-2012");
-      Assert.assertTrue (accList.size () > 0);
+      Assert.assertTrue (accList.getData().size () > 0);
       if (accList != null)
         _logger.info ("SIZE::" + accList.getDependencies ().size ());
     } catch (ReturnStatusException exp) {

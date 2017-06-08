@@ -1,46 +1,48 @@
 /*******************************************************************************
  * Educational Online Test Delivery System Copyright (c) 2014 American
  * Institutes for Research
- * 
+ *
  * Distributed under the AIR Open Source License, Version 1.0 See accompanying
  * file AIR-License-1_0.txt or at http://www.smarterapp.org/documents/
  * American_Institutes_for_Research_Open_Source_Software_License.pdf
  ******************************************************************************/
 package tds.student.web.handlers;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import AIR.Common.TDSLogger.ITDSLogger;
+import AIR.Common.Web.Session.HttpContext;
+import AIR.Common.Web.TDSReplyCode;
+import AIR.Common.data.ResponseData;
+import TDS.Shared.Data.ReturnStatus;
+import TDS.Shared.Exceptions.ReturnStatusException;
+import TDS.Shared.Exceptions.TDSSecurityException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.HtmlUtils;
-
+import tds.blackbox.web.handlers.TDSHandler;
+import tds.exam.ExamStatusCode;
 import tds.itemrenderer.data.AccLookup;
 import tds.itemrenderer.data.AccProperties;
-import tds.student.services.PrintService;
+import tds.student.services.ExamCompletionService;
 import tds.student.services.abstractions.IOpportunityService;
 import tds.student.services.abstractions.IResponseService;
+import tds.student.services.abstractions.PrintService;
 import tds.student.services.data.ApprovalInfo;
 import tds.student.services.data.ApprovalInfo.OpportunityApprovalStatus;
 import tds.student.services.data.ItemResponse;
 import tds.student.services.data.PageGroup;
-import tds.student.services.data.PageList;
 import tds.student.services.data.TestOpportunity;
+import tds.student.services.remote.RemoteExamineeNoteService;
 import tds.student.sql.abstractions.IOpportunityRepository;
 import tds.student.sql.abstractions.IResponseRepository;
 import tds.student.sql.data.ClientLatency;
@@ -54,19 +56,18 @@ import tds.student.sql.data.ToolUsed;
 import tds.student.web.StudentContext;
 import tds.student.web.TestManager;
 import tds.student.web.data.TestShellAudit;
-import AIR.Common.TDSLogger.ITDSLogger;
-import AIR.Common.Web.TDSReplyCode;
-import AIR.Common.Web.Session.HttpContext;
-import AIR.Common.data.ResponseData;
-import TDS.Shared.Data.ReturnStatus;
-import TDS.Shared.Exceptions.ReturnStatusException;
-import TDS.Shared.Exceptions.TDSSecurityException;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * @author mpatel
- * 
+ *
  */
 @Controller
 @Scope ("prototype")
@@ -77,15 +78,28 @@ public class TestShellHandler extends TDSHandler
   @Autowired
   private IOpportunityRepository _oppRepository;
   @Autowired
+  @Qualifier("integrationOpportunityService")
   private IOpportunityService    _oppService;
   @Autowired
+  @Qualifier("integrationResponseService")
   private IResponseService       _responseService;
   @Autowired
   private IResponseRepository    _responseRepository;
   @Autowired
-  private PrintService           _printService;
+  @Qualifier("integrationPrintService")
+  private PrintService _printService;
   @Autowired
   private ITDSLogger             _tdsLogger;
+
+  private final RemoteExamineeNoteService remoteExamineeNoteService;
+  private final ExamCompletionService examCompletionService;
+
+  @Autowired
+  public TestShellHandler(final RemoteExamineeNoteService remoteExamineeNoteService,
+                          final ExamCompletionService examCompletionService) {
+    this.remoteExamineeNoteService = remoteExamineeNoteService;
+    this.examCompletionService = examCompletionService;
+  }
 
   @RequestMapping (value = "TestShell.axd/logAuditTrail")
   @ResponseBody
@@ -216,59 +230,30 @@ public class TestShellHandler extends TDSHandler
 
   @RequestMapping (value = "TestShell.axd/complete")
   @ResponseBody
-  public ResponseData<String> reviewTest (@RequestParam Map<String, String> formParams, HttpServletRequest request) throws IOException, TDSSecurityException, ReturnStatusException {
+  public ResponseData<String> reviewTest (@RequestParam Map<String, String> formParams, HttpServletRequest request)
+    throws IOException, TDSSecurityException, ReturnStatusException {
     checkAuthenticated ();
 
     TestOpportunity testOpp = StudentContext.getTestOpportunity ();
 
-    // get responses
-    TestManager testManager = new TestManager (testOpp);
-    testManager.LoadResponses (true);
+    ResponseData<String> responseData = examCompletionService.updateStatusWithValidation(testOpp, new TestManager(testOpp),
+      ExamStatusCode.STATUS_REVIEW);
 
-    // check if test length is met
-    testManager.CheckIfTestComplete ();
+    if (responseData.getReplyCode() != TDSReplyCode.OK.getCode()) {
+      _tdsLogger.applicationError (responseData.getReplyText(), "updateStatusWithValidation", request, null);
+      HttpContext.getCurrentContext()
+        .getResponse()
+        .sendError(HttpStatus.SC_FORBIDDEN, "Cannot end the test.");
 
-    if (!testManager.IsTestLengthMet ()) {
-      // TODO mpatel - Check to see status and message in response and make sure
-      // following works
-      String message = "Review Test: Cannot end test because test length is not met.";
-      _tdsLogger.applicationError (message, "reviewTest", request, null);
-      HttpContext.getCurrentContext ().getResponse ().sendError (HttpStatus.SC_FORBIDDEN, "Cannot end the test.");
       return null;
     }
 
-    // check if all visible pages are completed
-    PageList pageList = testManager.GetVisiblePages ();
-
-    if (!pageList.isAllCompleted ()) {
-      String message = "Review Test: Cannot end test because all the groups have not been answered.";
-      _tdsLogger.applicationError (message, "reviewTest", request, null);
-      HttpContext.getCurrentContext ().getResponse ().sendError (HttpStatus.SC_FORBIDDEN, "Cannot end the test.");
-      return null;
-    }
-
-    String latencies = parseOutLatencies (formParams);
-    if (latencies != null) {
-      TestShellAudit testShellAudit = null;
-      try {
-        ObjectMapper mapper = new ObjectMapper ();
-        testShellAudit = mapper.readValue (latencies, TestShellAudit.class);
-      } catch (IOException e) {
-        _logger.error (String.format ("Problem mapping pause request to TestShellAudit: %s", e.getMessage ()));
-      }
-      PerformTestShellAudit (testOpp, testShellAudit, request);
-    }
-    // put test in review mode
-    OpportunityStatusChange statusChange = new OpportunityStatusChange (OpportunityStatusType.Review, true);
-    _oppService.setStatus (testOpp.getOppInstance (), statusChange);
-
-    // success
-    return new ResponseData<String> (TDSReplyCode.OK.getCode (), "OK", null);
+    return responseData;
   }
 
   /**
    * Gets the test shell audit json and logs data to the DB.
-   * 
+   *
    * @param testOpp
    * @throws ReturnStatusException
    */
@@ -383,8 +368,7 @@ public class TestShellHandler extends TDSHandler
     checkAuthenticated ();
 
     OpportunityInstance oppInstance = StudentContext.getOppInstance ();
-
-    _oppRepository.exitSegment (oppInstance, segmentPosition);
+    _oppService.exitSegment(oppInstance, segmentPosition);
   }
 
   @RequestMapping (value = "TestShell.axd/recordItemComment")
@@ -403,7 +387,8 @@ public class TestShellHandler extends TDSHandler
       comment = HtmlUtils.htmlEscape (comment);
     }
 
-    _responseRepository.recordComment (oppInstance.getSessionKey (), testee.getKey (), oppInstance.getKey (), position, comment);
+    //_responseRepository.recordComment (oppInstance.getSessionKey (), testee.getKey (), oppInstance.getKey (), position, comment);
+    remoteExamineeNoteService.saveItemNote(oppInstance, testee.getKey(), position, comment);
 
     return new ResponseData<String> (TDSReplyCode.OK.getCode (), "OK", null);
   }
@@ -422,7 +407,7 @@ public class TestShellHandler extends TDSHandler
      * UrlEncoderDecoderUtils.encode (comment); }
      */
 
-    _oppRepository.recordComment (oppInstance.getSessionKey (), testee.getKey (), oppInstance.getKey (), comment);
+    remoteExamineeNoteService.saveExamNote(oppInstance, testee.getKey(), comment);
 
     return new ResponseData<String> (TDSReplyCode.OK.getCode (), "OK", null);
   }
@@ -433,7 +418,7 @@ public class TestShellHandler extends TDSHandler
     checkAuthenticated ();
     OpportunityInstance oppInstance = StudentContext.getOppInstance ();
 
-    String comment = _oppRepository.getComment (oppInstance.getKey ());
+    final String comment = remoteExamineeNoteService.findExamNote(oppInstance);
 
     return new ResponseData<String> (TDSReplyCode.OK.getCode (), "OK", comment);
   }
@@ -446,9 +431,9 @@ public class TestShellHandler extends TDSHandler
 
     OpportunityInstance oppInstance = StudentContext.getOppInstance ();
 
-    _responseRepository.setItemMarkForReview (oppInstance, position, mark);
+    _responseService.markItemForReview(oppInstance, position, mark);
 
-    return new ResponseData<String> (TDSReplyCode.OK.getCode (), "OK", null);
+    return new ResponseData<> (TDSReplyCode.OK.getCode (), "OK", null);
   }
 
   @RequestMapping (value = "TestShell.axd/removeResponse")

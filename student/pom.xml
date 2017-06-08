@@ -3,15 +3,14 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>org.opentestsystem.shared</groupId>
-		<artifactId>shared-master</artifactId>
-		<version>1.0.1</version>
+		<groupId>org.opentestsystem.delivery</groupId>
+		<artifactId>student-parent</artifactId>
+		<version>3.1.0.RELEASE</version>
 	</parent>
-	<groupId>org.opentestsystem.delivery</groupId>
+
 	<artifactId>student</artifactId>
 	<name>student</name>
 	<packaging>war</packaging>
-	<version>2.1.1</version>
 
 	<licenses>
 		<license>
@@ -22,18 +21,57 @@
 		</license>
 	</licenses>
 
-
 	<properties>
+		<progman-client.version>3.1.0.RELEASE</progman-client.version>
+		<sb11-mna-client.version>3.1.0.RELEASE</sb11-mna-client.version>
+		<tds-exam-client.version>0.0.20</tds-exam-client.version>
+		<sb11-shared-code.version>3.1.0.RELEASE</sb11-shared-code.version>
+		<tds-common-legacy.version>3.1.0.RELEASE</tds-common-legacy.version>
+		<tds-assessment-client.version>3.1.0.RELEASE</tds-assessment-client.version>
+		<jackson.version>2.8.5</jackson.version>
 
-		<item-selection.version>0.0.1</item-selection.version>
-		<testscoring.version>0.0.1</testscoring.version>
-		<spellcheck.version>0.0.1</spellcheck.version>
-		<progman-client.version>0.0.4</progman-client.version>
-		<sb11-mna-client.version>0.0.4</sb11-mna-client.version>
-		<sb11-shared-code.version>0.0.6</sb11-shared-code.version>
+		<docker.image.prefix>fwsbac</docker.image.prefix>
 	</properties>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>spellcheck</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>student-library</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.opentestsystem.delivery</groupId>
+					<artifactId>item-renderer</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>item-renderer</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>tds-common-legacy</artifactId>
+			<version>${tds-common-legacy.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>tds-assessment-client</artifactId>
+			<version>${tds-assessment-client.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>tds-exam-client</artifactId>
+			<version>${tds-exam-client.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
@@ -48,23 +86,37 @@
 			<artifactId>tds-dll-mysql</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>tds-itemselection-aironline</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>item-scoring-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>item-scoring-engine</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>tds-itemselection-common</artifactId>
-			<version>${item-selection.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>testscoring</artifactId>
-			<version>${testscoring.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>AIR.SpellCheck</groupId>
-			<artifactId>spellcheck</artifactId>
-			<version>${spellcheck.version}</version>
-		</dependency>
+
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpcore</artifactId>
@@ -91,8 +143,13 @@
 
 		<dependency>
 			<groupId>org.opentestsystem.shared</groupId>
+			<artifactId>shared-spring</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.opentestsystem.shared</groupId>
 			<artifactId>monitoring-alerting.client</artifactId>
-			<version> ${sb11-mna-client.version}</version>
+			<version>${sb11-mna-client.version}</version>
 		</dependency>
 
 		<dependency>
@@ -114,10 +171,48 @@
 		</dependency>
 
 		<dependency>
+			<groupId>com.google.auto.value</groupId>
+			<artifactId>auto-value</artifactId>
+			<version>1.2</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
 			<groupId>com.zaxxer</groupId>
 			<artifactId>HikariCP</artifactId>
 			<version>2.4.3</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-guava</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-joda</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
 
 		<!-- Test -->
 		<dependency>
@@ -125,23 +220,34 @@
 			<artifactId>c3p0</artifactId>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<scope>test</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<version>1.1.4.RELEASE</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
-			<artifactId>student.library</artifactId>
-			<version>0.0.1</version>
+			<artifactId>resource-bundler</artifactId>
 		</dependency>
+
 		<dependency>
-			<groupId>org.opentestsystem.blackbox</groupId>
-			<artifactId>shared-blackbox</artifactId>
-			<version>1.0.1</version>
+			<groupId>org.opentestsystem.delivery</groupId>
+			<artifactId>item-renderer-web</artifactId>
 			<type>war</type>
 		</dependency>
+
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -158,15 +264,117 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 			<version>${spring.version}</version>
+			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
-			<version>1.10.19</version>
 			<scope>test</scope>
 		</dependency>
 
-		
+		<dependency>
+            <groupId>org.opentestsystem.shared</groupId>
+            <artifactId>shared-logging</artifactId>
+		</dependency>
+
+		<dependency>
+            <groupId>org.opentestsystem.shared</groupId>
+            <artifactId>shared-threading</artifactId>
+		</dependency>
+
+		<dependency>
+            <groupId>org.opentestsystem.shared</groupId>
+            <artifactId>shared-test</artifactId>
+		</dependency>
+
+        <dependency>
+            <groupId>org.opentestsystem.shared</groupId>
+            <artifactId>shared-web</artifactId>
+        </dependency>
+
+		<dependency>
+            <groupId>commons-primitives</groupId>
+            <artifactId>commons-primitives</artifactId>
+		</dependency>
+
+		<dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+		</dependency>
+
+		<dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+		</dependency>
+
+		<dependency>
+            <groupId>commons-configuration</groupId>
+            <artifactId>commons-configuration</artifactId>
+		</dependency>
+
+		<dependency>
+            <groupId>commons-digester</groupId>
+            <artifactId>commons-digester</artifactId>
+		</dependency>
+
+		 <!--@Inject-->
+		<dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+		</dependency>
+
+		<!-- Servlet -->
+		<dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <scope>provided</scope>
+		</dependency>
+
+		<dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>jsp-api</artifactId>
+            <scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+		</dependency>
+
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.4.10</version>
+				<configuration>
+					<imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+					<imageTags>
+						<imageTag>${project.version}</imageTag>
+						<imageTag>latest</imageTag>
+					</imageTags>
+					<dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
+					<resources>
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.build.directory}</directory>
+							<include>${project.build.finalName}.war</include>
+						</resource>
+
+						<!-- TDS_Student requires file-system test definitions.  The resource directories below must
+							be defined in the build machine's local file-system at the specified paths
+							to be embedded into the student docker container image.
+							Modify as required.-->
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>/usr/local/tomcat/resources/tds/bank</directory>
+							<include>**/*</include>
+						</resource>
+					</resources>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

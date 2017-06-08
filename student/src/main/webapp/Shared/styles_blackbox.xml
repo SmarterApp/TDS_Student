@@ -1,122 +1,153 @@
 <resources>
 
-    <!-- 
-    This CSS is used in Loader.aspx. 
-    All file paths are relative to /Shared/. 
-    -->
+	<!-- This CSS is used in Loader.aspx. All file paths are relative to /Shared/. -->
 
-    <!-- Base -->
-    <fileSet name="base">
+	<!-- Base -->
+	<fileSet name="base">
 
-        <!-- YUI styles -->
-        <input>../Scripts/Libraries/yahoo/yui2/build/menu/assets/skins/sam/menu.css</input>
-        <input>../Scripts/Libraries/yahoo/yui2/build/button/assets/skins/sam/button.css</input>
-        <input>../Scripts/Libraries/yahoo/yui2/build/container/assets/skins/sam/container.css</input>
-        <input>../Scripts/Simulator2/Renderer/CSS/simulator.css</input>
-        <input>../Scripts/Simulator2/Renderer/CSS/slider.css</input>
+		<!-- YUI styles -->
+		<input>../Scripts/Libraries/yahoo/yui2/build/menu/assets/skins/sam/menu.css
+		</input>
+		<input>../Scripts/Libraries/yahoo/yui2/build/button/assets/skins/sam/button.css
+		</input>
+		<input>../Scripts/Libraries/yahoo/yui2/build/container/assets/skins/sam/container.css
+		</input>
+		<input>../Scripts/Simulator2/Renderer/CSS/simulator.css</input>
+		<input>../Scripts/Simulator2/Renderer/CSS/slider.css</input>
 
-        <!-- General -->
-        <input>CSS/dialogs.css</input>
-        <input>CSS/accommodations.css</input>
+		<!-- General -->
+		<input>CSS/dialogs.css</input>
+		<input>CSS/accommodations.css</input>
 
-    </fileSet>
+	</fileSet>
 
-    <fileSet name="widgets">
+	<fileSet name="widgets">
 
-        <input>../Scripts/Interaction/CSS/interaction.css</input>
-        <input>../Scripts/EquationEditor2/mathjax_editor.css</input>
-        <input>../Scripts/EquationEditor3/eq_editor.css</input>
-        <input>../Scripts/EquationEditor3/custom_eq_editor.css</input>
-        <input>../Scripts/LineReader/lineReader.css</input>
-        <input>../Scripts/MatchItem/mi.css</input>
-        <input>../Scripts/Slideshow2/show.css</input>
-        <input>../Scripts/Simulator2/Renderer/CSS/simulator.css</input>
-        <input>../Scripts/Simulator2/Renderer/CSS/slider.css</input>
-        <input>../Scripts/HTMLEditor2/editor.css</input>
-        <input>../Scripts/EditTask/edit.css</input>
-        <input>../Scripts/Scaffolding/asi.css</input>
-        <input>../Scripts/EBSR/ebsr.css</input>
-        <input>../Scripts/Scratchpad/scratchpad.css</input>
-        <input>../Scripts/Mask/mask.css</input>
-        <input>../Scripts/TableInput/base.css</input>
-        <input>../Scripts/Moogle/CSS/moogle.css</input>
-        <input>../Scripts/Audio2/ClosedCaptioning.css</input>
+		<input>../Scripts/Interaction/CSS/interaction.css</input>
+		<input>../Scripts/EquationEditor3/eq_editor.css</input>
+		<input>../Scripts/EquationEditor3/custom_eq_editor.css</input>
+		<input>../Scripts/LineReader/lineReader.css</input>
+		<input>../Scripts/MatchItem/mi.css</input>
+		<input>../Scripts/Slideshow2/show.css</input>
+		<input>../Scripts/Mask/mask.css</input>
+		<input>../Scripts/Simulator2/Renderer/CSS/simulator.css</input>
+		<input>../Scripts/Simulator2/Renderer/CSS/slider.css</input>
+		<input>../Scripts/HTMLEditor2/editor.css</input>
+		<input>../Scripts/EditTask/edit.css</input>
+		<input>../Scripts/Scaffolding/asi.css</input>
+		<input>../Scripts/EBSR/ebsr.css</input>
+		<input>../Scripts/TableInput/base.css</input>
+		<input>../Scripts/Scratchpad/scratchpad.css</input>
+		<input>../Scripts/Moogle/CSS/moogle.css</input>
+		<input>../Scripts/Audio2/ClosedCaptioning.css</input>
+		<input>../Scripts/ItemSecurity/itemsecurity.css</input> <!-- only exists in student -->
+		<input>../Scripts/GapMatch/GapMatch.css</input>
+		<input>../Scripts/GraphicGapMatch/GraphicGapMatch.css</input>
+		<input>../Scripts/Hotspot/hotspot.css</input>
+		<input>../Scripts/Scoring/Results/scoring.css</input>
+		<input>../Scripts/Associate/AssociateInteraction.css</input>
+		<input>../Shared/CSS/Universal/test/badges/badges.css</input>
+		<input>../Scripts/BarHistogram/BarHistogram.css</input>
+		<input>../Scripts/Graphing/Graphing.css</input>
+	</fileSet>
 
-    </fileSet>
+	<fileSet name="navigator_widgets">
+		<input>../Scripts/Interaction/CSS/interaction.css</input>
+		<!--<input>../Scripts/EquationEditor2/mathjax_editor.css</input> -->
+		<input>../Scripts/EquationEditor3/eq_editor.css</input>
+		<input>../Scripts/EquationEditor3/custom_eq_editor.css</input>
+		<input>../Scripts/Simulator2/Renderer/CSS/simulator.css</input>
+		<input>../Scripts/Simulator2/Renderer/CSS/slider.css</input>
+		<input>../Scripts/EditTask/edit.css</input>
+		<input>../Scripts/MatchItem/mi.css</input>
+	</fileSet>
 
-    <fileSet name="navigator_widgets">
-        <input>../Scripts/Interaction/CSS/interaction.css</input>
-        <!--<input>../Scripts/EquationEditor2/mathjax_editor.css</input>-->
-        <input>../Scripts/EquationEditor3/eq_editor.css</input>
-        <input>../Scripts/EquationEditor3/custom_eq_editor.css</input>
-        <input>../Scripts/Simulator2/Renderer/CSS/simulator.css</input>
-        <input>../Scripts/Simulator2/Renderer/CSS/slider.css</input>
-        <input>../Scripts/EditTask/edit.css</input>
-        <input>../Scripts/MatchItem/mi.css</input>
-    </fileSet>
+	<fileSet name="print">
+		<input>CSS/Universal/print.css</input>
+	</fileSet>
 
-    <fileSet name="universal">
+	<fileSet name="universal" output="combined\universal.css">
 
-        <!-- YUI -->
-        <input>../Scripts/Libraries/yahoo/yui2/build/menu/assets/skins/sam/menu.css</input>
-        <input>../Scripts/Libraries/yahoo/yui2/build/button/assets/skins/sam/button.css</input>
-        <input>../Scripts/Libraries/yahoo/yui2/build/container/assets/skins/sam/container.css</input>
+		<!-- YUI -->
+		<input>../Scripts/Libraries/yahoo/yui2/build/menu/assets/skins/sam/menu.css
+		</input>
+		<input>../Scripts/Libraries/yahoo/yui2/build/button/assets/skins/sam/button.css
+		</input>
+		<input>../Scripts/Libraries/yahoo/yui2/build/container/assets/skins/sam/container.css
+		</input>
 
-        <!-- Shell -->
-        <input>CSS/modernFrame.css</input>
-        <input>CSS/normalize.css</input>
-        <input>CSS/Universal/shell.css</input>
-        <input>CSS/dialogs.css</input>
-        <input>CSS/accommodations.css</input>
+		<!-- Video.js -->
+		<input>../Scripts/Libraries/video.js/video-js.min.css</input>
 
-        <!-- Content -->
-        <input>CSS/items.css</input>
-        <input>CSS/elpa.css</input>
-        <input>CSS/Universal/items.css</input>
+		<!-- Shell -->
+		<input>CSS/Universal/frame.css</input>
+		<input>CSS/normalize.css</input>
+		<input>CSS/Universal/shell.css</input>
+		<reference set="project-modern" />
+		<input>CSS/dialogs.css</input>
+		<input>CSS/accommodations.css</input>
+
+		<!-- Content -->
+		<input>CSS/items.css</input>
+		<input>CSS/elpa.css</input>
+		<input>CSS/Universal/items.css</input>
 		<input>CSS/Universal/iat.css</input>
-        <input>../Projects/{0}/css/items.css</input>
-        <input>../Projects/{0}/css/elpa.css</input>
+		<reference set="project-content" />
 
-        <!-- Widgets -->
-        <reference set="widgets" />
 
-    </fileSet>
+		<!-- Super Zoom -->
+		<input>CSS/Universal/superZoom_5.css</input>
+		<input>CSS/Universal/superZoom_6.css</input>
+		<input>CSS/Universal/superZoom_7.css</input>
+		<input>CSS/Universal/superZoom_8.css</input>
 
-    <!-- Modern Styles (copied from TestShellModern.aspx) -->
-    <fileSet name="modern">
-        <reference set="universal" />
-        <input>CSS/Universal/modernish.css</input>
-    </fileSet>
+		<!-- Widgets -->
+		<reference set="widgets" />
 
-    <!-- Development Styles -->
-    <fileSet name="dev">
-        <reference set="universal" />
-    </fileSet>
+	</fileSet>
 
-    <fileSet name="navigator">
-        <!-- YUI -->
-        <input>../Scripts/Libraries/yahoo/yui2/build/menu/assets/skins/sam/menu.css</input>
-        <input>../Scripts/Libraries/yahoo/yui2/build/button/assets/skins/sam/button.css</input>
-        <input>../Scripts/Libraries/yahoo/yui2/build/container/assets/skins/sam/container.css</input>
+	<!-- Modern Styles (copied from TestShellModern.aspx) -->
+	<fileSet name="modern">
+		<reference set="universal" />
+		<input>CSS/Universal/modernish.css</input>
+	</fileSet>
 
-        <!-- Shell -->
-        <input>CSS/Modern/frame.css</input>
-        <input>CSS/normalize.css</input>
-        <input>CSS/Modern/shell.css</input>
-        <input>../Projects/{0}/css/modernShell.css</input>
-        <input>CSS/dialogs.css</input>
-        <input>CSS/accommodations.css</input>
+	<!-- iris styles -->
+	<fileSet name="iris">
+		<reference set="universal" />
+		<reference set="print" />
+	</fileSet>
 
-        <!-- Content -->
-        <input>CSS/items.css</input>
-        <input>CSS/elpa.css</input>
-        <input>CSS/modernItems.css</input>
-        <input>../Projects/{0}/css/items.css</input>
-        <input>../Projects/{0}/css/elpa.css</input>
-        <input>../Projects/{0}/css/modernItems.css</input>
+	<!-- Development Styles -->
+	<fileSet name="dev">
+		<reference set="universal" />
+	</fileSet>
 
-        <!-- Widgets -->
-        <reference set="navigator_widgets" />
-    </fileSet>
+	<fileSet name="navigator">
+		<!-- YUI -->
+		<input>../Scripts/Libraries/yahoo/yui2/build/menu/assets/skins/sam/menu.css
+		</input>
+		<input>../Scripts/Libraries/yahoo/yui2/build/button/assets/skins/sam/button.css
+		</input>
+		<input>../Scripts/Libraries/yahoo/yui2/build/container/assets/skins/sam/container.css
+		</input>
+
+		<!-- Shell -->
+		<input>CSS/Modern/frame.css</input>
+		<input>CSS/normalize.css</input>
+		<input>CSS/Modern/shell.css</input>
+		<reference set="project-shell" />
+		<input>CSS/dialogs.css</input>
+		<input>CSS/accommodations.css</input>
+
+		<!-- Content -->
+		<input>CSS/items.css</input>
+		<input>CSS/elpa.css</input>
+		<input>CSS/modernItems.css</input>
+		<reference set="project-content" />
+
+		<!-- Widgets -->
+		<reference set="navigator_widgets" />
+	</fileSet>
 
 </resources>

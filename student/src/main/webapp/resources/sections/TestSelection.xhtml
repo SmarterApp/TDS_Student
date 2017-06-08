@@ -1,17 +1,27 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://java.sun.com/jsf/passthrough"
-	xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:cc="http://java.sun.com/jsf/composite" xmlns:tds="http://airast.org/jsfcustom" xmlns:ui="http://java.sun.com/jsf/facelets"
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://java.sun.com/jsf/passthrough"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:cc="http://java.sun.com/jsf/composite"
+	xmlns:tds="http://airast.org/jsfcustom"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 <cc:interface componentType="tds.student.web.controls.SectionControl">
 </cc:interface>
 <cc:implementation>
-	<tds:SectionWrapper id="sectionTestSelection" headerKey="Opportunity.Label.PageMessage">
-		<div class="instructions" i18n-content="StaticContent.Label.ChooseTest"></div>
-		<ul id="testSelections"></ul>
-		<div class="instructions" i18n-content="StaticContent.Label.TestOpp"></div>
+	<tds:SectionWrapper id="sectionTestSelection" headerName="ChooseTest">
 
-		<span class="actions"> <tds:Button id="btnLogout" styleClass="negative" key="Opportunity.Button.BackToLogin" />
-		</span>
+		<ul id="testSelections"></ul>
+
+		<tds:NextStepWrapper headerID="sectionTestSelectionNextSteps"
+			headerName="ChooseTest">
+			<tds:Button id="btnLogout" styleClass="negative"
+				key="Opportunity.Button.BackToLogin" />
+		</tds:NextStepWrapper>
+
 	</tds:SectionWrapper>
 </cc:implementation>
 </html>
+

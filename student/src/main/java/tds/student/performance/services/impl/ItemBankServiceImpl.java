@@ -175,23 +175,23 @@ public class ItemBankServiceImpl extends AbstractDAO implements ItemBankService 
                     }
                 }
             }
-            Collections.sort (accList, new Comparator<Data>()
-            {
-                @Override
-                public int compare (Data acc1, Data acc2) {
-                    if (acc1.getSegmentPosition () != acc2.getSegmentPosition ())
-                        return Integer.compare (acc1.getSegmentPosition (), acc2.getSegmentPosition ());
-                    if (acc1.getToolTypeSortOrder () != acc2.getToolTypeSortOrder ())
-                        return Integer.compare (acc1.getToolTypeSortOrder (), acc2.getToolTypeSortOrder ());
-                    if (acc1.getToolValueSortOrder () != acc2.getToolValueSortOrder ())
-                        return Integer.compare (acc1.getToolValueSortOrder (), acc2.getToolValueSortOrder ());
-                    return 0;
-                }
-            });
         } catch (SQLException e) {
             _logger.error (e.getMessage ());
             throw new ReturnStatusException (e);
         }
+        Collections.sort (accList.getData(), new Comparator<Data>()
+        {
+            @Override
+            public int compare (Data acc1, Data acc2) {
+                if (acc1.getSegmentPosition () != acc2.getSegmentPosition ())
+                    return Integer.compare (acc1.getSegmentPosition (), acc2.getSegmentPosition ());
+                if (acc1.getToolTypeSortOrder () != acc2.getToolTypeSortOrder ())
+                    return Integer.compare (acc1.getToolTypeSortOrder (), acc2.getToolTypeSortOrder ());
+                if (acc1.getToolValueSortOrder () != acc2.getToolValueSortOrder ())
+                    return Integer.compare (acc1.getToolValueSortOrder (), acc2.getToolValueSortOrder ());
+                return 0;
+            }
+        });
         return accList;
     }
 
@@ -253,6 +253,7 @@ public class ItemBankServiceImpl extends AbstractDAO implements ItemBankService 
         return testforms;
     }
 
+    @Cacheable(CacheType.LongTerm)
     public String getItemPath (long bankKey, long itemKey) throws ReturnStatusException {
         String itemPath = null;
 
@@ -274,6 +275,7 @@ public class ItemBankServiceImpl extends AbstractDAO implements ItemBankService 
         return itemPath;
     }
 
+    @Cacheable(CacheType.LongTerm)
     public String getStimulusPath (long bankKey, long stimulusKey) throws ReturnStatusException {
         String stimulusPath = null;
 

@@ -43,13 +43,14 @@ import TDS.Shared.Browser.BrowserRule;
 import TDS.Shared.Browser.BrowserValidation;
 import TDS.Shared.Data.ReturnStatus;
 import TDS.Shared.Exceptions.ReturnStatusException;
+import org.springframework.stereotype.Service;
 
 /**
  * @author temp_rreddy
  * 
  */
-@Component
 @Scope ("prototype")
+@Service("legacyOpportunityService")
 public class OpportunityService implements IOpportunityService
 {
   @Autowired
@@ -347,5 +348,10 @@ public class OpportunityService implements IOpportunityService
       _logger.error (e.getMessage ());
       throw new ReturnStatusException (e);
     }
+  }
+
+  @Override
+  public int getAttemptNumber(final OpportunityInstance opportunityInstance) throws ReturnStatusException {
+    return _oppRepository.getOpportunityNumber(opportunityInstance.getKey());
   }
 }

@@ -117,6 +117,7 @@ public class TestResponseReaderSax extends TestResponseReader
         _itemResponseUpdate.setTestKey (_testOpp.getTestKey ());
         _itemResponseUpdate.setLanguage (_testOpp.getLanguage ());
         _itemResponseUpdate.setTestID (_testOpp.getTestID ());
+        _itemResponseUpdate.setClientName(_testOpp.getOppInstance().getExamClientName());
 
         getResponses ().add (_itemResponseUpdate);
         popHandler ();

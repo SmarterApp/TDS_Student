@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import tds.itemrenderer.handler.SoundCueHandlerBase;
+import tds.student.performance.services.ItemBankService;
 import tds.student.sql.abstractions.IItemBankRepository;
 import AIR.Common.Utilities.SpringApplicationContext;
 import TDS.Shared.Exceptions.ReturnStatusException;
@@ -24,12 +25,12 @@ public class SoundCueHandler extends SoundCueHandlerBase
 {
 
   private static final Logger _logger = LoggerFactory.getLogger (SoundCueHandler.class);
-  IItemBankRepository ibRepository;
+  ItemBankService itemBankService;
+
   @Override
   protected String GetItemPath (long bankKey, long itemKey) {
-    IItemBankRepository ibRepository = SpringApplicationContext.getBean (IItemBankRepository.class);
     try {
-      return ibRepository.getItemPath(bankKey, itemKey);
+      return itemBankService.getItemPath(bankKey, itemKey);
     } catch (ReturnStatusException e) {
       _logger.error (e.getMessage (),e);
       return "";

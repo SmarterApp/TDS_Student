@@ -71,3 +71,11 @@ p {
 .rubric .rubricFoot h4{
 	font-weight: bold;
 }
+.rubric caption {
+	font-size: 1.4em;
+	line-height: 2em;
+	font-weight: bold;
+}
+.rubric table {
+	margin-bottom: 2em;
+}

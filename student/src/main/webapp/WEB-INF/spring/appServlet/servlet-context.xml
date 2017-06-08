@@ -34,7 +34,15 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-	
+
+	<!-- Configuring interceptors based on URI -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/**" />
+			<beans:bean class="org.opentestsystem.delivery.logging.LoggingInterceptor" />
+		</interceptor>
+	</interceptors>
+
 	<context:component-scan base-package="tds.student.web, tds.student.securebrowser.controllers" />
 
 </beans:beans>

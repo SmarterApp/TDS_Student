@@ -5,7 +5,7 @@
 <cc:interface componentType="tds.student.web.controls.SectionControl">
 </cc:interface>
 <cc:implementation>
-	<tds:SectionWrapper id="sectionTestVerify" headerKey="Approval.Label.IsYourTest">
+	<tds:SectionWrapper id="sectionTestVerify" headerName="IsYourTest">
 
 		<div id="ot-infoConfirm">
 			<p id="verifySessionID">
@@ -18,11 +18,13 @@
 
 		<div id="summary-segments"></div>
 
-		<div class="instructions" i18n-content="StaticContent.Label.IsYourTest"></div>
-
-		<span class="actions"> <tds:Button id="btnWrongAccommodations" styleClass="negative" key="Approval.Button.WrongAccomodation" /> <tds:Button id="btnApproveAccommodations"
-				styleClass="positive" key="Approval.Button.ApproveAccomodation" />
-		</span>
+		<tds:NextStepWrapper headerID="sectionTestVerifyNextSteps"
+			headerName="IsYourTest">
+			<tds:Button id="btnApproveAccommodations" styleClass="positive"
+				key="Approval.Button.ApproveAccomodation" />
+			<tds:Button id="btnWrongAccommodations" styleClass="negative"
+				key="Approval.Button.WrongAccomodation" />
+		</tds:NextStepWrapper>
 
 	</tds:SectionWrapper>
 </cc:implementation>

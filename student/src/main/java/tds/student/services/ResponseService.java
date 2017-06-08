@@ -28,13 +28,14 @@ import tds.student.sql.data.OpportunityItem;
 import tds.student.sql.data.OpportunityItem.OpportunityItems;
 import TDS.Shared.Data.ReturnStatus;
 import TDS.Shared.Exceptions.ReturnStatusException;
+import org.springframework.stereotype.Service;
 
 /**
  * @author temp_rreddy
  * 
  */
-@Component
 @Scope ("prototype")
+@Service("legacyResponseService")
 public class ResponseService implements IResponseService
 {
 
@@ -47,7 +48,7 @@ public class ResponseService implements IResponseService
   }
 
   // insert items we got from adaptive algorithm to the session db
-  public PageGroup insertItems (OpportunityInstance oppInstance, AdaptiveGroup adaptiveGroup) throws ReturnStatusException {
+  public PageGroup insertItems (OpportunityInstance oppInstance, AdaptiveGroup adaptiveGroup, boolean isMsb) throws ReturnStatusException {
     OpportunityItems sqlOppItems = null;
     if (adaptiveGroup == null)
       return null;
@@ -57,7 +58,7 @@ public class ResponseService implements IResponseService
       // nothing to do, return
       if (insertCount == 0)
         return null;
-      sqlOppItems = _responseRepository.insertItems (oppInstance, adaptiveGroup);
+      sqlOppItems = _responseRepository.insertItems (oppInstance, adaptiveGroup, isMsb);
       ReturnStatus returnedStatus = sqlOppItems.getReturnStatus ();
       // check if the return status is "inserted", otherwise it failed
       if (returnedStatus == null || !returnedStatus.getStatus ().equalsIgnoreCase ("inserted")) {
@@ -113,9 +114,9 @@ public class ResponseService implements IResponseService
     return PageGroup.Create (sqlResult);
   }
 
-  public boolean isTestComplete (UUID oppKey) throws ReturnStatusException {
+  public boolean isTestComplete (OpportunityInstance opportunityInstance) throws ReturnStatusException {
     try {
-      return _responseRepository.isTestComplete (oppKey);
+      return _responseRepository.isTestComplete (opportunityInstance.getKey());
     } catch (ReturnStatusException e) {
       _logger.error (e.getMessage ());
       throw e;
@@ -134,5 +135,10 @@ public class ResponseService implements IResponseService
       _logger.error (e.getMessage ());
       throw e;
     }
+  }
+
+  @Override
+  public void markItemForReview(final OpportunityInstance opportunityInstance, final int position, final boolean mark) throws ReturnStatusException {
+    _responseRepository.setItemMarkForReview(opportunityInstance, position, mark);
   }
 }

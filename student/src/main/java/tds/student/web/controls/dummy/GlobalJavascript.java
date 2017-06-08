@@ -31,13 +31,20 @@ import TDS.Shared.Exceptions.ReadOnlyException;
 import TDS.Shared.Exceptions.ReturnStatusException;
 import TDS.Shared.Messages.IMessageService;
 
-// / <summary>
-// / Adds global variables to a page
-// / </summary>
+/**
+ * This faces component is responsible for fetching resources from the system and providing initial
+ * page-wide javascript values via an embedded <script/> tag.
+ * The javascript values produced include TDS configuration values, I18N translation values,
+ * system information values, etc.
+ */
 @FacesComponent (value = "GlobalJavascript")
 public class GlobalJavascript extends UIComponentBase
 {
   private static final Logger _logger = LoggerFactory.getLogger (GlobalJavascript.class);
+  static final String CONTEXT_LOGIN_SHELL = "LoginShell";
+  static final String CONTEXT_REVIEW_SHELL = "ReviewShell";
+  static final String CONTEXT_DIAGNOSTIC_SHELL = "DiagnosticShell";
+  static final String CONTEXT_TEST_SHELL = "TestShell";
 
   private String              _contextName;
   private String              _messages;
@@ -58,6 +65,12 @@ public class GlobalJavascript extends UIComponentBase
     init ();
   }
 
+  /**
+   * Write the super javascript tag to the output stream.
+   *
+   * @param context       The faces context
+   * @throws IOException
+   */
   @Override
   public void encodeAll (FacesContext context) throws IOException {
     ResponseWriter output = context.getResponseWriter ();
@@ -72,6 +85,14 @@ public class GlobalJavascript extends UIComponentBase
     output.write ("</script>");
   }
 
+  /**
+   * Write various javascript property values based upon the context.
+   *
+   * @param output  The output writer
+   * @throws IOException
+   * @throws ReturnStatusException
+   * @throws ReadOnlyException
+   */
   public void writeJavascript (ResponseWriter output) throws IOException, ReturnStatusException, ReadOnlyException {
     GlobalJavascriptWriter writer = new GlobalJavascriptWriter (output, _studentSettings, _configRepository, _itemBankRepository, _iMessageService);
     writer.writeProperties (); // required
@@ -87,7 +108,7 @@ public class GlobalJavascript extends UIComponentBase
     writer.WriteAppSettings();
 
     // required on login shell
-    if (StringUtils.equals (getContextName (), "LoginShell")) {
+    if (StringUtils.equals (getContextName (), CONTEXT_LOGIN_SHELL)) {
       writer.writeLoginRequirements ();
       // writer.writeGrades ();
       writer.writeGlobalAccommodations ();
@@ -95,7 +116,7 @@ public class GlobalJavascript extends UIComponentBase
     }
 
     // required for test shell
-    if (StringUtils.equals (getContextName (), "TestShell")) {
+    if (StringUtils.equals (getContextName (), CONTEXT_TEST_SHELL)) {
       writer.writeTestShellButtons ();
       writer.writeManifest ();
     }
@@ -110,6 +131,13 @@ public class GlobalJavascript extends UIComponentBase
      */
   }
 
+  /**
+   * Retrieve the set of contexts required by the given root context.
+   * (e.g. the test shell requires many sub-contexts to provide message translations)
+   *
+   * @param contextName The root context
+   * @return The set of contexts required by the root context
+   */
   public static List<String> getContexts (String contextName) {
     // TODO GeoSettings
     // GeoType geoServer = GeoSettings.GetServerType();
@@ -123,7 +151,7 @@ public class GlobalJavascript extends UIComponentBase
       contextList.add (contextName);
 
     // LEGACY CONTEXTS:
-    if (StringUtils.equals (contextName, "LoginShell")) {
+    if (StringUtils.equals (contextName, CONTEXT_LOGIN_SHELL)) {
       // TODO
       /*
        * if (geoServer == GeoType.Login) { contextList.AddRange(new[] {
@@ -133,7 +161,7 @@ public class GlobalJavascript extends UIComponentBase
           "TestInstructions.aspx", "Approval.aspx" };
       // ServerSide
       contextList.addAll (Arrays.asList (pagesArray));
-    } else if (StringUtils.equals (contextName, "TestShell")) {
+    } else if (StringUtils.equals (contextName, CONTEXT_TEST_SHELL)) {
 
       // Removed in new code
       // ServerSide
@@ -145,15 +173,26 @@ public class GlobalJavascript extends UIComponentBase
 
       // ClientSide
       contextList.addAll (Arrays.asList (jsArray));
-    } else if (StringUtils.equals (contextName, "ReviewShell")) {
+    } else if (StringUtils.equals (contextName, CONTEXT_REVIEW_SHELL)) {
       String[] morePages = { "Student.Master", "TestReview.aspx", "TestResults.aspx" };
       // ServerSide
       contextList.addAll (Arrays.asList (morePages));
+
+    } else if (StringUtils.equals(contextName, CONTEXT_DIAGNOSTIC_SHELL)) {
+      String[] pagesArray = { "Default.aspx", "Diagnostics.aspx", "SoundCheck.aspx", "TTSCheck.aspx" };
+      contextList.addAll (Arrays.asList (pagesArray));
     }
 
     return contextList;
   }
 
+  /**
+   * Write message translations for all contexts as a javascript/json property: "TDS.Config.messages"
+   *
+   * @param writer  The output writer
+   * @throws IOException
+   * @throws ReturnStatusException
+   */
   private void writeMessages (GlobalJavascriptWriter writer) throws IOException, ReturnStatusException {
     List<String> contextList = getContexts (getContextName ());
 
