@@ -43,6 +43,10 @@
 				<beans:entry key="itemscoring.qti.sympyTimeoutMillis" value="${itemscoring.qti.sympyTimeoutMillis}" />
 				<beans:entry key="itemScoring.callbackUrl" value="${itemScoring.callbackUrl}" />
 				<beans:entry key="tds.testshell.dictionaryUrl" value="${tds.testshell.dictionaryUrl:}" />
+				<beans:entry key="tds.exam.remote.enabled" value="${tds.exam.remote.enabled:false}" />
+				<beans:entry key="tds.exam.legacy.enabled" value="${tds.exam.legacy.enabled:true}" />
+				<beans:entry key="tds.exam.remote.url" value="${tds.exam.remote.url}" />
+				<beans:entry key="tds.assessment.remote.url" value="${tds.assessment.remote.url}" />
 			</util:map>
 
 		</beans:constructor-arg>
@@ -55,10 +59,13 @@
 	<context:component-scan base-package="tds.student.sql.repository" />
 	<context:component-scan base-package="tds.student.sql.singletons" />
 	<context:component-scan base-package="tds.student.services" />
+	<context:component-scan base-package="tds.student.tdslogger"/>
 	<context:component-scan base-package="tds.student.web" />
 	<context:component-scan base-package="tds.student.configuration" />
 	<context:component-scan base-package="tds.itemscoringengine" />
 	<context:component-scan base-package="tds.itemscoringengine.web.server" />
+
+	<context:component-scan base-package="org.opentestsystem.delivery.logging" />
 
 	<!-- Start item scoring engine Configuration. TODO Shiva: Please consolidate these in a config in item-scoring-engine project so that we can just do an import. -->
 	<beans:bean id="rubricCache" class="tds.itemscoringengine.complexitemscorers.RubricCache" scope="singleton" />
@@ -126,6 +133,15 @@
 	<!-- HTTP web helper -->
 	<beans:bean id="httpWebHelper" class="AIR.Common.Web.HttpWebHelper" />
 
+	<beans:bean id="clientRequestFactory" class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory"/>
+
+	<!-- a generic rest Template bean for invoking webservices can be injected into clients -->
+	<beans:bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+		<beans:constructor-arg ref="clientRequestFactory"/>
+	</beans:bean>
+
+	<beans:bean id="eventParser" class="tds.student.tdslogger.StudentEventParserFactory" />
+
 	<beans:bean id="hikariAIRConfig" class="com.zaxxer.hikari.HikariConfig">
 		<beans:property name="dataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlDataSource" />
 		<beans:property name="dataSourceProperties" >
@@ -137,14 +153,14 @@
 		</beans:property>
 
 		<beans:property name="poolName" value="AIRHikariCP" />
-		<beans:property name="maxLifetime" value="1800000" />
+		<beans:property name="maxLifetime" value="${datasource.maxLifetime:1800000}" />
 		<beans:property name="minimumIdle" value="${datasource.minPoolSize:5}" />
 		<beans:property name="maximumPoolSize" value="${datasource.maxPoolSize:20}" />
-		<!-- <beans:property name="leakDetectionThreshold" value="15000" /> -->
+		<beans:property name="connectionTimeout" value="${datasource.connectionTimeout:30000}" />
+		<beans:property name="leakDetectionThreshold" value="${datasource.leakDetectionThreshold:0}" />
 
 		<!-- The follow values are the defaults -->
 		<!--<beans:property name="autoCommit" value="true" />-->
-		<!--<beans:property name="connectionTimeout" value="30000" />-->
 		<!--<beans:property name="idleTimeout" value="30000" /> &lt;!&ndash; connect_timeout on MySQL is 60 seconds, and HikariCP recommends making this 30 seconds less than that value &ndash;&gt;-->
 	</beans:bean>
 

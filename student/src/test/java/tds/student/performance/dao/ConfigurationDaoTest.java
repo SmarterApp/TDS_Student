@@ -13,6 +13,7 @@
 package tds.student.performance.dao;
 
 import org.junit.Assert;;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import tds.dll.common.performance.domain.ClientSystemFlag;
@@ -72,7 +73,7 @@ public class ConfigurationDaoTest extends IntegrationTest {
         Assert.assertNotNull(result);
         Assert.assertEquals("SBAC_PT", result.getClientName());
         Assert.assertEquals("SBAC Math 3-MATH-3", result.getTestId());
-        Assert.assertEquals((Integer)9999, result.getMaxOpportunities());
+        Assert.assertEquals((Integer)300, result.getMaxOpportunities());
         Assert.assertEquals((Integer)2, result.getPrefetch());
         Assert.assertEquals(false, result.getIsPrintable());
         Assert.assertEquals(true, result.getIsSelectable());
@@ -162,6 +163,6 @@ public class ConfigurationDaoTest extends IntegrationTest {
         Assert.assertEquals("session", externs.getSessionDb());
         Assert.assertEquals("itembank", externs.getTestDb());
         Assert.assertEquals("RTS", externs.getTesteeType());
-        Assert.assertEquals("dev", externs.getEnvironment());
+        Assert.assertEquals("Development", externs.getEnvironment());
     }
 }

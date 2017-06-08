@@ -8,13 +8,18 @@
  ******************************************************************************/
 package tds.student.services;
 
-import java.sql.SQLException;
-
+import AIR.Common.DB.AbstractDAO;
+import AIR.Common.DB.SQLConnection;
+import AIR.Common.Helpers._Ref;
+import TDS.Shared.Exceptions.ReturnStatusException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import java.sql.SQLException;
 
 import tds.itemselection.api.IAIROnline;
 import tds.itemselection.base.ItemGroup;
@@ -23,13 +28,9 @@ import tds.student.services.abstractions.IAdaptiveService;
 import tds.student.services.abstractions.IResponseService;
 import tds.student.services.data.ItemResponse;
 import tds.student.services.data.PageGroup;
+import tds.student.services.data.TestOpportunity;
 import tds.student.sql.data.AdaptiveGroup;
 import tds.student.sql.data.AdaptiveItem;
-import tds.student.sql.data.OpportunityInstance;
-import AIR.Common.DB.AbstractDAO;
-import AIR.Common.DB.SQLConnection;
-import AIR.Common.Helpers._Ref;
-import TDS.Shared.Exceptions.ReturnStatusException;
 
 /**
  * @author temp_rreddy
@@ -37,6 +38,7 @@ import TDS.Shared.Exceptions.ReturnStatusException;
  */
 @Component
 @Scope ("prototype")
+@Qualifier("legacyAdaptiveService")
 public class AdaptiveService extends AbstractDAO implements IAdaptiveService
 {
 
@@ -44,6 +46,7 @@ public class AdaptiveService extends AbstractDAO implements IAdaptiveService
   private IAIROnline _aironline;
   
   @Autowired
+  @Qualifier("integrationResponseService")
   private IResponseService _responseService;
   
   private static final Logger    _logger = LoggerFactory.getLogger (AdaptiveService.class);
@@ -86,8 +89,9 @@ public class AdaptiveService extends AbstractDAO implements IAdaptiveService
     return adaptiveItem;
   }
 
-  public PageGroup createNextItemGroup (OpportunityInstance oppInstance, int lastPage, int lastPosition) throws ReturnStatusException {
+  public PageGroup createNextItemGroup (TestOpportunity testOpportunity, int lastPage, int lastPosition) throws ReturnStatusException {
     PageGroup pageGroup = null;
+    boolean isMsb = testOpportunity.getTestConfig().isMsb();
     try {
       // generate next item group
       ItemGroup itemGroup;
@@ -95,7 +99,7 @@ public class AdaptiveService extends AbstractDAO implements IAdaptiveService
 
         // this is main command! error is referenced String
       _Ref<String> errorRef = new _Ref<>();
-        itemGroup = _aironline.getNextItemGroup (connection, oppInstance.getKey (), errorRef);
+        itemGroup = _aironline.getNextItemGroup (connection, testOpportunity.getOppInstance().getKey (), isMsb, errorRef);
           
         if(errorRef.get() != null  && !errorRef.get().isEmpty())
         {
@@ -122,7 +126,7 @@ public class AdaptiveService extends AbstractDAO implements IAdaptiveService
         adaptiveGroup.getItems ().add (adaptiveItem);
       }
       try {
-        pageGroup = _responseService.insertItems (oppInstance, adaptiveGroup);
+        pageGroup = _responseService.insertItems (testOpportunity.getOppInstance(), adaptiveGroup, isMsb);
       } catch (Exception e) {
         _logger.error (e.getMessage (),e);
         throw new ReturnStatusException (e);

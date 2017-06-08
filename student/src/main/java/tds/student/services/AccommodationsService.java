@@ -43,6 +43,7 @@ import AIR.Common.collections.IGrouping;
 import TDS.Shared.Data.ReturnStatus;
 import TDS.Shared.Exceptions.ReadOnlyException;
 import TDS.Shared.Exceptions.ReturnStatusException;
+import org.springframework.stereotype.Service;
 
 /**
  * @author temp_rreddy
@@ -51,6 +52,7 @@ import TDS.Shared.Exceptions.ReturnStatusException;
 
 @Component
 @Scope ("prototype")
+@Service("legacyAccommodationsService")
 public class AccommodationsService implements IAccommodationsService
 {
   @Autowired
@@ -395,7 +397,7 @@ public class AccommodationsService implements IAccommodationsService
     // if this is PT then remove all acc's that are disabled for guest sessions
     try {
       if (isGuestSession)
-        CollectionUtils.removeAll (accList, CollectionUtils.select (accList, new Predicate ()
+        CollectionUtils.removeAll (accList.getData(), CollectionUtils.select (accList.getData(), new Predicate ()
         {
           public boolean evaluate (Object object) {
             return ((Data) object).isDisableOnGuestSession ();

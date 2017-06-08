@@ -8,25 +8,27 @@
  ******************************************************************************/
 package tds.student.services;
 
-import java.sql.SQLException;
-
+import AIR.test.framework.AbstractTest;
+import TDS.Shared.Exceptions.ReturnStatusException;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.sql.SQLException;
+
 import tds.itemrenderer.data.AccLookup;
+import tds.student.services.abstractions.PrintService;
 import tds.student.services.data.ItemResponse;
 import tds.student.services.data.PageGroup;
 import tds.student.services.data.TestOpportunity;
 import tds.student.sql.data.OpportunityInstance;
-import tds.student.sql.repository.OpportunityRepository;
-import AIR.test.framework.AbstractTest;
-import TDS.Shared.Exceptions.ReturnStatusException;
 
 /**
  * @author temp_rreddy
@@ -40,10 +42,12 @@ public class PrintServiceTest extends AbstractTest
   private static final Logger _logger               = LoggerFactory.getLogger (PrintServiceTest.class);
 
   @Autowired
-  PrintService          printService ;
+  @Qualifier("legacyPrintService")
+  PrintService printService ;
 
   // Suceess Test Case
-  //@Test
+  @Test
+  @Ignore("Never actually implemented")
   public void testLogin () throws SQLException, ReturnStatusException {
     OpportunityInstance oppInstance = null;
     PageGroup pageGroupToPrint = null;
@@ -53,7 +57,8 @@ public class PrintServiceTest extends AbstractTest
   }
 
   // Failure Test Case
-  //@Test
+  @Test
+  @Ignore("Never actually implemented")
   public void testLoginFailure () throws SQLException, ReturnStatusException {
     OpportunityInstance oppInstance = null;
     PageGroup pageGroupToPrint = null;
@@ -63,7 +68,8 @@ public class PrintServiceTest extends AbstractTest
   }
 
   // Sucess Test Case
-  //@Test
+  @Test
+  @Ignore("Never actually implemented")
   public void testprintItem () throws SQLException, ReturnStatusException {
     OpportunityInstance oppInstance = null;
     ItemResponse pageGroupToPrint = null;
@@ -73,7 +79,8 @@ public class PrintServiceTest extends AbstractTest
   }
 
   // Failure Test Case
-  //@Test
+  @Test
+  @Ignore("Never actually implemented")
   public void testprintItemFailure () throws SQLException, ReturnStatusException {
     OpportunityInstance oppInstance = null;
     ItemResponse pageGroupToPrint = null;
@@ -84,6 +91,7 @@ public class PrintServiceTest extends AbstractTest
 
   // Sucess Test Case
   @Test
+  @Ignore("Never actually implemented")
   public void testPrintPassageBraille () throws SQLException, ReturnStatusException {
     TestOpportunity testOpp = null;
     PageGroup pageGroupToPrint = null;
@@ -94,6 +102,7 @@ public class PrintServiceTest extends AbstractTest
 
   // Failure Test Case
   @Test
+  @Ignore("Never actually implemented")
   public void testPrintPassageBrailleFailure () throws SQLException, ReturnStatusException {
     TestOpportunity testOpp = null;
     PageGroup pageGroupToPrint = null;
@@ -104,6 +113,7 @@ public class PrintServiceTest extends AbstractTest
 
   // Sucess Test Case
   @Test
+  @Ignore("Never actually implemented")
   public void tesPprintItemBraille () throws SQLException, ReturnStatusException {
     TestOpportunity testOpp = null;
     ItemResponse responseToPrint = null;
@@ -114,6 +124,7 @@ public class PrintServiceTest extends AbstractTest
 
   // Sucess Test Case
   @Test
+  @Ignore("Never actually implemented")
   public void tesPrintItemBrailleFailure () throws SQLException, ReturnStatusException {
     TestOpportunity testOpp = null;
     ItemResponse responseToPrint = null;

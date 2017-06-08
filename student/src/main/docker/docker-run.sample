@@ -1,0 +1,11 @@
+# Sample docker run command (replace values with your environment values)
+
+docker run -e "OAUTH_ACCESS_URL=https://my-sso.com/auth/oauth2/access_token?realm=/myrealm" \
+-e "PM_OAUTH_CLIENT_ID=<clientid>" \
+-e "PM_OAUTH_CLIENT_SECRET=<clientsecret>" \
+-e "PM_OAUTH_BATCH_ACCOUNT=<progmanuser>" \
+-e "PM_OAUTH_BATCH_PASSWORD=<progmanpass>" \
+-e "PROGMAN_BASEURI=http://my-progman.com/rest/" \
+-e "PROGMAN_LOCATOR=some,progman,context" \
+-e "SPRING_PROFILES_ACTIVE=mna.client.null,progman.client.impl.integration,server.singleinstance" \
+-P <DOCKER_IMAGE_ID>

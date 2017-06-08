@@ -9,36 +9,35 @@
 
 package tds.student.web.handlers;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.UUID;
-
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.xml.bind.JAXBException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import tds.itemscoringengine.ItemScoreResponse;
-import tds.student.services.abstractions.IItemScoringService;
-import tds.student.sql.data.ItemResponseScorable;
 import AIR.Common.Json.JsonHelper;
 import AIR.Common.Web.EncryptionHelper;
 import AIR.Common.Web.WebValueCollectionCorrect;
 import AIR.Common.xml.XmlReader;
 import TDS.Shared.Exceptions.FailedReturnStatusException;
 import TDS.Shared.Exceptions.ReturnStatusException;
-
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import tds.blackbox.web.handlers.TDSHandler;
+import tds.itemscoringengine.ItemScoreResponse;
+import tds.student.services.abstractions.IItemScoringService;
+import tds.student.sql.data.ItemResponseScorable;
+
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.xml.bind.JAXBException;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.UUID;
 
 /**
  * Handles requests for the application home page.
@@ -50,6 +49,7 @@ public class ItemScoringCallbackHandler extends TDSHandler
   private static final Logger _logger = LoggerFactory.getLogger (ItemScoringCallbackHandler.class);
 
   @Autowired
+  @Qualifier("legacyItemScoringService")
   private IItemScoringService _itemScoringService;
 
   /**

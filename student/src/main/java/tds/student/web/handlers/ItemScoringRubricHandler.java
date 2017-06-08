@@ -9,19 +9,12 @@
 
 package tds.student.web.handlers;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import AIR.Common.Web.ContentType;
+import AIR.Common.Web.EncryptionHelper;
+import AIR.Common.Web.TDSReplyCode;
+import AIR.Common.Web.WebHelper;
+import AIR.Common.data.ResponseData;
+import TDS.Shared.Exceptions.ReturnStatusException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
@@ -35,16 +28,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-
+import tds.blackbox.web.handlers.TDSHandler;
 import tds.itemrenderer.data.IITSDocument;
 import tds.itemrenderer.data.ITSMachineRubric;
 import tds.student.services.abstractions.IContentService;
-import AIR.Common.Web.ContentType;
-import AIR.Common.Web.EncryptionHelper;
-import AIR.Common.Web.TDSReplyCode;
-import AIR.Common.Web.WebHelper;
-import AIR.Common.data.ResponseData;
-import TDS.Shared.Exceptions.ReturnStatusException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Handles requests for the application home page.

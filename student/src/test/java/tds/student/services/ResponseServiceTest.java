@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,12 +39,13 @@ public class ResponseServiceTest extends AbstractTest
   ResponseService             responseService    = null;
 
   // Suceess Test Case
-  ////@Test
+  @Test
+  @Ignore("Never actually implemented")
   public void testLogin () throws SQLException, ReturnStatusException {
     try {
       OpportunityInstance oppInstance = null;
       AdaptiveGroup adaptiveGroup = null;
-      PageGroup pageGroup = responseService.insertItems (oppInstance, adaptiveGroup);
+      PageGroup pageGroup = responseService.insertItems (oppInstance, adaptiveGroup, false);
       Assert.assertTrue (pageGroup != null);
       if (pageGroup != null) {
         _logger.info ("File path::" + pageGroup.getFilePath ());
@@ -73,12 +75,13 @@ public class ResponseServiceTest extends AbstractTest
   }
 
   // Failure Test Case
-  //@Test
+  @Test
+  @Ignore("Never actually implemented")
   public void testLoginFailure () throws SQLException, ReturnStatusException {
     try {
       OpportunityInstance oppInstance = null;
       AdaptiveGroup adaptiveGroup = null;
-      PageGroup pageGroup = responseService.insertItems (oppInstance, adaptiveGroup);
+      PageGroup pageGroup = responseService.insertItems (oppInstance, adaptiveGroup, false);
       Assert.assertTrue (pageGroup == null);
     } catch (ReturnStatusException exp) {
       ReturnStatus returnStatus = exp.getReturnStatus ();
@@ -92,7 +95,8 @@ public class ResponseServiceTest extends AbstractTest
   }
 
   // Sucess Test Case
-  //@Test
+  @Test
+  @Ignore("Never actually implemented")
   public void testOpportunityItems () throws SQLException, ReturnStatusException {
     /*try {
       OpportunityInstance oppInstance = null;
@@ -115,7 +119,8 @@ public class ResponseServiceTest extends AbstractTest
   }
 
   // Failure Test Case
-  //@Test
+  @Test
+  @Ignore("Never actually implemented")
   public void testOpportunityItemsFAilure () throws SQLException, ReturnStatusException {
     /*try {
       OpportunityInstance oppInstance = null;
@@ -134,7 +139,8 @@ public class ResponseServiceTest extends AbstractTest
   }
 
   // Sucess Test Case
-  //@Test
+  @Test
+  @Ignore("Never actually implemented")
   public void testGetItemGroup () throws SQLException, ReturnStatusException {
     try {
       OpportunityInstance oppInstance = null;
@@ -172,7 +178,8 @@ public class ResponseServiceTest extends AbstractTest
   }
 
   // Failure Test Case
-  //@Test
+  @Test
+  @Ignore("Never actually implemented")
   public void testGetItemGroupFailure () throws SQLException, ReturnStatusException {
     try {
       OpportunityInstance oppInstance = null;
@@ -195,43 +202,8 @@ public class ResponseServiceTest extends AbstractTest
   }
 
   // Sucess Test Case
-  //@Test
-  public void testisTestComplete () throws SQLException, ReturnStatusException {
-    try {
-      UUID uuid = null;
-      boolean pageGroup = responseService.isTestComplete (uuid);
-      Assert.assertTrue (pageGroup);
-    } catch (ReturnStatusException exp) {
-      ReturnStatus returnStatus = exp.getReturnStatus ();
-      _logger.error ("Status: " + returnStatus.getStatus ());
-      _logger.error ("Reason: " + returnStatus.getReason ());
-      _logger.error (exp.getMessage ());
-    } catch (Exception exp) {
-      exp.printStackTrace ();
-      _logger.error (exp.getMessage ());
-    }
-  }
-
-  // Failure Test Case
-  //@Test
-  public void testisTestCompleteFailure () throws SQLException, ReturnStatusException {
-    try {
-      UUID uuid = null;
-      boolean pageGroup = responseService.isTestComplete (uuid);
-      Assert.assertFalse (pageGroup);
-    } catch (ReturnStatusException exp) {
-      ReturnStatus returnStatus = exp.getReturnStatus ();
-      _logger.error ("Status: " + returnStatus.getStatus ());
-      _logger.error ("Reason: " + returnStatus.getReason ());
-      _logger.error (exp.getMessage ());
-    } catch (Exception exp) {
-      exp.printStackTrace ();
-      _logger.error (exp.getMessage ());
-    }
-  }
-
-  // Sucess Test Case
-  //@Test
+  @Test
+  @Ignore("Never actually implemented")
   public void testremoveResponse () throws SQLException, ReturnStatusException {
     try {
       OpportunityInstance oppInstance = null;

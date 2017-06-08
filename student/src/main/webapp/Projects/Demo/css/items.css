@@ -1,0 +1,151 @@
+
+/* temporary styles until we support SIM for IE*/
+#noBrowser {
+	display:none;
+	background-color: #e1e1e1;
+	background-color: rgba(0, 0, 0, .3);
+	position:absolute;
+	left:0px;
+	top:0px;
+	height:100%;
+	width:100%;
+	z-index:9;
+	text-align:center;
+}
+#noIE {
+	width:50%;
+	left:25%;
+	top:33%;
+	position:absolute;
+	background-color:#fff;
+	border: 4px solid #00abf4;
+	-moz-border-radius:  10px;
+	-webkit-border-radius:  10px;
+	border-radius: 10px;
+	-webkit-box-shadow: 0em 0em .5em #666;
+	-moz-box-shadow: 0em 0em .5em #666;
+	box-shadow: 0em 0em .5em #666;
+	 -moz-box-sizing: border-box;
+	box-sizing: border-box;
+	font-size:24px;
+	padding:20px;
+	text-align:left;
+	line-height:1.2em;
+}
+.browser_ie.platform_windows.layout_29 #noBrowser {
+	display:block !important;
+}
+/* temporary styles until we support SIM for IE*/
+
+/* @group WordList */
+
+#WordListTool {
+	z-index: 6;
+}
+#wordListPanel {
+	-webkit-box-shadow: 0em 0em .5em #666;
+	-moz-box-shadow: 0em 0em .5em #666;
+	box-shadow: 0em 0em .5em #666;
+	border-color: transparent;
+	font-family: "Lucida Grande", "Lucida Sans", Arial, Helvetica, sans-serif;
+}
+#wordListPanel .hd {
+	-moz-border-radius:  10px 10px 0px 0px;
+	-webkit-border-radius:  10px 10px 0px 0px;
+	border-radius: 10px 10px 0px 0px;
+	font-size: 1.2em;
+	font-weight: normal;
+	background-image: none;
+}
+#wordListPanel .bd {
+	-moz-border-radius:  0px 0px 10px 10px;
+	-webkit-border-radius:  0px 0px 10px 10px;
+	border-radius: 0px 0px 10px 10px;
+}
+#wordListPanel .yui-nav {
+	font-size: .9em;
+	font-weight: normal;
+	border-bottom: solid 1px #00aeef;
+}
+#wordListPanel .yui-nav a {
+	padding: .2em;
+	border-top: solid 1px #999;
+	border-left: solid 1px #999;
+	border-right: solid 1px #999;
+	background-color: #e7e7e7;
+	background-image: none;
+}
+#wordListPanel .yui-nav .selected a, #wordListPanel .yui-nav a:hover {
+	background-color: #00aeef;
+	border-color: #008fc5;
+	color: #fff;
+}
+#wordListPanel .yui-content {
+	border-color: #00aeef;
+	border-top: none;
+	background-color: #fff;
+}
+#wordListPanel .yui-content h2 {
+	font-size: .9em;
+}
+#wordListPanel .container-close {
+    right: 11px;
+    top: 10px;
+}
+#wordListPanel .container-close:hover {
+	border-color: #00aeef !important;
+}
+
+/* @end */
+
+/* @group ASL */
+
+a.ASL {
+	background: transparent url(../images/ASL.png) no-repeat scroll center -70px;
+    display: block;
+    height: 16px;
+    margin-top: 1px;
+    overflow: hidden;
+    text-indent: -9999px;
+    width: 33px;
+}
+a.ASL:hover {
+	background-position: center -110px;
+}
+/*.TDS_PS_L1 a.ASL {
+	width: 33px;
+	height: 16px;
+	margin-top: 3px;
+	margin-left: 5px;
+	background-position: center -70px;
+}
+.TDS_PS_L1 a.ASL:hover {
+	background-position: center -110px;
+}*/
+.TDS_PS_L2 a.ASL, .TDS_PS_L3 a.ASL, .TDS_PS_L4 a.ASL {
+	width: 41px;
+	height: 20px;
+	margin-top: 5px;
+	margin-left: 7px;
+	background-position: center -150px;
+}
+.TDS_PS_L2 a.ASL:hover, .TDS_PS_L3 a.ASL:hover, .TDS_PS_L4 a.ASL:hover {
+	background-position: center -200px;
+}
+
+/* @end */
+
+/*hack to get measurment tools to fit*/
+.layout_8 .structure {
+	max-width:60em;
+}
+/* hacks to make grid visible with inverted color, yellow on blue and white on navy*/
+.TDS_CCWhiteN .GridContainer, .TDS_CCInvert .GridContainer, .TDS_CCYellowB .GridContainer {
+	background-color: #fff;
+}
+
+
+/* hacks for demo site */
+#btnPause, #btnPagePrint, #smallButtons {
+	display: none !important;
+}

@@ -8,19 +8,17 @@
  ******************************************************************************/
 package tds.student.web.handlers;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletResponse;
-
+import TDS.Shared.Exceptions.ReturnStatusException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import tds.blackbox.web.handlers.BaseContentRendererController;
 import tds.itemrenderer.data.AccLookup;
 import tds.itemrenderer.data.AccProperties;
 import tds.itemrenderer.data.IITSDocument;
@@ -29,23 +27,18 @@ import tds.itemrenderer.data.ITSTypes.ITSEntityType;
 import tds.itemrenderer.data.InvalidDataException;
 import tds.itemrenderer.data.ItemRender;
 import tds.itemrenderer.data.ItemRenderGroup;
-import tds.itemrenderer.web.ITSDocumentXmlSerializable;
-import tds.itemrenderer.web.XmlWriter;
-import tds.itemrenderer.webcontrols.ErrorCategories;
-import tds.itemrenderer.webcontrols.PageLayout;
-import tds.itemrenderer.webcontrols.rendererservlet.ContentRenderingException;
-import tds.itemrenderer.webcontrols.rendererservlet.RendererServlet;
-import tds.student.services.PrintService;
 import tds.student.services.abstractions.IContentService;
 import tds.student.services.abstractions.IResponseService;
+import tds.student.services.abstractions.PrintService;
 import tds.student.services.data.ItemResponse;
 import tds.student.services.data.PageGroup;
 import tds.student.services.data.TestOpportunity;
 import tds.student.web.StudentContext;
 import tds.student.web.StudentContextException;
 import tds.student.web.StudentSettings;
-import AIR.Common.Web.ContentType;
-import TDS.Shared.Exceptions.ReturnStatusException;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Scope ("prototype")
 @Controller
@@ -55,6 +48,7 @@ public class ContentHandler extends BaseContentRendererController
   private static final Logger _logger = LoggerFactory.getLogger (ContentHandler.class);
 
   @Autowired
+  @Qualifier("integrationResponseService")
   private IResponseService    _responseService;
 
   @Autowired
@@ -64,7 +58,8 @@ public class ContentHandler extends BaseContentRendererController
   private IContentService     _contentService;
 
   @Autowired
-  PrintService                _printService;
+  @Qualifier("integrationPrintService")
+  PrintService _printService;
 
   @RequestMapping (value = "TestShell.axd/getPageContent", produces = "application/xml")
   @ResponseBody
@@ -120,7 +115,7 @@ public class ContentHandler extends BaseContentRendererController
       throw new ReturnStatusException (String.format ("An error occured getting the groupID '{%s}' passage file path.", groupId));
     }
 
-    if (prefetched && attempt == 1) {
+    if (attempt == 1) {
       autoEmbossing (testOpp, accLookup, pageGroup);
     }
 
@@ -138,7 +133,7 @@ public class ContentHandler extends BaseContentRendererController
       return;
 
     // check if passage allows auto embossing
-    if (pageGroup.getIitsDocument () != null && allowsAutoEmbossing (accProps, pageGroup.getIitsDocument ())) {
+    if (pageGroup.getDocument () != null && allowsAutoEmbossing (accProps, pageGroup.getDocument ())) {
 
       _printService.printPassageBraille (testOpp, pageGroup, accLookup);
     }

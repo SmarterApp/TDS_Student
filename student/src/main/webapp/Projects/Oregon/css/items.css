@@ -1,7 +1,8 @@
 @charset "UTF-8";
 /* Oregon Rules*/
 
-.passage-expanded .maskQuestions {
+.passage-expanded .maskQuestions, 
+.items-expanded .maskQuestions {
 	background-color: #fff !important;
 	-webkit-opacity: 0.50 !important;
 	-moz-opacity: 0.50 !important;
