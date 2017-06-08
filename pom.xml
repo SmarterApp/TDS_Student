@@ -27,7 +27,6 @@
 
     <modules>
         <module>student</module>
-        <module>iris</module>
         <module>SpellCheck</module>
     </modules>
 
