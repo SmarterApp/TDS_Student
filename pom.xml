@@ -3,7 +3,7 @@
     <parent>
         <groupId>org.opentestsystem.shared</groupId>
         <artifactId>shared-master</artifactId>
-        <version>3.0.9</version>
+        <version>3.1.0.RELEASE</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -15,19 +15,18 @@
 
     <properties>
         <assertj.version>2.6.0</assertj.version>
-        <item-renderer.version>3.0.9</item-renderer.version>
-        <item-selection.version>3.0.2</item-selection.version>
-        <item-scoring.version>3.0.1</item-scoring.version>
+        <item-renderer.version>3.1.0.RELEASE</item-renderer.version>
+        <item-selection.version>3.1.0.RELEASE</item-selection.version>
+        <item-scoring.version>3.1.0.RELEASE</item-scoring.version>
         <junit.version>4.12</junit.version>
         <mockito.version>1.10.19</mockito.version>
-        <tds-dll.version>3.0.1</tds-dll.version>
-        <test-scoring.version>3.0.0</test-scoring.version>
-        <tds-student-common.version>3.0.9</tds-student-common.version>
+        <tds-dll.version>3.1.0.RELEASE</tds-dll.version>
+        <test-scoring.version>3.1.0.RELEASE</test-scoring.version>
+        <tds-student-common.version>3.1.0.RELEASE</tds-student-common.version>
     </properties>
 
     <modules>
         <module>student</module>
-        <module>iris</module>
         <module>SpellCheck</module>
     </modules>
 

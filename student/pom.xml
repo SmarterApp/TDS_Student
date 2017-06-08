@@ -22,12 +22,12 @@
 	</licenses>
 
 	<properties>
-		<progman-client.version>3.0.1</progman-client.version>
-		<sb11-mna-client.version>3.0.0</sb11-mna-client.version>
+		<progman-client.version>3.1.0.RELEASE</progman-client.version>
+		<sb11-mna-client.version>3.1.0.RELEASE</sb11-mna-client.version>
 		<tds-exam-client.version>0.0.20</tds-exam-client.version>
-		<sb11-shared-code.version>3.0.11</sb11-shared-code.version>
-		<tds-common-legacy.version>0.0.6</tds-common-legacy.version>
-		<tds-assessment-client.version>0.0.13</tds-assessment-client.version>
+		<sb11-shared-code.version>3.1.0.RELEASE</sb11-shared-code.version>
+		<tds-common-legacy.version>3.1.0.RELEASE</tds-common-legacy.version>
+		<tds-assessment-client.version>3.1.0.RELEASE</tds-assessment-client.version>
 		<jackson.version>2.8.5</jackson.version>
 
 		<docker.image.prefix>fwsbac</docker.image.prefix>
