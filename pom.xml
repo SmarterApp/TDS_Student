@@ -20,7 +20,7 @@
         <item-scoring.version>3.1.0.RELEASE</item-scoring.version>
         <junit.version>4.12</junit.version>
         <mockito.version>1.10.19</mockito.version>
-        <tds-dll.version>3.0.1</tds-dll.version>
+        <tds-dll.version>3.1.0.RELEASE</tds-dll.version>
         <test-scoring.version>3.0.0</test-scoring.version>
         <tds-student-common.version>3.0.9</tds-student-common.version>
     </properties>
