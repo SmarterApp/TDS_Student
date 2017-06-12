@@ -30,7 +30,7 @@
 		<tds-assessment-client.version>3.1.0.RELEASE</tds-assessment-client.version>
 		<jackson.version>2.8.5</jackson.version>
 
-		<docker.image.prefix>fwsbac</docker.image.prefix>
+		<docker.image.prefix>smarterbalanced</docker.image.prefix>
 	</properties>
 
 	<dependencies>
