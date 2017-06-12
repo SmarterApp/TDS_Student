@@ -344,7 +344,8 @@ public class RemoteOpportunityServiceTest {
   @Test
   public void shouldStartExamAndReturnTestConfig() throws ReturnStatusException {
     service = new RemoteOpportunityService(mockLegacyOpportunityService, true, false, mockExamRepository, mockExamSegmentRepository, mockTestOpportunityExamMapDao, configRepository);
-    OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+    OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(),
+        UUID.randomUUID(), UUID.randomUUID(), "", "\"userAgent\"");
     final String assessmentKey = "assessmentKey";
     ExamConfiguration mockExamConfig = new ExamConfiguration.Builder()
       .withExam(
@@ -363,9 +364,9 @@ public class RemoteOpportunityServiceTest {
       .withExamRestartWindowMinutes(60)
       .build();
 
-    when(mockExamRepository.startExam(oppInstance.getExamId(), "")).thenReturn(new Response<>(mockExamConfig));
+    when(mockExamRepository.startExam(oppInstance.getExamId(), "userAgent")).thenReturn(new Response<>(mockExamConfig));
     TestConfig testConfig = service.startTest(oppInstance, assessmentKey, null);
-    verify(mockExamRepository).startExam(oppInstance.getExamId(), "");
+    verify(mockExamRepository).startExam(oppInstance.getExamId(), "userAgent");
 
     assertThat(testConfig).isNotNull();
     assertThat(testConfig.getStatus()).isEqualTo(ExamStatusMapper.parseExamStatus(ExamStatusCode.STATUS_STARTED));

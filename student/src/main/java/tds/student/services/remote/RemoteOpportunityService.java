@@ -292,8 +292,9 @@ public class RemoteOpportunityService implements IOpportunityService {
       return testConfig;
     }
 
+    final String unquotedBrowserUserAgent = oppInstance.getBrowserUserAgent().replaceAll("^\"|\"$", "");
     /* Note that the formKeys argument can be ignored - it is an unused functionality */
-    final Response<ExamConfiguration> response = examRepository.startExam(oppInstance.getExamId(), oppInstance.getBrowserUserAgent());
+    final Response<ExamConfiguration> response = examRepository.startExam(oppInstance.getExamId(), unquotedBrowserUserAgent);
 
     if (response.getError().isPresent()) {
       final ValidationError validationError = response.getError().get();
