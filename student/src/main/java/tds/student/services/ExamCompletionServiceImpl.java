@@ -44,7 +44,7 @@ public class ExamCompletionServiceImpl implements ExamCompletionService {
         }
 
         this.opportunityService = opportunityService;
-        this.isLegacyCallsEnabled = false;
+        this.isLegacyCallsEnabled = legacyCallsEnabled;
     }
 
     @Override
