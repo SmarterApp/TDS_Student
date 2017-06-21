@@ -28,6 +28,7 @@
 		<sb11-shared-code.version>3.1.0.RELEASE</sb11-shared-code.version>
 		<tds-common-legacy.version>3.1.0.RELEASE</tds-common-legacy.version>
 		<tds-assessment-client.version>3.1.0.RELEASE</tds-assessment-client.version>
+		<spellcheck.version>3.1.0.RELEASE</spellcheck.version>
 		<jackson.version>2.8.5</jackson.version>
 
 		<docker.image.prefix>smarterbalanced</docker.image.prefix>
@@ -38,7 +39,7 @@
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>spellcheck</artifactId>
-			<version>${project.version}</version>
+			<version>${spellcheck.version}</version>
 		</dependency>
 
 		<dependency>
