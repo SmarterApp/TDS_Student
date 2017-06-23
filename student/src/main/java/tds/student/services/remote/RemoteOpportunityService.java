@@ -1,3 +1,16 @@
+/***************************************************************************************************
+ * Educational Online Test Delivery System
+ * Copyright (c) 2017 Regents of the University of California
+ *
+ * Distributed under the AIR Open Source License, Version 1.0
+ * See accompanying file AIR-License-1_0.txt or at
+ * http://www.smarterapp.org/documents/American_Institutes_for_Research_Open_Source_Software_License.pdf
+ *
+ * SmarterApp Open Source Assessment Software Project: http://smarterapp.org
+ * Developed by Fairway Technologies, Inc. (http://fairwaytech.com)
+ * for the Smarter Balanced Assessment Consortium (http://smarterbalanced.org)
+ **************************************************************************************************/
+
 package tds.student.services.remote;
 
 import TDS.Shared.Browser.BrowserAction;
@@ -292,8 +305,9 @@ public class RemoteOpportunityService implements IOpportunityService {
       return testConfig;
     }
 
+    final String unquotedBrowserUserAgent = oppInstance.getBrowserUserAgent().replaceAll("^\"|\"$", "");
     /* Note that the formKeys argument can be ignored - it is an unused functionality */
-    final Response<ExamConfiguration> response = examRepository.startExam(oppInstance.getExamId(), oppInstance.getBrowserUserAgent());
+    final Response<ExamConfiguration> response = examRepository.startExam(oppInstance.getExamId(), unquotedBrowserUserAgent);
 
     if (response.getError().isPresent()) {
       final ValidationError validationError = response.getError().get();
