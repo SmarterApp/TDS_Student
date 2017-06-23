@@ -1,3 +1,16 @@
+/***************************************************************************************************
+ * Educational Online Test Delivery System
+ * Copyright (c) 2017 Regents of the University of California
+ *
+ * Distributed under the AIR Open Source License, Version 1.0
+ * See accompanying file AIR-License-1_0.txt or at
+ * http://www.smarterapp.org/documents/American_Institutes_for_Research_Open_Source_Software_License.pdf
+ *
+ * SmarterApp Open Source Assessment Software Project: http://smarterapp.org
+ * Developed by Fairway Technologies, Inc. (http://fairwaytech.com)
+ * for the Smarter Balanced Assessment Consortium (http://smarterbalanced.org)
+ **************************************************************************************************/
+
 package tds.student.services.remote;
 
 import TDS.Shared.Browser.BrowserAction;
@@ -344,7 +357,8 @@ public class RemoteOpportunityServiceTest {
   @Test
   public void shouldStartExamAndReturnTestConfig() throws ReturnStatusException {
     service = new RemoteOpportunityService(mockLegacyOpportunityService, true, false, mockExamRepository, mockExamSegmentRepository, mockTestOpportunityExamMapDao, configRepository);
-    OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID());
+    OpportunityInstance oppInstance = new OpportunityInstance(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(),
+        UUID.randomUUID(), UUID.randomUUID(), "", "\"userAgent\"");
     final String assessmentKey = "assessmentKey";
     ExamConfiguration mockExamConfig = new ExamConfiguration.Builder()
       .withExam(
@@ -363,9 +377,9 @@ public class RemoteOpportunityServiceTest {
       .withExamRestartWindowMinutes(60)
       .build();
 
-    when(mockExamRepository.startExam(oppInstance.getExamId(), "")).thenReturn(new Response<>(mockExamConfig));
+    when(mockExamRepository.startExam(oppInstance.getExamId(), "userAgent")).thenReturn(new Response<>(mockExamConfig));
     TestConfig testConfig = service.startTest(oppInstance, assessmentKey, null);
-    verify(mockExamRepository).startExam(oppInstance.getExamId(), "");
+    verify(mockExamRepository).startExam(oppInstance.getExamId(), "userAgent");
 
     assertThat(testConfig).isNotNull();
     assertThat(testConfig.getStatus()).isEqualTo(ExamStatusMapper.parseExamStatus(ExamStatusCode.STATUS_STARTED));
