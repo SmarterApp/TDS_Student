@@ -39,7 +39,7 @@
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>spellcheck</artifactId>
-			<version>${spellcheck.version}</version>
+			<version>3.1.0.RELEASE</version>
 		</dependency>
 
 		<dependency>
