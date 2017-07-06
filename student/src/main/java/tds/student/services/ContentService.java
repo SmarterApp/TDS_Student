@@ -34,6 +34,8 @@ import tds.student.services.abstractions.IContentService;
 import tds.student.services.data.ItemResponse;
 import tds.student.services.data.PageGroup;
 import tds.student.sql.abstractions.IItemBankRepository;
+import tds.student.sql.repository.remote.ContentRepository;
+
 import TDS.Shared.Exceptions.ReturnStatusException;
 
 /**
@@ -44,16 +46,20 @@ import TDS.Shared.Exceptions.ReturnStatusException;
 @Scope ("prototype")
 public class ContentService implements IContentService
 {
-  @Autowired
-  private ItemBankService itemBankService;
+  private final ItemBankService itemBankService;
+  private final ContentRepository contentRepository;
 
   @Autowired
-  private ContentHelperService contentHelperService;
+  public ContentService(final ItemBankService itemBankService,
+                        final ContentRepository contentRepository) {
+    this.itemBankService = itemBankService;
+    this.contentRepository = contentRepository;
+  }
 
   private static final Logger       _logger = LoggerFactory.getLogger (ContentService.class);
 
-  public IITSDocument getContent (String xmlFilePath, AccLookup accommodations) throws ReturnStatusException {
-    return contentHelperService.getContent(xmlFilePath, new AccLookupWrapper(accommodations));
+  public IITSDocument getContent (final String xmlFilePath, final AccLookup accommodations) throws ReturnStatusException {
+    return contentRepository.findItemDocument(xmlFilePath, accommodations);
   }
 
   public IITSDocument getItemContent (long bankKey, long itemKey, AccLookup accommodations) throws ReturnStatusException {
