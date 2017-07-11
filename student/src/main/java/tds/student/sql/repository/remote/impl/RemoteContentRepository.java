@@ -14,10 +14,13 @@
 package tds.student.sql.repository.remote.impl;
 
 import TDS.Shared.Exceptions.ReturnStatusException;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -30,7 +33,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import tds.itemrenderer.data.AccLookup;
 import tds.itemrenderer.data.ITSDocument;
-import tds.student.sql.repository.remote.ContentRepository;
+import tds.itemrenderer.repository.ContentRepository;
 
 @Repository
 public class RemoteContentRepository implements ContentRepository {
@@ -46,6 +49,10 @@ public class RemoteContentRepository implements ContentRepository {
 
     @Override
     public ITSDocument findItemDocument(final String itemPath, final AccLookup accommodations) throws ReturnStatusException {
+        if (StringUtils.isEmpty (itemPath)) {
+            return null;
+        }
+
         HttpHeaders headers = new HttpHeaders();
         headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
         HttpEntity<?> requestHttpEntity = new HttpEntity<>(accommodations, headers);
@@ -66,5 +73,25 @@ public class RemoteContentRepository implements ContentRepository {
         }
 
         return responseEntity.getBody();
+    }
+
+    @Override
+    public byte[] findResource(final String resourcePath) {
+        HttpHeaders headers = new HttpHeaders();
+//        headers.set("Accept", MediaType.APPLICATION_OCTET_STREAM_VALUE);
+        HttpEntity<?> requestHttpEntity = new HttpEntity<>(headers);
+        ResponseEntity<Resource> responseEntity;
+
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(String.format("%s/resource", contentUrl))
+            .queryParam("resourcePath", resourcePath);
+
+        responseEntity = restTemplate.exchange(
+            builder.build().toUri(),
+            HttpMethod.GET,
+            requestHttpEntity,
+            new ParameterizedTypeReference<Resource>() {
+            });
+
+        return ((ByteArrayResource)responseEntity.getBody()).getByteArray();
     }
 }
