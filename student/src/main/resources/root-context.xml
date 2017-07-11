@@ -158,6 +158,7 @@
 		<beans:property name="maximumPoolSize" value="${datasource.maxPoolSize:20}" />
 		<beans:property name="connectionTimeout" value="${datasource.connectionTimeout:30000}" />
 		<beans:property name="leakDetectionThreshold" value="${datasource.leakDetectionThreshold:0}" />
+		<beans:property name="idleTimeout" value="${datasource.idleTimeout:120000}"/>
 
 		<!-- The follow values are the defaults -->
 		<!--<beans:property name="autoCommit" value="true" />-->
