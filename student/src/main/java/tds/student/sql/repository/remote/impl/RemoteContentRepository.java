@@ -49,10 +49,6 @@ public class RemoteContentRepository implements ContentRepository {
 
     @Override
     public ITSDocument findItemDocument(final String itemPath, final AccLookup accommodations) throws ReturnStatusException {
-        if (StringUtils.isEmpty (itemPath)) {
-            return null;
-        }
-
         HttpHeaders headers = new HttpHeaders();
         headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
         HttpEntity<?> requestHttpEntity = new HttpEntity<>(accommodations, headers);

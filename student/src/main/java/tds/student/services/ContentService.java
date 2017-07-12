@@ -55,6 +55,11 @@ public class ContentService implements IContentService
   private static final Logger       _logger = LoggerFactory.getLogger (ContentService.class);
 
   public IITSDocument getContent (final String xmlFilePath, final AccLookup accommodations) throws ReturnStatusException {
+    if (StringUtils.isEmpty(xmlFilePath)) {
+      _logger.warn("Cannot get content: Provided item file path was empty.");
+      return null;
+    }
+
     return contentRepository.findItemDocument(xmlFilePath, accommodations);
   }
 
