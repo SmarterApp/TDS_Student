@@ -50,8 +50,8 @@ public class DialogFrameHandler extends TDSHandler
     this.contentRepository = contentRepository;
   }
 
-                            @RequestMapping (value = "DialogFrame.axd/getContent", produces = "application/xml")
-                            @ResponseBody
+  @RequestMapping (value = "DialogFrame.axd/getContent", produces = "application/xml")
+  @ResponseBody
   public String getDialogFrameContent () {
     // get query String params
     long bankKey = WebHelper.getQueryValueLong ("bankKey");
