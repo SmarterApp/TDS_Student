@@ -8,6 +8,7 @@
  ******************************************************************************/
 package tds.student.services;
 
+import AIR.Common.Web.Session.Server;
 import TDS.Shared.Exceptions.ReturnStatusException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -48,7 +49,7 @@ public class ContentService implements IContentService
   private static final Logger       _logger = LoggerFactory.getLogger (ContentService.class);
 
   public IITSDocument getContent (final String xmlFilePath, final AccLookup accommodations) throws ReturnStatusException {
-    return contentRepository.findItemDocument(xmlFilePath, accommodations);
+    return contentRepository.findItemDocument(xmlFilePath, accommodations, Server.getContextPath());
   }
 
   public IITSDocument getItemContent (long bankKey, long itemKey, AccLookup accommodations) throws ReturnStatusException {
