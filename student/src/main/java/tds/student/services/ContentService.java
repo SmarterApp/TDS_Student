@@ -8,6 +8,8 @@
  ******************************************************************************/
 package tds.student.services;
 
+import AIR.Common.Web.Session.Server;
+import TDS.Shared.Exceptions.ReturnStatusException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,18 +23,10 @@ import tds.itemrenderer.data.ITSContent;
 import tds.itemrenderer.data.ITSMachineRubric;
 import tds.itemrenderer.repository.ContentRepository;
 import tds.itemscoringengine.RubricContentSource;
-/*
- * import tds.itemrenderer.ITSDocumentFactory; import
- * tds.itemrenderer.data.AccLookup; import tds.itemrenderer.data.IITSDocument;
- * import tds.itemrenderer.data.ITSContent; import
- * tds.itemrenderer.data.ITSMachineRubric;
- */
 import tds.student.performance.services.ItemBankService;
 import tds.student.services.abstractions.IContentService;
 import tds.student.services.data.ItemResponse;
 import tds.student.services.data.PageGroup;
-
-import TDS.Shared.Exceptions.ReturnStatusException;
 
 /**
  * @author temp_rreddy
@@ -60,7 +54,7 @@ public class ContentService implements IContentService
       return null;
     }
 
-    return contentRepository.findItemDocument(xmlFilePath, accommodations);
+    return contentRepository.findItemDocument(xmlFilePath, accommodations, Server.getContextPath());
   }
 
   public IITSDocument getItemContent (long bankKey, long itemKey, AccLookup accommodations) throws ReturnStatusException {
