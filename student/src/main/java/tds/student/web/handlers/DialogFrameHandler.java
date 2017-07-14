@@ -8,6 +8,7 @@
  ******************************************************************************/
 package tds.student.web.handlers;
 
+import AIR.Common.Web.Session.Server;
 import AIR.Common.Web.WebHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -90,7 +91,7 @@ public class DialogFrameHandler extends TDSHandler
     {
       final AccLookup languageAccommodation = new AccLookup();
       languageAccommodation.add ("Language", contentLanguage);
-      itsDocument = contentRepository.findItemDocument(studentHelpFile, languageAccommodation);
+      itsDocument = contentRepository.findItemDocument(studentHelpFile, languageAccommodation, Server.getContextPath());
     } catch (Exception ex)
     {
       // Jeremy approved ignoring this and just logging.
