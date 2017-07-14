@@ -55,12 +55,12 @@
 		<url-pattern>/rs/*</url-pattern>
 	</servlet-mapping>
 	<servlet>
-		<servlet-name>RemoteResourceHandler</servlet-name>
+		<servlet-name>ResourceHandler</servlet-name>
 		<servlet-class>tds.itemrenderer.web.RemoteResourceHandler</servlet-class>
 		<load-on-startup>4</load-on-startup>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>RemoteResourceHandler</servlet-name>
+		<servlet-name>ResourceHandler</servlet-name>
 		<url-pattern>/Pages/API/Resources.axd/*</url-pattern>
 	</servlet-mapping>
 	<servlet>
