@@ -64,6 +64,7 @@
 	<context:component-scan base-package="tds.student.configuration" />
 	<context:component-scan base-package="tds.itemscoringengine" />
 	<context:component-scan base-package="tds.itemscoringengine.web.server" />
+	<context:component-scan base-package="tds.itemrenderer.repository" />
 
 	<context:component-scan base-package="org.opentestsystem.delivery.logging" />
 
