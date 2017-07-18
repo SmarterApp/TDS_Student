@@ -363,16 +363,6 @@
 							<directory>${project.build.directory}</directory>
 							<include>${project.build.finalName}.war</include>
 						</resource>
-
-						<!-- TDS_Student requires file-system test definitions.  The resource directories below must
-							be defined in the build machine's local file-system at the specified paths
-							to be embedded into the student docker container image.
-							Modify as required.-->
-						<resource>
-							<targetPath>/</targetPath>
-							<directory>/usr/local/tomcat/resources/tds/bank</directory>
-							<include>**/*</include>
-						</resource>
 					</resources>
 				</configuration>
 			</plugin>
