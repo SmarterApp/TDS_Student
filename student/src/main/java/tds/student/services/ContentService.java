@@ -21,6 +21,7 @@ import tds.itemrenderer.data.AccLookup;
 import tds.itemrenderer.data.IITSDocument;
 import tds.itemrenderer.data.ITSContent;
 import tds.itemrenderer.data.ITSMachineRubric;
+import tds.itemrenderer.data.xml.wordlist.Itemrelease;
 import tds.itemrenderer.repository.ContentRepository;
 import tds.itemscoringengine.RubricContentSource;
 import tds.student.performance.services.ItemBankService;
@@ -120,5 +121,10 @@ public class ContentService implements IContentService
       }
     }
     return machineRubric;
+  }
+
+  @Override
+  public Itemrelease getWordListItemRelease(String path) throws ReturnStatusException {
+    return contentRepository.findWordListItem(path);
   }
 }
