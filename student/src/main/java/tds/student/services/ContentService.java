@@ -8,6 +8,8 @@
  ******************************************************************************/
 package tds.student.services;
 
+import AIR.Common.Web.Session.Server;
+import TDS.Shared.Exceptions.ReturnStatusException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,28 +17,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import tds.itemrenderer.ITSDocumentFactory;
 import tds.itemrenderer.data.AccLookup;
 import tds.itemrenderer.data.IITSDocument;
 import tds.itemrenderer.data.ITSContent;
 import tds.itemrenderer.data.ITSMachineRubric;
+import tds.itemrenderer.repository.ContentRepository;
 import tds.itemscoringengine.RubricContentSource;
-/*
- * import tds.itemrenderer.ITSDocumentFactory; import
- * tds.itemrenderer.data.AccLookup; import tds.itemrenderer.data.IITSDocument;
- * import tds.itemrenderer.data.ITSContent; import
- * tds.itemrenderer.data.ITSMachineRubric;
- */
-import tds.student.performance.domain.AccLookupWrapper;
-import tds.student.performance.services.ContentHelperService;
 import tds.student.performance.services.ItemBankService;
 import tds.student.services.abstractions.IContentService;
 import tds.student.services.data.ItemResponse;
 import tds.student.services.data.PageGroup;
-import tds.student.sql.abstractions.IItemBankRepository;
-import tds.student.sql.repository.remote.ContentRepository;
-
-import TDS.Shared.Exceptions.ReturnStatusException;
 
 /**
  * @author temp_rreddy
@@ -59,7 +49,12 @@ public class ContentService implements IContentService
   private static final Logger       _logger = LoggerFactory.getLogger (ContentService.class);
 
   public IITSDocument getContent (final String xmlFilePath, final AccLookup accommodations) throws ReturnStatusException {
-    return contentRepository.findItemDocument(xmlFilePath, accommodations);
+    if (StringUtils.isEmpty(xmlFilePath)) {
+      _logger.warn("Cannot get content: Provided item file path was empty.");
+      return null;
+    }
+
+    return contentRepository.findItemDocument(xmlFilePath, accommodations, Server.getContextPath());
   }
 
   public IITSDocument getItemContent (long bankKey, long itemKey, AccLookup accommodations) throws ReturnStatusException {
