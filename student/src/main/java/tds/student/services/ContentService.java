@@ -8,6 +8,7 @@
  ******************************************************************************/
 package tds.student.services;
 
+import AIR.Common.Web.BrowserParser;
 import AIR.Common.Web.Session.Server;
 import TDS.Shared.Exceptions.ReturnStatusException;
 import org.apache.commons.lang3.StringUtils;
@@ -55,7 +56,7 @@ public class ContentService implements IContentService
       return null;
     }
 
-    return contentRepository.findItemDocument(xmlFilePath, accommodations, Server.getContextPath());
+    return contentRepository.findItemDocument(xmlFilePath, accommodations, Server.getContextPath(), new BrowserParser().isSupportsOggAudio());
   }
 
   public IITSDocument getItemContent (long bankKey, long itemKey, AccLookup accommodations) throws ReturnStatusException {

@@ -8,6 +8,7 @@
  ******************************************************************************/
 package tds.student.web.handlers;
 
+import AIR.Common.Web.BrowserParser;
 import AIR.Common.Web.Session.Server;
 import AIR.Common.Web.WebHelper;
 import org.apache.commons.lang3.StringUtils;
@@ -91,7 +92,7 @@ public class DialogFrameHandler extends TDSHandler
     {
       final AccLookup languageAccommodation = new AccLookup();
       languageAccommodation.add ("Language", contentLanguage);
-      itsDocument = contentRepository.findItemDocument(studentHelpFile, languageAccommodation, Server.getContextPath());
+      itsDocument = contentRepository.findItemDocument(studentHelpFile, languageAccommodation, Server.getContextPath(), new BrowserParser().isSupportsOggAudio());
     } catch (Exception ex)
     {
       // Jeremy approved ignoring this and just logging.
