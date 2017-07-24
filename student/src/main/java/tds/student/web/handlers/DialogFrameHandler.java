@@ -8,6 +8,7 @@
  ******************************************************************************/
 package tds.student.web.handlers;
 
+import AIR.Common.Web.BrowserParser;
 import AIR.Common.Web.Session.Server;
 import AIR.Common.Web.WebHelper;
 import org.apache.commons.lang3.StringUtils;
@@ -18,14 +19,15 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import tds.blackbox.web.handlers.TDSHandler;
 import tds.itemrenderer.data.AccLookup;
 import tds.itemrenderer.data.IITSDocument;
 import tds.itemrenderer.data.ItemRender;
 import tds.itemrenderer.data.ItemRenderGroup;
-import tds.itemrenderer.repository.ContentRepository;
 import tds.itemrenderer.webcontrols.PageLayout;
 import tds.itemrenderer.webcontrols.rendererservlet.RendererServlet;
+import tds.student.services.abstractions.IContentService;
 import tds.student.sql.abstractions.IItemBankRepository;
 import tds.student.web.StudentContext;
 
@@ -40,15 +42,15 @@ public class DialogFrameHandler extends TDSHandler
   private static Logger       _logger       = LoggerFactory.getLogger (DialogFrameHandler.class);
   private final IItemBankRepository itemBankRepository;
   private final PageLayout pageLayout;
-  private final ContentRepository contentRepository;
+  private final IContentService contentService;
 
   @Autowired
   public DialogFrameHandler(final IItemBankRepository itemBankRepository,
                             final PageLayout pageLayout,
-                            final ContentRepository contentRepository) {
+                            final IContentService contentService) {
     this.itemBankRepository = itemBankRepository;
     this.pageLayout = pageLayout;
-    this.contentRepository = contentRepository;
+    this.contentService = contentService;
   }
 
   @RequestMapping (value = "DialogFrame.axd/getContent", produces = "application/xml")
@@ -91,7 +93,7 @@ public class DialogFrameHandler extends TDSHandler
     {
       final AccLookup languageAccommodation = new AccLookup();
       languageAccommodation.add ("Language", contentLanguage);
-      itsDocument = contentRepository.findItemDocument(studentHelpFile, languageAccommodation, Server.getContextPath());
+      itsDocument = contentService.getContent(studentHelpFile, languageAccommodation);
     } catch (Exception ex)
     {
       // Jeremy approved ignoring this and just logging.
