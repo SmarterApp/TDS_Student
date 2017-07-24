@@ -126,6 +126,6 @@ public class ContentService implements IContentService
 
   @Override
   public Itemrelease getWordListItemRelease(String path) throws ReturnStatusException {
-    return contentRepository.findWordListItem(path);
+    return contentRepository.findWordListItem(path, Server.getContextPath(), new BrowserParser().isSupportsOggAudio());
   }
 }
