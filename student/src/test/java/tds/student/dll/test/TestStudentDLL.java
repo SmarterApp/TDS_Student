@@ -5023,7 +5023,7 @@ public class TestStudentDLL extends AbstractTest
         if (count == 0) {
           header.append ("\t").append (record.getIndexToColumn (index + 1));
         }
-        rowOutput.append ("\t").append ((String)record.get (index + 1));
+        rowOutput.append ("\t").append (String.valueOf(record.get (index + 1)));
       }
       if (count == 0) {
         output.append (header).append ("\n");
