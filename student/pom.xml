@@ -22,10 +22,10 @@
 	</licenses>
 
 	<properties>
-		<progman-client.version>3.1.0.RELEASE</progman-client.version>
-		<sb11-mna-client.version>3.1.0.RELEASE</sb11-mna-client.version>
-		<tds-exam-client.version>0.0.20</tds-exam-client.version>
-		<sb11-shared-code.version>3.1.1.RELEASE</sb11-shared-code.version>
+		<progman-client.version>3.1.1-SNAPSHOT</progman-client.version>
+		<sb11-mna-client.version>3.1.1-SNAPSHOT</sb11-mna-client.version>
+		<tds-exam-client.version>3.1.1.RELEASE</tds-exam-client.version>
+		<sb11-shared-code.version>3.1.2-SNAPSHOT</sb11-shared-code.version>
 		<tds-common-legacy.version>3.1.1.RELEASE</tds-common-legacy.version>
 		<tds-assessment-client.version>3.1.1.RELEASE</tds-assessment-client.version>
 		<spellcheck.version>3.1.0.RELEASE</spellcheck.version>
@@ -168,13 +168,11 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 
 		<dependency>
@@ -264,13 +262,11 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>${spring.version}</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -346,6 +342,7 @@
 		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
+			<scope>test</scope>
 		</dependency>
 
 	</dependencies>
