@@ -30,6 +30,7 @@
         <property name="maxLifetime" value="1800000" />
         <property name="minimumIdle" value="${performance.datasource.minPoolSize:5}" />
         <property name="maximumPoolSize" value="${performance.datasource.maxPoolSize:20}" />
+        <property name="idleTimeout" value="${performance.datasource.idleTimeout:120000}"/>
         <!-- <property name="leakDetectionThreshold" value="15000" /> -->
 
         <!-- The follow values are the defaults -->

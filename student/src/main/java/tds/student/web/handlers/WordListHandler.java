@@ -8,16 +8,17 @@
  ******************************************************************************/
 package tds.student.web.handlers;
 
+import TDS.Shared.Exceptions.ReturnStatusException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import tds.dll.common.performance.caching.CacheType;
+import java.util.HashMap;
+import java.util.Map;
+
 import tds.itemrenderer.handler.WordListHandlerBase;
 import tds.student.performance.services.ItemBankService;
-import tds.student.sql.abstractions.IItemBankRepository;
-import TDS.Shared.Exceptions.ReturnStatusException;
+import tds.student.services.abstractions.IContentService;
 
 /**
  * @author jmambo
@@ -31,6 +32,8 @@ public class WordListHandler extends WordListHandlerBase
   @Autowired
   private ItemBankService itemBankService;
 
+  @Autowired
+  private IContentService contentService;
 
   /* (non-Javadoc)
    * @see tds.itemrenderer.handler.WordListHandlerBase#getItemPath(long, long)
@@ -40,4 +43,9 @@ public class WordListHandler extends WordListHandlerBase
       return itemBankService.getItemPath(bankKey, itemKey);
   }
 
+  @Override
+  protected Map<String, String> parseXml (String filePath) throws ReturnStatusException  {
+    _itemRelease = contentService.getWordListItemRelease(filePath);
+    return new HashMap<>();
+  }
 }
