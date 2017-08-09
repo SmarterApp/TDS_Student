@@ -11,11 +11,11 @@
     <artifactId>student-parent</artifactId>
     <name>student-parent</name>
     <packaging>pom</packaging>
-    <version>3.1.1.RELEASE</version>
+    <version>3.1.2.RELEASE</version>
 
     <properties>
         <assertj.version>2.6.0</assertj.version>
-        <item-renderer.version>3.1.1.RELEASE</item-renderer.version>
+        <item-renderer.version>3.1.5.RELEASE</item-renderer.version>
         <item-selection.version>3.1.1.RELEASE</item-selection.version>
         <item-scoring.version>3.1.1.RELEASE</item-scoring.version>
         <junit.version>4.12</junit.version>
@@ -148,7 +148,7 @@
         <connection>scm:git:https://github.com/SmarterApp/TDS_Student.git</connection>
         <developerConnection>scm:git:git://github.com/SmarterApp/TDS_Student.git</developerConnection>
         <url>https://github.com/SmarterApp/TDS_Student</url>
-        <tag>3.1.1.RELEASE</tag>
+        <tag>3.1.2.RELEASE</tag>
     </scm>
 
     <distributionManagement>
