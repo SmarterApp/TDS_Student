@@ -8,6 +8,7 @@
  ******************************************************************************/
 package tds.student.services;
 
+import AIR.Common.Web.BrowserParser;
 import AIR.Common.Web.Session.Server;
 import TDS.Shared.Exceptions.ReturnStatusException;
 import org.apache.commons.lang3.StringUtils;
@@ -21,6 +22,7 @@ import tds.itemrenderer.data.AccLookup;
 import tds.itemrenderer.data.IITSDocument;
 import tds.itemrenderer.data.ITSContent;
 import tds.itemrenderer.data.ITSMachineRubric;
+import tds.itemrenderer.data.xml.wordlist.Itemrelease;
 import tds.itemrenderer.repository.ContentRepository;
 import tds.itemscoringengine.RubricContentSource;
 import tds.student.performance.services.ItemBankService;
@@ -54,7 +56,7 @@ public class ContentService implements IContentService
       return null;
     }
 
-    return contentRepository.findItemDocument(xmlFilePath, accommodations, Server.getContextPath());
+    return contentRepository.findItemDocument(xmlFilePath, accommodations, Server.getContextPath(), new BrowserParser().isSupportsOggAudio());
   }
 
   public IITSDocument getItemContent (long bankKey, long itemKey, AccLookup accommodations) throws ReturnStatusException {
@@ -120,5 +122,10 @@ public class ContentService implements IContentService
       }
     }
     return machineRubric;
+  }
+
+  @Override
+  public Itemrelease getWordListItemRelease(String path) throws ReturnStatusException {
+    return contentRepository.findWordListItem(path, Server.getContextPath(), new BrowserParser().isSupportsOggAudio());
   }
 }
