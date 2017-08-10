@@ -259,6 +259,7 @@
 			<artifactId>spring-jdbc</artifactId>
 		</dependency>
 
+		<!-- This is used in a non test class (RendererServlet) so it needs to remain compile scope  -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
