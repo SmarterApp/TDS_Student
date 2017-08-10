@@ -26,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.StopWatch;
@@ -40,6 +41,8 @@ import AIR.Common.Web.WebValueCollectionCorrect;
 import TDS.Shared.Data.ReturnStatus;
 import TDS.Shared.Exceptions.ReturnStatusException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import tds.itemrenderer.data.AccLookup;
 import tds.itemrenderer.data.IITSDocument;
 import tds.itemrenderer.data.ITSMachineRubric;
@@ -72,6 +75,7 @@ import tds.student.tdslogger.TDSLogger;
 
 @Service("legacyItemScoringService")
 @Scope ("prototype")
+@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 public class ItemScoringService implements IItemScoringService
 {
 
