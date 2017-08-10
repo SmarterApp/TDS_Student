@@ -75,7 +75,6 @@ import tds.student.tdslogger.TDSLogger;
 
 @Service("legacyItemScoringService")
 @Scope ("prototype")
-@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 public class ItemScoringService implements IItemScoringService
 {
 
