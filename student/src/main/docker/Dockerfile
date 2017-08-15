@@ -3,7 +3,7 @@
 ################
 
 #Based off of the shared secure tomcat 7 image from SS_SharedMultiJar
-FROM smarterbalanced/secure-tomcat-image:3.1.0.RELEASE
+FROM fwsbac/secure-tomcat-image:4.0.0
 
 #Overwrite server.xml
 ADD server.xml /usr/local/tomcat/conf/
