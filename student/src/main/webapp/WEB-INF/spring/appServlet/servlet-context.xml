@@ -44,5 +44,6 @@
 	</interceptors>
 
 	<context:component-scan base-package="tds.student.web, tds.student.securebrowser.controllers" />
+	<context:component-scan base-package="tds.student.diagnostic.controller" />
 
 </beans:beans>
