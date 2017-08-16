@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.opentestsystem.delivery</groupId>
 		<artifactId>student-parent</artifactId>
-		<version>3.1.2.RELEASE</version>
+		<version>3.1.3.RELEASE</version>
 	</parent>
 
 	<artifactId>student</artifactId>
@@ -24,7 +24,7 @@
 	<properties>
 		<progman-client.version>3.1.0.RELEASE</progman-client.version>
 		<sb11-mna-client.version>3.1.0.RELEASE</sb11-mna-client.version>
-		<tds-exam-client.version>0.0.20</tds-exam-client.version>
+		<tds-exam-client.version>3.1.2.RELEASE</tds-exam-client.version>
 		<sb11-shared-code.version>3.1.1.RELEASE</sb11-shared-code.version>
 		<tds-common-legacy.version>3.1.1.RELEASE</tds-common-legacy.version>
 		<tds-assessment-client.version>3.1.1.RELEASE</tds-assessment-client.version>
