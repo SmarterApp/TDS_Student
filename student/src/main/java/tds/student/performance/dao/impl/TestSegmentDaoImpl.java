@@ -66,6 +66,6 @@ public class TestSegmentDaoImpl implements TestSegmentDao {
             "WHERE\n" +
                 "_fk_TestOpportunity = :oppKey";
 
-        return namedParameterJdbcTemplate.queryForInt(dbNameUtility.setDatabaseNames(SQL), parameters);
+        return namedParameterJdbcTemplate.queryForObject(dbNameUtility.setDatabaseNames(SQL), parameters, Integer.class);
     }
 }

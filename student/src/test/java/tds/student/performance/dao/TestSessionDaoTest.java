@@ -305,7 +305,7 @@ public class TestSessionDaoTest extends IntegrationTest {
         parameters.put("date", mockDate);
 
         final String SQL = "SELECT COUNT(*) AS count FROM ${archivedb}.sessionaudit WHERE _fk_session = :key AND browserkey = :browserKey AND dateaccessed = :date";
-        final Integer result = namedParameterJdbcTemplate.queryForInt(dbNameUtility.setDatabaseNames(SQL), parameters);
+        final Integer result = namedParameterJdbcTemplate.queryForObject(dbNameUtility.setDatabaseNames(SQL), parameters, Integer.class);
 
         Assert.assertEquals((Integer)1, result);
     }
