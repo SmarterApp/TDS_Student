@@ -8,7 +8,7 @@
 	</parent>
 	<groupId>org.opentestsystem.delivery</groupId>
 	<artifactId>student.library</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>student.library</name>
@@ -17,7 +17,7 @@
 	<properties>
 		<resource-bundler.version>0.0.1</resource-bundler.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<item-renderer.version>0.0.1</item-renderer.version>
+		<item-renderer.version>0.0.2-SNAPSHOT</item-renderer.version>
 		<item-scoring.version>1.1.0</item-scoring.version>
 		<item-selection.version>0.0.1</item-selection.version>
 	</properties>

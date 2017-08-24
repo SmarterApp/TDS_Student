@@ -11,7 +11,7 @@
 	<artifactId>student</artifactId>
 	<name>student</name>
 	<packaging>war</packaging>
-	<version>2.1.1</version>
+	<version>2.1.2.SNAPSHOT</version>
 
 	<licenses>
 		<license>
@@ -134,7 +134,7 @@
 		<dependency>
 			<groupId>org.opentestsystem.delivery</groupId>
 			<artifactId>student.library</artifactId>
-			<version>0.0.1</version>
+			<version>0.0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.opentestsystem.blackbox</groupId>
