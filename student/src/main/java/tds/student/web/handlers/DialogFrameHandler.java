@@ -8,6 +8,8 @@
  ******************************************************************************/
 package tds.student.web.handlers;
 
+import AIR.Common.Web.BrowserParser;
+import AIR.Common.Web.Session.Server;
 import AIR.Common.Web.WebHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -17,13 +19,15 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import tds.blackbox.web.handlers.TDSHandler;
-import tds.itemrenderer.ITSDocumentFactory;
+import tds.itemrenderer.data.AccLookup;
 import tds.itemrenderer.data.IITSDocument;
 import tds.itemrenderer.data.ItemRender;
 import tds.itemrenderer.data.ItemRenderGroup;
 import tds.itemrenderer.webcontrols.PageLayout;
 import tds.itemrenderer.webcontrols.rendererservlet.RendererServlet;
+import tds.student.services.abstractions.IContentService;
 import tds.student.sql.abstractions.IItemBankRepository;
 import tds.student.web.StudentContext;
 
@@ -35,13 +39,19 @@ import tds.student.web.StudentContext;
 @Controller
 public class DialogFrameHandler extends TDSHandler
 {
-
   private static Logger       _logger       = LoggerFactory.getLogger (DialogFrameHandler.class);
-  @Autowired
-  private IItemBankRepository _ibRepository = null;
+  private final IItemBankRepository itemBankRepository;
+  private final PageLayout pageLayout;
+  private final IContentService contentService;
 
   @Autowired
-  private PageLayout          _pageLayout;
+  public DialogFrameHandler(final IItemBankRepository itemBankRepository,
+                            final PageLayout pageLayout,
+                            final IContentService contentService) {
+    this.itemBankRepository = itemBankRepository;
+    this.pageLayout = pageLayout;
+    this.contentService = contentService;
+  }
 
   @RequestMapping (value = "DialogFrame.axd/getContent", produces = "application/xml")
   @ResponseBody
@@ -59,7 +69,7 @@ public class DialogFrameHandler extends TDSHandler
 
     try
     {
-      studentHelpFile = _ibRepository.getItemPath (bankKey, itemKey);
+      studentHelpFile = itemBankRepository.getItemPath (bankKey, itemKey);
     } catch (Exception ex)
     {
       // NOTE: We would get an error here if the tutorials config is not loaded.
@@ -81,7 +91,9 @@ public class DialogFrameHandler extends TDSHandler
 
     try
     {
-      itsDocument = ITSDocumentFactory.load (studentHelpFile, contentLanguage, true);
+      final AccLookup languageAccommodation = new AccLookup();
+      languageAccommodation.add ("Language", contentLanguage);
+      itsDocument = contentService.getContent(studentHelpFile, languageAccommodation);
     } catch (Exception ex)
     {
       // Jeremy approved ignoring this and just logging.
@@ -94,10 +106,10 @@ public class DialogFrameHandler extends TDSHandler
     ItemRenderGroup itemRenderGroup = new ItemRenderGroup (groupId, null, contentLanguage);
     itemRenderGroup.add (new ItemRender (itsDocument, (int) itemKey));
 
-    _pageLayout.setItemRenderGroup (itemRenderGroup);
+    pageLayout.setItemRenderGroup (itemRenderGroup);
 
-    RendererServlet.getRenderedOutput (_pageLayout);
-    System.out.println (_pageLayout.getRenderToString ());
-    return _pageLayout.getRenderToString ();
+    RendererServlet.getRenderedOutput (pageLayout);
+    System.out.println (pageLayout.getRenderToString ());
+    return pageLayout.getRenderToString ();
   }
 }

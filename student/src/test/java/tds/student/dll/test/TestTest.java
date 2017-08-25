@@ -11,6 +11,7 @@ package tds.student.dll.test;
 import java.sql.SQLException;
 import java.util.Date;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -56,10 +57,11 @@ public class TestTest extends AbstractTest
       System.out.println ("done");
     }
   }
-  
+
   @Test
+  @Ignore("Autowire issues")
   public void testFloat ()throws Exception {
-    
+
     try (SQLConnection connection = abstractConnectionManager.getConnection ()) {
       Float fl =1.2F;
       final String cmd = "select cast (${fl} as float) as fl";
@@ -69,15 +71,16 @@ public class TestTest extends AbstractTest
       DbResultRecord rec = rs.getRecords ().next ();
       Float myFl = rec.<Float> get ("fl");
       System.out.println (String.format ("myFl: %f", myFl));
-          
+
     } catch (Exception ex) {
       System.out.println ("Exception: " + ex.getMessage ());
     }
-    
+
   }
-  
+
 //use jdbc:mysql://ec2-54-237-18-215.compute-1.amazonaws.com:3306/test
  @Test
+ @Ignore("Autowire issues")
  public void testLocks() throws Exception {
    try (SQLConnection connection = abstractConnectionManager.getConnection ()) {
     

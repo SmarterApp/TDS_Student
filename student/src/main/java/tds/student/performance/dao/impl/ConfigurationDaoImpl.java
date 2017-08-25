@@ -219,7 +219,7 @@ public class ConfigurationDaoImpl extends tds.dll.common.performance.dao.impl.Co
                         "OR UseForAbility = 1)\n" +
                 "LIMIT 1";
 
-        Integer recordCount = namedParameterJdbcTemplate.queryForInt(dbNameUtility.setDatabaseNames(SQL), parameters);
+        Integer recordCount = namedParameterJdbcTemplate.queryForObject(dbNameUtility.setDatabaseNames(SQL), parameters, Integer.class);
 
         return recordCount > 0;
     }
@@ -248,7 +248,7 @@ public class ConfigurationDaoImpl extends tds.dll.common.performance.dao.impl.Co
                         "AND msb = 1\n" +
                         "LIMIT 1";
 
-        Integer recordCount = namedParameterJdbcTemplate.queryForInt(dbNameUtility.setDatabaseNames(SQL), parameters);
+        Integer recordCount = namedParameterJdbcTemplate.queryForObject(dbNameUtility.setDatabaseNames(SQL), parameters, Integer.class);
 
         return recordCount > 0;
     }
