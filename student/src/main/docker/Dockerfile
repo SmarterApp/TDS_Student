@@ -2,8 +2,8 @@
 # Docker file to build a docker servlet container hosting the Student WAR.
 ################
 
-#Based off of the shared secure tomcat 7 image from SS_SharedMultiJar
-FROM fwsbac/secure-tomcat-image:4.0.0
+# tomcat 8 based off of the shared secure tomcat image from SS_SharedMultiJar
+FROM smarterbalanced/secure-tomcat-image:4.0.0.RELEASE
 
 #Overwrite server.xml
 ADD server.xml /usr/local/tomcat/conf/
