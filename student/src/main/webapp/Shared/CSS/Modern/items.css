@@ -820,19 +820,15 @@ a.guideToRevision:hover, a.guideToRevision:focus, .TDS_PS_L1 a.guideToRevision:h
 }
 .TDS_PS_L1 #wordListPanel {
 	font-size: 1.25em;
-	width: 400px !important;
 }
 .TDS_PS_L2 #wordListPanel {
 	font-size: 1.5em;
-	width: 480px !important;
 }
 .TDS_PS_L3 #wordListPanel {
 	font-size: 1.75em;
-	width: 560px !important;
 }
 .TDS_PS_L4 #wordListPanel {
 	font-size: 2em;
-	width: 640px !important;
 }
 /* adjusting line height to prevent borders from overlapping */
 .TDS_WORD_LIST, .TDS_WORD_LIST_HOVER, .TDS_WORD_LIST:hover {
