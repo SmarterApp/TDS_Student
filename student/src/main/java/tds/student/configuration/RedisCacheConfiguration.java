@@ -24,15 +24,9 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.util.StringUtils;
 
-import java.util.Set;
-
-import tds.dll.common.performance.caching.impl.JedisSentinelConnectionFactory;
 import tds.dll.common.performance.caching.impl.NameAwareRedisCacheManager;
 import tds.dll.common.performance.caching.impl.RedisJsonSerializer;
-
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 /**
  * This configuration initializes a Redis Sentinel-backed cache manager if the "redisCaching" profile is active.
@@ -42,16 +36,8 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
 public class RedisCacheConfiguration {
 
     @Bean
-    public RedisConnectionFactory redisConnectionFactory(@Value("${spring.redis.sentinel.master:}") final String masterName,
-                                                         @Value("${spring.redis.sentinel.nodes:}") final String sentinelCsv,
-                                                         @Value("${spring.redis.host:}") final String redisHost,
+    public RedisConnectionFactory redisConnectionFactory(@Value("${spring.redis.host:}") final String redisHost,
                                                          @Value("${spring.redis.port:6379}") final int redisPort) {
-
-        final Set<String> sentinels = StringUtils.commaDelimitedListToSet(sentinelCsv);
-        if (isNotBlank(masterName) && !sentinels.isEmpty()) {
-            return new JedisSentinelConnectionFactory(masterName, sentinels);
-        }
-
         final JedisConnectionFactory connectionFactory = new JedisConnectionFactory();
         connectionFactory.setHostName(redisHost);
         connectionFactory.setPort(redisPort);
