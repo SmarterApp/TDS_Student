@@ -21,7 +21,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
@@ -34,15 +33,6 @@ import tds.dll.common.performance.caching.impl.RedisJsonSerializer;
 @Profile("redisCaching")
 @Configuration
 public class RedisCacheConfiguration {
-
-    @Bean
-    public RedisConnectionFactory redisConnectionFactory(@Value("${spring.redis.host:}") final String redisHost,
-                                                         @Value("${spring.redis.port:6379}") final int redisPort) {
-        final JedisConnectionFactory connectionFactory = new JedisConnectionFactory();
-        connectionFactory.setHostName(redisHost);
-        connectionFactory.setPort(redisPort);
-        return connectionFactory;
-    }
 
     @Bean
     public RedisTemplate<String, Object> redisTemplate(final RedisConnectionFactory redisConnectionFactory,
