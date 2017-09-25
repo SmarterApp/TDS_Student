@@ -56,7 +56,7 @@ public class ContentServiceTest extends AbstractTest
       _logger.info ("Grade Key::" + iITSDocument.getGrade ());
       _logger.info ("Grid Answer Key::" + iITSDocument.getGridAnswerSpace ());
       _logger.info ("Group Id Key::" + iITSDocument.getGroupID ());
-      _logger.info ("ID Key::" + iITSDocument.getID ());
+      _logger.info ("ID Key::" + iITSDocument.getIDString());
       _logger.info ("Item Key::" + iITSDocument.getItemKey ());
       _logger.info ("Parent Folder name Key::" + iITSDocument.getParentFolderName ());
       _logger.info ("Render Spec Key::" + iITSDocument.getRendererSpec ());
@@ -95,7 +95,7 @@ public class ContentServiceTest extends AbstractTest
       _logger.info ("Grade Key::" + iITSDocument.getGrade ());
       _logger.info ("Grid Answer Key::" + iITSDocument.getGridAnswerSpace ());
       _logger.info ("Group Id Key::" + iITSDocument.getGroupID ());
-      _logger.info ("ID Key::" + iITSDocument.getID ());
+      _logger.info ("ID Key::" + iITSDocument.getIDString());
       _logger.info ("Item Key::" + iITSDocument.getItemKey ());
       _logger.info ("Parent Folder name Key::" + iITSDocument.getParentFolderName ());
       _logger.info ("Render Spec Key::" + iITSDocument.getRendererSpec ());
@@ -135,7 +135,7 @@ public class ContentServiceTest extends AbstractTest
       _logger.info ("Grade Key::" + iITSDocument.getGrade ());
       _logger.info ("Grid Answer Key::" + iITSDocument.getGridAnswerSpace ());
       _logger.info ("Group Id Key::" + iITSDocument.getGroupID ());
-      _logger.info ("ID Key::" + iITSDocument.getID ());
+      _logger.info ("ID Key::" + iITSDocument.getIDString ());
       _logger.info ("Item Key::" + iITSDocument.getItemKey ());
       _logger.info ("Parent Folder name Key::" + iITSDocument.getParentFolderName ());
       _logger.info ("Render Spec Key::" + iITSDocument.getRendererSpec ());
