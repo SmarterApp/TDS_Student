@@ -8,6 +8,9 @@
  ******************************************************************************/
 package tds.student.services;
 
+import AIR.Common.Web.BrowserParser;
+import AIR.Common.Web.Session.Server;
+import TDS.Shared.Exceptions.ReturnStatusException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,26 +18,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import tds.itemrenderer.ITSDocumentFactory;
 import tds.itemrenderer.data.AccLookup;
 import tds.itemrenderer.data.IITSDocument;
 import tds.itemrenderer.data.ITSContent;
 import tds.itemrenderer.data.ITSMachineRubric;
+import tds.itemrenderer.data.xml.wordlist.Itemrelease;
+import tds.itemrenderer.repository.ContentRepository;
 import tds.itemscoringengine.RubricContentSource;
-/*
- * import tds.itemrenderer.ITSDocumentFactory; import
- * tds.itemrenderer.data.AccLookup; import tds.itemrenderer.data.IITSDocument;
- * import tds.itemrenderer.data.ITSContent; import
- * tds.itemrenderer.data.ITSMachineRubric;
- */
-import tds.student.performance.domain.AccLookupWrapper;
-import tds.student.performance.services.ContentHelperService;
 import tds.student.performance.services.ItemBankService;
 import tds.student.services.abstractions.IContentService;
 import tds.student.services.data.ItemResponse;
 import tds.student.services.data.PageGroup;
-import tds.student.sql.abstractions.IItemBankRepository;
-import TDS.Shared.Exceptions.ReturnStatusException;
 
 /**
  * @author temp_rreddy
@@ -44,16 +38,25 @@ import TDS.Shared.Exceptions.ReturnStatusException;
 @Scope ("prototype")
 public class ContentService implements IContentService
 {
-  @Autowired
-  private ItemBankService itemBankService;
+  private final ItemBankService itemBankService;
+  private final ContentRepository contentRepository;
 
   @Autowired
-  private ContentHelperService contentHelperService;
+  public ContentService(final ItemBankService itemBankService,
+                        final ContentRepository contentRepository) {
+    this.itemBankService = itemBankService;
+    this.contentRepository = contentRepository;
+  }
 
   private static final Logger       _logger = LoggerFactory.getLogger (ContentService.class);
 
-  public IITSDocument getContent (String xmlFilePath, AccLookup accommodations) throws ReturnStatusException {
-    return contentHelperService.getContent(xmlFilePath, new AccLookupWrapper(accommodations));
+  public IITSDocument getContent (final String xmlFilePath, final AccLookup accommodations) throws ReturnStatusException {
+    if (StringUtils.isEmpty(xmlFilePath)) {
+      _logger.warn("Cannot get content: Provided item file path was empty.");
+      return null;
+    }
+
+    return contentRepository.findItemDocument(xmlFilePath, accommodations, Server.getContextPath(), new BrowserParser().isSupportsOggAudio());
   }
 
   public IITSDocument getItemContent (long bankKey, long itemKey, AccLookup accommodations) throws ReturnStatusException {
@@ -119,5 +122,10 @@ public class ContentService implements IContentService
       }
     }
     return machineRubric;
+  }
+
+  @Override
+  public Itemrelease getWordListItemRelease(String path) throws ReturnStatusException {
+    return contentRepository.findWordListItem(path, Server.getContextPath(), new BrowserParser().isSupportsOggAudio());
   }
 }
