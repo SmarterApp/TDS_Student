@@ -74,7 +74,7 @@ public class DbLatencyDaoTest extends IntegrationTest {
         final String SQL = "SELECT COUNT(*) AS count FROM ${archivedb}._dblatency WHERE procName = :procName AND _fk_session = :sessionKey AND _fk_testopportunity = :testOppKey AND starttime = :startTime AND n = :n";
 
         Integer expectedValue = 1;
-        Integer count = namedParameterJdbcTemplate.queryForInt(dbNameUtility.setDatabaseNames(SQL), parameters);
+        Integer count = namedParameterJdbcTemplate.queryForObject(dbNameUtility.setDatabaseNames(SQL), parameters, Integer.class);
         Assert.assertEquals(expectedValue, count);
     }
 }

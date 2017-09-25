@@ -202,7 +202,7 @@ public class TestOpportunityDaoTest extends IntegrationTest {
         parameters.put("dateAccessed", dateAccessed);
 
         final String SQL = "SELECT COUNT(*) AS count FROM ${archivedb}.opportunityaudit WHERE _fk_testopportunity = :key AND _fk_session = :sessionKey AND dateaccessed = :dateAccessed";
-        final Integer result = namedParameterJdbcTemplate.queryForInt(dbNameUtility.setDatabaseNames(SQL), parameters);
+        final Integer result = namedParameterJdbcTemplate.queryForObject(dbNameUtility.setDatabaseNames(SQL), parameters, Integer.class);
 
         Assert.assertEquals((Integer)1, result);
     }
