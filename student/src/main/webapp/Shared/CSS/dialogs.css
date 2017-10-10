@@ -598,3 +598,12 @@ div#tools div.tool iframe {
 	overflow: auto;
 	-webkit-overflow-scrolling: touch;
 }
+
+.yui-resize .yui-resize-handle-br {
+	background: url(../../Images/resize-handle.png) no-repeat 0 0 !important;
+	background-position: 0 0 !important;
+	height: 12px;
+	width: 12px;
+	background-size: 12px;
+	right: 10px;
+}
