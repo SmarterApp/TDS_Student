@@ -102,7 +102,7 @@ public class TesteeResponseDaoImpl implements TesteeResponseDao {
             "WHERE\n" +
                 "_fk_TestOpportunity = :oppKey";
 
-        return namedParameterJdbcTemplate.queryForLong(dbNameUtility.setDatabaseNames(SQL), parameters);
+        return namedParameterJdbcTemplate.queryForObject(dbNameUtility.setDatabaseNames(SQL), parameters, Long.class);
     }
 
     @Override

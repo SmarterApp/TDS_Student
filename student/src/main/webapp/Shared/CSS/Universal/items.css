@@ -943,6 +943,7 @@ div.toolsContainer a.itemMenu {
 	font-size: .9em;
 	font-weight: normal;
 	border-bottom: solid 1px #00aeef;
+	overflow: hidden;
 }
 #wordListPanel .yui-nav a {
 	padding: .2em;
