@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.opentestsystem.delivery</groupId>
 		<artifactId>student-parent</artifactId>
-		<version>4.0.1.RELEASE</version>
+		<version>4.0.3-SNAPSHOT</version>
 	</parent>
 
   	<licenses>
@@ -55,5 +55,5 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	
+
 </project>
