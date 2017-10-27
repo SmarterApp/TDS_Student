@@ -24,7 +24,7 @@
 	<properties>
 		<progman-client.version>4.0.5.RELEASE</progman-client.version>
 		<sb11-mna-client.version>4.0.3.RELEASE</sb11-mna-client.version>
-		<tds-exam-client.version>4.0.3</tds-exam-client.version>
+		<tds-exam-client.version>4.0.6.RELEASE</tds-exam-client.version>
 		<sb11-shared-code.version>4.0.6.RELEASE</sb11-shared-code.version>
 		<tds-common-legacy.version>4.0.1.RELEASE</tds-common-legacy.version>
 		<tds-assessment-client.version>4.0.0.RELEASE</tds-assessment-client.version>
