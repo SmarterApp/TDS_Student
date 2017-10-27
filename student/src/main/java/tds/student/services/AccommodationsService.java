@@ -396,13 +396,9 @@ public class AccommodationsService implements IAccommodationsService
     AccList accList = itemBankService.getTestAccommodations (testProps.getTestKey ());
     // if this is PT then remove all acc's that are disabled for guest sessions
     try {
-      if (isGuestSession)
-        CollectionUtils.removeAll (accList.getData(), CollectionUtils.select (accList.getData(), new Predicate ()
-        {
-          public boolean evaluate (Object object) {
-            return ((Data) object).isDisableOnGuestSession ();
-          }
-        }));
+      if (isGuestSession) {
+        accList.getData().removeAll(CollectionUtils.select(accList.getData(), object -> ((Data) object).isDisableOnGuestSession()));
+      }
       // first create the test accommodations
       Accommodations testAccs = null;
       testAccs = accList.createAccommodations (0, testProps.getTestID (), testProps.getDisplayName ());
