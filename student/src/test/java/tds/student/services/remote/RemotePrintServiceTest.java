@@ -31,7 +31,7 @@ import tds.exam.ExamPrintRequest;
 import tds.itemrenderer.data.AccLookup;
 import tds.itemrenderer.data.ITSAttachment;
 import tds.itemrenderer.data.ITSContent;
-import tds.itemrenderer.data.ITSDocumentXml;
+import tds.itemrenderer.data.ITSDocument;
 import tds.student.services.abstractions.IContentService;
 import tds.student.services.abstractions.PrintService;
 import tds.student.services.data.ItemResponse;
@@ -195,7 +195,7 @@ public class RemotePrintServiceTest {
     final ITSContent content = new ITSContent();
     content.setLanguage("ENU");
     content.setAttachments(Arrays.asList(brailleAttachment));
-    final ITSDocumentXml document = new ITSDocumentXml();
+    final ITSDocument document = new ITSDocument();
     document.addContent(content);
 
     final PageGroup pageGroup = new PageGroup(opportunityItem1);
@@ -251,7 +251,7 @@ public class RemotePrintServiceTest {
     final ITSContent content = new ITSContent();
     content.setLanguage("ENU");
     content.setAttachments(Arrays.asList(brailleAttachment1, brailleAttachment2));
-    final ITSDocumentXml document = new ITSDocumentXml();
+    final ITSDocument document = new ITSDocument();
     document.addContent(content);
 
     final PageGroup pageGroup = new PageGroup(opportunityItem1);
@@ -319,7 +319,7 @@ public class RemotePrintServiceTest {
     final ITSContent content = new ITSContent();
     content.setLanguage("ENU");
     content.setAttachments(Arrays.asList(brailleAttachment));
-    final ITSDocumentXml document = new ITSDocumentXml();
+    final ITSDocument document = new ITSDocument();
 
     final PageGroup pageGroup = new PageGroup(opportunityItem1);
     pageGroup.add(new ItemResponse(opportunityItem1));
@@ -353,7 +353,7 @@ public class RemotePrintServiceTest {
     content.setLanguage("ENU");
     content.setAttachments(new ArrayList<ITSAttachment>());
 
-    final ITSDocumentXml document = new ITSDocumentXml();
+    final ITSDocument document = new ITSDocument();
     document.addContent(content);
 
     final PageGroup pageGroup = new PageGroup(opportunityItem1);
@@ -393,7 +393,7 @@ public class RemotePrintServiceTest {
     content.setLanguage("ENU");
     content.setAttachments(Arrays.asList(brailleAttachment));
 
-    final ITSDocumentXml document = new ITSDocumentXml();
+    final ITSDocument document = new ITSDocument();
     document.addContent(content);
 
     final PageGroup pageGroup = new PageGroup(opportunityItem1);
@@ -442,7 +442,7 @@ public class RemotePrintServiceTest {
     content.setLanguage("ENU");
     content.setAttachments(Arrays.asList(brailleAttachment));
 
-    final ITSDocumentXml document = new ITSDocumentXml();
+    final ITSDocument document = new ITSDocument();
     document.addContent(content);
 
     final ItemResponse itemResponse = new ItemResponse(opportunityItem1);
@@ -495,7 +495,7 @@ public class RemotePrintServiceTest {
     content.setLanguage("ENU");
     content.setAttachments(Arrays.asList(brailleAttachment1, brailleAttachment2));
 
-    final ITSDocumentXml document = new ITSDocumentXml();
+    final ITSDocument document = new ITSDocument();
     document.addContent(content);
 
     final ItemResponse itemResponse = new ItemResponse(opportunityItem1);
@@ -542,7 +542,7 @@ public class RemotePrintServiceTest {
     content.setLanguage("ENU");
     content.setAttachments(Arrays.asList(brailleAttachment));
 
-    final ITSDocumentXml document = new ITSDocumentXml();
+    final ITSDocument document = new ITSDocument();
     document.addContent(content);
 
     final ItemResponse itemResponse = new ItemResponse(opportunityItem1);
@@ -560,7 +560,7 @@ public class RemotePrintServiceTest {
     opportunityItem1.setPage(3);
     opportunityItem1.setPosition(1);
 
-    final ITSDocumentXml document = new ITSDocumentXml();
+    final ITSDocument document = new ITSDocument();
 
     final ItemResponse itemResponse = new ItemResponse(opportunityItem1);
     itemResponse.setFilePath(itemPath);
@@ -587,7 +587,7 @@ public class RemotePrintServiceTest {
     content.setLanguage("ENU");
     content.setAttachments(new ArrayList<ITSAttachment>());
 
-    final ITSDocumentXml document = new ITSDocumentXml();
+    final ITSDocument document = new ITSDocument();
     document.addContent(content);
 
     final ItemResponse itemResponse = new ItemResponse(opportunityItem1);
