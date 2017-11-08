@@ -41,6 +41,10 @@ public class StudentSettings /* extends TDSSettings */
   @Autowired
   private TDSSettings         _tdsSettings;
 
+  public boolean isSecureBrowserRequired() throws ReturnStatusException {
+    return _configRepository.isSecureBrowserRequired();
+  }
+
   public String getClientStylePath () throws RuntimeReturnStatusException {
     // TODO:
     // For debugging, use AppSettings.Get to override testeecheckin address.
