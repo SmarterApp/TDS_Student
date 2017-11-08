@@ -167,7 +167,8 @@ public class MasterShellHandler extends TDSHandler
   @RequestMapping (value = "MasterShell.axd/loginStudent")
   @ResponseBody
   public ResponseData<tds.student.sbacossmerge.data.LoginInfo> loginStudent (@RequestParam (value = "sessionID", required = false) String sessionID,
-      @RequestParam (value = "keyValues", required = false) String keyValues, @RequestParam (value = "forbiddenApps", required = false) String forbiddenApps, HttpServletResponse response,
+      @RequestParam (value = "keyValues", required = false) String keyValues, @RequestParam (value = "forbiddenApps", required = false) String forbiddenApps,
+      @RequestParam (value = "secureBrowser", required = false) boolean secureBrowser, HttpServletResponse response,
       HttpServletRequest request) throws ReturnStatusException, FailedReturnStatusException {
     LoginInfo loginInfo;
     sessionID = sessionID != null ? sessionID : "";
@@ -204,6 +205,9 @@ public class MasterShellHandler extends TDSHandler
       _eventLogger.putField("result", "denied: error");
       return new ResponseData<tds.student.sbacossmerge.data.LoginInfo> (TDSReplyCode.Error.getCode (), loginErrorKey, null);
     }
+
+    // check if secure browser is required
+    checkSecureBrowserRequired(secureBrowser, _studentSettings, loginInfo);
 
     // check forbidden apps if there are no validation errors
     if (loginInfo.getValidationErrors ().size () == 0) {
@@ -265,6 +269,22 @@ public class MasterShellHandler extends TDSHandler
     // ().getContextPath ());
     _eventLogger.putField("result", "success");
     return new ResponseData<tds.student.sbacossmerge.data.LoginInfo> (TDSReplyCode.OK.getCode (), "OK", _loginInfo);
+  }
+
+  /**
+   * If a secure browsers is required, returns a validation error if a secure browser is not being used
+   *
+   * @param secureBrowser is a secure browser currently being used
+   * @param studentSettings access to the configuration setting for requiring a secure browser  to be used
+   * @param loginInfo if any validation errors are present in loginInfo, the user is prevented from logging in
+   * @throws ReturnStatusException
+   */
+  void checkSecureBrowserRequired(boolean secureBrowser, StudentSettings studentSettings, LoginInfo loginInfo) throws ReturnStatusException {
+    if (studentSettings.isSecureBrowserRequired()) {
+      if (!secureBrowser) {
+        loginInfo.getValidationErrors().add("Secure Browser Required");
+      }
+    }
   }
 
   /***

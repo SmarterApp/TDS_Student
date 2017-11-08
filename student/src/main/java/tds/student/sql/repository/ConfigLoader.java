@@ -93,6 +93,7 @@ public class ConfigLoader extends AbstractConfigLoader implements ServletContext
       loadAppSettings ();
       loadPTSetup ();
       loadLoginRequirements ();
+      loadSecureBrowserRequired();
       loadForbiddenApps ();
       loadVoicePacks ();
       loadGlobalAccommodations ();
@@ -256,6 +257,23 @@ public class ConfigLoader extends AbstractConfigLoader implements ServletContext
   }
 
   // just call this once
+
+  protected void loadSecureBrowserRequired() throws ReturnStatusException {
+    boolean isSecureBrowserRequired = true;
+
+    try (SQLConnection connection = getSQLConnection ()) {
+
+      isSecureBrowserRequired = _studentDll._SecureBrowserRequired_FN(connection, getTdsSettings().getClientName());
+
+    } catch (SQLException e) {
+      _logger.error (e.getMessage ());
+      throw new ReturnStatusException (e);
+    }
+    // Interlocked.Exchange(ref _forbiddenApps, forbiddenApps);
+    synchronized (this) {
+      _isSecureBrowserRequired = isSecureBrowserRequired;
+    }
+  }
 
   protected void loadForbiddenApps () throws ReturnStatusException {
 
