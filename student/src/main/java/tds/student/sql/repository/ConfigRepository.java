@@ -78,10 +78,6 @@ public class ConfigRepository implements IConfigRepository, ApplicationContextAw
 	  return getTesteeAttributeMetadata (null, null, new String[]{"REQUIRE"} ).values ();
 	}
 
-	public boolean isSecureBrowserRequired() {
-		return this._loader.isSecureBrowserRequired();
-	}
-
 	public ForbiddenApps getForbiddenApps() {
 		return this._loader.getForbiddenApps();
 	}

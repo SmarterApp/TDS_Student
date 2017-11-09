@@ -207,7 +207,7 @@ public class MasterShellHandler extends TDSHandler
     }
 
     // check if secure browser is required
-    checkSecureBrowserRequired(secureBrowser, _studentSettings, loginInfo);
+    checkSecureBrowserRequired(secureBrowser, _studentSettings.isSecureBrowserRequired(), loginInfo);
 
     // check forbidden apps if there are no validation errors
     if (loginInfo.getValidationErrors ().size () == 0) {
@@ -275,12 +275,12 @@ public class MasterShellHandler extends TDSHandler
    * If a secure browsers is required, returns a validation error if a secure browser is not being used
    *
    * @param secureBrowser is a secure browser currently being used
-   * @param studentSettings access to the configuration setting for requiring a secure browser  to be used
+   * @param isSecureBrowserRequired configuration setting for requiring a secure browser
    * @param loginInfo if any validation errors are present in loginInfo, the user is prevented from logging in
    * @throws ReturnStatusException
    */
-  void checkSecureBrowserRequired(boolean secureBrowser, StudentSettings studentSettings, LoginInfo loginInfo) throws ReturnStatusException {
-    if (studentSettings.isSecureBrowserRequired()) {
+  void checkSecureBrowserRequired(boolean secureBrowser, boolean isSecureBrowserRequired, LoginInfo loginInfo) throws ReturnStatusException {
+    if (isSecureBrowserRequired) {
       if (!secureBrowser) {
         loginInfo.getValidationErrors().add("Secure Browser Required");
       }
