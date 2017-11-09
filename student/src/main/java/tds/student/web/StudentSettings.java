@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import tds.dll.common.performance.services.ConfigurationService;
 import tds.student.sql.abstractions.IConfigRepository;
 import tds.student.sql.data.AppExterns;
 import tds.student.sql.data.PTSetup;
@@ -41,8 +42,12 @@ public class StudentSettings /* extends TDSSettings */
   @Autowired
   private TDSSettings         _tdsSettings;
 
+  @Autowired
+  private ConfigurationService _configurationService;
+
+
   public boolean isSecureBrowserRequired() throws ReturnStatusException {
-    return _configRepository.isSecureBrowserRequired();
+    return _configurationService.isFlagOn(_tdsSettings.getClientName(), "secureBrowserRequired");
   }
 
   public String getClientStylePath () throws RuntimeReturnStatusException {
