@@ -8,15 +8,15 @@
  ******************************************************************************/
 package tds.student.web.handlers;
 
-import java.io.OutputStream;
-import java.util.List;
-import java.util.UUID;
+import AIR.Common.Web.Session.HttpContext;
+import AIR.Common.xml.TdsXmlOutputFactory;
 
 import javax.xml.stream.FactoryConfigurationError;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-
-import org.apache.commons.lang3.StringUtils;
+import java.io.OutputStream;
+import java.util.List;
+import java.util.UUID;
 
 import tds.student.services.data.ItemResponse;
 import tds.student.services.data.PageGroup;
@@ -24,8 +24,6 @@ import tds.student.services.data.PageList;
 import tds.student.services.data.TestOpportunity;
 import tds.student.sql.data.ItemResponseUpdateStatus;
 import tds.student.web.TestManager;
-import AIR.Common.Web.Session.HttpContext;
-import AIR.Common.xml.TdsXmlOutputFactory;
 
 // / <summary>
 // / Used to write out the results of a update response request (or possibly
@@ -62,6 +60,7 @@ public class TestResponseWriter // : IDisposable
     _writer.writeAttribute ("lengthMet", Boolean.toString (tm.IsTestLengthMet ()));
     _writer.writeAttribute ("finished", Boolean.toString (tm.IsTestLengthMet () && pageList.isAllCompleted ()));
     _writer.writeAttribute ("prefetched", Boolean.toString (prefetched));
+    _writer.writeAttribute ("allAnswered", Boolean.toString(pageList.isAllAnswered()));
     // SB:Merge End
     _writer.writeEndElement ();
 
