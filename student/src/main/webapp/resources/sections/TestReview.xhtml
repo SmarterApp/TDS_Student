@@ -13,10 +13,14 @@
 <cc:implementation>
 	<tds:SectionWrapper id="sectionTestReview" headerName="TestReview">
 
-		<div class="markedWarning" style="display: none;"
-			i18n-content="QuestionsAreMarkedForReview"></div>
-		<div class="unansweredWarning" style="display: none;"
-			i18n-content="QuestionsAreUnanswered"></div>
+        <div class="markedWarning" style="display: none;">
+            <span class="markedWarningCount"/>
+            <span class="markedWarningText" i18n-content="QuestionsAreMarkedForReview"/>
+        </div>
+        <div class="unansweredWarning" style="display: none;">
+            <span class="unansweredWarningCount"/>
+            <span class="unansweredWarningText" i18n-content="QuestionsAreUnanswered"/>
+        </div>
 
 		<div class="choices TDS_RSL_ListView">
 
