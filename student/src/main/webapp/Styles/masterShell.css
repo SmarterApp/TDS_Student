@@ -3531,3 +3531,24 @@ a.yui-panel-bottom:focus, a.yui-panel-bottom:active {
 #checkRecorder .instructions div ol {
 	margin: 0 3em 0 0;
 }
+
+/* In some environments, the selectors @ line 2500 do not properly display the "unanswered question" icon on the ReviewShell.xhtml page.
+These more generic selectors properly display the icon for questions that have been marked as "unanswered", marked for review or both.
+ */
+li a.marked {
+	background: url(../Shared/Images/universal/marked.svg) no-repeat right center;
+	-moz-box-shadow: 0 0 5px 2px rgba(0, 174, 239, .1);
+	-webkit-box-shadow: 0 0 5px 2px rgba(0, 174, 239, .1);
+	box-shadow: 0 0 5px 2px rgba(0, 174, 239, .4);
+	background-size: 1.5em;
+}
+
+li a.unanswered {
+	background: url(../Shared/Images/universal/unanswered.svg) no-repeat right center;
+	background-size: 1.5em;
+}
+
+li a.marked.unanswered {
+	background-image: url(../Shared/Images/universal/marked_unanswered.svg);
+	background-size: 3em;
+}
