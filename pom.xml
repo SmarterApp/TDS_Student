@@ -15,7 +15,7 @@
 
     <properties>
         <assertj.version>2.6.0</assertj.version>
-        <item-renderer.version>5.0.3</item-renderer.version>
+        <item-renderer.version>5.0.4</item-renderer.version>
         <item-selection.version>4.0.3.RELEASE</item-selection.version>
         <item-scoring.version>4.0.2.RELEASE</item-scoring.version>
         <junit.version>4.12</junit.version>
