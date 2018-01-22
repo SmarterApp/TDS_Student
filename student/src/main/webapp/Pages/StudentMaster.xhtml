@@ -15,11 +15,46 @@
 
 	<!-- Specific CDE styles that override the default styles -->
 	<style>
-		#ot-topBar{background-color:initial !important;}
-		#tds-ot-header{border-bottom:1px solid #bed7df !important;}
-		#ot-logo_spot1 {background-image:url(../images/logo_cde.png) !important; margin-top: -20px !important;}
-		#ot-brand1 span.hiddenHeader{font-family:arial;color:#0b6fc7;padding-left:250px;font-size:26pt;position:absolute;width:650px;top:40px;overflow:initial !important;}
-		.footer-area{position:fixed;left:0px;bottom:0px;height:35px;width:100%;border-top:1px solid #bed7df;text-align:right;font-size:10px;}
+		#ot-topBar {
+			background-color:initial !important;
+		}
+
+		#tds-ot-header {
+			border-bottom:1px solid #bed7df !important;
+		}
+
+		#ot-logo_spot1 {
+			background-image: url(themes/pillars/images/logo_cde.png) !important;
+			background-size: contain;
+			margin-top: -20px !important;
+		}
+
+		#ot-brand1 span.hiddenHeader {
+			font-family: arial;
+			color: #0b6fc7;
+			padding-left: 250px;
+			font-size: 26pt;
+			position: absolute;
+			width: 650px;
+			top: 40px;
+			overflow: initial !important;
+		}
+
+		.footer-area {
+			position: fixed;
+			left: 0px;
+			bottom: 0px;
+			height: 35px;
+			width: 100%;
+			border-top: 1px solid #bed7df;
+			text-align: right;
+			font-size: 10px;
+		}
+
+		.footer-area img {
+			display: inline-block;
+			vertical-align: middle;
+		}
 	</style>
 
 	<tds:ResourcesLink file="~/Scripts/scripts_student.xml" name="base" />
@@ -135,7 +170,7 @@
 	<iframe id="xhrFrame" name="xhrFrame" style="display: none"></iframe>
 	<tds:ClientScript binding="#{clientScriptBackingBean.clientScript}" />
 	<div class="footer-area">
-	Powered by <img height="20px" src="../images/logo_smarterapp.png"/>
+	Powered by <img height="20px" src="themes/pillars/images/logo_smarterapp.png"/>
 	</div>
 </h:body>
 </html>
