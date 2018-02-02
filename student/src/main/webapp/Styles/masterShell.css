@@ -540,7 +540,7 @@ select option {
 }
 
 #logOut {
-	display: none;
+	/* display: none; */
 }
 
 #btnAccGlobal {
