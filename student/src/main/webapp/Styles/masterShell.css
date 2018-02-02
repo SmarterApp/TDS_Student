@@ -590,7 +590,7 @@ select option {
 	
 }
 
-.browser_airsecurebrowser #logOut, .browser_airmobilesecurebrowser #logOut
+.browser_airsecurebrowser #logOut, .browser_airmobilesecurebrowser #logOut, browser_smartersecurebrowser #logout
 	{
 	display: block;
 }
