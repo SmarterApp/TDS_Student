@@ -46,7 +46,7 @@ public class RemoteAssessmentRepository implements AssessmentRepository {
   }
 
   @Override
-//  @Cacheable(CacheType.LongTerm)
+  @Cacheable(CacheType.LongTerm)
   public Assessment findAssessment(final String clientName, final String key) throws ReturnStatusException {
     HttpHeaders headers = new HttpHeaders();
     headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
