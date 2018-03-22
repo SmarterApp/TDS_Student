@@ -10,6 +10,7 @@ package tds.student.web.handlers;
 
 import TDS.Shared.Exceptions.ReturnStatusException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -35,12 +36,15 @@ public class WordListHandler extends WordListHandlerBase
   @Autowired
   private IContentService contentService;
 
+  @Value("${tds.content.format:/tds/bank/items/Item-%1$s-%2$s/item-%1$s-%2$s.xml}")
+  private String itemContentFormat;
+
   /* (non-Javadoc)
    * @see tds.itemrenderer.handler.WordListHandlerBase#getItemPath(long, long)
    */
   @Override
   protected String getItemPath (long bankKey, long itemKey) throws ReturnStatusException {
-      return itemBankService.getItemPath(bankKey, itemKey);
+      return String.format(itemContentFormat, bankKey, itemKey);
   }
 
   @Override
