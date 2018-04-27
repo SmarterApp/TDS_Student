@@ -161,7 +161,7 @@ public class RemoteAccommodationsService implements IAccommodationsService {
     if (!segmentPositionToAccommodations.isEmpty()) {
       Accommodations assessmentAccommodation = segmentPositionToAccommodations.get(ASSESSMENT_POSITION);
 
-      if (assessmentAccommodation != null) {
+      if (assessmentAccommodation != null && assessment.getAccommodationDependencies() != null) {
         for (AccommodationDependency assessmentDependency : assessment.getAccommodationDependencies()) {
           assessmentAccommodation.AddDependency(assessmentDependency.getIfType(), assessmentDependency.getIfValue(),
             assessmentDependency.getThenType(), assessmentDependency.getThenValue(), assessmentDependency.isDefault());

@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +45,9 @@ public class DialogFrameHandler extends TDSHandler
   private final PageLayout pageLayout;
   private final IContentService contentService;
 
+  @Value("${tds.content.format:/tds/bank/items/Item-%1$s-%2$s/item-%1$s-%2$s.xml}")
+  private String itemContentFormat;
+
   @Autowired
   public DialogFrameHandler(final IItemBankRepository itemBankRepository,
                             final PageLayout pageLayout,
@@ -69,7 +73,7 @@ public class DialogFrameHandler extends TDSHandler
 
     try
     {
-      studentHelpFile = itemBankRepository.getItemPath (bankKey, itemKey);
+      studentHelpFile = String.format(itemContentFormat, bankKey, itemKey);
     } catch (Exception ex)
     {
       // NOTE: We would get an error here if the tutorials config is not loaded.
