@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
         <groupId>org.opentestsystem.shared</groupId>
         <artifactId>shared-master</artifactId>
@@ -15,7 +17,7 @@
 
     <properties>
         <assertj.version>2.6.0</assertj.version>
-        <item-renderer.version>3.1.1.RELEASE</item-renderer.version>
+        <item-renderer.version>3.5.0.RELEASE</item-renderer.version>
         <item-selection.version>3.1.1.RELEASE</item-selection.version>
         <item-scoring.version>3.1.1.RELEASE</item-scoring.version>
         <junit.version>4.12</junit.version>
@@ -27,7 +29,7 @@
 
     <modules>
         <module>student</module>
-        <module>SpellCheck</module>
+        <!--<module>SpellCheck</module>-->
     </modules>
 
     <dependencyManagement>
@@ -150,12 +152,18 @@
         <url>https://github.com/SmarterApp/TDS_Student</url>
         <tag>3.1.1.RELEASE</tag>
     </scm>
-
+    <repositories>
+        <repository>
+            <id>org.opentestsystem</id>
+            <name>artifactory-releases</name>
+            <url>https://artifactory.smarterbalanced.org/artifactory/libs-releases-local</url>
+        </repository>
+    </repositories>
     <distributionManagement>
         <repository>
             <id>central</id>
-            <name>airdev-releases</name>
-            <url>https://airdev.jfrog.io/airdev/libs-releases-local</url>
+            <name>artifactory-releases</name>
+            <url>https://artifactory.smarterbalanced.org/artifactory/libs-releases-local</url>
         </repository>
     </distributionManagement>
 </project>
